@@ -1,0 +1,1335 @@
+.builder {
+  min-height: 100vh;
+  background: var(--app-bg);
+  color: var(--app-text);
+  display: flex;
+  flex-direction: column;
+}
+
+.builder-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--app-surface-2);
+  border-bottom: var(--app-bw) solid var(--app-border);
+}
+.builder-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.builder-title i {
+  color: var(--app-accent);
+  font-size: 15px;
+}
+.name-input {
+  margin-left: 8px;
+  background: var(--app-surface);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  color: var(--app-text);
+  font-size: 13px;
+  padding: 6px 10px;
+  font-family: inherit;
+  min-width: 180px;
+}
+
+.lstrip {
+  display: flex;
+  gap: 4px;
+  padding: 9px 14px;
+  border-bottom: var(--app-bw) solid var(--app-border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.lstrip::-webkit-scrollbar {
+  display: none;
+}
+.lchip {
+  min-width: 26px;
+  height: 26px;
+  padding: 0 9px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  background: var(--app-surface-2);
+  color: var(--app-text-dim);
+  flex: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.lchip.on {
+  background: var(--app-accent);
+  color: var(--app-accent-text);
+  font-weight: 500;
+}
+.lchip.pending {
+  outline: 1px solid var(--app-warn);
+  outline-offset: -1px;
+}
+.lchip.future {
+  opacity: 0.4;
+}
+
+/* target-level stepper in the header */
+.lvl-ctl {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--app-surface);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  padding: 3px 8px;
+}
+.lvl-ctl-label {
+  font-size: 11px;
+  color: var(--app-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.lvl-ctl-val {
+  font-size: 14px;
+  font-weight: 600;
+  min-width: 18px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.lvl-step {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--app-radius-sm);
+  border: var(--app-bw) solid var(--app-border);
+  background: var(--app-surface-2);
+  color: var(--app-text);
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+}
+.lvl-step:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.builder-body {
+  display: grid;
+  grid-template-columns: 244px 1fr;
+  gap: 14px;
+  padding: 14px;
+  align-items: start;
+}
+.bmain {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+.bsec-title {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--app-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 9px;
+}
+.bsec-title .muted {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+  color: var(--app-text-dim);
+}
+.card-sec {
+  background: var(--app-surface);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius);
+  padding: 12px;
+}
+
+.ocard {
+  background: var(--app-surface);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius);
+  padding: 9px 11px;
+}
+
+/* ---- custom ("deep") background form ---- */
+.custom-bg {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--app-surface);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius);
+  padding: 11px 13px;
+}
+.cbg-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--app-accent);
+}
+.cbg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+.cbg-lbl {
+  font-size: 11px;
+  color: var(--app-text-dim);
+}
+.cbg-field input,
+.cbg-field textarea,
+.cbg-field select {
+  background: var(--app-surface-2);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  color: var(--app-text);
+  font-size: 12.5px;
+  padding: 6px 8px;
+  width: 100%;
+  font-family: inherit;
+  resize: vertical;
+}
+.cbg-row {
+  display: flex;
+  gap: 8px;
+}
+.custom-bg .ocard {
+  padding: 0;
+  border: none;
+  background: none;
+}
+.ocard .ol {
+  font-size: 11px;
+  color: var(--app-text-dim);
+  margin-bottom: 5px;
+}
+
+.osel,
+.bsel {
+  background: var(--app-surface-2);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  color: var(--app-text);
+  font-size: 12.5px;
+  padding: 6px 8px;
+  font-family: inherit;
+  cursor: pointer;
+}
+.osel {
+  width: 100%;
+}
+.bsel {
+  min-width: 64px;
+}
+/* Ability-boost popup triggers stay compact (inline in a row), not full-width like card selects. */
+.osel.bsel {
+  width: auto;
+  min-width: 84px;
+}
+
+/* The "key attribute is fixed" label shown in its setup card when the class has no choice. */
+.fixed-val {
+  font-size: 13px;
+  color: var(--app-accent);
+  font-weight: 500;
+}
+
+/* (Trained-skill selection moved from a checkbox grid to chips + a popup "add" control —
+   see SkillEditor; the old .skill-grid/.skill-opt styles were removed.) */
+
+.lore-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.lore-chip {
+  display: inline-flex;
+  align-items: center;
+  background: var(--app-surface-2);
+  border-radius: var(--app-radius-sm);
+  padding: 6px 10px;
+  font-size: 12.5px;
+}
+.lore-chip.on {
+  background: var(--app-accent);
+  color: var(--app-accent-text);
+  cursor: pointer;
+}
+.lore-chip.locked {
+  opacity: 0.6;
+}
+.lore-inc-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.lore-inc-add input {
+  background: var(--app-surface-2);
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  padding: 4px 8px;
+  font-size: 12px;
+  color: var(--app-text);
+  width: 130px;
+}
+.lore-inc-add button {
+  background: var(--app-surface-3);
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  padding: 4px 9px;
+  font-size: 12px;
+  color: var(--app-text);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.lore-inc-add button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.brail {
+  /* Sits in the left column; main content stays first in the DOM for sensible tab order. */
+  order: -1;
+  position: sticky;
+  top: 14px;
+  background: var(--app-surface);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius);
+  padding: 12px;
+}
+.brail-title {
+  font-size: 11px;
+  color: var(--app-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 9px;
+}
+.brow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  padding: 4px 0;
+}
+.brow .bk {
+  color: var(--app-text-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.brow .bk .rank-pill {
+  font-size: 10px;
+  padding: 0 5px;
+}
+/* Long labels (e.g. a custom Lore name) ellipsize instead of wrapping in the narrow rail. */
+.brow .bk-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.brow .bv {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  flex: none;
+}
+/* Clickable summary rows — open the same stat breakdown the character sheet uses. */
+.brow-open {
+  cursor: pointer;
+  margin: 0 -6px;
+  padding-left: 6px;
+  padding-right: 6px;
+  border-radius: var(--app-radius-sm);
+}
+.brow-open:hover {
+  background: var(--app-surface-2);
+}
+.brow-open:hover .bv {
+  color: var(--app-accent);
+}
+.brail-actions {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.b-create {
+  background: var(--app-accent);
+  color: var(--app-accent-text);
+  border: none;
+  border-radius: var(--app-radius-sm);
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+}
+.b-cancel {
+  background: transparent;
+  color: var(--app-text-dim);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  padding: 8px 14px;
+  font-size: 12.5px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.b-cancel:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.bsec-sub {
+  font-size: 11.5px;
+  color: var(--app-text-dim);
+  margin-bottom: 9px;
+}
+
+/* variant switcher (temporary — for choosing a direction) */
+.variant-switch {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--app-surface);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  padding: 3px;
+}
+.vs-label {
+  font-size: 11px;
+  color: var(--app-text-dim);
+  padding: 0 6px;
+}
+.vs-btn {
+  font-size: 12px;
+  padding: 5px 11px;
+  border: none;
+  background: transparent;
+  color: var(--app-text-dim);
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.vs-btn.on {
+  background: var(--app-accent);
+  color: var(--app-accent-text);
+  font-weight: 500;
+}
+.builder-head .b-cancel {
+  margin-left: 8px;
+}
+
+/* single-page sections */
+.sp-sec + .sp-sec {
+  border-top: var(--app-bw) solid var(--app-border);
+  padding-top: 14px;
+  margin-top: 2px;
+}
+
+/* wizard */
+.wiz-steps {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 12px 14px;
+  border-bottom: var(--app-bw) solid var(--app-border);
+  font-size: 12px;
+}
+.wiz-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--app-text-dim);
+}
+.wiz-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--app-surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+.wiz-num.on {
+  background: var(--app-accent);
+  color: var(--app-accent-text);
+  font-weight: 500;
+}
+.wiz-cur {
+  color: var(--app-text);
+  font-weight: 500;
+}
+.wiz-arrow {
+  font-size: 13px;
+  color: var(--app-text-dim);
+  margin-left: 2px;
+}
+.wiz-body {
+  padding: 14px;
+  max-width: 680px;
+  width: 100%;
+  margin: 0 auto;
+}
+.wiz-h {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.wiz-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 14px 16px;
+  max-width: 680px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* setup + per-level panels */
+.setup-note {
+  font-size: 12.5px;
+  color: var(--app-text-dim);
+  line-height: 1.6;
+}
+.setup-chips {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+.setup-chip {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: var(--app-bw) solid var(--app-border);
+  color: var(--app-text);
+}
+.setup-chip.muted {
+  color: var(--app-text-dim);
+  border-style: dashed;
+}
+.lvl-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /* rendered as a <fieldset> for the future-level disabled state — strip its chrome */
+  border: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.lvl-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--app-surface-2);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  padding: 9px 11px;
+  text-align: left;
+  font-family: inherit;
+  color: var(--app-text);
+  width: 100%;
+  cursor: pointer;
+}
+.lvl-card.info {
+  cursor: default;
+}
+.lvl-card.empty {
+  border-style: dashed;
+}
+.lvl-card-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--app-accent);
+  flex: none;
+}
+.lvl-card-text {
+  flex: 1;
+  min-width: 0;
+}
+.lvl-card-label {
+  font-size: 11px;
+  color: var(--app-text-dim);
+}
+.lvl-card-val {
+  font-size: 13px;
+  font-weight: 500;
+}
+.lvl-auto {
+  font-size: 11px;
+  color: var(--app-text-dim);
+}
+/* A class feature that is actually the player's subclass choice, rendered inline on the card. */
+.lvl-card.lvl-choice {
+  cursor: default;
+}
+.lvl-subsel {
+  width: 100%;
+  margin-top: 3px;
+}
+/* Info affordances on builder cards: tap to read the description (subclass option, picked feat). */
+.lvl-info {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  color: var(--app-text-dim);
+  font-size: 15px;
+}
+.lvl-slot-info {
+  flex: none;
+  width: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--app-bw) solid var(--app-border);
+  background: var(--app-surface-2);
+  border-radius: var(--app-radius-sm);
+  color: var(--app-text-dim);
+  font-size: 14px;
+}
+.info-term.lvl-info,
+.info-term.lvl-slot-info {
+  text-decoration: none;
+}
+.lvl-info:hover,
+.lvl-slot-info:hover {
+  color: var(--app-accent);
+}
+.lvl-pending {
+  color: var(--app-warn);
+  font-weight: 500;
+  margin-left: auto;
+}
+.lvl-future-tag {
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--app-text-dim);
+  font-weight: 400;
+}
+.lvl-card-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+/* Level-0 setup cards reuse the level-card chrome but can hold wrapping pills/chips, so the
+   icon top-aligns with the label and the picker row spans the card width. */
+.lvl-card-setup {
+  align-items: flex-start;
+}
+.lvl-card-setup .lvl-card-icon {
+  margin-top: 1px;
+}
+.lvl-result {
+  font-size: 12px;
+  color: var(--app-accent);
+  font-weight: 500;
+}
+.lvl-slot {
+  display: flex;
+  gap: 6px;
+  align-items: stretch;
+}
+.lvl-slot .lvl-card {
+  flex: 1;
+  min-width: 0;
+}
+.lvl-clear-btn {
+  flex: none;
+  width: 34px;
+  border: var(--app-bw) solid var(--app-border);
+  background: var(--app-surface-2);
+  color: var(--app-text-dim);
+  border-radius: var(--app-radius-sm);
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lvl-clear-btn:hover {
+  color: var(--app-bad);
+  border-color: var(--app-bad);
+}
+/* A dependent follow-up choice (a background's boost, a feat's domain, …) shown as a child card
+   connected + indented under the card that triggers it. */
+.lvl-slot-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.lvl-subcard {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  padding-left: 16px;
+}
+.lvl-subcard-conn {
+  color: var(--app-text-faint);
+  font-size: 15px;
+  margin-top: 10px;
+  flex: none;
+}
+.lvl-card-child {
+  flex: 1;
+  min-width: 0;
+  background: var(--app-surface);
+}
+.lvl-card-child .lvl-card-icon {
+  background: var(--app-surface-2);
+}
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--app-accent);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+  text-decoration: underline;
+}
+/* a disabled <fieldset> wrapping the level cards must not collapse its layout */
+.lvl-cards[disabled] {
+  border: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+/* ---- Per-level page: header + gains band + grouped choices ---- */
+.lvl-page-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 13px;
+}
+.lvl-page-head .bsec-title {
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--app-text);
+  margin-bottom: 0;
+}
+.lvl-pending-tag,
+.lvl-done-tag,
+.lvl-sub-tag {
+  font-size: 11px;
+  border-radius: 20px;
+  padding: 3px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.lvl-pending-tag {
+  color: var(--app-warn);
+  background: color-mix(in srgb, var(--app-warn) 14%, transparent);
+  border: var(--app-bw) solid color-mix(in srgb, var(--app-warn) 35%, transparent);
+}
+.lvl-done-tag {
+  color: var(--app-good);
+  background: color-mix(in srgb, var(--app-good) 14%, transparent);
+  border: var(--app-bw) solid color-mix(in srgb, var(--app-good) 32%, transparent);
+}
+.lvl-sub-tag {
+  color: var(--app-text-faint);
+  background: var(--app-surface-2);
+  border: var(--app-bw) solid var(--app-border);
+}
+.lvl-zone {
+  background: color-mix(in srgb, var(--app-good) 6%, var(--app-surface));
+  border: var(--app-bw) solid color-mix(in srgb, var(--app-good) 22%, transparent);
+  border-radius: var(--app-radius-sm);
+  padding: 9px 11px;
+  margin-bottom: 15px;
+}
+.lvl-zone-h {
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--app-text-faint);
+  margin-bottom: 7px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.lvl-zone-h i {
+  color: var(--app-good);
+  font-size: 13px;
+}
+.lvl-gains {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+.lvl-gain {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+}
+.lvl-gain-ic {
+  color: var(--app-good);
+  font-size: 14px;
+}
+.lvl-gain-tag {
+  font-size: 9.5px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--app-text-faint);
+}
+.lvl-gain-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.lvl-gain-name {
+  font-size: 12.5px;
+}
+.lvl-gain-block .cc-flavor {
+  margin-left: 21px;
+}
+
+/* ---- ChoiceDetails: flavor + grants summary on origin/class cards + level features ---- */
+.cc-flavor {
+  font-size: 12.5px;
+  color: var(--app-text-dim);
+  line-height: 1.55;
+  margin-top: 8px;
+}
+.cc-det {
+  background: none;
+  border: none;
+  color: var(--app-accent);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 3px 0;
+  margin-top: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.cc-grants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+  margin-top: 8px;
+}
+.cc-g {
+  font-size: 12px;
+  color: var(--app-text);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.cc-g i {
+  color: var(--app-text-dim);
+  font-size: 14px;
+}
+.lvl-choice-zone {
+  border: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  display: block;
+}
+.lvl-group {
+  margin-bottom: 15px;
+}
+.lvl-group:last-child {
+  margin-bottom: 0;
+}
+.lvl-group-h {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--app-text-dim);
+  margin-bottom: 7px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.lvl-group-h i {
+  color: var(--app-accent);
+  font-size: 14px;
+}
+
+/* feat picker */
+.picker-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+  padding: 20px;
+}
+.picker {
+  background: var(--app-surface);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius);
+  width: 420px;
+  max-width: 100%;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--app-shadow);
+}
+.picker-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 13px;
+  border-bottom: var(--app-bw) solid var(--app-border);
+  font-size: 13px;
+  font-weight: 500;
+}
+.picker-list {
+  overflow-y: auto;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.picker-more {
+  padding: 8px 6px;
+  font-size: 11.5px;
+  color: var(--app-text-dim);
+  font-style: italic;
+  text-align: center;
+}
+.picker-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 9px;
+  border: none;
+  background: transparent;
+  border-radius: var(--app-radius-sm);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  color: var(--app-text);
+}
+.picker-item:hover {
+  background: var(--app-surface-2);
+}
+.picker-item:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.picker-item:disabled:hover {
+  background: transparent;
+}
+.picker-check {
+  width: 18px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--app-accent);
+}
+.picker-item.chosen {
+  background: color-mix(in srgb, var(--app-accent) 14%, transparent);
+}
+/* The picker-row content classes (.picker-lvl/.picker-name/.picker-traits/.picker-prereq/
+   .picker-count) and the .pick-row / .pick-body / .pick-add chrome now live in sheet.css
+   alongside the rest of the shared picker/modal styling, so sheet pickers (e.g. SpellsTab)
+   don't depend on builder.css being loaded. */
+
+/* spell selection rows (builder) */
+.spell-pick-row {
+  padding: 8px 0;
+  border-top: var(--app-bw) solid var(--app-border);
+}
+.spell-pick-row:first-of-type {
+  border-top: none;
+}
+.spr-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.spr-count {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--app-text-dim);
+}
+.spr-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.spr-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--app-surface-2);
+  border: var(--app-bw) solid var(--app-border);
+}
+.spr-chip-x {
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  background: transparent;
+  color: var(--app-text-dim);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+.spr-chip-x:hover {
+  color: var(--app-bad);
+}
+.spr-chip-sig {
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  background: transparent;
+  color: var(--app-text-faint);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+.spr-chip-sig:hover {
+  color: var(--app-accent);
+}
+.spr-chip-sig.on {
+  color: var(--app-accent);
+}
+.spr-add {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: var(--app-bw) dashed var(--app-border);
+  background: transparent;
+  color: var(--app-accent);
+  cursor: pointer;
+  font-family: inherit;
+}
+.spr-add:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* builder equipment list */
+.inv-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.inv-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--app-surface-2);
+  border-radius: var(--app-radius-sm);
+  padding: 6px 9px;
+}
+.inv-line-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 12.5px;
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+.inv-line-type {
+  font-size: 11px;
+  color: var(--app-text-dim);
+  text-transform: capitalize;
+}
+.inv-toggle {
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: var(--app-bw) solid var(--app-border);
+  background: transparent;
+  color: var(--app-text-dim);
+  cursor: pointer;
+  font-family: inherit;
+  flex: none;
+}
+.inv-toggle.on {
+  background: var(--app-accent);
+  color: var(--app-accent-text);
+  border-color: var(--app-accent);
+}
+.inv-qty {
+  width: 46px;
+  flex: none;
+  background: var(--app-surface);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  color: var(--app-text);
+  font-size: 12px;
+  padding: 4px 6px;
+  font-family: inherit;
+}
+.inv-remove {
+  flex: none;
+  border: none;
+  background: transparent;
+  color: var(--app-text-dim);
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+.inv-remove:hover {
+  color: var(--app-bad);
+}
+
+/* full stats sidebar */
+.fs-abil {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.fs-ab {
+  background: var(--app-surface-2);
+  border-radius: var(--app-radius-sm);
+  padding: 5px 4px;
+  text-align: center;
+}
+.fs-ab-open {
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.fs-ab-open:hover {
+  border-color: var(--app-accent);
+}
+.fs-an {
+  font-size: 11px;
+  color: var(--app-text-dim);
+}
+.fs-av {
+  font-size: 14px;
+  font-weight: 500;
+}
+.fs-am {
+  font-size: 11px;
+  color: var(--app-text-dim);
+}
+.fs-sec {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--app-text-dim);
+  margin: 11px 0 3px;
+  padding-top: 8px;
+  border-top: var(--app-bw) solid var(--app-border);
+}
+.fs-none {
+  font-size: 12px;
+  color: var(--app-text-dim);
+}
+.fs-profrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.fs-prof {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--app-surface-2);
+  border-radius: var(--app-radius-sm);
+  padding: 3px 6px 3px 8px;
+  font-size: 11.5px;
+  color: var(--app-text-dim);
+}
+.fs-prof .rank-pill {
+  font-size: 10px;
+  padding: 0 5px;
+}
+
+.ol-count { color: var(--app-text-dim); font-weight: normal; }
+.ec-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.ec-chip {
+  background: var(--app-surface-2);
+  color: var(--app-text);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  font-size: 11.5px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.ec-chip.on { background: var(--app-accent); color: var(--app-accent-text); border-color: var(--app-accent); }
+.ec-chip:disabled { opacity: 0.4; cursor: default; }
+/* A restricted sub-choice under a selected extra-choice option (e.g. Energized Spark energy type). */
+.ec-subpick { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.ec-subpick-label { font-size: 11.5px; color: var(--app-text-dim); flex: none; }
+
+/* SearchSelect: a select-styled button that opens a searchable overlay. */
+/* Choice control: a button that opens a popup (NOT a dropdown — no chevron). Two states:
+   empty = dashed "+ choose", picked = filled value with a pencil-to-change cue. */
+.popsel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 11px;
+  border-radius: var(--app-radius-sm);
+  font-family: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+  text-align: left;
+}
+.popsel.is-empty {
+  border: 1px dashed var(--app-border);
+  background: transparent;
+  color: var(--app-text-dim);
+}
+.popsel.is-empty:hover {
+  border-color: var(--app-accent);
+  color: var(--app-text);
+}
+.popsel.is-picked {
+  border: var(--app-bw) solid var(--app-border);
+  background: var(--app-surface-2);
+  color: var(--app-text);
+}
+.popsel.is-picked:hover {
+  border-color: var(--app-accent);
+}
+.popsel-lead {
+  flex: none;
+  color: var(--app-accent);
+  font-size: 15px;
+}
+.popsel-tile {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--app-accent) 16%, var(--app-surface));
+  color: var(--app-accent);
+  font-size: 14px;
+}
+.popsel-val {
+  flex: 1;
+  min-width: 0;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.popsel-ph {
+  flex: 1;
+  min-width: 0;
+}
+.popsel-change {
+  flex: none;
+  color: var(--app-text-dim);
+  font-size: 14px;
+}
+.popsel.is-picked:hover .popsel-change {
+  color: var(--app-accent);
+}
+/* In-popup "type your own" mode (e.g. a custom Lore) — typed inside the picker, not outside it. */
+.popsel-custom {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.popsel-custom-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+/* Pill variant — compact, for the ability-boost rows. */
+.popsel.pill {
+  width: auto;
+  border-radius: 999px;
+  padding: 5px 12px;
+  gap: 5px;
+}
+.popsel.pill.is-picked {
+  border-color: var(--app-accent);
+  background: color-mix(in srgb, var(--app-accent) 16%, var(--app-surface));
+}
+.popsel.pill .popsel-lead {
+  font-size: 13px;
+}
+.ss-count {
+  margin-left: auto;
+  margin-right: 8px;
+  font-weight: 400;
+  color: var(--app-text-dim);
+  font-size: 12px;
+}
+/* Search + rarity controls in the feat picker. */
+.picker-controls {
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-bottom: var(--app-bw) solid var(--app-border);
+}
+.rarity-row { display: flex; gap: 6px; }
+.rar-chip {
+  flex: 1;
+  text-transform: capitalize;
+  background: var(--app-surface-2);
+  color: var(--app-text-dim);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  font-size: 11px;
+  padding: 3px 8px;
+  cursor: pointer;
+}
+.rar-chip.on { background: var(--app-accent); color: var(--app-accent-text); border-color: var(--app-accent); }
+.arch-chip { flex: 1.6; display: inline-flex; align-items: center; justify-content: center; gap: 4px; text-transform: none; }
+
+/* Builder companions section. */
+.cmp-row { border: var(--app-bw) solid var(--app-border); border-radius: var(--app-radius-sm); padding: 8px 10px; margin-bottom: 8px; }
+.cmp-row-head { display: flex; align-items: center; gap: 8px; }
+.cmp-row-head .ti { color: var(--app-text-dim); }
+.cmp-name { flex: 1; background: var(--app-surface-2); border: var(--app-bw) solid var(--app-border); border-radius: var(--app-radius-sm); color: var(--app-text); font-size: 12.5px; padding: 5px 8px; font-family: inherit; }
+.cmp-kind { font-size: 11px; color: var(--app-text-dim); text-transform: capitalize; }
+.cmp-controls { display: flex; gap: 8px; margin-top: 8px; }
+.cmp-controls .popsel { flex: 1; width: auto; }
+
+/* Feat embedded sub-choice (Domain Initiate domain, etc.). */
+
+/* Equipment budget + per-item price. */
+.inv-line-price { font-size: 11px; color: var(--app-text-dim); margin-left: 6px; }
+.ol-count.over { color: var(--app-bad); font-weight: 500; }

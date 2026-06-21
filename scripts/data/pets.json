@@ -1,0 +1,18 @@
+{
+  "normal-pet": {
+    "id": "normal-pet",
+    "name": "Normal Pet",
+    "kind": "pet",
+    "description": "A Tiny animal of a type you choose (a cat, bird, rodent, and so on). It has the minion trait, gaining 2 actions when you Command an Animal (no Nature check needed). A pet can't make Strikes.",
+    "notes": "Tiny; land Speed 25 feet; low-light vision. Perception, Acrobatics, and Stealth scale with your level. Lets you choose two pet abilities.",
+    "traits": ["pet", "animal", "minion"]
+  },
+  "aquatic-pet": {
+    "id": "aquatic-pet",
+    "name": "Aquatic Pet",
+    "kind": "pet",
+    "description": "A Tiny aquatic animal of a type you choose (a fish, octopus, jellyfish, and so on). It has the minion trait, gaining 2 actions when you Command an Animal (no Nature check needed). A pet can't make Strikes.",
+    "notes": "Tiny; swim Speed 25 feet; low-light vision. Perception, Acrobatics, and Stealth scale with your level. Lets you choose two pet abilities.",
+    "traits": ["pet", "aquatic", "animal", "minion"]
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "ballista": {
+    "id": "ballista",
+    "name": "Ballista",
+    "level": 4,
+    "price": "1,000 gp",
+    "size": "Large",
+    "space": "10 ft long, 5 ft wide, 5 ft high",
+    "crew": "1 crew",
+    "ac": 12,
+    "fort": 10,
+    "hp": 60,
+    "brokenThreshold": 30,
+    "hardness": 10,
+    "speeds": "stationary (can be wheeled)",
+    "traits": ["siege-weapon"],
+    "description": "A giant mounted crossbow that fires heavy bolts at distant targets or ships.",
+    "attacks": [
+      { "name": "Bolt", "actionCost": "operate (2 crew actions)", "bonus": 10, "damage": "4d8 piercing", "range": "180 ft", "reload": "3 crew actions" }
+    ]
+  },
+  "catapult": {
+    "id": "catapult",
+    "name": "Catapult",
+    "level": 6,
+    "price": "2,000 gp",
+    "size": "Huge",
+    "space": "15 ft long, 15 ft wide, 10 ft high",
+    "crew": "2 crew",
+    "ac": 12,
+    "fort": 14,
+    "hp": 100,
+    "brokenThreshold": 50,
+    "hardness": 12,
+    "speeds": "stationary (can be wheeled)",
+    "traits": ["siege-weapon"],
+    "description": "A torsion engine that hurls heavy stones in an arc to smash fortifications or massed foes.",
+    "attacks": [
+      { "name": "Stone", "actionCost": "operate (crew)", "bonus": 12, "damage": "6d10 bludgeoning (10-ft burst)", "range": "300 ft", "reload": "long" }
+    ]
+  },
+  "trebuchet": {
+    "id": "trebuchet",
+    "name": "Trebuchet",
+    "level": 9,
+    "price": "6,000 gp",
+    "size": "Gargantuan",
+    "space": "20 ft long, 15 ft wide, 25 ft high",
+    "crew": "3 crew",
+    "ac": 14,
+    "fort": 18,
+    "hp": 160,
+    "brokenThreshold": 80,
+    "hardness": 14,
+    "speeds": "stationary",
+    "traits": ["siege-weapon"],
+    "description": "A massive counterweight engine with tremendous range, built to batter castle walls.",
+    "attacks": [
+      { "name": "Boulder", "actionCost": "operate (crew)", "bonus": 16, "damage": "8d10 bludgeoning (15-ft burst)", "range": "500 ft", "reload": "very long" }
+    ]
+  },
+  "ram": {
+    "id": "ram",
+    "name": "Battering Ram",
+    "level": 3,
+    "price": "400 gp",
+    "size": "Large",
+    "space": "15 ft long, 5 ft wide, 5 ft high",
+    "crew": "4 crew",
+    "ac": 8,
+    "fort": 12,
+    "hp": 80,
+    "brokenThreshold": 40,
+    "hardness": 12,
+    "speeds": "pushed 10 feet",
+    "traits": ["siege-weapon"],
+    "description": "A heavy capped beam, often roofed, used to stave in gates and doors.",
+    "attacks": [
+      { "name": "Ram", "actionCost": "operate (crew)", "bonus": 12, "damage": "4d10 bludgeoning vs. structures", "range": "adjacent", "reload": "—" }
+    ]
+  },
+  "cannon": {
+    "id": "cannon",
+    "name": "Cannon",
+    "level": 7,
+    "price": "3,000 gp",
+    "size": "Large",
+    "space": "10 ft long, 5 ft wide, 5 ft high",
+    "crew": "2 crew",
+    "ac": 14,
+    "fort": 14,
+    "hp": 90,
+    "brokenThreshold": 45,
+    "hardness": 16,
+    "speeds": "stationary (can be wheeled)",
+    "traits": ["siege-weapon", "firearm"],
+    "description": "A black-powder gun that fires an iron ball with devastating force; common on warships and ramparts.",
+    "attacks": [
+      { "name": "Cannonball", "actionCost": "operate (crew)", "bonus": 14, "damage": "8d6 bludgeoning", "range": "250 ft", "reload": "long" }
+    ]
+  }
+}

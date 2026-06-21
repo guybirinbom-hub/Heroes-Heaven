@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    // composite forbids noEmit; redirect the (unused) JS/.d.ts/.tsbuildinfo emit out of the project
+    // root so `tsc -b` doesn't drop vite.config.js next to the real vite.config.ts.
+    "outDir": "node_modules/.cache/tsnode",
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "strict": true
+  },
+  "include": ["vite.config.ts"]
+}

@@ -1,0 +1,42 @@
+{
+  "berserker": {
+    "id": "berserker",
+    "name": "Berserker",
+    "kind": "follower",
+    "description": "An incautious front-line fighter wielding a falchion who grows more dangerous as it takes hits.",
+    "notes": "Trained in martial weapons, Athletics, Intimidation, and Warfare Lore. Wields a falchion (1d10 slashing). When a berserker takes damage, it gains a +1 status bonus to its next damage roll before the end of your next turn (increasing as it advances).",
+    "traits": ["follower", "minion"]
+  },
+  "medic": {
+    "id": "medic",
+    "name": "Medic",
+    "kind": "follower",
+    "description": "A skirmish medic that patches up the party in combat.",
+    "notes": "Trained in Medicine, Nature, and Herbalism Lore. Has the Battle Medicine feat and a healer's toolkit, and carries a scalpel (1d4 piercing).",
+    "traits": ["follower", "minion"]
+  },
+  "scout": {
+    "id": "scout",
+    "name": "Scout",
+    "kind": "follower",
+    "description": "A stealthy melee scout that exploits openings for extra damage.",
+    "notes": "Trained in Acrobatics, Stealth, and Survival. Wields a shortsword and deals 1d4 extra precision damage to off-guard targets.",
+    "traits": ["follower", "minion"]
+  },
+  "sharpshooter": {
+    "id": "sharpshooter",
+    "name": "Sharpshooter",
+    "kind": "follower",
+    "description": "An archer that takes careful aim and hampers enemies it hits.",
+    "notes": "Trained in Acrobatics, Stealth, and Hunting Lore. Wields a shortbow. Take Aim (two actions): a ranged Strike with a +2 circumstance bonus to hit. A creature it damages takes a -5-foot circumstance penalty to its Speeds for 1 round (-10 on a crit).",
+    "traits": ["follower", "minion"]
+  },
+  "shieldbearer": {
+    "id": "shieldbearer",
+    "name": "Shieldbearer",
+    "kind": "follower",
+    "description": "A shield-wielding protector that can block hits and react on command.",
+    "notes": "Trained in Athletics, Survival, and Warfare Lore. Carries a shield (Hardness 5, HP 20, BT 10), can Raise a Shield (+2 AC), has the Shield Block feat, and gains a reaction when Directed.",
+    "traits": ["follower", "minion"]
+  }
+}

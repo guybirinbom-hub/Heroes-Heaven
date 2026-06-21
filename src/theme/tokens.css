@@ -1,0 +1,107 @@
+/*
+ * Semantic token contract.
+ *
+ * Every component reads ONLY from these custom properties — never a raw hex.
+ * A theme is just a different set of values for the color tokens (see themes.ts)
+ * and a style is a different set for the shape/type tokens (see styles.ts).
+ * theme-manager.ts writes the active values onto <html> at runtime; the values
+ * below are the defaults (Midnight palette + Modern style) so the very first
+ * paint is already themed.
+ */
+
+/* ── Action-icon font ─────────────────────────────────────────────
+ * The Pathfinder2eActions glyph font — the same icon set Archives of
+ * Nethys uses. Char map: 1/2/3 → one/two/three actions, 4 → free
+ * action, 5 → reaction. Rendered via <ActionGlyph> (sheet/widgets). */
+@font-face {
+  font-family: 'Pathfinder2eActions';
+  src: url('/fonts/Pathfinder2eActions.ttf') format('truetype');
+  font-display: block;
+}
+.pf2-action {
+  font-family: 'Pathfinder2eActions', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.15em;
+  line-height: 1;
+  vertical-align: -0.12em;
+  -webkit-font-smoothing: antialiased;
+}
+.pf2-action-range {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+}
+.pf2-action-sep {
+  font-size: 0.8em;
+  color: var(--app-text-dim);
+}
+
+:root {
+  /* surfaces */
+  --app-bg: #14161f;
+  --app-surface: #1c1f2b;
+  --app-surface-2: #262a3a;
+  --app-surface-3: #303547;
+  --app-border: #333a4d;
+
+  /* text */
+  --app-text: #e6e8f0;
+  --app-text-dim: #9aa0b4;
+  --app-text-faint: #6b7186;
+
+  /* brand / interactive (accent-text + accent-hover are derived per accent) */
+  --app-accent: #6366f1;
+  --app-accent-text: #ffffff;
+  --app-accent-hover: #7c7ef4;
+  --app-focus: #6366f1;
+
+  /* semantic feedback */
+  --app-good: #34d399;
+  --app-warn: #fbbf24;
+  --app-bad: #f87171;
+
+  /* shape + type (set by the active style preset) */
+  --app-radius: 11px;
+  --app-radius-sm: 7px;
+  --app-radius-lg: 15px;
+  --app-bw: 1px;
+  --app-shadow: 0 3px 16px rgba(0, 0, 0, 0.28);
+  --app-font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* density */
+  --app-pad: 14px;
+  --app-gap: 11px;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--app-bg);
+  color: var(--app-text);
+  font-family: var(--app-font);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--app-accent) 40%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--app-focus);
+  outline-offset: 2px;
+}

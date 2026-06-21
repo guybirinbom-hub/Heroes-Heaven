@@ -1,0 +1,1600 @@
+/*
+ * One-time importer: Foundry VTT pf2e source JSON -> our ContentDatabase schema.
+ * Imports all character-building content from every book (ancestries, heritages,
+ * backgrounds, classes, class-features, feats, spells, equipment, deities) —
+ * monsters/hazards/NPCs are excluded. Run with: node scripts/import-core.mjs
+ *
+ * Reads the sparse clone in .import-src/pf2e and writes public/core.json (~14 MB),
+ * a static asset the app fetches at runtime (see src/data/index.ts) rather than
+ * bundling. Per-class spellcasting/subclass metadata (SPELLCASTING/SUBCLASS below)
+ * is hand-supplied and currently covers only the Player Core classes.
+ */
+import { readFileSync, writeFileSync, readdirSync, statSync, mkdirSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
+
+const ROOT = '.import-src/pf2e/packs/pf2e';
+// Full character-content import (all books). Written to public/ (a ~12 MB static
+// asset fetched at runtime) rather than bundled into the JS.
+const OUT = 'public/core.json';
+
+// Build safety: if the Foundry source clone isn't present (source-less checkout/CI), do NOT fail or
+// overwrite — keep the committed public/core.json so `npm run build` still ships a working app. The
+// importer only regenerates when the source is available.
+if (!existsSync(ROOT)) {
+  console.warn(`[import-core] ${ROOT} not found — skipping import; keeping existing ${OUT}.`);
+  process.exit(0);
+}
+const RANKS = ['untrained', 'trained', 'expert', 'master', 'legendary'];
+const SIZE = { tiny: 'tiny', sm: 'small', med: 'medium', lg: 'large', huge: 'huge', grg: 'gargantuan' };
+
+// Tradition/type aren't in the class JSON, so supply them here. Player Core (1)
+// casters only; add PC2 casters (sorcerer, oracle, ...) when that book is imported.
+// NOTE: witch's tradition is actually patron-dependent — 'arcane' is a placeholder
+// until patron selection exists.
+const SPELLCASTING = {
+  bard: { type: 'spontaneous', tradition: 'occult', repertoire: true },
+  cleric: { type: 'prepared', tradition: 'divine', repertoire: false },
+  druid: { type: 'prepared', tradition: 'primal', repertoire: false },
+  witch: { type: 'prepared', tradition: 'arcane', repertoire: false },
+  wizard: { type: 'prepared', tradition: 'arcane', repertoire: false },
+  // Full spontaneous casters from later books. Oracle is fixed-divine; sorcerer's
+  // tradition is set by its bloodline (extracted per-subclass below), so 'arcane'
+  // here is only a fallback if no bloodline is chosen.
+  oracle: { type: 'spontaneous', tradition: 'divine', repertoire: true, progression: 'full' },
+  sorcerer: { type: 'spontaneous', tradition: 'arcane', repertoire: true, progression: 'full' },
+  // Limited casters (slot tables transcribed from Archives of Nethys, modelled in
+  // spellcasting.ts). Magus prepares arcane; psychic casts occult; summoner's
+  // tradition comes from its eidolon (extracted per-subclass below).
+  // Magus casts off Intelligence even though its class key ability is Str/Dex; the
+  // psychic's key ability is a conscious-mind choice (absent in data) — default Int.
+  magus: { type: 'prepared', tradition: 'arcane', repertoire: false, progression: 'two-rank', keyAbility: 'int' },
+  summoner: { type: 'spontaneous', tradition: 'arcane', repertoire: true, progression: 'two-rank' },
+  psychic: { type: 'spontaneous', tradition: 'occult', repertoire: true, progression: 'psychic', keyAbility: 'int' },
+  // Animist: divine, Wis. Models the COMBINED total of its prepared "animist" pool
+  // + spontaneous "apparition" pool as a single prepared pool (see spellcasting.ts).
+  animist: { type: 'prepared', tradition: 'divine', repertoire: false, progression: 'animist' },
+};
+const FEAT_PROGRESSION = {
+  class: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+  skill: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+  general: [3, 7, 11, 15, 19],
+  ancestry: [1, 5, 9, 13, 17],
+};
+
+// Subclass choice per class: a display name + the Foundry otherTag that marks its
+// option features. Fighter has none. Options are collected from class-features.
+const SUBCLASS = {
+  cleric: { name: 'Doctrine', tag: 'cleric-doctrine' },
+  druid: { name: 'Order', tag: 'druid-order' },
+  ranger: { name: "Hunter's Edge", tag: 'ranger-hunters-edge' },
+  rogue: { name: 'Racket', tag: 'rogue-racket' },
+  bard: { name: 'Muse', tag: 'bard-muse' },
+  wizard: { name: 'Arcane School', tag: 'wizard-arcane-school' },
+  witch: { name: 'Patron', tag: 'witch-patron' },
+  // All-books classes. Tag = the Foundry otherTag marking that class's subclass
+  // option features (verified by scanning class-features otherTags). Options +
+  // their skill/focus grants are extracted data-drivenly, same as Player Core.
+  // monk has no subclass; commander/guardian have no tagged subclass; exemplar
+  // and kineticist use multi-pick ikon/gate systems (deferred — not a single pick).
+  alchemist: { name: 'Research Field', tag: 'alchemist-research-field' },
+  barbarian: { name: 'Instinct', tag: 'barbarian-instinct' },
+  champion: { name: 'Cause', tag: 'champion-cause' },
+  gunslinger: { name: 'Way', tag: 'gunslinger-way' },
+  inventor: { name: 'Innovation', tag: 'inventor-innovation' },
+  investigator: { name: 'Methodology', tag: 'investigator-methodology' },
+  magus: { name: 'Hybrid Study', tag: 'magus-hybrid-study' },
+  oracle: { name: 'Mystery', tag: 'oracle-mystery' },
+  sorcerer: { name: 'Bloodline', tag: 'sorcerer-bloodline' },
+  summoner: { name: 'Eidolon', tag: 'summoner-eidolon' },
+  swashbuckler: { name: 'Style', tag: 'swashbuckler-style' },
+  // thaumaturge implements are a multi-pick (1 at L1, +1 at L5, +1 at L15) — see EXTRA_CHOICES, not a single subclass.
+  psychic: { name: 'Conscious Mind', tag: 'psychic-conscious-mind' },
+  animist: { name: 'Practice', tag: 'animistic-practice' },
+};
+
+// A witch's spell tradition is set by its patron (the patron features state it in
+// prose, not as a rule). Authoritative Player Core mapping by patron slug.
+const PATRON_TRADITION = {
+  'faiths-flamekeeper': 'divine',
+  'silence-in-snow': 'primal',
+  'spinner-of-threads': 'occult',
+  'starless-shadow': 'occult',
+  'the-inscribed-one': 'arcane',
+  'the-resentment': 'occult',
+  'wilding-steward': 'primal',
+};
+
+// Subclass armor/weapon keystones not expressible as a simple rank rule in the
+// source. (The Warrior muse bard is already martial-trained at base, so it needs
+// no entry; its real benefit is a fighter feat — out of scope.)
+const SUBCLASS_KEYSTONE = {
+  ruffian: { armor: ['medium'] },
+  avenger: { armor: ['medium'] }, // Avenger rogue is trained in medium armor (from the racket's prose)
+};
+
+// Subclass option key-ability overrides not expressible as a Foundry keyOptions field (e.g. set via
+// a FlatModifier on the class selector). Way of the Spellshot uses Intelligence for the class DC.
+const SUBCLASS_KEY_ABILITY = {
+  'way-of-the-spellshot': 'int',
+};
+
+// Class-feature id fixups: a class's items[] name slugs to an id the class-features pack stores
+// differently, leaving the feature without a description. Map the slug to the real feature id.
+const FEATURE_ID_ALIAS = {
+  hexes: 'hex-spells', // witch "Hexes" feature → "Hex Spells" content
+  'choice-greater-field-discovery': 'greater-field-discovery', // alchemist L13 display slug
+};
+
+const slug = (s) =>
+  String(s)
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[’']/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+const rank = (n) => RANKS[n] ?? 'untrained';
+const idOf = (e) => slug(e.system?.slug || e.name);
+
+function walk(dir) {
+  let out = [];
+  for (const e of readdirSync(dir)) {
+    if (e.startsWith('_')) continue;
+    const p = join(dir, e);
+    if (statSync(p).isDirectory()) out = out.concat(walk(p));
+    else if (e.endsWith('.json')) out.push(p);
+  }
+  return out;
+}
+const readPack = (name) => walk(join(ROOT, name)).map((f) => JSON.parse(readFileSync(f, 'utf8')));
+
+/** Derive a readable label for a LABEL-LESS @UUID/@Compendium reference from its document
+ *  name (the last path segment), so condition/spell/feat references don't leave dangling
+ *  sentences like "You are , you don't treat anyone as your ally". Conditions read lowercase
+ *  ("off-guard"); other names keep their case ("Fear"). Opaque Foundry ids (no separators)
+ *  have no readable name, so they're dropped. */
+function uuidLabel(ref) {
+  const seg = (ref.split('.').pop() || '').trim();
+  if (!seg || (/^[A-Za-z0-9]{12,}$/.test(seg) && !/[ -]/.test(seg))) return '';
+  return /conditionitems/i.test(ref) ? seg.toLowerCase() : seg;
+}
+
+/** Foundry compendium pack -> the ContentDatabase key it maps to (for in-description links).
+ *  Packs not listed (journals/effects/bestiary/…) aren't navigable content, so they stay plain. */
+const PACK_KEY = {
+  'spells-srd': 'spells',
+  conditionitems: 'conditions',
+  actionspf2e: 'actions',
+  'feats-srd': 'feats',
+  'equipment-srd': 'items',
+  classfeatures: 'classFeatures',
+  deities: 'deities',
+  'familiar-abilities': 'familiarAbilities',
+  heritages: 'heritages',
+  backgrounds: 'backgrounds',
+};
+
+/**
+ * Like cleanDesc, but also extracts the cross-references the text links to (Foundry @UUID
+ * links), so the app can make those words clickable. Returns { text, refs } where each ref
+ * is { label, key } (key = ContentDatabase map). The label text is left inline in `text`
+ * exactly where the link was, so the renderer can re-linkify its occurrences.
+ */
+function cleanDescRich(html) {
+  if (!html) return { text: '', refs: [] };
+  const refs = [];
+  const seen = new Set();
+  const addRef = (pack, label) => {
+    const key = PACK_KEY[pack];
+    const l = (label || '').trim();
+    if (!key || !l) return;
+    const dk = key + '|' + l.toLowerCase();
+    if (seen.has(dk)) return;
+    seen.add(dk);
+    refs.push({ label: l, key });
+  };
+  // Inline emphasis + entity decode for a fragment (used for table/list cell text).
+  const inlineClean = (frag) =>
+    String(frag)
+      .replace(/<\/?(?:strong|b)\b[^>]*>/gi, '**')
+      .replace(/<\/?(?:em|i)\b[^>]*>/gi, '*')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&mdash;/g, '—')
+      .replace(/&ndash;/g, '–')
+      .replace(/&times;/g, '×')
+      .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
+      .replace(/&[a-z]+;/g, '')
+      // collapse empty emphasis runs left by a stripped label-less link (e.g. "**** " / "** **")
+      .replace(/\*\*\s*\*\*/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+  // A Foundry <table> → a GFM pipe table. Cells keep bold runs; pipes are escaped to '/'.
+  const tableToMd = (inner) => {
+    const rows = [...inner.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)].map((m) =>
+      [...m[1].matchAll(/<(?:td|th)[^>]*>([\s\S]*?)<\/(?:td|th)>/gi)].map((c) => inlineClean(c[1]).replace(/\|/g, '/')),
+    );
+    const grid = rows.filter((r) => r.length);
+    if (!grid.length) return '';
+    const ncol = Math.max(...grid.map((r) => r.length));
+    const pad = (r) => { while (r.length < ncol) r.push(''); return r; };
+    const line = (cells) => '| ' + cells.join(' | ') + ' |';
+    const out = [line(pad(grid[0])), line(Array(ncol).fill('---'))];
+    for (const r of grid.slice(1)) out.push(line(pad(r)));
+    return '\n\n' + out.join('\n') + '\n\n';
+  };
+
+  const text = String(html)
+    // Foundry "effect" item links (Spell Effect / equipment-effects / feat-effects / …) carry the
+    // VTT effect token but read as noise in prose ("Spell Effect: Albatross Curse (Failure)") — drop
+    // them entirely, labelled or not, before the general ref handlers keep their label text.
+    .replace(/@(?:UUID|Compendium)\[Compendium\.pf2e\.[a-z0-9-]*effects\.[^\]]*\](?:\{[^}]*\})?/gi, '')
+    // Journal links (e.g. a class flavor entry's trailing "{Fighter}" link to its rules journal) are
+    // navigation artifacts that render as a stray line — drop them entirely.
+    .replace(/@(?:UUID|Compendium)\[Compendium\.pf2e\.journals\.[^\]]*\](?:\{[^}]*\})?/gi, '')
+    // labelled compendium refs we can map → record the ref, keep the label text
+    .replace(/@(?:UUID|Compendium)\[Compendium\.pf2e\.([a-z0-9-]+)\.[^\]]*\]\{([^}]*)\}/g, (_, pack, label) => {
+      addRef(pack, label);
+      return label;
+    })
+    // labelled refs we can't map (journals, effects, …) → keep the label text only
+    .replace(/@(?:UUID|Compendium)\[[^\]]*\]\{([^}]*)\}/g, '$1')
+    .replace(/@[A-Za-z]+\[[^\]]*\]\{([^}]*)\}/g, '$1')
+    // label-less compendium refs we can map → derive a label + record the ref
+    .replace(/@(?:UUID|Compendium)\[(Compendium\.pf2e\.([a-z0-9-]+)\.[^\]]*)\]/g, (_, ref, pack) => {
+      const lbl = uuidLabel(ref);
+      addRef(pack, lbl);
+      return lbl;
+    })
+    // other label-less UUID/Compendium refs: derive a name instead of deleting them
+    .replace(/@(?:UUID|Compendium)\[([^\]]*)\]/g, (_, ref) => uuidLabel(ref))
+    // other label-less inline macros (@Check, @Damage, @Template, …) have no readable text
+    .replace(/@[A-Za-z]+\[[^\]]*\]/g, '')
+    // inline roll expressions: [[/r 1d4 #flavor]]{label} → label; bare [[/r 2d6]] → the dice.
+    .replace(/\[\[\/[a-z]+\s+[^\]]*?\]\]\{([^}]*)\}/gi, '$1')
+    // dice form — tolerate an inline [type] bracket (e.g. 4d8[healing]) and a #flavor tail with or
+    // without a leading space (1d4#flavor), consuming the remainder lazily up to the closing ]].
+    .replace(/\[\[\/[a-z]+\s+(\d+d\d+(?:[+\-]\d+)?)[\s\S]*?\]\]/gi, '$1')
+    // any remaining bare roll (non-dice / flat) — allow #flavor with or without a leading space.
+    .replace(/\[\[\/[a-z]+\s+([^\]#]*?)(?:\s*#[^\]]*)?\]\]/gi, '$1')
+    // tables and lists first, so their nested <p>/<li> don't get flattened by the block pass below
+    .replace(/<table[^>]*>([\s\S]*?)<\/table>/gi, (_, inner) => tableToMd(inner))
+    .replace(/<(ul|ol)[^>]*>([\s\S]*?)<\/\1>/gi, (_, tag, inner) => {
+      let n = 0;
+      const items = [...inner.matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi)].map((m) => {
+        const c = inlineClean(m[1]);
+        return (tag.toLowerCase() === 'ol' ? `${++n}. ` : '- ') + c;
+      });
+      return items.length ? '\n\n' + items.join('\n') + '\n\n' : '';
+    })
+    .replace(/<span class="action-glyph">[^<]*<\/span>/g, '')
+    // block structure → markdown breaks
+    .replace(/<hr\s*\/?>/gi, '\n\n---\n\n')
+    .replace(/<h1[^>]*>/gi, '\n\n# ')
+    .replace(/<h2[^>]*>/gi, '\n\n## ')
+    .replace(/<h3[^>]*>/gi, '\n\n### ')
+    .replace(/<h4[^>]*>/gi, '\n\n#### ')
+    .replace(/<\/h[1-6]>/gi, '\n\n')
+    .replace(/<\/p>/gi, '\n\n')
+    .replace(/<br\s*\/?>/gi, '\n')
+    // inline emphasis
+    .replace(/<\/?(?:strong|b)\b[^>]*>/gi, '**')
+    .replace(/<\/?(?:em|i)\b[^>]*>/gi, '*')
+    // strip any remaining tags
+    .replace(/<[^>]+>/g, ' ')
+    // entities
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&mdash;/g, '—')
+    .replace(/&ndash;/g, '–')
+    .replace(/&times;/g, '×')
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
+    .replace(/&[a-z]+;/g, '')
+    // normalize whitespace: collapse spaces/tabs per line, keep newlines, cap blank lines at one.
+    // Lines left as bare emphasis markers (e.g. an empty "**" from a stripped link) are dropped.
+    .split('\n')
+    .map((l) => {
+      const t = l.replace(/[ \t]+/g, ' ').trim();
+      return /^[*_]+$/.test(t) ? '' : t;
+    })
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+  return { text, refs };
+}
+
+function cleanDesc(html) {
+  return cleanDescRich(html).text;
+}
+
+/** Flatten markdown-lite back to a single plain-text line, for the prose parsers (frequency,
+ *  charges, subclass tradition) that scan description text and predate the markdown formatting. */
+function flat(md) {
+  return String(md)
+    .replace(/\*\*/g, '')
+    .replace(/(^|\s)-{3,}(?=\s|$)/g, ' ')
+    .replace(/[#|]/g, ' ')
+    .replace(/\s*\n+\s*/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** Object spread for an entry: { description, descRefs? } from a Foundry HTML description. */
+function descFields(html) {
+  const { text, refs } = cleanDescRich(html);
+  return refs.length ? { description: text, descRefs: refs } : { description: text };
+}
+
+function boosts(obj) {
+  const out = [];
+  for (const k of Object.keys(obj || {}).sort()) {
+    const v = obj[k]?.value || [];
+    if (v.length === 0) continue;
+    if (v.length >= 6) out.push({ kind: 'free' });
+    else if (v.length === 1) out.push({ kind: 'fixed', ability: v[0] });
+    else out.push({ kind: 'choice', options: v });
+  }
+  return out;
+}
+const flaws = (obj) =>
+  Object.values(obj || {})
+    .map((f) => (f?.value || [])[0])
+    .filter(Boolean);
+
+const traitsOf = (s) => s?.traits?.value || [];
+const rarityOf = (s) => s?.traits?.rarity || 'common';
+const bulkVal = (b) => (typeof b?.value === 'number' ? b.value : 0);
+const sourceOf = (e) => {
+  const p = e.system?.publication;
+  return p ? { book: p.title, license: p.license } : undefined;
+};
+
+function featCost(s) {
+  const t = s.actionType?.value;
+  if (t === 'passive') return { type: 'passive' };
+  if (t === 'reaction') return { type: 'reaction' };
+  if (t === 'free') return { type: 'free' };
+  const n = s.actions?.value;
+  if (t === 'action' && (n === 1 || n === 2 || n === 3)) return { type: 'actions', value: n };
+  return undefined;
+}
+// Foundry localization keys (PF2E.Skill.Arcana) -> a readable label.
+const humanize = (l) =>
+  !l ? '' : String(l).startsWith('PF2E.') ? String(l).split('.').pop().replace(/([a-z])([A-Z])/g, '$1 $2') : String(l);
+// A feat's embedded sub-choice (ChoiceSet), when we can resolve its options:
+// the deity-domain reference (Domain Initiate) or an inline {value,label} array.
+function featChoice(s) {
+  const cs = (s.rules || []).find((r) => r.key === 'ChoiceSet');
+  if (!cs) return undefined;
+  if (cs.choices === 'system.details.deities.domains') return { flag: cs.flag || 'choice', prompt: 'Domain', kind: 'domains' };
+  if (Array.isArray(cs.choices)) {
+    const options = cs.choices
+      .filter((c) => c && c.value !== undefined && typeof c.value !== 'object')
+      .map((c) => ({ value: String(c.value), label: humanize(c.label) || String(c.value) }));
+    if (options.length) return { flag: cs.flag || 'choice', prompt: humanize(cs.prompt) || 'Choose an option', kind: 'array', options };
+  }
+  return undefined;
+}
+function spellCast(tv) {
+  if (!tv) return { type: 'passive' };
+  const t = String(tv).trim().toLowerCase();
+  if (t === 'reaction') return { type: 'reaction' };
+  if (t === 'free') return { type: 'free' };
+  // Variable casting time: "1 to 3" and "1 or 2" both mean an N–M action range.
+  const m = t.match(/^(\d)\s*(?:to|or)\s*(\d)$/);
+  if (m) return { type: 'variable', min: +m[1], max: +m[2] };
+  if (/^[123]$/.test(t)) return { type: 'actions', value: +t };
+  return { type: 'duration', text: String(tv) };
+}
+
+const db = {
+  ancestries: {},
+  heritages: {},
+  backgrounds: {},
+  classes: {},
+  classFeatures: {},
+  feats: {},
+  spells: {},
+  items: {},
+  deities: {},
+  languages: {},
+  animalCompanions: {},
+  familiarAbilities: {},
+  conditions: {},
+  actions: {},
+  runes: {},
+};
+const langSet = new Set(['common']);
+
+/** Strike-damage property runes (Foundry has no structured damage on the rune item; this is the
+ *  well-known elemental set). Greater variants deal the same per-hit die (+persistent on a crit). */
+const RUNE_DAMAGE = {
+  flaming: { dice: 1, die: 'd6', type: 'fire' },
+  'flaming-greater': { dice: 1, die: 'd6', type: 'fire', persistent: true },
+  frost: { dice: 1, die: 'd6', type: 'cold' },
+  'frost-greater': { dice: 1, die: 'd6', type: 'cold', persistent: true },
+  corrosive: { dice: 1, die: 'd6', type: 'acid' },
+  'corrosive-greater': { dice: 1, die: 'd6', type: 'acid', persistent: true },
+  shock: { dice: 1, die: 'd6', type: 'electricity' },
+  'shock-greater': { dice: 1, die: 'd6', type: 'electricity', persistent: true },
+  thundering: { dice: 1, die: 'd6', type: 'sonic' },
+  'thundering-greater': { dice: 1, die: 'd6', type: 'sonic', persistent: true },
+};
+
+/** Parse a standalone "etched-onto-…" equipment item into a RuneDef (or null if not a rune). */
+function parseRune(id, name, usage, level, price) {
+  const slot = /armor/.test(usage) ? 'armor' : /shield/.test(usage) ? 'shield' : 'weapon';
+  let m;
+  if ((m = /^(weapon|armor)-potency-(\d)$/.exec(id))) return { id, name, slot: m[1], kind: 'potency', value: Number(m[2]), level, price };
+  const tier = (base) => (id === base ? 1 : id === `${base}-greater` ? 2 : id === `${base}-major` ? 3 : null);
+  let v;
+  if ((v = tier('striking')) != null) return { id, name, slot: 'weapon', kind: 'striking', value: v, level, price };
+  if ((v = tier('resilient')) != null) return { id, name, slot: 'armor', kind: 'resilient', value: v, level, price };
+  if (id.startsWith('reinforcing-rune')) {
+    const tiers = { minor: 1, lesser: 2, moderate: 3, greater: 4, major: 5, supreme: 6 };
+    const t = Object.keys(tiers).find((k) => id.endsWith(k));
+    return { id, name, slot: 'shield', kind: 'reinforcing', value: t ? tiers[t] : 1, level, price };
+  }
+  return { id, name, slot, kind: 'property', level, price, ...(RUNE_DAMAGE[id] ? { damage: RUNE_DAMAGE[id] } : {}) };
+}
+
+/** Parse an item's limited-use frequency from its description ("Frequency once per day", etc.).
+ *  Foundry has no structured frequency, so the count + period are read from the prose. */
+function parseFrequency(desc) {
+  if (!desc) return undefined;
+  const m = /frequency\s+(once|twice|thrice|three times|four times|five times|\d+\s*times?)\s+per\s+(?:\d+\s+)?(day|hour|minute|round|turn|week|month)/i.exec(desc);
+  if (!m) return undefined;
+  const w = m[1].toLowerCase().replace(/\s+/g, ' ').trim();
+  const words = { once: 1, twice: 2, thrice: 3, 'three times': 3, 'four times': 4, 'five times': 5 };
+  let max = words[w];
+  if (max == null) {
+    const n = /(\d+)/.exec(w);
+    max = n ? Number(n[1]) : 1;
+  }
+  return { max, per: m[2].toLowerCase() };
+}
+
+/** An item's activation action cost, read from the RAW description ("Activate" + the action glyph),
+ *  which must run before cleanDescRich strips the glyph span. Returns an ActionCost or undefined. */
+function parseActivationCost(rawHtml) {
+  const h = String(rawHtml || '');
+  if (!/<strong>\s*Activate\b/i.test(h)) return undefined;
+  const m = /<strong>\s*Activate\b[^<]*<\/strong>[\s—–-]*(?:<span[^>]*action-glyph[^>]*>([^<]*)<\/span>)?/i.exec(h);
+  const g = (m?.[1] || '').trim();
+  const map = {
+    '1': { type: 'actions', value: 1 },
+    '2': { type: 'actions', value: 2 },
+    '3': { type: 'actions', value: 3 },
+    f: { type: 'free' },
+    F: { type: 'free' },
+    r: { type: 'reaction' },
+    R: { type: 'reaction' },
+  };
+  if (map[g]) return map[g];
+  return { type: 'variable', min: 1, max: 3 }; // generic "A", "Cast a Spell", or no glyph
+}
+
+/** Spells held by a staff/spellheart, parsed from its description's per-rank list
+ *  (`<strong>1st</strong> @UUID[…], @UUID[…]`). Returns rank → spell ids, or undefined. */
+function parseHeldSpells(rawHtml) {
+  const h = String(rawHtml || '');
+  const out = {};
+  const re = /<strong>\s*(Cantrip|\d+(?:st|nd|rd|th))\s*<\/strong>([^]*?)(?:<\/li>|<\/p>|<strong>)/gi;
+  let m;
+  while ((m = re.exec(h))) {
+    const rank = /cantrip/i.test(m[1]) ? 0 : parseInt(m[1], 10);
+    if (!Number.isFinite(rank)) continue;
+    const ids = [...m[2].matchAll(/@UUID\[Compendium\.pf2e\.spells-srd\.Item\.([^\]]+)\]/g)].map((x) => slug(x[1]));
+    if (ids.length) out[rank] = [...new Set([...(out[rank] || []), ...ids])];
+  }
+  return Object.keys(out).length ? out : undefined;
+}
+/** Innate spells a feat/heritage grants: the `item:slug:<spell>` token on an `ItemAlteration` rule
+ *  predicated `spellcasting:innate`, with tradition + at-will/frequency read from the prose. */
+// Pre-Remaster spell slugs that some feats still reference → their current Remaster ids.
+const INNATE_SPELL_ALIAS = { 'produce-flame': 'ignition', regeneration: 'regenerate' };
+function parseInnateSpells(rules, descHtml) {
+  const ids = new Set();
+  for (const r of rules || []) {
+    if (r.key !== 'ItemAlteration') continue;
+    const pred = (r.predicate || []).map(String);
+    if (!pred.includes('spellcasting:innate')) continue;
+    const tok = pred.find((p) => p.startsWith('item:slug:'));
+    if (!tok) continue;
+    let slugId = tok.slice('item:slug:'.length);
+    // Skip Foundry ChoiceSet templates like "{item|flags.system.rulesSelections.cantrip}" — these
+    // never resolve to a real spell id.
+    if (slugId.includes('{')) continue;
+    slugId = INNATE_SPELL_ALIAS[slugId] ?? slugId;
+    ids.add(slugId);
+  }
+  if (!ids.size) return undefined;
+  const t = flat(cleanDesc(descHtml));
+  const tradition = (t.match(/\b(arcane|divine|occult|primal)\s+innate/i) || [])[1]?.toLowerCase();
+  const atWill = /\binnate spell at will\b/i.test(t) || /\bat will\b/i.test(t);
+  return [...ids].map((spellId) => ({ spellId, ...(tradition ? { tradition } : {}), ...(atWill ? { atWill: true } : {}) }));
+}
+
+/** A spellheart's held spells (a cantrip + a 1/day leveled spell), referenced as @UUID spell links in
+ *  prose rather than a per-rank list. Groups the resolvable spell refs by their rank (needs db.spells). */
+function parseSpellheartSpells(rawHtml) {
+  const ids = [...String(rawHtml || '').matchAll(/@UUID\[Compendium\.pf2e\.spells-srd\.Item\.([^\]]+)\]/g)].map((m) => slug(m[1]));
+  const out = {};
+  for (const id of ids) {
+    const r = db.spells[id]?.rank;
+    if (r != null && !(out[r] || []).includes(id)) (out[r] = out[r] || []).push(id);
+  }
+  return Object.keys(out).length ? out : undefined;
+}
+/** A wand's single held spell at the wand's rank (structured embedded spell, or generic by name). */
+function parseWandSpell(s, name) {
+  const sslug = s?.spell?.system?.slug;
+  if (!sslug) return undefined;
+  const rankFromName = /\(rank (\d+)\)/i.exec(name)?.[1];
+  const rank = Number(rankFromName ?? s.spell.system?.level?.value ?? 1);
+  return { [rank]: [slug(sslug)] };
+}
+
+const FREQ_WORDS = { once: 1, one: 1, twice: 2, two: 2, thrice: 3, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
+/** All "Frequency N per/each/every <period>" activations in the prose (an item can have several). */
+function parseFrequencies(desc) {
+  if (!desc) return [];
+  const re = /frequency\s+(once|twice|thrice|one|two|three|four|five|six|seven|eight|nine|ten|\d+)(?:\s*times?)?\s+(?:per|each|every)\s+(?:\d+\s+)?(day|hour|minute|round|turn|week|month)/gi;
+  const out = [];
+  let m;
+  while ((m = re.exec(desc))) {
+    const w = m[1].toLowerCase();
+    out.push({ max: FREQ_WORDS[w] ?? (Number(w) || 1), per: m[2].toLowerCase() });
+  }
+  return out;
+}
+
+/** Build the trackable counters for an item: a staff's level-based charge pool, an explicit
+ *  prose charge pool, each per-X activation, and a multi-use consumable's finite stock. */
+function buildCounters(desc, traits, uses) {
+  const counters = [];
+  if ((traits ?? []).includes('staff')) {
+    // A staff's charge pool equals its level (PF2e core rule); resolved at derive time.
+    counters.push({ id: 'pool', label: 'Charges', max: 'level', resetsOnRest: true, startsFull: true });
+  } else {
+    // Explicit prose charge pool, e.g. "has 10 charges", "begins with 10 charges", "up to 2 charges".
+    const cm = /\b(?:has|holds|begins with|contains|up to|stores|with)\s+(\d{1,3})\s+charges?\b/i.exec(desc || '');
+    if (cm) counters.push({ id: 'pool', label: 'Charges', max: Number(cm[1]), resetsOnRest: !/reset[^.]*\bto 0\b/i.test(desc || '') });
+  }
+  parseFrequencies(desc).forEach((f, i) =>
+    counters.push({ id: i === 0 ? 'freq' : `freq${i + 1}`, label: `per ${f.per}`, max: f.max, per: f.per, resetsOnRest: !['week', 'month'].includes(f.per) }),
+  );
+  if (uses && uses.max > 1) counters.push({ id: 'uses', label: 'Uses', max: uses.max, resetsOnRest: false });
+  return counters;
+}
+
+/* =========================================================================
+ * Structured "stat block" markdown.
+ *
+ * Foundry stores only flavor text in a class/ancestry/deity/background's description.value; the
+ * mechanical "page" (proficiencies, HP, boosts, domains, the advancement table) lives in structured
+ * fields. We compose those into a markdown stat block and append it after the flavor, so every place
+ * that renders `description` (Details-tab chips, cross-reference popups) shows the full page via the
+ * existing RichText markdown renderer — no display-path changes needed.
+ * ========================================================================= */
+const ABIL_NAME = { str: 'Strength', dex: 'Dexterity', con: 'Constitution', int: 'Intelligence', wis: 'Wisdom', cha: 'Charisma' };
+const capWord = (x) => (x ? String(x).charAt(0).toUpperCase() + String(x).slice(1) : '');
+const titleCase = (x) => String(x || '').split(/[-_\s]+/).filter(Boolean).map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+const abilName = (a) => ABIL_NAME[a] || titleCase(a);
+const rankName = (n) => capWord(rank(n));
+const ordinal = (n) => (n === 1 ? '1st' : n === 2 ? '2nd' : n === 3 ? '3rd' : `${n}th`);
+
+const NUMWORD = ['zero', 'one', 'two', 'three', 'four', 'five', 'six'];
+function boostSlotsText(slots) {
+  if (!slots.length) return '';
+  const named = [];
+  let free = 0;
+  for (const b of slots) {
+    if (b.kind === 'free') free++;
+    else if (b.kind === 'fixed') named.push(abilName(b.ability));
+    else named.push((b.options || []).map(abilName).join(' or '));
+  }
+  const freeTxt = free ? `${NUMWORD[free] || free} free` : '';
+  return [...named, freeTxt].filter(Boolean).join(', ');
+}
+/** "Simple weapons (Trained), Martial weapons (Trained)" — only categories the class is trained+ in. */
+function profCats(obj, cats) {
+  return cats.filter(([k]) => (obj?.[k] || 0) > 0).map(([k, label]) => `${label} (${rankName(obj[k])})`).join(', ') || 'Untrained';
+}
+/** Combine a cleaned flavor description with a structured stat block (flavor first, then a divider).
+ *  extraRefs (e.g. the cross-references inside inlined class-feature text) are merged + de-duped so
+ *  links keep working in the appended block. */
+function descWithBlock(html, blockMd, extraRefs) {
+  const { text, refs } = cleanDescRich(html);
+  const description = blockMd ? (text ? `${text}\n\n---\n\n${blockMd}` : blockMd) : text;
+  const all = [...refs, ...(extraRefs || [])];
+  const seen = new Set();
+  const merged = all.filter((r) => {
+    const k = `${r.key}|${(r.label || '').toLowerCase()}`;
+    if (seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
+  return merged.length ? { description, descRefs: merged } : { description };
+}
+
+function classStatBlock(s) {
+  const key = s.keyAbility?.value || [];
+  const sk = s.trainedSkills || {};
+  const head = [
+    '## Class details',
+    `**Key Attribute** ${key.length ? key.map(abilName).join(' or ') : '—'}`,
+    `**Hit Points** ${s.hp ?? '—'} + your Constitution modifier per level`,
+    `**Perception** ${rankName(s.perception || 0)}`,
+    `**Saving Throws** Fortitude ${rankName(s.savingThrows?.fortitude || 0)}, Reflex ${rankName(s.savingThrows?.reflex || 0)}, Will ${rankName(s.savingThrows?.will || 0)}`,
+    (sk.value || []).length
+      ? `**Skills** Trained in ${sk.value.map(titleCase).join(', ')}${sk.additional ? `, plus ${sk.additional} + Intelligence modifier additional skills` : ''}`
+      : `**Skills** Trained in ${sk.additional || 0} + Intelligence modifier skills of your choice`,
+    `**Attacks** ${profCats(s.attacks, [['unarmed', 'Unarmed attacks'], ['simple', 'Simple weapons'], ['martial', 'Martial weapons'], ['advanced', 'Advanced weapons']])}`,
+    `**Defenses** ${profCats(s.defenses, [['unarmored', 'Unarmored'], ['light', 'Light armor'], ['medium', 'Medium armor'], ['heavy', 'Heavy armor']])}`,
+    '**Class DC** Trained',
+  ].join('\n\n');
+  const byLevel = {};
+  for (const it of Object.values(s.items || {})) (byLevel[it.level || 1] ??= []).push(it.name);
+  const set = (v) => new Set(v || []);
+  const cf = set(s.classFeatLevels?.value), sf = set(s.skillFeatLevels?.value), gf = set(s.generalFeatLevels?.value), af = set(s.ancestryFeatLevels?.value), si = set(s.skillIncreaseLevels?.value);
+  const boostL = new Set([5, 10, 15, 20]);
+  const rows = [];
+  for (let L = 1; L <= 20; L++) {
+    const it = [];
+    if (byLevel[L]) it.push(...byLevel[L]);
+    if (cf.has(L)) it.push('Class feat');
+    if (si.has(L)) it.push('Skill increase');
+    if (boostL.has(L)) it.push('Attribute boosts');
+    if (gf.has(L)) it.push('General feat');
+    if (sf.has(L)) it.push('Skill feat');
+    if (af.has(L)) it.push('Ancestry feat');
+    if (it.length) rows.push(`| ${L} | ${it.join(', ').replace(/\|/g, '/')} |`);
+  }
+  const table = rows.length ? `### Class advancement\n\n| Level | You gain |\n| --- | --- |\n${rows.join('\n')}` : '';
+  // The full per-feature text is appended in a post-pass (appendClassFeatureText), once
+  // db.classFeatures is populated — it isn't yet when this runs during the classes loop.
+  return head + (table ? `\n\n${table}` : '');
+}
+
+function ancestryStatBlock(s) {
+  const parts = ['## Ancestry details'];
+  parts.push(`**Hit Points** ${s.hp ?? '—'}`);
+  parts.push(`**Size** ${capWord(SIZE[s.size] || 'medium')}`);
+  parts.push(`**Speed** ${s.speed ?? '—'} feet`);
+  const bt = boostSlotsText(boosts(s.boosts));
+  if (bt) parts.push(`**Attribute Boosts** ${bt}`);
+  const fl = flaws(s.flaws).map(abilName);
+  if (fl.length) parts.push(`**Attribute Flaws** ${fl.join(', ')}`);
+  const langs = (s.languages?.value || []).map(titleCase);
+  const addl = s.additionalLanguages?.count || 0;
+  parts.push(`**Languages** ${langs.join(', ') || '—'}${addl ? `; plus ${addl} + Intelligence modifier additional languages` : ''}`);
+  parts.push(`**Senses** ${titleCase(s.vision || 'normal')}`);
+  return parts.join('\n\n');
+}
+
+function deityStatBlock(s) {
+  const parts = ['## Divine details'];
+  const font = (s.font || []).map(capWord);
+  if (font.length) parts.push(`**Divine Font** ${font.join(' or ')}`);
+  const skill = (s.skill || []).map(titleCase);
+  if (skill.length) parts.push(`**Divine Skill** ${skill.join(', ')}`);
+  const wpn = (s.weapons || []).map(titleCase);
+  if (wpn.length) parts.push(`**Favored Weapon** ${wpn.join(', ')}`);
+  const dom = (s.domains?.primary || []).map(titleCase);
+  const alt = (s.domains?.alternate || []).map(titleCase);
+  if (dom.length) parts.push(`**Domains** ${dom.join(', ')}${alt.length ? ` (Alternate: ${alt.join(', ')})` : ''}`);
+  if (s.sanctification && (s.sanctification.what || []).length) {
+    parts.push(`**Sanctification** ${capWord(s.sanctification.modal || 'can')} be ${s.sanctification.what.map(capWord).join(' or ')}`);
+  }
+  const spells = s.spells && typeof s.spells === 'object'
+    ? Object.entries(s.spells).sort((a, b) => Number(a[0]) - Number(b[0])).map(([r, v]) => `${ordinal(Number(r))}: ${String(v).split('.').pop()}`)
+    : [];
+  if (spells.length) parts.push(`**Cleric Spells** ${spells.join(', ')}`);
+  return parts.length > 1 ? parts.join('\n\n') : '';
+}
+
+function backgroundStatBlock(s) {
+  const parts = ['## Background details'];
+  const bt = boostSlotsText(boosts(s.boosts));
+  if (bt) parts.push(`**Attribute Boosts** ${bt}`);
+  const skill = (s.trainedSkills?.value || [])[0];
+  if (skill) parts.push(`**Trained Skill** ${titleCase(skill)}`);
+  const lore = (s.trainedSkills?.lore || [])[0];
+  if (lore) parts.push(`**Lore** ${titleCase(String(lore).replace(/\s*lore$/i, ''))} Lore`);
+  const feat = Object.values(s.items || {})[0];
+  if (feat) parts.push(`**Skill Feat** ${feat.name}`);
+  return parts.length > 1 ? parts.join('\n\n') : '';
+}
+
+for (const e of readPack('ancestries')) {
+  const s = e.system;
+  (s.languages?.value || []).forEach((l) => langSet.add(l));
+  db.ancestries[idOf(e)] = {
+    id: idOf(e),
+    name: e.name,
+    traits: traitsOf(s),
+    rarity: rarityOf(s),
+    ...descWithBlock(s.description?.value, ancestryStatBlock(s)),
+    source: sourceOf(e),
+    hp: s.hp,
+    size: SIZE[s.size] || 'medium',
+    speeds: { land: s.speed },
+    abilityBoosts: boosts(s.boosts),
+    abilityFlaws: flaws(s.flaws),
+    vision: s.vision || 'normal',
+    languages: { granted: s.languages?.value || [], additional: s.additionalLanguages?.count || 0 },
+    heritages: [],
+  };
+}
+
+// Parse innate defenses (senses + IWR) from a Foundry rule-element array. Skips
+// predicated (conditional) rules and dynamic/choice-based types we can't resolve
+// statically. Resistance/Weakness `value` may be a level-formula string, resolved
+// per-character in derive.ts.
+function parseDefenses(rules) {
+  const senses = [];
+  const resistances = [];
+  const weaknesses = [];
+  const immunities = [];
+  const speeds = {};
+  for (const r of rules || []) {
+    if (!r || r.predicate) continue;
+    if (r.key === 'BaseSpeed') {
+      // Only unconditional, numeric non-land speeds (fly/swim/climb/burrow). Predicated
+      // (form-/toggle-gated) speeds are skipped above; land overrides and formula values
+      // are dropped here. Normalize the occasional "fly-speed"-style selector.
+      if (typeof r.selector !== 'string' || typeof r.value !== 'number') continue;
+      const sel = r.selector.replace(/-speed$/, '');
+      if (!['fly', 'swim', 'climb', 'burrow'].includes(sel)) continue;
+      speeds[sel] = Math.max(speeds[sel] ?? 0, r.value);
+    } else if (r.key === 'Sense') {
+      if (typeof r.selector !== 'string' || r.selector.includes('{')) continue;
+      const sense = { name: r.selector };
+      if (typeof r.range === 'number') sense.range = r.range;
+      if (typeof r.acuity === 'string') sense.acuity = r.acuity;
+      senses.push(sense);
+    } else if (r.key === 'Resistance' || r.key === 'Weakness') {
+      if (typeof r.type !== 'string' || r.type.includes('{')) continue;
+      const value =
+        typeof r.value === 'number' ? r.value : typeof r.value === 'string' ? r.value : Number(r.value) || 0;
+      (r.key === 'Resistance' ? resistances : weaknesses).push({ type: r.type, value });
+    } else if (r.key === 'Immunity') {
+      for (const t of Array.isArray(r.type) ? r.type : [r.type]) {
+        if (typeof t === 'string' && !t.includes('{')) immunities.push(t);
+      }
+    }
+  }
+  const out = {};
+  if (senses.length) out.senses = senses;
+  if (resistances.length) out.resistances = resistances;
+  if (weaknesses.length) out.weaknesses = weaknesses;
+  if (immunities.length) out.immunities = immunities;
+  if (Object.keys(speeds).length) out.speeds = speeds;
+  return out;
+}
+
+/** Weapon critical specialization from a CriticalSpecialization rule element, made predicate-aware:
+ *  - a `self:level >= N` gate becomes critSpecLevel (the effect only applies from level N);
+ *  - weapon-narrowing tokens (item:group/trait/base, item:melee) become critSpecWeapons so the
+ *    sheet only shows crit-spec for matching weapons;
+ *  - a `feature:`/`feat:` prerequisite (e.g. monastic-weaponry needs expert-strikes) ⇒ DON'T flag,
+ *    since we can't evaluate it (and the prerequisite feature usually grants crit-spec itself).
+ *    A `proficiency:rank` gate is the normal "for weapons you're expert in" clause (Weapon
+ *    Mastery/Expertise) — that's the core grant, so it's treated as satisfied, not a blocker.
+ *  Returned as fields to spread onto the entry; {} when there's no (usable) grant. */
+// A feat that raises max HP (Toughness/Mountain's Stoutness = +level; Thick Hide Mask = +20;
+// Ghostly Resistance = -level). Returns { maxHpBonus: { perLevel?, flat? } } or {}. Dedication-count
+// formulas (the Resiliency feats: "3 * @actor.flags…DedicationCount") are not yet supported.
+function parseHpGrant(rules) {
+  for (const r of rules || []) {
+    if (!r || r.key !== 'FlatModifier' || r.selector !== 'hp') continue;
+    const v = r.value;
+    if (typeof v === 'number' && Number.isFinite(v)) return { maxHpBonus: { flat: v } };
+    if (typeof v === 'string') {
+      const s = v.replace(/\s+/g, '');
+      const m = s.match(/^(-?\d*)\*?@actor\.level$/);
+      if (m) {
+        const c = m[1] === '' ? 1 : m[1] === '-' ? -1 : Number(m[1]);
+        if (Number.isFinite(c)) return { maxHpBonus: { perLevel: c } };
+      }
+      if (/^-?\d+$/.test(s)) return { maxHpBonus: { flat: Number(s) } };
+    }
+  }
+  return {};
+}
+
+function critSpecGrant(rules) {
+  const rule = (rules || []).find((r) => r && r.key === 'CriticalSpecialization');
+  if (!rule) return {};
+  const pred = Array.isArray(rule.predicate) ? rule.predicate : null;
+  if (!pred) return { critSpec: true }; // unconditional → all weapons, at the entry's own level
+  let level = 0;
+  const groups = [];
+  const traits = [];
+  const bases = [];
+  let melee = false;
+  let blocked = false; // a prerequisite we can't evaluate here
+  const token = (t) => {
+    if (typeof t !== 'string') return;
+    if (t.startsWith('item:group:')) groups.push(t.slice('item:group:'.length));
+    else if (t.startsWith('item:trait:')) traits.push(t.slice('item:trait:'.length));
+    else if (t.startsWith('item:base:')) bases.push(t.slice('item:base:'.length));
+    else if (t === 'item:melee') melee = true;
+    else if (t.startsWith('feature:') || t.startsWith('feat:')) blocked = true;
+  };
+  const scan = (p) => {
+    if (typeof p === 'string') token(p);
+    else if (p && typeof p === 'object') {
+      if (Array.isArray(p.gte)) {
+        const [lhs, n] = p.gte;
+        if (lhs === 'self:level' && typeof n === 'number') level = Math.max(level, n);
+        // a proficiency-rank gate is the normal "weapons you're expert in" clause — ignore it.
+      } else if (Array.isArray(p.or)) p.or.forEach(scan);
+      else if (Array.isArray(p.and)) p.and.forEach(scan);
+    }
+  };
+  pred.forEach(scan);
+  if (blocked) return {};
+  const out = { critSpec: true };
+  if (level > 1) out.critSpecLevel = level;
+  const w = {};
+  if (groups.length) w.groups = groups;
+  if (traits.length) w.traits = traits;
+  if (bases.length) w.bases = bases;
+  if (melee) w.melee = true;
+  if (Object.keys(w).length) out.critSpecWeapons = w;
+  return out;
+}
+
+for (const e of readPack('heritages')) {
+  const s = e.system;
+  db.heritages[idOf(e)] = {
+    id: idOf(e),
+    name: e.name,
+    ancestryId: s.ancestry?.slug || null,
+    versatile: !s.ancestry,
+    traits: traitsOf(s),
+    rarity: rarityOf(s),
+    ...descFields(s.description?.value),
+    source: sourceOf(e),
+    ...parseDefenses(s.rules),
+    ...((() => {
+      const innate = parseInnateSpells(s.rules, s.description?.value);
+      return innate ? { innateSpells: innate } : {};
+    })()),
+  };
+}
+
+for (const e of readPack('backgrounds')) {
+  const s = e.system;
+  const granted = Object.values(s.items || {})[0];
+  const lore = (s.trainedSkills?.lore || [])[0];
+  db.backgrounds[idOf(e)] = {
+    id: idOf(e),
+    name: e.name,
+    traits: traitsOf(s),
+    rarity: rarityOf(s),
+    ...descWithBlock(s.description?.value, backgroundStatBlock(s)),
+    source: sourceOf(e),
+    abilityBoosts: boosts(s.boosts),
+    trainedSkill: (s.trainedSkills?.value || [])[0],
+    trainedLore: lore ? slug(String(lore).replace(/\s*lore$/i, '')) : undefined,
+    grantedFeatId: granted ? slug(granted.name) : undefined,
+  };
+}
+
+// Collect subclass option features (Player Core) keyed by their otherTag.
+// Subclass features reference their granted/curriculum spells in prose via @UUID;
+// we capture all such refs and later keep only the ones that are focus spells.
+const spellRefs = (html) =>
+  [...String(html || '').matchAll(/@UUID\[Compendium\.pf2e\.spells-srd\.Item\.([^\]]+)\]/g)].map((m) => slug(m[1]));
+const featRefs = (html) =>
+  [...String(html || '').matchAll(/@UUID\[Compendium\.pf2e\.feats-srd\.Item\.([^\]]+)\]/g)].map((m) => slug(m[1]));
+/**
+ * Feats a subclass/extra-choice option grants WITH a restricted embedded sub-choice — e.g. an
+ * Exemplar Dominion Epithet grants Energized Spark restricted to the dominion's two energy types.
+ * Read from the option's rules: a GrantItem(feat) whose preselectChoices key matches a sibling
+ * ChoiceSet's flag; restrictTo = that ChoiceSet's literal string choices. Returns [] if none.
+ */
+/** Sorcerer Draconic bloodline: the chosen dragon (exemplar) sets the spell tradition + the second
+ *  bloodline skill (+ a flavor blood-magic damage type). Read from the 'dragonBloodline' ChoiceSet. */
+const dragonChoices = (rules) => {
+  const cs = (rules || []).find((r) => r.key === 'ChoiceSet' && r.flag === 'dragonBloodline');
+  if (!cs) return undefined;
+  const out = [];
+  const seen = new Set();
+  for (const ch of cs.choices || []) {
+    const v = ch.value;
+    if (!v?.slug || seen.has(v.slug)) continue;
+    seen.add(v.slug);
+    out.push({
+      slug: v.slug,
+      label: String(ch.label || '').replace(/^PF2E\.Dragon\./, '') || v.slug,
+      tradition: v.tradition,
+      skill: v.skill,
+      damageType: v.damageType,
+    });
+  }
+  return out.length ? out : undefined;
+};
+const grantedChoiceFeats = (rules) => {
+  const out = [];
+  for (const r of rules || []) {
+    if (r.key !== 'GrantItem' || !r.preselectChoices) continue;
+    const m = String(r.uuid || '').match(/feats-srd\.Item\.(.+)$/);
+    if (!m) continue;
+    const flag = Object.keys(r.preselectChoices)[0];
+    const cs = (rules || []).find((x) => x.key === 'ChoiceSet' && x.flag === flag);
+    const restrictTo = (cs?.choices || []).map((c) => (typeof c === 'string' ? c : c?.value)).filter((v) => typeof v === 'string');
+    out.push({ featId: slug(m[1]), ...(restrictTo.length ? { restrictTo } : {}) });
+  }
+  return out;
+};
+/** Focus-pool points a feat grants: "gain a focus pool of N Focus Points" or
+ *  "increase the number of Focus Points in your focus pool by N". Undefined if neither. */
+function parseFocusPoolBonus(html) {
+  const t = flat(cleanDesc(html));
+  let m = /focus pool of (\d+) focus point/i.exec(t);
+  if (m) return Number(m[1]);
+  m = /increase the number of focus points in your focus pool by (\d+)/i.exec(t);
+  if (m) return Number(m[1]);
+  // Gaining a focus spell from an archetype/feat grants a focus point too (the app caps the pool at
+  // 3 and counts sources). Match an explicit GRANT of a focus-category spell (not a comparison).
+  if (/\byou (?:gain|learn)\b[^.]{0,50}\b(?:devotion|focus|domain|conflux|revelation|order|school|mystery|bloodline)\b[^.]{0,15}\bspells?\b/i.test(t)) return 1;
+  return undefined;
+}
+const subclassTags = new Set(Object.values(SUBCLASS).map((s) => s.tag));
+// Per-class choices made IN ADDITION to the single subclass (psychic's subconscious
+// mind now; animist apparitions / exemplar ikons / kineticist elements added with
+// those classes). pickByLevel = cumulative count allowed by character level.
+const EXTRA_CHOICES = {
+  psychic: [{ id: 'subconscious-mind', name: 'Subconscious Mind', tag: 'psychic-subconscious-mind', pickByLevel: { 1: 1 } }],
+  // Exemplar: 3 ikons at L1 (a 4th via the Additional Ikon feat — not auto), plus an
+  // epithet gained at 3rd, 7th and 15th. No spellcasting.
+  exemplar: [
+    { id: 'ikon', name: 'Ikons', tag: 'exemplar-ikon', pickByLevel: { 1: 3 } },
+    { id: 'root-epithet', name: 'Root Epithet', tag: 'exemplar-root-epithet', pickByLevel: { 3: 1 } },
+    { id: 'dominion-epithet', name: 'Dominion Epithet', tag: 'exemplar-dominion-epithet', pickByLevel: { 7: 1 } },
+    { id: 'sovereignty-epithet', name: 'Sovereignty Epithet', tag: 'exemplar-sovereignty-epithet', pickByLevel: { 15: 1 } },
+  ],
+  // Kineticist: the Kinetic Gate chooses 1 element (single gate) or 2 (dual gate)
+  // from the six. Impulses are element-traited feats (filtered in the feat picker).
+  kineticist: [{ id: 'element', name: 'Kinetic Gate (elements)', tag: 'kineticist-kinetic-gate', pickByLevel: { 1: 2 } }],
+  // Animist: attune to apparitions (2 at L1, 3 at L7, 4 at L15); each grants a
+  // spontaneous spell repertoire (its spell ladder) cast from the apparition pool.
+  animist: [{ id: 'apparition', name: 'Apparitions', tag: 'animist-apparition', pickByLevel: { 1: 2, 7: 3, 15: 4 } }],
+  // Thaumaturge: choose 3 different implements — one at L1, a second at L5, a third at L15.
+  // (Modeled as a multi-pick rather than a single subclass; the adept/paragon designations at
+  // L7/L17 are a further refinement not yet surfaced.)
+  thaumaturge: [{ id: 'implement', name: 'Implements', tag: 'thaumaturge-implement', pickByLevel: { 1: 1, 5: 2, 15: 3 } }],
+  // Wizard: Arcane Thesis is a single level-1 pick of one methodology (alongside the Arcane School subclass).
+  wizard: [{ id: 'thesis', name: 'Arcane Thesis', tag: 'wizard-arcane-thesis', pickByLevel: { 1: 1 } }],
+};
+// Tags whose options grant a spell ladder added to the caster's repertoire/known list.
+// Subclass tags whose option feature adds bonus spells to the caster's repertoire/known list
+// (the spells named in the option's prose). Focus spells are filtered out of this set in
+// resolveOptionFocus so a bloodline/mystery/order focus spell doesn't also land in the repertoire.
+const GRANTED_SPELL_TAGS = new Set([
+  'psychic-conscious-mind',
+  'animist-apparition',
+  'sorcerer-bloodline', // Sorcerous Gifts (cantrip + 1st–9th)
+  'oracle-mystery', // mystery Granted Spells
+  'bard-muse', // muse-granted repertoire spell
+]);
+// Subclass tags whose option grants a fixed bonus FEAT named in its prose (bard muse feat,
+// cleric doctrine grants, druid order feat). build.ts auto-grants those without a sub-choice.
+const SUBCLASS_FEAT_TAGS = new Set(['bard-muse', 'cleric-doctrine', 'druid-order']);
+// Actions a class grants but doesn't list in its items[] (granted by feature rules).
+// Surfaced as features so they appear on the sheet. Slugs come from the actions pack.
+const GRANTED_ACTIONS = {
+  kineticist: [
+    { level: 1, featureId: 'elemental-blast' },
+    { level: 1, featureId: 'base-kinesis' },
+    { level: 1, featureId: 'channel-elements' },
+  ],
+};
+const extraTags = new Set(Object.values(EXTRA_CHOICES).flat().map((c) => c.tag));
+const allOptionTags = new Set([...subclassTags, ...extraTags]);
+const optionsByTag = {};
+let bardCompositionRefs = [];
+let summonerLinkRefs = [];
+for (const e of readPack('class-features')) {
+  if (idOf(e) === 'composition-spells') bardCompositionRefs = spellRefs(e.system.description?.value);
+  // A summoner's link spells (Boost Eidolon, Evolution Surge) are focus spells
+  // granted by the link; the spell entries lack the 'focus' trait (they're cantrip/
+  // summoner) so capture the refs directly rather than via the focus filter.
+  if (idOf(e) === 'link-spells') summonerLinkRefs = spellRefs(e.system.description?.value);
+  for (const t of e.system?.traits?.otherTags || []) {
+    if (!allOptionTags.has(t)) continue;
+    // Fixed trained skills are AELike rules on system.skills.<skill>.rank (the
+    // templated choice path has braces, so [a-z]+ excludes it).
+    const skills = [
+      ...new Set(
+        (e.system.rules || [])
+          .filter((r) => r.key === 'ActiveEffectLike' && /^system\.skills\.[a-z]+\.rank$/.test(r.path || ''))
+          .map((r) => r.path.split('.')[2]),
+      ),
+    ];
+    const keystone = SUBCLASS_KEYSTONE[idOf(e)] || {};
+    const grants = {};
+    if (skills.length) grants.skills = skills;
+    if (keystone.weapons) grants.weapons = keystone.weapons;
+    if (keystone.armor) grants.armor = keystone.armor;
+    const { text: desc, refs: descR } = cleanDescRich(e.system.description?.value);
+    // A subclass that sets the caster's tradition encodes it authoritatively as a
+    // `...tradition:<name>` RollOption (sorcerer bloodlines) or names it in prose:
+    // witch patrons as "Spell List <name>", sorcerer Draconic as "Tradition <name>"
+    // (its rule is a per-dragon choice). Fall back to the hand-mapped witch patrons.
+    const tradFromRules = (e.system.rules || [])
+      .map((r) => (JSON.stringify(r).match(/tradition:(arcane|divine|occult|primal)/i) || [])[1])
+      .find(Boolean);
+    const tradFromDesc = (flat(desc).match(/(?:Spell List|Tradition)\s+(arcane|divine|occult|primal)\b/i) || [])[1];
+    (optionsByTag[t] ??= []).push({
+      id: idOf(e),
+      name: e.name,
+      description: desc,
+      ...(descR.length ? { descRefs: descR } : {}),
+      tradition:
+        (tradFromRules || tradFromDesc)?.toLowerCase() ?? PATRON_TRADITION[idOf(e)],
+      // Psychic subconscious mind sets the spellcasting key ability (Int or Cha); a few options
+      // (Way of the Spellshot) set it via a FlatModifier the importer can't read, so hand-map those.
+      keyAbility: e.system.subfeatures?.keyOptions?.[0] ?? SUBCLASS_KEY_ABILITY[idOf(e)],
+      // Psychic conscious mind grants a spell ladder to the repertoire.
+      grantedSpells: GRANTED_SPELL_TAGS.has(t) ? spellRefs(e.system.description?.value) : undefined,
+      grantedFeats: SUBCLASS_FEAT_TAGS.has(t) ? featRefs(e.system.description?.value) : undefined,
+      _grantedChoiceFeats: grantedChoiceFeats(e.system.rules),
+      ...((() => {
+        const dc = dragonChoices(e.system.rules);
+        return dc ? { dragonChoice: dc } : {};
+      })()),
+      _focusRefs: spellRefs(e.system.description?.value),
+      grants: Object.keys(grants).length ? grants : undefined,
+    });
+  }
+}
+
+for (const e of readPack('classes')) {
+  const s = e.system;
+  const id = idOf(e);
+  const sc = SPELLCASTING[id];
+  const sub = SUBCLASS[id];
+  const subOptions = sub ? (optionsByTag[sub.tag] || []).sort((a, b) => a.name.localeCompare(b.name)) : [];
+  const extraChoices = (EXTRA_CHOICES[id] || [])
+    .map((g) => ({
+      id: g.id,
+      name: g.name,
+      pickByLevel: g.pickByLevel,
+      options: (optionsByTag[g.tag] || []).slice().sort((a, b) => a.name.localeCompare(b.name)),
+    }))
+    .filter((g) => g.options.length);
+  const key = s.keyAbility?.value || [];
+  db.classes[id] = {
+    id,
+    name: e.name,
+    traits: traitsOf(s),
+    rarity: rarityOf(s),
+    ...descWithBlock(s.description?.value, classStatBlock(s)),
+    source: sourceOf(e),
+    keyAbility: key,
+    hpPerLevel: s.hp,
+    perception: rank(s.perception),
+    saves: {
+      fortitude: rank(s.savingThrows?.fortitude),
+      reflex: rank(s.savingThrows?.reflex),
+      will: rank(s.savingThrows?.will),
+    },
+    attacks: {
+      unarmed: rank(s.attacks?.unarmed),
+      simple: rank(s.attacks?.simple),
+      martial: rank(s.attacks?.martial),
+      advanced: rank(s.attacks?.advanced),
+    },
+    // Weapon-GROUP proficiency from the class's "other" attack entry (alchemist bombs, gunslinger
+    // firearms) — these signature weapons would otherwise derive at the wrong (martial) category rank.
+    ...((() => {
+      const o = s.attacks?.other;
+      if (!o?.name || !(o.rank > 0)) return {};
+      const nm = o.name.toLowerCase();
+      const g = {};
+      if (nm.includes('bomb')) g.bomb = rank(o.rank);
+      if (nm.includes('firearm')) g.firearm = rank(o.rank);
+      if (nm.includes('crossbow')) g.crossbow = rank(o.rank);
+      return Object.keys(g).length ? { attackGroups: g } : {};
+    })()),
+    defenses: {
+      unarmored: rank(s.defenses?.unarmored),
+      light: rank(s.defenses?.light),
+      medium: rank(s.defenses?.medium),
+      heavy: rank(s.defenses?.heavy),
+    },
+    classDc: 'trained',
+    // A multi-skill `value` WITH a `custom` lore (only the thaumaturge) means "trained in ONE of these"
+    // + the named Lore — NOT all of them. Encode it as a restricted choice so it doesn't over-grant.
+    trainedSkills: (() => {
+      const ts = s.trainedSkills || {};
+      const value = ts.value || [];
+      const isChoice = !!ts.custom && value.length > 1;
+      return {
+        fixed: isChoice ? [] : value,
+        additional: ts.additional || 0,
+        ...(isChoice ? { choice: value } : {}),
+        ...(ts.custom ? { lore: slug(String(ts.custom).replace(/\s+lore$/i, '')) } : {}),
+      };
+    })(),
+    features: [
+      ...Object.values(s.items || {}).map((it) => {
+        // Foundry stores the real feature under the @UUID target name (…classfeatures.Item.<Name>),
+        // which sometimes differs from the display name in items[]. Prefer the UUID target so the
+        // featureId resolves in db.classFeatures (skip raw 16-char Foundry ids — those aren't names).
+        const seg = (String(it.uuid || '').match(/classfeatures\.Item\.(.+)$/) || [])[1];
+        const fromUuid = seg && !/^[A-Za-z0-9]{16}$/.test(seg) ? slug(seg) : null;
+        const base = fromUuid || slug(it.name);
+        return { level: it.level || 1, featureId: FEATURE_ID_ALIAS[base] ?? FEATURE_ID_ALIAS[slug(it.name)] ?? base };
+      }),
+      // Actions granted by class features (not listed in class items[]) — surfaced as features.
+      ...(GRANTED_ACTIONS[id] || []),
+    ],
+    // Per-class progression lives in the source (classFeatLevels etc.); fall back to
+    // the standard table only if a class is missing it.
+    featProgression: {
+      class: s.classFeatLevels?.value || FEAT_PROGRESSION.class,
+      skill: s.skillFeatLevels?.value || FEAT_PROGRESSION.skill,
+      general: s.generalFeatLevels?.value || FEAT_PROGRESSION.general,
+      ancestry: s.ancestryFeatLevels?.value || FEAT_PROGRESSION.ancestry,
+    },
+    skillIncreaseLevels: s.skillIncreaseLevels?.value || [3, 5, 7, 9, 11, 13, 15, 17, 19],
+    spellcasting: sc
+      ? { type: sc.type, tradition: sc.tradition, keyAbility: sc.keyAbility || key[0] || 'wis', repertoire: sc.repertoire, progression: sc.progression }
+      : undefined,
+    subclass: sub && subOptions.length ? { name: sub.name, options: subOptions } : undefined,
+    extraChoices: extraChoices.length ? extraChoices : undefined,
+  };
+}
+
+for (const e of readPack('class-features')) {
+  const s = e.system;
+  const ot = s.traits?.otherTags || [];
+  db.classFeatures[idOf(e)] = {
+    id: idOf(e),
+    name: e.name,
+    traits: traitsOf(s),
+    rarity: rarityOf(s),
+    ...descFields(s.description?.value),
+    source: sourceOf(e),
+    level: s.level?.value || 1,
+    actionCost: featCost(s),
+    // Inventor modifications are class-features tagged by innovation type (e.g. armor-innovation-
+    // modification); the tier is the item level (1/7/15). Keep the tags so they're selectable.
+    ...(ot.length ? { otherTags: ot } : {}),
+    ...parseDefenses(s.rules),
+    ...critSpecGrant(s.rules),
+  };
+}
+
+// Class-granted ACTIONS (Elemental Blast, Channel Elements, Base Kinesis, …) live in
+// the `actions` pack, not class-features. Import them as features so a class's
+// signature actions resolve + display. Don't clobber a same-slug real feature.
+for (const e of readPack('actions/class')) {
+  const s = e.system;
+  const id = idOf(e);
+  if (db.classFeatures[id]) continue;
+  db.classFeatures[id] = {
+    id,
+    name: e.name,
+    traits: traitsOf(s),
+    rarity: rarityOf(s),
+    ...descFields(s.description?.value),
+    source: sourceOf(e),
+    level: s.level?.value || 1,
+    actionCost: featCost(s),
+    ...parseDefenses(s.rules),
+  };
+}
+
+// AoN-style full class pages: now that db.classFeatures is populated, append each class feature's
+// full text (in level order) to the class description, merging the features' cross-references so
+// links keep working. (Done as a post-pass because db.classFeatures isn't ready during the classes loop.)
+for (const cls of Object.values(db.classes)) {
+  const seen = new Set();
+  const sections = [];
+  const refs = [...(cls.descRefs || [])];
+  for (const f of (cls.features || []).slice().sort((a, b) => a.level - b.level)) {
+    if (seen.has(f.featureId)) continue;
+    seen.add(f.featureId);
+    const def = db.classFeatures[f.featureId];
+    if (!def || !def.description) continue;
+    sections.push(`### ${def.name} (Level ${f.level})\n\n${def.description}`);
+    for (const r of def.descRefs || []) refs.push(r);
+  }
+  if (sections.length) {
+    cls.description = `${cls.description || ''}\n\n## Class features\n\n${sections.join('\n\n')}`;
+    const seenR = new Set();
+    cls.descRefs = refs.filter((r) => {
+      const k = `${r.key}|${(r.label || '').toLowerCase()}`;
+      if (seenR.has(k)) return false;
+      seenR.add(k);
+      return true;
+    });
+  }
+}
+
+// Walk feat paths (not readPack) so we can read the archetype each feat belongs to:
+// archetype feats live under feats/archetype/<archetype-slug>/, the only place that grouping
+// is recorded (the feat JSON itself doesn't name its archetype).
+for (const fp of walk(join(ROOT, 'feats'))) {
+  const e = JSON.parse(readFileSync(fp, 'utf8'));
+  const s = e.system;
+  const archMatch = fp.match(/[/\\]feats[/\\]archetype[/\\]([^/\\]+)[/\\]/);
+  const feat = {
+    id: idOf(e),
+    name: e.name,
+    level: s.level?.value || 1,
+    category: s.category || 'class',
+    traits: traitsOf(s),
+    rarity: rarityOf(s),
+    ...descFields(s.description?.value),
+    source: sourceOf(e),
+    prerequisites: (s.prerequisites?.value || []).map((p) => p.value).filter(Boolean),
+    actionCost: featCost(s),
+    choice: featChoice(s),
+    _focusRefs: spellRefs(s.description?.value),
+    focusPoolBonus: parseFocusPoolBonus(s.description?.value),
+    ...parseDefenses(s.rules),
+    ...critSpecGrant(s.rules),
+    ...parseHpGrant(s.rules),
+    ...(archMatch ? { archetype: archMatch[1] } : {}),
+    ...((() => {
+      const innate = parseInnateSpells(s.rules, s.description?.value);
+      return innate ? { innateSpells: innate } : {};
+    })()),
+  };
+  // Two DISTINCT feats can slug-collide (e.g. the Knight Vigilant archetype "Keep Up the Good Fight"
+  // vs the Guardian class feat). Don't let one silently clobber the other: qualify the archetype
+  // feat's id with its archetype so both survive (the picker still filters archetype feats by tag).
+  const existing = db.feats[feat.id];
+  if (existing) {
+    if (feat.archetype) {
+      feat.id = `${feat.id}-${feat.archetype}`;
+    } else if (existing.archetype) {
+      existing.id = `${existing.id}-${existing.archetype}`;
+      db.feats[existing.id] = existing;
+    }
+  }
+  db.feats[feat.id] = feat;
+}
+
+for (const e of readPack('spells')) {
+  const s = e.system;
+  const cantrip = traitsOf(s).includes('cantrip');
+  const area = s.area ? `${s.area.value}-foot ${s.area.type}` : undefined;
+  db.spells[idOf(e)] = {
+    id: idOf(e),
+    name: e.name,
+    rank: cantrip ? 0 : s.level?.value || 1,
+    traditions: s.traits?.traditions || [],
+    traits: traitsOf(s),
+    rarity: rarityOf(s),
+    ...descFields(s.description?.value),
+    source: sourceOf(e),
+    cast: spellCast(s.time?.value),
+    range: s.range?.value || undefined,
+    area,
+    targets: s.target?.value || undefined,
+    duration: s.duration?.value || undefined,
+    save: s.defense?.save ? { type: s.defense.save.statistic, basic: !!s.defense.save.basic } : undefined,
+    // Rituals: a tradition-less spell anyone can cast if they meet the primary-check proficiency.
+    ...(s.ritual ? { ritual: true, ...(s.ritual.primary?.check ? { ritualPrimary: s.ritual.primary.check } : {}) } : {}),
+  };
+}
+
+for (const e of readPack('equipment')) {
+  const s = e.system;
+  const id = idOf(e);
+  const hands = s.usage?.value === 'held-in-two-hands' ? 2 : s.usage?.value === 'held-in-one-hand' ? 1 : undefined;
+  const { text: desc, refs: descR } = cleanDescRich(s.description?.value);
+  // Frequency/charge parsers scan prose, so feed them the flattened (un-markdown'd) text.
+  const flatDesc = flat(desc);
+  const freq = parseFrequency(flatDesc);
+  const traits = traitsOf(s);
+  const counters = buildCounters(flatDesc, traits, e.type === 'consumable' ? s.uses : undefined);
+  const base = {
+    id,
+    name: e.name,
+    level: s.level?.value || 0,
+    price: s.price?.value || {},
+    bulk: bulkVal(s.bulk),
+    traits,
+    rarity: rarityOf(s),
+    description: desc,
+    ...(descR.length ? { descRefs: descR } : {}),
+    source: sourceOf(e),
+    usage: s.usage?.value,
+    ...(s.material?.type ? { material: { type: s.material.type, ...(s.material.grade ? { grade: s.material.grade } : {}) } } : {}),
+    ...(freq ? { frequency: freq } : {}),
+    ...(counters.length ? { counters } : {}),
+    ...((() => {
+      const a = parseActivationCost(s.description?.value);
+      return a ? { activationCost: a } : {};
+    })()),
+    // Staff/wand/spellheart held spells (a magic-item spell source for the Spells tab).
+    ...((() => {
+      const held = traits.includes('staff')
+        ? parseHeldSpells(s.description?.value)
+        : traits.includes('spellheart')
+          ? parseSpellheartSpells(s.description?.value)
+          : traits.includes('wand')
+            ? parseWandSpell(s, e.name) ?? parseHeldSpells(s.description?.value)
+            : undefined;
+      if (held) return { heldSpells: held };
+      // A GENERIC scroll/wand ("Scroll of 3rd-rank Spell", "Magic Wand (3rd-rank spell)") holds a spell
+      // the player picks. Flag it with a spellSlot {rank, traditions?} so the sheet can offer a picker.
+      if (traits.includes('scroll') || traits.includes('wand')) {
+        const m = String(e.name).match(/(\d+)(?:st|nd|rd|th)-rank/i);
+        const rank = m ? Number(m[1]) : null;
+        if (rank && rank >= 1 && rank <= 10) {
+          const trads = traits.filter((t) => ['arcane', 'divine', 'occult', 'primal'].includes(t));
+          return { spellSlot: { rank, ...(trads.length ? { traditions: trads } : {}) } };
+        }
+      }
+      return {};
+    })()),
+  };
+  if (e.type === 'weapon') {
+    // A thrown weapon's range increment is often encoded only in a `thrown-N` trait
+    // (e.g. dagger = thrown-10) rather than system.range; surface it so the weapon can
+    // be used as a (Strength-based) ranged Strike.
+    const thrownTrait = (base.traits ?? []).find((t) => /^thrown-\d+$/.test(t));
+    const explicitRange = typeof s.range === 'number' ? s.range : s.range?.value || undefined;
+    db.items[id] = {
+      ...base,
+      itemType: 'weapon',
+      hands,
+      category: s.category,
+      group: s.group || '',
+      damage: { dice: s.damage?.dice || 1, die: s.damage?.die || 'd4', type: s.damage?.damageType || 'untyped' },
+      range: explicitRange ?? (thrownTrait ? Number(thrownTrait.split('-')[1]) : undefined),
+      reload: s.reload?.value != null && s.reload.value !== '' ? Number(s.reload.value) : undefined,
+    };
+  } else if (e.type === 'armor') {
+    db.items[id] = {
+      ...base,
+      itemType: 'armor',
+      category: s.category,
+      group: s.group || undefined,
+      acBonus: s.acBonus || 0,
+      dexCap: s.dexCap,
+      checkPenalty: s.checkPenalty,
+      speedPenalty: s.speedPenalty,
+      strength: s.strength,
+    };
+  } else if (e.type === 'shield') {
+    db.items[id] = {
+      ...base,
+      itemType: 'shield',
+      acBonus: s.acBonus || 0,
+      hardness: s.hardness || 0,
+      hp: s.hp?.max || 0,
+      brokenThreshold: s.hp?.brokenThreshold || Math.floor((s.hp?.max || 0) / 2),
+      speedPenalty: s.speedPenalty,
+    };
+  } else if (e.type === 'consumable') {
+    db.items[id] = {
+      ...base,
+      itemType: 'consumable',
+      consumableType: s.category || 'other',
+      uses: s.uses ? { current: s.uses.value, max: s.uses.max } : undefined,
+    };
+  } else if (e.type === 'backpack') {
+    db.items[id] = {
+      ...base,
+      itemType: 'container',
+      bulk: s.bulk?.heldOrStowed ?? bulkVal(s.bulk),
+      capacity: s.bulk?.capacity != null ? { bulk: s.bulk.capacity } : undefined,
+      ignoredBulk: s.bulk?.ignored,
+    };
+  } else if (e.type === 'treasure') {
+    db.items[id] = { ...base, itemType: 'treasure', value: s.price?.value || {} };
+  } else {
+    db.items[id] = { ...base, itemType: 'equipment' };
+  }
+  // Standalone runes (also kept as buyable equipment above) → the etchable-rune registry.
+  if ((s.usage?.value || '').startsWith('etched-onto')) {
+    const r = parseRune(id, e.name, s.usage.value, base.level, base.price);
+    if (r) db.runes[id] = r;
+  }
+}
+
+for (const e of readPack('deities')) {
+  const s = e.system;
+  db.deities[idOf(e)] = {
+    id: idOf(e),
+    name: e.name,
+    traits: traitsOf(s),
+    rarity: rarityOf(s),
+    ...descWithBlock(s.description?.value, deityStatBlock(s)),
+    source: sourceOf(e),
+    domains: s.domains?.primary || [],
+    divineFont: s.font || [],
+    favoredWeapons: s.weapons || [],
+    skill: (s.skill || [])[0],
+  };
+}
+
+for (const l of langSet) {
+  const id = slug(l);
+  db.languages[id] = { id, name: l.charAt(0).toUpperCase() + l.slice(1), rarity: 'common' };
+}
+
+// Resolve focus spells: of the spells a subclass/class references in prose, keep only
+// the ones that are actually focus spells (the order/school spell, the witch hex, the
+// bard compositions) — the rest are curriculum or repertoire grants.
+// Focus cantrips (hexes, compositions) carry the hex/composition trait, not focus,
+// so recognize all three.
+const isFocus = (s) => (s.traits || []).some((t) => t === 'focus' || t === 'hex' || t === 'composition');
+const focusSet = new Set(
+  Object.values(db.spells)
+    .filter(isFocus)
+    .map((s) => s.id),
+);
+const resolveOptionFocus = (o) => {
+  // A subclass grants ONE initial focus spell (order spell / school spell / hex) at level 1;
+  // its advanced/greater focus spells are feat-gated (Advanced/Greater Bloodline or Revelation).
+  // The description lists them in order (initial -> advanced -> greater), so capture all three and
+  // expose the feat-gated ones separately for the build engine to grant when the feat is taken.
+  const fs = (o._focusRefs || []).filter((id) => focusSet.has(id));
+  if (fs.length) o.focusSpells = fs.slice(0, 1);
+  if (fs[1]) o.advancedFocusSpell = fs[1];
+  if (fs[2]) o.greaterFocusSpell = fs[2];
+  delete o._focusRefs;
+  // Keep only granted repertoire spells that were imported AND aren't focus spells (a bloodline/
+  // mystery/order focus spell is granted via focusSpells above, not added to the repertoire).
+  if (o.grantedSpells) {
+    o.grantedSpells = o.grantedSpells.filter((id) => db.spells[id] && !focusSet.has(id));
+    if (!o.grantedSpells.length) delete o.grantedSpells;
+  }
+  if (o.grantedFeats) {
+    o.grantedFeats = o.grantedFeats.filter((id) => db.feats[id]);
+    if (!o.grantedFeats.length) delete o.grantedFeats;
+  }
+  // Granted choice-feats (Energized Spark on dominion epithets): keep only feats that imported AND
+  // actually carry an embedded choice (so we can render the restricted sub-picker).
+  if (o._grantedChoiceFeats?.length) {
+    const kept = o._grantedChoiceFeats.filter((g) => db.feats[g.featId]?.choice);
+    if (kept.length) o.grantedChoiceFeats = kept;
+  }
+  delete o._grantedChoiceFeats;
+};
+// Subclasses that grant a *restricted* skill choice (vs a fixed trained skill). The build engine
+// shows a picker limited to these options instead of granting nothing.
+const SUBCLASS_SKILL_CHOICE = {
+  'way-of-the-pistolero': ['deception', 'intimidation'],
+  'empiricism-methodology': ['arcana', 'crafting', 'occultism', 'society'], // Int-based skills
+  'palatine-detective': ['occultism', 'religion'],
+};
+// Subclasses that force a deity choice even though the base class doesn't (rogue Avenger racket).
+const SUBCLASS_REQUIRES_DEITY = new Set(['avenger']);
+// Cleric Battle Creed replaces the full-caster table with the reduced two-rank "Battle Harbinger"
+// progression and removes Resolute Faith + Miraculous Spell (verified against battle-creed.json's
+// spells-per-day table and system.subfeatures.suppressedFeatures).
+const SUBCLASS_SLOT_PROGRESSION = { 'battle-creed': 'two-rank' };
+const SUBCLASS_SUPPRESSED_FEATURES = { 'battle-creed': ['resolute-faith', 'miraculous-spell'] };
+for (const cls of Object.values(db.classes)) {
+  for (const o of cls.subclass?.options || []) {
+    if (SUBCLASS_SKILL_CHOICE[o.id]) o.skillChoice = SUBCLASS_SKILL_CHOICE[o.id];
+    if (SUBCLASS_REQUIRES_DEITY.has(o.id)) o.requiresDeity = true;
+    if (SUBCLASS_SLOT_PROGRESSION[o.id]) o.slotProgression = SUBCLASS_SLOT_PROGRESSION[o.id];
+    if (SUBCLASS_SUPPRESSED_FEATURES[o.id]) o.suppressedFeatures = SUBCLASS_SUPPRESSED_FEATURES[o.id];
+  }
+  for (const o of cls.subclass?.options || []) resolveOptionFocus(o);
+  for (const g of cls.extraChoices || []) for (const o of g.options) resolveOptionFocus(o);
+}
+// Feats that grant a fixed focus spell + a focus pool point (Blessed One → Lay on Hands, etc.):
+// attach the single named focus spell when the feat also grants a pool (so it maps 1:1 to a point).
+// Multi-ref/choice feats keep only the pool bonus; context-dependent grants resolve to nothing.
+for (const f of Object.values(db.feats)) {
+  const refs = (f._focusRefs || []).filter((id) => focusSet.has(id) && db.spells[id]);
+  delete f._focusRefs;
+  if (f.focusPoolBonus && refs.length === 1) {
+    f.focusSpells = refs;
+    delete f.focusPoolBonus; // counted via the granted spell to avoid double-counting the point
+  } else if (f.focusPoolBonus == null) {
+    delete f.focusPoolBonus;
+  }
+}
+if (db.classes.bard) {
+  // All bards get their composition cantrips at level 1.
+  const fs = bardCompositionRefs.filter((id) => focusSet.has(id));
+  if (fs.length) db.classes.bard.focusSpells = fs;
+}
+if (db.classes.summoner) {
+  // Link spells are focus spells; keep only those actually imported as spells.
+  const fs = summonerLinkRefs.filter((id) => db.spells[id]);
+  if (fs.length) db.classes.summoner.focusSpells = fs;
+}
+
+// Familiar / master abilities (the familiar-abilities pack).
+for (const e of readPack('familiar-abilities')) {
+  const s = e.system;
+  db.familiarAbilities[idOf(e)] = {
+    id: idOf(e),
+    name: e.name,
+    kind: traitsOf(s).includes('master') ? 'master' : 'familiar',
+    ...descFields(s.description?.value),
+  };
+}
+// PF2e conditions (the conditions pack) — the browsable rules entries. `isValued`
+// flags the ones that carry a numeric value (Frightened 2, Clumsy 1, …).
+for (const e of readPack('conditions')) {
+  const s = e.system;
+  db.conditions[idOf(e)] = {
+    id: idOf(e),
+    name: e.name,
+    ...descFields(s.description?.value),
+    valued: !!s.value?.isValued,
+    group: s.group ?? null,
+  };
+}
+// Actions (the actions pack) — Strike, Seek, Demoralize, … Referenced constantly in
+// other descriptions, so they're stored as navigable content for in-text links.
+// Commander tactics are `action` items tagged by tier in traits.otherTags. The folio unlocks
+// higher tiers at level 7/15/19, so record each tactic's tier (defaulting basic for AP tactics
+// that ship without a tier tag). Suffix match also catches a known source typo (vcommander-…).
+const tacticTier = (otherTags) => {
+  for (const t of otherTags || []) {
+    if (/-(mobility|offensive)-tactic$/.test(t)) return 'basic';
+    if (/-expert-tactic$/.test(t)) return 'expert';
+    if (/-master-tactic$/.test(t)) return 'master';
+    if (/-legendary-tactic$/.test(t)) return 'legendary';
+  }
+  return 'basic';
+};
+for (const e of readPack('actions')) {
+  if (e.type !== 'action') continue;
+  const s = e.system;
+  const cost = featCost(s);
+  const traits = traitsOf(s);
+  db.actions[idOf(e)] = {
+    id: idOf(e),
+    name: e.name,
+    traits,
+    rarity: rarityOf(s),
+    ...descFields(s.description?.value),
+    ...(cost ? { actionCost: cost } : {}),
+    ...(traits.includes('tactic') ? { tacticTier: tacticTier(s.traits?.otherTags) } : {}),
+    source: sourceOf(e),
+  };
+}
+// Animal-companion per-type data (sourced from AoN, authored into this JSON) — the
+// level/maturity scaling is a formula in src/rules/companions.ts.
+if (existsSync('scripts/data/animal-companions.json')) {
+  db.animalCompanions = JSON.parse(readFileSync('scripts/data/animal-companions.json', 'utf8'));
+}
+// Companion specializations, followers, and pets (authored JSON, like animal companions).
+if (existsSync('scripts/data/companion-specializations.json')) {
+  db.companionSpecializations = JSON.parse(readFileSync('scripts/data/companion-specializations.json', 'utf8'));
+}
+if (existsSync('scripts/data/followers.json')) {
+  db.followers = JSON.parse(readFileSync('scripts/data/followers.json', 'utf8'));
+}
+if (existsSync('scripts/data/pets.json')) {
+  db.pets = JSON.parse(readFileSync('scripts/data/pets.json', 'utf8'));
+}
+// Curated reference content the SRD bundle has no data for (hand-authored, not data-driven).
+if (existsSync('scripts/data/services.json')) {
+  db.services = JSON.parse(readFileSync('scripts/data/services.json', 'utf8'));
+}
+if (existsSync('scripts/data/vehicles.json')) {
+  db.vehicles = JSON.parse(readFileSync('scripts/data/vehicles.json', 'utf8'));
+}
+if (existsSync('scripts/data/siege-weapons.json')) {
+  db.siegeWeapons = JSON.parse(readFileSync('scripts/data/siege-weapons.json', 'utf8'));
+}
+
+mkdirSync('public', { recursive: true });
+writeFileSync(OUT, JSON.stringify(db));
+const counts = Object.fromEntries(Object.entries(db).map(([k, v]) => [k, Object.keys(v).length]));
+const bytes = statSync(OUT).size;
+console.log('Imported (all books):', JSON.stringify(counts, null, 1));
+console.log(`-> ${OUT} (${(bytes / 1e6).toFixed(1)} MB)`);

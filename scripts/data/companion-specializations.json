@@ -1,0 +1,53 @@
+{
+  "ambusher": {
+    "id": "ambusher",
+    "name": "Ambusher",
+    "description": "An ambush striker — boosts Stealth, Dexterity, and unarmored defense, and can sneak even while watched in its element.",
+    "skills": [{ "skill": "stealth", "rank": "expert" }],
+    "abilityBoosts": { "dex": 1 },
+    "acRank": "expert",
+    "note": "In its natural environment it can Sneak even while observed. (Its Stealth becomes master if it was already an expert.)"
+  },
+  "bully": {
+    "id": "bully",
+    "name": "Bully",
+    "description": "A battlefield bruiser that terrorizes and shoves foes, with strong Athletics, Intimidation, Strength, and Charisma.",
+    "skills": [{ "skill": "athletics", "rank": "expert" }, { "skill": "intimidation", "rank": "expert" }],
+    "abilityBoosts": { "str": 1, "cha": 3 },
+    "note": "Its Athletics and Intimidation become master if they were already expert."
+  },
+  "daredevil": {
+    "id": "daredevil",
+    "name": "Daredevil",
+    "description": "A nimble skirmisher that is hard to flank, with master Acrobatics, more Dexterity, and better unarmored defense.",
+    "skills": [{ "skill": "acrobatics", "rank": "master" }],
+    "abilityBoosts": { "dex": 1 },
+    "acRank": "expert",
+    "note": "Gains Deny Advantage: it isn't off-guard to hidden, undetected, or flanking creatures unless their level is greater than yours."
+  },
+  "racer": {
+    "id": "racer",
+    "name": "Racer",
+    "description": "A speedster — a +10-foot status bonus to one Speed, legendary Fortitude, and extra Constitution.",
+    "skills": [],
+    "abilityBoosts": { "con": 1 },
+    "speedBonus": 10,
+    "note": "Its Fortitude save becomes legendary. The +10-foot status bonus applies to one Speed of your choice (Land, Swim, or Fly)."
+  },
+  "tracker": {
+    "id": "tracker",
+    "name": "Tracker",
+    "description": "An expert tracker that pursues tracks at full Speed, with improved Survival and Wisdom.",
+    "skills": [{ "skill": "survival", "rank": "expert" }],
+    "abilityBoosts": { "wis": 1 },
+    "note": "It can move at full Speed while Tracking. (Its Survival becomes master if it was already an expert.)"
+  },
+  "wrecker": {
+    "id": "wrecker",
+    "name": "Wrecker",
+    "description": "A demolisher whose unarmed attacks crack objects, with master Athletics and more Strength.",
+    "skills": [{ "skill": "athletics", "rank": "master" }],
+    "abilityBoosts": { "str": 1 },
+    "note": "Its unarmed attacks ignore half an object's Hardness."
+  }
+}

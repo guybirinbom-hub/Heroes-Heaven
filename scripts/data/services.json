@@ -1,0 +1,98 @@
+{
+  "unskilled-hireling": {
+    "id": "unskilled-hireling",
+    "name": "Unskilled Hireling",
+    "level": 0,
+    "price": "1 sp/day",
+    "description": "An untrained laborer hired by the day for simple manual work (porters, diggers, rowers). They avoid danger and won't fight.",
+    "traits": ["hireling"]
+  },
+  "trained-hireling": {
+    "id": "trained-hireling",
+    "name": "Trained Hireling",
+    "level": 0,
+    "price": "from 5 sp/day",
+    "description": "A hireling trained in a relevant skill or Lore (a guide, scribe, sailor, or artisan). Cost scales with the rarity and danger of the work.",
+    "traits": ["hireling"]
+  },
+  "spellcasting-service": {
+    "id": "spellcasting-service",
+    "name": "Spellcasting Service",
+    "level": 1,
+    "price": "by spell rank (≈ rank × level cost)",
+    "description": "Pay an NPC spellcaster to cast a spell for you (a heal, restoration, raise dead, teleport, etc.). The price is set by the spell's rank — uncommon/rare spells and costly material components add to it. Many require time to prepare.",
+    "traits": ["service"]
+  },
+  "healing-service": {
+    "id": "healing-service",
+    "name": "Healing & Restoration",
+    "level": 1,
+    "price": "by spell rank",
+    "description": "Temple or guild spellcasting to restore Hit Points, remove a condition (Treat Disease, restoration), or neutralize poison. Costs follow the Spellcasting Service price for the spell's rank.",
+    "traits": ["service"]
+  },
+  "lodging-poor": {
+    "id": "lodging-poor",
+    "name": "Lodging (Poor)",
+    "level": 0,
+    "price": "1 cp/night",
+    "description": "A spot on a common-room floor or a shared bunk. Crowded and cheap.",
+    "traits": ["service"]
+  },
+  "lodging-common": {
+    "id": "lodging-common",
+    "name": "Lodging (Common)",
+    "level": 0,
+    "price": "1 sp/night",
+    "description": "A private room at a typical inn, with a meal included at most establishments.",
+    "traits": ["service"]
+  },
+  "lodging-fine": {
+    "id": "lodging-fine",
+    "name": "Lodging (Fine)",
+    "level": 1,
+    "price": "3 gp/night",
+    "description": "A well-appointed suite at a fine establishment, with service, baths, and quality meals.",
+    "traits": ["service"]
+  },
+  "ship-passage": {
+    "id": "ship-passage",
+    "name": "Ship Passage",
+    "level": 1,
+    "price": "from 1 sp/mile (cabin extra)",
+    "description": "Passage aboard a vessel along a coast or river. A private cabin and fast routes cost more; deck passage on a cargo run is cheapest.",
+    "traits": ["service"]
+  },
+  "carriage-fare": {
+    "id": "carriage-fare",
+    "name": "Coach / Carriage Fare",
+    "level": 0,
+    "price": "from 1 cp/mile",
+    "description": "A seat on an overland coach or a hired carriage between settlements. Private hire and rough roads raise the fare.",
+    "traits": ["service"]
+  },
+  "messenger": {
+    "id": "messenger",
+    "name": "Courier / Messenger",
+    "level": 0,
+    "price": "from 1 sp",
+    "description": "Hire a runner or rider to carry a letter or small package; magical sending services (via a spell) cost far more.",
+    "traits": ["service"]
+  },
+  "access-library": {
+    "id": "access-library",
+    "name": "Library / Archive Access",
+    "level": 1,
+    "price": "from 1 gp/day",
+    "description": "Paid access to a library or archive to support a Research downtime activity. Prestigious or restricted collections cost more and may require sponsorship.",
+    "traits": ["service"]
+  },
+  "mount-rental": {
+    "id": "mount-rental",
+    "name": "Mount Rental",
+    "level": 0,
+    "price": "from 2 sp/day",
+    "description": "Rent a riding horse, pony, or pack animal by the day. Purchase prices for animals are higher (see a stable).",
+    "traits": ["service"]
+  }
+}

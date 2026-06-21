@@ -1,0 +1,23 @@
+# dependencies
+node_modules
+
+# build output
+dist
+dist-ssr
+*.local
+
+# editor / os
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+
+# logs
+*.log
+npm-debug.log*
+
+# Tauri
+src-tauri/target
+src-tauri/gen
+
+# Foundry source clone for the data importer (not tracked)
+.import-src/
