@@ -11,6 +11,8 @@ function strikeBlurb(strike: Strike): string {
     return 'An unarmed Strike with your fist — every creature can make unarmed attacks. It uses your unarmed proficiency, and Handwraps of Mighty Blows can etch potency, striking, and property runes onto it.';
   if (strike.instanceId.startsWith('blast:'))
     return 'Your kineticist Elemental Blast, channeled through your kinetic gate. A two-action blast adds your Constitution modifier to damage; a melee blast adds your Strength modifier.';
+  if (strike.instanceId.startsWith('natural:'))
+    return `A natural unarmed attack (${strike.name}) granted by your ancestry or a feat. It uses your unarmed proficiency, and — like any unarmed attack — is buffed by Handwraps of Mighty Blows (striking scales it to ${strike.strikingDice + 1} of its own dice).`;
   return '';
 }
 

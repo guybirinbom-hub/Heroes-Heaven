@@ -21,7 +21,7 @@
  *         items/skills) to our slugs. Anything whose name we don't carry is dropped and
  *         listed in the returned ImportReport.
  */
-import type { AbilityId, Character, Coins, ContentDatabase, NotePage } from '../rules/types';
+import type { AbilityId, Character, Coins, ContentDatabase, NaturalAttack, NotePage } from '../rules/types';
 import { ABILITIES, SKILLS } from '../rules/types';
 import { newRosterId, type SavedChar } from './storage';
 import { buildCharacter, classChoosesDeity, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
@@ -482,10 +482,22 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
   const invWarn: string[] = [];
   const wgItems: any[] = Array.isArray(c.inventory?.items) ? c.inventory.items : [];
   const builtInv: BuildState['inventory'] = [];
+  const naturals: NaturalAttack[] = [];
   for (const row of wgItems) {
     const nm: string | undefined = row?.item?.name;
     if (!nm) continue;
     const id = itemsIdx.get(norm(nm));
+    // WG models natural unarmed attacks (Iruxi Fangs, claws, …) as inventory "weapons" with
+    // category 'unarmed_attack'. Our baseline Fist is built-in; a MATCHED row (Handwraps of Mighty
+    // Blows) imports as a normal item below; an UNMATCHED unarmed attack becomes a naturalAttacks
+    // Strike so it shows in Strikes (and is buffed by handwraps runes).
+    if (row?.item?.meta_data?.category === 'unarmed_attack' && !id) {
+      const dmg = row?.item?.meta_data?.damage;
+      if (norm(nm) !== 'fist' && dmg?.die) {
+        naturals.push({ name: nm, die: String(dmg.die), damageType: String(dmg.damageType || 'bludgeoning'), traits: ['unarmed'], group: 'brawling' });
+      }
+      continue;
+    }
     if (!id) {
       invWarn.push(nm);
       continue;
@@ -497,6 +509,10 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
   if (builtInv.length) {
     build.inventory = builtInv;
     resolved.push(`${builtInv.length} item${builtInv.length === 1 ? '' : 's'} matched.`);
+  }
+  if (naturals.length) {
+    build.naturalAttacks = naturals;
+    resolved.push(`${naturals.length} natural attack${naturals.length === 1 ? '' : 's'} (${naturals.map((n) => n.name).join(', ')}).`);
   }
   if (invWarn.length) warnings.push(`Items not in Codex content (dropped): ${invWarn.slice(0, 12).join(', ')}${invWarn.length > 12 ? '…' : ''}`);
 

@@ -688,49 +688,69 @@ export function deriveBlastStrikes(c: Character, _db: ContentDatabase): Strike[]
     });
 }
 
-/** All strikes from the character's equipped weapons + the kineticist's Elemental Blast (per element). */
-/** The Fist — every character's baseline unarmed Strike (1d4 B, agile/finesse/nonlethal/unarmed).
- *  Handwraps of Mighty Blows etch their runes onto unarmed attacks: potency raises the attack,
- *  striking adds dice OF THE FIST'S OWN DIE SIZE (so striking on a d4 Fist = 2d4, per the die-size
+/** An unarmed-attack profile: the baseline Fist or an ancestry/feat natural attack (fangs, claws…). */
+interface UnarmedProfile {
+  instanceId: string;
+  name: string;
+  die: string;
+  damageType: string;
+  traits: string[];
+  group: string;
+}
+
+const FIST_PROFILE: UnarmedProfile = {
+  instanceId: 'fist',
+  name: 'Fist',
+  die: 'd4',
+  damageType: 'bludgeoning',
+  traits: ['agile', 'finesse', 'nonlethal', 'unarmed'],
+  group: 'brawling',
+};
+
+/** A single unarmed Strike (the Fist, or a natural attack like Iruxi Fangs). Uses the unarmed
+ *  proficiency; Str (or Dex when the attack is finesse and Dex is higher). Handwraps of Mighty
+ *  Blows etch their runes onto ALL unarmed attacks: potency raises the attack, striking adds dice
+ *  OF THIS ATTACK'S OWN DIE SIZE (striking d4 Fist = 2d4, striking d8 fangs = 2d8 — the die-size
  *  rule), and damage-property runes add their riders. ABP, when on, replaces potency/striking. */
-function deriveFistStrike(c: Character, db: ContentDatabase, hwRunes?: WeaponRunes): Strike {
+function deriveUnarmedStrike(c: Character, db: ContentDatabase, p: UnarmedProfile, hwRunes?: WeaponRunes): Strike {
   const strMod = abilityMod(c.abilities.str);
   const dexMod = abilityMod(c.abilities.dex);
-  const usesDex = dexMod > strMod; // finesse
+  const usesDex = p.traits.includes('finesse') && dexMod > strMod;
   const atkAbility: AbilityId = usesDex ? 'dex' : 'str';
   const abMod = usesDex ? dexMod : strMod;
   const rank = c.proficiencies.attacks.unarmed;
   const potencyBonus = abpOn(c) ? abpAttack(c.level) : hwRunes?.potency ?? 0;
   const base =
     abMod + profBonus(rank, c.level, pwl(c)) + potencyBonus + conditionPenalty(c.conditions, atkAbility, 'attack') + modeNumberBonus(c.activeModes, { kind: 'attack' });
-  const attack = [base, base - 4, base - 8]; // agile → −4 MAP
+  const step = p.traits.includes('agile') ? 4 : 5;
+  const attack = [base, base - step, base - step * 2];
   const specDamage = weaponSpecDamage(rank, weaponSpecialization(c, db));
   const dmgBonus = strMod + conditionPenalty(c.conditions, 'str', 'damage') + specDamage + modeNumberBonus(c.activeModes, { kind: 'damage' });
-  // ABP devastating attacks OR a handwraps striking rune add dice to the Fist's own die (d4).
+  // ABP devastating attacks OR a handwraps striking rune add dice to THIS attack's own die.
   const strikingExtra = abpOn(c) ? abpStrikingDice(c.level) : hwRunes?.striking ? STRIKING_DICE[hwRunes.striking] : 0;
   const dice = 1 + strikingExtra;
   // Property runes on the handwraps apply to unarmed attacks (no weapon-type restriction exists in
   // the data to gate on — see the property-applicability rule; gate here if a restriction is added).
   const runeDamage = (hwRunes?.property ?? [])
-    .map((p) => db.runes[p]?.damage)
+    .map((pp) => db.runes[pp]?.damage)
     .filter((d): d is NonNullable<typeof d> => !!d);
   const runeDmg = runeDamage.map((d) => `${d.dice}${d.die} ${DAMAGE_ABBR[d.type] ?? d.type}`);
   const critPersistent = runeDamage
     .filter((d) => d.persistent)
     .map((d) => `${d.dice}${d.die} persistent ${DAMAGE_ABBR[d.type] ?? d.type}`);
   const damage =
-    `${dice}d4${dmgBonus ? formatMod(dmgBonus) : ''} ${DAMAGE_ABBR['bludgeoning'] ?? 'B'}` +
+    `${dice}${p.die}${dmgBonus ? formatMod(dmgBonus) : ''} ${DAMAGE_ABBR[p.damageType] ?? p.damageType}` +
     (runeDmg.length ? ` plus ${runeDmg.join(' plus ')}` : '') +
     (critPersistent.length ? ` (plus ${critPersistent.join(', ')} on a crit)` : '');
   return {
-    instanceId: 'fist',
-    name: 'Fist',
+    instanceId: p.instanceId,
+    name: p.name,
     attack,
     damage,
-    traits: ['agile', 'finesse', 'nonlethal', 'unarmed'],
+    traits: p.traits,
     ranged: false,
-    group: 'brawling',
-    base: 'fist',
+    group: p.group,
+    base: p.instanceId,
     specDamage: specDamage || undefined,
     rank,
     atkAbility,
@@ -739,18 +759,35 @@ function deriveFistStrike(c: Character, db: ContentDatabase, hwRunes?: WeaponRun
     potencyBonus,
     dmgBonus,
     strikingDice: strikingExtra,
-    mapStep: 4,
+    mapStep: step,
   };
 }
 
 export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
-  // Handwraps never appear as their own Strike (under any carry flag) — their runes buff the Fist.
+  // Handwraps never appear as their own Strike (under any carry flag) — their runes buff every unarmed attack.
   const weapons = c.inventory
     .filter((inv) => inv.equipped && !isHandwraps(db.items[inv.itemId]))
     .map((inv) => deriveStrike(c, db, inv))
     .filter((s): s is Strike => s != null);
-  // Always offer the baseline Fist (PF2e gives every character an unarmed Strike), listed last.
-  return [...weapons, ...deriveBlastStrikes(c, db), deriveFistStrike(c, db, bestHandwrapsRunes(c, db))];
+  const hwRunes = bestHandwrapsRunes(c, db);
+  // Ancestry/feat natural attacks (Iruxi Fangs, claws, …) are unarmed Strikes too — buffed by handwraps.
+  const naturals = (c.naturalAttacks ?? []).map((na, i) =>
+    deriveUnarmedStrike(
+      c,
+      db,
+      {
+        instanceId: `natural:${i}`,
+        name: na.name,
+        die: na.die,
+        damageType: na.damageType,
+        traits: na.traits?.length ? na.traits : ['unarmed'],
+        group: na.group ?? 'brawling',
+      },
+      hwRunes,
+    ),
+  );
+  // Always offer the baseline Fist (PF2e gives every character an unarmed Strike), listed after naturals.
+  return [...weapons, ...deriveBlastStrikes(c, db), ...naturals, deriveUnarmedStrike(c, db, FIST_PROFILE, hwRunes)];
 }
 
 export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {

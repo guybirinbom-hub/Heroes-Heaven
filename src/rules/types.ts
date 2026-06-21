@@ -949,6 +949,20 @@ export interface ArmorRunes {
   reinforcing?: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
+/** A natural unarmed attack granted by ancestry/feat (Iruxi Fangs, claws, jaws, tail, …). Rendered
+ *  as a Strike using the unarmed proficiency; defaults to the brawling group + unarmed trait. */
+export interface NaturalAttack {
+  name: string;
+  /** Damage die, e.g. 'd6' / 'd8'. Base count is one die (Handwraps striking adds more). */
+  die: string;
+  /** 'piercing' | 'slashing' | 'bludgeoning' (or another damage type). */
+  damageType: string;
+  /** Weapon traits (e.g. 'agile', 'finesse', 'grapple'); defaults to ['unarmed']. */
+  traits?: string[];
+  /** Weapon group (drives crit specialization); defaults to 'brawling'. */
+  group?: string;
+}
+
 /** One stack of an item in the character's inventory. */
 export interface InventoryItem {
   /** Unique per inventory entry (distinct from the item definition id). */
@@ -1171,6 +1185,10 @@ export interface Character {
   // --- gear ---
   inventory: InventoryItem[];
   currency: Coins;
+  /** Ancestry/feat-granted natural unarmed attacks (Iruxi Fangs, claws, jaws, tail, …) beyond the
+   *  baseline Fist. Each becomes its own Strike that uses your unarmed proficiency and is buffed by
+   *  Handwraps of Mighty Blows (the die-size rule scales the dice to this attack's own die). */
+  naturalAttacks?: NaturalAttack[];
 
   // --- magic ---
   spellcasting: SpellcastingEntry[];

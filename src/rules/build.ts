@@ -40,6 +40,7 @@ import type {
   Tradition,
   VariantRules,
   CharacterOptions,
+  NaturalAttack,
   WeaponCategory,
   WeaponRunes,
 } from './types';
@@ -163,6 +164,8 @@ export interface BuildState {
     /** Generic scroll/wand: the spell the player chose to store (see ItemBase.spellSlot). */
     heldSpell?: string;
   }[];
+  /** Ancestry/feat natural unarmed attacks (Iruxi Fangs, claws, …) shown as extra Strikes. */
+  naturalAttacks?: NaturalAttack[];
   /** Animal companions, familiars (eidolons are derived from the summoner subclass). */
   companions: CompanionConfig[];
 }
@@ -1410,6 +1413,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(classChoices.length ? { classChoices } : {}),
     ...(build.variantRules ? { variantRules: build.variantRules } : {}),
     ...(build.options ? { options: build.options } : {}),
+    ...(build.naturalAttacks?.length ? { naturalAttacks: build.naturalAttacks } : {}),
     ...(build.variantRules?.dualClass && build.classId2 ? { classId2: build.classId2, subclassId2: build.subclassId2 ?? null } : {}),
     ...(build.variantRules?.abp && build.abpSkills && Object.keys(build.abpSkills).length ? { abpSkills: build.abpSkills } : {}),
     ...(build.variantRules?.abp && build.abpApex ? { abpApex: build.abpApex } : {}),
@@ -1499,6 +1503,7 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   b.subclassId = c.subclassId ?? null;
   if (c.variantRules) b.variantRules = { ...c.variantRules };
   if (c.options) b.options = { ...c.options };
+  if (c.naturalAttacks?.length) b.naturalAttacks = c.naturalAttacks.map((na) => ({ ...na }));
   if (c.classId2 !== undefined) b.classId2 = c.classId2;
   if (c.subclassId2 !== undefined) b.subclassId2 = c.subclassId2;
   if (c.abpSkills) b.abpSkills = { ...c.abpSkills };

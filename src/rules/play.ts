@@ -534,8 +534,38 @@ function nextInstanceId(inv: InventoryItem[]): string {
   return `inv-${max + 1}`;
 }
 
-/** Add one of `itemId` to the inventory (worn/equipped state defaulted by the caller). */
+/** Kits that, when acquired, expand into a container holding their contents instead of a single
+ *  opaque item — e.g. Adventurer's Pack becomes a worn Backpack holding the bedroll, rope, rations,
+ *  torches, etc. (RAW pack contents). Add new packs here; each `container` + `itemId` is a content slug. */
+const KIT_CONTENTS: Record<string, { container: string; items: { itemId: string; quantity?: number }[] }> = {
+  'adventurers-pack': {
+    container: 'backpack',
+    items: [
+      { itemId: 'bedroll' },
+      { itemId: 'chalk', quantity: 10 },
+      { itemId: 'flint-and-steel' },
+      { itemId: 'rope' },
+      { itemId: 'rations', quantity: 2 },
+      { itemId: 'soap' },
+      { itemId: 'torch', quantity: 5 },
+      { itemId: 'waterskin' },
+    ],
+  },
+};
+
+/** Add one of `itemId` to the inventory (worn/equipped state defaulted by the caller). A KIT item
+ *  (Adventurer's Pack) instead adds its container + each content item nested inside it. */
 export function addInventoryItem(play: PlayState, itemId: string, init?: Partial<InventoryItem>): PlayState {
+  const kit = KIT_CONTENTS[itemId];
+  if (kit) {
+    let inv = play.inventory ?? [];
+    const containerInstanceId = nextInstanceId(inv);
+    inv = [...inv, { instanceId: containerInstanceId, itemId: kit.container, quantity: 1, worn: true }];
+    for (const c of kit.items) {
+      inv = [...inv, { instanceId: nextInstanceId(inv), itemId: c.itemId, quantity: c.quantity ?? 1, containerInstanceId }];
+    }
+    return { ...play, inventory: inv };
+  }
   const inv = play.inventory ?? [];
   return {
     ...play,
