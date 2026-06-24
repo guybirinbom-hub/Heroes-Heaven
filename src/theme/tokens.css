@@ -73,11 +73,36 @@
   --app-pad: 14px;
   --app-gap: 11px;
 
+  /* scrollbars — thin neutral by default; :root.sb-accent (a device pref) swaps to the brand color */
+  --app-sb-thumb: color-mix(in srgb, var(--app-text-dim) 50%, transparent);
+  --app-sb-thumb-hover: color-mix(in srgb, var(--app-text-dim) 78%, transparent);
+
   color-scheme: dark;
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* App-wide scrollbars (WebView2/Chromium). Element-scoped rules (e.g. the hidden .tabs / .lstrip
+   bars) are more specific and still win, so they keep their own treatment. */
+:root.sb-accent {
+  --app-sb-thumb: color-mix(in srgb, var(--app-accent) 60%, transparent);
+  --app-sb-thumb-hover: color-mix(in srgb, var(--app-accent) 88%, transparent);
+}
+*::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--app-sb-thumb);
+  border-radius: 6px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--app-sb-thumb-hover);
 }
 
 html,

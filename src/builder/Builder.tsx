@@ -5,11 +5,15 @@ import {
   GRADUAL_BOOST_SETS,
   type BuildState,
   buildCharacter,
+  applyOverrides,
+  applySources,
+  collectChosenIds,
   canTakeNewDedication,
   checkPrerequisites,
   kineticistElements,
   levelGrants,
 } from '../rules/build';
+import { sourceCatalog, enabledBookSet } from '../rules/sources';
 import { classFeatureDescription } from '../rules/featureText';
 import {
   resolveBackground,
@@ -19,8 +23,9 @@ import { casterSlots, wizardSpellbookSize, cantripsKnown } from '../rules/spellc
 import { activeCasterArchetype, archetypeSlots } from '../rules/casterArchetypes';
 import type { ContentDatabase, FeatCategory, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, PopupSelect, START, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
+import { AbilitySelect, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SourcesCard, START, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
+import { ActionGlyph, isActionCost } from '../sheet/widgets';
 import { SPELL_SPEC_BUILDER, FEAT_SPEC } from '../sheet/filterSpecs';
 
 const FEAT_LABEL: Record<FeatCategory, string> = {
@@ -71,7 +76,7 @@ export function hasChoicesAtLevel(build: BuildState, level: number): boolean {
 const ord = (r: number) => (r === 1 ? '1st' : r === 2 ? '2nd' : r === 3 ? '3rd' : `${r}th`);
 
 export function Builder({
-  content,
+  content: baseContent,
   initial,
   onCancel,
   onCreate,
@@ -83,7 +88,22 @@ export function Builder({
   onCreate: (build: BuildState) => void;
 }) {
   const [build, setBuild] = useState<BuildState>(initial ?? START);
-  const actions = useBuilderActions(setBuild, content);
+  // Effective content = the shared DB with this build's Overrides content-edits overlaid (text/field
+  // edits to feats/features). Returns the same ref when there are no edits, so pickers/memos are stable.
+  // `ovContent` is the FULL (override-applied) DB used for the live character + grants; `content` is
+  // that DB with disabled source books filtered out — what the pickers offer. Already-chosen ids are
+  // always kept so disabling a book a character already used never breaks it.
+  const ovContent = useMemo(() => applyOverrides(baseContent, build.overrides), [baseContent, build.overrides]);
+  const sourceCat = useMemo(() => sourceCatalog(baseContent), [baseContent]);
+  const content = useMemo(() => {
+    const enabled = enabledBookSet(build.enabledSources);
+    if (sourceCat.allBooks.every((b) => enabled.has(b))) return ovContent; // everything on → no filtering
+    return applySources(ovContent, enabled, collectChosenIds(build, ovContent));
+    // `build` is read for keepIds but intentionally not a dep: re-running only when sources change is
+    // enough — a freshly-picked item is always from an enabled book, so it's present regardless.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ovContent, build.enabledSources, sourceCat]);
+  const actions = useBuilderActions(setBuild, ovContent);
   const [sel, setSel] = useState<Sel>(0);
   const [picker, setPicker] = useState<Picker | null>(null);
   // The full item catalog, sorted once, for the equipment picker's filter panel.
@@ -98,8 +118,11 @@ export function Builder({
   // Memoized so the full buildCharacter pipeline doesn't re-run on every level-page render.
   const baseSkills = useMemo(() => {
     if (typeof sel !== 'number' || sel < 1) return null;
-    const rest = { ...build.skillIncreases };
-    delete rest[sel];
+    // "Before this level's increase" must include ONLY increases at LOWER levels. Deleting just this
+    // level's increase still re-applied higher-level increases (buildCharacter applies them in level
+    // order), which inflated the rank shown as the starting point and could disable a legal increase.
+    const rest: typeof build.skillIncreases = {};
+    for (const [lvl, key] of Object.entries(build.skillIncreases)) if (Number(lvl) < sel) rest[Number(lvl)] = key;
     return buildCharacter({ ...build, skillIncreases: rest }, content).proficiencies.skills;
   }, [build, content, sel]);
 
@@ -122,7 +145,9 @@ export function Builder({
       // Free Archetype slot: any archetype feat (these are stored as class-category feats carrying the
       // 'archetype' trait, so match on the trait rather than the category).
       if (p.category === 'archetype') return f.traits.includes('archetype');
-      if (f.category !== p.category) return false;
+      // A general feat slot may take any qualifying SKILL feat (skill feats are a subset of general
+      // feats). The reverse is not true — a skill slot takes only skill feats.
+      if (f.category !== p.category && !(p.category === 'general' && f.category === 'skill')) return false;
       if (p.category === 'ancestry' && build.ancestryId && !f.traits.includes(build.ancestryId)) return false;
       // Class slots take your class's feats OR any archetype feat (multiclass/archetypes). Dual Class
       // also accepts the second class's feats.
@@ -190,7 +215,7 @@ export function Builder({
   const cantripCap = casting ? cantripsKnown(build.classId) : archCaster?.config.cantrips ?? 0;
   // The built character, used to evaluate feat prerequisites in the picker and the stats rail.
   // Memoized so the full per-level build pipeline runs once per build change, not 2–3× per render.
-  const featPrereqChar = useMemo(() => buildCharacter(build, content), [build, content]);
+  const featPrereqChar = useMemo(() => buildCharacter(build, ovContent), [build, ovContent]);
   // Divine font (cleric): the deity's allowed heal/harm options + the resolved slot count.
   const hasFontFeature = !!casterCls?.features?.some((f) => f.featureId === 'divine-font');
   const fontOptions = ((build.deityId ? content.deities[build.deityId]?.divineFont : undefined) ?? []) as (
@@ -264,6 +289,17 @@ export function Builder({
     if (!showSpells) return false;
     const g = spellGainsAt(L);
     return L === firstCasterLevel || g.ranks.length > 0 || g.bookGained > 0 || g.cantrips > 0;
+  };
+  // Whether lowering past level L would strip spells the player actually chose — so the level-down
+  // confirmation fires for spells too, not just feats / skill increases / attribute boosts.
+  const spellsDropAt = (L: number) => {
+    if (!showSpells) return false;
+    const g = spellGainsAt(L);
+    const anySpells = (build.cantrips ?? []).some(Boolean) || Object.values(build.spells ?? {}).some((a) => a?.length);
+    // Dropping the first caster level (or a wizard's new spellbook capacity) can strip chosen spells.
+    if ((g.cantrips > 0 || g.bookGained > 0) && anySpells) return true;
+    // A rank whose slot count rose here: warn only if the player stocked more than the lower cap holds.
+    return g.ranks.some((r) => (build.spells[r.rank] ?? []).length > r.cap - r.gained);
   };
 
   /** The Spells section for one level card: the cantrips/slots GAINED at that level. */
@@ -491,8 +527,9 @@ export function Builder({
           <button
             className="lvl-step"
             onClick={() => {
-              // Lowering drops the current top level. Confirm only if choices were made there.
-              if (hasChoicesAtLevel(build, build.level)) setConfirmLowerTo(build.level - 1);
+              // Lowering drops the current top level. Confirm if any choice (feat, skill, boost, or
+              // chosen spells of a rank/cantrip gained there) was made there.
+              if (hasChoicesAtLevel(build, build.level) || spellsDropAt(build.level)) setConfirmLowerTo(build.level - 1);
               else actions.bumpLevel(-1);
             }}
             disabled={build.level <= 1}
@@ -538,6 +575,10 @@ export function Builder({
               <div className="lvl-cards">
                 <OptionsCard build={build} actions={actions} content={content} />
                 <VariantRulesCard build={build} actions={actions} content={content} />
+                <SourcesCard build={build} actions={actions} catalog={sourceCat} />
+                {build.options?.overridesEnabled && (
+                  <OverridesCard build={build} actions={actions} content={ovContent} character={featPrereqChar} />
+                )}
               </div>
             </div>
           )}
@@ -1052,16 +1093,23 @@ export function Builder({
               const pre = checkPrerequisites(f, featPrereqChar, content);
               // A new dedication is blocked until current archetypes have 2 feats each.
               const dedBlocked = f.traits.includes('dedication') && !dedicationOK;
-              const disabled = !pre.met || dedBlocked;
-              const reason = dedBlocked
-                ? 'Take two feats from your current archetype first.'
-                : !pre.met && f.prerequisites && f.prerequisites.length > 0
-                  ? `Requires: ${f.prerequisites.join(', ')}`
-                  : undefined;
+              const unmet = !pre.met || dedBlocked;
+              // Overrides (creative editing): a feat you don't qualify for isn't dead-greyed — you can
+              // "Take anyway", which records this one feat as a deliberate override (no global switch).
+              const allowed = build.overrides?.allowedFeats?.includes(f.id) ?? false;
               const node = descNodeOf(f, 'feats');
               return (
                 <PickerRow
-                  lead={<span className="picker-lvl">{f.level}</span>}
+                  lead={
+                    <>
+                      {isActionCost(f.actionCost) && (
+                        <span className="action-cost">
+                          <ActionGlyph cost={f.actionCost} />
+                        </span>
+                      )}
+                      <span className="picker-lvl">{f.level}</span>
+                    </>
+                  }
                   name={f.name}
                   meta={
                     <>
@@ -1073,14 +1121,30 @@ export function Builder({
                           {f.prerequisites.join(', ')}
                         </div>
                       )}
+                      {unmet && (
+                        <div className="picker-override-note">
+                          {allowed ? 'Allowed via override.' : 'Override: you can take this anyway, ignoring the rule.'}
+                        </div>
+                      )}
                     </>
                   }
                   onOpenDesc={node ? () => openDesc(node) : undefined}
-                  selectLabel="Choose"
-                  selectDisabled={disabled}
-                  disabledReason={reason}
-                  dim={disabled}
+                  selectLabel={
+                    unmet && !allowed ? (
+                      <span className="ovr-take">
+                        <i className="ti ti-alert-triangle" aria-hidden="true" /> Take anyway
+                      </span>
+                    ) : (
+                      'Choose'
+                    )
+                  }
+                  dim={unmet && !allowed}
                   onSelect={() => {
+                    if (unmet && !allowed) {
+                      actions.patch({
+                        overrides: { ...build.overrides, allowedFeats: [...(build.overrides?.allowedFeats ?? []), f.id] },
+                      });
+                    }
                     actions.setFeat(pickerKey, f.id);
                     setPicker(null);
                   }}
@@ -1121,7 +1185,14 @@ export function Builder({
               const node = descNodeOf(sp, 'spells');
               return (
                 <PickerRow
-                  lead={preparedMode && count > 0 ? <span className="picker-count">×{count}</span> : undefined}
+                  lead={
+                    <>
+                      <span className="spell-cost">
+                        <ActionGlyph cost={sp.cast} />
+                      </span>
+                      {preparedMode && count > 0 && <span className="picker-count">×{count}</span>}
+                    </>
+                  }
                   name={sp.name}
                   meta={
                     <div className="picker-traits">
@@ -1196,8 +1267,8 @@ export function Builder({
             </div>
             <div className="confirm-body">
               <p>
-                You&apos;ve made choices at <strong>level {confirmLowerTo + 1}</strong> (a feat, skill increase, or
-                attribute boost). Lowering to <strong>level {confirmLowerTo}</strong> stops applying them.
+                You&apos;ve made choices at <strong>level {confirmLowerTo + 1}</strong> (a feat, skill increase,
+                attribute boost, or chosen spells). Lowering to <strong>level {confirmLowerTo}</strong> stops applying them.
               </p>
               <p>They&apos;re kept and will reapply if you raise the level again.</p>
             </div>

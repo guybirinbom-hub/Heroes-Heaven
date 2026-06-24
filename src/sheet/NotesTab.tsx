@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Character } from '../rules/types';
 import { addNotePage, nextNoteId, removeNotePage, updateNotePage, type PlayState } from '../rules/play';
+import { RefSearchModal, refLinkHtml, type RefTarget } from './RichEditor';
+import { DescBody } from './DescBody';
 
 /** Toolbar formatting commands (document.execCommand on the focused contentEditable). */
 const TOOLS: { cmd: string; arg?: string; icon?: string; text?: string; title: string }[] = [
@@ -40,6 +42,9 @@ function NoteEditor({
   onSaveRef.current = onSave;
   // Open popover for the color/glyph toolbar extras (null = none).
   const [pop, setPop] = useState<'fore' | 'hili' | 'glyph' | null>(null);
+  // Description-link flow: the saved selection + whether the ref-search modal is open.
+  const savedRange = useRef<Range | null>(null);
+  const [linking, setLinking] = useState(false);
 
   useEffect(() => {
     if (ref.current) ref.current.innerHTML = initialHtml;
@@ -92,6 +97,30 @@ function NoteEditor({
     save();
     setPop(null);
   };
+  // Link flow: remember the selection, open the search; on pick, wrap the selection (or insert the
+  // target's name) as a ref-link anchor that the read-only renderer makes clickable.
+  const openLink = () => {
+    const sel = window.getSelection();
+    savedRange.current = sel && sel.rangeCount ? sel.getRangeAt(0).cloneRange() : null;
+    setPop(null);
+    setLinking(true);
+  };
+  const applyLink = (t: RefTarget) => {
+    setLinking(false);
+    const el = ref.current;
+    if (!el) return;
+    el.focus();
+    const sel = window.getSelection();
+    if (savedRange.current && sel) {
+      sel.removeAllRanges();
+      sel.addRange(savedRange.current);
+    }
+    const text = savedRange.current ? savedRange.current.toString() : '';
+    const label = text.trim() || t.name;
+    document.execCommand('insertHTML', false, `${refLinkHtml(t, label)}&nbsp;`);
+    el.focus();
+    save();
+  };
 
   return (
     <>
@@ -119,6 +148,9 @@ function NoteEditor({
         </button>
         <button className="tb-btn" title="Action glyph" onMouseDown={(e) => (e.preventDefault(), setPop(pop === 'glyph' ? null : 'glyph'))}>
           <i className="ti ti-circle-1" aria-hidden="true" />
+        </button>
+        <button className="tb-btn" title="Link selected text to a description" onMouseDown={(e) => (e.preventDefault(), openLink())}>
+          <i className="ti ti-link" aria-hidden="true" />
         </button>
       </div>
       {(pop === 'fore' || pop === 'hili') && (
@@ -160,6 +192,7 @@ function NoteEditor({
         onInput={save}
         data-placeholder="Write your notes…"
       />
+      {linking && <RefSearchModal onPick={applyLink} onClose={() => setLinking(false)} />}
     </>
   );
 }
@@ -345,7 +378,7 @@ export function NotesTab({ character, onPlay }: { character: Character; onPlay?:
             onSave={(id, html) => onPlay((pl) => updateNotePage(pl, id, { content: html }))}
           />
         ) : (
-          <div className="editor-body" dangerouslySetInnerHTML={{ __html: active.content }} />
+          <DescBody description={active.content} className="editor-body" />
         )}
       </div>
 

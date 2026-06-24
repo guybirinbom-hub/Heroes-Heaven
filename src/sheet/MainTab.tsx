@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import type { ActionCost, Character, ContentDatabase, PinnedDesc, ProficiencyKey } from '../rules/types';
+import { useMemo, useState, type ReactNode } from 'react';
+import type { ActionCost, Character, ContentDatabase, DescRef, PinnedDesc, ProficiencyKey } from '../rules/types';
 import { ABILITIES, SKILLS } from '../rules/types';
 import {
   abilityMod,
@@ -14,13 +14,18 @@ import {
 } from '../rules/derive';
 import { togglePin, togglePinnedDesc, toggleTactic, descId, type PlayState } from '../rules/play';
 import { critSpec } from '../rules/critSpec';
-import { ACTIVITIES } from '../rules/actions';
+import { ACTIVITIES, type ActivityDef } from '../rules/actions';
 import { traitDesc } from '../rules/glossary';
 import { statHasConditionalMode, type StatRef } from '../rules/explain';
 import { ActionGlyph, RankPill } from './widgets';
 import { DescriptionModal } from './DescriptionModal';
+import { DescBody } from './DescBody';
+import { toPlainText } from './RichText';
 import { StrikeDetailModal } from './StrikeDetailModal';
+import { CritSpecText } from './CritSpecText';
 import { InfoTerm } from './InfoTerm';
+import { useEscapeClose } from './useEscapeClose';
+import { usePrefs } from '../data/prefs';
 import type { DescNode } from './descref';
 
 const capWord = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -71,6 +76,35 @@ interface Act {
   cost?: ActionCost;
   desc: string;
   skill?: string;
+  /** Traits/tags shown (as explained chips) in the detail popup. */
+  traits?: string[];
+  /** Cross-references in `desc`, so the detail popup can linkify + drill into them. */
+  descRefs?: DescRef[];
+  /** Richer text for the detail popup when the inline `desc` is just a short summary (curated
+   *  activities): the full rules description + its cross-references from content.actions. */
+  fullDesc?: string;
+  fullRefs?: DescRef[];
+}
+
+/** An action opened in the compact-mode detail popup. `prepare` carries a Commander tactic's
+ *  prepared state + toggle so the popup keeps that control (it has no place on a chip). */
+interface DetailAction {
+  a: Act;
+  pinnable: boolean;
+  prepare?: { prepared: boolean; disabled: boolean; onToggle: () => void };
+}
+
+/** Group skill actions by their skill (alphabetically) so each skill renders on its own chip
+ *  line(s) in compact mode. Action order within a skill is preserved. */
+function groupBySkill(items: Act[]): [string, Act[]][] {
+  const map = new Map<string, Act[]>();
+  for (const a of items) {
+    const key = a.skill ?? '';
+    const arr = map.get(key);
+    if (arr) arr.push(a);
+    else map.set(key, [a]);
+  }
+  return [...map.entries()].sort((x, y) => x[0].localeCompare(y[0]));
 }
 
 export function MainTab({
@@ -95,6 +129,18 @@ export function MainTab({
   const [openDesc, setOpenDesc] = useState<DescNode | null>(null);
   // The strike whose detail popup is open (clicked from a strike row).
   const [strikeDetail, setStrikeDetail] = useState<Strike | null>(null);
+  const { compactActions } = usePrefs();
+  // Collapsible action section headers (always on, in-component like InventoryTab's groups).
+  const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
+  const toggleSection = (id: string) =>
+    setCollapsed((prev) => {
+      const n = new Set(prev);
+      if (n.has(id)) n.delete(id);
+      else n.add(id);
+      return n;
+    });
+  // The action shown in the compact-mode detail popup (chip click).
+  const [detailAction, setDetailAction] = useState<DetailAction | null>(null);
 
   const loreKeys = Object.keys(character.proficiencies.skills).filter((k) =>
     k.startsWith('lore:'),
@@ -108,9 +154,25 @@ export function MainTab({
   // level it activates + any weapon restriction. A Strike shows its crit-spec effect only when a
   // source actually covers that weapon — computed per strike below.
   const critSources = useMemo(() => critSpecSources(character, content), [character, content]);
-  const encActivities: Act[] = ACTIVITIES.filter((a) => a.mode === 'encounter');
-  const exploreActivities: Act[] = ACTIVITIES.filter((a) => a.mode === 'exploration');
-  const downtimeActivities: Act[] = ACTIVITIES.filter((a) => a.mode === 'downtime');
+  // Curated activities carry only a short summary; the detail popup wants the FULL rules text +
+  // its cross-references (conditions, etc.) + traits, which live in content.actions under the
+  // kebab-cased name. Keep the summary inline; surface the full version (when found) in the popup.
+  const actionId = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const enrichActivity = (a: ActivityDef): Act => {
+    const full = content.actions[actionId(a.name)];
+    return {
+      name: a.name,
+      cost: a.cost,
+      skill: a.skill,
+      traits: full?.traits ?? a.traits,
+      desc: a.desc,
+      fullDesc: full?.description,
+      fullRefs: full?.descRefs,
+    };
+  };
+  const encActivities: Act[] = ACTIVITIES.filter((a) => a.mode === 'encounter').map(enrichActivity);
+  const exploreActivities: Act[] = ACTIVITIES.filter((a) => a.mode === 'exploration').map(enrichActivity);
+  const downtimeActivities: Act[] = ACTIVITIES.filter((a) => a.mode === 'downtime').map(enrichActivity);
   // Feats that ARE a curated activity (Bon Mot, Battle Medicine) already appear under Skill
   // actions — exclude them here so they aren't listed twice (and don't collide on pin key).
   const activityNames = new Set(ACTIVITIES.map((a) => a.name));
@@ -122,19 +184,19 @@ export function MainTab({
   const featActions: Act[] = character.feats
     .map((f) => content.feats[f.featId])
     .filter((f) => !!f && isActionCost(f.actionCost) && !activityNames.has(f.name))
-    .map((f) => ({ name: f!.name, cost: f!.actionCost as ActionCost, desc: f!.description }));
+    .map((f) => ({ name: f!.name, cost: f!.actionCost as ActionCost, desc: f!.description, descRefs: f!.descRefs, traits: f!.traits }));
   // Commander folio tactics are Action items the character knows — listed in their own section.
   const tacticActions: (Act & { id: string })[] = (character.commanderTactics?.folio ?? [])
     .map((id) => content.actions[id])
     .filter((a): a is NonNullable<typeof a> => !!a)
-    .map((a) => ({ id: a.id, name: a.name, cost: a.actionCost, desc: a.description }));
+    .map((a) => ({ id: a.id, name: a.name, cost: a.actionCost, desc: a.description, descRefs: a.descRefs, traits: a.traits }));
   const preparedTactics = new Set(character.commanderTactics?.prepared ?? []);
   const tacticPreparedMax = character.commanderTactics?.preparedMax ?? 3;
   // Item actions: activatable carried items (consumables, or invested/worn/equipped magic items).
   const itemActions: (Act & { key: string })[] = (character.inventory ?? [])
     .map((inv) => ({ inv, item: content.items[inv.itemId] }))
     .filter(({ inv, item }) => !!item?.activationCost && (item.itemType === 'consumable' || inv.invested || inv.equipped || inv.worn))
-    .map(({ inv, item }) => ({ key: `itemact:${inv.instanceId}`, name: item!.name, cost: item!.activationCost, desc: item!.description }));
+    .map(({ inv, item }) => ({ key: `itemact:${inv.instanceId}`, name: item!.name, cost: item!.activationCost, desc: item!.description, descRefs: item!.descRefs, traits: item!.traits }));
 
   const pinned = new Set(character.pinned ?? []);
   const strikeKey = (instanceId: string) => `strike:${instanceId}`;
@@ -181,7 +243,10 @@ export function MainTab({
         className={'pin-star' + (on ? ' on' : '')}
         title={on ? 'Unpin' : 'Pin to top'}
         aria-label={on ? 'Unpin' : 'Pin to top'}
-        onClick={() => onPlay((p) => togglePin(p, k))}
+        onClick={(e) => {
+          e.stopPropagation();
+          onPlay((p) => togglePin(p, k));
+        }}
       >
         <i className="ti ti-star" aria-hidden="true" />
       </button>
@@ -235,7 +300,7 @@ export function MainTab({
         {critSpec(s.group) && strikeShowsCritSpec(s, critSources) && (
           <div className="strike-crit">
             <span className="sc-label">Crit</span>
-            {critSpec(s.group)}
+            <CritSpecText text={critSpec(s.group)!} content={content} />
           </div>
         )}
       </div>
@@ -256,8 +321,34 @@ export function MainTab({
     onPrepare?: () => void;
     prepareDisabled?: boolean;
   }) {
+    // Both modes open the SAME detail popup (full description + traits + pin star inside).
+    const openDetail = () =>
+      setDetailAction({
+        a,
+        pinnable,
+        prepare: onPrepare ? { prepared: !!prepared, disabled: !!prepareDisabled, onToggle: onPrepare } : undefined,
+      });
+    // Compact mode: a chip (cost glyph + name) that opens the popup; no inline description or
+    // star — those live in the popup. Tactics keep their prepared state visible via the trailing dot.
+    if (compactActions) {
+      return (
+        <button type="button" className={'action-chip' + (onPrepare && !prepared ? ' unprepared' : '')} title={`Show ${a.name}`} onClick={openDetail}>
+          <span className="action-cost">
+            {a.cost ? <ActionGlyph cost={a.cost} /> : <i className="ti ti-hourglass-low action-activity-icon" aria-hidden="true" />}
+          </span>
+          <span className="action-chip-name">{a.name}</span>
+          {a.skill && <span className="action-skill">{a.skill}</span>}
+          {onPrepare && <i className={'ti chip-prep ' + (prepared ? 'ti-circle-check-filled' : 'ti-circle')} aria-hidden="true" />}
+        </button>
+      );
+    }
+    // Full mode: the same row as before, now clickable to open the full description + traits popup.
     return (
-      <div className={'action' + (onPrepare && !prepared ? ' unprepared' : '')}>
+      <div
+        className={'action clickable' + (onPrepare && !prepared ? ' unprepared' : '')}
+        onClick={openDetail}
+        title={`Show ${a.name}`}
+      >
         <span className="action-cost">
           {a.cost ? (
             <ActionGlyph cost={a.cost} />
@@ -270,7 +361,7 @@ export function MainTab({
             {a.name}
             {a.skill && <span className="action-skill">{a.skill}</span>}
           </div>
-          <div className="action-desc">{a.desc}</div>
+          <div className="action-desc">{toPlainText(a.desc)}</div>
         </div>
         {onPrepare && (
           <button
@@ -278,7 +369,10 @@ export function MainTab({
             title={prepared ? 'Prepared today — click to unprepare' : 'Prepare this tactic'}
             aria-label={prepared ? 'Unprepare tactic' : 'Prepare tactic'}
             disabled={!prepared && prepareDisabled}
-            onClick={onPrepare}
+            onClick={(e) => {
+              e.stopPropagation();
+              onPrepare();
+            }}
           >
             <i className={'ti ' + (prepared ? 'ti-circle-check-filled' : 'ti-circle')} aria-hidden="true" />
           </button>
@@ -286,6 +380,78 @@ export function MainTab({
         {/* Pinning surfaces in the encounter Pinned section; exploration/downtime rows
             (pinnable=false) omit the star so it's never a dead control. */}
         {pinnable && <Star k={actionKey(a.name)} />}
+      </div>
+    );
+  }
+
+  /** A collapsible action section: an always-clickable chevron header wrapping its rows. In compact
+   *  mode the body becomes a wrapping chip row; collapsing hides the whole body either way. */
+  function Section({ id, label, note, wrap = true, children }: { id: string; label: ReactNode; note?: ReactNode; wrap?: boolean; children: ReactNode }) {
+    const open = !collapsed.has(id);
+    return (
+      <>
+        <button type="button" className="acts-sec-label acts-sec-toggle" aria-expanded={open} onClick={() => toggleSection(id)}>
+          <i className={'ti ' + (open ? 'ti-chevron-down' : 'ti-chevron-right')} aria-hidden="true" />
+          {label}
+          {note}
+        </button>
+        {/* `wrap` sections drop their chips into a single wrapping row; the Skill section passes
+            wrap={false} and supplies its own per-skill rows so each skill gets its own line(s). */}
+        {open && (compactActions && wrap ? <div className="action-chip-row">{children}</div> : children)}
+      </>
+    );
+  }
+
+  /** Action popup (compact chips + full rows both open it): cost glyph + name in the header, the
+   *  favorite star + (for tactics) the prepare toggle inside, the trait tags, and the full
+   *  linkified description in the body. */
+  function ActionDetailModal({ detail, onClose }: { detail: DetailAction; onClose: () => void }) {
+    useEscapeClose(onClose);
+    const { a, pinnable, prepare } = detail;
+    const traits = a.traits ?? [];
+    return (
+      <div className="picker-overlay" onClick={onClose}>
+        <div className="picker info-modal" onClick={(e) => e.stopPropagation()}>
+          <div className="picker-head">
+            <span className="action-cost action-detail-cost">
+              {a.cost ? <ActionGlyph cost={a.cost} /> : <i className="ti ti-hourglass-low action-activity-icon" aria-hidden="true" />}
+            </span>
+            <span className="info-title">
+              {a.name}
+              {a.skill && <span className="action-skill">{a.skill}</span>}
+            </span>
+            {prepare && onPlay && (
+              <button
+                className={'prep-toggle' + (prepare.prepared ? ' on' : '')}
+                title={prepare.prepared ? 'Prepared today — click to unprepare' : 'Prepare this tactic'}
+                aria-label={prepare.prepared ? 'Unprepare tactic' : 'Prepare tactic'}
+                disabled={!prepare.prepared && prepare.disabled}
+                onClick={() => {
+                  prepare.onToggle();
+                  onClose();
+                }}
+              >
+                <i className={'ti ' + (prepare.prepared ? 'ti-circle-check-filled' : 'ti-circle')} aria-hidden="true" />
+              </button>
+            )}
+            {pinnable && <Star k={actionKey(a.name)} />}
+            <button className="picker-close" onClick={onClose} aria-label="Close">
+              <i className="ti ti-x" aria-hidden="true" />
+            </button>
+          </div>
+          <div className="info-body">
+            {traits.length > 0 && (
+              <div className="action-detail-traits">
+                {traits.map((t) => (
+                  <InfoTerm key={t} className="strike-trait" title={capWord(t)} description={traitDesc(t, content)}>
+                    {t}
+                  </InfoTerm>
+                ))}
+              </div>
+            )}
+            <DescBody description={a.fullDesc ?? a.desc} descRefs={a.fullRefs ?? a.descRefs} className="action-detail-desc" onExit={onClose} />
+          </div>
+        </div>
       </div>
     );
   }
@@ -444,17 +610,19 @@ export function MainTab({
             ) : (
               <div className="actions">
                 {shownTactics.length > 0 && (
-                  <>
-                    <div className="acts-sec-label">
-                      Tactics
-                      {character.commanderTactics && (
+                  <Section
+                    id="tactics"
+                    label="Tactics"
+                    note={
+                      character.commanderTactics && (
                         <span className="acts-sec-note">
                           {' '}
                           · folio {character.commanderTactics.folio.length}/{character.commanderTactics.folioMax} · prepared{' '}
                           {preparedTactics.size}/{tacticPreparedMax} · {character.commanderTactics.squadmates} squadmates
                         </span>
-                      )}
-                    </div>
+                      )
+                    }
+                  >
                     {shownTactics.map((a) => (
                       <ActionRow
                         key={a.id}
@@ -464,39 +632,41 @@ export function MainTab({
                         onPrepare={onPlay ? () => onPlay((p) => toggleTactic(p, a.id, tacticPreparedMax)) : undefined}
                       />
                     ))}
-                  </>
+                  </Section>
                 )}
                 {shownFeats.length > 0 && (
-                  <>
-                    <div className="acts-sec-label">Feat actions</div>
+                  <Section id="feats" label="Feat actions">
                     {shownFeats.map((a) => (
                       <ActionRow key={a.name} a={a} />
                     ))}
-                  </>
+                  </Section>
                 )}
                 {shownBasic.length > 0 && (
-                  <>
-                    <div className="acts-sec-label">Basic actions</div>
+                  <Section id="basic" label="Basic actions">
                     {shownBasic.map((a) => (
                       <ActionRow key={a.name} a={a} />
                     ))}
-                  </>
+                  </Section>
                 )}
                 {shownSkill.length > 0 && (
-                  <>
-                    <div className="acts-sec-label">Skill actions</div>
-                    {shownSkill.map((a) => (
-                      <ActionRow key={a.name} a={a} />
-                    ))}
-                  </>
+                  <Section id="skill" label="Skill actions" wrap={false}>
+                    {compactActions
+                      ? groupBySkill(shownSkill).map(([skill, group]) => (
+                          <div className="action-chip-row" key={skill || 'misc'}>
+                            {group.map((a) => (
+                              <ActionRow key={a.name} a={a} />
+                            ))}
+                          </div>
+                        ))
+                      : shownSkill.map((a) => <ActionRow key={a.name} a={a} />)}
+                  </Section>
                 )}
                 {shownItemActions.length > 0 && (
-                  <>
-                    <div className="acts-sec-label">Item actions</div>
+                  <Section id="items" label="Item actions">
                     {shownItemActions.map((a) => (
                       <ActionRow key={a.key} a={a} pinnable={false} />
                     ))}
-                  </>
+                  </Section>
                 )}
                 {shownTactics.length + shownFeats.length + shownBasic.length + shownSkill.length + shownItemActions.length ===
                   0 && <div className="acts-empty">No actions match.</div>}
@@ -505,13 +675,16 @@ export function MainTab({
           </>
         ) : (
           <div className="actions">
-            <div className="acts-sec-label">
-              {mode === 'exp' ? 'Exploration activities' : 'Downtime activities'}
-            </div>
-            {(mode === 'exp' ? shownExplore : shownDowntime).map((a) => (
-              <ActionRow key={a.name} a={a} pinnable={false} />
-            ))}
-            {(mode === 'exp' ? shownExplore : shownDowntime).length === 0 && (
+            {(mode === 'exp' ? shownExplore : shownDowntime).length > 0 ? (
+              <Section
+                id={mode === 'exp' ? 'explore' : 'downtime'}
+                label={mode === 'exp' ? 'Exploration activities' : 'Downtime activities'}
+              >
+                {(mode === 'exp' ? shownExplore : shownDowntime).map((a) => (
+                  <ActionRow key={a.name} a={a} pinnable={false} />
+                ))}
+              </Section>
+            ) : (
               <div className="acts-empty">No activities match.</div>
             )}
           </div>
@@ -519,6 +692,7 @@ export function MainTab({
       </section>
 
       {openDesc && <DescriptionModal root={openDesc} onClose={() => setOpenDesc(null)} />}
+      {detailAction && <ActionDetailModal detail={detailAction} onClose={() => setDetailAction(null)} />}
       {strikeDetail && (
         <StrikeDetailModal
           strike={strikeDetail}

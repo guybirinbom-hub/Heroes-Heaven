@@ -817,6 +817,13 @@
   color: var(--app-text-dim);
   line-height: 1.55;
   margin-top: 8px;
+  /* A long description gets its own scroll instead of pushing the next choice far down the page;
+     short ones (under the cap) show in full with no scrollbar. overscroll-behavior keeps the inner
+     scroll from spilling into the page once you reach the bottom. */
+  max-height: 300px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 8px;
 }
 .cc-det {
   background: none;
@@ -1323,7 +1330,9 @@
 .cmp-row { border: var(--app-bw) solid var(--app-border); border-radius: var(--app-radius-sm); padding: 8px 10px; margin-bottom: 8px; }
 .cmp-row-head { display: flex; align-items: center; gap: 8px; }
 .cmp-row-head .ti { color: var(--app-text-dim); }
-.cmp-name { flex: 1; background: var(--app-surface-2); border: var(--app-bw) solid var(--app-border); border-radius: var(--app-radius-sm); color: var(--app-text); font-size: 12.5px; padding: 5px 8px; font-family: inherit; }
+/* Scoped to the builder's companion row — this is the editable name <input>. Leaving it unscoped
+   leaked the input box onto the sheet's companion-header `.cmp-name` title div (a class clash). */
+.cmp-row-head .cmp-name { flex: 1; background: var(--app-surface-2); border: var(--app-bw) solid var(--app-border); border-radius: var(--app-radius-sm); color: var(--app-text); font-size: 12.5px; padding: 5px 8px; font-family: inherit; }
 .cmp-kind { font-size: 11px; color: var(--app-text-dim); text-transform: capitalize; }
 .cmp-controls { display: flex; gap: 8px; margin-top: 8px; }
 .cmp-controls .popsel { flex: 1; width: auto; }
@@ -1333,3 +1342,315 @@
 /* Equipment budget + per-item price. */
 .inv-line-price { font-size: 11px; color: var(--app-text-dim); margin-left: 6px; }
 .ol-count.over { color: var(--app-bad); font-weight: 500; }
+
+/* Overrides (creative editing) section — Setup card + the picker "Take anyway" affordance. */
+.ovr-intro {
+  margin: 0 0 4px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--app-text-dim);
+}
+
+/* Sources card — category rows with per-book toggles. */
+.src-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.src-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 4px;
+}
+.src-act {
+  font-size: 12px;
+  padding: 4px 10px;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+  color: var(--app-text);
+  cursor: pointer;
+}
+.src-act:hover {
+  border-color: var(--app-accent);
+  color: var(--app-accent);
+}
+.src-cat {
+  border-top: var(--app-bw) solid var(--app-border);
+}
+.src-cat-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.src-cat-name {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: none;
+  border: none;
+  color: var(--app-text);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 2px;
+  text-align: left;
+}
+.src-cat-name > i {
+  font-size: 14px;
+  color: var(--app-text-dim);
+}
+.src-count {
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--app-text-dim);
+  background: var(--app-surface-2);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+.src-check {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--app-text-dim);
+  padding: 4px;
+  display: inline-flex;
+}
+.src-check.on,
+.src-check.partial {
+  color: var(--app-accent);
+}
+.src-check.partial {
+  opacity: 0.75;
+}
+.src-check i {
+  font-size: 18px;
+}
+.src-books {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 0 0 8px 22px;
+}
+.src-book {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--app-text-dim);
+  font: inherit;
+  font-size: 12.5px;
+  padding: 4px 6px;
+  border-radius: var(--app-radius-sm);
+  text-align: left;
+}
+.src-book:hover {
+  background: var(--app-surface-2);
+}
+.src-book.on {
+  color: var(--app-text);
+}
+.src-book > i {
+  font-size: 16px;
+  flex: none;
+  color: var(--app-text-dim);
+}
+.src-book.on > i {
+  color: var(--app-accent);
+}
+.src-book-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.src-book-n {
+  font-size: 11px;
+  color: var(--app-text-dim);
+}
+.src-bundle-n {
+  font-size: 11px;
+  color: var(--app-text-dim);
+  opacity: 0.7;
+}
+.src-niche {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px 6px 2px;
+  background: none;
+  border: none;
+  border-top: var(--app-bw) solid var(--app-border);
+  color: var(--app-text-dim);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: left;
+}
+.src-niche:hover {
+  color: var(--app-text);
+}
+.src-niche > i {
+  font-size: 15px;
+  flex: none;
+}
+.src-niche-hint {
+  margin-left: auto;
+  font-size: 11px;
+  opacity: 0.7;
+}
+.ovr-take-inline,
+.ovr-take {
+  color: var(--app-warn);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.ovr-take {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.ovr-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 6px;
+}
+.ovr-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 4px 2px 9px;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: 999px;
+  font-size: 11.5px;
+  color: var(--app-text);
+  background: var(--app-surface-2);
+}
+.ovr-chip-x {
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--app-danger);
+  padding: 1px;
+  border-radius: 50%;
+  line-height: 1;
+}
+.ovr-chip-x:hover {
+  background: var(--app-hover);
+}
+.picker-override-note {
+  font-size: 11px;
+  color: var(--app-warn);
+  margin-top: 2px;
+}
+.ovr-opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Overrides — attribute grid + proficiency rows. */
+.ovr-attrs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 6px;
+}
+.ovr-attr {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 5px;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+}
+.ovr-attr.on {
+  border-color: var(--app-warn);
+}
+.ovr-attr-k {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--app-text-dim);
+  width: 26px;
+}
+.ovr-attr-in {
+  width: 42px;
+  background: var(--app-surface);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  color: var(--app-text);
+  padding: 2px 4px;
+  font-size: 12px;
+}
+.ovr-attr-x {
+  display: inline-flex;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--app-warn);
+  padding: 1px;
+}
+.ovr-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+}
+.ovr-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ovr-row-k {
+  flex: 1;
+  font-size: 12px;
+  color: var(--app-text);
+}
+
+/* Overrides — change-a-feat/feature editor. */
+.ovr-edit {
+  margin-top: 8px;
+  padding: 7px;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+}
+.ovr-edit-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ovr-edit-name {
+  flex: 1;
+  background: var(--app-surface);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  color: var(--app-text);
+  padding: 4px 7px;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.ovr-edit-desc {
+  width: 100%;
+  margin-top: 5px;
+  background: var(--app-surface);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  color: var(--app-text);
+  padding: 5px 7px;
+  font-size: 11.5px;
+  font-family: inherit;
+  line-height: 1.4;
+  resize: vertical;
+}

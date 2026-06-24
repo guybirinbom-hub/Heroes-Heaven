@@ -7,17 +7,19 @@
  */
 import { themes } from './themes';
 import { styles } from './styles';
+import { fonts } from './fonts';
 
 const STORAGE_KEY = 'pf2e-codex.appearance';
 
 export interface AppearanceState {
   themeId: string;
   styleId: string;
+  fontId: string;
   /** Hex accent override, or null to use the active theme's own accent. */
   accent: string | null;
 }
 
-const DEFAULT: AppearanceState = { themeId: 'midnight', styleId: 'modern', accent: null };
+const DEFAULT: AppearanceState = { themeId: 'midnight', styleId: 'modern', fontId: 'system', accent: null };
 
 let state: AppearanceState = { ...DEFAULT };
 
@@ -29,6 +31,7 @@ function loadState(): AppearanceState {
       return {
         themeId: p.themeId && themes[p.themeId] ? p.themeId : DEFAULT.themeId,
         styleId: p.styleId && styles[p.styleId] ? p.styleId : DEFAULT.styleId,
+        fontId: p.fontId && fonts[p.fontId] ? p.fontId : DEFAULT.fontId,
         accent: typeof p.accent === 'string' ? p.accent : null,
       };
     }
@@ -90,9 +93,11 @@ function setVars(vars: Record<string, string>): void {
 export function applyAppearance(): void {
   const theme = themes[state.themeId] ?? themes[DEFAULT.themeId];
   const style = styles[state.styleId] ?? styles[DEFAULT.styleId];
+  const font = fonts[state.fontId] ?? fonts[DEFAULT.fontId];
 
   setVars(theme.tokens);
   setVars(style.tokens);
+  setVars({ '--app-font': font.stack });
 
   const accent = state.accent ?? theme.tokens['--app-accent'];
   setVars({
@@ -128,6 +133,13 @@ export function setTheme(themeId: string): void {
 export function setStyle(styleId: string): void {
   if (!styles[styleId]) return;
   state = { ...state, styleId };
+  saveState();
+  applyAppearance();
+}
+
+export function setFont(fontId: string): void {
+  if (!fonts[fontId]) return;
+  state = { ...state, fontId };
   saveState();
   applyAppearance();
 }

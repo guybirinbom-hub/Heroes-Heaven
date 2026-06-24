@@ -73,6 +73,53 @@ export const SPELL_SPEC_BUILDER: FilterSpec<Spell> = {
   fields: SPELL_SPEC.fields.filter((f) => f.id !== 'tradition'),
 };
 
+/** The AoN-style equipment "Category" tokens for one item — an item can belong to several (a magic
+ *  staff is Staves + Held Items + maybe Materials). Categories with no reliable signal in the data
+ *  (Vehicles/Siege Weapons/Services live in separate maps; Customizations/Assistive/Adventuring Gear
+ *  have no trait) are intentionally absent. Empty chips auto-hide, so over-listing is harmless. */
+function itemCategories(i: Item): string[] {
+  const c: string[] = [];
+  const u = i.usage ?? '';
+  const t = i.traits ?? [];
+  const has = (trait: string) => t.includes(trait);
+  // itemType-driven
+  if (i.itemType === 'weapon') c.push('weapons');
+  else if (i.itemType === 'armor') c.push('armor');
+  else if (i.itemType === 'shield') c.push('shields');
+  else if (i.itemType === 'consumable') c.push('consumables');
+  else if (i.itemType === 'treasure') c.push('trade-goods');
+  // trait-driven (each trait maps 1:1 to an AoN category)
+  if (has('apex')) c.push('apex');
+  if (has('snare')) c.push('snares');
+  if (has('tattoo')) c.push('tattoos');
+  if (has('spellheart')) c.push('spellhearts');
+  if (has('staff')) c.push('staves');
+  if (has('wand') || (i.itemType === 'consumable' && i.consumableType === 'wand')) c.push('wands');
+  if (has('grimoire')) c.push('grimoires');
+  if (has('cursed')) c.push('cursed');
+  if (has('intelligent')) c.push('intelligent');
+  if (has('relic')) c.push('relics');
+  if (has('artifact')) c.push('artifacts');
+  if (has('censer')) c.push('censer');
+  if (has('contract')) c.push('contracts');
+  if (has('graft')) c.push('grafts');
+  if (has('structure')) c.push('structures');
+  if (has('adjustment')) c.push('adjustments');
+  if (has('tech')) c.push('high-tech');
+  if (has('alchemical')) c.push('alchemical');
+  if (has('figurehead')) c.push('figurehead');
+  if (has('companion')) c.push('animals-and-gear');
+  // material-driven
+  if (i.material || has('precious')) c.push('materials');
+  // usage-driven
+  if (/^etched/.test(u)) c.push('runes');
+  if (/^worn/.test(u)) c.push('worn-items');
+  if (/^held-in/.test(u)) c.push('held-items');
+  // catch-all so nothing falls through the filter entirely
+  if (c.length === 0) c.push('other');
+  return c;
+}
+
 /** The item filter set (type/category/rarity/traits chips + Level/Price/Bulk sliders). */
 export const ITEM_SPEC: FilterSpec<Item> = {
   fields: [
@@ -86,6 +133,38 @@ export const ITEM_SPEC: FilterSpec<Item> = {
       { id: 'container', label: 'Containers' },
       { id: 'treasure', label: 'Treasure' },
     ], accessor: (i) => i.itemType },
+    { id: 'category', label: 'Category', kind: 'chips', mode: 'any', accessor: (i) => itemCategories(i), options: [
+      { id: 'adjustments', label: 'Adjustments' },
+      { id: 'alchemical', label: 'Alchemical Items' },
+      { id: 'animals-and-gear', label: 'Animals and Gear' },
+      { id: 'apex', label: 'Apex Items' },
+      { id: 'armor', label: 'Armor' },
+      { id: 'artifacts', label: 'Artifacts' },
+      { id: 'censer', label: 'Censer' },
+      { id: 'consumables', label: 'Consumables' },
+      { id: 'contracts', label: 'Contracts' },
+      { id: 'cursed', label: 'Cursed Items' },
+      { id: 'figurehead', label: 'Figurehead' },
+      { id: 'grafts', label: 'Grafts' },
+      { id: 'grimoires', label: 'Grimoires' },
+      { id: 'held-items', label: 'Held Items' },
+      { id: 'high-tech', label: 'High-Tech' },
+      { id: 'intelligent', label: 'Intelligent Items' },
+      { id: 'materials', label: 'Materials' },
+      { id: 'relics', label: 'Relics' },
+      { id: 'runes', label: 'Runes' },
+      { id: 'shields', label: 'Shields' },
+      { id: 'snares', label: 'Snares' },
+      { id: 'spellhearts', label: 'Spellhearts' },
+      { id: 'staves', label: 'Staves' },
+      { id: 'structures', label: 'Structures' },
+      { id: 'tattoos', label: 'Tattoos' },
+      { id: 'trade-goods', label: 'Trade Goods' },
+      { id: 'wands', label: 'Wands' },
+      { id: 'weapons', label: 'Weapons' },
+      { id: 'worn-items', label: 'Worn Items' },
+      { id: 'other', label: 'Other' },
+    ] },
     { id: 'rarity', label: 'Rarity', kind: 'chips', options: RARITY, accessor: (i) => i.rarity },
     { id: 'consumable', label: 'Consumable type', kind: 'chips', options: [
       { id: 'potion', label: 'Potion' },

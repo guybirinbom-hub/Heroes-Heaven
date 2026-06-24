@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import type { Coins, ContentDatabase, InventoryItem, Item } from '../rules/types';
-import { setItemCounter, setItemQuantity, updateInventoryItem, type PlayState } from '../rules/play';
+import { removeInventoryItem, setItemCounter, setItemQuantity, updateInventoryItem, type PlayState } from '../rules/play';
 import { useEscapeClose } from './useEscapeClose';
 import { chargesFor, itemCounters } from '../rules/itemUses';
 import { traitDesc } from '../rules/glossary';
 import { InfoTerm } from './InfoTerm';
 import { DescBody } from './DescBody';
+import { CritSpecText } from './CritSpecText';
+import { critSpec } from '../rules/critSpec';
 import { PinStar } from './PinStar';
 import { ActionGlyph } from './widgets';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { SPELL_SPEC_BUILDER } from './filterSpecs';
+import { MonsterPartsSection } from './MonsterPartsEditor';
 
 const ordinalRank = (n: number): string => (n === 1 ? '1st' : n === 2 ? '2nd' : n === 3 ? '3rd' : `${n}th`);
 
@@ -138,6 +141,9 @@ export function ItemDetail({
   onClose,
   onPlay,
   inventory = [],
+  rationsDayTracking = false,
+  monsterPartsOn = false,
+  charLevel = 1,
   onEdit,
 }: {
   inv: InventoryItem;
@@ -147,13 +153,19 @@ export function ItemDetail({
   onPlay?: (fn: (play: PlayState) => PlayState) => void;
   /** The character's full inventory — needed to show affixed attachments. */
   inventory?: InventoryItem[];
+  /** "Individual day tracking of rations" option — suppress the Rations days counter. */
+  rationsDayTracking?: boolean;
+  /** Whether the Monster Parts subsystem is unlocked for this character (shows refine/imbue controls). */
+  monsterPartsOn?: boolean;
+  /** Character level — caps refinement / imbued-property levels. */
+  charLevel?: number;
   /** Opens the item editor for this item + instance (runes/attachments live there). */
   onEdit?: (item: Item, inv: InventoryItem) => void;
 }) {
   useEscapeClose(onClose);
   const [pickingSpell, setPickingSpell] = useState(false);
   const runes = runeLines(inv);
-  const counters = itemCounters(item, inv);
+  const counters = rationsDayTracking && item.id === 'rations' ? [] : itemCounters(item, inv);
   const id = inv.instanceId;
   const storedSpell = inv.heldSpell ? content.spells[inv.heldSpell] : undefined;
   // Spells legal for a generic scroll/wand: the slot's rank, the right tradition (if locked), no rituals.
@@ -312,7 +324,31 @@ export function ItemDetail({
               </span>
             </div>
           )}
-          <DescBody description={item.description} descRefs={item.descRefs} />
+          {item.itemType === 'weapon' && critSpec(item.group) && (
+            <div className="sd-uses sd-critspec">
+              <span className="sd-uses-title">Critical specialization · {item.group}</span>
+              <div className="sd-critspec-text">
+                <CritSpecText text={critSpec(item.group)!} content={content} />
+              </div>
+              <span className="sd-uses-hint">Applies on a critical hit if you have critical specialization with this weapon group.</span>
+            </div>
+          )}
+          {onPlay && monsterPartsOn && <MonsterPartsSection inv={inv} item={item} charLevel={charLevel} onPlay={onPlay} />}
+          <DescBody description={item.description} descRefs={item.descRefs} onExit={onClose} />
+          {onPlay && (
+            <div className="sd-remove">
+              <button
+                className="sd-remove-btn"
+                aria-label="Remove item"
+                onClick={() => {
+                  onPlay((p) => removeInventoryItem(p, id));
+                  onClose();
+                }}
+              >
+                <i className="ti ti-trash" aria-hidden="true" /> Remove item
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

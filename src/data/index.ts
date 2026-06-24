@@ -8,10 +8,10 @@
  * fills any gaps (so the example character keeps resolving even where Core lacks an
  * exact slug).
  */
-import type { ContentDatabase } from '../rules/types';
+import type { ContentDatabase, SourceInfo } from '../rules/types';
 import { seedContent } from '../rules/seed';
 import { CATALOG_MODE_MAP } from '../rules/modes';
-import { loadHomebrewItems, loadModes } from './storage';
+import { loadHomebrewContent, loadHomebrewSources, loadModes, HOMEBREW_TYPES } from './storage';
 
 function merge<T>(base: Record<string, T>, over: Record<string, T>): Record<string, T> {
   return { ...base, ...over };
@@ -19,16 +19,26 @@ function merge<T>(base: Record<string, T>, over: Record<string, T>): Record<stri
 
 function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
   const c = core as ContentDatabase;
+  // Seed → Core → user homebrew, so homebrew entries resolve everywhere core content does.
+  const hb = loadHomebrewContent();
+  // Tag each homebrew entry's source.book with its Source's name, so the per-character Sources filter
+  // (applySources) governs it: a homebrew Source is off by default and opt-in via Setup → Sources.
+  const hbSources = loadHomebrewSources();
+  for (const type of HOMEBREW_TYPES) {
+    for (const entry of Object.values(hb[type]) as unknown as { homebrewSourceId?: string; source?: SourceInfo }[]) {
+      const name = entry.homebrewSourceId ? hbSources[entry.homebrewSourceId]?.name : undefined;
+      entry.source = { ...(entry.source ?? {}), license: 'homebrew', ...(name ? { book: name } : {}) };
+    }
+  }
   return {
-    ancestries: merge(seedContent.ancestries, c.ancestries ?? {}),
-    heritages: merge(seedContent.heritages, c.heritages ?? {}),
-    backgrounds: merge(seedContent.backgrounds, c.backgrounds ?? {}),
+    ancestries: merge(merge(seedContent.ancestries, c.ancestries ?? {}), hb.ancestries),
+    heritages: merge(merge(seedContent.heritages, c.heritages ?? {}), hb.heritages),
+    backgrounds: merge(merge(seedContent.backgrounds, c.backgrounds ?? {}), hb.backgrounds),
     classes: merge(seedContent.classes, c.classes ?? {}),
     classFeatures: merge(seedContent.classFeatures, c.classFeatures ?? {}),
-    feats: merge(seedContent.feats, c.feats ?? {}),
-    spells: merge(seedContent.spells, c.spells ?? {}),
-    // Core/seed first, then the user's custom (homebrew) items on top.
-    items: merge(merge(seedContent.items, c.items ?? {}), loadHomebrewItems()),
+    feats: merge(merge(seedContent.feats, c.feats ?? {}), hb.feats),
+    spells: merge(merge(seedContent.spells, c.spells ?? {}), hb.spells),
+    items: merge(merge(seedContent.items, c.items ?? {}), hb.items),
     deities: merge(seedContent.deities, c.deities ?? {}),
     languages: merge(seedContent.languages, c.languages ?? {}),
     animalCompanions: merge(seedContent.animalCompanions, c.animalCompanions ?? {}),
@@ -40,7 +50,7 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
     vehicles: merge(seedContent.vehicles ?? {}, c.vehicles ?? {}),
     siegeWeapons: merge(seedContent.siegeWeapons ?? {}, c.siegeWeapons ?? {}),
     conditions: merge(seedContent.conditions, c.conditions ?? {}),
-    actions: merge(seedContent.actions, c.actions ?? {}),
+    actions: merge(merge(seedContent.actions, c.actions ?? {}), hb.actions),
     // Built-in mode catalog, then the user's saved modes on top.
     modes: merge(CATALOG_MODE_MAP, loadModes()),
     runes: c.runes ?? {},
@@ -48,6 +58,14 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
 }
 
 let cached: ContentDatabase | null = null;
+let cachedCore: Partial<ContentDatabase> = {};
+
+/** Re-merge seed + core + the current homebrew (re-read from storage) without re-fetching core.json.
+ *  Call after the user edits homebrew so the live content DB reflects it immediately. */
+export function rebuildContent(): ContentDatabase {
+  cached = mergeWithSeed(cachedCore);
+  return cached;
+}
 
 /** Fetch + parse public/core.json once, merged with the seed. Cached after first call. */
 export async function loadContent(): Promise<ContentDatabase> {
@@ -56,6 +74,7 @@ export async function loadContent(): Promise<ContentDatabase> {
     const res = await fetch(`${import.meta.env.BASE_URL}core.json`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const core = (await res.json()) as Partial<ContentDatabase>;
+    cachedCore = core;
     cached = mergeWithSeed(core);
   } catch (err) {
     // Fall back to the seed alone so the app still boots (and the example

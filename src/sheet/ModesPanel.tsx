@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { ModeDef, ModeModifier, ModeTargetKind, ModifierType } from '../rules/types';
 import { SKILLS, SAVES } from '../rules/types';
 import { MODE_TARGETS, MODIFIER_TYPES, modeRelevant } from '../rules/modes';
+import { usePrefs, togglePinnedMode } from '../data/prefs';
 
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -14,22 +15,31 @@ function targetLabel(mod: ModeModifier): string {
   if (mod.target === 'skill') return mod.detail ? (mod.detail.startsWith('lore:') ? cap(mod.detail.slice(5)) + ' Lore' : cap(mod.detail)) : 'Skills';
   return MODE_TARGETS.find((t) => t.kind === mod.target)?.label ?? mod.target;
 }
-function summarizeMod(mod: ModeModifier): string {
+export function summarizeMod(mod: ModeModifier): string {
   const typed = mod.type === 'untyped' ? '' : ` ${mod.type}`;
   return `${formatMod(mod.value)}${typed} to ${targetLabel(mod)}${mod.appliesWhen ? ` — ${mod.appliesWhen}` : ''}`;
 }
 
 const newModifier = (): ModeModifier => ({ value: 1, type: 'status', target: 'all-checks' });
 
-/** The "Modes" tab: toggle predefined class/ancestry modes (gated to your character), plus your
- *  own saved modes (toggle on/off, create from a template, edit/delete). */
+/** A scope a user-created mode can belong to — null id = universal (every character). */
+export interface ScopeOption {
+  id: string | null;
+  name: string;
+}
+
+/** The "Modes" tab: toggle predefined class/ancestry/archetype modes (gated to your character), plus
+ *  your own saved modes. Pin a star to keep a mode visible at the top even when it's gated out. */
 export function ModesPanel({
   library,
   predefined,
   catalog,
   classId,
   ancestryId,
+  featIds,
   activeIds,
+  charKey,
+  charName,
   onToggle,
   onSave,
   onDelete,
@@ -39,42 +49,77 @@ export function ModesPanel({
   catalog: ModeDef[];
   classId?: string | null;
   ancestryId?: string | null;
+  /** Feat ids this character has — gates archetype modes (a mode's `feats` list). */
+  featIds?: ReadonlySet<string>;
   activeIds: string[];
+  /** Roster id of the character whose panel this is — for creating character-specific modes. */
+  charKey?: string;
+  charName?: string;
   onToggle: (id: string) => void;
   onSave: (mode: ModeDef) => void;
   onDelete: (id: string) => void;
 }) {
+  const prefs = usePrefs();
   const [editing, setEditing] = useState<ModeDef | null>(null);
   const [showAll, setShowAll] = useState(false);
   const [q, setQ] = useState('');
+
+  const scopeOptions: ScopeOption[] = charKey
+    ? [
+        { id: null, name: 'All characters' },
+        { id: charKey, name: charName ? `Only ${charName}` : 'Only this character' },
+      ]
+    : [{ id: null, name: 'All characters' }];
 
   if (editing) {
     return (
       <ModeEditor
         draft={editing}
         catalog={catalog}
+        scopeOptions={scopeOptions}
         onChange={setEditing}
         onCancel={() => setEditing(null)}
         onSave={() => {
           if (editing.name.trim()) onSave({ ...editing, name: editing.name.trim() });
           setEditing(null);
         }}
+        onDelete={
+          library.some((m) => m.id === editing.id)
+            ? () => {
+                onDelete(editing.id);
+                setEditing(null);
+              }
+            : undefined
+        }
       />
     );
   }
 
   const active = new Set(activeIds);
+  const pinned = new Set(prefs.pinnedModes ?? []);
   const ql = q.trim().toLowerCase();
   const matches = (m: ModeDef) => !ql || m.name.toLowerCase().includes(ql);
-  const relevant = predefined.filter((md) => modeRelevant(md, classId, ancestryId));
-  // A search spans every predefined mode (ignoring class/ancestry gating); otherwise show the
-  // relevant set (or all when "Show all" is ticked).
-  const shown = (ql ? predefined : showAll ? predefined : relevant).filter(matches);
-  const hiddenCount = predefined.length - relevant.length;
 
-  // Group the shown predefined modes by category, preserving catalog order.
+  // A predefined mode is on the default (non-search, non-show-all) list if it's relevant to the
+  // character, OR force-shown because it's pinned or currently active (so a gated mode the player
+  // turned on — or starred — never disappears).
+  const relevant = (md: ModeDef) => modeRelevant(md, classId, ancestryId, featIds);
+  const forceShow = (md: ModeDef) => pinned.has(md.id) || active.has(md.id);
+  const defaultShow = (md: ModeDef) => relevant(md) || forceShow(md);
+
+  const allModes = [...library, ...predefined];
+  const editableIds = new Set(library.map((m) => m.id));
+  const pinnedList = allModes.filter((m) => pinned.has(m.id) && matches(m));
+
+  // Predefined shown in the categorized section (search → all; show-all → all; else default set),
+  // minus the ones already surfaced in the Pinned section.
+  const shownPredef = (ql || showAll ? predefined : predefined.filter(defaultShow))
+    .filter(matches)
+    .filter((m) => !pinned.has(m.id));
+  const hiddenCount = predefined.filter((md) => !relevant(md)).length;
+
   const groups: { cat: string; list: ModeDef[] }[] = [];
-  for (const md of shown) {
+  for (const md of shownPredef) {
     const cat = md.category ?? 'Other';
     let g = groups.find((x) => x.cat === cat);
     if (!g) {
@@ -86,6 +131,7 @@ export function ModesPanel({
 
   const row = (mode: ModeDef, editable: boolean) => {
     const on = active.has(mode.id);
+    const isPinned = pinned.has(mode.id);
     return (
       <div className={'mode-row' + (on ? ' on' : '')} key={mode.id}>
         <button
@@ -96,20 +142,27 @@ export function ModesPanel({
           <i className={'ti ' + (on ? 'ti-circle-check' : 'ti-circle')} aria-hidden="true" />
         </button>
         <div className="mode-info" onClick={() => onToggle(mode.id)}>
-          <div className="mode-name">{mode.name}</div>
+          <div className="mode-name">
+            {mode.name}
+            {editable && mode.charId && <span className="mode-scope-tag" title="Only this character">★ this character</span>}
+          </div>
           {mode.modifiers.length > 0 && <div className="mode-mods">{mode.modifiers.map(summarizeMod).join(' · ')}</div>}
           {mode.note && <div className="mode-note">{mode.note}</div>}
           {mode.modifiers.length === 0 && !mode.note && <div className="mode-mods">no modifiers</div>}
         </div>
+        <button
+          className={'mode-pin' + (isPinned ? ' on' : '')}
+          aria-label={isPinned ? 'Unpin' : 'Pin to top'}
+          aria-pressed={isPinned}
+          title={isPinned ? 'Unpin' : 'Pin to top'}
+          onClick={() => togglePinnedMode(mode.id)}
+        >
+          <i className="ti ti-star" aria-hidden="true" />
+        </button>
         {editable && (
-          <>
-            <button className="mode-edit" aria-label="Edit" onClick={() => setEditing(structuredClone(mode))}>
-              <i className="ti ti-edit" aria-hidden="true" />
-            </button>
-            <button className="mode-del" aria-label="Delete" onClick={() => onDelete(mode.id)}>
-              <i className="ti ti-trash" aria-hidden="true" />
-            </button>
-          </>
+          <button className="mode-edit" aria-label="Edit" onClick={() => setEditing(structuredClone(mode))}>
+            <i className="ti ti-edit" aria-hidden="true" />
+          </button>
         )}
       </div>
     );
@@ -132,17 +185,30 @@ export function ModesPanel({
         <input placeholder="Search modes" value={q} onChange={(e) => setQ(e.target.value)} />
       </div>
 
-      <div className="modes-section-head">
-        <span className="modes-section-title">Your modes</span>
-      </div>
-      {library.length === 0 ? (
-        <div className="acts-empty">No custom modes yet. Create one with “New mode” — optionally starting from a template.</div>
-      ) : (
-        <div className="modes-list">{library.filter(matches).map((mode) => row(mode, true))}</div>
+      {pinnedList.length > 0 && (
+        <>
+          <div className="modes-section-head">
+            <span className="modes-section-title">Pinned</span>
+          </div>
+          <div className="modes-list">{pinnedList.map((mode) => row(mode, editableIds.has(mode.id)))}</div>
+        </>
       )}
 
       <div className="modes-section-head">
-        <span className="modes-section-title">Class &amp; ancestry modes</span>
+        <span className="modes-section-title">Your modes</span>
+      </div>
+      {library.filter((m) => !pinned.has(m.id)).filter(matches).length === 0 ? (
+        <div className="acts-empty">
+          {library.length === 0
+            ? 'No custom modes yet. Create one with “New mode” — optionally starting from a template.'
+            : 'All your custom modes are pinned above.'}
+        </div>
+      ) : (
+        <div className="modes-list">{library.filter((m) => !pinned.has(m.id)).filter(matches).map((mode) => row(mode, true))}</div>
+      )}
+
+      <div className="modes-section-head">
+        <span className="modes-section-title">Class, ancestry &amp; archetype modes</span>
         {hiddenCount > 0 && (
           <label className="modes-showall">
             <input type="checkbox" checked={showAll} onChange={(e) => setShowAll(e.target.checked)} />
@@ -164,18 +230,25 @@ export function ModesPanel({
   );
 }
 
-function ModeEditor({
+/** The create/edit-a-mode form. Exported so Settings → Modes can reuse it (with the full roster as
+ *  scope options). `scopeOptions` drives the universal-vs-character control. */
+export function ModeEditor({
   draft,
   catalog,
+  scopeOptions = [{ id: null, name: 'All characters' }],
   onChange,
   onSave,
   onCancel,
+  onDelete,
 }: {
   draft: ModeDef;
   catalog: ModeDef[];
+  scopeOptions?: ScopeOption[];
   onChange: (m: ModeDef) => void;
   onSave: () => void;
   onCancel: () => void;
+  /** Provided only when editing an existing custom mode — renders a Delete button. */
+  onDelete?: () => void;
 }) {
   const setMod = (i: number, patch: Partial<ModeModifier>) =>
     onChange({ ...draft, modifiers: draft.modifiers.map((m, j) => (j === i ? { ...m, ...patch } : m)) });
@@ -193,6 +266,22 @@ function ModeEditor({
         <span className="me-label">Mode name</span>
         <input value={draft.name} placeholder="e.g. Inspired" onChange={(e) => onChange({ ...draft, name: e.target.value })} />
       </label>
+
+      {scopeOptions.length > 1 && (
+        <label className="me-field">
+          <span className="me-label">Available to</span>
+          <select
+            value={draft.charId ?? ''}
+            onChange={(e) => onChange({ ...draft, charId: e.target.value || undefined })}
+          >
+            {scopeOptions.map((s) => (
+              <option key={s.id ?? '__all__'} value={s.id ?? ''}>
+                {s.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
 
       <label className="me-field">
         <span className="me-label">Start from a template (optional)</span>
@@ -282,6 +371,11 @@ function ModeEditor({
       </button>
 
       <div className="me-actions">
+        {onDelete && (
+          <button className="btn-danger me-delete" onClick={onDelete}>
+            <i className="ti ti-trash" aria-hidden="true" /> Delete
+          </button>
+        )}
         <button className="btn-ghost" onClick={onCancel}>
           Cancel
         </button>

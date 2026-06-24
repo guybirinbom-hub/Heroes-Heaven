@@ -39,12 +39,42 @@ describe('familiar + eidolon use the master / summoner defenses', () => {
     expect(fam.saves.will).toBe(deriveSave(ch, 'will').modifier);
   });
 
-  it('an eidolon shares the summoner HP and uses their AC/saves/Perception', () => {
+  it('an eidolon shares the summoner HP/saves but uses its OWN Dex + array AC tweaks', () => {
     const ch = build('summoner', 5, { keyAbility: 'cha' });
-    const eid = deriveEidolon({ id: 'e', kind: 'eidolon', name: '', typeId: ch.subclassId ?? undefined }, ch, c);
-    expect(eid.hp).toBe(deriveMaxHp(ch, c)); // shared pool
-    expect(eid.ac).toBe(deriveAc(ch, c).value);
-    expect(eid.saves.fortitude).toBe(deriveSave(ch, 'fortitude').modifier);
+    const mk = (eidolon?: import('../src/rules/types').EidolonConfig) =>
+      deriveEidolon({ id: 'e', kind: 'eidolon', name: '', typeId: ch.subclassId ?? undefined, eidolon }, ch, c);
+    const base = mk(); // default abilities (Dex +2)
+    expect(base.hp).toBe(deriveMaxHp(ch, c)); // shared HP pool
+    expect(base.saves.fortitude).toBe(deriveSave(ch, 'fortitude').modifier); // shared saves
+    // AC tracks the eidolon's OWN Dex, the array's item bonus, and the array's Dex cap
+    expect(mk({ abilities: { dex: 5 }, acItemBonus: 2 }).ac).toBe(base.ac + 3 + 2);
+    expect(mk({ abilities: { dex: 5 }, dexCap: 1 }).ac).toBe(base.ac - 1);
+  });
+
+  it('an eidolon has a player-configured primary + a fixed secondary unarmed attack', () => {
+    const ch = build('summoner', 5, { keyAbility: 'cha' });
+    const eid = deriveEidolon(
+      {
+        id: 'e', kind: 'eidolon', name: '', typeId: ch.subclassId ?? undefined,
+        eidolon: { abilities: { str: 5 }, primary: { name: 'Claw', damageType: 'slashing', option: 'd8-trip' }, secondary: { name: 'Tail', damageType: 'bludgeoning' } },
+      },
+      ch,
+      c,
+    );
+    expect(eid.attacks).toHaveLength(2);
+    // primary 1d8 (trip): attack = Str5 + trained(2) + level5 = 12; damage 1d8 + Str5
+    expect(eid.attacks[0]).toMatchObject({ name: 'Claw', attack: 12, damage: '1d8+5 slashing' });
+    expect(eid.attacks[0].traits).toEqual(expect.arrayContaining(['trip', 'unarmed']));
+    // secondary is ALWAYS 1d6 with agile + finesse
+    expect(eid.attacks[1]).toMatchObject({ name: 'Tail', damage: '1d6+5 bludgeoning' });
+    expect(eid.attacks[1].traits).toEqual(expect.arrayContaining(['agile', 'finesse', 'unarmed']));
+  });
+
+  it('a cleared ability input falls back to the default (no NaN)', () => {
+    const ch = build('summoner', 5, { keyAbility: 'cha' });
+    const eid = deriveEidolon({ id: 'e', kind: 'eidolon', name: '', typeId: ch.subclassId ?? undefined, eidolon: { abilities: { str: undefined } } }, ch, c);
+    expect(eid.abilities.str).toBe(4); // default spread, not NaN
+    expect(Number.isNaN(eid.attacks[0].attack)).toBe(false);
   });
 
   it('a companion condition (Frightened 2) applies the status penalty to its stats', () => {

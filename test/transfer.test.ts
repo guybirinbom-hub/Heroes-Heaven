@@ -13,7 +13,7 @@ describe('native Codex export/import (lossless)', () => {
   it('round-trips a character through exportNative → importCharacter', () => {
     const s = saved('Native Hero');
     const { saved: back, report } = importCharacter(exportNative(s), c);
-    expect(report.source).toBe('Wanderer’s Codex');
+    expect(report.source).toBe('Heroes Heaven');
     expect(report.lossless).toBe(true);
     expect(back.character.name).toBe('Native Hero');
     expect(back.character.level).toBe(5);

@@ -1,12 +1,29 @@
 /* Character sheet styles. Every value reads from the design tokens. */
 
 .ws-app,
-.roster-screen {
+.roster-screen,
+.hb-page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   background: var(--app-bg);
   color: var(--app-text);
+}
+/* Homebrew is a full screen: the chrome header sits on top, the sources/content body fills the rest
+   and scrolls internally (clamp the page to the viewport so the pane scrolls, not the whole page). */
+.hb-page {
+  height: 100vh;
+  overflow: hidden;
+}
+.hb-page .settings-body {
+  flex: 1;
+  min-height: 0;
+}
+.hb-back {
+  color: var(--app-text-dim);
+}
+.hb-back:hover {
+  color: var(--app-accent);
 }
 
 /* ---- roster screen ---- */
@@ -301,6 +318,10 @@
   color: var(--app-accent);
   font-size: 15px;
 }
+.chrome-logo {
+  color: var(--app-accent);
+  flex: none;
+}
 .chrome-btns {
   display: flex;
   gap: 2px;
@@ -348,6 +369,54 @@
   font-weight: 500;
   font-size: 15px;
   flex: none;
+}
+/* The top-left avatar when it holds a portrait image: a round button that opens the full-size view. */
+.portrait-btn {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  border: none;
+  cursor: zoom-in;
+}
+.portrait-btn:hover {
+  outline: 2px solid var(--app-accent);
+  outline-offset: 1px;
+}
+/* Full-size portrait lightbox (click anywhere to close). */
+.portrait-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+.portrait-lightbox-img {
+  max-width: 92vw;
+  max-height: 92vh;
+  border-radius: var(--app-radius);
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.55);
+}
+.portrait-lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.portrait-lightbox-close:hover {
+  background: rgba(0, 0, 0, 0.8);
 }
 .identity-name {
   flex: none;
@@ -609,7 +678,12 @@
 }
 /* Inline temp-HP editor — sits right where the "+N temp" is shown. */
 .hp-temp-input {
-  width: 2.1em;
+  /* Size to digits, not font-size — auto-grow where supported, ch fallback (see .coin-input). */
+  width: 3ch;
+  min-width: 2ch;
+  max-width: 6ch;
+  field-sizing: content;
+  box-sizing: content-box;
   background: transparent;
   border: none;
   border-bottom: 1px dashed var(--app-border);
@@ -699,6 +773,11 @@
   flex: 1;
   min-width: 0;
   text-align: right;
+}
+/* Senses read as a normal left-to-right list (the right-align used for immunities/weaknesses/
+   resistances made it look right-to-left). */
+.iwr-val.senses-val {
+  text-align: left;
 }
 /* A clickable rail row (e.g. Speed → opens its breakdown). */
 .rail-kv.openable {
@@ -871,6 +950,14 @@
   padding: 4px 6px;
   font-size: 12.5px;
   color: var(--app-text);
+}
+/* Quick-HP-entry command field (Settings → Customization) — full-width, centred. */
+.hp-cmd {
+  text-align: center;
+}
+.hp-cmd::placeholder {
+  font-size: 10.5px;
+  opacity: 0.7;
 }
 .hp-dmg,
 .hp-heal {
@@ -1356,6 +1443,21 @@ button.strike-name:hover {
   font-size: 10px;
   color: var(--app-accent);
 }
+/* Crit specialization block in the strike-detail popup + the item popup. */
+.strike-detail-crit,
+.sd-critspec {
+  margin-top: 10px;
+}
+.strike-detail-crit .sds-label,
+.sd-critspec .sd-uses-title {
+  text-transform: capitalize;
+}
+.sd-critspec-text {
+  margin: 4px 0 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--app-text);
+}
 .strike-line {
   display: flex;
   align-items: center;
@@ -1570,6 +1672,101 @@ button.strike-name:hover {
   letter-spacing: 0;
   font-weight: 400;
   opacity: 0.85;
+}
+/* Collapsible section header — a button reusing the .acts-sec-label styling plus a chevron. */
+.acts-sec-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+}
+.acts-sec-toggle:hover {
+  color: var(--app-text);
+}
+.acts-sec-toggle > i {
+  font-size: 13px;
+}
+
+/* Compact actions: chips that wrap onto shared rows; a click opens the detail popup. */
+.action-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 2px 0 4px;
+}
+.action-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--app-text);
+  cursor: pointer;
+  font: inherit;
+  max-width: 100%;
+}
+.action-chip:hover {
+  border-color: var(--app-accent);
+  color: var(--app-accent);
+}
+.action-chip.unprepared {
+  opacity: 0.62;
+}
+.action-chip .action-cost {
+  min-width: 0;
+}
+.action-chip-name {
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.action-chip .chip-prep {
+  font-size: 13px;
+  color: var(--app-accent);
+}
+/* Action detail popup: cost glyph beside the title. */
+.action-detail-cost {
+  flex: none;
+  margin-right: 2px;
+}
+/* Full action rows are clickable to open the detail popup. */
+.action.clickable {
+  cursor: pointer;
+}
+.action.clickable:hover {
+  background: var(--app-surface-2);
+}
+/* Trait tags in the action popup — uppercase pills; each opens its trait description on click. */
+.action-detail-traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 10px;
+  padding-bottom: 9px;
+  border-bottom: var(--app-bw) solid var(--app-border);
+}
+.action-detail-traits .strike-trait {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--app-accent);
+  background: var(--app-surface-2);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: 4px;
+  padding: 1px 7px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.action-detail-traits .strike-trait:hover {
+  border-color: var(--app-accent);
 }
 .acts-empty {
   font-size: 12.5px;
@@ -2286,6 +2483,77 @@ button.strike-name:hover {
 .mode-del {
   color: var(--app-bad);
 }
+.mode-pin {
+  background: none;
+  border: none;
+  color: var(--app-text-dim);
+  cursor: pointer;
+  padding: 5px;
+  display: inline-flex;
+  font-size: 16px;
+}
+.mode-pin:hover {
+  color: var(--app-text);
+}
+.mode-pin.on {
+  color: var(--app-accent);
+}
+.mode-scope-tag {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--app-accent);
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+/* ---- Settings → Modes ---- */
+.settings-h {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+.set-modes-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.set-modes-group-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--app-text-dim);
+  margin: 16px 0 7px;
+}
+.set-modes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.set-mode-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+}
+.set-mode-info {
+  flex: 1;
+  min-width: 0;
+}
+.set-mode-name {
+  font-size: 13px;
+  font-weight: 500;
+}
+.set-mode-mods {
+  font-size: 11.5px;
+  color: var(--app-text-dim);
+  line-height: 1.4;
+}
 
 /* ---- mode editor ---- */
 .mode-editor {
@@ -2367,6 +2635,13 @@ button.strike-name:hover {
   gap: 8px;
   margin-top: 14px;
 }
+/* Delete sits apart on the left when editing an existing mode. */
+.me-delete {
+  margin-right: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
 
 /* ---- stat underline when a conditional mode targets it ---- */
 .stat-row.has-mode .stat-name,
@@ -2406,6 +2681,61 @@ button.strike-name:hover {
   background: var(--app-accent);
   color: var(--app-accent-text);
   border: none;
+}
+/* Destructive action button (Settings → Uninstall). */
+.btn-danger {
+  border-radius: var(--app-radius-sm);
+  padding: 8px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  background: var(--app-bad);
+  color: #fff;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-danger:hover {
+  filter: brightness(1.08);
+}
+.btn-danger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Settings → Uninstall "danger zone": a red-bordered panel making the destructive action obvious. */
+.danger-zone {
+  margin-top: 12px;
+  border: var(--app-bw) solid var(--app-bad);
+  border-radius: var(--app-radius);
+  padding: 14px;
+  background: color-mix(in srgb, var(--app-bad) 7%, transparent);
+}
+.danger-list {
+  margin: 4px 0 14px;
+  padding-left: 18px;
+  font-size: 12.5px;
+  color: var(--app-text-dim);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.danger-note {
+  color: var(--app-bad);
+}
+.danger-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.danger-confirm-label {
+  font-size: 12.5px;
+  color: var(--app-text);
+}
+.danger-actions {
+  display: flex;
+  gap: 8px;
 }
 
 /* Generic outlined button (recovery / banner actions). */
@@ -2808,11 +3138,128 @@ button.strike-name:hover {
   font-style: italic;
 }
 
+/* ---- Rich editor embedded in the item editor (description / craft requirements) ---- */
+.ie-rich {
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.ie-rich .toolbar {
+  padding: 5px 7px;
+}
+.ie-rich .editor-body {
+  min-height: 108px;
+  max-height: 320px;
+  padding: 10px 12px;
+}
+.ie-rich-sm .editor-body {
+  min-height: 46px;
+}
+/* A description hyperlink — in the editor (editable) and the read-only render (clickable popup). */
+.ref-link {
+  color: var(--app-accent);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.rich-html .ref-link:hover {
+  text-decoration-style: solid;
+}
+
+/* ---- Read-only render of an authored rich-HTML description ---- */
+.rich-html h2 {
+  font-size: 16px;
+  margin: 8px 0 4px;
+}
+.rich-html h3 {
+  font-size: 14px;
+  margin: 8px 0 4px;
+}
+.rich-html p {
+  margin: 0 0 8px;
+}
+.rich-html ul,
+.rich-html ol {
+  margin: 4px 0 8px;
+  padding-left: 20px;
+}
+.rich-html blockquote {
+  margin: 6px 0;
+  padding: 4px 0 4px 12px;
+  border-left: 3px solid var(--app-border);
+  color: var(--app-text-dim);
+  font-style: italic;
+}
+.rich-html hr {
+  border: none;
+  border-top: var(--app-bw) solid var(--app-border);
+  margin: 8px 0;
+}
+
+/* ---- "Link to a description" search modal ---- */
+.ref-search-overlay {
+  z-index: 70;
+}
+.ref-search {
+  width: 460px;
+}
+.ref-search-list {
+  max-height: 52vh;
+  overflow-y: auto;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ref-search-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  background: none;
+  border: none;
+  border-radius: var(--app-radius-sm);
+  cursor: pointer;
+  text-align: left;
+  color: var(--app-text);
+}
+.ref-search-row:hover {
+  background: var(--app-surface-2);
+}
+.ref-search-name {
+  font-size: 13px;
+}
+.ref-search-kind {
+  font-size: 11px;
+  color: var(--app-text-dim);
+  flex: none;
+}
+
 /* ---- Feats & features ---- */
+/* Feats & features: search on the left, type filters on the right of the same row. */
+.ff-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ff-bar .search {
+  flex: 1 1 220px;
+}
 .ff-filters {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
+}
+.ff-bar .ff-filters {
+  flex: 0 0 auto;
+  justify-content: flex-end;
 }
 .fchip {
   font-size: 12px;
@@ -3061,6 +3508,17 @@ button.strike-name:hover {
   opacity: 0.4;
   cursor: default;
 }
+/* Services in the catalog are reference-only (no Buy/Give) — a small tag instead of buttons. */
+.ai-reference {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--app-text-dim);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  padding: 3px 9px;
+  white-space: nowrap;
+}
 .ai-empty {
   text-align: center;
   color: var(--app-text-dim);
@@ -3116,6 +3574,7 @@ button.strike-name:hover {
   margin-left: auto;
   display: flex;
   gap: 12px;
+  flex-wrap: wrap;
 }
 .coin {
   display: inline-flex;
@@ -3143,7 +3602,14 @@ button.strike-name:hover {
 }
 /* Inline-editable coin amounts — type directly, no edit mode / arrows / Done button. */
 .coin-input {
-  width: 2.6em;
+  /* Size to the DIGITS, not the font size: `ch` (advance of "0") scales with the chosen typeface, so
+     wide fonts (serif / mono / dyslexic) no longer clip multi-digit amounts. Where supported, the input
+     auto-grows to its content; the ch width is the fallback for older webviews. */
+  width: 4.5ch;
+  min-width: 3ch;
+  max-width: 9ch;
+  field-sizing: content;
+  box-sizing: content-box;
   background: var(--app-surface-2);
   border: 1.5px solid var(--app-border);
   border-radius: var(--app-radius-sm);
@@ -3245,6 +3711,47 @@ button.strike-name:hover {
   outline: 2px dashed var(--app-accent);
   outline-offset: 3px;
   border-radius: var(--app-radius);
+}
+/* Drag-to-attach: a weapon/armor/shield card that the dragged rune/attachment can affix onto. */
+.inv-card.attach-target {
+  outline: 1.5px dashed var(--app-accent);
+  outline-offset: 2px;
+}
+.inv-card.attach-over {
+  outline: 2px solid var(--app-accent);
+  outline-offset: 2px;
+  background: color-mix(in srgb, var(--app-accent) 12%, transparent);
+}
+/* "Why it can't attach" banner, shown when a drop is rejected. */
+.inv-attach-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 8px 12px;
+  border: var(--app-bw) solid var(--app-bad);
+  border-radius: var(--app-radius);
+  background: color-mix(in srgb, var(--app-bad) 10%, transparent);
+  color: var(--app-text);
+  font-size: 0.9em;
+}
+.inv-attach-error > i {
+  color: var(--app-bad);
+  flex-shrink: 0;
+}
+.inv-attach-error span {
+  flex: 1;
+}
+.inv-attach-dismiss {
+  background: none;
+  border: none;
+  color: var(--app-muted);
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+}
+.inv-attach-dismiss:hover {
+  color: var(--app-text);
 }
 .inv-actions {
   display: flex;
@@ -3348,6 +3855,38 @@ button.strike-name:hover {
   padding-top: 10px;
   border-top: var(--app-bw) solid var(--app-border);
 }
+/* "Remove item" — relocated here from the inventory card; right-aligned danger button. */
+.sd-remove {
+  display: flex;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: var(--app-bw) solid var(--app-border);
+}
+.sd-remove-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  background: transparent;
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  color: var(--app-bad);
+  font-size: 12.5px;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+.sd-remove-btn:hover {
+  background: color-mix(in srgb, var(--app-bad) 14%, transparent);
+  border-color: var(--app-bad);
+}
+/* The stats block already draws a bottom rule; drop the next section's top rule so a detail popup
+   shows ONE divider between them, not two stacked lines. */
+.sd-stats + .sd-uses,
+.sd-stats + .sd-attach,
+.sd-stats + .sd-heighten {
+  border-top: none;
+  padding-top: 2px;
+}
 .sd-uses-title {
   font-size: 12px;
   font-weight: 600;
@@ -3389,6 +3928,133 @@ button.strike-name:hover {
   font-size: 11px;
   color: var(--app-text-dim);
   font-style: italic;
+}
+
+/* ── Monster Parts (refine / imbue) section in the item-detail popup ── */
+.mp-section {
+  border-top: 1px solid var(--app-border);
+  padding-top: 10px;
+}
+.mp-section .sd-uses-title i {
+  margin-right: 4px;
+}
+.mp-refine,
+.mp-imbue-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.mp-row-label {
+  font-size: 12px;
+  font-weight: 600;
+}
+.mp-cost {
+  font-size: 11px;
+  color: var(--app-text-dim);
+}
+.mp-slots {
+  font-size: 11px;
+  color: var(--app-text-dim);
+  font-weight: 400;
+}
+.mp-effects {
+  margin: 6px 0 0;
+  padding-left: 18px;
+  font-size: 12px;
+}
+.mp-effects li {
+  margin: 1px 0;
+}
+.mp-imbue {
+  margin-top: 8px;
+  padding: 8px;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+}
+.mp-imbue-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mp-imbue-name {
+  font-weight: 600;
+  font-size: 13px;
+  flex: 1;
+}
+.mp-imbue-del {
+  border: none;
+  background: none;
+  color: var(--app-text-dim);
+  cursor: pointer;
+  padding: 2px;
+}
+.mp-imbue-del:hover {
+  color: var(--app-danger, #c0392b);
+}
+.mp-imbue-ctrls {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+.mp-select {
+  font-size: 12px;
+  padding: 3px 6px;
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+  color: var(--app-text);
+}
+.mp-imbue-eff {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.mp-riders {
+  margin: 6px 0 0;
+  padding-left: 0;
+  list-style: none;
+  font-size: 11px;
+  color: var(--app-text-dim);
+}
+.mp-riders li {
+  margin: 2px 0;
+  display: flex;
+  gap: 6px;
+}
+.mp-rider-lvl {
+  display: inline-block;
+  min-width: 18px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--app-text);
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  height: fit-content;
+}
+.mp-add-btn {
+  margin-top: 8px;
+  font-size: 12px;
+  padding: 4px 10px;
+  border: 1.5px dashed var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: none;
+  color: var(--app-text);
+  cursor: pointer;
+}
+.mp-add-btn:hover {
+  border-color: var(--app-accent);
+  color: var(--app-accent);
+}
+.mp-add-select {
+  margin-top: 8px;
+}
+.mp-parts-input {
+  width: 5ch;
 }
 .sd-uses-max {
   display: inline-flex;
@@ -3588,6 +4254,12 @@ button.strike-name:hover {
   align-items: center;
   gap: 6px;
 }
+/* Activation action-cost glyph shown inline on an activatable item's card. */
+.inv-act-cost {
+  display: inline-flex;
+  align-items: center;
+  color: var(--app-text-dim);
+}
 .inv-name {
   font-size: 13.5px;
   font-weight: 500;
@@ -3643,9 +4315,32 @@ button.strike-name:hover {
   align-items: center;
   gap: 10px;
 }
+/* Collapse chevron on a spellcasting / focus / item / rituals section header. */
+.sc-collapse {
+  background: none;
+  border: none;
+  color: var(--app-text-dim);
+  cursor: pointer;
+  padding: 0;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+}
+.sc-collapse:hover {
+  color: var(--app-text);
+}
+.sc-collapse i {
+  font-size: 14px;
+}
 .sc-info {
   flex: 1;
   min-width: 0;
+}
+.sc-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 .sc-name {
   font-size: 13px;
@@ -3749,6 +4444,154 @@ button.strike-name:hover {
   min-width: 0;
   overflow-y: auto;
   padding: 16px 18px;
+}
+
+/* ---- Homebrew manager ---------------------------------------------------------------------------- */
+.chip.danger {
+  color: var(--app-bad);
+  border-color: color-mix(in srgb, var(--app-bad) 45%, transparent);
+}
+.hb-new-source {
+  color: var(--app-accent);
+  margin-top: 6px;
+}
+.hb-source-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.hb-source-name {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 500;
+}
+.hb-unlock {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 10px 12px;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+  font-size: 12.5px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.hb-unlock input {
+  margin-top: 2px;
+}
+.hb-type {
+  margin-bottom: 16px;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  padding: 8px 10px;
+}
+.hb-type-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+  font-size: 13.5px;
+  margin-bottom: 6px;
+}
+.hb-type-head i {
+  margin-right: 6px;
+  color: var(--app-text-dim);
+}
+.hb-entry {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+}
+.hb-entry-name {
+  flex: 1;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--app-text);
+  font: inherit;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: var(--app-radius-sm);
+}
+.hb-entry-name:hover {
+  background: var(--app-surface-2);
+  color: var(--app-accent);
+}
+.hb-entry-del {
+  background: none;
+  border: none;
+  color: var(--app-text-faint);
+  cursor: pointer;
+  padding: 4px;
+}
+.hb-entry-del:hover {
+  color: var(--app-bad);
+}
+
+/* The schema-driven entry editor */
+.hb-editor {
+  width: 560px;
+  max-width: 94vw;
+  max-height: 88vh;
+}
+.hb-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 16px;
+  overflow-y: auto;
+}
+.hb-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1 1 100%;
+  min-width: 0;
+}
+.hb-field.half {
+  flex: 1 1 calc(50% - 6px);
+}
+.hb-field.full {
+  flex: 1 1 100%;
+}
+.hb-label {
+  font-size: 12px;
+  color: var(--app-text-dim);
+}
+.hb-help {
+  font-size: 11px;
+  color: var(--app-text-faint);
+}
+.hb-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--app-surface-2);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  padding: 7px 9px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--app-text);
+  outline: none;
+}
+.hb-input:focus {
+  border-color: var(--app-accent);
+}
+.hb-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.hb-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: var(--app-bw) solid var(--app-border);
 }
 .settings-h {
   margin: 0 0 4px;
@@ -3884,15 +4727,52 @@ button.strike-name:hover {
   padding: 20px;
 }
 .picker {
+  position: relative;
   background: var(--app-surface);
   border: var(--app-bw) solid var(--app-border);
   border-radius: var(--app-radius);
   width: 420px;
-  max-width: 100%;
-  max-height: 70vh;
+  max-width: 95vw;
+  max-height: 92vh;
+  min-width: 280px;
+  min-height: 120px;
   display: flex;
   flex-direction: column;
   box-shadow: var(--app-shadow);
+  /* Drag the bottom-right corner to resize (grip icon below). The body already flex-scrolls. */
+  resize: both;
+  overflow: hidden;
+}
+/* Hide the browser's default corner grip; draw our own diagonal grip-lines on top. */
+.picker::-webkit-resizer {
+  display: none;
+}
+/* Opaque corner so a scrolling body's scrollbar ends cleanly ABOVE the grip instead of running
+   under it (like a textarea's resizer). pointer-events:none lets the native corner-resize through. */
+.picker::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  background: var(--app-surface);
+  border-bottom-right-radius: var(--app-radius);
+  z-index: 2;
+}
+.picker::after {
+  content: '';
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  z-index: 3;
+  background-color: var(--app-text-dim);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cg fill='none' stroke='black' stroke-width='1.4' stroke-linecap='round'%3E%3Cline x1='13' y1='5' x2='5' y2='13'/%3E%3Cline x1='13' y1='9' x2='9' y2='13'/%3E%3Cline x1='13' y1='12.5' x2='12.5' y2='13'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cg fill='none' stroke='black' stroke-width='1.4' stroke-linecap='round'%3E%3Cline x1='13' y1='5' x2='5' y2='13'/%3E%3Cline x1='13' y1='9' x2='9' y2='13'/%3E%3Cline x1='13' y1='12.5' x2='12.5' y2='13'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
 }
 .picker-head {
   display: flex;
@@ -3937,7 +4817,12 @@ button.strike-name:hover {
   color: var(--app-accent);
 }
 .hp-cur-input {
-  width: 2.4em;
+  /* Size to digits, not font-size — auto-grow where supported, ch fallback (see .coin-input). */
+  width: 3ch;
+  min-width: 2ch;
+  max-width: 6ch;
+  field-sizing: content;
+  box-sizing: content-box;
   font-size: 22px;
   font-weight: 500;
   font-family: inherit;
@@ -4167,17 +5052,17 @@ button.strike-name:hover {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  align-self: flex-start;
-  padding: 5px 10px;
+  padding: 3px 9px;
   border: var(--app-bw) solid var(--app-border);
   border-radius: var(--app-radius-sm);
-  background: var(--app-surface-2);
-  color: var(--app-text);
+  background: transparent;
+  color: var(--app-text-dim);
   font-size: 12px;
   cursor: pointer;
 }
 .ms-btn:hover {
   border-color: var(--app-accent);
+  color: var(--app-accent);
 }
 .manage-spells {
   width: 460px;
@@ -4761,6 +5646,17 @@ button.strike-name:hover {
 .sd-stat-v {
   font-weight: 500;
 }
+/* Inline activation line — "Activate ◆◆" with the action glyph right after the word. */
+.sd-activate {
+  font-size: 13px;
+  margin-bottom: 9px;
+}
+.sd-activate strong {
+  font-weight: 500;
+}
+.sd-activate .pf2-action {
+  margin-left: 3px;
+}
 .sd-desc {
   font-size: 13px;
   line-height: 1.6;
@@ -4798,6 +5694,16 @@ button.strike-name:hover {
   border-color: var(--app-accent);
   background: var(--app-accent);
   color: var(--app-accent-text);
+}
+/* A non-clickable rank chip that just highlights the viewed rank (cantrips / non-signature spells). */
+.sd-rank-static {
+  cursor: default;
+}
+/* The inline "(→ heightened)" upcast value spliced into the spell text + stats. */
+.up-heighten {
+  color: var(--app-accent);
+  font-weight: 600;
+  white-space: nowrap;
 }
 .sd-heighten {
   border-top: var(--app-bw) solid var(--app-border);
@@ -4921,6 +5827,61 @@ button.strike-name:hover {
 .slot-pip.btn:hover,
 .focus-circ.btn:hover {
   box-shadow: 0 0 0 2px var(--app-accent);
+}
+
+/* Item-spell source (staff/wand) header: the name opens the item; charge pips mirror its charges. */
+.sc-item-name {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: var(--app-text);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--app-border);
+  text-underline-offset: 2px;
+}
+.sc-item-name:hover {
+  color: var(--app-accent);
+  text-decoration-color: var(--app-accent);
+}
+.item-charges {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+.item-charges-n {
+  font-size: 11px;
+  color: var(--app-text-dim);
+  margin-left: 2px;
+}
+/* "Cast" button on an item-spell card — spends the item's charges. */
+.spell-cast-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: 6px;
+  padding: 1px 7px;
+  font-size: 10.5px;
+  font-weight: 600;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--app-accent);
+  cursor: pointer;
+}
+.spell-cast-btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--app-accent) 14%, transparent);
+  border-color: var(--app-accent);
+}
+.spell-cast-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.spell-cast-btn i {
+  font-size: 12px;
 }
 
 .app-loading {
@@ -5209,6 +6170,64 @@ button.strike-name:hover {
   flex: 1;
   min-width: 140px;
 }
+/* Eidolon edit panel: ability-mod grid + the two unarmed-attack pickers. */
+.cmp-crow-top {
+  align-items: flex-start;
+}
+.cmp-crow-top .cmp-lbl {
+  padding-top: 6px;
+}
+.eid-abils {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+}
+.eid-abil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.eid-abil > span {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--app-text-dim);
+}
+.eid-num {
+  width: 50px;
+  padding: 4px 6px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--app-text);
+  background: var(--app-surface);
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+}
+.eid-atk {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+.eid-atk .comp-name.eid-form {
+  flex: 1 1 120px;
+  min-width: 110px;
+}
+.eid-atk .osel {
+  flex: 0 1 auto;
+  min-width: 110px;
+}
+.cmp-hint {
+  font-size: 11px;
+  color: var(--app-text-dim);
+  margin: -2px 0 2px 102px;
+}
+.cmp-hint.eid-fixed {
+  margin: 0;
+  align-self: center;
+}
 .cmp-seg {
   display: flex;
   border: var(--app-bw) solid var(--app-border);
@@ -5313,6 +6332,26 @@ button.strike-name:hover {
   color: var(--app-bad);
   cursor: pointer;
 }
+.comp-manage-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.comp-manage-btn.ghost {
+  background: transparent;
+  color: var(--app-text-dim);
+}
+/* Add-companion modal: vehicle/siege rows carry a Level note + Buy / Free actions. */
+.cmp-add-note {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--app-text-dim);
+  margin-left: 6px;
+}
+.cmp-add-buy {
+  display: inline-flex;
+  gap: 6px;
+  flex: none;
+}
 .picker-add-hint {
   margin-left: auto;
   display: inline-flex;
@@ -5354,6 +6393,13 @@ button.strike-name:hover {
 .sb-line .ti { font-size: 14px; color: var(--app-text-dim); vertical-align: -1px; }
 .sb-muted { color: var(--app-text-dim); }
 .sb-div { border-top: var(--app-bw) solid var(--app-border); margin: 8px 0; }
+.sb-trait-warn { background: var(--app-warn); color: #3a2a00; }
+.sb-trait-bad { background: var(--app-bad); color: #fff; }
+/* The shared HpControl (sidebar HP block) embedded in a companion / vehicle / siege stat block. */
+.sb-hp-block { margin: 4px 0 2px; }
+.sb-hp-block .hp-line { margin: 2px 0; }
+.sb-hp-block .hp-track { margin: 4px 0 6px; }
+.sb-hp-bt { font-size: 11.5px; margin-top: -2px; }
 .ph-sub { font-size: 12px; color: var(--app-text-dim); margin-top: 4px; }
 
 /* Encumbrance state on the inventory bulk badge. */
@@ -5757,6 +6803,8 @@ button.strike-name:hover {
 }
 .fsel-chip.on { color: var(--app-text); border-color: var(--app-accent); }
 .fsel-chip.on::before { background: var(--app-accent); border-color: var(--app-accent); }
+/* The option(s) matching the "find a filter" search — drawn out so the user spots them at a glance. */
+.fsel-chip.match { border-color: var(--app-accent); box-shadow: 0 0 0 1px var(--app-accent); color: var(--app-text); }
 
 .fsel-traits { display: flex; flex-direction: column; gap: 6px; }
 .fsel-trait-chosen { display: flex; flex-wrap: wrap; gap: 5px; }

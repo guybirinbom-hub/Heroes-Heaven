@@ -19,6 +19,8 @@ import type {
   WeaponRunes,
 } from '../rules/types';
 import { PopupSelect, SearchSelect } from '../builder/shared';
+import { RichEditor } from './RichEditor';
+import { useEscapeClose } from './useEscapeClose';
 
 /* ---- option catalogs ---- */
 const ITEM_TYPES: { value: Item['itemType']; label: string }[] = [
@@ -61,6 +63,9 @@ const num = (s: string, dflt = 0) => {
   return Number.isFinite(n) ? n : dflt;
 };
 const str = (n?: number) => (n != null ? String(n) : '');
+/** A rich-text field whose HTML has no actual text/glyph content reads as empty (e.g. a stray <br>). */
+const richEmpty = (s: string) => !s.replace(/<[^>]*>/g, '').replace(/&nbsp;/gi, ' ').trim();
+const cleanRich = (s: string) => (richEmpty(s) ? '' : s.trim());
 const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'item';
 const rand = () => Math.random().toString(36).slice(2, 7);
 
@@ -211,11 +216,15 @@ export function ItemEditorModal({
   onSave: (item: Item) => void;
   onClose: () => void;
 }) {
+  useEscapeClose(onClose);
   const [d, setD] = useState<Draft>(() => (item ? fromItem(item) : defaults()));
   const [open, setOpen] = useState<Set<string>>(
     () => new Set(['additional', ...(item?.itemType ? [item.itemType] : []), ...(inv ? ['runes'] : [])]),
   );
   const [baseId, setBaseId] = useState<string | null>(null);
+  // The rich-text editors are uncontrolled; bump this key to remount them when the description is
+  // replaced wholesale (copy-from-item, reset) so they reflect the new value.
+  const [editorKey, setEditorKey] = useState(0);
   const upd = (patch: Partial<Draft>) => setD((prev) => ({ ...prev, ...patch }));
   const isOpen = (id: string) => open.has(id);
   const toggle = (id: string) =>
@@ -287,6 +296,7 @@ export function ItemEditorModal({
       return next;
     });
     setOpen((prev) => new Set([...prev, b.itemType, 'additional']));
+    setEditorKey((k) => k + 1); // reflect a copied description in the (uncontrolled) editor
   };
 
   const build = (): Item | null => {
@@ -308,7 +318,7 @@ export function ItemEditorModal({
       name,
       traits: d.traits.map((t) => t.trim().toLowerCase()).filter(Boolean),
       rarity: d.rarity,
-      description: d.description.trim(),
+      description: cleanRich(d.description),
       level: num(d.level),
       bulk: num(d.bulk),
       ...(price ? { price } : {}),
@@ -317,7 +327,7 @@ export function ItemEditorModal({
       ...(d.usage.trim() ? { usage: d.usage.trim() } : {}),
       ...(d.matType.trim() ? { material: { type: d.matType.trim(), ...(d.matGrade ? { grade: d.matGrade } : {}) } } : {}),
       ...(d.freqMax.trim() ? { frequency: { max: num(d.freqMax), per: d.freqPer || 'day' } } : {}),
-      ...(d.craft.trim() ? { craftRequirements: d.craft.trim() } : {}),
+      ...(cleanRich(d.craft) ? { craftRequirements: cleanRich(d.craft) } : {}),
       ...(item?.descRefs ? { descRefs: item.descRefs } : {}),
       source,
     };
@@ -615,14 +625,18 @@ export function ItemEditorModal({
                   </AccRow>
                 </div>
 
-                <label className="ci-field">
+                <div className="ci-field">
                   <span>Description <span className="ie-req">✦</span></span>
-                  <textarea rows={5} value={d.description} onChange={(e) => upd({ description: e.target.value })} placeholder="What the item does…" />
-                </label>
-                <label className="ci-field">
+                  <div className="ie-rich">
+                    <RichEditor key={`desc-${editorKey}`} initialHtml={d.description} onChange={(html) => upd({ description: html })} enableRefLink placeholder="What the item does…" />
+                  </div>
+                </div>
+                <div className="ci-field">
                   <span>Craft requirements</span>
-                  <textarea rows={2} value={d.craft} onChange={(e) => upd({ craft: e.target.value })} placeholder="e.g. Supply one casting of fireball" />
-                </label>
+                  <div className="ie-rich ie-rich-sm">
+                    <RichEditor key={`craft-${editorKey}`} initialHtml={d.craft} onChange={(html) => upd({ craft: html })} enableRefLink placeholder="e.g. Supply one casting of fireball" />
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -635,7 +649,7 @@ export function ItemEditorModal({
             </div>
             {isOpen('ops') && (
               <div className="ie-collap-b">
-                <button className="ci-cancel" style={{ alignSelf: 'flex-start' }} onClick={() => { setD(item ? fromItem(item) : defaults()); setBaseId(null); }}>
+                <button className="ci-cancel" style={{ alignSelf: 'flex-start' }} onClick={() => { setD(item ? fromItem(item) : defaults()); setBaseId(null); setEditorKey((k) => k + 1); }}>
                   <i className="ti ti-refresh" aria-hidden="true" /> Reset {mode === 'edit' ? 'changes' : 'form'}
                 </button>
               </div>

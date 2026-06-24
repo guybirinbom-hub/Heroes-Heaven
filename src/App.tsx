@@ -1,15 +1,20 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { CharacterSheet } from './sheet/CharacterSheet';
 import { RosterScreen } from './sheet/RosterScreen';
+import { HomebrewPage } from './sheet/HomebrewPage';
 import { Builder } from './builder/Builder';
 import { ErrorBoundary } from './sheet/ErrorBoundary';
 import { kyra } from './rules/seed';
-import { loadContent } from './data';
+import { loadContent, rebuildContent } from './data';
 import { loadRoster, saveRoster, newRosterId, duplicateChar, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, type SavedChar } from './data/storage';
-import { buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from './rules/build';
+import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from './rules/build';
+import { useUndoableState } from './useUndoableState';
 import { applyPlayState, initialPlay, playForRebuild, rest, type PlayState } from './rules/play';
 import { abilityMod } from './rules/derive';
 import { ContentContext } from './sheet/ContentContext';
+import { PopupSizeController } from './sheet/PopupSizeController';
+import { OverlayDismissGuard } from './sheet/OverlayDismissGuard';
+import { PopupSizeLock } from './sheet/PopupSizeLock';
 import { bumpZoom, resetZoom, ZOOM_STEP } from './theme/zoom';
 import type { ContentDatabase, Item, ModeDef } from './rules/types';
 
@@ -20,14 +25,16 @@ function initialRoster(): SavedChar[] {
 
 export default function App() {
   const [content, setContent] = useState<ContentDatabase | null>(null);
-  const [roster, setRoster] = useState<SavedChar[]>(initialRoster);
+  // Roster lives in an undo/redo timeline: every character-data change (all sheet mutations funnel
+  // through setRoster) becomes an undoable step, driving Ctrl+Z / Ctrl+Shift+Z below.
+  const { state: roster, set: setRoster, undo, redo } = useUndoableState<SavedChar[]>(initialRoster);
   const [activeId, setActiveId] = useState<string>(() => {
     // Reopen the last-active character if it still exists, else the first.
     const r = initialRoster();
     const saved = loadActiveId();
     return r.some((c) => c.id === saved) ? (saved as string) : r[0].id;
   });
-  const [mode, setMode] = useState<'sheet' | 'builder' | 'roster'>('sheet');
+  const [mode, setMode] = useState<'sheet' | 'builder' | 'roster' | 'homebrew'>('sheet');
   // The build being edited: a BuildState (edit existing) or null (creating new).
   const [editing, setEditing] = useState<{ id: string; build: BuildState } | null>(null);
   // True when the last persist attempt was rejected (e.g. localStorage quota) — surfaced as a banner
@@ -49,6 +56,19 @@ export default function App() {
     };
     const onKey = (e: KeyboardEvent) => {
       if (!e.ctrlKey && !e.metaKey) return;
+      const k = e.key.toLowerCase();
+      // Undo / redo for every character change. While a text field is focused, let the browser's
+      // native text undo handle it (so editing a field char-by-char still works); elsewhere, Ctrl+Z
+      // reverts the last sheet action (condition, item, HP, …) and Ctrl+Shift+Z / Ctrl+Y redoes it.
+      if (k === 'z' || k === 'y') {
+        const el = document.activeElement as HTMLElement | null;
+        const editing = !!el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
+        if (editing) return;
+        e.preventDefault();
+        if (k === 'y' || (k === 'z' && e.shiftKey)) redo();
+        else undo();
+        return;
+      }
       if (e.key === '=' || e.key === '+') {
         e.preventDefault();
         bumpZoom(ZOOM_STEP);
@@ -66,7 +86,7 @@ export default function App() {
       window.removeEventListener('wheel', onWheel);
       window.removeEventListener('keydown', onKey);
     };
-  }, []);
+  }, [undo, redo]);
 
   const active = roster.find((c) => c.id === activeId) ?? roster[0];
   // Derive the in-play character ONCE per (character, play, content) change. Inlining this in JSX
@@ -87,6 +107,13 @@ export default function App() {
     }
   }, [content, active?.character, active?.play]);
 
+  // Content the SHEET sees, with this character's Overrides content-edits (feat/feature text) overlaid.
+  // applyOverrides returns the same ref when there are no edits, so memoization downstream is preserved.
+  const sheetContent = useMemo(
+    () => (content ? applyOverrides(content, active?.character.overrides) : content),
+    [content, active?.character.overrides],
+  );
+
   // The game data is fetched at runtime; hold the UI until it's ready.
   if (!content || !active || !character) {
     return <div className="app-loading">Loading…</div>;
@@ -96,12 +123,15 @@ export default function App() {
   // starting values the first time it's touched), then persist via the roster.
   const updatePlay = (fn: (play: PlayState) => PlayState) => {
     const id = active.id;
-    setRoster((r) =>
-      r.map((c) =>
-        // Seed from initialPlay (derived from the character) then layer any persisted
-        // state on top, so a play saved before newer fields existed gets them filled in.
-        c.id === id ? { ...c, play: fn({ ...initialPlay(c.character, content), ...(c.play ?? {}) }) } : c,
-      ),
+    setRoster(
+      (r) =>
+        r.map((c) =>
+          // Seed from initialPlay (derived from the character) then layer any persisted
+          // state on top, so a play saved before newer fields existed gets them filled in.
+          c.id === id ? { ...c, play: fn({ ...initialPlay(c.character, content), ...(c.play ?? {}) }) } : c,
+        ),
+      // Coalesce rapid same-character edits (typing an HP/currency/notes value) into ONE undo step.
+      { coalesce: true, tag: 'play:' + id },
     );
   };
 
@@ -121,6 +151,9 @@ export default function App() {
     setContent((c) => (c ? { ...c, modes: Object.fromEntries(Object.entries(c.modes).filter(([k]) => k !== id)) } : c));
     deleteMode(id);
   };
+
+  // The Homebrew manager persists to localStorage itself; re-merge it over core so changes show live.
+  const onHomebrewChanged = () => setContent(rebuildContent());
 
   const deleteChar = (id: string) => {
     if (roster.length <= 1) return; // keep at least one character
@@ -166,7 +199,7 @@ export default function App() {
           setMode('sheet');
         }}
         onCreate={(build) => {
-          const built = buildCharacter(build, content);
+          const built = buildCharacter(build, applyOverrides(content, build.overrides));
           if (editing) {
             const id = editing.id;
             // Keep in-play progress across a rebuild, but reconcile build-derived overrides
@@ -185,16 +218,21 @@ export default function App() {
         }}
       />
     );
+  } else if (mode === 'homebrew') {
+    screen = <HomebrewPage content={content} onChanged={onHomebrewChanged} onClose={() => setMode('sheet')} />;
   } else {
     screen = (
       <CharacterSheet
         character={character}
-        content={content}
+        content={sheetContent ?? content}
         build={active.build}
+        charKey={active.id}
+        characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
         onPlay={updatePlay}
         onCreateItem={addCustomItem}
         onSaveMode={saveModeDef}
         onDeleteMode={removeModeDef}
+        onOpenHomebrew={() => setMode('homebrew')}
         onRest={() =>
           updatePlay((p) =>
             rest(p, {
@@ -225,6 +263,9 @@ export default function App() {
 
   return (
     <ContentContext.Provider value={content}>
+      <PopupSizeController />
+      <PopupSizeLock />
+      <OverlayDismissGuard />
       {saveFailed && (
         <div className="save-warning" role="alert">
           <i className="ti ti-alert-triangle" aria-hidden="true" />

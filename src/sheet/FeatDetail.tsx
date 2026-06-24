@@ -1,5 +1,5 @@
 import type { ActionCost, DescRef } from '../rules/types';
-import { ActionGlyph } from './widgets';
+import { ActionGlyph, isActionCost } from './widgets';
 import { DescBody } from './DescBody';
 import { InfoTerm } from './InfoTerm';
 import { PinStar } from './PinStar';
@@ -56,25 +56,20 @@ export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () =
               ))}
             </div>
           )}
-          {(entry.actionCost || entry.prerequisites?.length) && (
-            <div className="sd-stats">
-              {entry.actionCost && (
-                <div className="sd-stat">
-                  <span className="sd-stat-k">Activate</span>
-                  <span className="sd-stat-v">
-                    <ActionGlyph cost={entry.actionCost} />
-                  </span>
-                </div>
-              )}
-              {entry.prerequisites?.length ? (
-                <div className="sd-stat">
-                  <span className="sd-stat-k">Prerequisites</span>
-                  <span className="sd-stat-v">{entry.prerequisites.join(', ')}</span>
-                </div>
-              ) : null}
+          {isActionCost(entry.actionCost) && (
+            <div className="sd-activate">
+              <strong>Activate</strong> <ActionGlyph cost={entry.actionCost} />
             </div>
           )}
-          <DescBody description={entry.description} descRefs={entry.descRefs} />
+          {entry.prerequisites?.length ? (
+            <div className="sd-stats">
+              <div className="sd-stat">
+                <span className="sd-stat-k">Prerequisites</span>
+                <span className="sd-stat-v">{entry.prerequisites.join(', ')}</span>
+              </div>
+            </div>
+          ) : null}
+          <DescBody description={entry.description} descRefs={entry.descRefs} onExit={onClose} />
         </div>
       </div>
     </div>

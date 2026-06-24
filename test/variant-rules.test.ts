@@ -133,14 +133,29 @@ describe('variant rules — Automatic Bonus Progression', () => {
     expect(deriveSkill(sp, 'athletics').modifier - deriveSkill(base, 'athletics').modifier).toBe(2);
   });
 
-  it('attribute apex raises one stat at L17 and round-trips without double-counting', () => {
+  it('attribute apex raises one stat at L17 like an apex item and round-trips without double-counting', () => {
     const base = build('fighter', 17, { keyAbility: 'str' });
     const apex = build('fighter', 17, { keyAbility: 'str', variantRules: { abp: true }, abpApex: 'int' });
-    expect(apex.abilities.int - base.abilities.int).toBe(2); // Int 10 → 12
+    // Apex works like an apex item: a below-18 stat is raised straight TO 18 (not a normal +2 boost).
+    expect(base.abilities.int).toBe(10);
+    expect(apex.abilities.int).toBe(18); // Int 10 → 18
     const rt = deriveBuildFromCharacter(apex, content());
     expect(rt.abpApex).toBe('int');
     // re-building from the recovered build reproduces the apex-boosted score (no slot double-spent)
     expect(buildCharacter(rt, content()).abilities.int).toBe(apex.abilities.int);
+  });
+
+  it('attribute apex adds +2 when the chosen stat is already 18+', () => {
+    // Drive Str to 18 via the key ability + free boosts at L1/5/10, then apex Str at L17 → 20 (+2).
+    const over = {
+      keyAbility: 'str' as const,
+      levelBoosts: ['str', 'con', 'dex', 'wis'] as (AbilityId | null)[],
+      attributeBoosts: { 5: ['str'], 10: ['str'] } as Record<number, (AbilityId | null)[]>,
+    };
+    const noApex = build('fighter', 17, over);
+    const apex = build('fighter', 17, { ...over, variantRules: { abp: true }, abpApex: 'str' });
+    expect(noApex.abilities.str).toBeGreaterThanOrEqual(18); // 10 +2 key +2 +2 +2 = 18
+    expect(apex.abilities.str).toBe(noApex.abilities.str + 2); // apex: 18+ → +2
   });
 });
 

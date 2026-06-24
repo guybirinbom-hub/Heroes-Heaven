@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { emptyPlay, setCondition, rest, type PlayState } from '../src/rules/play';
+import { emptyPlay, setCondition, rest, applyDamage, applyHeal, type PlayState } from '../src/rules/play';
 import { dyingDeathThreshold } from '../src/rules/conditions';
 
 const dyingOf = (p: PlayState) => p.conditions.find((c) => c.id === 'dying')?.value;
@@ -82,18 +82,29 @@ describe('rest() / daily preparations (PF2e)', () => {
     expect(valOf(r, 'drained')).toBeUndefined();
   });
 
-  it('Wounded clears only when the rest restores full HP', () => {
-    // still damaged afterwards → Wounded persists
-    const hurt = { ...setCondition(emptyPlay(), 'wounded', 1), damage: 30 };
-    expect(valOf(rest(hurt, opts), 'wounded')).toBe(1);
-    // recovers to full → Wounded clears
+  it('a full night’s rest clears Wounded even if still hurt (you recover overnight)', () => {
+    const hurt = { ...setCondition(emptyPlay(), 'wounded', 2), damage: 30 };
+    expect(valOf(rest(hurt, opts), 'wounded')).toBeUndefined();
     const light = { ...setCondition(emptyPlay(), 'wounded', 1), damage: 5 };
     expect(valOf(rest(light, opts), 'wounded')).toBeUndefined();
   });
 
-  it('does not touch Dying (you cannot rest while dying)', () => {
-    const p = { ...setCondition(emptyPlay(), 'dying', 1), damage: 30 };
-    expect(valOf(rest(p, opts), 'dying')).toBe(1);
+  it('a full night’s rest clears Dying (you survive/recover overnight)', () => {
+    const p = { ...setCondition(emptyPlay(), 'dying', 2), damage: 30 };
+    expect(valOf(rest(p, opts), 'dying')).toBeUndefined();
+  });
+
+  it('clears Dying picked up from dropping to 0 HP (the reported case)', () => {
+    const p = applyDamage(emptyPlay(), 100, 40); // to 0 HP → Dying
+    expect(valOf(p, 'dying')).toBeGreaterThan(0);
+    expect(valOf(rest(p, opts), 'dying')).toBeUndefined();
+  });
+
+  it('clears Wounded picked up from recovering from Dying (the reported case)', () => {
+    let p = applyDamage(emptyPlay(), 100, 40); // → Dying
+    p = applyHeal(p, 100, 40); // heal to 1+ HP → recoverFromDying → Wounded, Dying removed
+    expect(valOf(p, 'wounded')).toBeGreaterThan(0);
+    expect(valOf(rest(p, opts), 'wounded')).toBeUndefined();
   });
 
   it('refreshes focus and spell slots', () => {

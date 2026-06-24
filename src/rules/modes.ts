@@ -95,7 +95,6 @@ const RAW_MODES: ModeDef[] = [
   { id: 'cat-take-cover', name: 'Take Cover (standard)', category: 'General', modifiers: [m(2, 'circumstance', 'ac'), m(2, 'circumstance', 'save', { detail: 'reflex' })] },
   { id: 'cat-greater-cover', name: 'Take Cover (greater)', category: 'General', modifiers: [m(4, 'circumstance', 'ac'), m(4, 'circumstance', 'save', { detail: 'reflex' })] },
   { id: 'cat-aid', name: 'Aid', category: 'General', modifiers: [m(1, 'circumstance', 'all-checks', { appliesWhen: 'an ally successfully Aids this check' })] },
-  { id: 'cat-shield-block', name: 'Fighting Defensively', category: 'General', modifiers: [m(-2, 'circumstance', 'attack', { appliesWhen: 'while fighting defensively' })] },
   { id: 'cat-bless', name: 'Bless', category: 'Divine', modifiers: [m(1, 'status', 'attack')], note: 'Allies in the aura gain a +1 status bonus to attack rolls.' },
   { id: 'cat-heroism', name: 'Heroism (4th)', category: 'Divine', modifiers: [m(1, 'status', 'all-checks')], note: 'A +1 status bonus to attack rolls, Perception, saving throws, and skill checks (+2 at 7th, +3 at 10th).' },
 
@@ -160,10 +159,10 @@ const RAW_MODES: ModeDef[] = [
   { id: 'cat-size-ancients', name: 'Size of the Ancients', category: 'Dragonkin', ancestries: ['dragonkin'], modifiers: [], note: 'Grow to Large size for a time, with the usual reach and Strike benefits.' },
   { id: 'cat-rivener-state', name: 'Rivener State', category: 'Ikeshti', ancestries: ['ikeshti'], modifiers: [], note: 'Enter your feral rivener state.' },
 
-  // ---- Archetype / general trances ----
-  { id: 'cat-spirit-trance', name: 'Spirit Trance', category: 'Archetype', modifiers: [], note: 'Divine Mysteries: enter a trance to commune with spirits.' },
-  { id: 'cat-sentinel-form', name: 'Sentinel Form', category: 'Archetype', modifiers: [], note: 'Tian Xia: assume your sentinel form.' },
-  { id: 'cat-daydream-trance', name: 'Daydream Trance', category: 'Archetype', modifiers: [], note: 'Dark Archive: enter a daydream trance.' },
+  // ---- Archetype trances/forms (gated to the dedication that grants them) ----
+  { id: 'cat-spirit-trance', name: 'Spirit Trance', category: 'Archetype', feats: ['rivethun-invoker-dedication'], modifiers: [], note: 'Rivethun Invoker (Divine Mysteries): enter a trance to commune with spirits.' },
+  { id: 'cat-sentinel-form', name: 'Sentinel Form', category: 'Archetype', feats: ['starlit-sentinel-dedication'], modifiers: [], note: 'Starlit Sentinel (Tian Xia): assume your sentinel form.' },
+  { id: 'cat-daydream-trance', name: 'Daydream Trance', category: 'Archetype', feats: ['sleepwalker-dedication'], modifiers: [], note: 'Sleepwalker (Dark Archive): enter a daydream trance.' },
 ];
 
 /** All predefined modes (every catalog entry is directly toggleable + usable as a template). */
@@ -172,12 +171,19 @@ export const CATALOG_MODES: ModeDef[] = RAW_MODES.map((d) => ({ predefined: true
 /** Catalog keyed by id (for content merge). */
 export const CATALOG_MODE_MAP: Record<string, ModeDef> = Object.fromEntries(CATALOG_MODES.map((d) => [d.id, d]));
 
-/** Whether a predefined mode is relevant to a character's class/ancestry (no gate ⇒ always relevant). */
-export function modeRelevant(mode: ModeDef, classId?: string | null, ancestryId?: string | null): boolean {
-  const classOk = !mode.classes || (classId != null && mode.classes.includes(classId));
-  const ancestryOk = !mode.ancestries || (ancestryId != null && mode.ancestries.includes(ancestryId));
-  // A mode with neither gate is general; one with a class gate OR an ancestry gate must match that gate.
-  if (!mode.classes && !mode.ancestries) return true;
-  if (mode.classes && mode.ancestries) return classOk || ancestryOk;
-  return mode.classes ? classOk : ancestryOk;
+/** Whether a predefined mode is relevant to a character — it must match at least one of its gates
+ *  (class / ancestry / feat). A mode with NO gate is general and always relevant. A mode gated only
+ *  by feats (e.g. an archetype trance) is relevant only to a character who has that dedication. */
+export function modeRelevant(
+  mode: ModeDef,
+  classId?: string | null,
+  ancestryId?: string | null,
+  featIds?: ReadonlySet<string>,
+): boolean {
+  const gates: boolean[] = [];
+  if (mode.classes) gates.push(classId != null && mode.classes.includes(classId));
+  if (mode.ancestries) gates.push(ancestryId != null && mode.ancestries.includes(ancestryId));
+  if (mode.feats) gates.push(!!featIds && mode.feats.some((f) => featIds.has(f)));
+  if (gates.length === 0) return true; // ungated ⇒ general
+  return gates.some(Boolean); // matches any gate
 }

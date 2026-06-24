@@ -40,11 +40,15 @@ import type {
   Tradition,
   VariantRules,
   CharacterOptions,
+  BuildOverrides,
   NaturalAttack,
+  GrantedStrike,
   WeaponCategory,
   WeaponRunes,
 } from './types';
+import type { SourceInfo } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
+import { CHOOSABLE_SOURCE_MAPS } from './sources';
 import { abilityMod } from './derive';
 import { CLASS_ADVANCEMENT } from './advancement';
 import { DOMAIN_SPELLS } from './domains';
@@ -67,6 +71,11 @@ export interface BuildState {
   variantRules?: VariantRules;
   /** Per-character convenience/house options (alternate ancestry boosts, voluntary flaw, ignore bulk, dice roller). */
   options?: CharacterOptions;
+  /** Creative "Overrides" — deliberate per-case rule-breaks (allowed-ineligible feats, bonus/removed feats). */
+  overrides?: BuildOverrides;
+  /** Enabled source books — content from other books is hidden from the builder pickers. Absent =
+   *  the four Core books only (the default for a new character). */
+  enabledSources?: string[];
   /** Dual Class variant: the second class + its subclass. */
   classId2?: string | null;
   subclassId2?: string | null;
@@ -394,9 +403,8 @@ function collectBoosts(
     pushDistinct((build.attributeBoosts[lvl] ?? []).slice(0, boostCount));
   }
 
-  // ABP Attribute Apex (level 17): a single boost to the chosen attribute (the +1-past-18 partial
-  // rule supplies the apex cap). Applied last, as it's gained at 17th.
-  if (build.variantRules?.abp && uptoLevel >= 17 && build.abpApex) boosts.push(build.abpApex);
+  // ABP Attribute Apex (level 17) is NOT an ordinary boost — it works like an apex item ("raise to 18,
+  // or +2 if already 18+"). It's applied separately in computeAbilitiesDetailed after all boosts.
 
   return { boosts, flaws };
 }
@@ -429,6 +437,12 @@ export function computeAbilitiesDetailed(
     if (s[b] >= 18) partial.add(b);
     s[b] += s[b] >= 18 ? 1 : 2;
   }
+  // ABP Attribute Apex (gained at 17th, applied after all ordinary boosts): works like an apex item —
+  // raise the chosen attribute to 18, or by 2 if it's already 18+ (NOT a normal +2/+1 boost).
+  if (build.variantRules?.abp && uptoLevel >= 17 && build.abpApex) {
+    const a = build.abpApex;
+    s[a] = s[a] >= 18 ? s[a] + 2 : 18;
+  }
   return { scores: s, partial: [...partial] };
 }
 
@@ -458,12 +472,21 @@ const ARMOR_TRACKS: readonly string[] = ['unarmored', 'light', 'medium', 'heavy'
 const WEAPON_GROUP_TRACKS: readonly string[] = ['bomb', 'firearm', 'crossbow'];
 
 /** Apply one advancement entry to the proficiency block / spellcasting entries (never lowers). */
-function applyAdvancement(p: Proficiencies, casting: SpellcastingEntry[], e: AdvancementEntry): void {
+function applyAdvancement(
+  p: Proficiencies,
+  casting: SpellcastingEntry[],
+  e: AdvancementEntry,
+  ownerClassId?: string,
+): void {
   const t = e.track;
   if (t === 'perception') p.perception = maxRank(p.perception, e.rank);
   else if (t === 'classDc') p.classDc = maxRank(p.classDc, e.rank);
-  else if (t === 'spellcasting') for (const c of casting) c.proficiency = maxRank(c.proficiency, e.rank);
-  else if (SAVE_TRACKS.includes(t)) p.saves[t as SaveId] = maxRank(p.saves[t as SaveId], e.rank);
+  // Spellcasting proficiency advances on the OWNING class's chassis only — under Dual Class each class
+  // caps its own entry (a magus tops at master even if paired with a legendary-caster bard). Entries are
+  // keyed `${classId}-casting` / `${classId}-focus`; with no owner (legacy callers) bump every entry.
+  else if (t === 'spellcasting') {
+    for (const c of casting) if (!ownerClassId || c.id.startsWith(ownerClassId + '-')) c.proficiency = maxRank(c.proficiency, e.rank);
+  } else if (SAVE_TRACKS.includes(t)) p.saves[t as SaveId] = maxRank(p.saves[t as SaveId], e.rank);
   else if (WEAPON_TRACKS.includes(t)) p.attacks[t as WeaponCategory] = maxRank(p.attacks[t as WeaponCategory], e.rank);
   else if (ARMOR_TRACKS.includes(t)) p.defenses[t as ArmorCategory] = maxRank(p.defenses[t as ArmorCategory], e.rank);
   else if (WEAPON_GROUP_TRACKS.includes(t)) (p.weaponGroups ??= {})[t] = maxRank(p.weaponGroups?.[t], e.rank);
@@ -594,8 +617,168 @@ export function inventorModificationOptions(
     .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
 }
 
+/**
+ * Curated melee strikes for feat ChoiceSet picks whose grant is an ItemAlteration (not a `Strike`
+ * rule element) — so they can't be extracted at import. Keyed featId → choiceValue. Iruxi's "claw"
+ * upgrades the lizardfolk-claws weapon (a separate item the app doesn't model), so we supply the
+ * resulting d6 versatile-p claw directly to close the headline case.
+ */
+const FEAT_CHOICE_STRIKES: Record<string, Record<string, NaturalAttack>> = {
+  'iruxi-armaments': {
+    claw: { name: 'Claw', die: 'd6', damageType: 'slashing', traits: ['agile', 'finesse', 'unarmed', 'versatile-p'], group: 'brawling' },
+  },
+};
+
+/**
+ * Collect the melee unarmed Strikes a character's feats / heritage / ancestry / class features grant
+ * (each entry's `grantedStrikes`, resolving ChoiceSet picks), as NaturalAttacks. Pass a pre-seeded
+ * `seen` set (e.g. names already present from a WG import) to dedup against it; the set is mutated.
+ */
+function collectGrantedNaturals(
+  content: ContentDatabase,
+  feats: { featId: string; choice?: { value: string } }[],
+  heritageId: string | null | undefined,
+  ancestryId: string | null | undefined,
+  classId: string | null | undefined,
+  level: number,
+  seen: Set<string> = new Set(),
+): NaturalAttack[] {
+  const out: NaturalAttack[] = [];
+  const push = (gs: GrantedStrike[] | undefined, pick?: string) => {
+    for (const g of gs ?? []) {
+      if (g.choiceValue && g.choiceValue !== pick) continue;
+      const key = g.name.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push({ name: g.name, die: g.die, damageType: g.damageType, traits: g.traits, group: g.group });
+    }
+  };
+  for (const f of feats) {
+    push(content.feats[f.featId]?.grantedStrikes, f.choice?.value);
+    const curated = f.choice?.value ? FEAT_CHOICE_STRIKES[f.featId]?.[f.choice.value] : undefined;
+    if (curated && !seen.has(curated.name.toLowerCase())) {
+      seen.add(curated.name.toLowerCase());
+      out.push({ ...curated });
+    }
+  }
+  if (heritageId) push(content.heritages[heritageId]?.grantedStrikes);
+  if (ancestryId) push(content.ancestries[ancestryId]?.grantedStrikes);
+  const cls = classId ? content.classes[classId] : undefined;
+  for (const cf of cls?.features ?? []) if (cf.level <= level) push(content.classFeatures[cf.featureId]?.grantedStrikes);
+  return out;
+}
+
+/**
+ * Apply Overrides CONTENT edits as a SHALLOW overlay on top of the shared content database WITHOUT
+ * mutating it (the DB is an ~18 MB cached singleton shared by every character). Only ever spreads into
+ * new objects, and returns the SAME base reference when there are no edits — so memo identity is
+ * preserved and content-keyed memos don't thrash. Overlays feat + class-feature field edits.
+ */
+export function applyOverrides(base: ContentDatabase, ov?: BuildOverrides): ContentDatabase {
+  const edits = ov?.contentEdits;
+  const featEdits = edits?.feats && Object.keys(edits.feats).length ? edits.feats : null;
+  const featureEdits = edits?.classFeatures && Object.keys(edits.classFeatures).length ? edits.classFeatures : null;
+  if (!featEdits && !featureEdits) return base;
+  const next: ContentDatabase = { ...base };
+  if (featEdits) {
+    const m = { ...base.feats };
+    for (const [id, patch] of Object.entries(featEdits)) if (m[id]) m[id] = { ...m[id], ...patch };
+    next.feats = m;
+  }
+  if (featureEdits) {
+    const m = { ...base.classFeatures };
+    for (const [id, patch] of Object.entries(featureEdits)) if (m[id]) m[id] = { ...m[id], ...patch };
+    next.classFeatures = m;
+  }
+  return next;
+}
+
+/** Every content id the build already references, so a source filter never drops a chosen entry. */
+export function collectChosenIds(build: BuildState, content: ContentDatabase): Set<string> {
+  const ids = new Set<string>();
+  const add = (id?: string | null) => {
+    if (id) ids.add(id);
+  };
+  add(build.ancestryId);
+  add(build.heritageId);
+  add(build.classId);
+  add(build.classId2);
+  add(build.subclassId);
+  add(build.subclassId2);
+  add(build.deityId);
+  if (build.backgroundId && build.backgroundId !== CUSTOM_BACKGROUND_ID) add(build.backgroundId);
+  for (const v of Object.values(build.featPicks)) add(v);
+  for (const v of Object.values(build.featChoices)) add(v);
+  for (const arr of Object.values(build.extraChoices)) for (const v of arr) add(v);
+  add(resolveBackground(build, content)?.grantedFeatId);
+  add(build.voiceOfNature);
+  add(build.primaryApparition);
+  add(build.devotionSpell);
+  add(build.dragonExemplar);
+  for (const v of build.commanderTactics ?? []) add(v);
+  for (const v of Object.values(build.gateForks ?? {})) add(v);
+  for (const v of Object.values(build.gateExpands ?? {})) add(v);
+  if (build.inventorModifications) {
+    add(build.inventorModifications.initial);
+    add(build.inventorModifications.breakthrough);
+    add(build.inventorModifications.revolutionary);
+  }
+  for (const v of build.cantrips) add(v);
+  for (const arr of Object.values(build.spells)) for (const v of arr) add(v);
+  for (const v of Object.values(build.signatures)) add(v);
+  if (build.archetypeSpells) {
+    for (const v of build.archetypeSpells.cantrips) add(v);
+    for (const arr of Object.values(build.archetypeSpells.spells)) for (const v of arr) add(v);
+  }
+  for (const it of build.inventory) {
+    add(it.itemId);
+    add(it.heldSpell);
+  }
+  for (const a of build.overrides?.addedFeats ?? []) add(a.featId);
+  for (const id of build.overrides?.allowedFeats ?? []) add(id);
+  for (const a of build.overrides?.addedFeatures ?? []) add(a.featureId);
+  for (const a of build.overrides?.addedSpells ?? []) add(a.spellId);
+  return ids;
+}
+
+/** Hide content from disabled source books (the BUILDER's picker content only — never the sheet's).
+ *  Keeps any entry whose book is enabled OR whose id is already chosen (`keepIds`). Returns the same
+ *  ref when nothing is dropped (memo-safe, like applyOverrides). */
+export function applySources(content: ContentDatabase, enabled: Set<string>, keepIds: Set<string>): ContentDatabase {
+  const next: ContentDatabase = { ...content };
+  let changed = false;
+  for (const m of CHOOSABLE_SOURCE_MAPS) {
+    const map = content[m] as Record<string, { source?: SourceInfo }> | undefined;
+    if (!map) continue;
+    let dropped = false;
+    const filtered: Record<string, unknown> = {};
+    for (const [id, e] of Object.entries(map)) {
+      const book = e.source?.book?.trim(); // match sourceCatalog's whitespace-normalized book names
+      if (!book || enabled.has(book) || keepIds.has(id)) filtered[id] = e;
+      else dropped = true;
+    }
+    if (dropped) {
+      (next as unknown as Record<string, unknown>)[m] = filtered;
+      changed = true;
+    }
+  }
+  return changed ? next : content;
+}
+
 export function buildCharacter(build: BuildState, content: ContentDatabase): Character {
   const { scores: abilities, partial: partialBoosts } = computeAbilitiesDetailed(build, content);
+  // Override: force-set raw ability scores (no boost limits). Mutating this object in place flows to
+  // HP (Con), spell slots (Cha/Wis), languages (Int), and — via Character.abilities — every derive.ts
+  // stat (saves, skills, class/spell DC, strikes). An overridden score also clears its partial-boost flag.
+  if (build.overrides?.attributes) {
+    for (const [k, v] of Object.entries(build.overrides.attributes)) {
+      if (typeof v === 'number' && Number.isFinite(v)) {
+        abilities[k as AbilityId] = v;
+        const pi = partialBoosts.indexOf(k as AbilityId);
+        if (pi >= 0) partialBoosts.splice(pi, 1);
+      }
+    }
+  }
   const cls = build.classId ? content.classes[build.classId] : undefined;
   // Dual Class variant: a second class contributes its HP/proficiencies/skills/features/feats.
   const cls2 = build.variantRules?.dualClass && build.classId2 ? content.classes[build.classId2] : undefined;
@@ -859,6 +1042,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
           .map(([, id]) => id);
         if (sig.length) entry.signature = sig;
       }
+      // Summoner's Unlimited Signature Spells (level 3): every spell in the repertoire is a signature
+      // spell, so the summoner can heighten any known spell to any slot rank it can cast.
+      const unlimitedSig = (cls.features ?? []).some(
+        (f) => f.featureId === 'unlimited-signature-spells' && f.level <= level,
+      );
+      if (unlimitedSig) entry.signature = [...new Set(Object.values(entry.repertoire).flat())];
     } else if (cls.id === 'wizard') {
       // Wizard: build.spells is the SPELLBOOK (learned spells per rank); the daily
       // preparation is auto-filled from it (the player can re-prepare in play).
@@ -1115,13 +1304,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const adv =
       (build.subclassId ? CLASS_ADVANCEMENT[build.subclassId] : undefined) ?? CLASS_ADVANCEMENT[build.classId] ?? [];
     for (const e of adv) {
-      if (e.level <= level) applyAdvancement(proficiencies, spellcasting, e);
+      if (e.level <= level) applyAdvancement(proficiencies, spellcasting, e, build.classId);
     }
     // Dual Class: also apply the second class's advancement (applyAdvancement only ever raises a
     // track via maxRank, so the better-rank-of-two result falls out automatically).
     if (cls2 && build.classId2) {
       const adv2 = (build.subclassId2 ? CLASS_ADVANCEMENT[build.subclassId2] : undefined) ?? CLASS_ADVANCEMENT[build.classId2] ?? [];
-      for (const e of adv2) if (e.level <= level) applyAdvancement(proficiencies, spellcasting, e);
+      for (const e of adv2) if (e.level <= level) applyAdvancement(proficiencies, spellcasting, e, build.classId2);
+    }
+    // Rogue Ruffian/Avenger rackets: "when you gain light armor expertise/mastery, you also gain expert/
+    // master proficiency in medium armor." The rogue table only advances light, so mirror the resolved
+    // light-armor rank onto medium for these rackets (trained@1, expert@13, master@19).
+    if ([build.subclassId, build.subclassId2].some((s) => s === 'ruffian' || s === 'avenger')) {
+      proficiencies.defenses.medium = maxRank(proficiencies.defenses.medium, proficiencies.defenses.light);
     }
   }
 
@@ -1133,6 +1328,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (level >= 7 && picks[0]) proficiencies.saves[picks[0]] = maxRank(proficiencies.saves[picks[0]], 'master');
     if (level >= 11 && picks[1]) proficiencies.saves[picks[1]] = maxRank(proficiencies.saves[picks[1]], 'master');
     if (level >= 15 && picks[2]) proficiencies.saves[picks[2]] = maxRank(proficiencies.saves[picks[2]], 'legendary');
+  }
+
+  // Override: force-set proficiency on any track to any rank (can also LOWER, unlike progression).
+  // Keys route by track: perception/classDc (scalar), a save, a weapon/armor category, else a skill
+  // id or `lore:<subject>` (assigning a brand-new key just adds that proficiency).
+  for (const [key, rank] of Object.entries(build.overrides?.proficiencies ?? {})) {
+    if (key === 'perception') proficiencies.perception = rank;
+    else if (key === 'classDc') proficiencies.classDc = rank;
+    else if (SAVE_TRACKS.includes(key)) proficiencies.saves[key as SaveId] = rank;
+    else if (WEAPON_TRACKS.includes(key)) proficiencies.attacks[key as WeaponCategory] = rank;
+    else if (ARMOR_TRACKS.includes(key)) proficiencies.defenses[key as ArmorCategory] = rank;
+    else proficiencies.skills[key as ProficiencyKey] = rank;
   }
 
   // The background's granted skill feat, then every feat picked in a level slot
@@ -1205,7 +1412,32 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     takenFeats.add(featId);
     feats.push({ featId, level: lvl, category: (cat as FeatCategory) ?? 'class', choice: featChoiceById[slotKey] });
   }
+  // Overrides — bonus feats force-granted with no slot (deduped against what's already taken), then
+  // suppress any feats the user explicitly removed. buildCharacter doesn't re-validate, so this is safe.
+  for (const a of build.overrides?.addedFeats ?? []) {
+    if (!a.featId || takenFeats.has(a.featId) || a.level > level || !content.feats[a.featId]) continue;
+    takenFeats.add(a.featId);
+    feats.push({ featId: a.featId, level: a.level, category: a.category });
+  }
+  if (build.overrides?.removedFeatIds?.length) {
+    const removed = new Set(build.overrides.removedFeatIds);
+    for (let i = feats.length - 1; i >= 0; i--) if (removed.has(feats[i].featId)) feats.splice(i, 1);
+  }
   feats.sort((a, b) => a.level - b.level);
+
+  // Granted melee strikes from feats/heritage/ancestry/class features (Iruxi Fangs, Razortooth jaws,
+  // …). Seeded with any WG-imported natural-attack names so a feat grant doesn't duplicate one the
+  // import already produced; the rest are appended so they appear in Strikes (handwraps-buffed).
+  const grantedNaturals = collectGrantedNaturals(
+    content,
+    feats,
+    build.heritageId,
+    build.ancestryId,
+    build.classId,
+    level,
+    new Set((build.naturalAttacks ?? []).map((n) => n.name.toLowerCase())),
+  );
+  const naturalAttacks = [...(build.naturalAttacks ?? []), ...grantedNaturals];
 
   // Caster archetype (multiclass into spellcasting): a caster Dedication + the Basic/Expert/Master
   // Spellcasting feats grant a separate prepared pool. When the CLASS isn't a slot caster the pool
@@ -1291,6 +1523,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const repertoire: Record<number, string[]> = {};
       for (const [rankStr, ids] of Object.entries(held)) if (Number(rankStr) > 0) repertoire[Number(rankStr)] = ids;
       spellcasting.push({
+        // `inv-${i}` matches the instanceId assigned to character.inventory[i] further below.
         id: `item:inv-${i}`,
         name: item.name,
         type: 'items',
@@ -1299,6 +1532,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         proficiency: caster?.proficiency ?? 'trained',
         cantrips: held[0] ?? [],
         repertoire,
+        itemInstanceId: `inv-${i}`,
       });
     });
 
@@ -1332,6 +1566,32 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         proficiency: caster?.proficiency ?? 'trained',
         cantrips: innateCantrips,
         repertoire: innateRep,
+      });
+    }
+
+    // Overrides → "Added spells": spells force-granted via the Overrides section, listed at the
+    // chosen rank (cantrips at-will). Rituals are excluded here — they show in the Rituals section.
+    const addedSpells = (build.overrides?.addedSpells ?? []).filter((a) => content.spells[a.spellId] && !content.spells[a.spellId].ritual);
+    if (addedSpells.length) {
+      const addedCantrips: string[] = [];
+      const addedRep: Record<number, string[]> = {};
+      for (const a of addedSpells) {
+        const r = a.rank ?? content.spells[a.spellId]?.rank ?? 0;
+        if (r <= 0) addedCantrips.push(a.spellId);
+        else (addedRep[r] ??= []).push(a.spellId);
+      }
+      const atc: Record<string, number> = {};
+      for (const a of addedSpells) for (const t of content.spells[a.spellId]?.traditions ?? []) atc[t] = (atc[t] ?? 0) + 1;
+      const addedTradition = (Object.entries(atc).sort((x, y) => y[1] - x[1])[0]?.[0] as Tradition) ?? caster?.tradition ?? 'arcane';
+      spellcasting.push({
+        id: 'added-spells',
+        name: 'Added spells',
+        type: 'innate',
+        tradition: addedTradition,
+        keyAbility: caster?.keyAbility ?? 'cha',
+        proficiency: caster?.proficiency ?? 'trained',
+        cantrips: addedCantrips,
+        repertoire: addedRep,
       });
     }
   }
@@ -1399,6 +1659,33 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       ? { elements: kineticistElements(build, level).map((id) => id.replace(/-gate$/, '')) }
       : undefined;
 
+  // Override: features force-granted via Overrides — materialized for the Feats & Features list (any
+  // class feature, regardless of class). buildCharacter doesn't re-validate, so any id is accepted.
+  const grantedFeatures: NonNullable<Character['grantedFeatures']> = [];
+  for (const g of build.overrides?.addedFeatures ?? []) {
+    const f = content.classFeatures[g.featureId];
+    if (!f) continue;
+    grantedFeatures.push({
+      featureId: g.featureId,
+      name: f.name,
+      level: g.level,
+      description: f.description,
+      ...(f.descRefs ? { descRefs: f.descRefs } : {}),
+      traits: f.traits ?? [],
+      ...(f.actionCost ? { actionCost: f.actionCost } : {}),
+      ...(f.rarity ? { rarity: f.rarity } : {}),
+    });
+  }
+
+  // Max-HP feats (Toughness = +level, Thick Hide Mask = +20, …) raise maximum HP, and a freshly built
+  // character starts at full HP — so fold them into the starting `current` to match deriveMaxHp().
+  // Otherwise initialPlay would record the difference as phantom damage (e.g. a new Fighter shows 58/63).
+  let featHp = 0;
+  for (const f of feats) {
+    const b = content.feats[f.featId]?.maxHpBonus;
+    if (b) featHp += (b.perLevel ?? 0) * level + (b.flat ?? 0);
+  }
+
   return {
     id: `char-${slug(build.name)}`,
     schemaVersion: CHARACTER_SCHEMA_VERSION,
@@ -1413,7 +1700,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(classChoices.length ? { classChoices } : {}),
     ...(build.variantRules ? { variantRules: build.variantRules } : {}),
     ...(build.options ? { options: build.options } : {}),
-    ...(build.naturalAttacks?.length ? { naturalAttacks: build.naturalAttacks } : {}),
+    ...(build.overrides ? { overrides: build.overrides } : {}),
+    ...(build.enabledSources ? { enabledSources: build.enabledSources } : {}),
+    ...(grantedFeatures.length ? { grantedFeatures } : {}),
+    ...(naturalAttacks.length ? { naturalAttacks } : {}),
     ...(build.variantRules?.dualClass && build.classId2 ? { classId2: build.classId2, subclassId2: build.subclassId2 ?? null } : {}),
     ...(build.variantRules?.abp && build.abpSkills && Object.keys(build.abpSkills).length ? { abpSkills: build.abpSkills } : {}),
     ...(build.variantRules?.abp && build.abpApex ? { abpApex: build.abpApex } : {}),
@@ -1421,7 +1711,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     abilities,
     partialBoosts,
     proficiencies,
-    hitPoints: { current: hpMax, temp: 0 },
+    hitPoints: { current: hpMax + featHp, temp: 0 },
     heroPoints: 1,
     ...(focus ? { focus } : {}),
     conditions: [],
@@ -1437,7 +1727,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const granted = ancestry?.languages.granted ?? [];
       const slots = Math.max(0, abilityMod(abilities.int)) + (ancestry?.languages.additional ?? 0);
       const bonus = build.languages.filter((l) => !granted.includes(l)).slice(0, slots);
-      return [...granted, ...bonus];
+      // Override-added languages bypass the ancestry/Int slot cap; dedup against granted + bonus picks.
+      return [...new Set([...granted, ...bonus, ...(build.overrides?.addedLanguages ?? [])])];
     })(),
     feats,
     skillIncreases,
@@ -1503,7 +1794,17 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   b.subclassId = c.subclassId ?? null;
   if (c.variantRules) b.variantRules = { ...c.variantRules };
   if (c.options) b.options = { ...c.options };
-  if (c.naturalAttacks?.length) b.naturalAttacks = c.naturalAttacks.map((na) => ({ ...na }));
+  if (c.overrides) b.overrides = JSON.parse(JSON.stringify(c.overrides)) as BuildOverrides;
+  if (c.enabledSources) b.enabledSources = [...c.enabledSources];
+  if (c.naturalAttacks?.length) {
+    // Keep only user/WG-imported attacks in the build — feat/feature-granted ones are re-derived on
+    // every build, so subtract them here to stay idempotent (no double-count on round-trip).
+    const grantedNames = new Set(
+      collectGrantedNaturals(content, c.feats ?? [], c.heritageId, c.ancestryId, c.classId, c.level).map((g) => g.name.toLowerCase()),
+    );
+    const kept = c.naturalAttacks.filter((na) => !grantedNames.has(na.name.toLowerCase())).map((na) => ({ ...na }));
+    if (kept.length) b.naturalAttacks = kept;
+  }
   if (c.classId2 !== undefined) b.classId2 = c.classId2;
   if (c.subclassId2 !== undefined) b.subclassId2 = c.subclassId2;
   if (c.abpSkills) b.abpSkills = { ...c.abpSkills };
@@ -1589,15 +1890,17 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     for (const a of background ? fixedBoosts(background.abilityBoosts) : []) fixedCount[a] = (fixedCount[a] ?? 0) + 1;
     const key = subclassKeyAbility(b, content) ?? b.keyAbility ?? cls?.keyAbility[0];
     if (key) fixedCount[key] = (fixedCount[key] ?? 0) + 1;
-    // ABP apex (L17) is a known fixed boost — count it so the level-boost reconstruction doesn't
-    // re-spend a slot to reach the apex-boosted score.
-    if (c.variantRules?.abp && c.level >= 17 && c.abpApex) fixedCount[c.abpApex] = (fixedCount[c.abpApex] ?? 0) + 1;
+    // ABP apex (L17) is applied AFTER ordinary boosts as an apex-item effect ("raise to 18, or +2 if
+    // already 18+"), so it's not a fixed +2/+1 boost — fold it into the score the ordinary boosts must
+    // reach (apexOf) so the level-boost reconstruction counts only the real boosts.
+    const apexAbility = c.variantRules?.abp && c.level >= 17 && c.abpApex ? c.abpApex : null;
 
     const need: Partial<Record<AbilityId, number>> = {};
     for (const X of ABIL) {
+      const apexOf = (v: number) => (X === apexAbility ? (v >= 18 ? v + 2 : 18) : v);
       let s = 10 - 2 * (flawCount[X] ?? 0);
       let total = 0;
-      while (s < c.abilities[X] && total < 40) {
+      while (apexOf(s) < c.abilities[X] && total < 40) {
         s += s >= 18 ? 1 : 2;
         total++;
       }
@@ -1719,12 +2022,16 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   // builder shows it in the right slot; idx is otherwise ignored by buildCharacter.
   const bgFeat = background?.grantedFeatId;
   let bgFeatDropped = false;
+  // Override-granted bonus feats are re-injected by buildCharacter from overrides.addedFeats, so they
+  // must NOT be reconstructed into a slot pick (else they'd consume a feat slot on reopen).
+  const addedFeatIds = new Set((c.overrides?.addedFeats ?? []).map((a) => a.featId));
   const featsByLevel = new Map<number, FeatChoice[]>();
   for (const f of c.feats) {
     if (!bgFeatDropped && bgFeat && f.featId === bgFeat && f.level === 1 && f.category === 'skill') {
       bgFeatDropped = true;
       continue;
     }
+    if (addedFeatIds.has(f.featId)) continue;
     const arr = featsByLevel.get(f.level) ?? [];
     arr.push(f);
     featsByLevel.set(f.level, arr);
@@ -1886,7 +2193,8 @@ export function levelGrants(
  * Check a feat's prerequisites against a (built) character. Enforces only the
  * unambiguous, safe patterns (under-enforcing never wrongly blocks a legal pick):
  *  - PROFICIENCY RANK ("trained/expert/master in <skill|Perception|… Lore>")
- *  - ABILITY modifier ("Strength +2"); multiple are treated as an OR group (dedications)
+ *  - ABILITY modifier ("Strength +2"); multiple are AND (comma convention), except the Fighter/Monk
+ *    Dedication allow-list whose two entries are genuinely "X or Y"
  *  - HAS-FEAT (the prereq names another feat) — enforced only when the name resolves
  *    to a known content feat; "met" if the character has it as a feat OR a class
  *    feature / heritage / subclass (so feature-prereqs like a rogue's Sneak Attack
@@ -1902,14 +2210,18 @@ const ABILITY_BY_NAME: Record<string, AbilityId> = {
   charisma: 'cha',
 };
 
+// The ONLY feats whose two separate ability prerequisites are genuinely "X or Y" (OR). Every other
+// feat with multiple ability prereqs uses the comma convention = AND (need both). The Foundry data
+// stores both shapes as identical separate entries, so the OR cases must be an explicit allow-list.
+const ABILITY_OR_FEATS = new Set(['fighter-dedication', 'monk-dedication']);
+
 export function checkPrerequisites(
   feat: Feat,
   character: Character,
   content: ContentDatabase,
 ): { met: boolean; unmet: string[] } {
   const unmet: string[] = [];
-  const abilityLines: string[] = [];
-  let abilityGroupMet = false;
+  const abilityResults: { line: string; met: boolean }[] = [];
 
   // Everything the character "has" for a has-feat prereq: taken feats + granted class
   // features (up to level) + heritage / ancestry / class / subclass ids.
@@ -1923,8 +2235,10 @@ export function checkPrerequisites(
   for (const line of feat.prerequisites ?? []) {
     const am = line.match(/^(strength|dexterity|constitution|intelligence|wisdom|charisma)\s+\+(\d+)$/i);
     if (am) {
-      abilityLines.push(line);
-      if (abilityMod(character.abilities[ABILITY_BY_NAME[am[1].toLowerCase()]]) >= Number(am[2])) abilityGroupMet = true;
+      abilityResults.push({
+        line,
+        met: abilityMod(character.abilities[ABILITY_BY_NAME[am[1].toLowerCase()]]) >= Number(am[2]),
+      });
       continue;
     }
     const m = line.match(/^(trained|expert|master|legendary)\s+(?:in\s+)?(.+)$/i);
@@ -1951,6 +2265,15 @@ export function checkPrerequisites(
     const fid = slug(line);
     if (content.feats[fid] && !has.has(fid)) unmet.push(line);
   }
-  if (abilityLines.length && !abilityGroupMet) unmet.push(...abilityLines);
+  // Multi-ability prereqs are AND by default (comma convention); only the Fighter/Monk Dedication
+  // allow-list treats its two ability entries as OR. (Single-string "X or Y" prereqs aren't matched
+  // above, so they remain safely under-enforced rather than wrongly blocking.)
+  if (abilityResults.length) {
+    if (ABILITY_OR_FEATS.has(feat.id)) {
+      if (!abilityResults.some((r) => r.met)) unmet.push(...abilityResults.map((r) => r.line));
+    } else {
+      for (const r of abilityResults) if (!r.met) unmet.push(r.line);
+    }
+  }
   return { met: unmet.length === 0, unmet };
 }

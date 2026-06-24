@@ -292,6 +292,32 @@ export function FilterableSelect<T>({
   const reset = () => setState(defaultState(spec, effStops));
 
   const presence = useMemo(() => computePresence(spec, items), [spec, items]);
+  // The searchable text of each field's individual options (chip labels, the trait vocabulary, the
+  // cast-time chips), so the "find a filter" box also matches an option's name — e.g. "uncommon" or
+  // "fire" — not just the section heading. Present options only, lowercased.
+  const optionText = useMemo(() => {
+    const out: Record<string, string[]> = {};
+    for (const f of spec.fields) {
+      const set = new Set<string>();
+      if (f.kind === 'chips') {
+        for (const o of f.options)
+          if (presence[f.id].opts.has(o.id)) {
+            set.add(o.label.toLowerCase());
+            set.add(o.id.toLowerCase());
+          }
+      } else if (f.kind === 'castTime') {
+        for (const c of COST_CHIPS)
+          if (presence[f.id].opts.has(c.id)) {
+            set.add(c.label.toLowerCase());
+            set.add(c.id.toLowerCase());
+          }
+      } else if (f.kind === 'traits') {
+        for (const it of items) for (const t of f.accessor(it)) set.add(String(t).toLowerCase());
+      }
+      out[f.id] = [...set];
+    }
+    return out;
+  }, [spec, items, presence]);
   // Only fields that can actually narrow this list participate (in the panel AND in filtering).
   const liveFields = useMemo(() => spec.fields.filter((f) => presence[f.id].show), [spec, presence]);
 
@@ -310,7 +336,9 @@ export function FilterableSelect<T>({
   const panelOpen = hasPanel && showFilters;
   const panelActiveCount = panelFields.filter((f) => isActive(f, state[f.id], effStops)).length;
   const mq = metaQuery.trim().toLowerCase();
-  const shownFields = mq ? panelFields.filter((f) => f.label.toLowerCase().includes(mq)) : panelFields;
+  const shownFields = mq
+    ? panelFields.filter((f) => f.label.toLowerCase().includes(mq) || (optionText[f.id] ?? []).some((o) => o.includes(mq)))
+    : panelFields;
 
   return (
     <>
@@ -361,6 +389,7 @@ export function FilterableSelect<T>({
                         items={items}
                         present={presence[f.id].opts}
                         stops={stopsOf(f, effStops)}
+                        query={mq}
                       />
                     </div>
                   );
@@ -420,6 +449,7 @@ function FieldControl<T>({
   items,
   present,
   stops,
+  query,
 }: {
   field: FilterField<T>;
   value: unknown;
@@ -429,7 +459,11 @@ function FieldControl<T>({
   present?: Set<string>;
   /** Data-trimmed slider stops (range fields). */
   stops?: SliderStop[];
+  /** The active "find a filter" query — options matching it are emphasized. */
+  query?: string;
 }) {
+  const q = (query ?? '').trim().toLowerCase();
+  const chipMatch = (label: string, id: string) => !!q && (label.toLowerCase().includes(q) || id.toLowerCase().includes(q));
   if (field.kind === 'text') {
     return (
       <input
@@ -448,7 +482,7 @@ function FieldControl<T>({
     return (
       <div className="fsel-chips">
         {opts.map((o) => (
-          <button key={o.id} className={'fsel-chip' + (sel.includes(o.id) ? ' on' : '')} onClick={() => toggle(o.id)}>
+          <button key={o.id} className={'fsel-chip' + (sel.includes(o.id) ? ' on' : '') + (chipMatch(o.label, o.id) ? ' match' : '')} onClick={() => toggle(o.id)}>
             {o.label}
           </button>
         ))}
@@ -463,7 +497,7 @@ function FieldControl<T>({
     return (
       <div className="fsel-chips">
         {opts.map((o) => (
-          <button key={o.id} className={'fsel-chip' + (sel.includes(o.id) ? ' on' : '')} onClick={() => toggle(o.id)}>
+          <button key={o.id} className={'fsel-chip' + (sel.includes(o.id) ? ' on' : '') + (chipMatch(o.label, o.id) ? ' match' : '')} onClick={() => toggle(o.id)}>
             {o.label}
           </button>
         ))}
@@ -478,7 +512,7 @@ function FieldControl<T>({
   }
 
   // traits — searchable multi-select over the vocabulary present in the dataset.
-  return <TraitPicker field={field} value={(value as string[]) ?? []} onChange={(v) => onChange(v)} items={items} />;
+  return <TraitPicker field={field} value={(value as string[]) ?? []} onChange={(v) => onChange(v)} items={items} query={query} />;
 }
 
 function TraitPicker<T>({
@@ -486,11 +520,14 @@ function TraitPicker<T>({
   value,
   onChange,
   items,
+  query,
 }: {
   field: Extract<FilterField<T>, { kind: 'traits' }>;
   value: string[];
   onChange: (v: string[]) => void;
   items: T[];
+  /** The "find a filter" query — used to surface matching traits before the user types here. */
+  query?: string;
 }) {
   const [q, setQ] = useState('');
   const vocab = useMemo(() => {
@@ -498,7 +535,9 @@ function TraitPicker<T>({
     for (const it of items) for (const t of field.accessor(it)) m.set(t, (m.get(t) ?? 0) + 1);
     return [...m.entries()].sort((a, b) => b[1] - a[1]).map(([t]) => t);
   }, [items, field]);
-  const needle = q.trim().toLowerCase();
+  // The trait picker's own search wins; until the user types here, fall back to the meta-query so a
+  // trait searched in "find a filter" (e.g. "fire") is already listed.
+  const needle = (q.trim() || (query ?? '').trim()).toLowerCase();
   const matches = needle ? vocab.filter((t) => t.includes(needle) && !value.includes(t)).slice(0, 12) : [];
   const add = (t: string) => {
     onChange([...value, t]);

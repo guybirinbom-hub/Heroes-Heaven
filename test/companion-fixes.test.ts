@@ -37,10 +37,16 @@ describe('animal companion speed by maturity', () => {
 });
 
 describe('eidolon AC', () => {
-  it('uses its own UNARMORED defense, not the summoner’s armored AC', () => {
+  it('uses its own UNARMORED defense — the eidolon’s OWN Dex + array AC bonus, not the summoner’s armored AC', () => {
     const summoner = build('summoner', 5, { subclassId: firstSubclass('summoner') ?? undefined });
-    const eid = deriveEidolon({ id: 'e', kind: 'eidolon', name: '', typeId: firstSubclass('summoner') ?? '' } as CompanionConfig, summoner, c);
-    const expected = 10 + abilityMod(summoner.abilities.dex) + profBonus(summoner.proficiencies.defenses.unarmored, summoner.level);
+    const eid = deriveEidolon(
+      { id: 'e', kind: 'eidolon', name: '', typeId: firstSubclass('summoner') ?? '', eidolon: { abilities: { dex: 3 }, acItemBonus: 1 } } as CompanionConfig,
+      summoner,
+      c,
+    );
+    // 10 + the eidolon's own Dex (3) + array item bonus (1) + the summoner's (shared) unarmored proficiency
+    const expected = 10 + 3 + 1 + profBonus(summoner.proficiencies.defenses.unarmored, summoner.level);
     expect(eid.ac).toBe(expected);
+    expect(abilityMod(summoner.abilities.dex)).not.toBeNaN(); // summoner Dex no longer feeds the eidolon AC
   });
 });

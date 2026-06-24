@@ -8,7 +8,17 @@
  */
 import type { BuildState } from '../rules/build';
 import type { PlayState } from '../rules/play';
-import type { Character, Item, ModeDef } from '../rules/types';
+import type {
+  Action,
+  Ancestry,
+  Background,
+  Character,
+  Feat,
+  Heritage,
+  Item,
+  ModeDef,
+  Spell,
+} from '../rules/types';
 import { normalizeCharacter, normalizePlay } from '../rules/normalize';
 
 export interface SavedChar {
@@ -94,29 +104,138 @@ export function saveActiveId(id: string): void {
   }
 }
 
-const HOMEBREW_ITEMS_KEY = 'wanderers-codex:homebrew-items:v1';
+/* ---- Homebrew: user-authored content, grouped under user-named Sources ---------------------------
+ * A Source is just a label + id. Each content entry carries `homebrewSourceId` linking it to its
+ * source, plus `source: { license: 'homebrew' }`. All entries merge into the live ContentDatabase at
+ * load (data/index.ts), so homebrew resolves everywhere core content does. */
 
-/** User-created custom items, keyed by item id. Merged into the content DB at load
- *  (see data/index.ts) so they resolve everywhere a real item would. */
-export function loadHomebrewItems(): Record<string, Item> {
+export interface HomebrewSource {
+  id: string;
+  name: string;
+  abbreviation?: string;
+  description?: string;
+  /** Capability ids this Source turns on when enabled on a character (e.g. ['monsterParts']).
+   *  Lets a Source unlock a built-in subsystem, resolved by Source id so it survives renames. */
+  unlocks?: string[];
+}
+
+/** The content-type buckets the Homebrew manager can author. */
+export interface HomebrewContent {
+  items: Record<string, Item>;
+  feats: Record<string, Feat>;
+  spells: Record<string, Spell>;
+  ancestries: Record<string, Ancestry>;
+  heritages: Record<string, Heritage>;
+  backgrounds: Record<string, Background>;
+  actions: Record<string, Action>;
+}
+export type HomebrewType = keyof HomebrewContent;
+export const HOMEBREW_TYPES: HomebrewType[] = [
+  'items',
+  'feats',
+  'spells',
+  'ancestries',
+  'heritages',
+  'backgrounds',
+  'actions',
+];
+
+const HOMEBREW_SOURCES_KEY = 'wanderers-codex:homebrew-sources:v1';
+const HOMEBREW_CONTENT_KEY = 'wanderers-codex:homebrew-content:v1';
+const LEGACY_HOMEBREW_ITEMS_KEY = 'wanderers-codex:homebrew-items:v1';
+
+function emptyHomebrewContent(): HomebrewContent {
+  return { items: {}, feats: {}, spells: {}, ancestries: {}, heritages: {}, backgrounds: {}, actions: {} };
+}
+
+export function loadHomebrewSources(): Record<string, HomebrewSource> {
   try {
-    const raw = localStorage.getItem(HOMEBREW_ITEMS_KEY);
+    const raw = localStorage.getItem(HOMEBREW_SOURCES_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
-    return parsed && typeof parsed === 'object' ? (parsed as Record<string, Item>) : {};
+    return parsed && typeof parsed === 'object' ? (parsed as Record<string, HomebrewSource>) : {};
   } catch {
     return {};
   }
 }
 
-/** Persist (or update) a single custom item. */
-export function saveHomebrewItem(item: Item): void {
+export function saveHomebrewSource(source: HomebrewSource): void {
   try {
-    const all = loadHomebrewItems();
-    all[item.id] = item;
-    localStorage.setItem(HOMEBREW_ITEMS_KEY, JSON.stringify(all));
+    const all = loadHomebrewSources();
+    all[source.id] = source;
+    localStorage.setItem(HOMEBREW_SOURCES_KEY, JSON.stringify(all));
   } catch {
-    // non-fatal
+    /* non-fatal */
   }
+}
+
+/** Delete a source and every content entry that belonged to it. */
+export function deleteHomebrewSource(id: string): void {
+  try {
+    const sources = loadHomebrewSources();
+    delete sources[id];
+    localStorage.setItem(HOMEBREW_SOURCES_KEY, JSON.stringify(sources));
+    const content = loadHomebrewContent();
+    for (const type of HOMEBREW_TYPES) {
+      for (const [eid, entry] of Object.entries(content[type])) {
+        if ((entry as { homebrewSourceId?: string }).homebrewSourceId === id) delete content[type][eid];
+      }
+    }
+    localStorage.setItem(HOMEBREW_CONTENT_KEY, JSON.stringify(content));
+  } catch {
+    /* non-fatal */
+  }
+}
+
+/** All homebrew content, folding in any items saved under the legacy items-only key. */
+export function loadHomebrewContent(): HomebrewContent {
+  const content = emptyHomebrewContent();
+  try {
+    const raw = localStorage.getItem(HOMEBREW_CONTENT_KEY);
+    const parsed = raw ? (JSON.parse(raw) as Partial<HomebrewContent>) : null;
+    if (parsed && typeof parsed === 'object') {
+      for (const type of HOMEBREW_TYPES) Object.assign(content[type], parsed[type] ?? {});
+    }
+  } catch {
+    /* ignore */
+  }
+  try {
+    const legacy = localStorage.getItem(LEGACY_HOMEBREW_ITEMS_KEY);
+    const items = legacy ? (JSON.parse(legacy) as Record<string, Item>) : null;
+    if (items && typeof items === 'object') for (const [id, it] of Object.entries(items)) content.items[id] ??= it;
+  } catch {
+    /* ignore */
+  }
+  return content;
+}
+
+function saveHomebrewContent(content: HomebrewContent): void {
+  try {
+    localStorage.setItem(HOMEBREW_CONTENT_KEY, JSON.stringify(content));
+  } catch {
+    /* non-fatal */
+  }
+}
+
+/** Persist (or update) one homebrew entry of the given type. */
+export function saveHomebrewEntry<T extends HomebrewType>(type: T, entry: HomebrewContent[T][string]): void {
+  const content = loadHomebrewContent();
+  content[type][(entry as { id: string }).id] = entry;
+  saveHomebrewContent(content);
+}
+
+/** Remove a homebrew entry. */
+export function deleteHomebrewEntry(type: HomebrewType, id: string): void {
+  const content = loadHomebrewContent();
+  delete content[type][id];
+  saveHomebrewContent(content);
+}
+
+/** Back-compat shim: the inventory "Create item" flow and data/index.ts use these. */
+export function loadHomebrewItems(): Record<string, Item> {
+  return loadHomebrewContent().items;
+}
+export function saveHomebrewItem(item: Item): void {
+  saveHomebrewEntry('items', item);
 }
 
 const MODES_KEY = 'wanderers-codex:modes:v1';
@@ -152,4 +271,25 @@ export function deleteMode(id: string): void {
   } catch {
     // non-fatal
   }
+}
+
+/** Permanently erase ALL of this app's locally-stored data: every saved character, homebrew item,
+ *  custom mode, theme/zoom preference, and any other setting. The app owns its storage origin
+ *  (a dedicated Tauri webview, or its own dev-server port), so clearing localStorage wipes only
+ *  this app's data and nothing else. Returns the number of storage keys removed. IRREVERSIBLE —
+ *  only call behind an explicit, typed user confirmation. */
+export function wipeAllData(): number {
+  let removed = 0;
+  try {
+    removed = localStorage.length;
+    localStorage.clear();
+  } catch {
+    // storage unavailable — nothing to clear
+  }
+  try {
+    sessionStorage.clear();
+  } catch {
+    // non-fatal
+  }
+  return removed;
 }

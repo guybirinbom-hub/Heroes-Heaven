@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
 import type { Character, ContentDatabase } from '../rules/types';
 import { classFeatureDescription } from '../rules/featureText';
-import { ActionGlyph } from './widgets';
+import { ActionGlyph, isActionCost } from './widgets';
 import { FeatDetail, type FeatEntry } from './FeatDetail';
+import { toPlainText } from './RichText';
 
 const BUCKETS = ['Class', 'Archetype', 'Ancestry & heritage', 'Skill', 'General'];
 const BUCKET_ICON: Record<string, string> = {
@@ -30,7 +31,8 @@ function featBucket(category: string): string {
 }
 
 export function FeatsTab({ character, content }: { character: Character; content: ContentDatabase }) {
-  const [active, setActive] = useState<Set<string>>(new Set(BUCKETS));
+  // Which type sections to show. EMPTY = "All" (everything); otherwise only the picked types.
+  const [picked, setPicked] = useState<Set<string>>(new Set());
   const [query, setQuery] = useState('');
   const [detail, setDetail] = useState<FeatEntry | null>(null);
 
@@ -117,6 +119,21 @@ export function FeatsTab({ character, content }: { character: Character; content
       });
     }
   }
+  // Features force-granted via the creative Overrides section.
+  for (const g of character.grantedFeatures ?? []) {
+    entries.push({
+      key: `granted:${g.featureId}:${g.level}`,
+      name: g.name,
+      level: g.level,
+      traits: g.traits,
+      actionCost: g.actionCost,
+      description: g.description,
+      descRefs: g.descRefs,
+      isFeature: true,
+      bucket: 'Class',
+      rarity: g.rarity,
+    });
+  }
   const heritage = character.heritageId ? content.heritages[character.heritageId] : undefined;
   if (heritage) {
     entries.push({
@@ -135,9 +152,14 @@ export function FeatsTab({ character, content }: { character: Character; content
   }, [character, content]);
 
   const q = query.trim().toLowerCase();
+  // EMPTY picked = show every type; otherwise only the picked ones.
+  const showAll = picked.size === 0;
+  // Only offer a type chip when the character actually has entries of that type (e.g. no Archetype
+  // feats → no Archetype filter). Based on all entries, independent of the search box.
+  const presentBuckets = BUCKETS.filter((b) => entries.some((e) => e.bucket === b));
   const filtered = entries.filter(
     (e) =>
-      active.has(e.bucket) &&
+      (showAll || picked.has(e.bucket)) &&
       (!q ||
         e.name.toLowerCase().includes(q) ||
         e.traits.some((t) => t.toLowerCase().includes(q)) ||
@@ -146,7 +168,7 @@ export function FeatsTab({ character, content }: { character: Character; content
   );
 
   function toggle(b: string) {
-    setActive((prev) => {
+    setPicked((prev) => {
       const n = new Set(prev);
       if (n.has(b)) n.delete(b);
       else n.add(b);
@@ -156,20 +178,25 @@ export function FeatsTab({ character, content }: { character: Character; content
 
   return (
     <div className="maincol">
-      <div className="ff-filters">
-        {BUCKETS.map((b) => (
-          <button key={b} className={'fchip' + (active.has(b) ? ' on' : '')} onClick={() => toggle(b)}>
-            {b}
+      <div className="ff-bar">
+        <div className="search">
+          <i className="ti ti-search" aria-hidden="true" />
+          <input placeholder="Search feats & features" value={query} onChange={(e) => setQuery(e.target.value)} />
+        </div>
+        <div className="ff-filters" role="group" aria-label="Show feat & feature types">
+          <button className={'fchip' + (showAll ? ' on' : '')} onClick={() => setPicked(new Set())} title="Show every type">
+            All
           </button>
-        ))}
-      </div>
-      <div className="search">
-        <i className="ti ti-search" aria-hidden="true" />
-        <input placeholder="Search feats & features" value={query} onChange={(e) => setQuery(e.target.value)} />
+          {presentBuckets.map((b) => (
+            <button key={b} className={'fchip' + (picked.has(b) ? ' on' : '')} onClick={() => toggle(b)} title={`Show only ${b}${picked.size ? ' (and other picked types)' : ''}`}>
+              {b}
+            </button>
+          ))}
+        </div>
       </div>
 
       <section className="card">
-        {BUCKETS.filter((b) => active.has(b)).map((b) => {
+        {BUCKETS.filter((b) => showAll || picked.has(b)).map((b) => {
           const rows = filtered.filter((e) => e.bucket === b).sort((a, c) => a.level - c.level);
           if (rows.length === 0) return null;
           return (
@@ -193,7 +220,7 @@ export function FeatsTab({ character, content }: { character: Character; content
                   </div>
                   <div className="ff-body">
                     <div className="ff-name-line">
-                      {e.actionCost && (
+                      {isActionCost(e.actionCost) && (
                         <span className="ff-cost">
                           <ActionGlyph cost={e.actionCost} />
                         </span>
@@ -206,7 +233,7 @@ export function FeatsTab({ character, content }: { character: Character; content
                         </span>
                       ))}
                     </div>
-                    <div className="ff-desc">{e.description}</div>
+                    <div className="ff-desc">{toPlainText(e.description)}</div>
                   </div>
                   <i className="ti ti-chevron-right ff-chev" aria-hidden="true" />
                 </div>

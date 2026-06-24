@@ -21,6 +21,9 @@ export function ConditionsModal({
   catalog = [],
   classId,
   ancestryId,
+  featIds,
+  charKey,
+  charName,
   activeModeIds = [],
   onToggleMode,
   onSaveMode,
@@ -40,6 +43,9 @@ export function ConditionsModal({
   catalog?: ModeDef[];
   classId?: string | null;
   ancestryId?: string | null;
+  featIds?: ReadonlySet<string>;
+  charKey?: string;
+  charName?: string;
   activeModeIds?: string[];
   onToggleMode?: (id: string) => void;
   onSaveMode?: (mode: ModeDef) => void;
@@ -79,6 +85,9 @@ export function ConditionsModal({
             catalog={catalog}
             classId={classId}
             ancestryId={ancestryId}
+            featIds={featIds}
+            charKey={charKey}
+            charName={charName}
             activeIds={activeModeIds}
             onToggle={(id) => onToggleMode?.(id)}
             onSave={(m) => onSaveMode?.(m)}

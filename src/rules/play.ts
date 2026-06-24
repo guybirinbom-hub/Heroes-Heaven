@@ -48,6 +48,8 @@ export interface PlayState {
   inventory?: InventoryItem[];
   /** In-play wallet; when set, it overrides the build's starting currency. */
   currency?: Coins;
+  /** Banked monster parts (gp-value) for the Monster Parts subsystem; in-play progress (kept on rebuild). */
+  monsterParts?: number;
   /** Pinned/favorited activity keys (Main-tab favorites). */
   pinned: string[];
   /** Favorited description popups (starred from any description page). */
@@ -58,6 +60,8 @@ export interface PlayState {
   notes?: NotePage[];
   /** Conditions on each companion, keyed by companion id. */
   companionConditions?: Record<string, ActiveCondition[]>;
+  /** Tracked HP per companion: damage taken + temp HP (current = max − damage), by companion id. */
+  companionHp?: Record<string, { damage: number; temp: number }>;
   /** In-play companions; when set, overrides the build's (so the Companions tab can add/remove). */
   companions?: CompanionConfig[];
   /** In-play edits to bio fields (alignment, age, appearance, …), merged over the build's details. */
@@ -126,6 +130,7 @@ export function initialPlay(ch: Character, content: ContentDatabase): PlayState 
     conditions: (ch.conditions ?? []).map((c) => ({ ...c })),
     inventory: (ch.inventory ?? []).map((i) => ({ ...i })),
     currency: { ...ch.currency },
+    monsterParts: ch.monsterParts ?? 0,
     pinned: ch.pinned ?? [],
     pinnedDescs: ch.pinnedDescs ? ch.pinnedDescs.map((d) => ({ ...d })) : [],
     resources: { ...(ch.classResources ?? {}) },
@@ -208,11 +213,13 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     conditions,
     inventory: play.inventory ?? ch.inventory,
     currency: play.currency ?? ch.currency,
+    monsterParts: play.monsterParts ?? ch.monsterParts,
     pinned: play.pinned ?? ch.pinned ?? [],
     pinnedDescs: play.pinnedDescs ?? ch.pinnedDescs ?? [],
     classResources: play.resources ?? ch.classResources ?? {},
     notes: play.notes ?? ch.notes,
     companionConditions: play.companionConditions ?? ch.companionConditions ?? {},
+    companionHp: play.companionHp ?? ch.companionHp ?? {},
     companions: play.companions ?? ch.companions,
     details: play.details ? { ...ch.details, ...play.details } : ch.details,
     appearance: play.appearance ? { ...ch.appearance, ...play.appearance } : ch.appearance,
@@ -457,11 +464,48 @@ export function addPlayCompanion(play: PlayState, cfg: Omit<CompanionConfig, 'id
   return { ...play, companions: [...list, { ...cfg, id: nextCompanionId(list) }] };
 }
 
-/** Remove a companion (and any tracked conditions on it) in play. */
+/** Remove a companion (and any tracked conditions/HP on it) in play. */
 export function removePlayCompanion(play: PlayState, id: string): PlayState {
   const companionConditions = { ...(play.companionConditions ?? {}) };
   delete companionConditions[id];
-  return { ...play, companions: (play.companions ?? []).filter((c) => c.id !== id), companionConditions };
+  const companionHp = { ...(play.companionHp ?? {}) };
+  delete companionHp[id];
+  return { ...play, companions: (play.companions ?? []).filter((c) => c.id !== id), companionConditions, companionHp };
+}
+
+/* ---- per-companion HP (vehicles/siege weapons track damage; creatures show current/max too) ---- */
+
+function patchCompanionHp(play: PlayState, id: string, patch: Partial<{ damage: number; temp: number }>): PlayState {
+  const map = play.companionHp ?? {};
+  const cur = map[id] ?? { damage: 0, temp: 0 };
+  return { ...play, companionHp: { ...map, [id]: { ...cur, ...patch } } };
+}
+/** Deal `amount` damage to a companion (temp HP soaks first); current = max − damage. */
+export function applyCompanionDamage(play: PlayState, id: string, amount: number, max: number): PlayState {
+  const cur = play.companionHp?.[id] ?? { damage: 0, temp: 0 };
+  const n = Math.max(0, Math.round(amount));
+  const soaked = Math.min(cur.temp, n);
+  return patchCompanionHp(play, id, { temp: cur.temp - soaked, damage: clamp(cur.damage + (n - soaked), 0, max) });
+}
+/** Heal a companion `amount` HP (reduces tracked damage). */
+export function applyCompanionHeal(play: PlayState, id: string, amount: number, max: number): PlayState {
+  const cur = play.companionHp?.[id] ?? { damage: 0, temp: 0 };
+  return patchCompanionHp(play, id, { damage: clamp(cur.damage - Math.max(0, Math.round(amount)), 0, max) });
+}
+/** Set a companion's current HP directly (clicking the number), clamped to [0, max]. */
+export function setCompanionHp(play: PlayState, id: string, value: number, max: number): PlayState {
+  return patchCompanionHp(play, id, { damage: clamp(max - Math.round(value), 0, max) });
+}
+/** Set a companion's temp-HP pool (never negative). */
+export function setCompanionTempHp(play: PlayState, id: string, value: number): PlayState {
+  return patchCompanionHp(play, id, { temp: Math.max(0, Math.round(value)) });
+}
+
+/** Buy a vehicle / siege weapon (or any companion) — deduct the character's coins, then add it. */
+export function buyCompanion(play: PlayState, cfg: Omit<CompanionConfig, 'id'>, price: Coins | undefined): PlayState {
+  if (price && !canAfford(play.currency, price)) return play;
+  const next = price ? { ...play, currency: cpToCoins(coinsToCp(play.currency) - coinsToCp(price)) } : play;
+  return addPlayCompanion(next, cfg);
 }
 
 /** Merge a patch into a companion in play (name / type / maturity / abilities). */
@@ -586,13 +630,24 @@ export function removeInventoryItem(play: PlayState, instanceId: string): PlaySt
 
 /** Affix an attachment (talisman/spellheart/banner) onto a host item; it stops being separately worn/carried. */
 export function attachItem(play: PlayState, attachmentId: string, hostId: string): PlayState {
+  const inv = play.inventory ?? [];
+  const src = inv.find((i) => i.instanceId === attachmentId);
+  const attached = { attachedTo: hostId, worn: false, equipped: false, invested: false, containerInstanceId: undefined };
+  // A stack of consumable talismans (quantity > 1): peel ONE off and affix it, leaving the rest as a
+  // loose stack — exactly like the rune-etch path. Affixing the whole instance would lock the other
+  // N-1 units inside the affixed item, making them inaccessible.
+  if (src && (src.quantity ?? 1) > 1) {
+    return {
+      ...play,
+      inventory: [
+        ...inv.map((i) => (i.instanceId === attachmentId ? { ...i, quantity: src.quantity - 1 } : i)),
+        { ...src, instanceId: nextInstanceId(inv), quantity: 1, ...attached },
+      ],
+    };
+  }
   return {
     ...play,
-    inventory: (play.inventory ?? []).map((i) =>
-      i.instanceId === attachmentId
-        ? { ...i, attachedTo: hostId, worn: false, equipped: false, invested: false, containerInstanceId: undefined }
-        : i,
-    ),
+    inventory: inv.map((i) => (i.instanceId === attachmentId ? { ...i, ...attached } : i)),
   };
 }
 
@@ -679,6 +734,32 @@ export function setItemCounter(
 /** Set the wallet directly (Manage Coins editor). */
 export function setCurrency(play: PlayState, currency: Coins): PlayState {
   return { ...play, currency };
+}
+
+/** Set the banked monster-parts value (gp), clamped to ≥ 0. */
+export function setMonsterParts(play: PlayState, value: number): PlayState {
+  return { ...play, monsterParts: Math.max(0, Math.round(value)) };
+}
+
+/** Write the per-item Monster Parts blob (refinement / imbuements) onto one inventory instance.
+ *  Passing `undefined` clears it (reverting the item to a normal, rune-capable item). */
+export function setItemMonsterPart(
+  play: PlayState,
+  instanceId: string,
+  monsterPart: InventoryItem['monsterPart'] | undefined,
+): PlayState {
+  const inv = play.inventory ?? [];
+  return {
+    ...play,
+    inventory: inv.map((i) => {
+      if (i.instanceId !== instanceId) return i;
+      const next = { ...i, monsterPart };
+      // An item uses either monster parts or runes — never both. Clear runes when refining.
+      if (monsterPart) delete next.runes;
+      if (!monsterPart) delete next.monsterPart;
+      return next;
+    }),
+  };
 }
 
 /** Prepare/unprepare a Commander tactic for the day (capped at preparedMax; over-cap toggles no-op). */
@@ -792,10 +873,13 @@ export function playForRebuild(play: PlayState): PlayState {
     tempSpeed: play.tempSpeed,
     heroPoints: play.heroPoints,
     xp: play.xp,
+    // Banked monster parts are harvested in play (not regenerated by the build), so keep them like XP.
+    monsterParts: play.monsterParts,
     conditions: play.conditions ?? [],
     pinned: play.pinned ?? [],
     pinnedDescs: play.pinnedDescs,
     companionConditions: play.companionConditions,
+    companionHp: play.companionHp,
     companions: play.companions,
     details: play.details,
     appearance: play.appearance,
@@ -809,18 +893,15 @@ export function playForRebuild(play: PlayState): PlayState {
   };
 }
 
-/** Apply a night's rest to a condition list (PF2e): Fatigued is removed; Doomed and Drained
- *  step down by 1 (removed at 0); Wounded clears only if the rest restored you to full HP.
- *  Dying isn't touched (you can't rest while dying). Other conditions persist (their
- *  durations aren't tracked, so the player clears those manually). */
-function restConditions(list: ActiveCondition[], reachedFull: boolean): ActiveCondition[] {
+/** Apply a full night's rest to a condition list. A night's rest is the day's big recovery, so it
+ *  removes Fatigued, Wounded, AND Dying (you survive/recover overnight — without this, Dying and
+ *  Wounded picked up from dropping to 0 HP would linger forever, since a night's HP recovery often
+ *  won't reach full). Doomed and Drained step down by 1 (removed at 0). Other conditions persist
+ *  (their durations aren't tracked, so the player clears those manually). */
+function restConditions(list: ActiveCondition[]): ActiveCondition[] {
   const out: ActiveCondition[] = [];
   for (const c of list) {
-    if (c.id === 'fatigued') continue; // a full night's rest removes fatigue
-    if (c.id === 'wounded') {
-      if (!reachedFull) out.push(c); // Wounded only ends when you're restored to full HP
-      continue;
-    }
+    if (c.id === 'fatigued' || c.id === 'wounded' || c.id === 'dying') continue;
     if (c.id === 'doomed' || c.id === 'drained') {
       const v = (c.value ?? 1) - 1;
       if (v > 0) out.push({ ...c, value: v });
@@ -834,9 +915,9 @@ function restConditions(list: ActiveCondition[], reachedFull: boolean): ActiveCo
 /**
  * A full night's rest + daily preparations, per PF2e — NOT a full heal. You regain Hit
  * Points equal to your level × your Constitution modifier (minimum 1); temp HP clears;
- * spell slots, the focus pool, and daily-use class resources refresh; Fatigued is removed,
- * Doomed and Drained step down by 1, and Wounded ends only if you reached full HP. Hero
- * points are session-based and untouched. XP carries over.
+ * spell slots, the focus pool, and daily-use class resources refresh; Fatigued, Wounded, and
+ * Dying are removed, and Doomed and Drained step down by 1. Hero points are session-based and
+ * untouched. XP carries over.
  */
 export function rest(
   play: PlayState,
@@ -844,10 +925,18 @@ export function rest(
 ): PlayState {
   const recovered = Math.max(0, opts.level) * Math.max(1, opts.conMod);
   const damage = Math.max(0, play.damage - recovered);
-  const reachedFull = damage === 0;
   const companionConditions = play.companionConditions
-    ? Object.fromEntries(Object.entries(play.companionConditions).map(([k, v]) => [k, restConditions(v, reachedFull)]))
+    ? Object.fromEntries(Object.entries(play.companionConditions).map(([k, v]) => [k, restConditions(v)]))
     : play.companionConditions;
+  // Creature companions fully recover overnight; vehicles & siege weapons need Repair, not rest.
+  const companionHp = play.companionHp
+    ? Object.fromEntries(
+        Object.entries(play.companionHp).map(([id, hp]) => {
+          const kind = (play.companions ?? []).find((c) => c.id === id)?.kind;
+          return [id, kind === 'vehicle' || kind === 'siege' ? hp : { damage: 0, temp: 0 }];
+        }),
+      )
+    : play.companionHp;
   // Refill tracked item uses that reset on daily preparations (wands, staves, per-day items) —
   // both the legacy single `charges` and each `counters` entry flagged resetsOnRest.
   const inventory = play.inventory
@@ -872,8 +961,9 @@ export function rest(
     focusUsed: 0,
     expendedSlots: {},
     slotsUsed: {},
-    conditions: restConditions(play.conditions ?? [], reachedFull),
+    conditions: restConditions(play.conditions ?? []),
     companionConditions,
+    companionHp,
     resources: opts.initialResources ?? play.resources,
     inventory,
   };

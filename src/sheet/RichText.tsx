@@ -43,6 +43,27 @@ function splitCells(row: string): string[] {
   return row.replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
 }
 
+/** Flatten markdown-lite to clean single-line plain text — for compact previews (e.g. the inline
+ *  blurb under an action name) where bold/dividers/links would be noise and, since the row itself is
+ *  clickable, linkified refs must NOT capture the click. Pure (exported for tests). */
+export function toPlainText(text?: string): string {
+  if (!text) return '';
+  return text
+    .replace(/@\w+\[[^\]]*\]\{([^}]*)\}/g, '$1') // @UUID[…]{Label} / @Check[…]{Label} → Label
+    .replace(/@\w+\[[^\]]*\]/g, '') // bare @Damage[…] → drop
+    .replace(/\[\[[^\]]*\]\]/g, '') // [[/r …]] inline rolls → drop
+    .replace(/-{3,}/g, ' ') // --- dividers and markdown table separator rows (| --- | --- |)
+    .replace(/^\s*#{1,4}\s+/gm, '') // # headings
+    .replace(/^\s*(?:[-*]|\d+\.)\s+/gm, '') // -, *, 1. list markers
+    .replace(/\*\*([^*]+)\*\*/g, '$1') // **bold**
+    .replace(/\*([^*]+)\*/g, '$1') // *italic*
+    .replace(/⟦([^⟧]+)⟧/g, '$1') // ⟦highlight⟧
+    .replace(/⟨[^⟩]*⟩/g, '') // ⟨N⟩ action glyph → drop (no icon font in a plain preview)
+    .replace(/\|/g, ' ') // table pipes
+    .replace(/\s+/g, ' ') // collapse whitespace + newlines
+    .trim();
+}
+
 /** Parse markdown-lite into a block list. Pure (exported for tests). */
 export function parseBlocks(text: string): Block[] {
   const lines = text.replace(/\r/g, '').split('\n');
@@ -159,16 +180,37 @@ function linkify(text: string, ctx: Ctx, keyBase: string): ReactNode[] {
 }
 
 /** Render a text run with **bold** / *italic* emphasis and linkified references inside each part. */
+const GLYPH_TITLE: Record<string, string> = {
+  '1': '1 action',
+  '2': '2 actions',
+  '3': '3 actions',
+  '4': 'Free action',
+  '5': 'Reaction',
+};
+
 function inline(text: string, ctx: Ctx, keyBase: string): ReactNode[] {
   const out: ReactNode[] = [];
-  const re = /\*\*([^*]+)\*\*|\*([^*]+)\*/g;
+  // **bold** / *italic* / ⟦highlight⟧ (upcast "→ X") / ⟨N⟩ action-cost glyph (from cleanDescRich).
+  const re = /\*\*([^*]+)\*\*|\*([^*]+)\*|⟦([^⟧]+)⟧|⟨([^⟩]+)⟩/g;
   let last = 0;
   let k = 0;
   let m: RegExpExecArray | null;
   while ((m = re.exec(text)) !== null) {
     if (m.index > last) out.push(...linkify(text.slice(last, m.index), ctx, `${keyBase}-t${k}`));
     if (m[1] != null) out.push(<strong key={`${keyBase}-b${k}`}>{linkify(m[1], ctx, `${keyBase}-bb${k}`)}</strong>);
-    else out.push(<em key={`${keyBase}-i${k}`}>{linkify(m[2], ctx, `${keyBase}-ii${k}`)}</em>);
+    else if (m[2] != null) out.push(<em key={`${keyBase}-i${k}`}>{linkify(m[2], ctx, `${keyBase}-ii${k}`)}</em>);
+    else if (m[3] != null)
+      out.push(
+        <span key={`${keyBase}-h${k}`} className="up-heighten">
+          {m[3]}
+        </span>,
+      );
+    else
+      out.push(
+        <span key={`${keyBase}-a${k}`} className="pf2-action" role="img" aria-label={GLYPH_TITLE[m[4]!] ?? 'action'} title={GLYPH_TITLE[m[4]!] ?? ''}>
+          {m[4]}
+        </span>,
+      );
     last = re.lastIndex;
     k++;
   }

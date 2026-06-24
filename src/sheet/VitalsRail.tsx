@@ -31,6 +31,7 @@ import {
   MAX_HERO_POINTS,
   type PlayState,
 } from '../rules/play';
+import { usePrefs } from '../data/prefs';
 import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
 import { CLASS_RESOURCES, resourceMax } from '../rules/classResources';
 import { statHasConditionalMode, type StatRef } from '../rules/explain';
@@ -68,6 +69,7 @@ function conditionLabel(id: string): string {
 export function VitalsRail({
   character,
   content,
+  charKey,
   onPlay,
   onOpenStat,
   onSaveMode,
@@ -76,6 +78,8 @@ export function VitalsRail({
 }: {
   character: Character;
   content: ContentDatabase;
+  /** Roster id of this character — scopes character-specific modes. */
+  charKey?: string;
   onPlay?: (fn: (play: PlayState) => PlayState) => void;
   /** Open the breakdown panel for a stat (clicking any number). */
   onOpenStat?: (ref: StatRef) => void;
@@ -85,6 +89,7 @@ export function VitalsRail({
   onCreateItem?: (item: Item) => void;
 }) {
   const [hpAmt, setHpAmt] = useState('');
+  const { hpCommandEntry } = usePrefs();
   const [condOpen, setCondOpen] = useState(false);
   const [shieldDetailOpen, setShieldDetailOpen] = useState(false);
   const [shieldEditOpen, setShieldEditOpen] = useState(false);
@@ -163,6 +168,16 @@ export function VitalsRail({
     if (onPlay && n) onPlay((p) => applyHeal(p, n, hpMax));
     setHpAmt('');
   };
+  // Quick-HP-entry command field (Settings → Customization): "N" = damage, "-N" = heal, "tN" = temp HP.
+  const runHpCommand = () => {
+    const raw = hpAmt.trim();
+    setHpAmt('');
+    if (!onPlay || !raw) return;
+    let m: RegExpMatchArray | null;
+    if ((m = raw.match(/^t\s*(\d+)$/i))) onPlay((p) => setTempHp(p, Math.max(0, parseInt(m![1], 10))));
+    else if ((m = raw.match(/^-\s*(\d+)$/))) onPlay((p) => applyHeal(p, parseInt(m![1], 10), hpMax));
+    else if ((m = raw.match(/^\+?\s*(\d+)$/))) onPlay((p) => applyDamage(p, parseInt(m![1], 10), hpMax));
+  };
 
   const acTitle =
     ac.dexCap != null && abilityMods.dex > ac.dexCap
@@ -217,7 +232,7 @@ export function VitalsRail({
             <span className="hp-cur">{character.hitPoints.current}</span>
           )}
           <span className="hp-max">/ {hpMax}</span>
-          {onPlay ? (
+          {onPlay && !hpCommandEntry ? (
             <span className="hp-temp" title="Temporary HP — type to set">
               +
               <input
@@ -249,24 +264,47 @@ export function VitalsRail({
         <div className="hp-track">
           <div className="hp-fill" style={{ width: hpPct + '%' }} />
         </div>
-        {onPlay && (
-          <div className="hp-edit">
-            <button className="hp-heal" onClick={heal} title="Heal">
-              <i className="ti ti-plus" aria-hidden="true" /> Heal
-            </button>
-            <input
-              type="number"
-              className="hp-amt"
-              value={hpAmt}
-              placeholder="HP"
-              aria-label="Amount to damage or heal"
-              onChange={(e) => setHpAmt(e.target.value)}
-            />
-            <button className="hp-dmg" onClick={damage} title="Take damage">
-              <i className="ti ti-droplet" aria-hidden="true" /> Damage
-            </button>
-          </div>
-        )}
+        {onPlay &&
+          (hpCommandEntry ? (
+            <div className="hp-edit hp-edit-cmd">
+              <input
+                type="text"
+                className="hp-amt hp-cmd"
+                value={hpAmt}
+                placeholder="N dmg · -N heal · tN temp"
+                aria-label="Quick HP entry — type a number for damage, -N to heal, tN for temporary HP, then Enter"
+                title="Type a number for damage, -N to heal, tN for temporary HP, then press Enter"
+                onChange={(e) => setHpAmt(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    runHpCommand();
+                    e.currentTarget.blur();
+                  }
+                  if (e.key === 'Escape') {
+                    setHpAmt('');
+                    e.currentTarget.blur();
+                  }
+                }}
+              />
+            </div>
+          ) : (
+            <div className="hp-edit">
+              <button className="hp-heal" onClick={heal} title="Heal">
+                <i className="ti ti-plus" aria-hidden="true" /> Heal
+              </button>
+              <input
+                type="number"
+                className="hp-amt"
+                value={hpAmt}
+                placeholder="HP"
+                aria-label="Amount to damage or heal"
+                onChange={(e) => setHpAmt(e.target.value)}
+              />
+              <button className="hp-dmg" onClick={damage} title="Take damage">
+                <i className="ti ti-droplet" aria-hidden="true" /> Damage
+              </button>
+            </div>
+          ))}
         <div className="defs">
           {defenses.map((d) => (
             <div
@@ -450,7 +488,7 @@ export function VitalsRail({
         </div>
         <div className="rail-kv">
           <span className="kv-label">Senses</span>
-          <span className="iwr-val">
+          <span className="iwr-val senses-val">
             {charDefenses.senses.map((s, i) => (
               <span key={s.name}>
                 {i > 0 ? ', ' : ''}
@@ -625,11 +663,14 @@ export function VitalsRail({
           onSetValue={(id, value) => onPlay((p) => setConditionValue(p, id, value))}
           onClose={() => setCondOpen(false)}
           modesEnabled
-          library={Object.values(content.modes).filter((m) => !CATALOG_MODE_MAP[m.id])}
+          library={Object.values(content.modes).filter((m) => !CATALOG_MODE_MAP[m.id] && (!m.charId || m.charId === charKey))}
           predefined={CATALOG_MODES}
           catalog={CATALOG_MODES}
           classId={character.classId}
           ancestryId={character.ancestryId}
+          featIds={new Set(character.feats.map((f) => f.featId))}
+          charKey={charKey}
+          charName={character.name}
           activeModeIds={(character.activeModes ?? []).map((m) => m.id)}
           onToggleMode={(id) => onPlay((p) => toggleMode(p, id, content.modes))}
           onSaveMode={onSaveMode}

@@ -173,6 +173,17 @@ const PACK_KEY = {
   backgrounds: 'backgrounds',
 };
 
+// Foundry embeds action-cost icons as <span class="action-glyph">X</span>. Map its font characters to
+// the app's Pathfinder2eActions font chars (1/2/3 = actions, 4 = free, 5 = reaction). Foundry uses both
+// digits and letters: A = 1 action, D = 2, T = 3, F/0 = free, R = reaction.
+const ACTION_GLYPH_CHAR = {
+  '1': '1', A: '1', a: '1',
+  '2': '2', D: '2', d: '2',
+  '3': '3', T: '3', t: '3',
+  '0': '4', F: '4', f: '4',
+  R: '5', r: '5',
+};
+
 /**
  * Like cleanDesc, but also extracts the cross-references the text links to (Foundry @UUID
  * links), so the app can make those words clickable. Returns { text, refs } where each ref
@@ -249,8 +260,22 @@ function cleanDescRich(html) {
     })
     // other label-less UUID/Compendium refs: derive a name instead of deleting them
     .replace(/@(?:UUID|Compendium)\[([^\]]*)\]/g, (_, ref) => uuidLabel(ref))
-    // other label-less inline macros (@Check, @Damage, @Template, …) have no readable text
-    .replace(/@[A-Za-z]+\[[^\]]*\]/g, '')
+    // @Damage tokens carry a value the prose needs (e.g. a healing potion's amount), and they nest a
+    // [type] bracket — @Damage[(2d8+5)[healing]]. Recover the dice/number formula instead of deleting it
+    // (the old catch-all stopped at the inner ] and stranded the outer one → "regain ] Hit Points").
+    .replace(/@Damage\[((?:[^\[\]]*\[[^\]]*\])*[^\[\]]*)\](?:\{([^}]*)\})?/g, (_m, inner, label) => {
+      if (label) return label;
+      const formula = inner
+        .replace(/\[[^\]]*\]/g, '')
+        .split(',')
+        .map((s) => s.trim().replace(/^\(|\)$/g, ''))
+        .filter(Boolean)
+        .join(' plus ');
+      return /^[\dd+\-\s()]+(?: plus [\dd+\-\s()]+)*$/.test(formula) && /\d/.test(formula) ? formula : '';
+    })
+    // other label-less inline macros (@Check, @Template, …) have no readable text; tolerate one level of
+    // nested brackets and keep a {label} when present, so a nested ] is never left stranded.
+    .replace(/@[A-Za-z]+\[(?:[^\[\]]*\[[^\]]*\])*[^\[\]]*\](?:\{([^}]*)\})?/g, (_m, label) => label || '')
     // inline roll expressions: [[/r 1d4 #flavor]]{label} → label; bare [[/r 2d6]] → the dice.
     .replace(/\[\[\/[a-z]+\s+[^\]]*?\]\]\{([^}]*)\}/gi, '$1')
     // dice form — tolerate an inline [type] bracket (e.g. 4d8[healing]) and a #flavor tail with or
@@ -258,6 +283,10 @@ function cleanDescRich(html) {
     .replace(/\[\[\/[a-z]+\s+(\d+d\d+(?:[+\-]\d+)?)[\s\S]*?\]\]/gi, '$1')
     // any remaining bare roll (non-dice / flat) — allow #flavor with or without a leading space.
     .replace(/\[\[\/[a-z]+\s+([^\]#]*?)(?:\s*#[^\]]*)?\]\]/gi, '$1')
+    // leaked Foundry data getters (@actor.x / @item.x — only resolvable with a live actor): render the
+    // common ability-mod case as readable text ("Str mod"), and strip any other getter so none leak.
+    .replace(/@actor\.abilities\.(str|dex|con|int|wis|cha)\.mod\b/gi, (_m, a) => a.charAt(0).toUpperCase() + a.slice(1) + ' mod')
+    .replace(/@(?:actor|item)\.[\w.[\]-]+/g, '')
     // tables and lists first, so their nested <p>/<li> don't get flattened by the block pass below
     .replace(/<table[^>]*>([\s\S]*?)<\/table>/gi, (_, inner) => tableToMd(inner))
     .replace(/<(ul|ol)[^>]*>([\s\S]*?)<\/\1>/gi, (_, tag, inner) => {
@@ -268,7 +297,12 @@ function cleanDescRich(html) {
       });
       return items.length ? '\n\n' + items.join('\n') + '\n\n' : '';
     })
-    .replace(/<span class="action-glyph">[^<]*<\/span>/g, '')
+    // Preserve the action-cost glyph inline (Foundry drops it into "Activate [icon] (traits)") as a
+    // ⟨N⟩ token the renderer turns into the icon, rather than stripping it.
+    .replace(/<span class="action-glyph">\s*([^<]*?)\s*<\/span>/g, (_m, g) => {
+      const c = ACTION_GLYPH_CHAR[g.trim()];
+      return c ? `⟨${c}⟩` : '';
+    })
     // block structure → markdown breaks
     .replace(/<hr\s*\/?>/gi, '\n\n---\n\n')
     .replace(/<h1[^>]*>/gi, '\n\n# ')
@@ -296,7 +330,10 @@ function cleanDescRich(html) {
     .split('\n')
     .map((l) => {
       const t = l.replace(/[ \t]+/g, ' ').trim();
-      return /^[*_]+$/.test(t) ? '' : t;
+      if (/^[*_]+$/.test(t)) return ''; // a line left as a bare emphasis marker → drop
+      // A stray leading "* " (a literal asterisk bullet some source paragraphs use) → a real bullet,
+      // so it renders as a list item instead of a dangling asterisk. (Bold "**"/italic "*x" are unaffected.)
+      return t.replace(/^\* /, '- ');
     })
     .join('\n')
     .replace(/\n{3,}/g, '\n\n')
@@ -460,19 +497,31 @@ function parseFrequency(desc) {
 function parseActivationCost(rawHtml) {
   const h = String(rawHtml || '');
   if (!/<strong>\s*Activate\b/i.test(h)) return undefined;
-  const m = /<strong>\s*Activate\b[^<]*<\/strong>[\s—–-]*(?:<span[^>]*action-glyph[^>]*>([^<]*)<\/span>)?/i.exec(h);
-  const g = (m?.[1] || '').trim();
+  // Foundry's action-glyph font uses digits AND letters: A = 1 action, D = 2, T = 3, F/0 = free,
+  // R = reaction. (Mapping must stay in sync with ACTION_GLYPH_CHAR used for description rendering.)
   const map = {
     '1': { type: 'actions', value: 1 },
     '2': { type: 'actions', value: 2 },
     '3': { type: 'actions', value: 3 },
+    A: { type: 'actions', value: 1 },
+    a: { type: 'actions', value: 1 },
+    D: { type: 'actions', value: 2 },
+    d: { type: 'actions', value: 2 },
+    T: { type: 'actions', value: 3 },
+    t: { type: 'actions', value: 3 },
+    '0': { type: 'free' },
     f: { type: 'free' },
     F: { type: 'free' },
     r: { type: 'reaction' },
     R: { type: 'reaction' },
   };
-  if (map[g]) return map[g];
-  return { type: 'variable', min: 1, max: 3 }; // generic "A", "Cast a Spell", or no glyph
+  // Some items list several activations (and a glyph-less "Activate Interact" / "Activate Cast a Spell"
+  // line may come first) — scan EVERY Activate line and use the first one carrying a recognized glyph.
+  for (const m of h.matchAll(/<strong>\s*Activate\b[^<]*<\/strong>[\s—–-]*(?:<span[^>]*action-glyph[^>]*>\s*([^<]*?)\s*<\/span>)?/gi)) {
+    const g = (m[1] || '').trim();
+    if (map[g]) return map[g];
+  }
+  return { type: 'variable', min: 1, max: 3 }; // genuinely unknown: "Cast a Spell" or no glyph
 }
 
 /** Spells held by a staff/spellheart, parsed from its description's per-rank list
@@ -702,7 +751,12 @@ function backgroundStatBlock(s) {
   const skill = (s.trainedSkills?.value || [])[0];
   if (skill) parts.push(`**Trained Skill** ${titleCase(skill)}`);
   const lore = (s.trainedSkills?.lore || [])[0];
-  if (lore) parts.push(`**Lore** ${titleCase(String(lore).replace(/\s*lore$/i, ''))} Lore`);
+  if (lore) {
+    // Source lore values can carry stray markdown (e.g. "**Boneyard Lore (...)") — drop any asterisks
+    // before inserting, and only append " Lore" when the value isn't already a "… Lore" subject.
+    const name = titleCase(String(lore).replace(/\*+/g, ' ').replace(/\s+/g, ' ').trim().replace(/\s*lore$/i, ''));
+    parts.push(`**Lore** ${name}${/\blore\b/i.test(name) ? '' : ' Lore'}`);
+  }
   const feat = Object.values(s.items || {})[0];
   if (feat) parts.push(`**Skill Feat** ${feat.name}`);
   return parts.length > 1 ? parts.join('\n\n') : '';
@@ -726,6 +780,7 @@ for (const e of readPack('ancestries')) {
     vision: s.vision || 'normal',
     languages: { granted: s.languages?.value || [], additional: s.additionalLanguages?.count || 0 },
     heritages: [],
+    ...grantedStrikesField(s.rules, e.name),
   };
 }
 
@@ -848,6 +903,56 @@ function critSpecGrant(rules) {
   return out;
 }
 
+/**
+ * Extract MELEE unarmed Strike grants from a feat/feature's rule-element array (Foundry `Strike`
+ * rule elements). Each becomes {name, die, damageType, traits, group, choiceValue?}. `choiceValue`
+ * is the ChoiceSet option that gates the strike (e.g. Iruxi 'fangs'/'tail'); absent = unconditional.
+ * Skips: fist-upgrades / no-die rules, dice-formula templates, and ranged/thrown attacks (the app's
+ * deriveUnarmedStrike is melee-only — those are deferred). Returns undefined when nothing grants.
+ */
+function parseGrantedStrikes(rules, fallbackName) {
+  const list = rules || [];
+  const cs = list.find((r) => r && r.key === 'ChoiceSet' && r.rollOption);
+  const ro = cs?.rollOption;
+  const out = [];
+  for (const r of list) {
+    if (!r || r.key !== 'Strike') continue;
+    const base = r.damage?.base;
+    if (!base || typeof base.die !== 'string' || !base.die || base.die.includes('{')) continue;
+    const rng = r.range;
+    const ranged = typeof rng === 'number' ? rng > 0 : !!(rng && (rng.increment ?? rng.max));
+    if (ranged) continue;
+    let choiceValue;
+    if (ro) {
+      const toks = (JSON.stringify(r.predicate || []).match(/"([^"]+)"/g) || []).map((t) => t.slice(1, -1));
+      const tok = toks.find((t) => t.startsWith(ro + ':'));
+      if (tok) choiceValue = tok.slice(ro.length + 1);
+    }
+    const lbl = String(r.label || '');
+    const name = /^PF2E\./.test(lbl)
+      ? titleCase(lbl.split('.').pop())
+      : lbl
+        ? titleCase(lbl)
+        : r.slug
+          ? titleCase(r.slug)
+          : fallbackName || 'Natural Attack';
+    const g = {
+      name,
+      die: base.die,
+      damageType: base.damageType || 'bludgeoning',
+      traits: Array.isArray(r.traits) && r.traits.length ? r.traits : ['unarmed'],
+      group: r.group || 'brawling',
+    };
+    if (choiceValue) g.choiceValue = choiceValue;
+    out.push(g);
+  }
+  return out.length ? out : undefined;
+}
+function grantedStrikesField(rules, name) {
+  const gs = parseGrantedStrikes(rules, name);
+  return gs ? { grantedStrikes: gs } : {};
+}
+
 for (const e of readPack('heritages')) {
   const s = e.system;
   db.heritages[idOf(e)] = {
@@ -860,6 +965,7 @@ for (const e of readPack('heritages')) {
     ...descFields(s.description?.value),
     source: sourceOf(e),
     ...parseDefenses(s.rules),
+    ...grantedStrikesField(s.rules, e.name),
     ...((() => {
       const innate = parseInnateSpells(s.rules, s.description?.value);
       return innate ? { innateSpells: innate } : {};
@@ -1170,6 +1276,7 @@ for (const e of readPack('class-features')) {
     ...(ot.length ? { otherTags: ot } : {}),
     ...parseDefenses(s.rules),
     ...critSpecGrant(s.rules),
+    ...grantedStrikesField(s.rules, e.name),
   };
 }
 
@@ -1243,6 +1350,7 @@ for (const fp of walk(join(ROOT, 'feats'))) {
     focusPoolBonus: parseFocusPoolBonus(s.description?.value),
     ...parseDefenses(s.rules),
     ...critSpecGrant(s.rules),
+    ...grantedStrikesField(s.rules, e.name),
     ...parseHpGrant(s.rules),
     ...(archMatch ? { archetype: archMatch[1] } : {}),
     ...((() => {
@@ -1265,10 +1373,55 @@ for (const fp of walk(join(ROOT, 'feats'))) {
   db.feats[feat.id] = feat;
 }
 
+// Pick the primary damage/heal entry's key + dice formula from system.damage (for upcast scaling).
+// Skips non-dice formulas ("1", "@item.rank"). Returns { key, formula, kind } or null.
+function primaryDamage(dmg) {
+  if (!dmg || typeof dmg !== 'object') return null;
+  const keys = Object.keys(dmg);
+  if (!keys.length) return null;
+  const key = keys.find((k) => (dmg[k]?.kinds || []).some((x) => x === 'damage' || x === 'healing')) || keys[0];
+  const formula = String(dmg[key]?.formula || '').trim();
+  if (!/d\d/.test(formula)) return null;
+  return { key, formula, kind: (dmg[key]?.kinds || []).includes('healing') ? 'healing' : 'damage' };
+}
+// Normalize system.heightening → { type:'interval', interval, damageIncr?, areaIncr? } | { type:'fixed', levels }.
+function normHeightening(h, primaryKey) {
+  if (!h || !h.type) return undefined;
+  if (h.type === 'interval') {
+    const out = { type: 'interval', interval: h.interval === 2 ? 2 : 1 };
+    if (h.damage) {
+      const k = primaryKey != null && h.damage[primaryKey] != null ? primaryKey : h.damage['0'] != null ? '0' : Object.keys(h.damage)[0];
+      const incr = String(h.damage[k] ?? '').trim();
+      if (incr) out.damageIncr = incr;
+    }
+    if (typeof h.area === 'number' && h.area > 0) out.areaIncr = h.area;
+    return out.damageIncr || out.areaIncr ? out : undefined;
+  }
+  if (h.type === 'fixed') {
+    const levels = {};
+    for (const [rank, body] of Object.entries(h.levels || {})) {
+      const lv = {};
+      if (body.damage) {
+        const pd = primaryDamage(body.damage);
+        if (pd) lv.damage = pd.formula;
+      }
+      if (body.area?.value != null) lv.area = Number(body.area.value);
+      if (body.range?.value) lv.range = String(body.range.value);
+      if (body.target?.value) lv.target = String(body.target.value);
+      if (body.duration?.value) lv.duration = String(body.duration.value);
+      if (Object.keys(lv).length) levels[rank] = lv;
+    }
+    return Object.keys(levels).length ? { type: 'fixed', levels } : undefined;
+  }
+  return undefined;
+}
+
 for (const e of readPack('spells')) {
   const s = e.system;
   const cantrip = traitsOf(s).includes('cantrip');
   const area = s.area ? `${s.area.value}-foot ${s.area.type}` : undefined;
+  const pd = primaryDamage(s.damage);
+  const heighten = normHeightening(s.heightening, pd?.key);
   db.spells[idOf(e)] = {
     id: idOf(e),
     name: e.name,
@@ -1286,6 +1439,10 @@ for (const e of readPack('spells')) {
     save: s.defense?.save ? { type: s.defense.save.statistic, basic: !!s.defense.save.basic } : undefined,
     // Rituals: a tradition-less spell anyone can cast if they meet the primary-check proficiency.
     ...(s.ritual ? { ritual: true, ...(s.ritual.primary?.check ? { ritualPrimary: s.ritual.primary.check } : {}) } : {}),
+    // Upcast scaling: structured base damage/area + the heightening increments (used to show "→ X" inline).
+    ...(pd ? { baseDamage: pd.formula, damageKind: pd.kind } : {}),
+    ...(typeof s.area?.value === 'number' ? { baseArea: { value: s.area.value, kind: s.area.type } } : {}),
+    ...(heighten ? { heightening: heighten } : {}),
   };
 }
 
@@ -1337,6 +1494,14 @@ for (const e of readPack('equipment')) {
           const trads = traits.filter((t) => ['arcane', 'divine', 'occult', 'primal'].includes(t));
           return { spellSlot: { rank, ...(trads.length ? { traditions: trads } : {}) } };
         }
+      }
+      // A worn/held magic item (amulet, ring, cloak, mask, weapon, armor…) whose activation casts a
+      // SPECIFIC named spell — phrased "Cast a Spell" or "You cast <spell>", the spell linked by @UUID
+      // in the prose — is also a Spells-page source. The trait-based parsers above miss these because
+      // they aren't staff/wand/spellheart; the cast-phrase gate keeps flavor spell-mentions out.
+      if (/Cast a Spell|\bYou cast\b/i.test(String(s.description?.value || ''))) {
+        const cast = parseSpellheartSpells(s.description?.value);
+        if (cast) return { heldSpells: cast };
       }
       return {};
     })()),

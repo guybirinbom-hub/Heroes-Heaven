@@ -447,7 +447,7 @@ export const SKILL_ACTIONS: Record<string, SkillAction[]> = {
     {
       "name": "Demoralize",
       "costText": "1 action",
-      "minRank": "trained",
+      "minRank": "untrained",
       "desc": "With a shout or threatening gesture, target one creature within 30 feet and attempt an Intimidation check against its Will DC. Success makes it frightened 1 and a critical success frightened 2; you take a -4 circumstance penalty if you don't share a language, and the target is immune to your Demoralize for 10 minutes regardless of the result."
     },
     {

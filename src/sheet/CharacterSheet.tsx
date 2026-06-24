@@ -18,6 +18,7 @@ import { DetailsTab } from './DetailsTab';
 import { NotesTab } from './NotesTab';
 import { SettingsPage } from './SettingsPage';
 import { WindowControls } from './WindowControls';
+import { HeroesHeavenLogo } from './Logo';
 
 const TABS = ['Main', 'Spells', 'Inventory', 'Feats & features', 'Companions', 'Notes', 'Details'];
 const TAB_KEY = 'wanderers-codex:tab:v1';
@@ -66,6 +67,9 @@ export function CharacterSheet({
   onCreateItem,
   onSaveMode,
   onDeleteMode,
+  onOpenHomebrew,
+  charKey,
+  characters,
   build,
 }: {
   character: Character;
@@ -75,14 +79,21 @@ export function CharacterSheet({
   onCreateItem?: (item: Item) => void;
   onSaveMode?: (mode: ModeDef) => void;
   onDeleteMode?: (id: string) => void;
+  /** This character's roster id — scopes character-specific modes. */
+  charKey?: string;
+  /** All roster characters (id + name) — for the Settings → Modes scope picker / labels. */
+  characters?: { id: string; name: string }[];
   onRest?: () => void;
   onOpenRoster?: () => void;
   onEdit?: () => void;
+  /** Navigate to the full-screen Homebrew page. */
+  onOpenHomebrew?: () => void;
 }) {
   const [tab, setTab] = useState(initialTab);
   const [menuOpen, setMenuOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [restOpen, setRestOpen] = useState(false);
+  const [portraitOpen, setPortraitOpen] = useState(false);
   useEffect(() => {
     try {
       localStorage.setItem(TAB_KEY, tab);
@@ -136,6 +147,7 @@ export function CharacterSheet({
   const ancestry = character.ancestryId ? content.ancestries[character.ancestryId] : undefined;
   const cls = character.classId ? content.classes[character.classId] : undefined;
   const initials = character.name.slice(0, 2).toUpperCase();
+  const portrait = character.appearance?.portrait;
 
   // Lets description popups anywhere in the sheet offer a "favorite" star (only in play mode).
   const pinApi: PinDescApi | null = useMemo(() => {
@@ -154,13 +166,25 @@ export function CharacterSheet({
     <div className="ws-app">
       <header className="chrome" data-tauri-drag-region>
         <div className="chrome-brand" data-tauri-drag-region>
-          <i className="ti ti-shield-half" aria-hidden="true" /> Wanderer&apos;s Codex
+          <HeroesHeavenLogo className="chrome-logo" /> Heroes Heaven
         </div>
         <WindowControls />
       </header>
 
       <div className="identity">
-        <div className="portrait">{initials}</div>
+        {portrait ? (
+          <button
+            type="button"
+            className="portrait portrait-btn"
+            title="View portrait"
+            aria-label="View portrait full size"
+            onClick={() => setPortraitOpen(true)}
+          >
+            <img src={portrait} alt="" className="portrait-img" />
+          </button>
+        ) : (
+          <div className="portrait">{initials}</div>
+        )}
         <div className="identity-name">
           <div className="char-name">
             <span className="char-name-text">{character.name}</span>
@@ -235,7 +259,7 @@ export function CharacterSheet({
         </div>
         {onRest && (
           <button className="icon-btn" title="Daily preparations" onClick={() => setRestOpen(true)}>
-            <i className="ti ti-moon" aria-hidden="true" />
+            <i className="ti ti-bed" aria-hidden="true" />
           </button>
         )}
         {!diceOff && (
@@ -272,6 +296,16 @@ export function CharacterSheet({
               >
                 <i className="ti ti-settings" aria-hidden="true" /> Settings
               </button>
+              <button
+                className="topmenu-item"
+                role="menuitem"
+                onClick={() => {
+                  setMenuOpen(false);
+                  onOpenHomebrew?.();
+                }}
+              >
+                <i className="ti ti-flask" aria-hidden="true" /> Homebrew
+              </button>
               {onOpenRoster && (
                 <button
                   className="topmenu-item"
@@ -287,11 +321,27 @@ export function CharacterSheet({
             </div>
           </>
         )}
-        {settingsOpen && <SettingsPage onClose={() => setSettingsOpen(false)} />}
+        {settingsOpen && (
+          <SettingsPage
+            onClose={() => setSettingsOpen(false)}
+            modes={content.modes}
+            characters={characters}
+            onSaveMode={onSaveMode}
+            onDeleteMode={onDeleteMode}
+          />
+        )}
+        {portraitOpen && portrait && (
+          <div className="portrait-lightbox" onClick={() => setPortraitOpen(false)} role="dialog" aria-label="Portrait">
+            <img src={portrait} alt={`${character.name} portrait`} className="portrait-lightbox-img" />
+            <button className="portrait-lightbox-close" onClick={() => setPortraitOpen(false)} aria-label="Close">
+              <i className="ti ti-x" aria-hidden="true" />
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="body">
-        <VitalsRail character={character} content={content} onPlay={onPlay} onOpenStat={setStatRef} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} onCreateItem={onCreateItem} />
+        <VitalsRail character={character} content={content} charKey={charKey} onPlay={onPlay} onOpenStat={setStatRef} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} onCreateItem={onCreateItem} />
         <main className="content">
           {tab === 'Main' ? (
             <MainTab character={character} content={content} onPlay={onPlay} onRoll={rollCheckFn} onOpenStat={setStatRef} />
@@ -362,8 +412,7 @@ export function CharacterSheet({
                 <li>Refresh spell slots, focus points, and daily-use abilities</li>
                 <li>Refill tracked item uses that reset daily (wands, staves, per-day items)</li>
                 <li>Clear temporary HP</li>
-                <li>Remove Fatigued; reduce Doomed and Drained by 1</li>
-                <li>End Wounded only if this brings you to full HP</li>
+                <li>Remove Fatigued, Wounded, and Dying; reduce Doomed and Drained by 1</li>
               </ul>
               <p className="confirm-note">Hero points are session-based and aren't changed.</p>
             </div>

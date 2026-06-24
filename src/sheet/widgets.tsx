@@ -47,6 +47,13 @@ function Glyph({ char, title }: { char: string; title: string }) {
   );
 }
 
+/** True only for an action cost that ActionGlyph renders as glyph(s) — actions/reaction/free/variable.
+ *  Passive and duration costs render nothing, so a caller's "Activate" label/row must gate on this to
+ *  avoid an empty glyph slot. */
+export function isActionCost(c?: ActionCost): boolean {
+  return !!c && (c.type === 'actions' || c.type === 'reaction' || c.type === 'free' || c.type === 'variable');
+}
+
 /** Renders an action cost as Archives-of-Nethys action-icon glyphs. */
 export function ActionGlyph({ cost }: { cost?: ActionCost }) {
   if (!cost) return null;

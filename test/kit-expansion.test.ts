@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { addInventoryItem } from '../src/rules/play';
+import { addInventoryItem, buyItem } from '../src/rules/play';
 import type { PlayState } from '../src/rules/play';
+import { content } from './_content';
+import { coinsToCp } from '../src/rules/wealth';
 
 const emptyPlay = () => ({ inventory: [] }) as unknown as PlayState;
 
@@ -28,5 +30,17 @@ describe("kit expansion (Adventurer's Pack)", () => {
     const inv = addInventoryItem(emptyPlay(), 'longsword').inventory!;
     expect(inv.length).toBe(1);
     expect(inv[0].itemId).toBe('longsword');
+  });
+
+  it('BUYING a pack deducts coins and adds the unpacked Backpack + contents (not the pack itself)', () => {
+    const db = content();
+    const price = db.items['adventurers-pack']?.price;
+    const play = { inventory: [], currency: { pp: 0, gp: 5, sp: 0, cp: 0 } } as unknown as PlayState;
+    const before = coinsToCp(play.currency);
+    const after = buyItem(play, 'adventurers-pack', price);
+    expect(after.inventory!.some((i) => i.itemId === 'adventurers-pack')).toBe(false);
+    expect(after.inventory!.some((i) => i.itemId === 'backpack')).toBe(true);
+    expect(after.inventory!.filter((i) => i.containerInstanceId).length).toBe(8);
+    if (coinsToCp(price) > 0) expect(coinsToCp(after.currency)).toBeLessThan(before);
   });
 });

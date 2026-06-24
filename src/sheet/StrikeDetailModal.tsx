@@ -1,9 +1,11 @@
 import type { Character, ContentDatabase } from '../rules/types';
-import { formatMod, type Strike } from '../rules/derive';
+import { formatMod, critSpecSources, strikeShowsCritSpec, type Strike } from '../rules/derive';
+import { critSpec } from '../rules/critSpec';
 import type { StatRef } from '../rules/explain';
 import { useEscapeClose } from './useEscapeClose';
 import { PinStar } from './PinStar';
 import { DescBody } from './DescBody';
+import { CritSpecText } from './CritSpecText';
 
 /** Description for strikes that have no backing item (the baseline Fist, kineticist blasts). */
 function strikeBlurb(strike: Strike): string {
@@ -40,6 +42,9 @@ export function StrikeDetailModal({
   const description = item?.description ?? strikeBlurb(strike);
   const descRefs = item?.descRefs;
   const node = { title: strike.name, description, descRefs, key: 'items' };
+  // Crit specialization — shown in Strikes ONLY when the character actually has it (matching the row).
+  const critText = critSpec(strike.group);
+  const showsCrit = !!critText && strikeShowsCritSpec(strike, critSpecSources(character, content));
 
   return (
     <div className="picker-overlay" onClick={onClose}>
@@ -72,7 +77,15 @@ export function StrikeDetailModal({
               {onOpenStat && <span className="sds-hint">show calculation</span>}
             </button>
           </div>
-          {description && <DescBody description={description} descRefs={descRefs} />}
+          {showsCrit && (
+            <div className="strike-detail-crit">
+              <span className="sds-label">Critical specialization · {strike.group}</span>
+              <div className="sd-critspec-text">
+                <CritSpecText text={critText!} content={content} />
+              </div>
+            </div>
+          )}
+          {description && <DescBody description={description} descRefs={descRefs} onExit={onClose} />}
         </div>
       </div>
     </div>

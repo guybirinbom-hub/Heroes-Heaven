@@ -1,28 +1,37 @@
 import { useRef, useState, type ReactNode } from 'react';
-import type { ActiveCondition, Character, ContentDatabase, CompanionConfig, CompanionKind, SimpleCompanion } from '../rules/types';
+import type { ActiveCondition, Character, Coins, ContentDatabase, CompanionConfig, CompanionKind, DamageType, EidolonConfig, SimpleCompanion, VehicleStat, SiegeWeaponStat } from '../rules/types';
 import {
   deriveAnimalCompanion,
   deriveEidolon,
   deriveFamiliar,
+  EIDOLON_PRIMARY_OPTIONS,
   type AnimalCompanionBlock,
   type EidolonBlock,
   type FamiliarBlock,
 } from '../rules/companions';
+import { toPlainText } from './RichText';
 import {
   addCompanionCondition,
   addCompanionItem,
   addPlayCompanion,
+  applyCompanionDamage,
+  applyCompanionHeal,
+  buyCompanion,
   buyCompanionItem,
+  canAfford,
   removeCompanionCondition,
   removeCompanionItem,
   removePlayCompanion,
   setCompanionConditionValue,
+  setCompanionHp,
   setCompanionItemQty,
+  setCompanionTempHp,
   toggleCompanionItemFlag,
   updatePlayCompanion,
   type PlayState,
 } from '../rules/play';
 import { formatMod } from '../rules/derive';
+import { HpControl } from './HpControl';
 import { SPECIFIC_FAMILIARS } from '../rules/specificFamiliars';
 import { ActionGlyph } from './widgets';
 import { ConditionsModal } from './ConditionsModal';
@@ -33,9 +42,21 @@ function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-const KIND_ICON: Record<CompanionKind, string> = { animal: 'ti-paw', familiar: 'ti-feather', eidolon: 'ti-flare', follower: 'ti-user', pet: 'ti-mood-smile' };
+const KIND_ICON: Record<CompanionKind, string> = { animal: 'ti-paw', familiar: 'ti-feather', eidolon: 'ti-flare', follower: 'ti-user', pet: 'ti-mood-smile', vehicle: 'ti-wheel', siege: 'ti-bow' };
 
-/** Display label + icon for a companion (animals may be constructs). */
+/** Parse a price string ("1,000 gp", "5 sp", "—") into Coins, or undefined if it has no value. */
+function parsePrice(s?: string): Coins | undefined {
+  if (!s) return undefined;
+  const o: Coins = {};
+  for (const m of s.matchAll(/([\d,]+)\s*(pp|gp|sp|cp)/gi)) {
+    const n = parseInt(m[1].replace(/,/g, ''), 10);
+    const k = m[2].toLowerCase() as keyof Coins;
+    if (n) o[k] = (o[k] ?? 0) + n;
+  }
+  return Object.keys(o).length ? o : undefined;
+}
+
+/** Display label + icon for a companion (animals may be constructs; vehicles/siege weapons too). */
 function kindMeta(cfg: CompanionConfig, content: ContentDatabase): { label: string; icon: string } {
   if (cfg.kind === 'animal') {
     const t = cfg.typeId ? content.animalCompanions[cfg.typeId] : undefined;
@@ -45,12 +66,14 @@ function kindMeta(cfg: CompanionConfig, content: ContentDatabase): { label: stri
   if (cfg.kind === 'familiar') return { label: 'Familiar', icon: 'ti-feather' };
   if (cfg.kind === 'eidolon') return { label: 'Eidolon', icon: 'ti-flare' };
   if (cfg.kind === 'follower') return { label: 'Follower', icon: 'ti-user' };
+  if (cfg.kind === 'vehicle') return { label: 'Vehicle', icon: 'ti-wheel' };
+  if (cfg.kind === 'siege') return { label: 'Siege weapon', icon: 'ti-bow' };
   return { label: 'Pet', icon: 'ti-mood-smile' };
 }
 
 /* ============================ Add companion ============================ */
 
-type AddCat = 'all' | 'animal' | 'construct' | 'familiar' | 'eidolon' | 'follower' | 'pet';
+type AddCat = 'all' | 'animal' | 'construct' | 'familiar' | 'eidolon' | 'follower' | 'pet' | 'vehicle' | 'siege';
 const ADD_CATS: { id: AddCat; label: string }[] = [
   { id: 'all', label: 'All' },
   { id: 'animal', label: 'Animal' },
@@ -59,14 +82,19 @@ const ADD_CATS: { id: AddCat; label: string }[] = [
   { id: 'eidolon', label: 'Eidolon' },
   { id: 'follower', label: 'Follower' },
   { id: 'pet', label: 'Pet' },
+  { id: 'vehicle', label: 'Vehicle' },
+  { id: 'siege', label: 'Siege' },
 ];
 
 interface AddRow {
   kind: CompanionKind;
   cat: AddCat;
-  /** Animal/construct type id, eidolon option id, specific-familiar id ('' = generic), follower/pet id. */
+  /** Animal/construct type id, eidolon option id, specific-familiar id ('' = generic), follower/pet/vehicle/siege id. */
   typeId: string;
   name: string;
+  /** Vehicles & siege weapons cost coin — their price string ("100 gp"); absent = free companion. */
+  price?: string;
+  note?: string;
 }
 
 function addRows(content: ContentDatabase): AddRow[] {
@@ -80,18 +108,24 @@ function addRows(content: ContentDatabase): AddRow[] {
   const eidolons: AddRow[] = (content.classes.summoner?.subclass?.options ?? []).map((o) => ({ kind: 'eidolon', cat: 'eidolon', typeId: o.id, name: o.name }));
   const followers: AddRow[] = Object.values(content.followers ?? {}).map((f) => ({ kind: 'follower', cat: 'follower', typeId: f.id, name: f.name }));
   const pets: AddRow[] = Object.values(content.pets ?? {}).map((p) => ({ kind: 'pet', cat: 'pet', typeId: p.id, name: p.name }));
-  return [...animals, ...constructs, ...familiars, ...eidolons, ...followers, ...pets];
+  const vehicles: AddRow[] = Object.values(content.vehicles ?? {})
+    .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
+    .map((v) => ({ kind: 'vehicle', cat: 'vehicle', typeId: v.id, name: v.name, price: v.price, note: `Level ${v.level}` }));
+  const siege: AddRow[] = Object.values(content.siegeWeapons ?? {})
+    .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
+    .map((s) => ({ kind: 'siege', cat: 'siege', typeId: s.id, name: s.name, price: s.price, note: `Level ${s.level}` }));
+  return [...animals, ...constructs, ...familiars, ...eidolons, ...followers, ...pets, ...vehicles, ...siege];
 }
 
 function rowToConfig(r: AddRow): Omit<CompanionConfig, 'id'> {
   if (r.kind === 'animal') return { kind: 'animal', name: '', typeId: r.typeId, maturity: 'young' };
   if (r.kind === 'eidolon') return { kind: 'eidolon', name: '', typeId: r.typeId };
   if (r.kind === 'familiar') return { kind: 'familiar', name: '', abilities: [], specificFamiliarId: r.typeId || undefined };
-  return { kind: r.kind, name: '', typeId: r.typeId }; // follower / pet
+  return { kind: r.kind, name: '', typeId: r.typeId }; // follower / pet / vehicle / siege
 }
 
 /** Two-step picker: choose a type (category), then the specific companion. */
-function AddCompanionModal({ content, onAdd, onClose }: { content: ContentDatabase; onAdd: (r: AddRow) => void; onClose: () => void }) {
+function AddCompanionModal({ content, currency, onAdd, onClose }: { content: ContentDatabase; currency?: Coins; onAdd: (r: AddRow, buy: boolean) => void; onClose: () => void }) {
   const [cat, setCat] = useState<AddCat>('all');
   const [q, setQ] = useState('');
   const ql = q.trim().toLowerCase();
@@ -119,22 +153,46 @@ function AddCompanionModal({ content, onAdd, onClose }: { content: ContentDataba
           </div>
         </div>
         <div className="cond-list">
-          {rows.map((r) => (
-            <div key={r.kind + ':' + r.cat + ':' + r.typeId} className="cond-row" role="button" tabIndex={0} onClick={() => onAdd(r)}>
-              <span className="cond-row-check">
-                <i className={'ti ' + (r.cat === 'construct' ? 'ti-robot' : KIND_ICON[r.kind])} aria-hidden="true" />
-              </span>
-              <div className="cond-row-text">
-                <div className="cond-row-name">
-                  {r.name}
-                  <span className="cond-valued-tag">{r.cat === 'all' ? r.kind : r.cat}</span>
+          {rows.map((r) => {
+            const priced = (r.kind === 'vehicle' || r.kind === 'siege') && !!r.price;
+            const coins = priced ? parsePrice(r.price) : undefined;
+            const affordable = !coins || canAfford(currency, coins);
+            return (
+              <div
+                key={r.kind + ':' + r.cat + ':' + r.typeId}
+                className="cond-row"
+                role={priced ? undefined : 'button'}
+                tabIndex={priced ? undefined : 0}
+                onClick={priced ? undefined : () => onAdd(r, false)}
+              >
+                <span className="cond-row-check">
+                  <i className={'ti ' + (r.cat === 'construct' ? 'ti-robot' : KIND_ICON[r.kind])} aria-hidden="true" />
+                </span>
+                <div className="cond-row-text">
+                  <div className="cond-row-name">
+                    {r.name}
+                    <span className="cond-valued-tag">{r.cat === 'all' ? r.kind : r.cat}</span>
+                    {r.note && <span className="cmp-add-note">{r.note}</span>}
+                  </div>
+                  {priced && <div className="cond-row-desc">{r.price}</div>}
                 </div>
+                {priced ? (
+                  <span className="cmp-add-buy">
+                    <button className="comp-manage-btn" disabled={!affordable} title={affordable ? `Buy for ${r.price}` : `You can't afford ${r.price}`} onClick={() => onAdd(r, true)}>
+                      <i className="ti ti-coins" aria-hidden="true" /> Buy
+                    </button>
+                    <button className="comp-manage-btn ghost" title="Add without paying" onClick={() => onAdd(r, false)}>
+                      Free
+                    </button>
+                  </span>
+                ) : (
+                  <span className="picker-add-hint">
+                    <i className="ti ti-plus" aria-hidden="true" /> Add
+                  </span>
+                )}
               </div>
-              <span className="picker-add-hint">
-                <i className="ti ti-plus" aria-hidden="true" /> Add
-              </span>
-            </div>
-          ))}
+            );
+          })}
           {rows.length === 0 && <div className="acts-empty">No companions match.</div>}
         </div>
       </div>
@@ -177,7 +235,7 @@ function FamiliarAbilityPicker({ content, chosen, onToggle, onClose }: { content
                     {a.name}
                     {a.kind === 'master' && <span className="cond-valued-tag">master</span>}
                   </div>
-                  {a.description && <div className="cond-row-desc">{a.description}</div>}
+                  {a.description && <div className="cond-row-desc">{toPlainText(a.description)}</div>}
                 </div>
               </div>
             );
@@ -207,7 +265,7 @@ function SpecializationPicker({ content, chosen, onPick, onClose }: { content: C
                 <span className="cond-row-check">{on && <i className="ti ti-check" aria-hidden="true" />}</span>
                 <div className="cond-row-text">
                   <div className="cond-row-name">{s.name}</div>
-                  <div className="cond-row-desc">{s.description}</div>
+                  <div className="cond-row-desc">{toPlainText(s.description)}</div>
                 </div>
               </div>
             );
@@ -289,7 +347,7 @@ function StatBlock({ name, kind, level, icon, children }: { name: string; kind: 
   );
 }
 
-function AnimalBlock({ b, cond }: { b: AnimalCompanionBlock; cond?: ReactNode }) {
+function AnimalBlock({ b, cond, hp }: { b: AnimalCompanionBlock; cond?: ReactNode; hp?: ReactNode }) {
   const isConstruct = b.category === 'construct';
   const over = b.bulk.carried > b.bulk.max;
   return (
@@ -313,9 +371,18 @@ function AnimalBlock({ b, cond }: { b: AnimalCompanionBlock; cond?: ReactNode })
       <div className="sb-line">
         <b>AC</b> {b.ac}; <b>Fort</b> {formatMod(b.saves.fortitude.modifier)}, <b>Ref</b> {formatMod(b.saves.reflex.modifier)}, <b>Will</b> {formatMod(b.saves.will.modifier)}
       </div>
-      <div className="sb-line">
-        <b>HP</b> {b.hp}; <b>Speed</b> {speedText(b.speeds)}
-      </div>
+      {hp ? (
+        <>
+          <div className="sb-hp-block">{hp}</div>
+          <div className="sb-line">
+            <b>Speed</b> {speedText(b.speeds)}
+          </div>
+        </>
+      ) : (
+        <div className="sb-line">
+          <b>HP</b> {b.hp}; <b>Speed</b> {speedText(b.speeds)}
+        </div>
+      )}
       {b.attacks.map((a, i) => (
         <div className="sb-line" key={i}>
           <b>Melee</b> <ActionGlyph cost={{ type: 'actions', value: 1 }} /> {a.name} {formatMod(a.attack)}
@@ -354,7 +421,7 @@ function SaveLine({ ac, saves }: { ac: number; saves: { fortitude: number; refle
   );
 }
 
-function FamiliarBlockView({ b, cond }: { b: FamiliarBlock; cond?: ReactNode }) {
+function FamiliarBlockView({ b, cond, hp }: { b: FamiliarBlock; cond?: ReactNode; hp?: ReactNode }) {
   const sf = b.specific;
   return (
     <StatBlock name={b.name} kind={sf ? 'Specific familiar' : 'Familiar'} level={b.level} icon="ti-feather">
@@ -374,9 +441,18 @@ function FamiliarBlockView({ b, cond }: { b: FamiliarBlock; cond?: ReactNode }) 
       <div className="sb-line sb-muted">Uses your AC, saves, and Perception (shown); HP equal to 5 × your level.</div>
       <div className="sb-div" />
       <SaveLine ac={b.ac} saves={b.saves} />
-      <div className="sb-line">
-        <b>HP</b> {b.hp}; <b>Speed</b> {b.speed} feet{b.extraSpeeds.length ? `, ${b.extraSpeeds.join(', ')}` : ''}
-      </div>
+      {hp ? (
+        <>
+          <div className="sb-hp-block">{hp}</div>
+          <div className="sb-line">
+            <b>Speed</b> {b.speed} feet{b.extraSpeeds.length ? `, ${b.extraSpeeds.join(', ')}` : ''}
+          </div>
+        </>
+      ) : (
+        <div className="sb-line">
+          <b>HP</b> {b.hp}; <b>Speed</b> {b.speed} feet{b.extraSpeeds.length ? `, ${b.extraSpeeds.join(', ')}` : ''}
+        </div>
+      )}
       {sf && (
         <>
           <div className="sb-div" />
@@ -422,8 +498,24 @@ function EidolonBlockView({ b, cond }: { b: EidolonBlock; cond?: ReactNode }) {
           <b>Trained skills</b> {b.skills.map(cap).join(', ')}
         </div>
       )}
+      <div className="sb-line">
+        {(['str', 'dex', 'con', 'int', 'wis', 'cha'] as const).map((a, i) => (
+          <span key={a}>
+            {i > 0 ? ', ' : ''}
+            <b>{a.toUpperCase()}</b> {b.abilities[a] >= 0 ? `+${b.abilities[a]}` : b.abilities[a]}
+          </span>
+        ))}
+      </div>
+      {b.attacks.map((a, i) => (
+        <div className="sb-line" key={i}>
+          <b>Melee</b> <ActionGlyph cost={{ type: 'actions', value: 1 }} /> {a.name} {formatMod(a.attack)}
+          {a.traits.length > 0 && <> ({a.traits.join(', ')})</>}, <b>Damage</b> {a.damage}
+        </div>
+      ))}
+      <div className="sb-line sb-muted">Shares your Hit Points; uses your AC, saves &amp; Perception.</div>
       <div className="sb-line sb-muted">
-        Shares your Hit Points; uses your AC, saves &amp; Perception. Manifest with <ActionGlyph cost={{ type: 'actions', value: 1 }} />.
+        <b>Manifest Eidolon</b> <ActionGlyph cost={{ type: 'actions', value: 3 }} /> (concentrate{b.tradition ? `, ${b.tradition}` : ''}) — it appears in an adjacent open
+        space and can immediately take 1 action; if already manifested, you unmanifest it instead. It must stay within 100 ft of you, and unmanifests if you drop to 0 HP.
       </div>
       <div className="sb-div" />
       <SaveLine ac={b.ac} saves={b.saves} />
@@ -450,6 +542,115 @@ function SimpleCompanionView({ sc, name, cond }: { sc: SimpleCompanion; name: st
         <>
           <div className="sb-div" />
           <div className="sb-line sb-muted">{sc.notes}</div>
+        </>
+      )}
+    </StatBlock>
+  );
+}
+
+/** A vehicle or siege-weapon stat block (companion-styled). HP is trackable; siege weapons add an
+ *  attack line. No conditions row (per design). */
+function VehicleBlock({
+  v,
+  kindLabel,
+  icon,
+  hp,
+  bt,
+  status,
+  attacks,
+}: {
+  v: VehicleStat;
+  kindLabel: string;
+  icon: string;
+  hp: ReactNode;
+  bt: number;
+  status: string | null;
+  attacks?: SiegeWeaponStat['attacks'];
+}) {
+  return (
+    <StatBlock name={v.name} kind={kindLabel} level={v.level} icon={icon}>
+      <div className="sb-traits">
+        <span className="sb-trait">{v.size}</span>
+        {(v.traits ?? []).map((t) => (
+          <span className="sb-trait" key={t}>
+            {cap(t.replace(/-/g, ' '))}
+          </span>
+        ))}
+        {status && <span className={'sb-trait ' + (status === 'Destroyed' ? 'sb-trait-bad' : 'sb-trait-warn')}>{status}</span>}
+      </div>
+      {v.pilotingDC != null && (
+        <div className="sb-line">
+          <b>Piloting</b> DC {v.pilotingDC}
+        </div>
+      )}
+      <div className="sb-line">
+        {v.crew && (
+          <>
+            <b>Crew</b> {v.crew}
+          </>
+        )}
+        {v.space && (
+          <>
+            {v.crew ? ' · ' : ''}
+            <b>Space</b> {v.space}
+          </>
+        )}
+        {v.price && (
+          <>
+            {' · '}
+            <b>Price</b> {v.price}
+          </>
+        )}
+      </div>
+      <div className="sb-div" />
+      <div className="sb-line">
+        <b>AC</b> {v.ac}
+        {v.fort != null && (
+          <>
+            ; <b>Fort</b> {formatMod(v.fort)}
+          </>
+        )}
+        ; <b>Hardness</b> {v.hardness}
+      </div>
+      <div className="sb-hp-block">
+        {hp}
+        <div className="sb-line sb-muted sb-hp-bt">Broken Threshold {bt}</div>
+      </div>
+      {v.speeds && (
+        <div className="sb-line">
+          <b>Speed</b> {v.speeds}
+        </div>
+      )}
+      {v.collision && (
+        <div className="sb-line">
+          <b>Collision</b> {v.collision}
+        </div>
+      )}
+      {attacks && attacks.length > 0 && (
+        <>
+          <div className="sb-div" />
+          {attacks.map((a, i) => (
+            <div className="sb-line" key={i}>
+              <b>{a.range ? 'Ranged' : 'Melee'}</b> <ActionGlyph cost={{ type: 'actions', value: 1 }} /> {a.name}
+              {a.bonus != null ? ` ${formatMod(a.bonus)}` : ''}
+              {a.range ? `, range ${a.range}` : ''}
+              {a.damage ? (
+                <>
+                  , <b>Damage</b> {a.damage}
+                </>
+              ) : (
+                ''
+              )}
+              {a.reload ? ` (reload ${a.reload})` : ''}
+            </div>
+          ))}
+        </>
+      )}
+      <div className="sb-line sb-muted">Immunities {v.immunities && v.immunities.length ? v.immunities.join(', ') : 'object immunities'}</div>
+      {v.description && (
+        <>
+          <div className="sb-div" />
+          <div className="sb-line sb-muted">{v.description}</div>
         </>
       )}
     </StatBlock>
@@ -520,9 +721,13 @@ function CompanionInventory({ cfg, content, onPlay, onAdd, bulkMax }: { cfg: Com
 /* ============================ Edit · choices panel ============================ */
 
 const MATURITIES = ['young', 'mature', 'nimble', 'savage', 'specialized'];
+/** An eidolon's unarmed attack damage type is its form's physical type (GM may allow others). */
+const EID_DMG_TYPES: DamageType[] = ['bludgeoning', 'piercing', 'slashing'];
 
 function EditChoices({ cfg, content, onPlay, onAbilities, onSpecialization }: { cfg: CompanionConfig; content: ContentDatabase; onPlay: (fn: (play: PlayState) => PlayState) => void; onAbilities: () => void; onSpecialization: () => void }) {
   const set = (patch: Partial<CompanionConfig>) => onPlay((p) => updatePlayCompanion(p, cfg.id, patch));
+  const ec: EidolonConfig = cfg.eidolon ?? {};
+  const setEid = (patch: Partial<EidolonConfig>) => set({ eidolon: { ...ec, ...patch } });
   const type = cfg.kind === 'animal' && cfg.typeId ? content.animalCompanions[cfg.typeId] : undefined;
   const isConstruct = type?.category === 'construct';
   const animalOpts = Object.values(content.animalCompanions).filter((t) => (t.category === 'construct') === isConstruct);
@@ -601,14 +806,73 @@ function EditChoices({ cfg, content, onPlay, onAbilities, onSpecialization }: { 
       )}
 
       {cfg.kind === 'eidolon' && (
-        <div className="cmp-crow">
-          <span className="cmp-lbl">Eidolon</span>
-          <select className="osel" aria-label="Eidolon type" value={cfg.typeId ?? ''} onChange={(e) => set({ typeId: e.target.value })}>
-            {(content.classes.summoner?.subclass?.options ?? []).map((o) => (
-              <option key={o.id} value={o.id}>{o.name}</option>
-            ))}
-          </select>
-        </div>
+        <>
+          <div className="cmp-crow">
+            <span className="cmp-lbl">Eidolon</span>
+            <select className="osel" aria-label="Eidolon type" value={cfg.typeId ?? ''} onChange={(e) => set({ typeId: e.target.value })}>
+              {(content.classes.summoner?.subclass?.options ?? []).map((o) => (
+                <option key={o.id} value={o.id}>{o.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="cmp-crow cmp-crow-top">
+            <span className="cmp-lbl">Ability mods</span>
+            <div className="eid-abils">
+              {(['str', 'dex', 'con', 'int', 'wis', 'cha'] as const).map((a) => (
+                <label key={a} className="eid-abil">
+                  <span>{a.toUpperCase()}</span>
+                  <input
+                    type="number"
+                    className="eid-num"
+                    value={ec.abilities?.[a] ?? ''}
+                    placeholder="—"
+                    aria-label={`Eidolon ${a.toUpperCase()} modifier`}
+                    onChange={(e) => setEid({ abilities: { ...(ec.abilities ?? {}), [a]: e.target.value === '' ? undefined : parseInt(e.target.value, 10) || 0 } })}
+                  />
+                </label>
+              ))}
+            </div>
+          </div>
+          <div className="cmp-hint">From your Eidolon Array + ability boosts (the eidolon boosts at the same levels you do).</div>
+
+          <div className="cmp-crow">
+            <span className="cmp-lbl">AC item bonus</span>
+            <input type="number" className="eid-num" value={ec.acItemBonus ?? ''} placeholder="0" aria-label="AC item bonus from array" onChange={(e) => setEid({ acItemBonus: e.target.value === '' ? undefined : parseInt(e.target.value, 10) || 0 })} />
+            <span className="cmp-lbl">Dex cap</span>
+            <input type="number" className="eid-num" value={ec.dexCap ?? ''} placeholder="—" aria-label="Dexterity cap from array" onChange={(e) => setEid({ dexCap: e.target.value === '' ? undefined : parseInt(e.target.value, 10) })} />
+          </div>
+
+          <div className="cmp-crow cmp-crow-top">
+            <span className="cmp-lbl">Primary atk</span>
+            <div className="eid-atk">
+              <input className="comp-name eid-form" value={ec.primary?.name ?? ''} placeholder="Claw, Jaws…" aria-label="Primary attack form" onChange={(e) => setEid({ primary: { ...ec.primary, name: e.target.value } })} />
+              <select className="osel" aria-label="Primary damage type" value={ec.primary?.damageType ?? 'slashing'} onChange={(e) => setEid({ primary: { ...ec.primary, damageType: e.target.value as DamageType } })}>
+                {EID_DMG_TYPES.map((d) => (
+                  <option key={d} value={d}>{cap(d)}</option>
+                ))}
+              </select>
+              <select className="osel" aria-label="Primary attack statistics" value={ec.primary?.option ?? 'd6-forceful'} onChange={(e) => setEid({ primary: { ...ec.primary, option: e.target.value } })}>
+                {EIDOLON_PRIMARY_OPTIONS.map((o) => (
+                  <option key={o.id} value={o.id}>{o.label}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="cmp-crow cmp-crow-top">
+            <span className="cmp-lbl">Secondary</span>
+            <div className="eid-atk">
+              <input className="comp-name eid-form" value={ec.secondary?.name ?? ''} placeholder="Tail, Fist…" aria-label="Secondary attack form" onChange={(e) => setEid({ secondary: { ...ec.secondary, name: e.target.value } })} />
+              <select className="osel" aria-label="Secondary damage type" value={ec.secondary?.damageType ?? 'slashing'} onChange={(e) => setEid({ secondary: { ...ec.secondary, damageType: e.target.value as DamageType } })}>
+                {EID_DMG_TYPES.map((d) => (
+                  <option key={d} value={d}>{cap(d)}</option>
+                ))}
+              </select>
+              <span className="cmp-hint eid-fixed">1d6 · agile, finesse</span>
+            </div>
+          </div>
+        </>
       )}
 
       {(cfg.kind === 'follower' || cfg.kind === 'pet') && (
@@ -618,6 +882,21 @@ function EditChoices({ cfg, content, onPlay, onAbilities, onSpecialization }: { 
             {Object.values((cfg.kind === 'follower' ? content.followers : content.pets) ?? {}).map((s) => (
               <option key={s.id} value={s.id}>{s.name}</option>
             ))}
+          </select>
+        </div>
+      )}
+
+      {(cfg.kind === 'vehicle' || cfg.kind === 'siege') && (
+        <div className="cmp-crow">
+          <span className="cmp-lbl">Type</span>
+          <select className="osel" aria-label="Type" value={cfg.typeId ?? ''} onChange={(e) => set({ typeId: e.target.value })}>
+            {Object.values((cfg.kind === 'vehicle' ? content.vehicles : content.siegeWeapons) ?? {})
+              .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
+              .map((v) => (
+                <option key={v.id} value={v.id}>
+                  {v.name} (Lv {v.level})
+                </option>
+              ))}
           </select>
         </div>
       )}
@@ -646,6 +925,28 @@ export function CompanionsTab({ character, content, onPlay }: { character: Chara
 
   const current = companions.find((c) => c.id === selId) ?? companions[0];
   const condsOf = (id: string): ActiveCondition[] => character.companionConditions?.[id] ?? [];
+  // Per-companion HP tracker (current = max − tracked damage), wired to the companion-HP mutations.
+  const hpTrackerFor = (id: string, max: number): ReactNode => {
+    const st = character.companionHp?.[id] ?? { damage: 0, temp: 0 };
+    return (
+      <HpControl
+        current={Math.max(0, max - st.damage)}
+        max={max}
+        temp={st.temp}
+        editable={!!onPlay}
+        onSetCurrent={onPlay ? (n) => onPlay((p) => setCompanionHp(p, id, n, max)) : undefined}
+        onSetTemp={onPlay ? (n) => onPlay((p) => setCompanionTempHp(p, id, n)) : undefined}
+        onDamage={onPlay ? (n) => onPlay((p) => applyCompanionDamage(p, id, n, max)) : undefined}
+        onHeal={onPlay ? (n) => onPlay((p) => applyCompanionHeal(p, id, n, max)) : undefined}
+      />
+    );
+  };
+  // Vehicles/siege weapons show their OWN level; creatures track the character's level.
+  const companionLevel = (cfg: CompanionConfig): number => {
+    if (cfg.kind === 'vehicle' && cfg.typeId) return content.vehicles?.[cfg.typeId]?.level ?? character.level;
+    if (cfg.kind === 'siege' && cfg.typeId) return content.siegeWeapons?.[cfg.typeId]?.level ?? character.level;
+    return character.level;
+  };
   const AUTO_ID = 'eidolon-auto';
   const isAuto = (cfg: CompanionConfig) => cfg.id === AUTO_ID;
   // The summoner's eidolon is shown automatically (synthetic). It's editable too — the first edit
@@ -681,22 +982,55 @@ export function CompanionsTab({ character, content, onPlay }: { character: Chara
       .then((url) => onPlay((p) => updatePlayCompanion(p, cfgId, { portrait: url })))
       .catch(() => {});
   };
-  const addCompanion = (r: AddRow) => {
+  const addCompanion = (r: AddRow, buy: boolean) => {
     if (!onPlay) return;
-    onPlay((p) => addPlayCompanion(p, rowToConfig(r)));
+    const cfg = rowToConfig(r);
+    if (buy) onPlay((p) => buyCompanion(p, cfg, parsePrice(r.price)));
+    else onPlay((p) => addPlayCompanion(p, cfg));
     setAddOpen(false);
   };
 
   /** Derive + render the selected companion's stat block. */
   const renderBlock = (cfg: CompanionConfig): { node: ReactNode; bulkMax?: number } => {
     const cond = <CompanionConditions compId={cfg.id} conditions={condsOf(cfg.id)} content={content} onPlay={onPlay} onOpen={() => setCondFor(cfg.id)} />;
+    // Vehicles & siege weapons: own stat block, trackable HP, no conditions row.
+    if (cfg.kind === 'vehicle' || cfg.kind === 'siege') {
+      const v: VehicleStat | SiegeWeaponStat | undefined = cfg.typeId
+        ? cfg.kind === 'vehicle'
+          ? content.vehicles?.[cfg.typeId]
+          : content.siegeWeapons?.[cfg.typeId]
+        : undefined;
+      const label = cfg.kind === 'vehicle' ? 'Vehicle' : 'Siege weapon';
+      if (!v) return { node: <StatBlock name={cfg.name || label} kind={label} icon={KIND_ICON[cfg.kind]}><div className="sb-line sb-muted">Pick a type in Edit.</div></StatBlock> };
+      const max = v.hp;
+      const st = character.companionHp?.[cfg.id] ?? { damage: 0, temp: 0 };
+      const cur = Math.max(0, max - st.damage);
+      const bt = v.brokenThreshold ?? Math.floor(max / 2);
+      const status = cur <= 0 ? 'Destroyed' : cur <= bt ? 'Broken' : null;
+      return {
+        node: (
+          <VehicleBlock
+            v={v}
+            kindLabel={label}
+            icon={KIND_ICON[cfg.kind]}
+            hp={hpTrackerFor(cfg.id, max)}
+            bt={bt}
+            status={status}
+            attacks={cfg.kind === 'siege' ? (v as SiegeWeaponStat).attacks : undefined}
+          />
+        ),
+      };
+    }
     if (cfg.kind === 'animal') {
       const type = cfg.typeId ? content.animalCompanions[cfg.typeId] : undefined;
       if (!type) return { node: <StatBlock name={cfg.name || 'Animal companion'} kind="Animal companion" icon="ti-paw"><div className="sb-line sb-muted">Pick a type in Edit.</div></StatBlock> };
       const b = deriveAnimalCompanion(cfg, type, character.level, content, condsOf(cfg.id), !!character.variantRules?.proficiencyWithoutLevel);
-      return { node: <AnimalBlock b={b} cond={cond} />, bulkMax: b.bulk.max };
+      return { node: <AnimalBlock b={b} cond={cond} hp={hpTrackerFor(cfg.id, b.hp)} />, bulkMax: b.bulk.max };
     }
-    if (cfg.kind === 'familiar') return { node: <FamiliarBlockView b={deriveFamiliar(cfg, character, content, condsOf(cfg.id))} cond={cond} /> };
+    if (cfg.kind === 'familiar') {
+      const b = deriveFamiliar(cfg, character, content, condsOf(cfg.id));
+      return { node: <FamiliarBlockView b={b} cond={cond} hp={hpTrackerFor(cfg.id, b.hp)} /> };
+    }
     if (cfg.kind === 'eidolon') return { node: <EidolonBlockView b={deriveEidolon(cfg, character, content, condsOf(cfg.id))} cond={cond} /> };
     const sc = cfg.typeId ? (cfg.kind === 'follower' ? content.followers : content.pets)?.[cfg.typeId] : undefined;
     if (!sc) return { node: <StatBlock name={cfg.name || cap(cfg.kind)} kind={cap(cfg.kind)} icon={KIND_ICON[cfg.kind]}><div className="sb-line sb-muted">Pick a type in Edit.</div></StatBlock> };
@@ -721,7 +1055,7 @@ export function CompanionsTab({ character, content, onPlay }: { character: Chara
           onClose={() => setCondFor(null)}
         />
       )}
-      {addOpen && onPlay && <AddCompanionModal content={content} onAdd={addCompanion} onClose={() => setAddOpen(false)} />}
+      {addOpen && onPlay && <AddCompanionModal content={content} currency={character.currency} onAdd={addCompanion} onClose={() => setAddOpen(false)} />}
       {invAddFor && onPlay && (
         <AddItemsModal
           content={content}
@@ -782,7 +1116,7 @@ export function CompanionsTab({ character, content, onPlay }: { character: Chara
             <button key={cfg.id} className={'cmp-pill' + (on ? ' active' : '')} onClick={() => select(cfg.id)}>
               <span className="av">{cfg.portrait ? <img src={cfg.portrait} alt="" className="cmp-av-img" /> : <i className={'ti ' + meta.icon} aria-hidden="true" />}</span>
               {cfg.name || meta.label}
-              <span className="lv">Lv {character.level}</span>
+              <span className="lv">Lv {companionLevel(cfg)}</span>
             </button>
           );
         })}
@@ -804,7 +1138,7 @@ export function CompanionsTab({ character, content, onPlay }: { character: Chara
           <input ref={portraitInputRef} type="file" accept="image/*" className="cmp-port-file" onChange={(e) => importPortrait(current.id, e)} aria-hidden="true" tabIndex={-1} />
           <div className="cmp-titleblock">
             <div className="cmp-name">{current.name || kindMeta(current, content).label}</div>
-            <div className="cmp-tag">{kindMeta(current, content).label} · Level {character.level}</div>
+            <div className="cmp-tag">{kindMeta(current, content).label} · Level {companionLevel(current)}</div>
           </div>
           {canEdit && (
             <div className="cmp-modes">
@@ -812,7 +1146,17 @@ export function CompanionsTab({ character, content, onPlay }: { character: Chara
               <button className={mode === 'edit' ? 'on' : ''} title="Edit choices" onClick={() => enterMode('edit')}><i className="ti ti-pencil" aria-hidden="true" /></button>
               <button className={mode === 'inv' ? 'on' : ''} title="Inventory" onClick={() => enterMode('inv')}><i className="ti ti-backpack" aria-hidden="true" /></button>
               {!isAuto(current) && (
-                <button className="cmp-del" title="Remove companion" onClick={() => { onPlay?.((p) => removePlayCompanion(p, current.id)); setSelId(null); }}><i className="ti ti-trash" aria-hidden="true" /></button>
+                <button
+                  className="cmp-del"
+                  title="Remove companion"
+                  onClick={() => {
+                    if (!confirm(`Remove ${current.name || kindMeta(current, content).label}? This cannot be undone.`)) return;
+                    onPlay?.((p) => removePlayCompanion(p, current.id));
+                    setSelId(null);
+                  }}
+                >
+                  <i className="ti ti-trash" aria-hidden="true" />
+                </button>
               )}
             </div>
           )}

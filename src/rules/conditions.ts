@@ -55,7 +55,10 @@ const CONDITION_EFFECTS: Record<string, ConditionEffect[]> = {
 
 function effectMatches(e: ConditionEffect, ability: AbilityId, slot: ConditionSlot): boolean {
   if (e.allChecks && slot !== 'damage') return true;
-  if (e.abilities?.includes(ability)) return true;
+  // Perception is its own statistic, NOT a Wis-based check, so attribute-keyed conditions (Stupefied
+  // lists 'wis') must not reach it through the ability match — only allChecks (Frightened/Sickened)
+  // and explicit slots penalize Perception.
+  if (e.abilities?.includes(ability) && slot !== 'perception') return true;
   if (e.slots?.includes(slot)) return true;
   return false;
 }

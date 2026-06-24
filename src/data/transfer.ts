@@ -45,7 +45,7 @@ const CODEX_APP = 'wanderers-codex';
 /** What an import did — surfaced to the user so a lossy WG import is transparent. */
 export interface ImportReport {
   /** Where the file came from. */
-  source: 'Wanderer’s Codex' | 'Wanderer’s Guide';
+  source: 'Heroes Heaven' | 'Wanderer’s Guide';
   /** True only for a native Codex file (nothing lost). */
   lossless: boolean;
   /** Things successfully brought across (for the success summary). */
@@ -165,8 +165,8 @@ function contentSnapshot(ch: Character, content: ContentDatabase): unknown {
 
   return {
     _README:
-      'Exported from Wanderer’s Codex. This block is a human-readable snapshot of the resolved character; ' +
-      'Wanderer’s Guide does not read it on import. Codex uses its own slug-based content, so a re-import into ' +
+      'Exported from Heroes Heaven. This block is a human-readable snapshot of the resolved character; ' +
+      'Wanderer’s Guide does not read it on import. Heroes Heaven uses its own slug-based content, so a re-import into ' +
       'WG will not reconstruct the mechanical build (class/feats/spells) — only name, level, vitals, and bio.',
     ancestry: ch.ancestryId ? content.ancestries[ch.ancestryId]?.name : null,
     background: ch.backgroundId ? content.backgrounds[ch.backgroundId]?.name : null,
@@ -277,7 +277,7 @@ function importNative(obj: any): { saved: SavedChar; report: ImportReport } {
   return {
     saved,
     report: {
-      source: 'Wanderer’s Codex',
+      source: 'Heroes Heaven',
       lossless: true,
       resolved: [`${character.name} — level ${character.level}`, 'Imported losslessly (full build + play state).'],
       warnings: [],

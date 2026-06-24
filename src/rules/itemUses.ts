@@ -76,3 +76,31 @@ export function itemUses(item: Item | undefined, inv: InventoryItem): UseInfo | 
 export function chargesFor(info: { max: number; resetsOnRest: boolean }, current: number): { current: number; max: number; resetsOnRest: boolean } {
   return { current: Math.max(0, Math.min(info.max, current)), max: info.max, resetsOnRest: info.resetsOnRest };
 }
+
+/* --- Spell-holding items (staff / wand / scroll): which counter a cast spends, and how much. --- */
+
+/** The counter a spell-holding item spends to cast: a staff's shared 'pool' (charges = item level),
+ *  a wand's 'freq' (1/day). null = a single-use item (scroll), consumed on cast instead of decremented. */
+export function chargeCounterId(item: Item | undefined): string | null {
+  if (item?.itemType === 'consumable' && item.consumableType === 'scroll') return null;
+  const ids = (item?.counters ?? []).map((c) => c.id);
+  if (ids.includes('pool')) return 'pool';
+  if (ids.includes('freq')) return 'freq';
+  return null;
+}
+
+/** Charges one cast of a rank-`rank` spell costs from `item`: a staff spends the spell's rank
+ *  (cantrips are free/at-will); a wand spends its single daily use. */
+export function chargeCostToCast(item: Item | undefined, rank: number): number {
+  return chargeCounterId(item) === 'pool' ? Math.max(0, rank) : 1;
+}
+
+/** Whether `item` (held as `inv`) can currently cast a rank-`rank` spell — enough charges, or in stock. */
+export function canCastFromItem(item: Item | undefined, inv: InventoryItem, rank: number): boolean {
+  const cid = chargeCounterId(item);
+  if (cid === null) return inv.quantity >= 1; // scroll: castable while you hold one
+  const u = itemCounters(item, inv).find((c) => c.id === cid);
+  if (!u) return true; // no tracker → at-will
+  const cost = chargeCostToCast(item, rank);
+  return cost <= 0 || u.current >= cost;
+}

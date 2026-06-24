@@ -11,12 +11,25 @@ import { useEscapeClose } from './useEscapeClose';
  * a linked word pushes that term's description onto a stack; "Back" pops one level. Recurses
  * arbitrarily deep. Reuses the .picker modal shell.
  */
-export function DescriptionModal({ root, onClose }: { root: DescNode; onClose: () => void }) {
+export function DescriptionModal({
+  root,
+  onClose,
+  onExit,
+  backToSource,
+}: {
+  root: DescNode;
+  onClose: () => void;
+  /** Dismiss the WHOLE popup chain (the X, Escape, and clicking outside). Defaults to onClose. */
+  onExit?: () => void;
+  /** Show Back even at the first level; there it returns (via onClose) to the popup this opened from. */
+  backToSource?: boolean;
+}) {
   const content = useContent();
-  useEscapeClose(onClose);
+  // X / Escape / click-outside dismiss the whole chain (onExit); Back steps up one level, and at the
+  // first level returns to the source the popup was opened from (onClose).
+  const exit = onExit ?? onClose;
+  useEscapeClose(exit);
   const pin = usePinDesc();
-  // Drilling into a linked term pushes onto the stack; Back (shown when stack.length > 1) walks the
-  // term chain back. The first term has no Back — Close returns to the source it was opened from.
   const [stack, setStack] = useState<DescNode[]>([root]);
   const cur = stack[stack.length - 1];
   const pinned = pin?.has(cur) ?? false;
@@ -26,13 +39,17 @@ export function DescriptionModal({ root, onClose }: { root: DescNode; onClose: (
     const node = lookupRef(content, ref);
     if (node) setStack((s) => [...s, node]);
   };
-  const back = () => setStack((s) => (s.length > 1 ? s.slice(0, -1) : s));
+  const back = () => {
+    if (stack.length > 1) setStack((s) => s.slice(0, -1));
+    else onClose();
+  };
+  const showBack = stack.length > 1 || !!backToSource;
 
   return (
-    <div className="picker-overlay" onClick={onClose}>
+    <div className="picker-overlay" onClick={exit}>
       <div className="picker info-modal" onClick={(e) => e.stopPropagation()}>
         <div className="picker-head">
-          {stack.length > 1 && (
+          {showBack && (
             <button
               className="info-back"
               aria-label="Back to previous description"
@@ -59,7 +76,7 @@ export function DescriptionModal({ root, onClose }: { root: DescNode; onClose: (
               <i className="ti ti-star" aria-hidden="true" />
             </button>
           )}
-          <button className="picker-close" onClick={onClose} aria-label="Close">
+          <button className="picker-close" onClick={exit} aria-label="Close">
             <i className="ti ti-x" aria-hidden="true" />
           </button>
         </div>

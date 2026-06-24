@@ -1,5 +1,25 @@
 import { describe, it, expect } from 'vitest';
-import { parseBlocks } from '../src/sheet/RichText';
+import { parseBlocks, toPlainText } from '../src/sheet/RichText';
+
+describe('toPlainText (compact preview flattening)', () => {
+  it('strips bold markers and the --- divider from an action blurb (Channel Smite case)', () => {
+    const desc = '**Cost** Expend a Harm or Heal spell.\n\n---\n\nYou siphon the energies of life and death.';
+    expect(toPlainText(desc)).toBe('Cost Expend a Harm or Heal spell. You siphon the energies of life and death.');
+  });
+  it('flattens headings, list markers, italics, highlights, and pipes; collapses whitespace', () => {
+    expect(toPlainText('# Heading\n\n- one\n- *two*\n\n⟦heightened⟧ | x |')).toBe('Heading one two heightened x');
+  });
+  it('reduces @refs and inline rolls to readable text', () => {
+    expect(toPlainText('See @UUID[Compendium.x]{Demoralize} and roll [[/r 1d6]] now.')).toBe('See Demoralize and roll now.');
+  });
+  it('strips markdown table separator rows (--- groups), not just whole-line dividers', () => {
+    expect(toPlainText('| A | B |\n| --- | --- |\n| 1 | 2 |')).toBe('A B 1 2');
+  });
+  it('returns empty string for undefined / empty', () => {
+    expect(toPlainText(undefined)).toBe('');
+    expect(toPlainText('')).toBe('');
+  });
+});
 
 describe('parseBlocks (markdown-lite)', () => {
   it('splits blank-line-separated paragraphs', () => {

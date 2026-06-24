@@ -11,7 +11,7 @@
  * The maturity ranks + HP formula are sourced from the published Animal Companion
  * rules (Archives of Nethys), authored into COMPANION_FORMULA below.
  */
-import { abilityMod, deriveAc, deriveMaxHp, derivePerception, deriveSave, profBonus, pwl } from './derive';
+import { deriveAc, deriveMaxHp, derivePerception, deriveSave, profBonus, pwl } from './derive';
 import { conditionPenalty } from './conditions';
 import { SPECIFIC_FAMILIARS_BY_ID } from './specificFamiliars';
 import type {
@@ -22,6 +22,8 @@ import type {
   Character,
   CompanionConfig,
   ContentDatabase,
+  DamageType,
+  EidolonConfig,
   FamiliarAbility,
   ProficiencyRank,
   SkillId,
@@ -342,6 +344,10 @@ export function deriveFamiliar(
     .map((a) => ({ id: a.id, name: a.name, description: a.description, kind: a.kind }));
   const sf = cfg.specificFamiliarId ? SPECIFIC_FAMILIARS_BY_ID[cfg.specificFamiliarId] : undefined;
   const has = (id: string) => (cfg.abilities ?? []).includes(id);
+  // The 'Tough' familiar ability raises max HP by 2 per level (base 5/level → 7/level). A specific
+  // familiar that requires Tough (e.g. Spellslime) gets it even though its required abilities aren't
+  // stored in cfg.abilities.
+  const hasTough = has('tough') || (sf?.requiredAbilities ?? []).some((a) => a.toLowerCase() === 'tough');
   // Movement abilities: Fast Movement raises the land Speed 25→40; Flier/Climber/Burrower add types.
   const land = has('fast-movement') ? 40 : 25;
   const extraSpeeds: string[] = [];
@@ -351,7 +357,7 @@ export function deriveFamiliar(
   return {
     name: cfg.name || sf?.name || 'Familiar',
     level: character.level,
-    hp: 5 * character.level,
+    hp: (5 + (hasTough ? 2 : 0)) * character.level,
     speed: land,
     extraSpeeds,
     ...masterDefenses(character, content, conditions),
@@ -378,6 +384,34 @@ export interface EidolonBlock extends Defenses {
   /** Shared with the summoner (one HP pool). */
   hp: number;
   speed: number;
+  /** The eidolon's own ability modifiers (from its array + boosts). */
+  abilities: Record<AbilityId, number>;
+  /** Primary + secondary unarmed Strikes (the summoner's proficiency, the eidolon's Str/Dex). */
+  attacks: { name: string; attack: number; damage: string; traits: string[] }[];
+}
+
+/** The eidolon's primary unarmed attack is chosen from these stat blocks (Secrets of Magic). The
+ *  "1d8" choice is one trait from {disarm, nonlethal, shove, trip}, flattened here into one pick
+ *  each. The secondary attack is always 1d6 with the agile + finesse traits. */
+export const EIDOLON_PRIMARY_OPTIONS: { id: string; label: string; die: number; traits: string[] }[] = [
+  { id: 'd8-disarm', label: '1d8 (disarm)', die: 8, traits: ['disarm'] },
+  { id: 'd8-nonlethal', label: '1d8 (nonlethal)', die: 8, traits: ['nonlethal'] },
+  { id: 'd8-shove', label: '1d8 (shove)', die: 8, traits: ['shove'] },
+  { id: 'd8-trip', label: '1d8 (trip)', die: 8, traits: ['trip'] },
+  { id: 'd6-fatal', label: '1d6 (fatal d10)', die: 6, traits: ['fatal d10'] },
+  { id: 'd6-forceful', label: '1d6 (forceful, sweep)', die: 6, traits: ['forceful', 'sweep'] },
+  { id: 'd6-deadly', label: '1d6 (deadly d8, finesse)', die: 6, traits: ['deadly d8', 'finesse'] },
+];
+
+/** A sensible level-1 starting spread so a freshly-added eidolon isn't broken-looking; the player
+ *  overwrites these with their actual array + boost values in the Edit panel. */
+const EIDOLON_DEFAULT_ABILITIES: Record<AbilityId, number> = { str: 4, dex: 2, con: 3, int: 0, wis: 1, cha: 1 };
+
+/** The summoner's proficiency in the eidolon's unarmed attacks: trained → expert (7) → master (15). */
+function eidolonAttackRank(level: number): ProficiencyRank {
+  if (level >= 15) return 'master';
+  if (level >= 7) return 'expert';
+  return 'trained';
 }
 
 /** An eidolon shares the summoner's Hit Points and uses their AC/saves/Perception; its
@@ -389,14 +423,48 @@ export function deriveEidolon(
   conditions: ActiveCondition[] = [],
 ): EidolonBlock {
   const opt = content.classes.summoner?.subclass?.options.find((o) => o.id === cfg.typeId);
-  // An eidolon is always UNARMORED — it doesn't inherit the summoner's worn-armor AC. It
-  // shares the summoner's saves/Perception and HP, but computes its own AC from unarmored
-  // defense (the summoner's armor would only contribute via a potency rune, not modelled).
+  const ec: EidolonConfig = cfg.eidolon ?? {};
+  // The eidolon has its OWN ability modifiers (from its array + boosts); the player sets them.
+  // Per-key fallback (not a spread) so a cleared/undefined input falls back to the default — a
+  // spread would let an explicit `undefined` overwrite the default and produce NaN math.
+  const ab = Object.fromEntries(
+    (Object.keys(EIDOLON_DEFAULT_ABILITIES) as AbilityId[]).map((a) => [a, ec.abilities?.[a] ?? EIDOLON_DEFAULT_ABILITIES[a]]),
+  ) as Record<AbilityId, number>;
+  const level = character.level;
+  const withoutLevel = pwl(character);
+
+  // An eidolon is always UNARMORED, but uses ITS OWN Dexterity (capped by its array's Dex cap) and
+  // the summoner's unarmored-defense proficiency. The array's item bonus to AC is added on top.
+  const cappedDex = ec.dexCap != null ? Math.min(ab.dex, ec.dexCap) : ab.dex;
   const eidolonAc =
     10 +
-    abilityMod(character.abilities.dex) +
-    profBonus(character.proficiencies.defenses.unarmored, character.level, pwl(character)) +
+    cappedDex +
+    profBonus(character.proficiencies.defenses.unarmored, level, withoutLevel) +
+    (ec.acItemBonus ?? 0) +
     conditionPenalty(conditions, 'dex', 'ac');
+
+  // Build an unarmed Strike: the summoner's eidolon-attack proficiency + the eidolon's Str (or Dex
+  // when the attack is finesse and Dex is higher); damage is one die + Str. Runes/handwraps aren't
+  // applied yet. dmgType defaults to slashing (the player picks B/P/S to match the chosen form).
+  const attackRank = eidolonAttackRank(level);
+  const strike = (rawName: string | undefined, fallback: string, die: number, traits: string[], dmgType?: DamageType) => {
+    const finesse = traits.includes('finesse');
+    const atkAbility: AbilityId = finesse && ab.dex > ab.str ? 'dex' : 'str';
+    const flat = ab.str + conditionPenalty(conditions, atkAbility, 'damage');
+    const dmgFlat = flat > 0 ? `+${flat}` : flat < 0 ? `${flat}` : '';
+    return {
+      name: rawName?.trim() || fallback,
+      attack: ab[atkAbility] + profBonus(attackRank, level, withoutLevel) + conditionPenalty(conditions, atkAbility, 'attack'),
+      damage: `1d${die}${dmgFlat} ${dmgType ?? 'slashing'}`,
+      traits: [...traits, 'unarmed'],
+    };
+  };
+  const primaryOpt = EIDOLON_PRIMARY_OPTIONS.find((o) => o.id === ec.primary?.option) ?? EIDOLON_PRIMARY_OPTIONS[5]; // 1d6 forceful, sweep
+  const attacks = [
+    strike(ec.primary?.name, 'Primary', primaryOpt.die, primaryOpt.traits, ec.primary?.damageType),
+    strike(ec.secondary?.name, 'Secondary', 6, ['agile', 'finesse'], ec.secondary?.damageType),
+  ];
+
   return {
     name: cfg.name || opt?.name || 'Eidolon',
     tradition: opt?.tradition,
@@ -404,6 +472,8 @@ export function deriveEidolon(
     description: opt?.description ?? '',
     hp: deriveMaxHp(character, content),
     speed: 25,
+    abilities: ab,
+    attacks,
     ...masterDefenses(character, content, conditions),
     ac: eidolonAc,
   };

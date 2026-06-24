@@ -5,6 +5,7 @@ import { applyPlayState } from '../rules/play';
 import { deriveMaxHp } from '../rules/derive';
 import { exportWg, exportNative, importCharacter, type ImportReport } from '../data/transfer';
 import { WindowControls } from './WindowControls';
+import { HeroesHeavenLogo } from './Logo';
 
 type Filter = 'all' | 'active' | 'archived';
 
@@ -105,7 +106,7 @@ export function RosterScreen({
     <div className="roster-screen">
       <header className="chrome" data-tauri-drag-region>
         <div className="chrome-brand" data-tauri-drag-region>
-          <i className="ti ti-shield-half" aria-hidden="true" /> Wanderer&apos;s Codex
+          <HeroesHeavenLogo className="chrome-logo" /> Heroes Heaven
         </div>
         <WindowControls />
       </header>

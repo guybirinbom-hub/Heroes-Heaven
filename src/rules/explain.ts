@@ -36,6 +36,7 @@ import {
   formatMod,
   profBonus,
   pwl,
+  shieldSwappedModes,
 } from './derive';
 
 export type StatRef =
@@ -182,10 +183,37 @@ function conditionPart(c: Character, ability: AbilityId, slot: Parameters<typeof
  *  the number) and return the CONDITIONAL ones as "situational" note strings. */
 function modeAdjust(c: Character, target: ModeTarget, parts: CalcPart[]): string[] {
   const situational: string[] = [];
+  const uncond: { mode: string; type: string; value: number }[] = [];
   for (const { mode, mod } of modeModifiersFor(c.activeModes, target)) {
     const typed = mod.type === 'untyped' ? 'untyped' : mod.type;
     if (mod.appliesWhen) situational.push(`${formatMod(mod.value)} ${typed} from ${mode} — ${mod.appliesWhen}`);
-    else parts.push({ label: mode, note: `${typed} ${mod.value >= 0 ? 'bonus' : 'penalty'}`, value: mod.value });
+    else uncond.push({ mode, type: typed, value: mod.value });
+  }
+  // Same-type bonuses/penalties don't stack — only the best bonus and worst penalty of each typed
+  // category count (untyped all sum), exactly as modeNumberBonus folds them into the number. Show
+  // superseded same-type modifiers at 0 with a "doesn't stack" note so the listed parts still sum to
+  // the total.
+  const winner = new Map<string, number>(); // `${type}|${sign}` -> best-magnitude value
+  for (const u of uncond) {
+    if (u.type === 'untyped') continue;
+    const key = `${u.type}|${u.value >= 0 ? '+' : '-'}`;
+    const cur = winner.get(key);
+    if (cur === undefined || Math.abs(u.value) > Math.abs(cur)) winner.set(key, u.value);
+  }
+  const claimed = new Set<string>();
+  for (const u of uncond) {
+    const sign = u.value >= 0 ? 'bonus' : 'penalty';
+    if (u.type === 'untyped') {
+      parts.push({ label: u.mode, note: `untyped ${sign}`, value: u.value });
+      continue;
+    }
+    const key = `${u.type}|${u.value >= 0 ? '+' : '-'}`;
+    if (winner.get(key) === u.value && !claimed.has(key)) {
+      claimed.add(key);
+      parts.push({ label: u.mode, note: `${u.type} ${sign}`, value: u.value });
+    } else {
+      parts.push({ label: u.mode, note: `${u.type} ${sign} — doesn't stack`, value: 0 });
+    }
   }
   return situational;
 }
@@ -339,7 +367,9 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       }
       const cond = conditionPart(c, 'dex', 'ac');
       if (cond) parts.push(cond);
-      const situational = modeAdjust(c, { kind: 'ac' }, parts);
+      // Use the shield-swapped modes so the "Raise a Shield" line shows the real shield bonus (buckler
+      // +1, fortress +3) and the parts reconcile with the AC total (which deriveAc computes the same way).
+      const situational = modeAdjust({ ...c, activeModes: shieldSwappedModes(c, db) }, { kind: 'ac' }, parts);
       return {
         title: 'Armor class',
         subtitle: armor ? `${cap(category)} armor` : 'Unarmored',
@@ -429,8 +459,22 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       const max = deriveMaxHp(c, db);
       const anc = c.ancestryId ? db.ancestries[c.ancestryId] : undefined;
       const cls = c.classId ? db.classes[c.classId] : undefined;
+      // A manual max-HP override replaces the whole calculation — show it as a single part.
+      if (c.hitPoints.maxOverride != null) {
+        return {
+          title: 'Hit points',
+          subtitle: `Maximum ${max}`,
+          totalText: String(max),
+          parts: [{ label: 'Manual maximum (override)', value: max }],
+          timeline: [],
+          description: DESC.hp,
+        };
+      }
       const conMod = abilityMod(c.abilities.con);
-      const perLevel = (cls?.hpPerLevel ?? 0) + conMod;
+      // Dual Class uses the HIGHER per-level HP of the two classes (matches deriveMaxHp).
+      const cls2 = c.variantRules?.dualClass && c.classId2 ? db.classes[c.classId2] : undefined;
+      const hpPer = Math.max(cls?.hpPerLevel ?? 0, cls2?.hpPerLevel ?? 0);
+      const perLevel = hpPer + conMod;
       // Feats that raise/lower max HP (Toughness +level, Thick Hide Mask +20, …).
       const featParts = c.feats
         .map((f) => ({ feat: db.feats[f.featId], b: db.feats[f.featId]?.maxHpBonus }))
@@ -442,7 +486,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         totalText: String(max),
         parts: [
           { label: 'Ancestry HP', note: anc?.name, value: anc?.hp ?? 0 },
-          { label: `(${cls?.hpPerLevel ?? 0} class + ${conMod} Con) × ${lvl} levels`, value: perLevel * lvl },
+          { label: `(${hpPer} class + ${conMod} Con) × ${lvl} levels`, value: perLevel * lvl },
           ...featParts,
         ],
         timeline: [],

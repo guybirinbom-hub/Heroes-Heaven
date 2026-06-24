@@ -6,6 +6,7 @@ import './theme/tokens.css';
 import './sheet.css';
 import { initTheme } from './theme/theme-manager';
 import { initZoom } from './theme/zoom';
+import { initPrefs } from './data/prefs';
 import { ErrorBoundary } from './sheet/ErrorBoundary';
 import { clearRoster } from './data/storage';
 
@@ -13,6 +14,7 @@ import { clearRoster } from './data/storage';
 // no flash of an unthemed/unscaled screen.
 initTheme();
 initZoom();
+initPrefs();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

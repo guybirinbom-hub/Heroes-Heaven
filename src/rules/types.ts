@@ -214,6 +214,9 @@ interface ContentBase {
   /** Cross-references found in `description` (from Foundry @UUID links), for in-text linking. */
   descRefs?: DescRef[];
   source?: SourceInfo;
+  /** App-level link to the user Homebrew source that authored this entry (groups it in the Homebrew
+   *  manager). Absent on imported/seed content. Ignored by the rules engine. */
+  homebrewSourceId?: string;
 }
 
 /** A precise/imprecise/vague sense granted by a feat, heritage, or class feature. */
@@ -249,6 +252,8 @@ export interface DefenseGrants {
   critSpecLevel?: number;
   /** Weapon restriction on the crit-spec grant — only matching weapons show the effect. */
   critSpecWeapons?: { groups?: string[]; traits?: string[]; bases?: string[]; melee?: boolean };
+  /** Melee unarmed Strikes this feat/feature grants (from Foundry `Strike` rule elements). */
+  grantedStrikes?: GrantedStrike[];
 }
 
 export interface Ancestry extends ContentBase {
@@ -265,6 +270,8 @@ export interface Ancestry extends ContentBase {
   };
   /** Heritage ids belonging to this ancestry. */
   heritages: string[];
+  /** Melee unarmed Strikes granted unconditionally by this ancestry (e.g. conrasu). */
+  grantedStrikes?: GrantedStrike[];
 }
 
 /** An innate spell a feat/heritage grants (cast at a fixed tradition; cantrips at-will, else 1/day). */
@@ -501,9 +508,17 @@ export type SpellRank = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
 export type SpellComponent = 'verbal' | 'somatic' | 'material' | 'focus';
 
+export interface FixedHeightenLevel {
+  /** Absolute replacement formula at this rank (e.g. cantrip "2d6"). */
+  damage?: string;
+  area?: number;
+  range?: string;
+  target?: string;
+  duration?: string;
+}
 export type SpellHeightening =
-  | { type: 'fixed'; levels: Partial<Record<SpellRank, string>> }
-  | { type: 'interval'; interval: 1 | 2; effect: string };
+  | { type: 'interval'; interval: 1 | 2; damageIncr?: string; areaIncr?: number }
+  | { type: 'fixed'; levels: Partial<Record<SpellRank, FixedHeightenLevel>> };
 
 export interface Spell extends ContentBase {
   /** 0 = cantrip. */
@@ -524,6 +539,11 @@ export interface Spell extends ContentBase {
   /** What the spell attacks against (spell attack roll vs AC, or a save). */
   defense?: SaveId | 'ac';
   heightening?: SpellHeightening;
+  /** Primary base damage/heal dice formula (for upcast scaling display). */
+  baseDamage?: string;
+  damageKind?: 'damage' | 'healing';
+  /** Structured base area (companion to the prose `area` string), in feet. */
+  baseArea?: { value: number; kind: string };
 }
 
 /* ---- Items: a discriminated union on `itemType` ---- */
@@ -793,19 +813,42 @@ export interface ModeDef {
   classes?: string[];
   /** Gate to these ancestry content-ids (absent ⇒ relevant to any ancestry). */
   ancestries?: string[];
+  /** Gate to characters who have one of these feat ids (e.g. an archetype dedication). Used for
+   *  archetype modes so they only show for characters who took the archetype. */
+  feats?: string[];
   /** Short note describing effects that aren't captured as numeric modifiers (shown in the list). */
   note?: string;
+  /** Scope of a USER-created mode: a roster character id ⇒ only that character sees it; absent ⇒
+   *  universal (every character on this device). Catalog/predefined modes never set this. */
+  charId?: string;
 }
 
-export type CompanionKind = 'animal' | 'familiar' | 'eidolon' | 'follower' | 'pet';
+export type CompanionKind = 'animal' | 'familiar' | 'eidolon' | 'follower' | 'pet' | 'vehicle' | 'siege';
 
 /** A companion the player has chosen, stored on the character (derived into a stat block). */
+/** Summoner-eidolon configuration: the eidolon's own ability mods (from its chosen Eidolon Array
+ *  plus level boosts), optional AC tweaks from the array, and its two unarmed-attack forms. */
+export interface EidolonConfig {
+  /** Ability MODIFIERS, derived by the player from the chosen array + ability boosts. */
+  abilities?: Partial<Record<AbilityId, number>>;
+  /** The array's item bonus to AC (armor, scales, deflection aura, …). */
+  acItemBonus?: number;
+  /** The array's Dexterity cap on AC, if any. */
+  dexCap?: number;
+  /** Primary unarmed attack: form name (Claw, Jaws…), damage type, and the stat-option id. */
+  primary?: { name?: string; damageType?: DamageType; option?: string };
+  /** Secondary unarmed attack (always 1d6, agile + finesse): form name + damage type. */
+  secondary?: { name?: string; damageType?: DamageType };
+}
+
 export interface CompanionConfig {
   id: string;
   kind: CompanionKind;
   name: string;
   /** Animal-companion type id, or eidolon type id (a summoner-eidolon subclass option). */
   typeId?: string;
+  /** Summoner eidolon: its own ability mods + chosen unarmed attacks. */
+  eidolon?: EidolonConfig;
   /** Animal companion maturity: young | mature | nimble | savage | specialized. */
   maturity?: string;
   /** Animal companion specialization id (Ambusher, Racer, …), chosen when specialized. */
@@ -963,6 +1006,21 @@ export interface NaturalAttack {
   group?: string;
 }
 
+/**
+ * A melee unarmed Strike granted by a feat / heritage / ancestry / class feature (extracted from a
+ * Foundry `Strike` rule element at import). Collected into `Character.naturalAttacks` by
+ * `buildCharacter` so granted attacks (Iruxi Fangs, Razortooth jaws, …) show up in Strikes.
+ */
+export interface GrantedStrike {
+  name: string;
+  die: string;
+  damageType: string;
+  traits: string[];
+  group: string;
+  /** Set only when gated by a ChoiceSet pick (e.g. Iruxi 'fangs'/'tail'); undefined = unconditional. */
+  choiceValue?: string;
+}
+
 /** One stack of an item in the character's inventory. */
 export interface InventoryItem {
   /** Unique per inventory entry (distinct from the item definition id). */
@@ -986,6 +1044,14 @@ export interface InventoryItem {
   counters?: Record<string, { current: number; max: number; resetsOnRest?: boolean }>;
   /** For a generic scroll/wand (item.spellSlot): the spell id the player chose to store in it. */
   heldSpell?: string;
+  /** Battlezoo Monster Parts: this instance has been refined and/or imbued. Mutually exclusive with
+   *  `runes` (an item uses either runes or monster parts, never both). `refinedLevel` is the item level
+   *  the item is refined to (drives the fundamental-rune-equivalent bonuses); `imbuements` are the
+   *  imbued properties on it (each with its chosen path, for weapon properties, and its property level). */
+  monsterPart?: {
+    refinedLevel?: number;
+    imbuements?: { propertyId: string; path?: string; level: number; choice?: string }[];
+  };
 }
 
 export type SpellcastingType = 'prepared' | 'spontaneous' | 'focus' | 'innate' | 'ritual' | 'items';
@@ -1032,6 +1098,9 @@ export interface SpellcastingEntry {
     useClassDc?: boolean;
     allowed?: string[];
   };
+  /** For `type:'items'` entries: the inventory instance this casting comes from, so the Spells page
+   *  can open the item and read/spend its charge counter (kept in sync with the Inventory). */
+  itemInstanceId?: string;
 }
 
 /** A user-defined ("deep") background: a name + description and its mechanical grants —
@@ -1108,6 +1177,49 @@ export interface CharacterOptions {
   ignoreBulk?: boolean;
   /** Hide the dice roller (its button and per-stat roll triggers) everywhere on the sheet. */
   diceRollerOff?: boolean;
+  /** Track rations day-by-day yourself (via quantity) instead of the built-in 7-day uses counter —
+   *  removes the days counter on the Rations item in the inventory + item popup. */
+  rationsDayTracking?: boolean;
+  /** Reveal the creative "Overrides" section in Setup (deliberate per-case rule-breaking). */
+  overridesEnabled?: boolean;
+  /** "Deep background" — unlock building a fully custom background (your own skills/feat/boosts). */
+  deepBackground?: boolean;
+}
+
+/**
+ * "Overrides" — a per-character creative/freeform editing layer that lets the user DELIBERATELY break
+ * the rules in specific, explicit cases (no blanket "ignore everything" switch). buildCharacter never
+ * re-validates legality, so these are mostly UI-gate relaxations + targeted grant/suppress. Authoring
+ * brand-new content (homebrew feats, new picker options) is intentionally NOT here — that's a separate
+ * future Homebrew section. Every field is plain JSON so it round-trips through the saved build.
+ */
+export interface BuildOverrides {
+  /** Feat ids the user has explicitly allowed to be picked despite failing prerequisites/eligibility
+   *  (recorded via the picker's "Take anyway" action). Un-gates exactly those feats — nothing else. */
+  allowedFeats?: string[];
+  /** Bonus feats force-granted with no slot cost (the "add a thing" case). */
+  addedFeats?: { featId: string; level: number; category: FeatCategory }[];
+  /** Class features force-granted with no slot cost (any feature, regardless of class). */
+  addedFeatures?: { featureId: string; level: number }[];
+  /** Auto-granted feat ids to suppress from the character (the "remove a thing" case). */
+  removedFeatIds?: string[];
+  /** Force-set raw ability scores — overwrites the computed value with no boost limits. */
+  attributes?: Partial<Record<AbilityId, number>>;
+  /** Force-set proficiency ranks for any track: a skill id, `lore:<subject>`, a save
+   *  (fortitude/reflex/will), a weapon category, an armor category, 'perception', or 'classDc'. */
+  proficiencies?: Record<string, ProficiencyRank>;
+  /** Extra language ids granted, bypassing the ancestry/Int slot limit. */
+  addedLanguages?: string[];
+  /** Spells force-added regardless of class/tradition/access — any spell at any rank, including
+   *  rituals. Non-rituals surface as a "Added spells" entry (at the chosen rank); rituals show in
+   *  the Spells page's Rituals section. */
+  addedSpells?: { spellId: string; rank: number }[];
+  /** Edits to existing entries' fields (name/description/traits/…). Applied as a shallow content
+   *  overlay so the shared database is never mutated. Display-safe fields are the intended use. */
+  contentEdits?: {
+    feats?: Record<string, Partial<Feat>>;
+    classFeatures?: Record<string, Partial<ClassFeature>>;
+  };
 }
 
 export interface Character {
@@ -1134,6 +1246,10 @@ export interface Character {
   variantRules?: VariantRules;
   /** Per-character convenience/house options (alternate ancestry boosts, voluntary flaw, etc.). */
   options?: CharacterOptions;
+  /** Creative "Overrides" — deliberate rule-breaks (allowed-ineligible feats, bonus/removed feats). */
+  overrides?: BuildOverrides;
+  /** Enabled source books (absent = the four Core books); other books are hidden from the builder. */
+  enabledSources?: string[];
   /** Dual Class: the second class id + its subclass (variant rule). */
   classId2?: string | null;
   subclassId2?: string | null;
@@ -1168,12 +1284,16 @@ export interface Character {
   classResources?: Record<string, number>;
   /** Conditions affecting each companion, keyed by companion id; overlaid from play-state. */
   companionConditions?: Record<string, ActiveCondition[]>;
+  /** Tracked HP per companion (damage taken + temp HP), keyed by companion id; overlaid from play. */
+  companionHp?: Record<string, { damage: number; temp: number }>;
   /** Active modes (resolved defs) whose modifiers adjust stats; overlaid from play-state. */
   activeModes?: ModeDef[];
 
   // --- choices ---
   languages: string[];
   feats: FeatChoice[];
+  /** Class features force-granted via Overrides (rendered in the Feats & Features list). */
+  grantedFeatures?: { featureId: string; name: string; level: number; description: string; descRefs?: DescRef[]; traits: Trait[]; actionCost?: ActionCost; rarity?: Rarity }[];
   skillIncreases?: SkillIncrease[];
   /** Commander folio tactics (chosen Action ids), with the tactics-feature metadata for display. */
   commanderTactics?: CommanderTactics;
@@ -1185,6 +1305,8 @@ export interface Character {
   // --- gear ---
   inventory: InventoryItem[];
   currency: Coins;
+  /** Banked monster parts (Battlezoo Monster Parts subsystem), tracked by total gp-value. */
+  monsterParts?: number;
   /** Ancestry/feat-granted natural unarmed attacks (Iruxi Fangs, claws, jaws, tail, …) beyond the
    *  baseline Fist. Each becomes its own Strike that uses your unarmed proficiency and is buffed by
    *  Handwraps of Mighty Blows (the die-size rule scales the dice to this attack's own die). */

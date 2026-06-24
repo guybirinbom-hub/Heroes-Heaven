@@ -119,12 +119,28 @@ describe('modeRelevant — class/ancestry gating', () => {
 
   it('ungated general modes are relevant to everyone', () => {
     expect(modeRelevant(byName('Raise a Shield'), 'wizard', 'gnome')).toBe(true);
-    expect(modeRelevant(byName('Spirit Trance'), null, null)).toBe(true);
+    expect(modeRelevant(byName('Bless'), null, null)).toBe(true);
   });
 
   it('ancestry-gated modes show only for that ancestry', () => {
     expect(modeRelevant(byName('Animal Shape'), 'fighter', 'werecreature')).toBe(true);
     expect(modeRelevant(byName('Animal Shape'), 'fighter', 'human')).toBe(false);
+  });
+
+  it('archetype modes are gated to the dedication feat that grants them', () => {
+    const spirit = byName('Spirit Trance');
+    expect(spirit.feats).toEqual(['rivethun-invoker-dedication']);
+    // hidden for a character without the dedication...
+    expect(modeRelevant(spirit, 'cleric', 'human')).toBe(false);
+    expect(modeRelevant(spirit, 'cleric', 'human', new Set())).toBe(false);
+    // ...shown for one who has it
+    expect(modeRelevant(spirit, 'cleric', 'human', new Set(['rivethun-invoker-dedication']))).toBe(true);
+    expect(modeRelevant(byName('Sentinel Form'), 'fighter', null, new Set(['starlit-sentinel-dedication']))).toBe(true);
+    expect(modeRelevant(byName('Daydream Trance'), 'wizard', null, new Set(['sleepwalker-dedication']))).toBe(true);
+  });
+
+  it('the non-official "Fighting Defensively" mode is gone', () => {
+    expect(CATALOG_MODES.some((m) => m.name === 'Fighting Defensively')).toBe(false);
   });
 });
 

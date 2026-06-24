@@ -4,9 +4,12 @@ import { deriveSpellcasting, deriveClassDc, formatMod } from '../rules/derive';
 import {
   poolKey,
   preparedKey,
+  removeInventoryItem,
   resetPreparedEntry,
   resetRepertoire,
   setFocusUsed,
+  setItemCounter,
+  setItemQuantity,
   setPreparedSpell,
   setRepertoireRank,
   setSignatureSpells,
@@ -14,7 +17,9 @@ import {
   toggleExpended,
   type PlayState,
 } from '../rules/play';
+import { itemCounters, chargesFor, chargeCounterId, chargeCostToCast, canCastFromItem } from '../rules/itemUses';
 import { ActionGlyph } from './widgets';
+import { ItemDetail } from './ItemDetail';
 import { useEscapeClose } from './useEscapeClose';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { SPELL_SPEC_BUILDER } from './filterSpecs';
@@ -25,7 +30,25 @@ import { useContent } from './ContentContext';
 import { traitDesc } from '../rules/glossary';
 import type { StatRef } from '../rules/explain';
 import { spellCostMatches } from '../rules/spellFilter';
-import { heighteningApplies, splitHeightening } from '../rules/heightening';
+import { heighteningApplies, splitHeightening, scaleDamage, scaleArea } from '../rules/heightening';
+
+function escapeRe(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+/**
+ * Splice a highlighted "(→ heightened)" right after the FIRST standalone occurrence of the base damage
+ * formula in the spell prose (the ⟦…⟧ markers become a .up-heighten span in RichText). Tries the full
+ * formula then the dice-only part; leaves the text unchanged when the formula isn't found (best-effort).
+ */
+function injectDamageArrow(text: string, baseFormula: string, heightened: string): string {
+  const dice = baseFormula.replace(/\s*[+-]\s*\d+$/, '');
+  for (const pat of dice === baseFormula ? [baseFormula] : [baseFormula, dice]) {
+    const body = escapeRe(pat).replace(/\\\+/g, '\\s*\\+\\s*');
+    const re = new RegExp(`(?<![\\dd])(${body})(?![\\dd])`);
+    if (re.test(text)) return text.replace(re, `$1 ⟦(→ ${heightened})⟧`);
+  }
+  return text;
+}
 
 /**
  * Ids of a spontaneous entry's signature spells that should ECHO (display-only, starred) at `rank`:
@@ -54,16 +77,24 @@ function castText(c?: ActionCost): string {
   return ''; // actions / reaction / free / variable are all shown by the action glyph
 }
 
-function SpellDetail({ spell, maxRank, onClose }: { spell: Spell; maxRank?: number; onClose: () => void }) {
+function SpellDetail({ spell, maxRank, signature, onClose }: { spell: Spell; maxRank?: number; signature?: boolean; onClose: () => void }) {
   const content = useContent();
   useEscapeClose(onClose);
   const { base, heightening } = splitHeightening(spell.description || '');
   const baseRank = spell.rank;
+  const isCantrip = baseRank === 0;
   const top = Math.min(10, Math.max(baseRank, maxRank ?? baseRank));
-  // Cantrips (rank 0) auto-heighten to the highest rank you can cast, so they get the selector too.
-  const canHeighten = heightening.length > 0 && top > baseRank;
-  const [castRank, setCastRank] = useState<number>(baseRank === 0 ? top : baseRank);
-  const r = canHeighten ? castRank : baseRank;
+  // Only spontaneous SIGNATURE spells can be freely re-ranked, so they're the only ones with a "cast
+  // at" picker. Cantrips auto-heighten to your max (viewed there, no picker); everything else is viewed
+  // at its set rank (highlighted, no picker).
+  const showPicker = !!signature && top > baseRank;
+  const autoRank = isCantrip ? top : baseRank;
+  const [castRank, setCastRank] = useState<number>(showPicker ? baseRank : autoRank);
+  const r = showPicker ? castRank : autoRank;
+  // Upcast scaling at the viewed rank — inline damage in the prose, area on the stat.
+  const upDamage = scaleDamage(spell, r);
+  const upArea = scaleArea(spell, r);
+  const shownBase = upDamage && spell.baseDamage ? injectDamageArrow(base, spell.baseDamage, upDamage) : base;
   const rankLabel = spell.rank === 0 ? 'Cantrip' : `${ord(spell.rank)} rank`;
   const stats: [string, string | undefined][] = [
     ['Cast', undefined],
@@ -109,27 +140,34 @@ function SpellDetail({ spell, maxRank, onClose }: { spell: Spell; maxRank?: numb
               ) : val ? (
                 <div className="sd-stat" key={label}>
                   <span className="sd-stat-k">{label}</span>
-                  <span className="sd-stat-v">{val}</span>
+                  <span className="sd-stat-v">
+                    {val}
+                    {label === 'Area' && upArea != null && spell.baseArea && (
+                      <span className="up-heighten"> (→ {upArea}-foot {spell.baseArea.kind})</span>
+                    )}
+                  </span>
                 </div>
               ) : null,
             )}
           </div>
-          {canHeighten && (
+          {showPicker ? (
+            // Signature spells: pick the cast rank.
             <div className="sd-rank-sel">
               <span className="sd-rank-lbl">Cast at</span>
-              {/* Cantrips have no real "rank 0" — their lowest castable rank is 1st. */}
               {Array.from({ length: top - Math.max(1, baseRank) + 1 }, (_, k) => Math.max(1, baseRank) + k).map((rr) => (
-                <button
-                  key={rr}
-                  className={'sd-rank-chip' + (rr === r ? ' on' : '')}
-                  onClick={() => setCastRank(rr)}
-                >
+                <button key={rr} className={'sd-rank-chip' + (rr === r ? ' on' : '')} onClick={() => setCastRank(rr)}>
                   {ord(rr)}
                 </button>
               ))}
             </div>
-          )}
-          {base && <DescBody description={base} descRefs={spell.descRefs} />}
+          ) : r > baseRank ? (
+            // No choice (e.g. a cantrip auto-heightened to your max) — just highlight the viewed rank.
+            <div className="sd-rank-sel">
+              <span className="sd-rank-lbl">Cast at</span>
+              <span className="sd-rank-chip on sd-rank-static">{ord(r)}</span>
+            </div>
+          ) : null}
+          {shownBase && <DescBody description={shownBase} descRefs={spell.descRefs} onExit={onClose} />}
           {heightening.length > 0 && (
             <div className="sd-heighten">
               <div className="sd-heighten-h">Heightening</div>
@@ -138,7 +176,8 @@ function SpellDetail({ spell, maxRank, onClose }: { spell: Spell; maxRank?: numb
                   key={i}
                   description={h}
                   descRefs={spell.descRefs}
-                  className={'sd-desc' + (canHeighten && heighteningApplies(h, baseRank, r) ? ' applies' : '')}
+                  className={'sd-desc' + (r > baseRank && heighteningApplies(h, baseRank, r) ? ' applies' : '')}
+                  onExit={onClose}
                 />
               ))}
             </div>
@@ -218,7 +257,12 @@ function ManageSpellsModal({
       if (spontaneous) {
         if (spellId) {
           const cur = entry.repertoire?.[picking.rank] ?? [];
-          if (!cur.includes(spellId) && cur.length < repCap(picking.rank))
+          // The cap counts only player-CHOSEN spells — granted (bloodline/mystery/conscious-mind) spells
+          // live in the repertoire too but don't count, matching the "Add" button's display gate. Counting
+          // the full array here silently dropped a legal add whenever chosen + granted filled the slots.
+          const granted = entry.grantedRepertoire?.[picking.rank] ?? [];
+          const chosenCount = cur.filter((id) => !granted.includes(id)).length;
+          if (!cur.includes(spellId) && chosenCount < repCap(picking.rank))
             onPlay((p) => setRepertoireRank(p, entry.id, picking.rank, [...cur, spellId]));
         }
       } else {
@@ -397,6 +441,9 @@ function SpellCard({
   onPip,
   empty,
   onClick,
+  onCast,
+  castDisabled,
+  castTitle,
 }: {
   name: string;
   cost?: ActionCost;
@@ -408,6 +455,10 @@ function SpellCard({
   onPip?: () => void;
   empty?: boolean;
   onClick?: () => void;
+  /** When set, a "Cast" button on the card spends the item's charges to cast this spell. */
+  onCast?: () => void;
+  castDisabled?: boolean;
+  castTitle?: string;
 }) {
   return (
     <div
@@ -442,6 +493,21 @@ function SpellCard({
           ) : (
             <span className={'slot-pip' + (pip === 'filled' ? ' on' : '')} />
           ))}
+        {onCast && (
+          <button
+            type="button"
+            className="spell-cast-btn"
+            disabled={castDisabled}
+            title={castTitle ?? 'Cast'}
+            aria-label={castTitle ?? 'Cast'}
+            onClick={(e) => {
+              e.stopPropagation();
+              onCast();
+            }}
+          >
+            <i className="ti ti-bolt" aria-hidden="true" /> Cast
+          </button>
+        )}
       </div>
     </div>
   );
@@ -462,12 +528,37 @@ export function SpellsTab({
   const [search, setSearch] = useState('');
   const [detail, setDetail] = useState<Spell | null>(null);
   const [manageId, setManageId] = useState<string | null>(null);
+  // An item-spell source opened from its Spells-page header → the item's full detail popup.
+  const [itemView, setItemView] = useState<string | null>(null);
+  // Collapsible spellcasting sections (in-component, like the Actions sub-tab).
+  const [collapsedSecs, setCollapsedSecs] = useState<Set<string>>(new Set());
+  const secOpen = (id: string) => !collapsedSecs.has(id);
+  const toggleSec = (id: string) =>
+    setCollapsedSecs((prev) => {
+      const n = new Set(prev);
+      if (n.has(id)) n.delete(id);
+      else n.add(id);
+      return n;
+    });
+  const SecChevron = ({ id }: { id: string }) => (
+    <button type="button" className="sc-collapse" aria-expanded={secOpen(id)} title={secOpen(id) ? 'Collapse' : 'Expand'} onClick={() => toggleSec(id)}>
+      <i className={'ti ' + (secOpen(id) ? 'ti-chevron-down' : 'ti-chevron-right')} aria-hidden="true" />
+    </button>
+  );
   const mains = character.spellcasting.filter((e) => e.type === 'prepared' || e.type === 'spontaneous');
   const manageEntry = manageId ? mains.find((m) => m.id === manageId) : null;
   const focus = character.spellcasting.find((e) => e.type === 'focus');
   const itemEntries = character.spellcasting.filter((e) => e.type === 'items' || e.type === 'innate');
-  // The ritual catalog (a scan of every spell) is content-static — memoize so it isn't rebuilt per render.
-  const allRituals = useMemo(() => Object.values(content.spells).filter((s) => s.ritual), [content]);
+  // The character's OWN rituals — added via Overrides → Add spell. Only these show; with none, the
+  // Rituals section (and its catalog bar) is hidden entirely.
+  const myRituals = useMemo(
+    () =>
+      (character.overrides?.addedSpells ?? [])
+        .map((a) => content.spells[a.spellId])
+        .filter((s): s is Spell => !!s && !!s.ritual)
+        .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name)),
+    [character.overrides, content],
+  );
   // Highest rank the character can cast — bounds the heightening rank selector. Includes the focus
   // auto-heighten target (ceil(level/2)) so a focus-only caster (champion/monk) can still see the
   // heightened text of e.g. Lay on Hands.
@@ -479,6 +570,12 @@ export function SpellsTab({
     ),
   );
   const deityDomains = (character.details?.deityId ? content.deities[character.details.deityId]?.domains : undefined) ?? [];
+  // Signature spells (spontaneous casters) — the only spells you can freely re-rank when casting, so
+  // they're the only ones that keep the "cast at" rank picker in the detail view.
+  const signatureIds = useMemo(
+    () => new Set(character.spellcasting.flatMap((e) => (e.repertoire ? e.signature ?? [] : []))),
+    [character.spellcasting],
+  );
   const multi = mains.length > 1;
 
   function toggleFilter(id: string) {
@@ -788,8 +885,16 @@ export function SpellsTab({
         return (
           <div key={main.id}>
             <div className="card sc-head">
+              <SecChevron id={main.id} />
               <div className="sc-info">
-                <div className="sc-name">{multi ? main.name : `${cap(main.tradition)} spellcasting`}</div>
+                <div className="sc-name-row">
+                  <span className="sc-name">{multi ? main.name : `${cap(main.tradition)} spellcasting`}</span>
+                  {onPlay && (main.type === 'prepared' || main.type === 'spontaneous') && (
+                    <button className="ms-btn" onClick={() => setManageId(main.id)} title="Manage spells for this session">
+                      <i className="ti ti-pencil-plus" aria-hidden="true" /> {main.type === 'spontaneous' ? 'Repertoire' : 'Prepare'}
+                    </button>
+                  )}
+                </div>
                 <div className="sc-sub">
                   {cap(main.type)} · key attribute {cap(main.keyAbility)}
                 </div>
@@ -822,33 +927,31 @@ export function SpellsTab({
                 <div className="tlab">Spell DC</div>
                 <div className="tval">{sc.dc}</div>
               </div>
-              {onPlay && (main.type === 'prepared' || main.type === 'spontaneous') && (
-                <button className="ms-btn" onClick={() => setManageId(main.id)} title="Manage spells for this session">
-                  <i className="ti ti-pencil-plus" aria-hidden="true" /> {main.type === 'spontaneous' ? 'Repertoire' : 'Prepare'}
-                </button>
-              )}
             </div>
-            <section className="card">
-              {rankNodes.length ? (
-                rankNodes
-              ) : (
-                <div className="spell-empty">
-                  {filtering ? 'No spells match your search or filters.' : 'No spells prepared yet.'}
-                </div>
-              )}
-            </section>
+            {secOpen(main.id) && (
+              <section className="card">
+                {rankNodes.length ? (
+                  rankNodes
+                ) : (
+                  <div className="spell-empty">
+                    {filtering ? 'No spells match your search or filters.' : 'No spells prepared yet.'}
+                  </div>
+                )}
+              </section>
+            )}
           </div>
         );
       })}
 
       {spellbookCards.length > 0 && (
         <section className="card">
-          <div className="ct" style={{ margin: '0 0 10px' }}>
+          <div className="ct" style={{ margin: secOpen('spellbook') ? '0 0 10px' : 0 }}>
+            <SecChevron id="spellbook" />
             <i className="ti ti-book" aria-hidden="true" />
             Spellbook
             <span className="ct-note">{spellbookCards.length} spells</span>
           </div>
-          <div className="spell-grid">{spellbookCards}</div>
+          {secOpen('spellbook') && <div className="spell-grid">{spellbookCards}</div>}
         </section>
       )}
 
@@ -856,6 +959,7 @@ export function SpellsTab({
         <section className="card">
           <div className="focus-head">
             <div className="ct" style={{ margin: 0 }}>
+              <SecChevron id="focus" />
               <i className="ti ti-flame" aria-hidden="true" />
               Focus spells
             </div>
@@ -895,91 +999,164 @@ export function SpellsTab({
               )}
             </div>
           </div>
-          {focusCards.length ? (
-            <div className="spell-grid">{focusCards}</div>
-          ) : (
-            <div className="spell-empty">{filtering ? 'No focus spells match.' : 'No focus spells.'}</div>
-          )}
+          {secOpen('focus') &&
+            (focusCards.length ? (
+              <div className="spell-grid">{focusCards}</div>
+            ) : (
+              <div className="spell-empty">{filtering ? 'No focus spells match.' : 'No focus spells.'}</div>
+            ))}
         </section>
       )}
       {/* Extra spell sources: staff/wand held spells and innate spells — read-only cards, cast with your spell DC. */}
       {itemEntries.map((entry) => {
         const isInnate = entry.type === 'innate';
+        // Item entries: resolve the inventory instance + def + its live charge counter (the SAME
+        // inv.counters the Inventory edits → charges stay in sync both ways for free). The instance
+        // id is on `itemInstanceId`, or recoverable from the entry id (`item:<instanceId>`) for
+        // characters built before that field existed.
+        const itemInstId = entry.itemInstanceId ?? (entry.type === 'items' && entry.id.startsWith('item:') ? entry.id.slice(5) : undefined);
+        const itemInv = !isInnate && itemInstId ? character.inventory.find((iv) => iv.instanceId === itemInstId) : undefined;
+        const itemDef = itemInv ? content.items[itemInv.itemId] : undefined;
+        const counterId = itemDef ? chargeCounterId(itemDef) : null;
+        const counter = itemDef && itemInv && counterId ? itemCounters(itemDef, itemInv).find((c) => c.id === counterId) : undefined;
+
+        // Casting a rank-N held spell spends the item's charges (staff = N, wand = 1) or consumes a
+        // single-use item. Per-spell cast props are attached to the leveled SpellCards below.
+        const castProps = (rank: number) => {
+          if (isInnate || !itemDef || !itemInv || !onPlay) return {};
+          const cid = chargeCounterId(itemDef);
+          const cost = chargeCostToCast(itemDef, rank);
+          return {
+            castDisabled: !canCastFromItem(itemDef, itemInv, rank),
+            castTitle:
+              cid === 'pool' ? `Cast — spend ${cost} charge${cost === 1 ? '' : 's'}` : cid === 'freq' ? 'Cast — uses the daily charge' : 'Cast — uses the item',
+            onCast: () =>
+              onPlay((p) => {
+                if (cid === null) return itemInv.quantity > 1 ? setItemQuantity(p, itemInv.instanceId, itemInv.quantity - 1) : removeInventoryItem(p, itemInv.instanceId);
+                const u = itemCounters(itemDef, itemInv).find((c) => c.id === cid);
+                if (!u || cost <= 0) return p;
+                return setItemCounter(p, itemInv.instanceId, cid, chargesFor(u, u.current - cost));
+              }),
+          };
+        };
+
         const cards: ReactNode[] = [];
         for (const id of entry.cantrips) {
           const sp = content.spells[id];
           if (!visible(sp)) continue;
           cards.push(
-            <SpellCard key={`${entry.id}:c:${id}`} name={sp?.name ?? id} cost={sp?.cast} meta={isInnate ? 'at will' : 'cantrip'} onClick={sp ? () => setDetail(sp) : undefined} />,
+            <SpellCard key={`${entry.id}:c:${id}`} name={sp?.name ?? id} cost={sp?.cast} meta={isInnate ? 'at will' : 'cantrip · at will'} onClick={sp ? () => setDetail(sp) : undefined} />,
           );
         }
         for (const rank of Object.keys(entry.repertoire ?? {}).map(Number).sort((a, b) => a - b)) {
           for (const id of entry.repertoire![rank]) {
             const sp = content.spells[id];
             if (!visible(sp)) continue;
+            const cost = !isInnate && itemDef ? chargeCostToCast(itemDef, rank) : 0;
+            const meta = isInnate
+              ? `rank ${rank} · 1/day`
+              : counterId === 'pool'
+                ? `rank ${rank} · ${cost} charge${cost === 1 ? '' : 's'}`
+                : counterId === 'freq'
+                  ? `rank ${rank} · 1/day`
+                  : `rank ${rank}`;
             cards.push(
               <SpellCard
                 key={`${entry.id}:${rank}:${id}`}
                 name={sp?.name ?? id}
                 cost={sp?.cast}
-                meta={isInnate ? `rank ${rank} · 1/day` : `rank ${rank}`}
+                meta={meta}
                 onClick={sp ? () => setDetail(sp) : undefined}
+                {...castProps(rank)}
               />,
             );
           }
         }
         return (
           <section className="card" key={entry.id}>
-            <div className="ct" style={{ margin: 0 }}>
-              <i className={'ti ' + (isInnate ? 'ti-sparkles' : 'ti-wand')} aria-hidden="true" /> {entry.name}
+            <div className="ct" style={{ margin: secOpen(entry.id) ? '0 0 10px' : 0 }}>
+              <SecChevron id={entry.id} />
+              <i className={'ti ' + (isInnate ? 'ti-sparkles' : 'ti-wand')} aria-hidden="true" />{' '}
+              {!isInnate && itemDef && itemInv ? (
+                <button type="button" className="sc-item-name" title="Open item details" onClick={() => setItemView(itemInv.instanceId)}>
+                  {entry.name}
+                </button>
+              ) : (
+                entry.name
+              )}
               <span style={{ fontSize: 11.5, color: 'var(--app-text-dim)', marginLeft: 6 }}>
                 · {isInnate ? 'innate' : 'item'} spells ({entry.tradition.charAt(0).toUpperCase() + entry.tradition.slice(1)})
               </span>
+              {counter && itemInv && (
+                <span className="item-charges">
+                  {Array.from({ length: counter.max }, (_, i) => {
+                    const on = i < counter.current;
+                    return onPlay ? (
+                      <button
+                        key={i}
+                        type="button"
+                        className={'slot-pip btn' + (on ? ' on' : '')}
+                        title={on ? 'Spend a charge' : 'Restore a charge'}
+                        aria-label={on ? 'Spend a charge' : 'Restore a charge'}
+                        onClick={() => onPlay((p) => setItemCounter(p, itemInv.instanceId, counter.id, chargesFor(counter, i + 1 === counter.current ? i : i + 1)))}
+                      />
+                    ) : (
+                      <span key={i} className={'slot-pip' + (on ? ' on' : '')} />
+                    );
+                  })}
+                  <span className="item-charges-n">
+                    {counter.current}/{counter.max} {counter.label.toLowerCase()}
+                  </span>
+                </span>
+              )}
             </div>
-            {cards.length ? (
-              <div className="spell-grid">{cards}</div>
-            ) : (
-              <div className="spell-empty">{filtering ? 'No spells match.' : 'No spells.'}</div>
-            )}
+            {secOpen(entry.id) &&
+              (cards.length ? (
+                <div className="spell-grid">{cards}</div>
+              ) : (
+                <div className="spell-empty">{filtering ? 'No spells match.' : 'No spells.'}</div>
+              ))}
           </section>
         );
       })}
-      {/* Rituals: a browsable reference (anyone can cast one if they meet its primary check). Kept
-          collapsed until you search, since the full catalog is large. */}
+      {/* Rituals the character has (added via Overrides). Hidden entirely when there are none. */}
       {(() => {
-        if (!allRituals.length) return null;
-        const shown = query
-          ? allRituals.filter((s) => s.name.toLowerCase().includes(query)).sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name))
-          : [];
+        const shown = query ? myRituals.filter((s) => s.name.toLowerCase().includes(query)) : myRituals;
+        if (!shown.length) return null;
         return (
           <section className="card">
-            <div className="ct" style={{ margin: 0 }}>
+            <div className="ct" style={{ margin: secOpen('rituals') ? '0 0 10px' : 0 }}>
+              <SecChevron id="rituals" />
               <i className="ti ti-books" aria-hidden="true" /> Rituals
-              <span style={{ fontSize: 11.5, color: 'var(--app-text-dim)', marginLeft: 6 }}>
-                · {allRituals.length} in the catalog{query ? '' : ' · search to browse'}
-              </span>
             </div>
-            {query &&
-              (shown.length ? (
-                <div className="spell-grid">
-                  {shown.map((sp) => (
-                    <SpellCard
-                      key={`ritual:${sp.id}`}
-                      name={sp.name}
-                      cost={sp.cast}
-                      meta={`rank ${sp.rank}${sp.ritualPrimary ? ` · ${sp.ritualPrimary}` : ''}`}
-                      onClick={() => setDetail(sp)}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <div className="spell-empty">No rituals match.</div>
-              ))}
+            {secOpen('rituals') && (
+              <div className="spell-grid">
+                {shown.map((sp) => (
+                  <SpellCard
+                    key={`ritual:${sp.id}`}
+                    name={sp.name}
+                    cost={sp.cast}
+                    meta={`rank ${sp.rank}${sp.ritualPrimary ? ` · ${sp.ritualPrimary}` : ''}`}
+                    onClick={() => setDetail(sp)}
+                  />
+                ))}
+              </div>
+            )}
           </section>
         );
       })()}
 
-      {detail && <SpellDetail key={detail.id} spell={detail} maxRank={maxRank} onClose={() => setDetail(null)} />}
+      {detail && (
+        <SpellDetail key={detail.id} spell={detail} maxRank={maxRank} signature={signatureIds.has(detail.id)} onClose={() => setDetail(null)} />
+      )}
+      {itemView &&
+        (() => {
+          const inv = character.inventory.find((iv) => iv.instanceId === itemView);
+          const item = inv ? content.items[inv.itemId] : undefined;
+          return inv && item ? (
+            <ItemDetail inv={inv} item={item} content={content} inventory={character.inventory} onPlay={onPlay} onClose={() => setItemView(null)} />
+          ) : null;
+        })()}
       {manageEntry && onPlay && (
         <ManageSpellsModal
           entry={manageEntry}

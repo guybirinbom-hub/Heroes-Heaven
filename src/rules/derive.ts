@@ -31,6 +31,7 @@ import { PROFICIENCY_RANKS } from './types';
 import { conditionPenalty, drainedHpLoss } from './conditions';
 import { modeNumberBonus } from './modes';
 import { abpOn, abpAttack, abpDefense, abpSave, abpPerception, abpStrikingDice, abpSkillBonus } from './abp';
+import { weaponRefinement, armorRefinement, shieldRefinement, getMpProperty, resolvePath } from './monsterParts';
 
 export const RANK_VALUE: Record<ProficiencyRank, number> = {
   untrained: 0,
@@ -123,11 +124,14 @@ export function abilityModifiers(c: Character): Record<AbilityId, number> {
 
 const RESILIENT_BONUS: Record<string, number> = { resilient: 1, greater: 2, major: 3 };
 
-/** Item bonus to saves from a worn armor's resilient rune (needs the content DB to find the armor). */
+/** Item bonus to saves from a worn armor's resilient rune (or refinement, Monster Parts). */
 export function resilientSaveBonus(c: Character, db: ContentDatabase): number {
   const worn = c.inventory.find((i) => i.worn && db.items[i.itemId]?.itemType === 'armor');
-  const r = (worn?.runes as ArmorRunes | undefined)?.resilient;
-  return r ? RESILIENT_BONUS[r] ?? 0 : 0;
+  if (!worn) return 0;
+  const r = (worn.runes as ArmorRunes | undefined)?.resilient;
+  const runeBonus = r ? RESILIENT_BONUS[r] ?? 0 : 0;
+  const refBonus = worn.monsterPart?.refinedLevel ? armorRefinement(worn.monsterPart.refinedLevel).saves : 0;
+  return Math.max(runeBonus, refBonus);
 }
 
 export function deriveSave(c: Character, save: SaveId, db?: ContentDatabase): StatLine {
@@ -265,8 +269,10 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
   if (worn) {
     category = worn.armor.category;
     dexCap = worn.armor.dexCap ?? null;
-    // ABP defense potency replaces the armor potency rune's numeric bonus.
-    const potency = abpOn(c) ? 0 : (worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0;
+    // ABP defense potency replaces the armor potency rune's numeric bonus. A refined armor (Monster
+    // Parts) gives an AC item bonus of the same class — take the higher of it and the potency rune.
+    const refAc = worn.inv.monsterPart?.refinedLevel ? armorRefinement(worn.inv.monsterPart.refinedLevel).ac : 0;
+    const potency = abpOn(c) ? 0 : Math.max((worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0, refAc);
     itemBonus = worn.armor.acBonus + potency;
   }
   // ABP defense potency is an automatic AC bonus regardless of worn armor.
@@ -278,15 +284,19 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
   const dex = abilityMod(c.abilities.dex);
   const dexContribution = dexCap != null ? Math.min(dex, dexCap) : dex;
   const penalty = conditionPenalty(c.conditions, 'dex', 'ac');
-  // Raise a Shield gives the HELD shield's circumstance bonus (buckler +1, fortress +3), not a flat
-  // +2 — so swap the built-in mode's placeholder value for the real shield AC before stacking modes.
+  const modeBonus = modeNumberBonus(shieldSwappedModes(c, db), { kind: 'ac' });
+  return { value: 10 + dexContribution + profBonus(rank, c.level, pwl(c)) + itemBonus + penalty + modeBonus, rank, dexCap };
+}
+
+/** The active modes with Raise a Shield's placeholder AC value swapped for the HELD shield's real
+ *  circumstance bonus (buckler +1, most +2, fortress +3). Shared by deriveAc and its stat breakdown so
+ *  the listed "Raise a Shield" line and the AC total can never disagree. */
+export function shieldSwappedModes(c: Character, db: ContentDatabase) {
   const shield = deriveShield(c, db);
   const shieldAc = shield && !shield.broken ? shield.ac : 0;
-  const acModes = (c.activeModes ?? []).map((mode) =>
+  return (c.activeModes ?? []).map((mode) =>
     mode.id === 'cat-raise-shield' ? { ...mode, modifiers: mode.modifiers.map((mod) => ({ ...mod, value: shieldAc })) } : mode,
   );
-  const modeBonus = modeNumberBonus(acModes, { kind: 'ac' });
-  return { value: 10 + dexContribution + profBonus(rank, c.level, pwl(c)) + itemBonus + penalty + modeBonus, rank, dexCap };
 }
 
 export interface ShieldInfo {
@@ -309,12 +319,13 @@ export function deriveShield(c: Character, db: ContentDatabase): ShieldInfo | nu
     .find((x) => (x.inv.equipped || x.inv.worn) && x.item?.itemType === 'shield');
   if (!held || held.item?.itemType !== 'shield') return null;
   const s = held.item;
-  // A reinforcing rune raises the shield's Hardness/HP/Broken Threshold to a tier maximum.
+  // A reinforcing rune (or Monster Parts refinement) raises the shield's Hardness/HP/Broken Threshold.
   const rein = (held.inv.runes as ArmorRunes | undefined)?.reinforcing;
   const r = rein ? REINFORCING[rein] : undefined;
-  const hardness = r ? Math.max(s.hardness, r.hardness) : s.hardness;
-  const hp = r ? Math.max(s.hp, r.hp) : s.hp;
-  const brokenThreshold = r ? Math.max(s.brokenThreshold, r.bt) : s.brokenThreshold;
+  const ref = held.inv.monsterPart?.refinedLevel ? shieldRefinement(held.inv.monsterPart.refinedLevel) : null;
+  const hardness = Math.max(s.hardness, r?.hardness ?? 0, ref?.hardness ?? 0);
+  const hp = Math.max(s.hp, r?.hp ?? 0, ref?.hp ?? 0);
+  const brokenThreshold = Math.max(s.brokenThreshold, r?.bt ?? 0, ref?.bt ?? 0);
   const current = Math.max(0, hp - Math.max(0, c.shieldDamage ?? 0));
   return { name: s.name, ac: s.acBonus, hardness, hp, brokenThreshold, current, broken: current <= brokenThreshold };
 }
@@ -404,6 +415,20 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     for (const t of src.immunities ?? []) imm.add(t);
   }
 
+  // Monster Parts: worn/invested/wielded items can grant resistances (Energy Resistant, value = the
+  // property's level) and senses (Sensory). Same-type resistances don't stack — the highest wins.
+  for (const inv of c.inventory) {
+    if (!(inv.worn || inv.invested || inv.equipped)) continue;
+    for (const im of inv.monsterPart?.imbuements ?? []) {
+      const prop = getMpProperty(im.propertyId);
+      if (!prop) continue;
+      if (prop.resistance && im.choice && im.level > 0) {
+        res.set(im.choice, Math.max(res.get(im.choice) ?? 0, im.level));
+      }
+      for (const s of prop.senses ?? []) if (im.level >= s.level) addSense({ name: s.sense });
+    }
+  }
+
   const sortByType = (a: { type: string }, b: { type: string }) => a.type.localeCompare(b.type);
   return {
     senses: [...senses.values()],
@@ -420,6 +445,25 @@ const DAMAGE_ABBR: Record<string, string> = {
 };
 
 const STRIKING_DICE = { striking: 1, greater: 2, major: 3 } as const;
+
+/** Per-hit extra-damage strings from an item's Monster Parts imbuements (folds in like property-rune
+ *  damage). Per-hit only — situational crit riders are reference text on the item, not computed. */
+function mpImbuedStrikeDamage(mp: InventoryItem['monsterPart']): string[] {
+  const out: string[] = [];
+  for (const im of mp?.imbuements ?? []) {
+    const prop = getMpProperty(im.propertyId);
+    if (!prop) continue;
+    const path = prop.paths.find((pa) => pa.id === im.path) ?? prop.paths[0];
+    if (!path) continue;
+    const r = resolvePath(path, im.level);
+    for (const dd of [r.addDamage, r.persistentDamage]) {
+      if (!dd) continue;
+      const body = dd.dice && dd.die ? `${dd.dice}${dd.die}` : `${dd.flat ?? 0}`;
+      out.push(`${body}${dd.persistent ? ' persistent' : ''} ${DAMAGE_ABBR[dd.type] ?? dd.type}`);
+    }
+  }
+  return out;
+}
 
 export interface Strike {
   instanceId: string;
@@ -582,14 +626,27 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     w.group ? c.proficiencies.weaponGroups?.[w.group] : undefined,
   );
   // ABP attack potency / devastating-attacks dice replace the weapon's potency / striking runes.
-  const potencyBonus = abpOn(c) ? abpAttack(c.level) : runes?.potency ?? 0;
+  // A refined weapon (Monster Parts) supplies an item bonus of the same class — take the higher
+  // (a refined item carries no runes, so this is really refinement-vs-ABP).
+  const mp = inv.monsterPart;
+  const mpRef = mp?.refinedLevel ? weaponRefinement(mp.refinedLevel) : null;
+  const potencyBonus = Math.max(abpOn(c) ? abpAttack(c.level) : runes?.potency ?? 0, mpRef?.attack ?? 0);
+  // Clumsy penalizes EVERY ranged attack roll, including thrown weapons that use Str to hit. Status
+  // penalties don't stack and both calls carry the same Frightened/Prone, so taking the worst (min) of
+  // the attack-ability and Dex penalties folds in Clumsy for a thrown strike without double-counting.
+  const atkCondPenalty = ranged
+    ? Math.min(conditionPenalty(c.conditions, atkAbility, 'attack'), conditionPenalty(c.conditions, 'dex', 'attack'))
+    : conditionPenalty(c.conditions, atkAbility, 'attack');
   const base =
-    abMod + profBonus(rank, c.level, pwl(c)) + potencyBonus + conditionPenalty(c.conditions, atkAbility, 'attack') + modeNumberBonus(c.activeModes, { kind: 'attack' });
+    abMod + profBonus(rank, c.level, pwl(c)) + potencyBonus + atkCondPenalty + modeNumberBonus(c.activeModes, { kind: 'attack' });
 
   const step = w.traits.includes('agile') ? 4 : 5;
   const attack = [base, base - step, base - step * 2];
 
-  const strikingExtra = abpOn(c) ? abpStrikingDice(c.level) : runes?.striking ? STRIKING_DICE[runes.striking] : 0;
+  const strikingExtra = Math.max(
+    abpOn(c) ? abpStrikingDice(c.level) : runes?.striking ? STRIKING_DICE[runes.striking] : 0,
+    mpRef?.extraDice ?? 0,
+  );
   const dice = w.damage.dice + strikingExtra;
   // Weapon specialization adds flat damage to weapons you're expert+ in (melee and ranged).
   const specDamage = weaponSpecDamage(rank, weaponSpecialization(c, db));
@@ -609,10 +666,21 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   const critPersistent = runeDamage
     .filter((d) => d.persistent)
     .map((d) => `${d.dice}${d.die} persistent ${DAMAGE_ABBR[d.type] ?? d.type}`);
+  // Monster Parts imbued damage folds in alongside property-rune damage as per-hit "plus" terms.
+  const extraDmg = [...runeDmg, ...mpImbuedStrikeDamage(mp)];
+  // Deadly dN adds bonus weapon dice on a crit (1 die; 2 with greater striking, 3 with major); Fatal dN
+  // upgrades the crit dice to dN and adds one; Two-Hand dN uses a larger die when wielded two-handed.
+  const traitDie = (re: RegExp) => w.traits.map((t) => re.exec(t)?.[1]).find(Boolean);
+  const deadlyDie = traitDie(/^deadly-(d\d+)$/);
+  const fatalDie = traitDie(/^fatal-(d\d+)$/);
+  const twoHandDie = traitDie(/^two-hand-(d\d+)$/);
+  const critRiders = [...(deadlyDie ? [`${Math.max(1, strikingExtra)}${deadlyDie}`] : []), ...critPersistent];
   const damage =
     `${dice}${w.damage.die}${dmgBonus ? formatMod(dmgBonus) : ''} ${DAMAGE_ABBR[w.damage.type] ?? w.damage.type}` +
-    (runeDmg.length ? ` plus ${runeDmg.join(' plus ')}` : '') +
-    (critPersistent.length ? ` (plus ${critPersistent.join(', ')} on a crit)` : '');
+    (extraDmg.length ? ` plus ${extraDmg.join(' plus ')}` : '') +
+    (critRiders.length ? ` (plus ${critRiders.join(', ')} on a crit)` : '') +
+    (fatalDie ? ` (fatal ${fatalDie})` : '') +
+    (twoHandDie ? ` (${dice}${twoHandDie}${dmgBonus ? formatMod(dmgBonus) : ''} two-handed)` : '');
 
   return {
     instanceId: inv.instanceId,
@@ -738,10 +806,16 @@ function deriveUnarmedStrike(c: Character, db: ContentDatabase, p: UnarmedProfil
   const critPersistent = runeDamage
     .filter((d) => d.persistent)
     .map((d) => `${d.dice}${d.die} persistent ${DAMAGE_ABBR[d.type] ?? d.type}`);
+  // Natural attacks can carry Deadly/Fatal (e.g. a creature's jaws) — surface their crit damage too.
+  const nDie = (re: RegExp) => p.traits.map((t) => re.exec(t)?.[1]).find(Boolean);
+  const nDeadly = nDie(/^deadly-(d\d+)$/);
+  const nFatal = nDie(/^fatal-(d\d+)$/);
+  const nCritRiders = [...(nDeadly ? [`${Math.max(1, strikingExtra)}${nDeadly}`] : []), ...critPersistent];
   const damage =
     `${dice}${p.die}${dmgBonus ? formatMod(dmgBonus) : ''} ${DAMAGE_ABBR[p.damageType] ?? p.damageType}` +
     (runeDmg.length ? ` plus ${runeDmg.join(' plus ')}` : '') +
-    (critPersistent.length ? ` (plus ${critPersistent.join(', ')} on a crit)` : '');
+    (nCritRiders.length ? ` (plus ${nCritRiders.join(', ')} on a crit)` : '') +
+    (nFatal ? ` (fatal ${nFatal})` : '');
   return {
     instanceId: p.instanceId,
     name: p.name,

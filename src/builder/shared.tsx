@@ -1,6 +1,9 @@
 import { useMemo, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
-import type { AbilityId, Character, CharacterOptions, ChoiceGroup, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, ProficiencyKey, ProficiencyRank, SaveId, SkillId, Tradition } from '../rules/types';
-import { ABILITIES, SKILLS } from '../rules/types';
+import type { AbilityId, BuildOverrides, Character, CharacterOptions, ChoiceGroup, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, ProficiencyKey, ProficiencyRank, SaveId, SkillId, Tradition } from '../rules/types';
+import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
+import { enabledBookSet, sourceCatalog, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
+import { usePrefs } from '../data/prefs';
+import { loadHomebrewSources } from '../data/storage';
 import {
   type BuildState,
   CUSTOM_BACKGROUND_ID,
@@ -15,7 +18,6 @@ import {
   classChoosesDeity,
   commanderFolioMax,
   commanderTacticOptions,
-  computeAbilities,
   GATE_THRESHOLD_LEVELS,
   innovationType,
   inventorModificationOptions,
@@ -1079,6 +1081,430 @@ export function VariantRulesCard({ build, actions, content }: EditorProps) {
   );
 }
 
+/**
+ * "Overrides" — the creative/freeform editing section. Lets the user deliberately break the rules in
+ * SPECIFIC, explicit cases (no global "ignore everything" switch): take a feat you don't qualify for
+ * (recorded inline from the feat picker's "Take anyway"), grant a bonus feat with no slot, or remove
+ * a feat the rules auto-granted. Each bent rule shows as a removable chip so it stays visible.
+ * Authoring brand-new content (homebrew feats/options) is intentionally a separate future section.
+ */
+// Proficiency tracks the user can override, in display order (skills appended below).
+const PROF_TRACKS: { key: string; name: string }[] = [
+  { key: 'perception', name: 'Perception' },
+  { key: 'classDc', name: 'Class DC' },
+  { key: 'fortitude', name: 'Fortitude save' },
+  { key: 'reflex', name: 'Reflex save' },
+  { key: 'will', name: 'Will save' },
+  { key: 'unarmed', name: 'Unarmed attacks' },
+  { key: 'simple', name: 'Simple weapons' },
+  { key: 'martial', name: 'Martial weapons' },
+  { key: 'advanced', name: 'Advanced weapons' },
+  { key: 'unarmored', name: 'Unarmored defense' },
+  { key: 'light', name: 'Light armor' },
+  { key: 'medium', name: 'Medium armor' },
+  { key: 'heavy', name: 'Heavy armor' },
+];
+const profTrackName = (key: string) =>
+  PROF_TRACKS.find((t) => t.key === key)?.name ?? (key.startsWith('lore:') ? `${cap(key.slice(5))} Lore` : cap(key));
+
+/** Per-character source books: enable/disable books (default = the four Core books) so the builder
+ *  pickers only offer content from the books you allow. Already-chosen content is always kept. */
+export function SourcesCard({ build, actions, catalog }: { build: BuildState; actions: BuilderActions; catalog: ReturnType<typeof sourceCatalog> }) {
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const toggleCat = (c: string) =>
+    setExpanded((s) => {
+      const n = new Set(s);
+      if (n.has(c)) n.delete(c);
+      else n.add(c);
+      return n;
+    });
+  const prefs = usePrefs();
+  const enabled = enabledBookSet(build.enabledSources);
+  const allBooks = catalog.allBooks;
+  // User homebrew Sources (toggled by their name, which is the entries' source.book). List every source
+  // the player has created — even empty ones — with how many entries each holds.
+  const hbList = useMemo(() => {
+    const byName = new Map(catalog.homebrew.map((h) => [h.name, h.count]));
+    return Object.values(loadHomebrewSources())
+      .map((src) => ({ name: src.name, count: byName.get(src.name) ?? 0 }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }, [catalog.homebrew]);
+  const enabledReal = allBooks.filter((b) => enabled.has(b)).length;
+  const hbOnCount = hbList.filter((h) => enabled.has(h.name)).length;
+  const hbAllOn = hbList.length > 0 && hbOnCount === hbList.length;
+  const hbOpen = expanded.has('__homebrew__');
+  // The niche "Other" shelf (Society scenarios, blogs, specials) stays hidden unless the pref is on.
+  // The reveal toggle itself lives in Settings → Customization → Sources (not here in Setup).
+  const groups = prefs.showNicheSources ? catalog.groups : catalog.groups.filter((g) => !NICHE_CATEGORIES.has(g.category));
+  const write = (next: Set<string>) => actions.patch({ enabledSources: [...next].sort() });
+  const setBooks = (books: string[], on: boolean) => {
+    const n = new Set(enabled);
+    for (const b of books) on ? n.add(b) : n.delete(b);
+    write(n);
+  };
+  const setCategory = (g: SourceGroup, on: boolean) => setBooks(g.entries.flatMap((e) => e.books), on);
+  return (
+    <SetupCard icon="ti-books" label="Sources" count={`${enabledReal}/${allBooks.length}`}>
+      <div className="src-wrap">
+        <p className="ovr-intro">
+          Choose which books this character can draw from. Disabled books are hidden from every picker — anything you've
+          already selected stays available even if its book is off. New characters start with the Core books only.
+        </p>
+        <div className="src-actions">
+        <button type="button" className="src-act" onClick={() => write(new Set([...allBooks, ...hbList.map((h) => h.name)]))}>
+          Enable everything
+        </button>
+        <button type="button" className="src-act" onClick={() => actions.patch({ enabledSources: undefined })}>
+          Core only
+        </button>
+        <button type="button" className="src-act" onClick={() => write(new Set())}>
+          Disable all
+        </button>
+      </div>
+      {hbList.length > 0 && (
+        <div className="src-cat">
+          <div className="src-cat-head">
+            <button type="button" className="src-cat-name" aria-expanded={hbOpen} onClick={() => toggleCat('__homebrew__')}>
+              <i className={'ti ' + (hbOpen ? 'ti-chevron-down' : 'ti-chevron-right')} aria-hidden="true" />
+              <i className="ti ti-flask" aria-hidden="true" /> Homebrew
+              <span className="src-count">
+                {hbOnCount}/{hbList.length}
+              </span>
+            </button>
+            <button
+              type="button"
+              className={'src-check' + (hbAllOn ? ' on' : hbOnCount > 0 ? ' partial' : '')}
+              title={hbAllOn ? 'Turn all homebrew off' : 'Turn all homebrew on'}
+              aria-label={hbAllOn ? 'Disable all homebrew' : 'Enable all homebrew'}
+              onClick={() => setBooks(hbList.map((h) => h.name), !hbAllOn)}
+            >
+              <i className={'ti ' + (hbAllOn ? 'ti-checkbox' : hbOnCount > 0 ? 'ti-square-minus' : 'ti-square')} aria-hidden="true" />
+            </button>
+          </div>
+          {hbOpen && (
+            <div className="src-books">
+              {hbList.map((h) => {
+                const on = enabled.has(h.name);
+                return (
+                  <button type="button" key={h.name} className={'src-book' + (on ? ' on' : '')} onClick={() => setBooks([h.name], !on)}>
+                    <i className={'ti ' + (on ? 'ti-checkbox' : 'ti-square')} aria-hidden="true" />
+                    <span className="src-book-name">{h.name}</span>
+                    <span className="src-book-n">{h.count}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
+      {groups.map((g) => {
+        const onCount = g.entries.filter((e) => e.books.every((b) => enabled.has(b))).length;
+        const allOn = onCount === g.entries.length;
+        const open = expanded.has(g.category);
+        return (
+          <div className="src-cat" key={g.category}>
+            <div className="src-cat-head">
+              <button type="button" className="src-cat-name" aria-expanded={open} onClick={() => toggleCat(g.category)}>
+                <i className={'ti ' + (open ? 'ti-chevron-down' : 'ti-chevron-right')} aria-hidden="true" />
+                {g.category}
+                <span className="src-count">
+                  {onCount}/{g.entries.length}
+                </span>
+              </button>
+              <button
+                type="button"
+                className={'src-check' + (allOn ? ' on' : onCount > 0 ? ' partial' : '')}
+                title={allOn ? 'Turn this category off' : 'Turn this category on'}
+                aria-label={allOn ? `Disable all ${g.category}` : `Enable all ${g.category}`}
+                onClick={() => setCategory(g, !allOn)}
+              >
+                <i className={'ti ' + (allOn ? 'ti-checkbox' : onCount > 0 ? 'ti-square-minus' : 'ti-square')} aria-hidden="true" />
+              </button>
+            </div>
+            {open && (
+              <div className="src-books">
+                {g.entries.map((e) => {
+                  const onN = e.books.filter((b) => enabled.has(b)).length;
+                  const on = onN === e.books.length;
+                  const partial = onN > 0 && !on;
+                  return (
+                    <button type="button" key={e.label} className={'src-book' + (on ? ' on' : '')} onClick={() => setBooks(e.books, !on)}>
+                      <i className={'ti ' + (on ? 'ti-checkbox' : partial ? 'ti-square-minus' : 'ti-square')} aria-hidden="true" />
+                      <span className="src-book-name">
+                        {e.label}
+                        {e.books.length > 1 && <span className="src-bundle-n"> · {e.books.length} books</span>}
+                      </span>
+                      <span className="src-book-n">{e.count}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        );
+      })}
+      </div>
+    </SetupCard>
+  );
+}
+
+export function OverridesCard({ build, actions, content, character }: EditorProps & { character: Character }) {
+  const ov = build.overrides ?? {};
+  const featName = (id: string) => content.feats[id]?.name ?? id;
+  const featureName = (id: string) => content.classFeatures[id]?.name ?? id;
+  const langName = (id: string) => content.languages[id]?.name ?? cap(id);
+  // Write a pruned overrides object — drop empty fields so an emptied override clears to `undefined`.
+  const writeOv = (next: Partial<BuildOverrides>) => {
+    const m = { ...ov, ...next };
+    const clean: BuildOverrides = {};
+    if (m.allowedFeats?.length) clean.allowedFeats = m.allowedFeats;
+    if (m.addedFeats?.length) clean.addedFeats = m.addedFeats;
+    if (m.addedFeatures?.length) clean.addedFeatures = m.addedFeatures;
+    if (m.removedFeatIds?.length) clean.removedFeatIds = m.removedFeatIds;
+    if (m.attributes && Object.keys(m.attributes).length) clean.attributes = m.attributes;
+    if (m.proficiencies && Object.keys(m.proficiencies).length) clean.proficiencies = m.proficiencies;
+    if (m.addedLanguages?.length) clean.addedLanguages = m.addedLanguages;
+    if (m.addedSpells?.length) clean.addedSpells = m.addedSpells;
+    if (m.contentEdits && (Object.keys(m.contentEdits.feats ?? {}).length || Object.keys(m.contentEdits.classFeatures ?? {}).length)) clean.contentEdits = m.contentEdits;
+    actions.patch({ overrides: Object.keys(clean).length ? clean : undefined });
+  };
+
+  // --- Feats: allow-past-prereqs ledger + grant (feat OR feature) + remove ---
+  const unallow = (id: string) => {
+    const slot = Object.entries(build.featPicks).find(([, v]) => v === id)?.[0];
+    if (slot) actions.setFeat(slot, null);
+    writeOv({ allowedFeats: (ov.allowedFeats ?? []).filter((x) => x !== id) });
+  };
+  const grant = (prefixed: string) => {
+    const i = prefixed.indexOf(':');
+    const kind = prefixed.slice(0, i);
+    const id = prefixed.slice(i + 1);
+    if (kind === 'feat') {
+      const f = content.feats[id];
+      if (f && !ov.addedFeats?.some((a) => a.featId === id)) writeOv({ addedFeats: [...(ov.addedFeats ?? []), { featId: id, level: Math.min(f.level, build.level), category: f.category }] });
+    } else {
+      const f = content.classFeatures[id];
+      if (f && !ov.addedFeatures?.some((a) => a.featureId === id)) writeOv({ addedFeatures: [...(ov.addedFeatures ?? []), { featureId: id, level: Math.min(f.level, build.level) }] });
+    }
+  };
+  const ungrantFeat = (id: string) => writeOv({ addedFeats: (ov.addedFeats ?? []).filter((a) => a.featId !== id) });
+  const ungrantFeature = (id: string) => writeOv({ addedFeatures: (ov.addedFeatures ?? []).filter((a) => a.featureId !== id) });
+  const removeFeat = (id: string) => { if (!ov.removedFeatIds?.includes(id)) writeOv({ removedFeatIds: [...(ov.removedFeatIds ?? []), id] }); };
+  const unremove = (id: string) => writeOv({ removedFeatIds: (ov.removedFeatIds ?? []).filter((x) => x !== id) });
+
+  const grantOptions = [
+    ...Object.values(content.feats).filter((f) => f.level <= build.level && !ov.addedFeats?.some((a) => a.featId === f.id)).map((f) => ({ id: `feat:${f.id}`, name: f.name, note: `Feat · ${cap(f.category)} · lvl ${f.level}` })),
+    ...Object.values(content.classFeatures).filter((f) => !ov.addedFeatures?.some((a) => a.featureId === f.id)).map((f) => ({ id: `feature:${f.id}`, name: f.name, note: `Feature · lvl ${f.level}` })),
+  ].sort((a, b) => a.name.localeCompare(b.name));
+  const removeOptions = character.feats
+    .filter((f, i, arr) => arr.findIndex((x) => x.featId === f.featId) === i && !ov.removedFeatIds?.includes(f.featId))
+    .map((f) => ({ id: f.featId, name: featName(f.featId), note: `level ${f.level}` }));
+
+  // --- Attributes: force a raw score, no limits ---
+  const setAttr = (ab: AbilityId, raw: string) => {
+    const n = parseInt(raw, 10);
+    if (Number.isNaN(n)) return revertAttr(ab);
+    writeOv({ attributes: { ...ov.attributes, [ab]: n } });
+  };
+  const revertAttr = (ab: AbilityId) => {
+    const a = { ...(ov.attributes ?? {}) };
+    delete a[ab];
+    writeOv({ attributes: a });
+  };
+
+  // --- Proficiencies: set any track to any rank ---
+  const setProf = (key: string, rank: ProficiencyRank) => writeOv({ proficiencies: { ...ov.proficiencies, [key]: rank } });
+  const clearProf = (key: string) => {
+    const p = { ...(ov.proficiencies ?? {}) };
+    delete p[key];
+    writeOv({ proficiencies: p });
+  };
+  const profTrackOptions = [
+    ...PROF_TRACKS.filter((t) => !(t.key in (ov.proficiencies ?? {}))).map((t) => ({ id: t.key, name: t.name })),
+    ...SKILLS.filter((s) => !(s in (ov.proficiencies ?? {}))).map((s) => ({ id: s, name: cap(s) })),
+  ];
+
+  // --- Languages ---
+  const addLang = (id: string) => { if (!ov.addedLanguages?.includes(id)) writeOv({ addedLanguages: [...(ov.addedLanguages ?? []), id] }); };
+  const removeLang = (id: string) => writeOv({ addedLanguages: (ov.addedLanguages ?? []).filter((x) => x !== id) });
+  const langOptions = Object.values(content.languages)
+    .filter((l) => !ov.addedLanguages?.includes(l.id) && !character.languages.includes(l.id))
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((l) => ({ id: l.id, name: l.name }));
+
+  // --- Spells: grant any spell at any rank (rituals included; no tradition/access check) ---
+  const spellName = (id: string) => content.spells[id]?.name ?? id;
+  const addSpell = (id: string) => {
+    const sp = content.spells[id];
+    if (sp && !ov.addedSpells?.some((a) => a.spellId === id)) writeOv({ addedSpells: [...(ov.addedSpells ?? []), { spellId: id, rank: sp.rank }] });
+  };
+  const setSpellRank = (id: string, rank: number) => writeOv({ addedSpells: (ov.addedSpells ?? []).map((a) => (a.spellId === id ? { ...a, rank } : a)) });
+  const removeSpell = (id: string) => writeOv({ addedSpells: (ov.addedSpells ?? []).filter((a) => a.spellId !== id) });
+  const spellOptions = Object.values(content.spells)
+    .filter((s) => !ov.addedSpells?.some((a) => a.spellId === s.id))
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((s) => ({ id: s.id, name: s.name, note: (s.ritual ? 'Ritual' : cap(s.traditions[0] ?? 'spell')) + ` · rank ${s.rank}` }));
+
+  // --- Change an existing feat/feature (edit its name + description text) ---
+  type EditMap = 'feats' | 'classFeatures';
+  const startEdit = (prefixed: string) => {
+    const i = prefixed.indexOf(':');
+    const map: EditMap = prefixed.slice(0, i) === 'feat' ? 'feats' : 'classFeatures';
+    const id = prefixed.slice(i + 1);
+    const ce = ov.contentEdits ?? {};
+    if (ce[map]?.[id]) return;
+    writeOv({ contentEdits: { ...ce, [map]: { ...(ce[map] ?? {}), [id]: {} } } });
+  };
+  const setEdit = (map: EditMap, id: string, patch: Record<string, unknown>) => {
+    const ce = ov.contentEdits ?? {};
+    writeOv({ contentEdits: { ...ce, [map]: { ...(ce[map] ?? {}), [id]: { ...(ce[map]?.[id] ?? {}), ...patch } } } });
+  };
+  const revertEdit = (map: EditMap, id: string) => {
+    const ce = ov.contentEdits ?? {};
+    const m = { ...(ce[map] ?? {}) };
+    delete m[id];
+    writeOv({ contentEdits: { ...ce, [map]: m } });
+  };
+  const editOptions = [
+    ...Object.values(content.feats).filter((f) => !ov.contentEdits?.feats?.[f.id]).map((f) => ({ id: `feat:${f.id}`, name: f.name, note: `Feat · lvl ${f.level}` })),
+    ...Object.values(content.classFeatures).filter((f) => !ov.contentEdits?.classFeatures?.[f.id]).map((f) => ({ id: `feature:${f.id}`, name: f.name, note: `Feature · lvl ${f.level}` })),
+  ].sort((a, b) => a.name.localeCompare(b.name));
+  const editEntries: { map: EditMap; id: string }[] = [
+    ...Object.keys(ov.contentEdits?.feats ?? {}).map((id) => ({ map: 'feats' as EditMap, id })),
+    ...Object.keys(ov.contentEdits?.classFeatures ?? {}).map((id) => ({ map: 'classFeatures' as EditMap, id })),
+  ];
+
+  const chip = (id: string, label: string, onX: () => void) => (
+    <span className="ovr-chip" key={id}>
+      {label}
+      <button type="button" className="ovr-chip-x" title="Remove this override" onClick={onX} aria-label={`Remove override: ${label}`}>
+        <i className="ti ti-x" aria-hidden="true" />
+      </button>
+    </span>
+  );
+
+  return (
+    <SetupCard icon="ti-wand" label="Overrides">
+      <p className="ovr-intro">
+        Creative editing — deliberately bend the rules for specific cases. In a feat picker, a feat you don't qualify for shows
+        a <span className="ovr-take-inline">Take anyway</span> option; it lands here.
+      </p>
+
+      {!!ov.allowedFeats?.length && (
+        <SubCard icon="ti-lock-open" label="Taken despite prerequisites" count={ov.allowedFeats.length}>
+          <div className="ovr-chips">{ov.allowedFeats.map((id) => chip(id, featName(id), () => unallow(id)))}</div>
+        </SubCard>
+      )}
+
+      <SubCard icon="ti-plus" label="Grant a feat or feature" count={(ov.addedFeats?.length ?? 0) + (ov.addedFeatures?.length ?? 0) || undefined}>
+        <SearchSelect label="Grant a feat or feature" value={null} placeholder="Add a feat or feature…" options={grantOptions} onChange={grant} bare />
+        {(!!ov.addedFeats?.length || !!ov.addedFeatures?.length) && (
+          <div className="ovr-chips">
+            {ov.addedFeats?.map((a) => chip(`feat:${a.featId}`, featName(a.featId), () => ungrantFeat(a.featId)))}
+            {ov.addedFeatures?.map((a) => chip(`feature:${a.featureId}`, featureName(a.featureId), () => ungrantFeature(a.featureId)))}
+          </div>
+        )}
+      </SubCard>
+
+      <SubCard icon="ti-minus" label="Remove a granted feat" count={ov.removedFeatIds?.length || undefined}>
+        <SearchSelect label="Remove a feat" value={null} placeholder="Remove a feat…" options={removeOptions} onChange={removeFeat} bare />
+        {!!ov.removedFeatIds?.length && <div className="ovr-chips">{ov.removedFeatIds.map((id) => chip(id, featName(id), () => unremove(id)))}</div>}
+      </SubCard>
+
+      <SubCard icon="ti-stairs-up" label="Change attributes" count={ov.attributes && Object.keys(ov.attributes).length ? Object.keys(ov.attributes).length : undefined}>
+        <div className="ovr-attrs">
+          {ABILITIES.map((ab) => {
+            const overridden = ov.attributes?.[ab] !== undefined;
+            return (
+              <label key={ab} className={'ovr-attr' + (overridden ? ' on' : '')}>
+                <span className="ovr-attr-k">{ABILITY_LABEL[ab]}</span>
+                <input type="number" className="ovr-attr-in" value={character.abilities[ab]} onChange={(e) => setAttr(ab, e.target.value)} />
+                {overridden && (
+                  <button type="button" className="ovr-attr-x" title="Revert to computed" onClick={() => revertAttr(ab)} aria-label={`Revert ${ab}`}>
+                    <i className="ti ti-arrow-back-up" aria-hidden="true" />
+                  </button>
+                )}
+              </label>
+            );
+          })}
+        </div>
+      </SubCard>
+
+      <SubCard icon="ti-award" label="Change proficiency" count={ov.proficiencies && Object.keys(ov.proficiencies).length ? Object.keys(ov.proficiencies).length : undefined}>
+        <SearchSelect label="Add a proficiency" value={null} placeholder="Choose a track…" options={profTrackOptions} onChange={(k) => setProf(k, 'trained')} bare />
+        {!!ov.proficiencies && Object.keys(ov.proficiencies).length > 0 && (
+          <div className="ovr-rows">
+            {Object.entries(ov.proficiencies).map(([key, rank]) => (
+              <div className="ovr-row" key={key}>
+                <span className="ovr-row-k">{profTrackName(key)}</span>
+                <PopupSelect variant="pill" title="Rank" value={rank} onChange={(v) => setProf(key, v as ProficiencyRank)} options={PROFICIENCY_RANKS.map((r) => ({ value: r, label: cap(r) }))} />
+                <button type="button" className="ovr-chip-x" title="Remove" onClick={() => clearProf(key)} aria-label={`Remove ${key} override`}>
+                  <i className="ti ti-x" aria-hidden="true" />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </SubCard>
+
+      <SubCard icon="ti-language" label="Add a language" count={ov.addedLanguages?.length || undefined}>
+        <SearchSelect label="Add a language" value={null} placeholder="Add a language…" options={langOptions} onChange={addLang} bare />
+        {!!ov.addedLanguages?.length && <div className="ovr-chips">{ov.addedLanguages.map((id) => chip(id, langName(id), () => removeLang(id)))}</div>}
+      </SubCard>
+
+      <SubCard icon="ti-sparkles" label="Add spell" count={ov.addedSpells?.length || undefined}>
+        <SearchSelect label="Add a spell" value={null} placeholder="Add any spell or ritual…" options={spellOptions} onChange={addSpell} bare />
+        {!!ov.addedSpells?.length && (
+          <div className="ovr-rows">
+            {ov.addedSpells.map((a) => {
+              const isRitual = content.spells[a.spellId]?.ritual;
+              return (
+                <div className="ovr-row" key={a.spellId}>
+                  <span className="ovr-row-k">
+                    {spellName(a.spellId)}
+                    {isRitual ? ' (ritual)' : ''}
+                  </span>
+                  {!isRitual && (
+                    <PopupSelect
+                      variant="pill"
+                      title="Rank"
+                      value={String(a.rank)}
+                      onChange={(v) => setSpellRank(a.spellId, Number(v))}
+                      options={Array.from({ length: 11 }, (_, r) => ({ value: String(r), label: r === 0 ? 'Cantrip' : `Rank ${r}` }))}
+                    />
+                  )}
+                  <button type="button" className="ovr-chip-x" title="Remove" onClick={() => removeSpell(a.spellId)} aria-label={`Remove ${spellName(a.spellId)}`}>
+                    <i className="ti ti-x" aria-hidden="true" />
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </SubCard>
+
+      <SubCard icon="ti-edit" label="Change a feat or feature" count={editEntries.length || undefined}>
+        <SearchSelect label="Edit a feat or feature" value={null} placeholder="Edit a feat or feature…" options={editOptions} onChange={startEdit} bare />
+        {editEntries.map(({ map, id }) => {
+          const entry = (map === 'feats' ? content.feats : content.classFeatures)[id];
+          if (!entry) return null;
+          return (
+            <div className="ovr-edit" key={`${map}:${id}`}>
+              <div className="ovr-edit-head">
+                <input className="ovr-edit-name" value={entry.name} onChange={(e) => setEdit(map, id, { name: e.target.value })} />
+                <button type="button" className="ovr-chip-x" title="Revert all edits to this entry" onClick={() => revertEdit(map, id)} aria-label={`Revert edits to ${entry.name}`}>
+                  <i className="ti ti-x" aria-hidden="true" />
+                </button>
+              </div>
+              <textarea className="ovr-edit-desc" rows={4} value={entry.description} onChange={(e) => setEdit(map, id, { description: e.target.value })} />
+            </div>
+          );
+        })}
+      </SubCard>
+    </SetupCard>
+  );
+}
+
 /** Per-character convenience/house options on the Setup page (alternate ancestry boosts, voluntary
  *  flaw, ignore bulk, dice roller on/off). Distinct from the GMG variant rules. */
 export function OptionsCard({ build, actions }: EditorProps) {
@@ -1118,6 +1544,30 @@ export function OptionsCard({ build, actions }: EditorProps) {
           onClick={() => set({ diceRollerOff: !opts.diceRollerOff })}
         >
           Dice roller {opts.diceRollerOff ? 'off' : 'on'}
+        </button>
+        <button
+          type="button"
+          title="Track rations day-by-day yourself (via quantity) instead of the built-in 7-day counter. When on, the Rations item shows no days counter."
+          className={'inv-toggle' + (opts.rationsDayTracking ? ' on' : '')}
+          onClick={() => set({ rationsDayTracking: !opts.rationsDayTracking })}
+        >
+          Individual day tracking of rations
+        </button>
+        <button
+          type="button"
+          title="Build a fully custom background of your own — pick its trained skills, lore, skill feat, and attribute boosts — instead of choosing a published one."
+          className={'inv-toggle' + (opts.deepBackground ? ' on' : '')}
+          onClick={() => set({ deepBackground: !opts.deepBackground })}
+        >
+          Deep background
+        </button>
+        <button
+          type="button"
+          title="Reveal the Overrides section — creative, deliberate rule-breaking for specific cases (take feats you don't qualify for, grant or remove feats/features, edit attributes/proficiencies, and more)."
+          className={'inv-toggle ovr-opt' + (opts.overridesEnabled ? ' on' : '')}
+          onClick={() => set({ overridesEnabled: !opts.overridesEnabled })}
+        >
+          <i className="ti ti-wand" aria-hidden="true" /> Overrides
         </button>
       </div>
     </SetupCard>
@@ -1190,6 +1640,9 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
   // that grants them (a background's boost belongs to the background, not a separate section).
   // Alternate Ancestry Boosts: ignore the ancestry's listed boosts/flaws; offer two free boosts.
   const altBoosts = !!build.options?.alternateAncestryBoosts;
+  // "Deep background" (an Options toggle) unlocks building a custom background. Keep it visible if one
+  // is already selected, so an existing custom-bg character never gets stuck with a hidden picker.
+  const showCustomBg = !!build.options?.deepBackground || build.backgroundId === CUSTOM_BACKGROUND_ID;
   const ancSlots = !ancestry ? [] : altBoosts ? ([{ kind: 'free' }, { kind: 'free' }] as BoostSlot[]) : boostSlots(ancestry.abilityBoosts);
   const ancFixed = ancestry && !altBoosts ? fixedBoosts(ancestry.abilityBoosts) : [];
   const bgSlots = background ? boostSlots(background.abilityBoosts) : [];
@@ -1310,7 +1763,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           value={build.backgroundId}
           onChange={actions.changeBackground}
           options={[
-            { id: CUSTOM_BACKGROUND_ID, name: '✎ Custom background…' },
+            ...(showCustomBg ? [{ id: CUSTOM_BACKGROUND_ID, name: '✎ Custom background…' }] : []),
             ...Object.values(content.backgrounds).map((b) => ({ id: b.id, name: b.name, note: note(b.rarity) })),
           ]}
         />
@@ -1348,7 +1801,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           ))}
         </SubCard>
       )}
-      {build.backgroundId === CUSTOM_BACKGROUND_ID && (
+      {showCustomBg && build.backgroundId === CUSTOM_BACKGROUND_ID && (
         <CustomBackgroundForm build={build} actions={actions} content={content} />
       )}
       <SetupCard icon="ti-sword" label="Class">
@@ -2138,8 +2591,10 @@ const skillName = (k: ProficiencyKey) => (k.startsWith('lore:') ? loreLabel(k) :
 
 export function FullStats({ build, content, character }: { build: BuildState; content: ContentDatabase; character?: Character }) {
   const [statRef, setStatRef] = useState<StatRef | null>(null);
-  const abilities = computeAbilities(build, content);
   const preview = useMemo(() => character ?? buildCharacter(build, content), [character, build, content]);
+  // Use the BUILT character's scores (they include any Overrides attribute edits), not a fresh
+  // computeAbilities(build) — which doesn't see overrides (they're applied inside buildCharacter).
+  const abilities = preview.abilities;
   const speed = deriveSpeeds(preview, content).land ?? 0;
   const trainedSkills = (Object.keys(preview.proficiencies.skills) as ProficiencyKey[])
     .filter((k) => preview.proficiencies.skills[k] !== 'untrained')

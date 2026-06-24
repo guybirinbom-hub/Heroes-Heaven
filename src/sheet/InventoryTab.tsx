@@ -1,11 +1,14 @@
-import { useState, type ReactNode } from 'react';
-import type { Character, Coins, ContentDatabase, InventoryItem, Item, VehicleStat } from '../rules/types';
-import { deriveBulk, containerLoads, effectiveItemBulk, formatMod } from '../rules/derive';
+import { useEffect, useState, type ReactNode } from 'react';
+import type { Character, Coins, ContentDatabase, InventoryItem, Item } from '../rules/types';
+import { deriveBulk, containerLoads, effectiveItemBulk } from '../rules/derive';
+import { isAttachable, planAttach } from '../rules/attachments';
 import {
   addInventoryItem,
+  attachItem,
   buyItem,
   removeInventoryItem,
   setCurrency,
+  setMonsterParts,
   setItemCounter,
   setItemQuantity,
   toggleItemFlag,
@@ -13,7 +16,10 @@ import {
   type PlayState,
 } from '../rules/play';
 import { chargesFor, itemCounters } from '../rules/itemUses';
+import { monsterPartsEnabled } from '../rules/sources';
+import { loadHomebrewSources } from '../data/storage';
 import { ItemDetail } from './ItemDetail';
+import { ActionGlyph, isActionCost } from './widgets';
 import { AddItemsModal } from './AddItemsModal';
 import { ItemEditorModal } from './ItemEditorModal';
 
@@ -69,17 +75,28 @@ function equipControl(item: Item): { flag: 'worn' | 'equipped'; on: string; off:
   return null;
 }
 
-/** Items whose quantity changes often in play (consumables, ammunition, alchemical bombs, thrown
- *  weapons) keep the inline +/- stepper on the card. Stable gear (armor, weapons, worn equipment)
- *  shows only a read-only "×N" and is re-counted from the item popup instead. Rations match via
- *  itemType==='consumable' (they carry NO traits); ammunition is itemType 'equipment' + the
- *  'consumable' trait; thrown weapons carry the 'thrown' OR range-suffixed 'thrown-N' trait (most
- *  use 'thrown-10' etc.) — matched the same way derive.ts identifies thrown weapons. */
-function keepsInlineQuantity(item: Item): boolean {
+/** Equipment-typed gear that's expended / used in quantity — a torch burns out, caltrops and
+ *  marbles scatter, pitons get hammered in and left — but that the source data doesn't tag
+ *  'consumable'. Listed by id so they get the inline +/- stepper like potions do, even when the
+ *  player happens to carry just one. (Most other expendables — rations, candles, chalk, oils,
+ *  alchemical items — are already itemType 'consumable'; ammunition carries the 'consumable' trait.) */
+const EXPENDABLE_GEAR = new Set(['torch', 'caltrops', 'marbles', 'piton']);
+
+/** Items whose quantity changes often in play (consumables, ammunition, thrown weapons, expendable
+ *  gear, or anything carried as a stack) keep the inline +/- stepper on the card. A single stable
+ *  piece (one weapon, one suit of armor, a worn item) shows no counter and is re-counted from the
+ *  item popup instead. Rations match via itemType==='consumable' (they carry NO traits); ammunition
+ *  is itemType 'equipment' + the 'consumable' trait; thrown weapons carry 'thrown' OR a range-suffixed
+ *  'thrown-N' trait — matched the same way derive.ts identifies thrown weapons. */
+function keepsInlineQuantity(item: Item, quantity = 1): boolean {
   const traits = item.traits ?? [];
   if (item.itemType === 'consumable') return true;
   if (traits.includes('consumable')) return true;
   if (item.itemType === 'weapon' && (traits.includes('thrown') || traits.some((t) => t.startsWith('thrown-')))) return true;
+  if (EXPENDABLE_GEAR.has(item.id)) return true;
+  // "Things the player uses an amount of and not just one" — any item carried as a stack (qty > 1)
+  // gets the live counter rather than a static ×N badge.
+  if (quantity > 1) return true;
   return false;
 }
 
@@ -93,8 +110,15 @@ function ItemCard({
   onOpen,
   onPlay,
   investedCount = 0,
+  rationsDayTracking = false,
   onDragStartItem,
   onDragEndItem,
+  attachHost = false,
+  attachValid = false,
+  attachOver = false,
+  onAttachOver,
+  onAttachLeave,
+  onAttachDrop,
 }: {
   inv: InventoryItem;
   item: Item;
@@ -102,31 +126,70 @@ function ItemCard({
   onOpen: () => void;
   onPlay?: (fn: (play: PlayState) => PlayState) => void;
   investedCount?: number;
+  /** "Individual day tracking of rations" option — suppress the Rations days counter. */
+  rationsDayTracking?: boolean;
   onDragStartItem?: (instanceId: string) => void;
   onDragEndItem?: () => void;
+  /** This card is a potential drop target for the attachment/rune currently being dragged. */
+  attachHost?: boolean;
+  /** The dragged attachment/rune would actually be accepted here (drives the green outline). */
+  attachValid?: boolean;
+  attachOver?: boolean;
+  onAttachOver?: (instanceId: string) => void;
+  onAttachLeave?: () => void;
+  onAttachDrop?: (srcId: string, hostId: string) => void;
 }) {
   const badge = stateBadge(inv);
   const equip = equipControl(item);
-  const counters = itemCounters(item, inv);
+  const counters = rationsDayTracking && item.id === 'rations' ? [] : itemCounters(item, inv);
   const investable = item.traits?.includes('invested');
-  const inlineQty = keepsInlineQuantity(item);
+  const inlineQty = keepsInlineQuantity(item, inv.quantity);
+  // The delete button moved to the item detail popup, so only render the actions row when there's
+  // still a control to show — otherwise plain items would keep an empty 7px-margin gap.
+  const hasActions = !!inv.attachedTo || !!equip || !!investable || counters.length > 0 || inlineQty;
   const stop = (e: React.MouseEvent) => e.stopPropagation();
 
   return (
     <div
-      className={'inv-card' + (inv.invested ? ' invested' : '') + ' clickable' + (onPlay ? ' draggable' : '')}
+      className={
+        'inv-card' +
+        (inv.invested ? ' invested' : '') +
+        ' clickable' +
+        (onPlay ? ' draggable' : '') +
+        (attachHost && attachValid ? ' attach-target' : '') +
+        (attachOver && attachValid ? ' attach-over' : '')
+      }
       onClick={onOpen}
       draggable={!!onPlay}
       onDragStart={
         onPlay
           ? (e) => {
               e.dataTransfer.setData('text/plain', inv.instanceId);
-              e.dataTransfer.effectAllowed = 'move';
+              e.dataTransfer.effectAllowed = 'copyMove';
               onDragStartItem?.(inv.instanceId);
             }
           : undefined
       }
       onDragEnd={onPlay ? () => onDragEndItem?.() : undefined}
+      onDragOver={
+        attachHost
+          ? (e) => {
+              e.preventDefault();
+              e.dataTransfer.dropEffect = attachValid ? 'copy' : 'none';
+              onAttachOver?.(inv.instanceId);
+            }
+          : undefined
+      }
+      onDragLeave={attachHost ? () => onAttachLeave?.() : undefined}
+      onDrop={
+        attachHost
+          ? (e) => {
+              e.preventDefault();
+              e.stopPropagation(); // win over the enclosing Group's relocate drop
+              onAttachDrop?.(e.dataTransfer.getData('text/plain'), inv.instanceId);
+            }
+          : undefined
+      }
     >
       <span className="inv-icon">
         <i className={'ti ' + (TYPE_ICON[item.itemType] ?? 'ti-package')} aria-hidden="true" />
@@ -142,12 +205,17 @@ function ItemCard({
                 {capWord(t)}
               </span>
             ))}
+          {isActionCost(item.activationCost) && (
+            <span className="inv-act-cost" title="Activation cost">
+              <ActionGlyph cost={item.activationCost} />
+            </span>
+          )}
         </div>
         <div className="inv-sub">
           level {item.level} · {formatPrice(item.price)}
           {item.material ? ` · ${capWord(item.material.type.replace(/-/g, ' '))}` : ''}
         </div>
-        {onPlay && (
+        {onPlay && hasActions && (
           <div className="inv-actions" onClick={stop}>
             {inv.attachedTo && <span className="inv-affixed" title="Affixed to another item">Affixed</span>}
             {equip && !inv.attachedTo && (
@@ -210,9 +278,6 @@ function ItemCard({
                 </button>
               </span>
             )}
-            <button className="inv-act danger" aria-label="Remove item" onClick={() => onPlay((p) => removeInventoryItem(p, inv.instanceId))}>
-              <i className="ti ti-trash" aria-hidden="true" />
-            </button>
           </div>
         )}
       </div>
@@ -272,15 +337,27 @@ export function InventoryTab({
   const [detail, setDetail] = useState<{ inv: InventoryItem; item: Item } | null>(null);
   const [addOpen, setAddOpen] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
+  const rationsDayTracking = !!character.options?.rationsDayTracking;
   const [editTarget, setEditTarget] = useState<{ item: Item; inv: InventoryItem } | null>(null);
   // A bound scroll/wand can't hold a spell above what the character could cast.
   const maxSpellRank = Math.min(10, Math.max(1, Math.ceil(character.level / 2)));
   const [query, setQuery] = useState('');
   const [dragId, setDragId] = useState<string | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
+  // drag-to-attach: the host card currently hovered, and a transient "why it can't attach" message.
+  const [attachOver, setAttachOver] = useState<string | null>(null);
+  const [attachMsg, setAttachMsg] = useState<string | null>(null);
+  useEffect(() => {
+    if (!attachMsg) return;
+    const t = setTimeout(() => setAttachMsg(null), 6000);
+    return () => clearTimeout(t);
+  }, [attachMsg]);
   const bulk = deriveBulk(character, content);
   const coins = character.currency;
   const loads = containerLoads(character, content);
+  // The Monster Parts subsystem (refine/imbue) is unlocked by a homebrew Source the character enabled.
+  const mpOn = monsterPartsEnabled(character, loadHomebrewSources());
+  const bankedParts = character.monsterParts ?? 0;
 
   const resolve = (inv: InventoryItem) => content.items[inv.itemId];
   const q = query.trim().toLowerCase();
@@ -303,6 +380,8 @@ export function InventoryTab({
   // --- drag & drop: relocate an item between Equipped / Carried / a container ---
   const draggedInv = dragId ? character.inventory.find((i) => i.instanceId === dragId) : null;
   const draggedItem = draggedInv ? resolve(draggedInv) : null;
+  // The dragged item is a rune or an affixable → weapon/armor/shield cards become attach targets.
+  const draggingAttachable = !!draggedItem && (isAttachable(draggedItem) || !!content.runes[draggedItem.id]);
   const isEquippable = (item?: Item) =>
     !!item &&
     (item.itemType === 'armor' ||
@@ -332,7 +411,14 @@ export function InventoryTab({
    *  'equipped' / 'carried' / a container instanceId. */
   const canDrop = (dest: string) => {
     if (!draggedItem || !dragId) return false;
-    if (dest === 'equipped') return isEquippable(draggedItem); // containers aren't equippable
+    if (dest === 'equipped') {
+      if (!isEquippable(draggedItem)) return false; // containers aren't equippable
+      // Dragging onto Equipped invests anything that isn't armor/weapon/shield — enforce the same
+      // 10-item invested cap the Invest button does, so drag-and-drop can't slip past it.
+      const wouldInvest = !['armor', 'weapon', 'shield'].includes(draggedItem.itemType);
+      if (wouldInvest && !draggedInv?.invested && investedCount >= INVESTED_LIMIT) return false;
+      return true;
+    }
     if (dest === 'carried') return true;
     // a container target: not itself, not into its own descendant (no cycles), and it must fit.
     // Use the dragged item's EFFECTIVE Bulk (incl. its own container contents) so a loaded
@@ -351,7 +437,11 @@ export function InventoryTab({
       if (item.itemType === 'armor') patch = { worn: true, equipped: false, invested: false, containerInstanceId: undefined };
       else if (item.itemType === 'weapon' || item.itemType === 'shield')
         patch = { equipped: true, worn: false, invested: false, containerInstanceId: undefined };
-      else patch = { invested: true, worn: false, equipped: false, containerInstanceId: undefined };
+      else {
+        // Investing is capped at 10 (the Invest condition limit) — match the Invest button's guard.
+        if (!inv.invested && investedCount >= INVESTED_LIMIT) return;
+        patch = { invested: true, worn: false, equipped: false, containerInstanceId: undefined };
+      }
     } else if (dest === 'carried') {
       patch = { worn: false, equipped: false, invested: false, containerInstanceId: undefined };
     } else {
@@ -364,6 +454,44 @@ export function InventoryTab({
   const endDrag = () => {
     setDragId(null);
     setOverId(null);
+    setAttachOver(null);
+  };
+  /** Drop an attachment/rune onto a host card: validate, confirm, then etch the rune (and consume
+   *  the loose rune) or affix the attachment. On failure, surface the specific reason. */
+  const attachDrop = (rawSrcId: string, hostId: string) => {
+    setAttachOver(null);
+    const srcId = rawSrcId || dragId || '';
+    if (!onPlay || !srcId || srcId === hostId) {
+      endDrag();
+      return;
+    }
+    const attInv = character.inventory.find((i) => i.instanceId === srcId);
+    const hostInv = character.inventory.find((i) => i.instanceId === hostId);
+    const attDef = attInv && resolve(attInv);
+    const hostDef = hostInv && resolve(hostInv);
+    if (!attInv || !hostInv || !attDef || !hostDef) {
+      endDrag();
+      return;
+    }
+    const plan = planAttach(attDef, attInv, hostDef, hostInv, character.inventory, content);
+    if (!plan.ok) {
+      setAttachMsg(plan.reason);
+      endDrag();
+      return;
+    }
+    if (window.confirm(`${plan.verb} ${attDef.name} ${plan.prep} ${hostDef.name}?`)) {
+      if (plan.action === 'affix') {
+        onPlay((p) => attachItem(p, srcId, hostId));
+      } else {
+        onPlay((p) => {
+          let next = updateInventoryItem(p, hostId, { runes: plan.runes });
+          if (plan.consume) next = attInv.quantity > 1 ? setItemQuantity(next, srcId, attInv.quantity - 1) : removeInventoryItem(next, srcId);
+          return next;
+        });
+      }
+      setAttachMsg(null);
+    }
+    endDrag();
   };
 
   function toggle(id: string) {
@@ -437,10 +565,31 @@ export function InventoryTab({
             {lead}
             {items.map((inv) => {
               const item = resolve(inv);
-              return item ? (
-                <ItemCard key={inv.instanceId} inv={inv} item={item} content={content} onOpen={() => open(inv)} onPlay={onPlay} investedCount={investedCount} onDragStartItem={setDragId} onDragEndItem={endDrag} />
-              ) : (
-                <UnknownItemCard key={inv.instanceId} inv={inv} onPlay={onPlay} />
+              if (!item) return <UnknownItemCard key={inv.instanceId} inv={inv} onPlay={onPlay} />;
+              // While dragging a rune/attachment, weapon/armor/shield cards become attach targets;
+              // run the planner so only valid hosts light up and the drop knows the exact reason.
+              const isHostType = item.itemType === 'weapon' || item.itemType === 'armor' || item.itemType === 'shield';
+              const attachHost = !!onPlay && draggingAttachable && isHostType && inv.instanceId !== dragId;
+              const plan = attachHost && draggedItem && draggedInv ? planAttach(draggedItem, draggedInv, item, inv, character.inventory, content) : null;
+              return (
+                <ItemCard
+                  key={inv.instanceId}
+                  inv={inv}
+                  item={item}
+                  content={content}
+                  onOpen={() => open(inv)}
+                  onPlay={onPlay}
+                  investedCount={investedCount}
+                  rationsDayTracking={rationsDayTracking}
+                  onDragStartItem={setDragId}
+                  onDragEndItem={endDrag}
+                  attachHost={attachHost}
+                  attachValid={!!plan?.ok}
+                  attachOver={attachOver === inv.instanceId}
+                  onAttachOver={setAttachOver}
+                  onAttachLeave={() => setAttachOver((cur) => (cur === inv.instanceId ? null : cur))}
+                  onAttachDrop={attachDrop}
+                />
               );
             })}
             {!lead && items.length === 0 && emptyHint && <div className="inv-empty-hint">{emptyHint}</div>}
@@ -470,6 +619,16 @@ export function InventoryTab({
           </button>
         )}
       </div>
+
+      {attachMsg && (
+        <div className="inv-attach-error" role="alert">
+          <i className="ti ti-alert-triangle" aria-hidden="true" />
+          <span>{attachMsg}</span>
+          <button className="inv-attach-dismiss" aria-label="Dismiss" onClick={() => setAttachMsg(null)}>
+            <i className="ti ti-x" aria-hidden="true" />
+          </button>
+        </div>
+      )}
 
       <div className="inv-meta">
         {(() => {
@@ -519,6 +678,25 @@ export function InventoryTab({
             </span>
           ))}
         </span>
+        {mpOn && (
+          <span className="bulk-badge mp-badge" title="Banked monster parts (gp-value) for refining & imbuing gear">
+            <i className="ti ti-bone" aria-hidden="true" /> Parts{' '}
+            {onPlay ? (
+              <input
+                className="coin-input mp-parts-input"
+                type="text"
+                inputMode="numeric"
+                value={bankedParts || ''}
+                placeholder="0"
+                aria-label="Banked monster parts"
+                onChange={(e) => onPlay((p) => setMonsterParts(p, parseInt(e.target.value.replace(/[^0-9]/g, ''), 10) || 0))}
+              />
+            ) : (
+              <strong>{bankedParts}</strong>
+            )}{' '}
+            gp
+          </span>
+        )}
       </div>
 
       <Group id="equipped" title="Equipped" items={equipped} dropKind="equipped" />
@@ -556,6 +734,9 @@ export function InventoryTab({
           onClose={() => setDetail(null)}
           onPlay={onPlay}
           inventory={character.inventory}
+          rationsDayTracking={rationsDayTracking}
+          monsterPartsOn={mpOn}
+          charLevel={character.level}
           onEdit={onCreateItem ? (it, iv) => setEditTarget({ item: it, inv: iv }) : undefined}
         />
       )}
@@ -604,78 +785,6 @@ export function InventoryTab({
           }}
           onClose={() => setEditTarget(null)}
         />
-      )}
-      <ReferenceSection content={content} />
-    </div>
-  );
-}
-
-/** Curated reference statblocks the SRD bundle has no data for (services / vehicles / siege weapons).
- *  Read-only and collapsed by default; labelled curated since the stats are hand-authored. */
-function ReferenceSection({ content }: { content: ContentDatabase }) {
-  const services = Object.values(content.services ?? {});
-  const vehicles = Object.values(content.vehicles ?? {});
-  const sieges = Object.values(content.siegeWeapons ?? {});
-  if (!services.length && !vehicles.length && !sieges.length) return null;
-  const vLine = (v: VehicleStat) =>
-    [`Lvl ${v.level}`, v.size, `AC ${v.ac}`, `HP ${v.hp}${v.brokenThreshold ? ` (BT ${v.brokenThreshold})` : ''}`, `Hardness ${v.hardness}`, v.speeds]
-      .filter(Boolean)
-      .join(' · ');
-  return (
-    <div className="inv-reference">
-      <div className="acts-sec-label">
-        Reference
-        <span className="acts-sec-note"> · curated, not exhaustive — verify stats against your sourcebook</span>
-      </div>
-      {services.length > 0 && (
-        <details className="ref-group">
-          <summary>Services ({services.length})</summary>
-          {services.map((s) => (
-            <div className="ref-card" key={s.id}>
-              <div className="ref-card-head">
-                <span className="ref-card-name">{s.name}</span>
-                <span className="ref-card-meta">{[`Lvl ${s.level}`, s.price].filter(Boolean).join(' · ')}</span>
-              </div>
-              <div className="ref-card-desc">{s.description}</div>
-            </div>
-          ))}
-        </details>
-      )}
-      {vehicles.length > 0 && (
-        <details className="ref-group">
-          <summary>Vehicles ({vehicles.length})</summary>
-          {vehicles.map((v) => (
-            <div className="ref-card" key={v.id}>
-              <div className="ref-card-head">
-                <span className="ref-card-name">{v.name}</span>
-                <span className="ref-card-meta">{v.price}</span>
-              </div>
-              <div className="ref-card-stats">{vLine(v)}</div>
-              {v.collision && v.collision !== '—' && <div className="ref-card-stats">Collision {v.collision}</div>}
-              {v.description && <div className="ref-card-desc">{v.description}</div>}
-            </div>
-          ))}
-        </details>
-      )}
-      {sieges.length > 0 && (
-        <details className="ref-group">
-          <summary>Siege weapons ({sieges.length})</summary>
-          {sieges.map((s) => (
-            <div className="ref-card" key={s.id}>
-              <div className="ref-card-head">
-                <span className="ref-card-name">{s.name}</span>
-                <span className="ref-card-meta">{s.price}</span>
-              </div>
-              <div className="ref-card-stats">{vLine(s)}</div>
-              {(s.attacks ?? []).map((a, i) => (
-                <div className="ref-card-stats" key={i}>
-                  {a.name}: {[a.bonus != null ? formatMod(a.bonus) : '', a.damage, a.range].filter(Boolean).join(', ')}
-                </div>
-              ))}
-              {s.description && <div className="ref-card-desc">{s.description}</div>}
-            </div>
-          ))}
-        </details>
       )}
     </div>
   );
