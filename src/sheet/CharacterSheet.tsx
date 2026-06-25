@@ -18,9 +18,21 @@ import { DetailsTab } from './DetailsTab';
 import { NotesTab } from './NotesTab';
 import { SettingsPage } from './SettingsPage';
 import { WindowControls } from './WindowControls';
+import { useIsMobile } from './useIsMobile';
 import { HeroesHeavenLogo } from './Logo';
 
 const TABS = ['Main', 'Spells', 'Inventory', 'Feats & features', 'Companions', 'Notes', 'Details'];
+
+/** Icon + short label for each tab in the mobile bottom navigation bar. */
+const TAB_META: Record<string, { icon: string; short: string }> = {
+  Main: { icon: 'ti-layout-grid', short: 'Play' },
+  Spells: { icon: 'ti-sparkles', short: 'Spells' },
+  Inventory: { icon: 'ti-briefcase', short: 'Items' },
+  'Feats & features': { icon: 'ti-award', short: 'Feats' },
+  Companions: { icon: 'ti-paw', short: 'Allies' },
+  Notes: { icon: 'ti-notebook', short: 'Notes' },
+  Details: { icon: 'ti-id-badge-2', short: 'Details' },
+};
 const TAB_KEY = 'wanderers-codex:tab:v1';
 
 function initialTab(): string {
@@ -91,6 +103,7 @@ export function CharacterSheet({
 }) {
   const [tab, setTab] = useState(initialTab);
   const [menuOpen, setMenuOpen] = useState(false);
+  const isMobile = useIsMobile();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [restOpen, setRestOpen] = useState(false);
   const [portraitOpen, setPortraitOpen] = useState(false);
@@ -176,11 +189,21 @@ export function CharacterSheet({
           <button
             type="button"
             className="portrait portrait-btn"
-            title="View portrait"
-            aria-label="View portrait full size"
-            onClick={() => setPortraitOpen(true)}
+            title={isMobile ? 'Menu' : 'View portrait'}
+            aria-label={isMobile ? 'Open menu' : 'View portrait full size'}
+            onClick={() => (isMobile ? setMenuOpen(true) : setPortraitOpen(true))}
           >
             <img src={portrait} alt="" className="portrait-img" />
+          </button>
+        ) : isMobile ? (
+          <button
+            type="button"
+            className="portrait portrait-btn"
+            title="Menu"
+            aria-label="Open menu"
+            onClick={() => setMenuOpen(true)}
+          >
+            {initials}
           </button>
         ) : (
           <div className="portrait">{initials}</div>
@@ -341,7 +364,9 @@ export function CharacterSheet({
       </div>
 
       <div className="body">
-        <VitalsRail character={character} content={content} charKey={charKey} onPlay={onPlay} onOpenStat={setStatRef} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} onCreateItem={onCreateItem} />
+        {(!isMobile || tab === 'Main') && (
+          <VitalsRail character={character} content={content} charKey={charKey} onPlay={onPlay} onOpenStat={setStatRef} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} onCreateItem={onCreateItem} />
+        )}
         <main className="content">
           {tab === 'Main' ? (
             <MainTab character={character} content={content} onPlay={onPlay} onRoll={rollCheckFn} onOpenStat={setStatRef} />
@@ -363,6 +388,24 @@ export function CharacterSheet({
           )}
         </main>
       </div>
+
+      {isMobile && (
+        <nav className="mtabs" role="tablist" aria-label="Sections">
+          {TABS.map((t) => (
+            <button
+              key={t}
+              type="button"
+              role="tab"
+              aria-selected={t === tab}
+              className={'mtab' + (t === tab ? ' on' : '')}
+              onClick={() => setTab(t)}
+            >
+              <i className={'ti ' + TAB_META[t].icon} aria-hidden="true" />
+              <span className="mtab-label">{TAB_META[t].short}</span>
+            </button>
+          ))}
+        </nav>
+      )}
 
       {diceOpen && (
         <DiceDrawer

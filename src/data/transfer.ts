@@ -21,7 +21,7 @@
  *         items/skills) to our slugs. Anything whose name we don't carry is dropped and
  *         listed in the returned ImportReport.
  */
-import type { AbilityId, Character, CharacterOptions, Coins, ContentDatabase, NaturalAttack, NotePage, VariantRules } from '../rules/types';
+import type { AbilityId, Character, CharacterOptions, Coins, ContentDatabase, NaturalAttack, NotePage, ProficiencyRank, VariantRules } from '../rules/types';
 import { ABILITIES, SKILLS } from '../rules/types';
 import { newRosterId, type SavedChar } from './storage';
 import { buildCharacter, classChoosesDeity, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
@@ -337,6 +337,47 @@ function readMod(attrs: any, abil: AbilityId): number | null {
   return null;
 }
 
+/** WG's proficiency bonus (content.proficiencies[*].parts.profValue: 0/2/4/6/8) → our rank. */
+const WG_PROF_RANK: Record<number, ProficiencyRank> = { 0: 'untrained', 2: 'trained', 4: 'expert', 6: 'master', 8: 'legendary' };
+const RANK_ORDER: ProficiencyRank[] = ['untrained', 'trained', 'expert', 'master', 'legendary'];
+
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/** Convert a Wanderer's Guide note page's TipTap/ProseMirror JSON doc into the HTML our NotePage stores. */
+function tiptapToHtml(node: any): string {
+  if (node == null) return '';
+  if (Array.isArray(node)) return node.map(tiptapToHtml).join('');
+  if (typeof node === 'string') return escapeHtml(node);
+  const kids = Array.isArray(node.content) ? node.content.map(tiptapToHtml).join('') : '';
+  switch (node.type) {
+    case 'doc': return kids;
+    case 'paragraph': return `<p>${kids || '<br>'}</p>`;
+    case 'heading': return `<h${node.attrs?.level ?? 2}>${kids}</h${node.attrs?.level ?? 2}>`;
+    case 'bulletList': return `<ul>${kids}</ul>`;
+    case 'orderedList': return `<ol>${kids}</ol>`;
+    case 'listItem': return `<li>${kids}</li>`;
+    case 'blockquote': return `<blockquote>${kids}</blockquote>`;
+    case 'codeBlock': return `<pre>${kids}</pre>`;
+    case 'horizontalRule': return '<hr>';
+    case 'hardBreak': return '<br>';
+    case 'text': {
+      let t = escapeHtml(node.text ?? '');
+      for (const m of node.marks ?? []) {
+        if (m.type === 'bold') t = `<strong>${t}</strong>`;
+        else if (m.type === 'italic') t = `<em>${t}</em>`;
+        else if (m.type === 'underline') t = `<u>${t}</u>`;
+        else if (m.type === 'strike') t = `<s>${t}</s>`;
+        else if (m.type === 'code') t = `<code>${t}</code>`;
+        else if (m.type === 'link' && m.attrs?.href) t = `<a href="${escapeHtml(String(m.attrs.href))}">${t}</a>`;
+      }
+      return t;
+    }
+    default: return kids;
+  }
+}
+
 function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; report: ImportReport } {
   const c = obj.character ?? {};
   const snap = obj.content ?? {};
@@ -485,15 +526,24 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
     const ft = content.feats[id];
     matchedFeats.push({ featId: id, level: ft.level || f.level || 1, category: ft.category });
   }
-  // Anything that looked like a feat the engine knows but we couldn't find:
-  for (const f of features) {
-    if (!featsIdx.get(norm(f.name)) && /feat|dedication|prowess/i.test(f.name)) unmatchedFeats.push(f.name);
-  }
   if (matchedFeats.length) {
     ch = { ...ch, feats: matchedFeats };
     resolved.push(`${matchedFeats.length} feat${matchedFeats.length === 1 ? '' : 's'} matched.`);
   }
-  if (unmatchedFeats.length) warnings.push(`Feats not in Codex content (dropped): ${unmatchedFeats.slice(0, 12).join(', ')}${unmatchedFeats.length > 12 ? '…' : ''}`);
+  // Warn about the player's CHOSEN feats that our content lacks, so they know exactly what to re-add.
+  // WG groups feats by source; only the four selectable groups are player choices (the rest are
+  // auto-granted class/ancestry features, which our class build already provides).
+  const ffSrc = snap.feats_features;
+  if (ffSrc && !Array.isArray(ffSrc) && typeof ffSrc === 'object') {
+    const chosenNames: string[] = ['generalAndSkillFeats', 'classFeats', 'ancestryFeats', 'otherFeats']
+      .flatMap((k) => (Array.isArray(ffSrc[k]) ? ffSrc[k].map((f: any) => f?.name) : []))
+      .filter((n: any): n is string => typeof n === 'string');
+    const dropped = [...new Set(chosenNames.filter((nm) => !featsIdx.get(norm(nm))))];
+    if (dropped.length) warnings.push(`Feats not in Codex content — re-add in the builder: ${dropped.join(', ')}`);
+  } else {
+    for (const f of features) if (!featsIdx.get(norm(f.name)) && /feat|dedication|prowess/i.test(f.name)) unmatchedFeats.push(f.name);
+    if (unmatchedFeats.length) warnings.push(`Feats not in Codex content (dropped): ${unmatchedFeats.slice(0, 12).join(', ')}${unmatchedFeats.length > 12 ? '…' : ''}`);
+  }
 
   // Trained skills from the proficiency snapshot (best-effort; ranks above trained are approximate).
   // WG v4 entries carry parts.profValue (the proficiency bonus: 0/2/4/6/8) and a STRING total
@@ -561,7 +611,14 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
   for (const row of wgItems) {
     const nm: string | undefined = row?.item?.name;
     if (!nm) continue;
-    const id = itemsIdx.get(norm(nm));
+    // Match by name; if a descriptor variant like "Rope (50 ft.)" / "Rations (1 week)" misses, retry
+    // without the trailing parenthetical — but NOT for tier parentheticals (a missing "Healing Potion
+    // (Greater)" must not silently become a base "Healing Potion").
+    const stripVariant = (s: string) =>
+      /\((greater|major|moderate|lesser|minor|true|grandmaster|(?:high|standard|low)-grade)\)/i.test(s)
+        ? s
+        : s.replace(/\s*\([^)]*\)\s*/g, ' ').trim();
+    const id = itemsIdx.get(norm(nm)) ?? itemsIdx.get(norm(stripVariant(nm)));
     // WG models natural unarmed attacks (Iruxi Fangs, claws, …) as inventory "weapons" with
     // category 'unarmed_attack'. Our baseline Fist is built-in; a MATCHED row (Handwraps of Mighty
     // Blows) imports as a normal item below; an UNMATCHED unarmed attack becomes a naturalAttacks
@@ -628,6 +685,63 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
   };
   if (typeof c.details?.image_url === 'string' && c.details.image_url) {
     character.appearance = { ...(character.appearance ?? {}), portrait: c.details.image_url };
+  }
+
+  // --- Patch the authoritative resolved data WG already computed straight onto the sheet. The
+  //     reverse-derived build only reflects class/background grants, so the player's chosen skill
+  //     trainings, skill increases (expert/master), save ranks, languages, and notes would otherwise
+  //     be lost. (The build stays approximate — editing in the builder re-derives proficiencies.) ---
+  if (snap.proficiencies && typeof snap.proficiencies === 'object') {
+    const wgRank = (key: string): ProficiencyRank | undefined => {
+      const e = snap.proficiencies[key];
+      const pv = e && typeof e === 'object' && e.parts ? e.parts.profValue : undefined;
+      return typeof pv === 'number' ? WG_PROF_RANK[pv] : undefined;
+    };
+    const bump = (cur: ProficiencyRank, key: string): ProficiencyRank => {
+      const r = wgRank(key);
+      return r && RANK_ORDER.indexOf(r) > RANK_ORDER.indexOf(cur) ? r : cur;
+    };
+    const skills = character.proficiencies.skills as Record<string, ProficiencyRank>;
+    let bumped = 0;
+    for (const sk of SKILLS) {
+      const before = skills[sk] ?? 'untrained';
+      const after = bump(before, `SKILL_${sk.toUpperCase()}`);
+      if (after !== before) {
+        skills[sk] = after;
+        bumped++;
+      }
+    }
+    character.proficiencies.saves.fortitude = bump(character.proficiencies.saves.fortitude, 'SAVE_FORT');
+    character.proficiencies.saves.reflex = bump(character.proficiencies.saves.reflex, 'SAVE_REFLEX');
+    character.proficiencies.saves.will = bump(character.proficiencies.saves.will, 'SAVE_WILL');
+    character.proficiencies.perception = bump(character.proficiencies.perception, 'PERCEPTION');
+    character.proficiencies.classDc = bump(character.proficiencies.classDc, 'CLASS_DC');
+    if (bumped) resolved.push(`Skill & save proficiencies set from Wanderer’s Guide.`);
+  }
+
+  // Languages: WG's content.languages is an array of language code/name strings (e.g. "IRUXI").
+  const langIdx = nameIndex(content.languages);
+  const langIds: string[] = [];
+  for (const l of Array.isArray(snap.languages) ? snap.languages : []) {
+    const id = langIdx.get(norm(String(l)));
+    if (id && !langIds.includes(id)) langIds.push(id);
+  }
+  if (langIds.length) {
+    character.languages = langIds;
+    resolved.push(`${langIds.length} language${langIds.length === 1 ? '' : 's'} imported.`);
+  }
+
+  // Notes: WG stores free-form pages under character.notes.pages; each page's `contents` is a TipTap doc.
+  const wgPages: any[] = Array.isArray(c.notes?.pages) ? c.notes.pages : [];
+  if (wgPages.length) {
+    character.notes = wgPages.map((p: any, i: number): NotePage => ({
+      id: `wg-note-${newRosterId()}`,
+      title: typeof p?.name === 'string' && p.name ? p.name : `Page ${i + 1}`,
+      icon: typeof p?.icon === 'string' && p.icon ? (p.icon.startsWith('ti-') ? p.icon : `ti-${p.icon}`) : undefined,
+      color: typeof p?.color === 'string' ? p.color : undefined,
+      content: typeof p?.contents === 'string' ? p.contents : tiptapToHtml(p?.contents),
+    }));
+    resolved.push(`${wgPages.length} note page${wgPages.length === 1 ? '' : 's'} imported.`);
   }
 
   warnings.push(
