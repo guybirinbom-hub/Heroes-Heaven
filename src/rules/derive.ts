@@ -31,7 +31,7 @@ import { PROFICIENCY_RANKS } from './types';
 import { conditionPenalty, drainedHpLoss } from './conditions';
 import { modeNumberBonus } from './modes';
 import { abpOn, abpAttack, abpDefense, abpSave, abpPerception, abpStrikingDice, abpSkillBonus } from './abp';
-import { weaponRefinement, armorRefinement, shieldRefinement, getMpProperty, resolvePath } from './monsterParts';
+import { weaponRefinement, armorRefinement, shieldRefinement, senseSkillRefinement, getMpProperty, resolvePath } from './monsterParts';
 
 export const RANK_VALUE: Record<ProficiencyRank, number> = {
   untrained: 0,
@@ -147,12 +147,26 @@ export function deriveSave(c: Character, save: SaveId, db?: ContentDatabase): St
   return { rank, modifier };
 }
 
+/** Item bonus from a refined Monster Parts Perception/skill item (Tables 4D/4E, +1/+2/+3). An item
+ *  bonus, so it takes the higher of it and any other item bonus to the same statistic (e.g. ABP). */
+function mpSenseSkillBonus(c: Character, kind: 'perception' | 'skill', skillKey?: string): number {
+  let best = 0;
+  for (const inv of c.inventory) {
+    const mp = inv.monsterPart;
+    if (!mp?.refinedLevel || mp.kind !== kind) continue;
+    if (!(inv.worn || inv.invested || inv.equipped)) continue;
+    if (kind === 'skill' && mp.skillKey !== skillKey) continue;
+    best = Math.max(best, senseSkillRefinement(mp.refinedLevel).bonus);
+  }
+  return best;
+}
+
 export function derivePerception(c: Character): StatLine {
   const rank = c.proficiencies.perception;
   const modifier =
     abilityMod(c.abilities.wis) +
     profBonus(rank, c.level, pwl(c)) +
-    (abpOn(c) ? abpPerception(c.level) : 0) +
+    Math.max(abpOn(c) ? abpPerception(c.level) : 0, mpSenseSkillBonus(c, 'perception')) +
     conditionPenalty(c.conditions, 'wis', 'perception') +
     modeNumberBonus(c.activeModes, { kind: 'perception' });
   return { rank, modifier };
@@ -164,7 +178,7 @@ export function deriveSkill(c: Character, key: ProficiencyKey, db?: ContentDatab
   let modifier =
     abilityMod(c.abilities[ability]) +
     profBonus(rank, c.level, pwl(c)) +
-    abpSkillBonus(c, key) +
+    Math.max(abpSkillBonus(c, key), mpSenseSkillBonus(c, 'skill', key)) +
     conditionPenalty(c.conditions, ability, 'skill') +
     modeNumberBonus(c.activeModes, { kind: 'skill', detail: key });
   // The worn armor's check penalty hits Strength- and Dexterity-based skills.
@@ -448,8 +462,12 @@ const STRIKING_DICE = { striking: 1, greater: 2, major: 3 } as const;
 
 /** Per-hit extra-damage strings from an item's Monster Parts imbuements (folds in like property-rune
  *  damage). Per-hit only — situational crit riders are reference text on the item, not computed. */
-function mpImbuedStrikeDamage(mp: InventoryItem['monsterPart']): string[] {
-  const out: string[] = [];
+function mpImbuedStrikeDamage(mp: InventoryItem['monsterPart'], baseType: string): string[] {
+  // Collect structured terms, resolving the 'untyped' placeholder (Bane/Wild deal the WEAPON's base
+  // damage type) to the weapon's own type, then merge like terms so two identical imbuements (e.g. two
+  // 1d6 fire on different paths) read as one "2d6 fire" instead of "1d6 fire plus 1d6 fire".
+  type Term = { dice?: number; die?: string; flat?: number; type: string; persistent?: boolean };
+  const terms: Term[] = [];
   for (const im of mp?.imbuements ?? []) {
     const prop = getMpProperty(im.propertyId);
     if (!prop) continue;
@@ -458,11 +476,21 @@ function mpImbuedStrikeDamage(mp: InventoryItem['monsterPart']): string[] {
     const r = resolvePath(path, im.level);
     for (const dd of [r.addDamage, r.persistentDamage]) {
       if (!dd) continue;
-      const body = dd.dice && dd.die ? `${dd.dice}${dd.die}` : `${dd.flat ?? 0}`;
-      out.push(`${body}${dd.persistent ? ' persistent' : ''} ${DAMAGE_ABBR[dd.type] ?? dd.type}`);
+      terms.push({ ...dd, type: dd.type === 'untyped' ? baseType : dd.type });
     }
   }
-  return out;
+  const merged = new Map<string, Term>();
+  for (const t of terms) {
+    const key = `${t.persistent ? 'p' : ''}|${t.type}|${t.dice && t.die ? t.die : 'flat'}`;
+    const prev = merged.get(key);
+    if (!prev) merged.set(key, { ...t });
+    else if (t.dice && t.die) prev.dice = (prev.dice ?? 0) + t.dice;
+    else prev.flat = (prev.flat ?? 0) + (t.flat ?? 0);
+  }
+  return [...merged.values()].map((t) => {
+    const body = t.dice && t.die ? `${t.dice}${t.die}` : `${t.flat ?? 0}`;
+    return `${body}${t.persistent ? ' persistent' : ''} ${DAMAGE_ABBR[t.type] ?? t.type}`;
+  });
 }
 
 export interface Strike {
@@ -667,7 +695,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     .filter((d) => d.persistent)
     .map((d) => `${d.dice}${d.die} persistent ${DAMAGE_ABBR[d.type] ?? d.type}`);
   // Monster Parts imbued damage folds in alongside property-rune damage as per-hit "plus" terms.
-  const extraDmg = [...runeDmg, ...mpImbuedStrikeDamage(mp)];
+  const extraDmg = [...runeDmg, ...mpImbuedStrikeDamage(mp, w.damage.type)];
   // Deadly dN adds bonus weapon dice on a crit (1 die; 2 with greater striking, 3 with major); Fatal dN
   // upgrades the crit dice to dN and adds one; Two-Hand dN uses a larger die when wielded two-handed.
   const traitDie = (re: RegExp) => w.traits.map((t) => re.exec(t)?.[1]).find(Boolean);

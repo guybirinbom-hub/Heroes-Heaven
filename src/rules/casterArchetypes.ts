@@ -32,6 +32,17 @@ export interface CasterArchetype {
   repertoire?: boolean;
   /** Summoner: the tradition is set by the chosen eidolon TYPE (build.archetypeEidolonType), not free. */
   eidolonTradition?: boolean;
+  /** Key attribute follows the chosen tradition: arcane → Int, primal → Wis (Magaambyan / Halcyon). */
+  keyByTradition?: boolean;
+  /** Magaambyan Attendant: grants a single INNATE cantrip of the chosen tradition — no spell slots. */
+  innateCantrip?: boolean;
+  /** A non-standard slot schedule (Halcyon Speaker): each entry unlocks one slot of `rank` at character
+   *  level `level` once `featId` is taken (the dedication counts as taken while active). Overrides the
+   *  standard basic/expert/master RANK_UNLOCKS. */
+  customUnlocks?: { rank: number; level: number; featId: string }[];
+  /** Custom proficiency advancement: the feat ids that raise spell proficiency to expert / master. */
+  profExpertFeat?: string;
+  profMasterFeat?: string;
 }
 
 export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
@@ -57,6 +68,34 @@ export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
   // Summoner: a spontaneous repertoire whose tradition follows the chosen eidolon TYPE; caps at Expert
   // (no master-summoner-spellcasting feat exists). Cha key.
   'summoner-dedication': { ...mk('arcane', 'cha', 2, 'summoner'), eidolonTradition: true },
+  // Magaambyan Attendant: a single INNATE cantrip from a chosen tradition (arcane → Int, primal → Wis).
+  // No spell slots — the slot progression comes from the follow-on Halcyon Speaker archetype.
+  'magaambyan-attendant-dedication': {
+    ...mk('arcane', 'int', 1, 'magaambyan-attendant', true),
+    traditionOptions: ['arcane', 'primal'],
+    keyByTradition: true,
+    innateCantrip: true,
+  },
+  // Halcyon Speaker: spontaneous "halcyon" caster (spells shared by the arcane + primal lists). The
+  // DEDICATION grants 2 cantrips + a 1st-rank slot at L6; Initiate (10) adds ranks 2-3, Adept (14) adds
+  // 4-5 (→ expert), Sage (18) adds 6-7 (→ master). Tradition (arcane/primal) sets the key + label.
+  'halcyon-speaker-dedication': {
+    ...mk('arcane', 'int', 2, 'halcyon-speaker', true),
+    traditionOptions: ['arcane', 'primal'],
+    keyByTradition: true,
+    repertoire: true,
+    customUnlocks: [
+      { rank: 1, level: 6, featId: 'halcyon-speaker-dedication' },
+      { rank: 2, level: 10, featId: 'halcyon-spellcasting-initiate' },
+      { rank: 3, level: 10, featId: 'halcyon-spellcasting-initiate' },
+      { rank: 4, level: 14, featId: 'halcyon-spellcasting-adept' },
+      { rank: 5, level: 14, featId: 'halcyon-spellcasting-adept' },
+      { rank: 6, level: 18, featId: 'halcyon-spellcasting-sage' },
+      { rank: 7, level: 18, featId: 'halcyon-spellcasting-sage' },
+    ],
+    profExpertFeat: 'halcyon-spellcasting-adept',
+    profMasterFeat: 'halcyon-spellcasting-sage',
+  },
 };
 
 // Spontaneous caster dedications (a known-spell repertoire + slots) — everything else is prepared.
@@ -70,6 +109,7 @@ const SPONTANEOUS_DEDICATIONS = new Set([
   'eldritch-archer-dedication',
   'beast-gunner-dedication',
   'summoner-dedication',
+  'halcyon-speaker-dedication',
 ]);
 for (const [id, cfg] of Object.entries(CASTER_ARCHETYPES)) if (SPONTANEOUS_DEDICATIONS.has(id)) cfg.repertoire = true;
 
@@ -101,6 +141,8 @@ export interface ActiveCasterArchetype {
   dedicationId: string;
   config: CasterArchetype;
   tier: Tier;
+  /** All taken feat ids — used by custom (Halcyon) schedules that gate ranks on specific feats. */
+  taken: Set<string>;
 }
 
 /** The caster archetype a character is invested in (a taken caster dedication) + which
@@ -113,6 +155,7 @@ export function activeCasterArchetype(takenFeatIds: string[], _content?: Content
       dedicationId,
       config,
       tier: { basic: taken.has(config.basicId), expert: taken.has(config.expertId), master: taken.has(config.masterId) },
+      taken,
     };
   }
   return null;
@@ -130,16 +173,34 @@ const RANK_UNLOCKS: [number, number, keyof Tier][] = [
   [8, 20, 'master'],
 ];
 
-/** Archetype spell slots: one of each available rank. A rank is available when its tier
- * feat is taken and the character is high enough level. */
-export function archetypeSlots(level: number, tier: Tier): Record<number, number> {
+/** Normalize a bare Tier (standard caster, used by tests/the slot table) or a full ActiveCasterArchetype
+ *  (build/Builder, custom schedules) into one shape. */
+function asArch(a: Tier | ActiveCasterArchetype): ActiveCasterArchetype {
+  return 'config' in a ? a : { dedicationId: '', config: {} as CasterArchetype, tier: a, taken: new Set() };
+}
+
+/** Archetype spell slots: one of each available rank. A rank is available when its tier feat is taken
+ * (or, for a custom schedule, its gating feat) and the character is high enough level. Innate-cantrip
+ * archetypes (Magaambyan) have no slots. Accepts a bare Tier (standard table) or a full archetype. */
+export function archetypeSlots(level: number, a: Tier | ActiveCasterArchetype): Record<number, number> {
+  const arch = asArch(a);
   const out: Record<number, number> = {};
-  for (const [rank, minLevel, t] of RANK_UNLOCKS) if (tier[t] && level >= minLevel) out[rank] = 1;
+  if (arch.config.innateCantrip) return out;
+  if (arch.config.customUnlocks) {
+    for (const u of arch.config.customUnlocks) if (arch.taken.has(u.featId) && level >= u.level) out[u.rank] = 1;
+    return out;
+  }
+  for (const [rank, minLevel, t] of RANK_UNLOCKS) if (arch.tier[t] && level >= minLevel) out[rank] = 1;
   return out;
 }
 
-/** Trained from the dedication; expert/master from the Expert/Master Spellcasting feats. */
-export function archetypeProficiency(tier: Tier): ProficiencyRank {
+/** Trained from the dedication; expert/master from the Expert/Master Spellcasting feats (or a custom
+ * archetype's own proficiency-advancing feats). */
+export function archetypeProficiency(a: Tier | ActiveCasterArchetype): ProficiencyRank {
+  const { config, tier, taken } = asArch(a);
+  if (config.profMasterFeat && taken.has(config.profMasterFeat)) return 'master';
+  if (config.profExpertFeat && taken.has(config.profExpertFeat)) return 'expert';
+  if (config.customUnlocks) return 'trained';
   if (tier.master) return 'master';
   if (tier.expert) return 'expert';
   return 'trained';

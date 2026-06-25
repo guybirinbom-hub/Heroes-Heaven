@@ -5,6 +5,26 @@ function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+// SRD descriptions are cleaned at import, but homebrew/authored text bypasses the importer and can
+// carry raw HTML entities/tags (a contentEditable serializes a typed "&" to "&amp;"; pasted markup can
+// include <sub>/<table> etc.). Decode the common entities and strip any residual tags so they never
+// render literally as "&amp;" or "<table>".
+const NAMED_ENTITIES: Record<string, string> = {
+  nbsp: ' ', amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", rsquo: '’', lsquo: '‘',
+  rdquo: '”', ldquo: '“', mdash: '—', ndash: '–', times: '×', deg: '°',
+  hellip: '…', frac12: '½', frac14: '¼', frac34: '¾', plusmn: '±', minus: '−',
+};
+export function decodeEntities(s: string): string {
+  return s
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(parseInt(d, 10)))
+    .replace(/&([a-z][a-z0-9]*);/gi, (m, name) => NAMED_ENTITIES[name.toLowerCase()] ?? m);
+}
+/** Decode HTML entities then strip any residual raw HTML tags from a plain-text run. */
+export function cleanRun(s: string): string {
+  return decodeEntities(s).replace(/<\/?[a-z][^>]*>/gi, '');
+}
+
 /* =========================================================================
  * Markdown-lite block model.
  *
@@ -48,7 +68,8 @@ function splitCells(row: string): string[] {
  *  clickable, linkified refs must NOT capture the click. Pure (exported for tests). */
 export function toPlainText(text?: string): string {
   if (!text) return '';
-  return text
+  return decodeEntities(text)
+    .replace(/<\/?[a-z][^>]*>/gi, ' ') // strip raw HTML tags (authored/homebrew content)
     .replace(/@\w+\[[^\]]*\]\{([^}]*)\}/g, '$1') // @UUID[…]{Label} / @Check[…]{Label} → Label
     .replace(/@\w+\[[^\]]*\]/g, '') // bare @Damage[…] → drop
     .replace(/\[\[[^\]]*\]\]/g, '') // [[/r …]] inline rolls → drop
@@ -190,6 +211,8 @@ const GLYPH_TITLE: Record<string, string> = {
 
 function inline(text: string, ctx: Ctx, keyBase: string): ReactNode[] {
   const out: ReactNode[] = [];
+  // Decode entities / strip stray tags from authored content (the **/*/⟦⟧/⟨⟩ markers are untouched).
+  text = cleanRun(text);
   // **bold** / *italic* / ⟦highlight⟧ (upcast "→ X") / ⟨N⟩ action-cost glyph (from cleanDescRich).
   const re = /\*\*([^*]+)\*\*|\*([^*]+)\*|⟦([^⟧]+)⟧|⟨([^⟩]+)⟩/g;
   let last = 0;

@@ -1,17 +1,9 @@
 import { useMemo } from 'react';
 import type { Coins, ContentDatabase, Item } from '../rules/types';
 import { canAfford } from '../rules/play';
+import { formatPrice } from '../rules/wealth';
 import { FilterableSelect, descNodeOf } from './FilterableSelect';
 import { ITEM_SPEC } from './filterSpecs';
-
-function priceLabel(p?: Coins): string {
-  if (!p) return 'free';
-  if (p.pp) return `${p.pp} pp`;
-  if (p.gp) return `${p.gp} gp`;
-  if (p.sp) return `${p.sp} sp`;
-  if (p.cp) return `${p.cp} cp`;
-  return 'free';
-}
 
 /** Browse the item catalog and Buy (deduct coins) or Give (free) items to the character. Services
  *  also appear here (searchable by name/description) but are REFERENCE-ONLY — they aren't inventory
@@ -66,7 +58,7 @@ export function AddItemsModal({
           <>
             <div className="ai-name">{it.name}</div>
             <div className="ai-meta">
-              {svc ? 'service' : it.itemType} · lvl {it.level} · {svc ? svc.price ?? 'varies' : priceLabel(it.price)}
+              {svc ? 'service' : it.itemType} · lvl {it.level} · {svc ? svc.price ?? 'varies' : formatPrice(it.price)}
               {!svc && it.rarity !== 'common' ? ` · ${it.rarity}` : ''}
             </div>
           </>

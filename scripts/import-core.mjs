@@ -521,7 +521,7 @@ function parseActivationCost(rawHtml) {
     const g = (m[1] || '').trim();
     if (map[g]) return map[g];
   }
-  return { type: 'variable', min: 1, max: 3 }; // genuinely unknown: "Cast a Spell" or no glyph
+  return undefined; // no recognizable glyph ("Cast a Spell" / glyph-less Activate) — don't fabricate a cost
 }
 
 /** Spells held by a staff/spellheart, parsed from its description's per-rank list

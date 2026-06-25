@@ -2411,7 +2411,7 @@ export function SkillEditor({ build, actions, content }: EditorProps) {
 
   const emptyCount = Math.max(0, addlCount - chosen.length);
   return (
-    <SetupCard icon="ti-list-check" label="Trained skills" count={`${chosen.length} / ${addlCount}`}>
+    <SetupCard icon="ti-list-check" label="Trained skills" count={`${chosen.length}/${addlCount}`}>
       {chosenSkills.map((s) => (
         <SlotCard key={s} icon="ti-list-check" label="Skill" value={cap(s)} onClear={() => actions.toggleSkill(s)} />
       ))}

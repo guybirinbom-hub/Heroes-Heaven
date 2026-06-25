@@ -1051,6 +1051,11 @@ export interface InventoryItem {
   monsterPart?: {
     refinedLevel?: number;
     imbuements?: { propertyId: string; path?: string; level: number; choice?: string }[];
+    /** For items that aren't auto-classified by itemType (weapon/armor/shield), the refinement track
+     *  the player chose: a Perception item or a skill item. */
+    kind?: 'perception' | 'skill';
+    /** For a refined skill item, which skill the item bonus applies to (a SkillId or 'lore:<subject>'). */
+    skillKey?: string;
   };
 }
 
@@ -1082,6 +1087,8 @@ export interface SpellcastingEntry {
   grantedRepertoire?: Record<number, string[]>;
   /** Slot pool per rank (used by spontaneous; prepared derives from `prepared`). */
   slots?: Record<number, { max: number; used: number }>;
+  /** Innate entries: spell ids already cast today (1/day each), overlaid from PlayState.innateUsed. */
+  innateUsed?: string[];
   /** Spontaneous: ids that can be cast from any higher slot. */
   signature?: string[];
   /** Wizard: learned spells per rank (the daily preparation is drawn from this). */

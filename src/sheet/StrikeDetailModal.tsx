@@ -79,7 +79,7 @@ export function StrikeDetailModal({
           </div>
           {showsCrit && (
             <div className="strike-detail-crit">
-              <span className="sds-label">Critical specialization · {strike.group}</span>
+              <span className="sds-label">Critical specialization · {strike.group ? strike.group.charAt(0).toUpperCase() + strike.group.slice(1) : ''}</span>
               <div className="sd-critspec-text">
                 <CritSpecText text={critText!} content={content} />
               </div>

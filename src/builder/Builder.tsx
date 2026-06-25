@@ -210,7 +210,7 @@ export function Builder({
   const slotCounts = casting
     ? casterSlots(build.level, castProgression)
     : archCaster
-      ? archetypeSlots(build.level, archCaster.tier)
+      ? archetypeSlots(build.level, archCaster)
       : {};
   const cantripCap = casting ? cantripsKnown(build.classId) : archCaster?.config.cantrips ?? 0;
   // The built character, used to evaluate feat prerequisites in the picker and the stats rail.
@@ -262,7 +262,7 @@ export function Builder({
   // --- per-level spell progression (spells are chosen on the level where they're gained) ---
   // Spell slots per rank at a given character level (0 = before play).
   const slotsAt = (L: number): Record<number, number> =>
-    L < 1 ? {} : casting ? casterSlots(L, castProgression) : archCaster ? archetypeSlots(L, archCaster.tier) : {};
+    L < 1 ? {} : casting ? casterSlots(L, castProgression) : archCaster ? archetypeSlots(L, archCaster) : {};
   // Wizard spellbook budget (a single across-rank total) at a given level.
   const bookAt = (L: number) => (L < 1 ? 0 : wizardSpellbookSize(L));
   // The first level this character can cast — cantrips, tradition, and divine font live here.

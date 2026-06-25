@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { build, content } from './_content';
-import { deriveStrike, deriveDefenses, deriveShield, resilientSaveBonus, deriveAc } from '../src/rules/derive';
+import { deriveStrike, deriveDefenses, deriveShield, resilientSaveBonus, deriveAc, derivePerception, deriveSkill } from '../src/rules/derive';
+import { applyPlayState, initialPlay } from '../src/rules/play';
 import {
   weaponRefinement,
   armorRefinement,
@@ -10,6 +11,7 @@ import {
   resolvePath,
   getMpProperty,
   propertiesForKind,
+  imbuementGrantedSpells,
 } from '../src/rules/monsterParts';
 import { monsterPartsEnabled } from '../src/rules/sources';
 import { MONSTER_PART_PROPERTIES } from '../src/rules/monsterParts';
@@ -134,6 +136,15 @@ describe('Monster Parts — derive integration', () => {
     expect(strike.damage).toContain('persistent fire');
   });
 
+  it('Bane (untyped placeholder) resolves to the weapon type, never literal "untyped"', () => {
+    const ch = build('fighter', 12, { keyAbility: 'str' });
+    const wid = findWeapon('d8');
+    const inv: InventoryItem = { instanceId: 'i', itemId: wid, quantity: 1, equipped: true, monsterPart: { refinedLevel: 12, imbuements: [{ propertyId: 'bane', path: 'might', level: 6, choice: 'undead' }] } };
+    const strike = deriveStrike(ch, db, inv)!;
+    expect(strike.damage).not.toContain('untyped'); // the placeholder must be substituted
+    expect(strike.damage).toContain('plus 1d6'); // Bane Might lvl 6 adds 1d6 of the weapon's type
+  });
+
   it('Energy Resistant on a worn armor grants a resistance equal to the property level', () => {
     const ch = build('fighter', 8, { keyAbility: 'str' });
     const armor: InventoryItem = {
@@ -164,6 +175,71 @@ describe('Monster Parts — derive integration', () => {
     const shield: InventoryItem = { instanceId: 'inv-shd', itemId: findShield(), quantity: 1, equipped: true, monsterPart: { refinedLevel: 16 } };
     const info = deriveShield({ ...ch, inventory: [shield] }, db)!;
     expect(info.hardness).toBeGreaterThanOrEqual(14); // level 16 → hardness 14
+  });
+});
+
+describe('Monster Parts — Perception/skill item refinement + apex (deferral fixes)', () => {
+  const equip = () => Object.keys(db.items).find((id) => db.items[id].itemType === 'equipment')!;
+
+  it('a refined Perception item grants a Perception item bonus (Table 4D)', () => {
+    const ch = build('fighter', 9, { keyAbility: 'str' });
+    const base = derivePerception(ch).modifier;
+    const ch2: Character = { ...ch, inventory: [...ch.inventory, { instanceId: 'mp', itemId: equip(), quantity: 1, invested: true, monsterPart: { kind: 'perception', refinedLevel: 9 } }] };
+    expect(derivePerception(ch2).modifier).toBe(base + 2); // level 9 → +2
+  });
+
+  it('a refined skill item grants a bonus to its chosen skill only (Table 4E)', () => {
+    const ch = build('fighter', 3, { keyAbility: 'str' });
+    const ch2: Character = { ...ch, inventory: [...ch.inventory, { instanceId: 'mp', itemId: equip(), quantity: 1, worn: true, monsterPart: { kind: 'skill', skillKey: 'athletics', refinedLevel: 3 } }] };
+    expect(deriveSkill(ch2, 'athletics', db).modifier).toBe(deriveSkill(ch, 'athletics', db).modifier + 1); // +1 at level 3
+    expect(deriveSkill(ch2, 'acrobatics', db).modifier).toBe(deriveSkill(ch, 'acrobatics', db).modifier); // other skills unaffected
+  });
+
+  it('an invested apex skill item (level 17+) raises its attribute on the live character', () => {
+    const ch = build('fighter', 18, { keyAbility: 'str' });
+    const baseStr = ch.abilities.str;
+    const play = {
+      ...initialPlay(ch, db),
+      inventory: [...ch.inventory, { instanceId: 'mp', itemId: equip(), quantity: 1, invested: true, monsterPart: { kind: 'skill' as const, skillKey: 'athletics', refinedLevel: 18, imbuements: [{ propertyId: 'strength', path: 'main', level: 17 }] } }],
+    };
+    const live = applyPlayState(ch, play, db);
+    expect(live.abilities.str).toBe(baseStr >= 18 ? baseStr + 2 : 18);
+  });
+
+  it('apex does nothing below level 17 or when the item is not invested', () => {
+    const ch = build('fighter', 18, { keyAbility: 'str' });
+    const mk = (over: Record<string, unknown>) => ({ ...initialPlay(ch, db), inventory: [...ch.inventory, { instanceId: 'mp', itemId: equip(), quantity: 1, monsterPart: { kind: 'skill' as const, skillKey: 'athletics', refinedLevel: 18, imbuements: [{ propertyId: 'strength', path: 'main', level: 16 }] }, ...over }] });
+    expect(applyPlayState(ch, mk({ invested: true }), db).abilities.str).toBe(ch.abilities.str); // level 16 < 17
+    const inv17 = { ...initialPlay(ch, db), inventory: [...ch.inventory, { instanceId: 'mp', itemId: equip(), quantity: 1, invested: false, monsterPart: { kind: 'skill' as const, skillKey: 'athletics', refinedLevel: 18, imbuements: [{ propertyId: 'strength', path: 'main', level: 17 }] } }] };
+    expect(applyPlayState(ch, inv17, db).abilities.str).toBe(ch.abilities.str); // not invested
+  });
+});
+
+describe('Monster Parts — granted spells (2b)', () => {
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
+
+  it('parses "Cast …" clauses, frequency, and "no longer X" supersession', () => {
+    const magic = getMpProperty('fire')!.paths.find((p) => p.id === 'magic')!;
+    const at8 = imbuementGrantedSpells(magic, 8).map((g) => g.name.toLowerCase());
+    expect(at8).toContain('ignition');
+    expect(at8).toContain('floating flame');
+    expect(at8).toContain('fireball');
+    expect(at8).not.toContain('breathe fire'); // "(no longer Breathe Fire)" at level 8 removes it
+    expect(imbuementGrantedSpells(magic, 2).find((g) => /ignition/i.test(g.name))?.freq).toBe('cantrip');
+  });
+
+  it('the parsed names resolve to real spells in the content database', () => {
+    const byName = new Set(Object.values(db.spells).map((s) => norm(s.name)));
+    const magic = getMpProperty('fire')!.paths.find((p) => p.id === 'magic')!;
+    const matched = imbuementGrantedSpells(magic, 20)
+      .map((g) => norm(g.name))
+      .filter((n) => byName.has(n));
+    expect(matched.length).toBeGreaterThanOrEqual(3); // Ignition, Floating Flame, fireball, Falling Stars, …
+  });
+
+  it('non-grant prose (damage riders) yields no spells', () => {
+    const might = getMpProperty('fire')!.paths.find((p) => p.id === 'might')!; // "+1 fire", "1d6", etc.
+    expect(imbuementGrantedSpells(might, 20).length).toBe(0);
   });
 });
 

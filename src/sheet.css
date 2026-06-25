@@ -3081,6 +3081,10 @@ button.strike-name:hover {
   align-items: center;
   justify-content: center;
 }
+.tb-swatch.on {
+  outline: 2px solid var(--app-accent);
+  outline-offset: 1px;
+}
 .tb-swatch-clear {
   background: var(--app-surface);
   color: var(--app-text-dim);

@@ -9,10 +9,13 @@ import { DescriptionModal } from './DescriptionModal';
  *  HTML tag; otherwise it's curated markdown and RichText parses + auto-linkifies it. */
 const HTML_TAG = /<(a|strong|em|b|i|u|s|h[1-6]|ul|ol|li|blockquote|span|br|div|p|hr|mark)\b/i;
 
-/** Strip script/style, inline event handlers, and javascript: URLs from user-authored HTML. */
+/** Strip script/style, inline event handlers, javascript: URLs, and embedded/external-resource tags
+ *  (img/iframe/etc.) from user-authored HTML — so a description pasted from a web page can't render a
+ *  broken remote image, silently fetch a tracker from this offline app, or embed a remote iframe. */
 function sanitizeHtml(html: string): string {
   return html
     .replace(/<\s*(script|style)\b[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, '')
+    .replace(/<\/?(?:img|iframe|object|embed|video|audio|source|track|link|meta|base|svg)\b[^>]*>/gi, '')
     .replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '')
     .replace(/\s(href|src)\s*=\s*("\s*javascript:[^"]*"|'\s*javascript:[^']*')/gi, '');
 }

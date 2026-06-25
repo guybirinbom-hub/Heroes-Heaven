@@ -1453,7 +1453,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const srcSpells = src?.spells ?? build.spells;
       const srcTradition = twoCaster ? src?.tradition ?? null : build.archetypeTradition ?? null;
       const srcKey = twoCaster ? src?.keyAbility ?? null : build.archetypeKeyAbility ?? null;
-      const slots = archetypeSlots(level, arch.tier);
+      const slots = archetypeSlots(level, arch);
       // Summoner: the tradition follows the chosen eidolon TYPE, not a free pick.
       const eidolonTradition = arch.config.eidolonTradition
         ? content.classes.summoner?.subclass?.options.find((o) => o.id === build.archetypeEidolonType)?.tradition
@@ -1467,9 +1467,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
               ? srcTradition
               : arch.config.tradition
           : arch.config.tradition);
-      // Psychic dedication lets you pick the key attribute (Int or Cha); else the fixed one.
-      const archKey: AbilityId =
-        arch.config.choiceKeyAbility && srcKey && arch.config.choiceKeyAbility.includes(srcKey)
+      // Key attribute: Magaambyan/Halcyon follow the tradition (arcane → Int, primal → Wis); psychic
+      // lets you pick Int or Cha; else the dedication's fixed attribute.
+      const archKey: AbilityId = arch.config.keyByTradition
+        ? archTradition === 'primal'
+          ? 'wis'
+          : 'int'
+        : arch.config.choiceKeyAbility && srcKey && arch.config.choiceKeyAbility.includes(srcKey)
           ? srcKey
           : arch.config.keyAbility;
       const baseEntry = {
@@ -1477,10 +1481,13 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         name: `${cap(archTradition)} spellcasting (archetype)`,
         tradition: archTradition,
         keyAbility: archKey,
-        proficiency: archetypeProficiency(arch.tier),
+        proficiency: archetypeProficiency(arch),
         cantrips: srcCantrips.slice(0, arch.config.cantrips),
       };
-      if (arch.config.repertoire) {
+      if (arch.config.innateCantrip) {
+        // Magaambyan Attendant: the chosen cantrip(s) are cast as innate spells — no spell slots.
+        spellcasting.push({ ...baseEntry, name: `${cap(archTradition)} innate (archetype)`, type: 'innate', repertoire: {} });
+      } else if (arch.config.repertoire) {
         // Spontaneous archetype (sorcerer/bard/oracle/psychic/summoner/eldritch-archer/beast-gunner):
         // a known-spell repertoire + a 1-slot-per-rank pool. No signature spells (no class feature).
         const repertoire: Record<number, string[]> = {};

@@ -166,6 +166,96 @@ describe('Wanderer’s Guide import — real v4 shapes (regression)', () => {
   });
 });
 
+describe('WG interop — variants, options, runes, containers (real-format fixes)', () => {
+  const fighter = c.classes['fighter'].name;
+  const wgChar = (over: Record<string, unknown>) => ({
+    version: 4,
+    character: {
+      name: 'WG Fix',
+      level: 5,
+      experience: 0,
+      hp_current: 30,
+      hp_temp: 0,
+      hero_points: 1,
+      inventory: { coins: {}, items: [] },
+      details: { class: { name: fighter } },
+      spells: null,
+      ...over,
+    },
+    content: {},
+  });
+
+  it('exports Codex variant rules + options under WG names', () => {
+    const s: SavedChar = {
+      id: 'r',
+      character: { ...build('fighter', 5, { variantRules: { freeArchetype: true, proficiencyWithoutLevel: true }, options: { ignoreBulk: true } }), name: 'V' },
+      archived: false,
+    };
+    const file = JSON.parse(exportWg(s, c));
+    expect(file.character.variants.free_archetype).toBe(true);
+    expect(file.character.variants.proficiency_without_level).toBe(true);
+    expect(file.character.options.ignore_bulk_limit).toBe(true);
+    expect(file.character.options.auto_detect_prerequisites).toBe(true);
+  });
+
+  it('imports WG variants + options back into the Codex build', () => {
+    const { saved } = importCharacter(
+      JSON.stringify(wgChar({ variants: { free_archetype: true, gradual_attribute_boosts: true }, options: { ignore_bulk_limit: true, voluntary_flaws: true } })),
+      c,
+    );
+    expect(saved.build?.variantRules?.freeArchetype).toBe(true);
+    expect(saved.build?.variantRules?.gradualBoosts).toBe(true);
+    expect(saved.build?.options?.ignoreBulk).toBe(true);
+    expect(saved.build?.options?.voluntaryFlaw).toBe(true);
+  });
+
+  it('imports object-shaped property runes (WG runes.property is {name,id}, not a string)', () => {
+    const weapon = Object.values(c.items).find((i) => i.itemType === 'weapon')!;
+    const propRune = Object.values(c.runes).find((r) => r.kind === 'property' && r.slot === 'weapon')!;
+    const { saved } = importCharacter(
+      JSON.stringify(
+        wgChar({
+          inventory: {
+            coins: {},
+            items: [{ is_equipped: true, is_invested: false, item: { name: weapon.name, meta_data: { runes: { potency: 1, striking: 1, property: [{ name: propRune.name, id: 1 }] } } } }],
+          },
+        }),
+      ),
+      c,
+    );
+    const inv = saved.build?.inventory?.find((it) => it.itemId === weapon.id);
+    expect(inv).toBeTruthy();
+    const runes = inv!.runes as { potency?: number; striking?: string; property?: string[] };
+    expect(runes.potency).toBe(1);
+    expect(runes.striking).toBe('striking');
+    expect(runes.property?.length).toBeGreaterThan(0); // the property rune is no longer dropped
+  });
+
+  it('flattens container_contents so stowed items are not dropped on import', () => {
+    const container = Object.values(c.items).find((i) => i.itemType === 'container')!;
+    const stowed = Object.values(c.items).find((i) => i.itemType === 'consumable' || i.itemType === 'equipment')!;
+    const { saved } = importCharacter(
+      JSON.stringify(
+        wgChar({
+          inventory: {
+            coins: {},
+            items: [
+              {
+                is_equipped: false,
+                is_invested: false,
+                item: { name: container.name, meta_data: {} },
+                container_contents: [{ is_equipped: false, is_invested: false, item: { name: stowed.name, meta_data: { quantity: 2 } } }],
+              },
+            ],
+          },
+        }),
+      ),
+      c,
+    );
+    expect(saved.build?.inventory?.some((it) => it.itemId === stowed.id)).toBe(true);
+  });
+});
+
 describe('import error handling', () => {
   it('rejects non-JSON', () => {
     expect(() => importCharacter('not json', c)).toThrow();

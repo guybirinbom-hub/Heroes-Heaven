@@ -21,7 +21,7 @@
  *         items/skills) to our slugs. Anything whose name we don't carry is dropped and
  *         listed in the returned ImportReport.
  */
-import type { AbilityId, Character, Coins, ContentDatabase, NaturalAttack, NotePage } from '../rules/types';
+import type { AbilityId, Character, CharacterOptions, Coins, ContentDatabase, NaturalAttack, NotePage, VariantRules } from '../rules/types';
 import { ABILITIES, SKILLS } from '../rules/types';
 import { newRosterId, type SavedChar } from './storage';
 import { buildCharacter, classChoosesDeity, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
@@ -71,6 +71,42 @@ function wgCoins(c?: Coins): { cp: number; sp: number; gp: number; pp: number } 
   return { cp: c?.cp ?? 0, sp: c?.sp ?? 0, gp: c?.gp ?? 0, pp: c?.pp ?? 0 };
 }
 
+// WG <-> Codex variant-rule + option names (the subset both apps share). WG has no Automatic Bonus
+// Progression flag (abp stays Codex-only); Codex has no proficiency_half_level / stamina.
+function wgVariants(v?: VariantRules): Record<string, boolean> {
+  const out: Record<string, boolean> = {};
+  if (v?.ancestryParagon) out.ancestry_paragon = true;
+  if (v?.freeArchetype) out.free_archetype = true;
+  if (v?.gradualBoosts) out.gradual_attribute_boosts = true;
+  if (v?.proficiencyWithoutLevel) out.proficiency_without_level = true;
+  if (v?.dualClass) out.dual_class = true;
+  return out;
+}
+function variantsFromWg(v: any): VariantRules {
+  const out: VariantRules = {};
+  if (v?.ancestry_paragon) out.ancestryParagon = true;
+  if (v?.free_archetype) out.freeArchetype = true;
+  if (v?.gradual_attribute_boosts) out.gradualBoosts = true;
+  if (v?.proficiency_without_level) out.proficiencyWithoutLevel = true;
+  if (v?.dual_class) out.dualClass = true;
+  return out;
+}
+function wgOptions(o?: CharacterOptions): Record<string, boolean> {
+  return {
+    auto_detect_prerequisites: true,
+    ...(o?.ignoreBulk ? { ignore_bulk_limit: true } : {}),
+    ...(o?.alternateAncestryBoosts ? { alternate_ancestry_boosts: true } : {}),
+    ...(o?.voluntaryFlaw ? { voluntary_flaws: true } : {}),
+  };
+}
+function optionsFromWg(o: any): CharacterOptions {
+  const out: CharacterOptions = {};
+  if (o?.ignore_bulk_limit) out.ignoreBulk = true;
+  if (o?.alternate_ancestry_boosts) out.alternateAncestryBoosts = true;
+  if (o?.voluntary_flaws) out.voluntaryFlaw = true;
+  return out;
+}
+
 /** Build a name/slug → id index for a content record. */
 function nameIndex(rec: Record<string, { name: string }>): Map<string, string> {
   const m = new Map<string, string>();
@@ -96,8 +132,13 @@ function mapWgRunes(wg: any, itemType: string, runesIdx: Map<string, string>): R
   if (itemType === 'weapon' && Number(wg.striking)) out.striking = STRIKING_TIERS[Number(wg.striking)];
   if (itemType === 'armor' && Number(wg.resilient)) out.resilient = RESILIENT_TIERS[Number(wg.resilient)];
   if (itemType === 'shield' && Number(wg.reinforcing)) out.reinforcing = Number(wg.reinforcing);
+  // WG v4 encodes each property rune as an OBJECT { name, id, rune? } (older/synthetic shapes use a
+  // plain string); pull the name either way and match it to a Codex rune id.
   const property = (Array.isArray(wg.property) ? wg.property : [])
-    .map((p: unknown) => (typeof p === 'string' ? runesIdx.get(norm(p)) : undefined))
+    .map((p: unknown) => {
+      const nm = typeof p === 'string' ? p : p && typeof p === 'object' ? (p as any).name ?? (p as any).rune?.name : undefined;
+      return typeof nm === 'string' ? runesIdx.get(norm(nm)) : undefined;
+    })
     .filter((x: unknown): x is string => !!x);
   if (property.length) out.property = property;
   return Object.keys(out).length ? out : undefined;
@@ -231,8 +272,8 @@ export function exportWg(saved: SavedChar, content: ContentDatabase): string {
       },
     },
     custom_operations: null,
-    options: { auto_detect_prerequisites: true },
-    variants: {},
+    options: wgOptions(ch.options),
+    variants: wgVariants(ch.variantRules),
     content_sources: { enabled: [1] },
     companions: null,
     campaign_id: null,
@@ -323,6 +364,14 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
   if (bgName) (backgroundId ? resolved : warnings).push(`Background: ${bgName}${backgroundId ? '' : ' (not found — left unset)'}`);
   if (clsName) (classId ? resolved : warnings).push(`Class: ${clsName}${classId ? '' : ' (not found — left unset)'}`);
 
+  // Variant rules + shared options round-trip both ways. Dual Class also carries a second class.
+  const importedVariants = variantsFromWg(c.variants);
+  const importedOptions = optionsFromWg(c.options);
+  const cls2Name: string | undefined = c.details?.class_2?.name;
+  const classId2 = importedVariants.dualClass && cls2Name ? classes.get(norm(cls2Name)) ?? null : null;
+  if (Object.keys(importedVariants).length) resolved.push(`Variant rules: ${Object.keys(importedVariants).join(', ')}.`);
+  if (importedVariants.dualClass && cls2Name) (classId2 ? resolved : warnings).push(`Second class: ${cls2Name}${classId2 ? '' : ' (not found — pick it in the builder)'}`);
+
   const cls = classId ? content.classes[classId] : undefined;
 
   // feats_features carries the resolved subclass, heritage, deity, and chosen feats by name.
@@ -389,7 +438,21 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
   }
 
   // Baseline character from identity alone, then layer the WG specifics onto it.
-  const baseBuild: BuildState = { ...emptyBuild(), name: c.name ?? 'Imported character', level: clampLevel(c.level), ancestryId, heritageId, backgroundId, classId, subclassId, deityId, keyAbility };
+  const baseBuild: BuildState = {
+    ...emptyBuild(),
+    name: c.name ?? 'Imported character',
+    level: clampLevel(c.level),
+    ancestryId,
+    heritageId,
+    backgroundId,
+    classId,
+    classId2,
+    subclassId,
+    deityId,
+    keyAbility,
+    ...(Object.keys(importedVariants).length ? { variantRules: importedVariants } : {}),
+    ...(Object.keys(importedOptions).length ? { options: importedOptions } : {}),
+  };
   let ch: Character;
   try {
     ch = buildCharacter(baseBuild, content);
@@ -480,7 +543,19 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
 
   // Inventory by name (WG embeds the item name on each row).
   const invWarn: string[] = [];
-  const wgItems: any[] = Array.isArray(c.inventory?.items) ? c.inventory.items : [];
+  // WG nests stowed items under each container's `container_contents`; flatten the tree so items inside
+  // a backpack/bag aren't dropped (the container itself is also a row and imports normally — the only
+  // thing lost is the nesting, which Codex re-derives from carry flags anyway).
+  const flattenWgItems = (rows: any[]): any[] => {
+    const out: any[] = [];
+    for (const row of rows ?? []) {
+      if (!row) continue;
+      out.push(row);
+      if (Array.isArray(row.container_contents) && row.container_contents.length) out.push(...flattenWgItems(row.container_contents));
+    }
+    return out;
+  };
+  const wgItems: any[] = flattenWgItems(Array.isArray(c.inventory?.items) ? c.inventory.items : []);
   const builtInv: BuildState['inventory'] = [];
   const naturals: NaturalAttack[] = [];
   for (const row of wgItems) {

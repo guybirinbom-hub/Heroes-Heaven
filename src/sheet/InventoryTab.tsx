@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import type { Character, Coins, ContentDatabase, InventoryItem, Item } from '../rules/types';
+import type { Character, ContentDatabase, InventoryItem, Item } from '../rules/types';
 import { deriveBulk, containerLoads, effectiveItemBulk } from '../rules/derive';
 import { isAttachable, planAttach } from '../rules/attachments';
 import {
@@ -17,6 +17,7 @@ import {
 } from '../rules/play';
 import { chargesFor, itemCounters } from '../rules/itemUses';
 import { monsterPartsEnabled } from '../rules/sources';
+import { formatPrice, grp } from '../rules/wealth';
 import { loadHomebrewSources } from '../data/storage';
 import { ItemDetail } from './ItemDetail';
 import { ActionGlyph, isActionCost } from './widgets';
@@ -39,14 +40,6 @@ function formatBulk(b: number): string {
   return String(b);
 }
 
-function formatPrice(p?: Coins): string {
-  if (!p) return '—';
-  if (p.pp) return `${p.pp} pp`;
-  if (p.gp) return `${p.gp} gp`;
-  if (p.sp) return `${p.sp} sp`;
-  if (p.cp) return `${p.cp} cp`;
-  return '—';
-}
 
 /** A scroll/wand reads as "Scroll of <Spell>"; otherwise the item's own name. */
 function displayName(item: Item, content: ContentDatabase): string {
@@ -557,7 +550,7 @@ export function InventoryTab({
         <div className="inv-sec" onClick={() => toggle(id)}>
           <i className={'ti ' + (expanded ? 'ti-chevron-down' : 'ti-chevron-right')} aria-hidden="true" />
           <span className="inv-sec-title">{title}</span>
-          <span className="inv-count">{items.length} items</span>
+          <span className="inv-count">{items.length} item{items.length === 1 ? '' : 's'}</span>
           {right}
         </div>
         {expanded && (
@@ -672,7 +665,7 @@ export function InventoryTab({
                   onChange={(e) => onPlay((p) => setCurrency(p, { ...coins, [d]: Math.max(0, parseInt(e.target.value.replace(/[^0-9]/g, ''), 10) || 0) }))}
                 />
               ) : (
-                <>{coins[d] ?? 0} </>
+                <>{grp(coins[d] ?? 0)} </>
               )}
               {d}
             </span>
@@ -692,7 +685,7 @@ export function InventoryTab({
                 onChange={(e) => onPlay((p) => setMonsterParts(p, parseInt(e.target.value.replace(/[^0-9]/g, ''), 10) || 0))}
               />
             ) : (
-              <strong>{bankedParts}</strong>
+              <strong>{grp(bankedParts)}</strong>
             )}{' '}
             gp
           </span>

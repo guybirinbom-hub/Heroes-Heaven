@@ -11,6 +11,7 @@ import {
   setTempHp,
   addXp,
   toggleExpended,
+  toggleInnateCast,
   setSlotsUsed,
   setFocusUsed,
   addCondition,
@@ -266,6 +267,7 @@ describe('rest', () => {
       focusUsed: 0,
       expendedSlots: {},
       slotsUsed: {},
+      innateUsed: {}, // 1/day innate spells refill on rest
       conditions: [], // doomed 1 → stepped down to 0 → cleared
       pinned: [],
     });
@@ -319,5 +321,30 @@ describe('commander prepared tactics (play-mode)', () => {
     expect(prepared).not.toContain('not-in-folio'); // non-folio ids dropped
     expect(prepared.length).toBe(3); // clamped to preparedMax
     expect(prepared).toEqual(['pincer-attack', 'reload', 'strike-hard']);
+  });
+});
+
+describe('innate-spell per-day use tracking (3b)', () => {
+  const db = content();
+
+  it('toggleInnateCast flips a 1/day innate spell used/available', () => {
+    const p = emptyPlay();
+    const cast = toggleInnateCast(p, 'inn', 's1');
+    expect(cast.innateUsed?.['inn:s1']).toBe(true);
+    expect(toggleInnateCast(cast, 'inn', 's1').innateUsed?.['inn:s1']).toBeUndefined();
+  });
+
+  it('applyPlayState overlays used spell ids onto the innate entry; rest refills', () => {
+    const base = build('fighter', 5, { keyAbility: 'str' });
+    const ch = {
+      ...base,
+      spellcasting: [
+        { id: 'inn', name: 'Innate', type: 'innate' as const, tradition: 'arcane' as const, keyAbility: 'cha' as const, proficiency: 'trained' as const, cantrips: [], repertoire: { 1: ['s1', 's2'] } },
+      ],
+    };
+    const play = { ...initialPlay(ch, db), innateUsed: { 'inn:s1': true } };
+    const live = applyPlayState(ch, play, db);
+    expect(live.spellcasting[0].innateUsed).toEqual(['s1']); // s1 cast, s2 still available
+    expect(rest(play, { level: 5, conMod: 2 }).innateUsed).toEqual({}); // daily prep refills
   });
 });

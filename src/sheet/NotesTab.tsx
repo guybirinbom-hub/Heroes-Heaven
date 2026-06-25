@@ -215,8 +215,23 @@ const NOTE_ICONS: { icon: string; label: string }[] = [
   { icon: 'ti-star', label: 'Important' },
 ];
 
-/** A small popup for choosing a note's icon/type — opened when adding a page or tapping the icon. */
-function IconPickerModal({ current, title, onPick, onClose }: { current?: string; title: string; onPick: (icon: string) => void; onClose: () => void }) {
+/** A small popup for choosing a note's icon/type — opened when adding a page or tapping the icon.
+ *  In edit mode it also offers a per-page color (onPickColor), which tints the page icon + header. */
+function IconPickerModal({
+  current,
+  currentColor,
+  title,
+  onPick,
+  onPickColor,
+  onClose,
+}: {
+  current?: string;
+  currentColor?: string;
+  title: string;
+  onPick: (icon: string) => void;
+  onPickColor?: (color: string | undefined) => void;
+  onClose: () => void;
+}) {
   return (
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker icon-picker" onClick={(e) => e.stopPropagation()}>
@@ -241,6 +256,25 @@ function IconPickerModal({ current, title, onPick, onClose }: { current?: string
             </button>
           ))}
         </div>
+        {onPickColor && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', marginTop: 10, paddingTop: 10, borderTop: '1px solid var(--app-border)' }}>
+            <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--app-text-dim)', marginRight: 2 }}>Color</span>
+            {NOTE_COLORS.map((hex) => (
+              <button
+                type="button"
+                key={hex}
+                className={'tb-swatch' + (currentColor === hex ? ' on' : '')}
+                style={{ background: hex }}
+                title={hex}
+                aria-label={`Color ${hex}`}
+                onClick={() => onPickColor(hex)}
+              />
+            ))}
+            <button type="button" className="tb-swatch tb-swatch-clear" title="Default" aria-label="Default color" onClick={() => onPickColor(undefined)}>
+              <i className="ti ti-ban" aria-hidden="true" />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -384,9 +418,11 @@ export function NotesTab({ character, onPlay }: { character: Character; onPlay?:
 
       {iconPicker && onPlay && (
         <IconPickerModal
-          title={iconPicker.mode === 'new' ? 'New page — choose an icon' : 'Change icon'}
+          title={iconPicker.mode === 'new' ? 'New page — choose an icon' : 'Icon & color'}
           current={iconPicker.mode === 'edit' ? pages.find((p) => p.id === iconPicker.id)?.icon : undefined}
+          currentColor={iconPicker.mode === 'edit' ? pages.find((p) => p.id === iconPicker.id)?.color : undefined}
           onPick={pickIcon}
+          onPickColor={iconPicker.mode === 'edit' ? (color) => onPlay((p) => updateNotePage(p, iconPicker.id, { color })) : undefined}
           onClose={() => setIconPicker(null)}
         />
       )}

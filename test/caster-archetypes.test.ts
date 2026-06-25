@@ -34,11 +34,61 @@ describe('archetype spell slot table', () => {
   it('every curated archetype feat id exists in the import', () => {
     for (const [ded, cfg] of Object.entries(CASTER_ARCHETYPES)) {
       expect(c.feats[ded], ded).toBeTruthy();
+      // Magaambyan (innate cantrip) + Halcyon (custom initiate/adept/sage schedule) don't use the
+      // standard basic/expert/master spellcasting feats — their gating feats are checked below.
+      if (cfg.innateCantrip || cfg.customUnlocks) continue;
       expect(c.feats[cfg.basicId], cfg.basicId).toBeTruthy();
       expect(c.feats[cfg.expertId], cfg.expertId).toBeTruthy();
       // Summoner archetype caps at Expert — there is no master-summoner-spellcasting feat.
       if (ded !== 'summoner-dedication') expect(c.feats[cfg.masterId], cfg.masterId).toBeTruthy();
     }
+  });
+
+  it('Magaambyan/Halcyon gating feats + the Halcyon schedule are real', () => {
+    for (const id of ['magaambyan-attendant-dedication', 'halcyon-speaker-dedication', 'halcyon-spellcasting-initiate', 'halcyon-spellcasting-adept', 'halcyon-spellcasting-sage'])
+      expect(c.feats[id], id).toBeTruthy();
+  });
+});
+
+describe('Magaambyan Attendant + Halcyon Speaker archetypes', () => {
+  it('Magaambyan Attendant grants an innate cantrip of the chosen tradition (no slots)', () => {
+    const ch = build('fighter', 2, {
+      keyAbility: 'str',
+      featPicks: { '2:class:0': 'magaambyan-attendant-dedication' },
+      archetypeTradition: 'primal',
+      cantrips: ['cz1'],
+    });
+    const entry = ch.spellcasting.find((e) => e.id === 'magaambyan-attendant-dedication-casting');
+    expect(entry?.type).toBe('innate');
+    expect(entry?.tradition).toBe('primal');
+    expect(entry?.keyAbility).toBe('wis'); // primal → Wis (arcane would be Int)
+    expect(entry?.cantrips).toEqual(['cz1']);
+    expect(entry?.prepared ?? {}).toEqual({});
+    expect(entry?.slots ?? {}).toEqual({});
+  });
+
+  it('Halcyon Speaker: dedication gives a 1st-rank slot; Initiate adds 2nd & 3rd at level 10', () => {
+    const ch = build('fighter', 10, {
+      keyAbility: 'str',
+      featPicks: { '6:class:0': 'halcyon-speaker-dedication', '10:class:1': 'halcyon-spellcasting-initiate' },
+      archetypeTradition: 'arcane',
+      spells: { 1: ['h1'], 2: ['h2'], 3: ['h3'] },
+    });
+    const entry = ch.spellcasting.find((e) => e.id === 'halcyon-speaker-dedication-casting');
+    expect(entry?.type).toBe('spontaneous');
+    expect(entry?.keyAbility).toBe('int'); // arcane → Int
+    expect(entry?.proficiency).toBe('trained');
+    expect(Object.keys(entry?.slots ?? {}).map(Number).sort((a, b) => a - b)).toEqual([1, 2, 3]);
+  });
+
+  it('Halcyon schedule + proficiency advance with Adept (14, expert) and Sage (18, master)', () => {
+    const arch = activeCasterArchetype(['halcyon-speaker-dedication', 'halcyon-spellcasting-initiate', 'halcyon-spellcasting-adept', 'halcyon-spellcasting-sage'])!;
+    expect(archetypeProficiency(arch)).toBe('master');
+    expect(Object.keys(archetypeSlots(18, arch)).map(Number).sort((a, b) => a - b)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+    // At level 6 with only the dedication: just the 1st-rank slot.
+    const justDed = activeCasterArchetype(['halcyon-speaker-dedication'])!;
+    expect(archetypeSlots(6, justDed)).toEqual({ 1: 1 });
+    expect(archetypeProficiency(justDed)).toBe('trained');
   });
 });
 

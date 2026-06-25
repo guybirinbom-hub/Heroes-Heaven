@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import type { Coins, ContentDatabase, InventoryItem, Item } from '../rules/types';
+import type { ContentDatabase, InventoryItem, Item } from '../rules/types';
 import { removeInventoryItem, setItemCounter, setItemQuantity, updateInventoryItem, type PlayState } from '../rules/play';
+import { formatPrice } from '../rules/wealth';
 import { useEscapeClose } from './useEscapeClose';
 import { chargesFor, itemCounters } from '../rules/itemUses';
 import { traitDesc } from '../rules/glossary';
@@ -15,16 +16,6 @@ import { SPELL_SPEC_BUILDER } from './filterSpecs';
 import { MonsterPartsSection } from './MonsterPartsEditor';
 
 const ordinalRank = (n: number): string => (n === 1 ? '1st' : n === 2 ? '2nd' : n === 3 ? '3rd' : `${n}th`);
-
-function formatPrice(p?: Coins): string {
-  if (!p) return '—';
-  const parts: string[] = [];
-  if (p.pp) parts.push(`${p.pp} pp`);
-  if (p.gp) parts.push(`${p.gp} gp`);
-  if (p.sp) parts.push(`${p.sp} sp`);
-  if (p.cp) parts.push(`${p.cp} cp`);
-  return parts.length ? parts.join(', ') : '—';
-}
 
 function formatBulk(b: number): string {
   if (b === 0) return '—';
@@ -326,7 +317,7 @@ export function ItemDetail({
           )}
           {item.itemType === 'weapon' && critSpec(item.group) && (
             <div className="sd-uses sd-critspec">
-              <span className="sd-uses-title">Critical specialization · {item.group}</span>
+              <span className="sd-uses-title">Critical specialization · {cap(item.group ?? '')}</span>
               <div className="sd-critspec-text">
                 <CritSpecText text={critSpec(item.group)!} content={content} />
               </div>

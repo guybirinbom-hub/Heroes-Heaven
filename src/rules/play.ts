@@ -14,6 +14,7 @@
  */
 import type { ActiveCondition, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ModeDef, NotePage, PinnedDesc, PreparedSlot } from './types';
 import { deriveMaxHp, deriveBulk } from './derive';
+import { monsterPartApex } from './monsterParts';
 import { dyingDeathThreshold } from './conditions';
 import { coinsToCp, cpToCoins } from './wealth';
 
@@ -42,6 +43,8 @@ export interface PlayState {
   expendedSlots: Record<string, boolean>;
   /** Spontaneous slot-pool usage (count per rank), keyed `${entryId}:${rank}`. */
   slotsUsed: Record<string, number>;
+  /** Innate spells cast today (1/day each), keyed `${entryId}:${spellId}`; refilled on rest. */
+  innateUsed?: Record<string, boolean>;
   /** Conditions currently affecting the character. */
   conditions: ActiveCondition[];
   /** In-play inventory; when set, it overrides the build's gear (so the sheet can add/drop/equip). */
@@ -142,6 +145,14 @@ export function initialPlay(ch: Character, content: ContentDatabase): PlayState 
 /** Overlay the in-play runtime values onto a freshly-built (snapshot) character. */
 export function applyPlayState(ch: Character, play: PlayState | undefined, content: ContentDatabase): Character {
   if (!play) return ch;
+  // Monster Parts apex: an invested item imbued with an apex property at level 17+ raises one attribute
+  // (to 18, or +2 if already 18+). Bump it on the overlaid character so it ripples through every derived
+  // stat (HP, saves, skills…). One apex item at a time.
+  const apexAbility = monsterPartApex(play.inventory ?? ch.inventory);
+  if (apexAbility) {
+    const score = ch.abilities[apexAbility];
+    ch = { ...ch, abilities: { ...ch.abilities, [apexAbility]: score >= 18 ? score + 2 : 18 } };
+  }
   // Tolerate play states persisted before these fields existed (forward migration).
   const expended = play.expendedSlots ?? {};
   const used = play.slotsUsed ?? {};
@@ -195,6 +206,10 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
         ...out,
         font: { ...e.font, expended: Array.from({ length: e.font.slots }, (_, i) => !!expended[`${e.id}:font:${i}`]) },
       };
+    }
+    if (e.type === 'innate') {
+      const used = play.innateUsed ?? {};
+      out = { ...out, innateUsed: Object.keys(used).filter((k) => used[k] && k.startsWith(`${e.id}:`)).map((k) => k.slice(e.id.length + 1)) };
     }
     return out;
   });
@@ -322,6 +337,15 @@ export function toggleExpended(play: PlayState, key: string): PlayState {
 /** Set how many slots of a spontaneous rank pool are spent, clamped to [0, max]. */
 export function setSlotsUsed(play: PlayState, key: string, used: number, max: number): PlayState {
   return { ...play, slotsUsed: { ...play.slotsUsed, [key]: clamp(used, 0, max) } };
+}
+
+/** Toggle whether a 1/day innate spell has been cast today (key `${entryId}:${spellId}`). */
+export function toggleInnateCast(play: PlayState, entryId: string, spellId: string): PlayState {
+  const key = `${entryId}:${spellId}`;
+  const innateUsed = { ...(play.innateUsed ?? {}) };
+  if (innateUsed[key]) delete innateUsed[key];
+  else innateUsed[key] = true;
+  return { ...play, innateUsed };
 }
 
 /** Prepare (or clear) the spell in a single prepared slot, in play. `null` empties the
@@ -961,6 +985,7 @@ export function rest(
     focusUsed: 0,
     expendedSlots: {},
     slotsUsed: {},
+    innateUsed: {},
     conditions: restConditions(play.conditions ?? []),
     companionConditions,
     companionHp,

@@ -15,9 +15,11 @@ import {
   setSignatureSpells,
   setSlotsUsed,
   toggleExpended,
+  toggleInnateCast,
   type PlayState,
 } from '../rules/play';
 import { itemCounters, chargesFor, chargeCounterId, chargeCostToCast, canCastFromItem } from '../rules/itemUses';
+import { getMpProperty, imbuementGrantedSpells } from '../rules/monsterParts';
 import { ActionGlyph } from './widgets';
 import { ItemDetail } from './ItemDetail';
 import { useEscapeClose } from './useEscapeClose';
@@ -686,7 +688,7 @@ export function SpellsTab({
           <div className="spell-rankhdr">
             {ord(rank)} rank
             <span className="spell-rankhdr-right">
-              {used} / {slots.length} slots used
+              {used} / {slots.length} slot{slots.length === 1 ? '' : 's'} used
             </span>
           </div>
           <div className="spell-grid">{cards}</div>
@@ -949,7 +951,7 @@ export function SpellsTab({
             <SecChevron id="spellbook" />
             <i className="ti ti-book" aria-hidden="true" />
             Spellbook
-            <span className="ct-note">{spellbookCards.length} spells</span>
+            <span className="ct-note">{spellbookCards.length} spell{spellbookCards.length === 1 ? '' : 's'}</span>
           </div>
           {secOpen('spellbook') && <div className="spell-grid">{spellbookCards}</div>}
         </section>
@@ -1010,6 +1012,7 @@ export function SpellsTab({
       {/* Extra spell sources: staff/wand held spells and innate spells — read-only cards, cast with your spell DC. */}
       {itemEntries.map((entry) => {
         const isInnate = entry.type === 'innate';
+        const innateUsedSet = new Set(entry.innateUsed ?? []); // leveled innate spells cast today (1/day)
         // Item entries: resolve the inventory instance + def + its live charge counter (the SAME
         // inv.counters the Inventory edits → charges stay in sync both ways for free). The instance
         // id is on `itemInstanceId`, or recoverable from the entry id (`item:<instanceId>`) for
@@ -1067,6 +1070,8 @@ export function SpellsTab({
                 cost={sp?.cast}
                 meta={meta}
                 onClick={sp ? () => setDetail(sp) : undefined}
+                pip={isInnate ? (innateUsedSet.has(id) ? 'empty' : 'filled') : undefined}
+                onPip={isInnate && onPlay ? () => onPlay((p) => toggleInnateCast(p, entry.id, id)) : undefined}
                 {...castProps(rank)}
               />,
             );
@@ -1140,6 +1145,56 @@ export function SpellsTab({
                     onClick={() => setDetail(sp)}
                   />
                 ))}
+              </div>
+            )}
+          </section>
+        );
+      })()}
+
+      {/* Monster Parts: spells granted by imbued items (read-only; cast using your spell DC). Names are
+          matched to the spell database from the imbued-property text, so only confirmed spells appear. */}
+      {(() => {
+        const imbued = character.inventory.filter((iv) => (iv.monsterPart?.imbuements?.length ?? 0) > 0);
+        if (!imbued.length) return null;
+        const mpNorm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
+        const byName = new Map<string, string>();
+        for (const sp of Object.values(content.spells)) byName.set(mpNorm(sp.name), sp.id);
+        const freqLabel: Record<string, string> = { cantrip: 'at will', day: '1/day', hour: '1/hour', minute: '1/minute' };
+        const rows: { spellId: string; freq: string; source: string }[] = [];
+        const seen = new Set<string>();
+        for (const iv of imbued) {
+          const item = content.items[iv.itemId];
+          if (!item) continue;
+          for (const im of iv.monsterPart!.imbuements!) {
+            const prop = getMpProperty(im.propertyId);
+            if (!prop) continue;
+            const path = prop.paths.find((p) => p.id === im.path) ?? prop.paths[0];
+            if (!path) continue;
+            for (const g of imbuementGrantedSpells(path, im.level)) {
+              const id = byName.get(mpNorm(g.name));
+              if (!id) continue;
+              const key = `${id}:${iv.instanceId}`;
+              if (seen.has(key)) continue;
+              seen.add(key);
+              rows.push({ spellId: id, freq: freqLabel[g.freq] ?? '1/day', source: `${item.name} · ${prop.name}` });
+            }
+          }
+        }
+        const shown = query ? rows.filter((r) => (content.spells[r.spellId]?.name ?? '').toLowerCase().includes(query)) : rows;
+        if (!shown.length) return null;
+        return (
+          <section className="card">
+            <div className="ct" style={{ margin: secOpen('monster-parts') ? '0 0 10px' : 0 }}>
+              <SecChevron id="monster-parts" />
+              <i className="ti ti-bone" aria-hidden="true" /> Monster Parts spells
+              <span style={{ fontSize: 11.5, color: 'var(--app-text-dim)', marginLeft: 6 }}>· granted by imbued items</span>
+            </div>
+            {secOpen('monster-parts') && (
+              <div className="spell-grid">
+                {shown.map((r) => {
+                  const sp = content.spells[r.spellId];
+                  return <SpellCard key={`mp:${r.spellId}:${r.source}`} name={sp?.name ?? r.spellId} cost={sp?.cast} meta={`${r.freq} · ${r.source}`} onClick={sp ? () => setDetail(sp) : undefined} />;
+                })}
               </div>
             )}
           </section>

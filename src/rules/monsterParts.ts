@@ -168,10 +168,13 @@ export function resolvePath(path: MpPath, level: number): ResolvedImbuement {
   return { addDamage, persistentDamage, riders };
 }
 
-/** Format an MpDamage as a human string fragment, e.g. "1d6 fire" or "+1 acid". */
-export function formatMpDamage(d: MpDamage): string {
-  const body = d.dice && d.die ? `${d.dice}${d.die}` : `+${d.flat ?? 0}`;
-  return `${d.persistent ? 'persistent ' : ''}${body} ${d.type}`;
+/** Format an MpDamage as a human string fragment, e.g. "1d6 fire", "1 persistent fire". The 'untyped'
+ *  placeholder (Bane/Wild deal the weapon's base type) renders as a readable label unless a concrete
+ *  base type is supplied. */
+export function formatMpDamage(d: MpDamage, baseType?: string): string {
+  const type = d.type === 'untyped' ? baseType ?? "weapon's type" : d.type;
+  const body = d.dice && d.die ? `${d.dice}${d.die}` : `${d.flat ?? 0}`;
+  return `${body}${d.persistent ? ' persistent' : ''} ${type}`;
 }
 
 // ── damage-scale helpers (keep the catalog compact + accurate) ──
@@ -264,4 +267,67 @@ export function getMpProperty(id: string): MpProperty | undefined {
 /** Properties offerable for a refined item of the given kind. */
 export function propertiesForKind(kind: MpItemKind): MpProperty[] {
   return MONSTER_PART_PROPERTIES.filter((p) => p.appliesTo.includes(kind));
+}
+
+export interface MpSpellGrant {
+  /** Candidate spell name (validate against your spell DB before surfacing). */
+  name: string;
+  freq: 'cantrip' | 'day' | 'hour' | 'minute';
+}
+
+function grantFreq(text: string): MpSpellGrant['freq'] {
+  if (/as a cantrip/i.test(text)) return 'cantrip';
+  if (/once\/minute/i.test(text)) return 'minute';
+  if (/once\/hour/i.test(text)) return 'hour';
+  return 'day';
+}
+
+/** Spell names a single rider's "Cast …" clause grants (split on and/or; 'either' + a leading
+ *  rank/article stripped). Anchored on the verb so non-grant prose ("Strikes deal…") is ignored. */
+function parseCastNames(text: string): string[] {
+  const out: string[] = [];
+  // Capture the noun phrase after "cast"/"casts" (a leading "either"/"both" dropped), up to a frequency
+  // word or punctuation. Comma- and "X, Y, and Z"-style lists are caught because the capture runs to the
+  // first frequency/qualifier, then we split on commas + and/or below.
+  const re = /\bcasts?\s+(?:(?:either|both)\s+)?(.+?)(?=\s+(?:as a cantrip|once\/day|once\/hour|once\/minute|each once\/day|instead|on (?:you|yourself|an ally)|automatically|\(|;|\.|$))/gi;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(text))) {
+    for (const part of m[1].split(/\s*,\s*|\s+(?:and|or)\s+/i)) {
+      const n = part
+        .replace(/^\d+(?:st|nd|rd|th)[-\s](?:level|rank)\s+/i, '') // "9th-level polar ray" → "polar ray"
+        .replace(/^(?:both |either |and |or |a |an |the )/i, '')
+        .trim();
+      if (n) out.push(n);
+    }
+  }
+  return out;
+}
+
+/** The spells an imbued property grants at `level` (cumulative; honors "no longer X" supersession).
+ *  Returns candidate NAMES + frequency — the caller matches them to the content spell DB. */
+export function imbuementGrantedSpells(path: MpPath, level: number): MpSpellGrant[] {
+  const granted = new Map<string, MpSpellGrant>();
+  for (const e of [...path.levels].sort((a, b) => a.level - b.level)) {
+    if (e.level > level) break;
+    for (const rm of e.text.matchAll(/no longer ([A-Za-z][\w'’ ]+?)(?=[).,;]|$)/gi)) granted.delete(rm[1].trim().toLowerCase());
+    const freq = grantFreq(e.text);
+    for (const name of parseCastNames(e.text)) granted.set(name.toLowerCase(), { name, freq });
+  }
+  return [...granted.values()];
+}
+
+/** The single Monster Parts apex attribute in effect, from an invested/worn item imbued with an apex
+ *  property (Strength/Dexterity/Constitution/Intelligence/Wisdom/Charisma) at level 17+. Only one apex
+ *  item works at a time — the first qualifying item wins. Returns the ability to raise, or null. */
+export function monsterPartApex(
+  inventory: { invested?: boolean; worn?: boolean; equipped?: boolean; monsterPart?: { imbuements?: { propertyId: string; level: number }[] } }[] | undefined,
+): AbilityId | null {
+  for (const inv of inventory ?? []) {
+    if (!(inv.invested || inv.worn || inv.equipped)) continue;
+    for (const im of inv.monsterPart?.imbuements ?? []) {
+      const prop = getMpProperty(im.propertyId);
+      if (prop?.apexAbility && im.level >= 17) return prop.apexAbility;
+    }
+  }
+  return null;
 }

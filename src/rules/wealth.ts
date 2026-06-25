@@ -54,12 +54,30 @@ export function cpToCoins(cp: number): Coins {
   return out;
 }
 
+/** Group an integer with thousands separators (deterministic en-US): 90000 → "90,000". */
+export function grp(n: number): string {
+  return n.toLocaleString('en-US');
+}
+
 export function formatCoins(c: Coins | undefined): string {
   if (!c) return '0 gp';
   const parts: string[] = [];
-  if (c.pp) parts.push(`${c.pp} pp`);
-  if (c.gp) parts.push(`${c.gp} gp`);
-  if (c.sp) parts.push(`${c.sp} sp`);
-  if (c.cp) parts.push(`${c.cp} cp`);
+  if (c.pp) parts.push(`${grp(c.pp)} pp`);
+  if (c.gp) parts.push(`${grp(c.gp)} gp`);
+  if (c.sp) parts.push(`${grp(c.sp)} sp`);
+  if (c.cp) parts.push(`${grp(c.cp)} cp`);
   return parts.length ? parts.join(' ') : '0 gp';
+}
+
+/** Format a price, listing EVERY present denomination (so "2 gp 5 sp" never loses the silver) with
+ *  thousands grouping. Returns `empty` (default "—") when there's no positive value. The single shared
+ *  price formatter — use this everywhere instead of per-file copies. */
+export function formatPrice(p: Coins | undefined, empty = '—'): string {
+  if (!p) return empty;
+  const parts: string[] = [];
+  if (p.pp) parts.push(`${grp(p.pp)} pp`);
+  if (p.gp) parts.push(`${grp(p.gp)} gp`);
+  if (p.sp) parts.push(`${grp(p.sp)} sp`);
+  if (p.cp) parts.push(`${grp(p.cp)} cp`);
+  return parts.length ? parts.join(', ') : empty;
 }
