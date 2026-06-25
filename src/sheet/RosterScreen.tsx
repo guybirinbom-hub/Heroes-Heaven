@@ -5,6 +5,7 @@ import { applyPlayState } from '../rules/play';
 import { deriveMaxHp } from '../rules/derive';
 import { exportWg, exportNative, importCharacter, type ImportReport } from '../data/transfer';
 import { WindowControls } from './WindowControls';
+import { confirmDialog } from './confirm';
 import { HeroesHeavenLogo } from './Logo';
 
 type Filter = 'all' | 'active' | 'archived';
@@ -215,8 +216,16 @@ export function RosterScreen({
                   <button
                     title="Delete"
                     className="danger"
-                    onClick={() => {
-                      if (confirm(`Delete ${ch.name}? This cannot be undone.`)) onDelete(c.id);
+                    onClick={async () => {
+                      if (
+                        await confirmDialog({
+                          title: `Delete ${ch.name}?`,
+                          message: "This can't be undone.",
+                          confirmLabel: 'Delete',
+                          danger: true,
+                        })
+                      )
+                        onDelete(c.id);
                     }}
                   >
                     <i className="ti ti-trash" aria-hidden="true" />

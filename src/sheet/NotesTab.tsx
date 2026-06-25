@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { Character } from '../rules/types';
 import { addNotePage, nextNoteId, removeNotePage, updateNotePage, type PlayState } from '../rules/play';
 import { RefSearchModal, refLinkHtml, type RefTarget } from './RichEditor';
+import { confirmDialog } from './confirm';
 import { DescBody } from './DescBody';
 
 /** Toolbar formatting commands (document.execCommand on the focused contentEditable). */
@@ -394,8 +395,16 @@ export function NotesTab({ character, onPlay }: { character: Character; onPlay?:
               <button
                 className="icon-btn"
                 title="Delete page"
-                onClick={() => {
-                  if (confirm(`Delete the page "${active.title}"?`)) onPlay((pl) => removeNotePage(pl, active.id));
+                onClick={async () => {
+                  if (
+                    await confirmDialog({
+                      title: 'Delete page?',
+                      message: `“${active.title}” will be removed.`,
+                      confirmLabel: 'Delete',
+                      danger: true,
+                    })
+                  )
+                    onPlay((pl) => removeNotePage(pl, active.id));
                 }}
               >
                 <i className="ti ti-trash" aria-hidden="true" />

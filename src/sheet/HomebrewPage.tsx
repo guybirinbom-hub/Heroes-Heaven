@@ -21,6 +21,7 @@ import {
 } from './homebrewSchemas';
 import { MONSTER_PARTS_CAPABILITY } from '../rules/sources';
 import { ItemEditorModal } from './ItemEditorModal';
+import { confirmDialog } from './confirm';
 import { RichEditor } from './RichEditor';
 import { useEscapeClose } from './useEscapeClose';
 import { WindowControls } from './WindowControls';
@@ -209,8 +210,16 @@ export function HomebrewPage({
     persistSource(src);
     setSelectedId(src.id);
   };
-  const removeSource = (id: string) => {
-    if (!window.confirm('Delete this source and everything in it? This cannot be undone.')) return;
+  const removeSource = async (id: string) => {
+    if (
+      !(await confirmDialog({
+        title: 'Delete this source?',
+        message: "Everything in it is deleted too. This can't be undone.",
+        confirmLabel: 'Delete',
+        danger: true,
+      }))
+    )
+      return;
     deleteHomebrewSource(id);
     onChanged();
     setSources((s) => {

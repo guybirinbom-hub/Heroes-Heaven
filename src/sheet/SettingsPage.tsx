@@ -5,6 +5,7 @@ import { fontList } from '../theme/fonts';
 import { getAppearance, setAccent, setFont, setStyle, setTheme } from '../theme/theme-manager';
 import { bumpZoom, getZoom, resetZoom, subscribeZoom, ZOOM_MAX, ZOOM_MIN, ZOOM_STEP } from '../theme/zoom';
 import { loadRoster, wipeAllData } from '../data/storage';
+import { isDesktopApp, isMobilePlatform } from '../platform';
 import { setPref, usePrefs } from '../data/prefs';
 import type { ModeDef } from '../rules/types';
 import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
@@ -236,18 +237,19 @@ function AboutSection() {
  *  to show if the program itself couldn't be removed automatically (data is wiped either way). */
 async function runUninstall(): Promise<string | null> {
   wipeAllData();
-  const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
-  if (isTauri) {
+  // The OS uninstaller is desktop-only (it launches the Windows uninstaller). On mobile/browser there's
+  // no such command — wiping data is the action; the app itself is removed from the launcher/app store.
+  if (isDesktopApp) {
     try {
       const { invoke } = await import('@tauri-apps/api/core');
       await invoke('uninstall_app'); // on success the app exits and the uninstaller takes over
       return null;
     } catch {
       // Older build without the command, a portable run, or no uninstaller found.
-      return 'Your data has been erased. To remove the application itself, uninstall “Heroes Heaven” from Windows Settings → Apps (or your platform’s app manager).';
+      return 'Your data has been erased. To remove the application itself, uninstall “Heroes Heaven” from Windows Settings → Apps.';
     }
   }
-  // Browser/dev: data is wiped — reload to the empty state.
+  if (isMobilePlatform) return 'Your data has been erased. To remove the app itself, uninstall Heroes Heaven from your device’s app manager.';
   window.location.reload();
   return null;
 }
@@ -285,7 +287,7 @@ function UninstallSection() {
           </li>
           <li>Every homebrew item and custom mode</li>
           <li>Your theme, zoom, and all other preferences</li>
-          <li>On the desktop app: the program itself (launches the system uninstaller, then closes)</li>
+          <li>{isMobilePlatform ? 'The app itself — remove it from your device’s app manager afterward' : 'On the desktop app: the program itself (launches the system uninstaller, then closes)'}</li>
         </ul>
         {status ? (
           <p className="settings-desc danger-note">{status}</p>

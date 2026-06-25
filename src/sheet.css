@@ -4805,6 +4805,31 @@ button.strike-name:hover {
   background: var(--app-surface-2);
 }
 
+/* Styled confirm() replacement: a small, non-resizable .picker variant (see sheet/confirm.tsx). */
+.confirm-modal {
+  width: 380px;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  resize: none;
+}
+.confirm-modal::before,
+.confirm-modal::after {
+  display: none;
+}
+.confirm-body {
+  padding: 15px 16px 2px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--app-text);
+}
+.confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 16px;
+}
+
 /* ---- numbers that open the stat-breakdown panel ---- */
 .openable {
   cursor: pointer;
@@ -6886,6 +6911,21 @@ button.strike-name:hover {
 @media (max-width: 720px) {
   .fsel-body { flex-direction: column; }
   .fsel-panel { width: auto; max-height: 45%; border-right: none; border-bottom: var(--app-bw) solid var(--app-border); }
+
+  /* ===== Phone / very-narrow layout (Android WebView + narrow windows) ===== */
+  /* Stack the sheet's stat rail above the tab content, and the builder's setup sidebar above its main —
+     the fixed 212px/244px sidebars don't fit a phone. Everything else (tabs scroll, auto-fill card
+     grids) already adapts. */
+  .body { grid-template-columns: 1fr; padding: 8px; gap: 10px; }
+  .builder-body { grid-template-columns: 1fr; padding: 8px; gap: 12px; }
+  .roster-body { padding: 10px; }
+  /* Reclaim the desktop window margins. */
+  .chrome { padding-left: 10px; padding-right: 10px; }
+  /* Add the Android status-bar / gesture-bar safe areas so content isn't under the system UI. */
+  .is-mobile .chrome { padding-top: env(safe-area-inset-top, 0px); }
+  .is-mobile .body,
+  .is-mobile .builder-body,
+  .is-mobile .roster-body { padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px)); }
 }
 
 /* ---- RangeSlider (dual-handle, quantized) ---- */

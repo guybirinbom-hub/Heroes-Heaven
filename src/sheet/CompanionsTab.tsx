@@ -10,6 +10,7 @@ import {
   type FamiliarBlock,
 } from '../rules/companions';
 import { toPlainText } from './RichText';
+import { confirmDialog } from './confirm';
 import {
   addCompanionCondition,
   addCompanionItem,
@@ -1149,8 +1150,16 @@ export function CompanionsTab({ character, content, onPlay }: { character: Chara
                 <button
                   className="cmp-del"
                   title="Remove companion"
-                  onClick={() => {
-                    if (!confirm(`Remove ${current.name || kindMeta(current, content).label}? This cannot be undone.`)) return;
+                  onClick={async () => {
+                    if (
+                      !(await confirmDialog({
+                        title: `Remove ${current.name || kindMeta(current, content).label}?`,
+                        message: "This can't be undone.",
+                        confirmLabel: 'Remove',
+                        danger: true,
+                      }))
+                    )
+                      return;
                     onPlay?.((p) => removePlayCompanion(p, current.id));
                     setSelId(null);
                   }}

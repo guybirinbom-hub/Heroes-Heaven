@@ -20,6 +20,7 @@ import { monsterPartsEnabled } from '../rules/sources';
 import { formatPrice, grp } from '../rules/wealth';
 import { loadHomebrewSources } from '../data/storage';
 import { ItemDetail } from './ItemDetail';
+import { confirmDialog } from './confirm';
 import { ActionGlyph, isActionCost } from './widgets';
 import { AddItemsModal } from './AddItemsModal';
 import { ItemEditorModal } from './ItemEditorModal';
@@ -451,7 +452,7 @@ export function InventoryTab({
   };
   /** Drop an attachment/rune onto a host card: validate, confirm, then etch the rune (and consume
    *  the loose rune) or affix the attachment. On failure, surface the specific reason. */
-  const attachDrop = (rawSrcId: string, hostId: string) => {
+  const attachDrop = async (rawSrcId: string, hostId: string) => {
     setAttachOver(null);
     const srcId = rawSrcId || dragId || '';
     if (!onPlay || !srcId || srcId === hostId) {
@@ -472,7 +473,8 @@ export function InventoryTab({
       endDrag();
       return;
     }
-    if (window.confirm(`${plan.verb} ${attDef.name} ${plan.prep} ${hostDef.name}?`)) {
+    endDrag(); // the drop is done — reset the drag UI before the (async) confirm modal
+    if (await confirmDialog({ title: `${plan.verb} ${attDef.name} ${plan.prep} ${hostDef.name}?`, confirmLabel: plan.verb })) {
       if (plan.action === 'affix') {
         onPlay((p) => attachItem(p, srcId, hostId));
       } else {
@@ -484,7 +486,6 @@ export function InventoryTab({
       }
       setAttachMsg(null);
     }
-    endDrag();
   };
 
   function toggle(id: string) {
