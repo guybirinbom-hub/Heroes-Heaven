@@ -51,13 +51,14 @@ export function categoryOfBook(book: string): SourceCategory {
   // Blogs and web specials → the niche "Other" shelf.
   if (/Blog|Web Supplement|Article/.test(book)) return 'Other';
   if (
-    /Pathfinder Society|Organized Play|One-Shot/.test(book) || // Society play folds in with Adventure Paths
+    /Pathfinder Society|Organized Play|One-Shot|\bPFS\b/.test(book) || // Society play folds in with Adventure Paths
     /Adventure Path/.test(book) || // the Adventure Path hardcover line
     /^Pathfinder #\d+/.test(book) || // individual AP volumes: "Pathfinder #219: Lord of the Trinity Star"
-    /Hardcover Compilation/.test(book) || // collected-AP hardcovers
+    /Hardcover Compilation|\(Hardcover\)/.test(book) || // collected-AP hardcovers (incl. "Gatewalkers (Hardcover)")
     /Player.?s Guide/.test(book) || // the free per-AP player's guides
     /^Pathfinder Adventures?:/.test(book) || // standalone adventures: "Pathfinder Adventure: The Slithering"
-    /Kingmaker|Claws of the Tyrant|Wake the Dead|Malevolence|Quest for the Frozen Flame/.test(book)
+    /Kingmaker|Claws of the Tyrant|Wake the Dead|Malevolence|Quest for the Frozen Flame/.test(book) ||
+    /Crown of the Kobold King|Night of the Gray Death|Troubles in Grayce|Seven Dooms|Hellknight Hill|Fall of Plaguestone|Beginner Box: Heroes/.test(book)
   )
     return 'Adventure Paths';
   return 'Other';
@@ -150,6 +151,7 @@ export interface SourceGroup {
  *  couple of toggles (all Society play together, all blog/web posts together). null = its own entry. */
 function otherBundleLabel(book: string): string | null {
   if (/Blog|Web Supplement|Article/.test(book)) return 'Blogs & web articles';
+  if (/Special:|Fumbus|Comic/.test(book)) return 'Specials & comics';
   return null;
 }
 

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { isMobileNow } from './useIsMobile';
 import type { ActiveCondition, Condition, ModeDef } from '../rules/types';
 import { ModesPanel } from './ModesPanel';
 import { DescBody } from './DescBody';
@@ -98,7 +99,7 @@ export function ConditionsModal({
             <div className="picker-controls">
           <div className="search">
             <i className="ti ti-search" aria-hidden="true" />
-            <input autoFocus placeholder="Search conditions" value={q} onChange={(e) => setQ(e.target.value)} />
+            <input autoFocus={!isMobileNow()} placeholder="Search conditions" value={q} onChange={(e) => setQ(e.target.value)} />
           </div>
           <span className="ss-count">{list.length}</span>
         </div>

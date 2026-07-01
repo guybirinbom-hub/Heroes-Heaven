@@ -306,7 +306,8 @@ export type FeatCategory =
   | 'skill'
   | 'general'
   | 'archetype'
-  | 'bonus';
+  | 'bonus'
+  | 'mythic';
 
 /** An embedded sub-choice a feat prompts when taken (a Foundry ChoiceSet). */
 export interface FeatChoiceDef {
@@ -314,7 +315,7 @@ export interface FeatChoiceDef {
   prompt: string;
   /** 'domains' resolves options from the deity at build time; 'array' carries fixed options. */
   kind: 'domains' | 'array';
-  options?: { value: string; label: string }[];
+  options?: { value: string; label: string; description?: string }[];
 }
 
 export interface Feat extends ContentBase, DefenseGrants {
@@ -944,6 +945,8 @@ export interface Condition {
   valued: boolean;
   /** Foundry's condition group (senses, death, attitudes, detection, abilities), if any. */
   group?: string | null;
+  /** Source book (only carried by added campaign conditions, e.g. Kingmaker — used for visibility gating). */
+  source?: SourceInfo;
 }
 
 /** Resolved proficiency ranks. The calc layer turns these into modifiers. */
@@ -1257,6 +1260,12 @@ export interface Character {
   overrides?: BuildOverrides;
   /** Enabled source books (absent = the four Core books); other books are hidden from the builder. */
   enabledSources?: string[];
+  /** Campaign content toggles. Mythic (War of Immortals): off → all `mythic`-trait content is hidden
+   *  from the player and the mythic subsystem is inactive. Kingmaker: on → its actions/conditions show. */
+  mythicEnabled?: boolean;
+  kingmakerEnabled?: boolean;
+  /** The chosen Mythic Calling (a [calling]-trait classFeature id). */
+  mythicCalling?: string | null;
   /** Dual Class: the second class id + its subclass (variant rule). */
   classId2?: string | null;
   subclassId2?: string | null;
@@ -1280,6 +1289,8 @@ export interface Character {
    *  When set, the sheet shows this instead of the derived Speed and highlights it. */
   speedOverride?: number;
   heroPoints: number;
+  /** Mythic points currently held (0..3); only used when the character is mythic. */
+  mythicPoints?: number;
   focus?: FocusPool;
   conditions: ActiveCondition[];
   /** Pinned/favorited activity keys (UI preference, persisted per character via play-state). */
@@ -1293,6 +1304,8 @@ export interface Character {
   companionConditions?: Record<string, ActiveCondition[]>;
   /** Tracked HP per companion (damage taken + temp HP), keyed by companion id; overlaid from play. */
   companionHp?: Record<string, { damage: number; temp: number }>;
+  /** Active modes (resolved defs) per companion, keyed by companion id; overlaid from play-state. */
+  companionModes?: Record<string, ModeDef[]>;
   /** Active modes (resolved defs) whose modifiers adjust stats; overlaid from play-state. */
   activeModes?: ModeDef[];
 

@@ -21,7 +21,7 @@
  *         items/skills) to our slugs. Anything whose name we don't carry is dropped and
  *         listed in the returned ImportReport.
  */
-import type { AbilityId, Character, CharacterOptions, Coins, ContentDatabase, NaturalAttack, NotePage, ProficiencyRank, VariantRules } from '../rules/types';
+import type { AbilityId, Character, CharacterOptions, Coins, ContentDatabase, Item, NaturalAttack, NotePage, ProficiencyRank, Rarity, Tradition, VariantRules } from '../rules/types';
 import { ABILITIES, SKILLS } from '../rules/types';
 import { newRosterId, type SavedChar } from './storage';
 import { buildCharacter, classChoosesDeity, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
@@ -61,6 +61,36 @@ export interface ImportReport {
 /** Normalize a name or slug for fuzzy matching ("Cloistered Cleric" ↔ "cloistered-cleric"). */
 function norm(s: string): string {
   return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+/** Loose name match that tolerates WG's category suffix/prefix. WG names subclasses as
+ *  "Maestro Muse" / "Mastermind Racket" / "Outwit Edge" while Codex stores the bare option
+ *  ("Maestro"), and sometimes the reverse ("Animal Instinct" both sides). Matches when the two
+ *  norms are equal or one is the other plus a trailing word. */
+function looseMatch(a: string, b: string): boolean {
+  return !!a && !!b && (a === b || a.startsWith(b + '-') || b.startsWith(a + '-'));
+}
+
+/** Strip a trailing parenthetical so WG "Predictive Purchase (Investigator)" matches Codex
+ *  "Predictive Purchase" (and vice-versa). */
+function stripParen(s: string): string {
+  return s.replace(/\s*\([^)]*\)\s*$/, '').trim();
+}
+
+/** Distinctive tokens of a name (drops generic category words so an extraChoice option matches
+ *  however WG phrases it: "Wood Gate" / "Kinetic Element (Wood)" both reduce to {wood}). */
+const EXTRA_STOP = new Set(['gate', 'element', 'kinetic', 'the', 'of', 'a', 'an', 'and', 'muse', 'racket', 'style', 'instinct', 'edge', 'mind']);
+function distinctTokens(s: string): string[] {
+  return s.toLowerCase().split(/[^a-z0-9]+/).filter((t) => t.length >= 3 && !EXTRA_STOP.has(t));
+}
+
+/** An extraChoice option matches a WG feature name when every distinctive token of the option name
+ *  is present in the feature name (handles WG's wrapping/suffixing of the value). */
+function extraChoiceMatch(featureName: string, optName: string): boolean {
+  const opt = distinctTokens(optName);
+  if (!opt.length) return false;
+  const feat = new Set(distinctTokens(featureName));
+  return opt.every((t) => feat.has(t));
 }
 
 function stripHtml(s: string): string {
@@ -288,7 +318,7 @@ export function exportWg(saved: SavedChar, content: ContentDatabase): string {
 
 /** Parse any supported file into a roster entry + a report of what happened. Throws a
  *  human-readable Error if the file isn't recognized. */
-export function importCharacter(text: string, content: ContentDatabase): { saved: SavedChar; report: ImportReport } {
+export function importCharacter(text: string, content: ContentDatabase): { saved: SavedChar; report: ImportReport; customItems: Item[] } {
   let obj: any;
   try {
     obj = JSON.parse(text);
@@ -303,7 +333,7 @@ export function importCharacter(text: string, content: ContentDatabase): { saved
   throw new Error('Unrecognized file. Expected a Wanderer’s Codex export or a Wanderer’s Guide version-4 JSON.');
 }
 
-function importNative(obj: any): { saved: SavedChar; report: ImportReport } {
+function importNative(obj: any): { saved: SavedChar; report: ImportReport; customItems: Item[] } {
   const character = obj.character as Character | undefined;
   if (!character || typeof character !== 'object' || typeof character.name !== 'string') {
     throw new Error('This Codex file is missing its character data.');
@@ -323,6 +353,7 @@ function importNative(obj: any): { saved: SavedChar; report: ImportReport } {
       resolved: [`${character.name} — level ${character.level}`, 'Imported losslessly (full build + play state).'],
       warnings: [],
     },
+    customItems: [],
   };
 }
 
@@ -378,7 +409,47 @@ function tiptapToHtml(node: any): string {
   }
 }
 
-function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; report: ImportReport } {
+const ITEM_RARITIES = new Set<Rarity>(['common', 'uncommon', 'rare', 'unique']);
+const slugifyItem = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'item';
+/** WG bulk is a string: "L" (light) → 0.1, "—"/"-"/""/"0" → 0, a number-string → that number. */
+function parseImportBulk(b: unknown): number {
+  if (typeof b === 'number') return Number.isFinite(b) ? b : 0;
+  const s = String(b ?? '').trim();
+  if (!s || s === '—' || s === '-' || s === '0') return 0;
+  if (/^l$/i.test(s)) return 0.1;
+  const n = Number(s);
+  return Number.isFinite(n) ? n : 0;
+}
+function mapImportPrice(p: any): Coins | undefined {
+  if (!p || typeof p !== 'object') return undefined;
+  const out: Coins = {};
+  for (const k of ['pp', 'gp', 'sp', 'cp'] as const) {
+    const n = Number(p[k]);
+    if (Number.isFinite(n) && n > 0) out[k] = n;
+  }
+  return Object.keys(out).length ? out : undefined;
+}
+/** Build a generic custom (homebrew) Item from a WG inventory row whose name we don't carry, so the
+ *  item still imports — with its name/level/bulk/price/description — instead of being silently dropped. */
+function synthImportedItem(wgItem: any): Item {
+  const name = String(wgItem?.name ?? '').trim() || 'Unknown item';
+  const price = mapImportPrice(wgItem?.price);
+  const item: Item = {
+    id: `custom-${slugifyItem(name)}-${Math.random().toString(36).slice(2, 7)}`,
+    name,
+    itemType: 'equipment',
+    traits: [],
+    rarity: ITEM_RARITIES.has(wgItem?.rarity) ? (wgItem.rarity as Rarity) : 'common',
+    level: Number(wgItem?.level) || 0,
+    bulk: parseImportBulk(wgItem?.bulk),
+    description: typeof wgItem?.description === 'string' ? wgItem.description : '',
+    source: { license: 'homebrew' },
+    ...(price ? { price } : {}),
+  };
+  return item;
+}
+
+function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; report: ImportReport; customItems: Item[] } {
   const c = obj.character ?? {};
   const snap = obj.content ?? {};
   const resolved: string[] = [];
@@ -392,6 +463,17 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
   const spellsIdx = nameIndex(content.spells);
   const itemsIdx = nameIndex(content.items);
   const runesIdx = nameIndex(content.runes);
+
+  // Parenthetical-tolerant feat lookup: WG and Codex disagree on the "(Investigator)" suffix
+  // ("Predictive Purchase" ↔ "Predictive Purchase (Investigator)", "Skill Mastery (Investigator)" ↔
+  // "Skill Mastery"), so index feats by their de-parenthesized name and try the query both ways.
+  const featsNoParen = new Map<string, string>();
+  for (const [id, f] of Object.entries(content.feats)) {
+    const np = norm(stripParen(f.name));
+    if (np && !featsNoParen.has(np)) featsNoParen.set(np, id);
+  }
+  const matchFeat = (nm: string): string | undefined =>
+    featsIdx.get(norm(nm)) ?? featsIdx.get(norm(stripParen(nm))) ?? featsNoParen.get(norm(nm)) ?? featsNoParen.get(norm(stripParen(nm)));
 
   const ancName: string | undefined = c.details?.ancestry?.name ?? snap.ancestry;
   const bgName: string | undefined = c.details?.background?.name ?? snap.background;
@@ -427,13 +509,30 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
     (f): f is { name: string; level?: number } => !!f && typeof (f as any).name === 'string',
   );
   const featureNorms = features.map((f) => norm(f.name));
+  // Names we've accounted for (subclass, extraChoice options, tactics, class features) so the
+  // "dropped feats" warning doesn't cry wolf over things that ARE imported or auto-granted.
+  const accountedFor = new Set<string>();
+  const cls2 = classId2 ? content.classes[classId2] : undefined;
+  // Auto-granted class features (Flurry of Blows, Hunt Prey, Confident Finisher, …) aren't player
+  // feats — the class build provides them; don't warn that they were "dropped".
+  for (const f of [...(cls?.features ?? []), ...(cls2?.features ?? [])]) {
+    const fn = content.classFeatures[f.featureId]?.name;
+    if (fn) accountedFor.add(norm(fn));
+  }
 
-  // Subclass: match a feature name to one of this class's subclass options.
+  // Subclass: match a feature name to one of this class's subclass options (loose: WG suffixes them).
   let subclassId: string | null = null;
   if (cls?.subclass) {
-    const opt = cls.subclass.options.find((o) => featureNorms.includes(norm(o.name)));
+    let subHit: string | undefined;
+    const opt = cls.subclass.options.find((o) => {
+      const fn = featureNorms.find((x) => looseMatch(x, norm(o.name)));
+      if (fn) { subHit = fn; return true; }
+      return false;
+    });
     if (opt) {
       subclassId = opt.id;
+      accountedFor.add(norm(opt.name));
+      if (subHit) accountedFor.add(subHit);
       resolved.push(`${cls.subclass.name}: ${opt.name}`);
     }
   }
@@ -442,9 +541,10 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
   let heritageId: string | null = null;
   if (ancestryId) {
     const heritageOpts = Object.values(content.heritages).filter((h) => h.ancestryId === ancestryId || h.ancestryId === null);
-    const h = heritageOpts.find((opt) => featureNorms.includes(norm(opt.name)));
+    const h = heritageOpts.find((opt) => featureNorms.some((fn) => looseMatch(fn, norm(opt.name))));
     if (h) {
       heritageId = h.id;
+      accountedFor.add(norm(h.name));
       resolved.push(`Heritage: ${h.name}`);
     } else {
       warnings.push('Heritage could not be detected from the file — left unset.');
@@ -457,11 +557,44 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
     const cand = features.map((f) => f.name).find((n) => deities.get(norm(n)));
     if (cand) {
       deityId = deities.get(norm(cand)) ?? null;
-      if (deityId) resolved.push(`Deity: ${content.deities[deityId].name}`);
+      if (deityId) {
+        accountedFor.add(norm(cand));
+        resolved.push(`Deity: ${content.deities[deityId].name}`);
+      }
     } else if (classChoosesDeity(cls?.features)) {
       warnings.push('Deity could not be detected — pick one in the builder.');
     }
   }
+
+  // extraChoices (Kineticist elements, Animist apparitions, Exemplar ikons, Psychic minds, …): WG
+  // lists these among feats_features but Codex models them as per-class multi-picks, so match each
+  // group's options to the WG feature names (containment-loose: "Kinetic Element (Wood)" → "Wood").
+  const matchedExtra: Record<string, string[]> = {};
+  for (const g of [...(cls?.extraChoices ?? []), ...(cls2?.extraChoices ?? [])]) {
+    const ids: string[] = [];
+    for (const o of g.options) {
+      const feat = features.find((f) => extraChoiceMatch(f.name, o.name));
+      if (feat) {
+        if (!ids.includes(o.id)) ids.push(o.id);
+        accountedFor.add(norm(feat.name));
+      }
+    }
+    if (ids.length) matchedExtra[g.id] = ids;
+  }
+  for (const [, ids] of Object.entries(matchedExtra)) {
+    const grp = [...(cls?.extraChoices ?? []), ...(cls2?.extraChoices ?? [])].find((g) => g.options.some((o) => ids.includes(o.id)));
+    if (grp) resolved.push(`${grp.name}: ${ids.map((id) => grp.options.find((o) => o.id === id)?.name).filter(Boolean).join(', ')}`);
+  }
+
+  // Commander tactics live in content.actions ([tactic] trait); match WG feature names. Always
+  // account for them (so they aren't mis-reported as "missing feats"), but only feed the folio for
+  // an actual Commander — that's the only class whose build consumes build.commanderTactics.
+  const tacIdx = new Map<string, string>();
+  for (const a of Object.values(content.actions)) if (a.traits?.includes('tactic')) tacIdx.set(norm(a.name), a.id);
+  const tacticIds = [...new Set(features.map((f) => tacIdx.get(norm(f.name))).filter((x): x is string => !!x))];
+  for (const f of features) if (tacIdx.has(norm(f.name))) accountedFor.add(norm(f.name));
+  const matchedTactics: string[] = cls?.id === 'commander' || cls2?.id === 'commander' ? tacticIds : [];
+  if (matchedTactics.length) resolved.push(`${matchedTactics.length} commander tactic${matchedTactics.length === 1 ? '' : 's'} matched.`);
 
   // Key attribute: WG gives final scores; pick the class's best-scoring key option.
   let keyAbility: AbilityId | null = cls?.keyAbility?.[0] ?? null;
@@ -521,9 +654,10 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
   const matchedFeats: { featId: string; level: number; category: Character['feats'][number]['category'] }[] = [];
   const unmatchedFeats: string[] = [];
   for (const f of features) {
-    const id = featsIdx.get(norm(f.name));
+    const id = matchFeat(f.name);
     if (!id) continue; // not necessarily a feat (could be a class feature label) — skip silently
     const ft = content.feats[id];
+    if (matchedFeats.some((m) => m.featId === id)) continue; // de-dupe (parenthetical variants)
     matchedFeats.push({ featId: id, level: ft.level || f.level || 1, category: ft.category });
   }
   if (matchedFeats.length) {
@@ -538,10 +672,12 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
     const chosenNames: string[] = ['generalAndSkillFeats', 'classFeats', 'ancestryFeats', 'otherFeats']
       .flatMap((k) => (Array.isArray(ffSrc[k]) ? ffSrc[k].map((f: any) => f?.name) : []))
       .filter((n: any): n is string => typeof n === 'string');
-    const dropped = [...new Set(chosenNames.filter((nm) => !featsIdx.get(norm(nm))))];
+    // A chosen name is genuinely dropped only if we didn't match it as a feat AND it wasn't accounted
+    // for as a subclass / extraChoice option / tactic / auto-granted class feature.
+    const dropped = [...new Set(chosenNames.filter((nm) => !matchFeat(nm) && !accountedFor.has(norm(nm))))];
     if (dropped.length) warnings.push(`Feats not in Codex content — re-add in the builder: ${dropped.join(', ')}`);
   } else {
-    for (const f of features) if (!featsIdx.get(norm(f.name)) && /feat|dedication|prowess/i.test(f.name)) unmatchedFeats.push(f.name);
+    for (const f of features) if (!matchFeat(f.name) && !accountedFor.has(norm(f.name)) && /feat|dedication|prowess/i.test(f.name)) unmatchedFeats.push(f.name);
     if (unmatchedFeats.length) warnings.push(`Feats not in Codex content (dropped): ${unmatchedFeats.slice(0, 12).join(', ')}${unmatchedFeats.length > 12 ? '…' : ''}`);
   }
 
@@ -581,6 +717,11 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
     warnings.push('Could not fully reverse-derive the build; some choices may need fixing in the builder.');
   }
 
+  // Layer in the matched per-class multi-picks the reverse-derive can't see: extraChoices
+  // (Kineticist elements, Animist apparitions, …) and the Commander folio.
+  if (Object.keys(matchedExtra).length) build.extraChoices = { ...build.extraChoices, ...matchedExtra };
+  if (matchedTactics.length) build.commanderTactics = matchedTactics;
+
   // Spells & cantrips by name → onto the build, then rebuild.
   const spellWarn: string[] = [];
   const cantrips = collectSpells(snap, 'cantrips', spellsIdx, spellWarn);
@@ -592,7 +733,7 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
   if (spellWarn.length) warnings.push(`Spells not in Codex content (dropped): ${spellWarn.slice(0, 12).join(', ')}${spellWarn.length > 12 ? '…' : ''}`);
 
   // Inventory by name (WG embeds the item name on each row).
-  const invWarn: string[] = [];
+  const customItems: Item[] = [];
   // WG nests stowed items under each container's `container_contents`; flatten the tree so items inside
   // a backpack/bag aren't dropped (the container itself is also a row and imports normally — the only
   // thing lost is the nesting, which Codex re-derives from carry flags anyway).
@@ -631,7 +772,11 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
       continue;
     }
     if (!id) {
-      invWarn.push(nm);
+      // Not in our content — synthesize a custom (homebrew) item from the import so it isn't dropped.
+      const custom = synthImportedItem(row.item);
+      customItems.push(custom);
+      const cqty = Number(row?.item?.meta_data?.quantity) || 1;
+      builtInv.push({ itemId: custom.id, quantity: cqty, equipped: !!row.is_equipped, invested: !!row.is_invested });
       continue;
     }
     const qty = Number(row?.item?.meta_data?.quantity) || 1;
@@ -646,15 +791,99 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
     build.naturalAttacks = naturals;
     resolved.push(`${naturals.length} natural attack${naturals.length === 1 ? '' : 's'} (${naturals.map((n) => n.name).join(', ')}).`);
   }
-  if (invWarn.length) warnings.push(`Items not in Codex content (dropped): ${invWarn.slice(0, 12).join(', ')}${invWarn.length > 12 ? '…' : ''}`);
+  if (customItems.length)
+    resolved.push(
+      `${customItems.length} item${customItems.length === 1 ? '' : 's'} not in the app's data — imported as custom item${customItems.length === 1 ? '' : 's'}: ${customItems.slice(0, 12).map((i) => i.name).join(', ')}${customItems.length > 12 ? '…' : ''}.`,
+    );
 
   // Final rebuild from the assembled build.
   let character: Character;
   try {
-    character = buildCharacter(build, content);
+    // Resolve the build against content augmented with the synthesized custom items, so imported
+    // unrecognized items resolve in the character's inventory (App persists them as homebrew after).
+    const contentForBuild = customItems.length
+      ? { ...content, items: { ...content.items, ...Object.fromEntries(customItems.map((i) => [i.id, i])) } }
+      : content;
+    character = buildCharacter(build, contentForBuild);
   } catch {
     character = ch;
     warnings.push('Final rebuild failed; kept the partially-assembled character.');
+  }
+
+  // --- Focus & innate spells WG resolved. The build only grants focus/innate spells whose granting
+  //     feat or subclass we matched; WG lists the FINAL resolved set, so add any it has that aren't
+  //     already on the sheet — otherwise a Cleric's domain spell, a Monk's ki spell, a Sorcerer's
+  //     innate bloodline spell, etc. silently vanish. ---
+  const spellIdsOnSheet = new Set<string>(
+    character.spellcasting.flatMap((e) => [
+      ...(e.cantrips ?? []),
+      ...Object.values(e.repertoire ?? {}).flat(),
+      ...Object.values(e.grantedRepertoire ?? {}).flat(),
+      ...Object.values(e.prepared ?? {}).flatMap((slots) => slots.map((s) => s.spellId).filter((x): x is string => !!x)),
+      ...Object.values(e.spellbook ?? {}).flat(),
+    ]),
+  );
+  const firstCaster = character.spellcasting.find((e) => e.type === 'spontaneous' || e.type === 'prepared');
+
+  const wgFocus: string[] = (Array.isArray(snap.focus_spells) ? snap.focus_spells : [])
+    .map((s: any): string | undefined => (typeof s?.name === 'string' ? spellsIdx.get(norm(s.name)) : undefined))
+    .filter((id: string | undefined): id is string => !!id && !spellIdsOnSheet.has(id));
+  if (wgFocus.length) {
+    let entry = character.spellcasting.find((e) => e.type === 'focus');
+    if (!entry) {
+      entry = {
+        id: 'wg-focus',
+        name: 'Focus spells',
+        type: 'focus',
+        tradition: firstCaster?.tradition ?? (content.spells[wgFocus[0]]?.traditions?.[0] as Tradition) ?? 'occult',
+        keyAbility: firstCaster?.keyAbility ?? cls?.keyAbility?.[0] ?? 'cha',
+        proficiency: firstCaster?.proficiency ?? 'trained',
+        cantrips: [],
+        repertoire: {},
+      };
+      character.spellcasting.push(entry);
+    }
+    const rep = (entry.repertoire ??= {});
+    for (const id of wgFocus) {
+      const r = content.spells[id]?.rank || 1;
+      (rep[r] ??= []).push(id);
+      spellIdsOnSheet.add(id);
+    }
+    const poolMax = Math.min(3, Math.max(character.focus?.max ?? 0, 1));
+    character.focus = { max: poolMax, current: character.focus?.current ?? poolMax };
+    resolved.push(`${wgFocus.length} focus spell${wgFocus.length === 1 ? '' : 's'} imported.`);
+  }
+
+  const wgInnate = (Array.isArray(snap.innate_spells) ? snap.innate_spells : [])
+    .map((s: any) => {
+      const nm = s?.spell?.name ?? s?.name;
+      const id = typeof nm === 'string' ? spellsIdx.get(norm(nm)) : undefined;
+      return id ? { id, tradition: typeof s?.tradition === 'string' ? s.tradition.toLowerCase() : undefined } : undefined;
+    })
+    .filter((x: any): x is { id: string; tradition?: string } => !!x && !spellIdsOnSheet.has(x.id));
+  if (wgInnate.length) {
+    let entry = character.spellcasting.find((e) => e.type === 'innate');
+    if (!entry) {
+      entry = {
+        id: 'wg-innate',
+        name: 'Innate spells',
+        type: 'innate',
+        tradition: (wgInnate[0].tradition as Tradition) ?? (content.spells[wgInnate[0].id]?.traditions?.[0] as Tradition) ?? firstCaster?.tradition ?? 'arcane',
+        keyAbility: firstCaster?.keyAbility ?? 'cha',
+        proficiency: firstCaster?.proficiency ?? 'trained',
+        cantrips: [],
+        repertoire: {},
+      };
+      character.spellcasting.push(entry);
+    }
+    const rep = (entry.repertoire ??= {});
+    for (const { id } of wgInnate) {
+      const r = content.spells[id]?.rank ?? 0;
+      if (r <= 0) entry.cantrips.push(id);
+      else (rep[r] ??= []).push(id);
+      spellIdsOnSheet.add(id);
+    }
+    resolved.push(`${wgInnate.length} innate spell${wgInnate.length === 1 ? '' : 's'} imported.`);
   }
 
   // Patch in coins, vitals, bio, and portrait the build doesn't carry.
@@ -751,6 +980,7 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
   return {
     saved: { id: newRosterId(), character, build, archived: false },
     report: { source: 'Wanderer’s Guide', lossless: false, resolved, warnings },
+    customItems,
   };
 }
 

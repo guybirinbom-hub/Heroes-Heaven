@@ -1081,6 +1081,51 @@ export function VariantRulesCard({ build, actions, content }: EditorProps) {
   );
 }
 
+/** Campaign content toggles (Mythic, Kingmaker) — top-level build flags that show/hide their content. */
+export function CampaignOptionsCard({ build, actions, content }: EditorProps) {
+  const calling = build.mythicCalling ? content.classFeatures[build.mythicCalling] : undefined;
+  return (
+    <SetupCard icon="ti-flag" label="Campaign">
+      <div className="spr-chips">
+        {(
+          [
+            ['mythicEnabled', 'Mythic', 'War of Immortals mythic rules: gain a mythic calling + destiny, mythic feats, and mythic points. Off hides all mythic-trait content.'],
+            ['kingmakerEnabled', 'Kingmaker', 'Show the Kingmaker Adventure Path content — its kingdom actions and conditions.'],
+          ] as const
+        ).map(([flag, label, desc]) => (
+          <button
+            key={flag}
+            type="button"
+            title={desc}
+            className={'inv-toggle' + (build[flag] ? ' on' : '')}
+            onClick={() => actions.patch({ [flag]: !build[flag] })}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      {build.mythicEnabled && (
+        <SubCard icon="ti-flame" label="Mythic Calling">
+          <PopupSelect
+            title="Mythic Calling"
+            value={build.mythicCalling ?? ''}
+            onChange={(v) => actions.patch({ mythicCalling: v || null })}
+            options={[
+              { value: '', label: '— none —' },
+              ...Object.values(content.classFeatures)
+                .filter((f) => (f.traits ?? []).includes('calling'))
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((f) => ({ value: f.id, label: f.name, description: f.description, descRefs: f.descRefs })),
+            ]}
+          />
+          {calling?.description && <ChoiceDetails name={calling.name} flavor={calling.description} descRefs={calling.descRefs} />}
+          <p className="setup-hint">You gain a mythic feat slot at every even level (2–20), fillable with mythic feats.</p>
+        </SubCard>
+      )}
+    </SetupCard>
+  );
+}
+
 /**
  * "Overrides" — the creative/freeform editing section. Lets the user deliberately break the rules in
  * SPECIFIC, explicit cases (no global "ignore everything" switch): take a feat you don't qualify for
@@ -1540,10 +1585,10 @@ export function OptionsCard({ build, actions }: EditorProps) {
         <button
           type="button"
           title="Turn the dice roller on or off. When off, its button (and per-stat roll triggers) is hidden everywhere on the sheet."
-          className={'inv-toggle' + (!opts.diceRollerOff ? ' on' : '')}
-          onClick={() => set({ diceRollerOff: !opts.diceRollerOff })}
+          className={'inv-toggle' + (opts.diceRollerOff === false ? ' on' : '')}
+          onClick={() => set({ diceRollerOff: opts.diceRollerOff === false })}
         >
-          Dice roller {opts.diceRollerOff ? 'off' : 'on'}
+          Dice roller {opts.diceRollerOff === false ? 'on' : 'off'}
         </button>
         <button
           type="button"

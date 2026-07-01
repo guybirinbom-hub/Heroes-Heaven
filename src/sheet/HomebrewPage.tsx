@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import type { ContentDatabase, Item } from '../rules/types';
+import type { ContentDatabase, Item, ModeDef } from '../rules/types';
 import {
   loadHomebrewSources,
   saveHomebrewSource,
@@ -26,6 +26,7 @@ import { RichEditor } from './RichEditor';
 import { useEscapeClose } from './useEscapeClose';
 import { WindowControls } from './WindowControls';
 import { HeroesHeavenLogo } from './Logo';
+import { PageMenu } from './PageMenu';
 
 type EntryRec = Record<string, unknown> & { id: string; name: string; homebrewSourceId?: string };
 
@@ -179,11 +180,19 @@ export function HomebrewPage({
   content,
   onChanged,
   onClose,
+  onOpenRoster,
+  onSaveMode,
+  onDeleteMode,
+  characters,
 }: {
   content: ContentDatabase;
   /** Called after any homebrew mutation so the host can refresh the live content DB. */
   onChanged: () => void;
   onClose: () => void;
+  onOpenRoster?: () => void;
+  onSaveMode?: (mode: ModeDef) => void;
+  onDeleteMode?: (id: string) => void;
+  characters?: { id: string; name: string }[];
 }) {
   useEscapeClose(onClose);
   const [sources, setSources] = useState<Record<string, HomebrewSource>>(() => loadHomebrewSources());
@@ -248,6 +257,13 @@ export function HomebrewPage({
           <HeroesHeavenLogo className="chrome-logo" /> Homebrew
         </div>
         <WindowControls />
+        <PageMenu
+          items={onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []}
+          modes={content.modes}
+          characters={characters}
+          onSaveMode={onSaveMode}
+          onDeleteMode={onDeleteMode}
+        />
       </header>
       <div className="settings-body">
           <nav className="settings-nav" aria-label="Homebrew sources">

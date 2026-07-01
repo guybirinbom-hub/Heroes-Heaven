@@ -6,6 +6,7 @@ import { deriveDefenses } from '../rules/derive';
 import { setDetail, setPortrait, type PlayState } from '../rules/play';
 import { proficiencyDesc, senseDesc, traitDesc, languageDesc } from '../rules/glossary';
 import { downscaleImage } from './imageUtil';
+import { useIsMobile } from './useIsMobile';
 
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -56,6 +57,7 @@ export function DetailsTab({
   content: ContentDatabase;
   onPlay?: (fn: (play: PlayState) => PlayState) => void;
 }) {
+  const isMobile = useIsMobile();
   const ancestry = character.ancestryId ? content.ancestries[character.ancestryId] : undefined;
   const heritage = character.heritageId ? content.heritages[character.heritageId] : undefined;
   const background = character.backgroundId ? content.backgrounds[character.backgroundId] : undefined;
@@ -155,47 +157,66 @@ export function DetailsTab({
               />
             )}
           </div>
-          <div className="origin-list">
-            <div className="orow pair">
-              <div className="ocell">
-                <i className="ti ti-user olead" aria-hidden="true" />
+          {isMobile ? (
+            <div className="origin-boxes">
+              {[
+                { icon: 'ti-user', label: 'Ancestry', name: ancestry?.name, title: ancestry?.name ?? 'Ancestry', desc: ancestry?.description, refs: ancestry?.descRefs },
+                { icon: 'ti-sparkles', label: 'Heritage', name: heritage?.name, title: heritage?.name ?? 'Heritage', desc: heritage?.description, refs: heritage?.descRefs },
+                { icon: 'ti-book-2', label: 'Background', name: bgName, title: bgName ?? 'Background', desc: bgDesc, refs: background?.descRefs },
+                { icon: 'ti-shield-half', label: 'Class', name: cls?.name, title: cls?.name ?? 'Class', desc: cls?.description, refs: cls?.descRefs },
+              ].map((o) => (
+                <div className="obox" key={o.label}>
+                  <i className={'ti ' + o.icon + ' olead'} aria-hidden="true" />
+                  <div className="olabel">{o.label}</div>
+                  <InfoTerm className="oval" title={o.title} description={o.desc} descRefs={o.refs}>
+                    {o.name ?? '—'}
+                  </InfoTerm>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="origin-list">
+              <div className="orow pair">
+                <div className="ocell">
+                  <i className="ti ti-user olead" aria-hidden="true" />
+                  <div className="ocell-text">
+                    <div className="olabel">Ancestry</div>
+                    <InfoTerm className="oval" title={ancestry?.name ?? 'Ancestry'} description={ancestry?.description} descRefs={ancestry?.descRefs}>
+                      {ancestry?.name ?? '—'}
+                    </InfoTerm>
+                  </div>
+                </div>
+                <div className="odiv" />
+                <div className="ocell">
+                  <i className="ti ti-sparkles olead" aria-hidden="true" />
+                  <div className="ocell-text">
+                    <div className="olabel">Heritage</div>
+                    <InfoTerm className="oval" title={heritage?.name ?? 'Heritage'} description={heritage?.description} descRefs={heritage?.descRefs}>
+                      {heritage?.name ?? '—'}
+                    </InfoTerm>
+                  </div>
+                </div>
+              </div>
+              <div className="orow">
+                <i className="ti ti-book-2 olead" aria-hidden="true" />
                 <div className="ocell-text">
-                  <div className="olabel">Ancestry</div>
-                  <InfoTerm className="oval" title={ancestry?.name ?? 'Ancestry'} description={ancestry?.description} descRefs={ancestry?.descRefs}>
-                    {ancestry?.name ?? '—'}
+                  <div className="olabel">Background</div>
+                  <InfoTerm className="oval" title={bgName ?? 'Background'} description={bgDesc} descRefs={background?.descRefs}>
+                    {bgName ?? '—'}
                   </InfoTerm>
                 </div>
               </div>
-              <div className="odiv" />
-              <div className="ocell">
-                <i className="ti ti-sparkles olead" aria-hidden="true" />
+              <div className="orow">
+                <i className="ti ti-shield-half olead" aria-hidden="true" />
                 <div className="ocell-text">
-                  <div className="olabel">Heritage</div>
-                  <InfoTerm className="oval" title={heritage?.name ?? 'Heritage'} description={heritage?.description} descRefs={heritage?.descRefs}>
-                    {heritage?.name ?? '—'}
+                  <div className="olabel">Class</div>
+                  <InfoTerm className="oval" title={cls?.name ?? 'Class'} description={cls?.description} descRefs={cls?.descRefs}>
+                    {cls?.name ?? '—'}
                   </InfoTerm>
                 </div>
               </div>
             </div>
-            <div className="orow">
-              <i className="ti ti-book-2 olead" aria-hidden="true" />
-              <div className="ocell-text">
-                <div className="olabel">Background</div>
-                <InfoTerm className="oval" title={bgName ?? 'Background'} description={bgDesc} descRefs={background?.descRefs}>
-                  {bgName ?? '—'}
-                </InfoTerm>
-              </div>
-            </div>
-            <div className="orow">
-              <i className="ti ti-shield-half olead" aria-hidden="true" />
-              <div className="ocell-text">
-                <div className="olabel">Class</div>
-                <InfoTerm className="oval" title={cls?.name ?? 'Class'} description={cls?.description} descRefs={cls?.descRefs}>
-                  {cls?.name ?? '—'}
-                </InfoTerm>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -276,6 +297,9 @@ export function DetailsTab({
           </>
         ) : (
           <>
+            {!d.appearance && !d.personality && !SHORT_FIELDS.some((f) => d[f.key]) && (
+              <div className="gen-empty">No general details recorded.</div>
+            )}
             {d.appearance && (
               <div className="gen-field" style={{ marginBottom: 8 }}>
                 <div className="fl">Appearance</div>

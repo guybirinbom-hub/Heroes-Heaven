@@ -6,7 +6,8 @@ import { Builder } from './builder/Builder';
 import { ErrorBoundary } from './sheet/ErrorBoundary';
 import { kyra } from './rules/seed';
 import { loadContent, rebuildContent } from './data';
-import { loadRoster, saveRoster, newRosterId, duplicateChar, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, type SavedChar } from './data/storage';
+import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, type SavedChar } from './data/storage';
+import { chooseDialog } from './sheet/confirm';
 import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from './rules/build';
 import { useUndoableState } from './useUndoableState';
 import { applyPlayState, initialPlay, playForRebuild, rest, type PlayState } from './rules/play';
@@ -177,9 +178,36 @@ export default function App() {
           setEditing(null);
           setMode('builder');
         }}
-        onImport={(saved) => {
-          setRoster((r) => [...r, saved]);
-          setActiveId(saved.id);
+        onImport={async (saved, customItems) => {
+          const norm = (n: string) => n.trim().toLowerCase();
+          const collide = roster.find((c) => norm(c.character.name) === norm(saved.character.name));
+          let action: 'add' | 'update' | 'rename' = 'add';
+          if (collide) {
+            const choice = await chooseDialog({
+              title: `“${saved.character.name}” already exists`,
+              message: 'A character with this name is already in your roster. Update it with the imported version, or keep both as separate characters?',
+              buttons: [
+                { value: 'update', label: 'Update existing', primary: true },
+                { value: 'both', label: 'Keep both' },
+                { value: 'cancel', label: 'Cancel' },
+              ],
+            });
+            if (choice === 'update') action = 'update';
+            else if (choice === 'both') action = 'rename';
+            else return false; // cancelled / dismissed — don't import
+          }
+          // Register any unrecognized imported items as custom homebrew items so the inventory resolves.
+          (customItems ?? []).forEach(addCustomItem);
+          if (action === 'update' && collide) {
+            // Replace the existing entry in place (keep its roster id so the card/undo/active-id stay valid).
+            setRoster((r) => r.map((c) => (c.id === collide.id ? { ...saved, id: collide.id, archived: c.archived ?? false } : c)));
+            setActiveId(collide.id);
+          } else {
+            const entry = action === 'rename' ? { ...saved, character: { ...saved.character, name: uniqueName(saved.character.name, roster) } } : saved;
+            setRoster((r) => [...r, entry]);
+            setActiveId(entry.id);
+          }
+          return true;
         }}
         onDuplicate={(id) => {
           const c = roster.find((x) => x.id === id);
@@ -187,6 +215,9 @@ export default function App() {
         }}
         onArchive={(id, archived) => setRoster((r) => r.map((c) => (c.id === id ? { ...c, archived } : c)))}
         onDelete={deleteChar}
+        onOpenHomebrew={() => setMode('homebrew')}
+        onSaveMode={saveModeDef}
+        onDeleteMode={removeModeDef}
       />
     );
   } else if (mode === 'builder') {
@@ -219,7 +250,17 @@ export default function App() {
       />
     );
   } else if (mode === 'homebrew') {
-    screen = <HomebrewPage content={content} onChanged={onHomebrewChanged} onClose={() => setMode('sheet')} />;
+    screen = (
+      <HomebrewPage
+        content={content}
+        onChanged={onHomebrewChanged}
+        onClose={() => setMode('sheet')}
+        onOpenRoster={() => setMode('roster')}
+        onSaveMode={saveModeDef}
+        onDeleteMode={removeModeDef}
+        characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
+      />
+    );
   } else {
     screen = (
       <CharacterSheet

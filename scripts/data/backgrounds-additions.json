@@ -1,0 +1,129 @@
+[
+  {
+    "id": "aon-post-guard-of-all-trade",
+    "name": "Post Guard of All Trade",
+    "traits": [],
+    "rarity": "common",
+    "description": "Not all cops are passionate about their jobs. For some, the pursuit of justice is just another way to pay the bills. Honestly, it was probably the Post Guard's generous time-off policy that drew you to their service, and during your yearly sabbaticals you've dabbled in hobbies as diverse as fishing, baking, or even stand-up comedy. Even while on duty, you're probably idly fiddling with a lucky coin or practicing magic tricks with a deck of cards. You probably irritate your fellow guards a bit with your non sequiturs, casual attitude, and tendency to daydream, but results don't lie, and more often than not you prove your worth when the chips are down. For all the excitement of guarding Absalom's Postern Gate, the Post Guard wasn't really the right fit for someone as distractible as yourself, so your boss put in a “promotion” for you to transfer to the newly formed Edgewatch. You're all for the reassignment, since it will put you smack in the middle of the most entertaining and diverse gathering of the century, the Radiant Festival. Choose two attribute boosts. One must be to Dexterity or Intelligence , and one is a free attribute boost. You're trained in the Performance skill, a Lore skill of your choice, and you gain a bonus language. You gain a +1 circumstance bonus to Deception, Diplomacy, and Intimidation checks to interact with Post Guards. You gain the Dubious Knowledge skill feat.",
+    "source": {
+      "book": "Pathfinder Agents of Edgewatch Player's Guide",
+      "license": "ORC"
+    },
+    "abilityBoosts": [
+      {
+        "kind": "choice",
+        "options": [
+          "dex",
+          "int"
+        ]
+      },
+      {
+        "kind": "free"
+      }
+    ],
+    "trainedSkill": "performance",
+    "grantedFeatId": "dubious-knowledge"
+  },
+  {
+    "id": "aon-reclaimed-investigator",
+    "name": "Reclaimed Investigator",
+    "traits": [],
+    "rarity": "common",
+    "description": "You believe the mysterious patron of the Crimson Reclaimers has an ulterior motive that bedevils the Knights of Lastwall. Whatever the organization gains from the pact, some mysterious force with its own agenda and a need for anonymity benefits as well. You've made it your mission to determine what that agenda is before the patron decides it has manipulated from the shadows long enough. Choose two attribute boosts. One must be to **Intelligence** or **Wisdom**, and one is a free attribute boost. You're trained in the Occultism skill, and the Crimson Reclaimers Lore skill. You gain the Oddity Identification skill feat.",
+    "source": {
+      "book": "Pathfinder Lost Omens Knights of Lastwall",
+      "license": "ORC"
+    },
+    "abilityBoosts": [
+      {
+        "kind": "choice",
+        "options": [
+          "int",
+          "wis"
+        ]
+      },
+      {
+        "kind": "free"
+      }
+    ],
+    "trainedSkill": "occultism",
+    "trainedLore": "crimson-reclaimers",
+    "grantedFeatId": "oddity-identification"
+  },
+  {
+    "id": "aon-muesello-s-student",
+    "name": "Muesello's Student",
+    "traits": [],
+    "rarity": "uncommon",
+    "description": "You trained under Venture-Captain Muesello of the Oppara Lodge in Taldor. You learned a few of the mage-machinist's crafting techniques, and your extensive knowledge of magic items comes in handy during your adventures as a Pathfinder field agent. Choose two attribute boosts. One must be to Dexterity or Intelligence , and one is a free attribute boost. You're trained in the Crafting skill and the Engineering Lore skill. You gain the Crafter's Appraisal skill feat. Additionally, when Muesello is present during your mission briefings, he takes some time to catch up with you and discuss your mission. You gain a +2 circumstance bonus to your checks to Gather Information or Recall Knowledge during the Getting Started segment of such adventures. Be sure to remind your GM that you have a relevant background.",
+    "source": {
+      "book": "Pathfinder Society Year 4 Rule Updates",
+      "license": "ORC"
+    },
+    "abilityBoosts": [
+      {
+        "kind": "choice",
+        "options": [
+          "dex",
+          "int"
+        ]
+      },
+      {
+        "kind": "free"
+      }
+    ],
+    "trainedSkill": "crafting",
+    "trainedLore": "engineering",
+    "grantedFeatId": "crafters-appraisal"
+  },
+  {
+    "id": "aon-historical-reeanactor",
+    "name": "Historical Reeanactor",
+    "traits": [],
+    "rarity": "common",
+    "description": "To Clan Tolorr, history shouldn't be dry and boring; it deserves to be engaging and made relevant to the living. You couldn't agree more! Whether it's your hobby or career, you've developed a reputation for translating the past into the present through demonstrations, period performances, acting out famous events, donning replica armor, and other feats of living history—filling in a few historical blanks if it makes a better show. Having learned of your passion, Clan Tolorr has sponsored your visit to Highhelm so that you can learn from each other. It's a wonderful opportunity, and Tolorr puppetry arts, storytelling, props, and historical rigor are the stuff of legends. Already, you've begun researching dwarven history so that you're prepared for whatever lies ahead. Choose two attribute boosts. One must be to Strength or Charisma , and one is a free attribute boost. You're trained in either the Performance skill or the Society skill, and you're trained in the Dwarf Lore skill. If you selected Performance, you gain the Impressive Performance skill feat. If you chose Society, you gain the Dubious Knowledge skill feat. Connection: Bulgra Veldollow, a matriarch in Clan Tolorr and accomplished puppeteer Reputation Points: +0",
+    "source": {
+      "book": "Pathfinder Sky King's Tomb Player's Guide",
+      "license": "ORC"
+    },
+    "abilityBoosts": [
+      {
+        "kind": "choice",
+        "options": [
+          "str",
+          "cha"
+        ]
+      },
+      {
+        "kind": "free"
+      }
+    ],
+    "trainedLore": "dwarf"
+  },
+  {
+    "id": "aon-wishes-for-riches",
+    "name": "Wishes for Riches",
+    "traits": [],
+    "rarity": "rare",
+    "description": "On the night of the Missing Moment, you saw visions of fabulous riches in the gate before you. Honestly, how someone could see anything but piles of jewels and gold is utterly baffling to you. Having pined for material wealth for as long as you could remember, you practically sprang into the portal in hopes of securing your fortune. The next moment, however, you were standing right where you’d just been, though indeterminate time had passed. You’re no richer than before you walked through the gate, unfortunately, but perhaps you could use the new power you’ve manifested since returning to pursue your dreams of avarice anew. Your deviant abilities are of either the dragon or leech classification. If you choose dragon, you gain the Consume Energy deviant feat with the cold type. If you choose leech, you gain the Borrowed Ability deviant feat. As a quirk, your deviant abilities manifest in a silver hue, and when you use a deviant ability you absorb the color silver from your surroundings. The absorbed color returns to your surroundings within an hour. Choose two attribute boosts. One must be to **Dexterity** or **Charisma**, and one is a free attribute boost. You're trained in the Thievery skill, and the Games Lore skill. You gain the Subtle Theft skill feat.",
+    "source": {
+      "book": "Gatewalkers Player's Guide (Remastered)",
+      "license": "ORC"
+    },
+    "abilityBoosts": [
+      {
+        "kind": "choice",
+        "options": [
+          "dex",
+          "cha"
+        ]
+      },
+      {
+        "kind": "free"
+      }
+    ],
+    "trainedSkill": "thievery",
+    "trainedLore": "games",
+    "grantedFeatId": "subtle-theft"
+  }
+]

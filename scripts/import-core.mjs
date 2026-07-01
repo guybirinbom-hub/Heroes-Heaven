@@ -1587,9 +1587,17 @@ for (const e of readPack('deities')) {
   };
 }
 
+// Ancestry-referenced names are a fallback (rarity unknown → common); scripts/data/languages.json
+// (the full current Archives of Nethys language set) is then authoritative for completeness + rarity.
 for (const l of langSet) {
   const id = slug(l);
-  db.languages[id] = { id, name: l.charAt(0).toUpperCase() + l.slice(1), rarity: 'common' };
+  if (!db.languages[id]) db.languages[id] = { id, name: l.charAt(0).toUpperCase() + l.slice(1), rarity: 'common' };
+}
+if (existsSync('scripts/data/languages.json')) {
+  for (const l of JSON.parse(readFileSync('scripts/data/languages.json', 'utf8'))) {
+    const id = slug(l.name);
+    db.languages[id] = { id, name: l.name, rarity: l.rarity || 'common' };
+  }
 }
 
 // Resolve focus spells: of the spells a subclass/class references in prose, keep only
@@ -1755,6 +1763,90 @@ if (existsSync('scripts/data/vehicles.json')) {
 }
 if (existsSync('scripts/data/siege-weapons.json')) {
   db.siegeWeapons = JSON.parse(readFileSync('scripts/data/siege-weapons.json', 'utf8'));
+}
+
+// Additive content from `scripts/data/<category>-additions.json` (missing AoN entries mapped to the
+// app's shape). Each file is an array; entries are merged into db[category] only when their id isn't
+// already present — so the Foundry-derived base is never overwritten, just extended.
+for (const f of readdirSync('scripts/data').filter((f) => f.endsWith('-additions.json'))) {
+  const key = f.replace(/-additions\.json$/, '');
+  if (!db[key] || typeof db[key] !== 'object') {
+    console.warn(`[import-core] ${f}: no such category "${key}" — skipped`);
+    continue;
+  }
+  let n = 0;
+  for (const e of JSON.parse(readFileSync(`scripts/data/${f}`, 'utf8'))) {
+    if (e && e.id && !db[key][e.id]) {
+      db[key][e.id] = e;
+      n++;
+    }
+  }
+  if (n) console.log(`[import-core] +${n} → ${key} (from ${f})`);
+}
+
+// Targeted corrections to inaccurate existing entries (see scripts/data/fixes.json).
+if (existsSync('scripts/data/fixes.json')) {
+  let n = 0;
+  for (const fix of JSON.parse(readFileSync('scripts/data/fixes.json', 'utf8'))) {
+    const map = db[fix.category];
+    const entry = map && (map[fix.id] || Object.values(map).find((e) => e.name === fix.name));
+    if (entry && fix.field) {
+      entry[fix.field] = fix.value;
+      n++;
+    }
+  }
+  if (n) console.log(`[import-core] applied ${n} content fixes`);
+}
+
+// Class sub-option additions (scripts/data/class-extras.json): inject sub-options that aren't
+// represented in the curated Foundry clone — Investigator's Esoterica methodology, plus the
+// Commander "Tactics" and Witch "Lessons" pick-by-level choice groups. `subclassOptions` extend a
+// class's existing subclass.options; `extraChoices` append new groups. Existing options/groups
+// (matched by id) are never overwritten.
+if (existsSync('scripts/data/class-extras.json')) {
+  const extras = JSON.parse(readFileSync('scripts/data/class-extras.json', 'utf8'));
+  for (const [classId, spec] of Object.entries(extras)) {
+    const cls = db.classes[classId];
+    if (!cls) {
+      console.warn(`[import-core] class-extras: no class "${classId}" — skipped`);
+      continue;
+    }
+    if (spec.subclassOptions?.length && cls.subclass) {
+      const have = new Set(cls.subclass.options.map((o) => o.id));
+      const add = spec.subclassOptions.filter((o) => !have.has(o.id));
+      if (add.length) {
+        cls.subclass.options = [...cls.subclass.options, ...add].sort((a, b) => a.name.localeCompare(b.name));
+        console.log(`[import-core] +${add.length} ${classId} ${cls.subclass.name} option(s)`);
+      }
+    }
+    if (spec.extraChoices?.length) {
+      cls.extraChoices = cls.extraChoices || [];
+      const have = new Set(cls.extraChoices.map((g) => g.id));
+      for (const g of spec.extraChoices) {
+        if (!have.has(g.id)) {
+          cls.extraChoices.push(g);
+          console.log(`[import-core] +extraChoices "${g.name}" (${g.options.length} options) → ${classId}`);
+        }
+      }
+    }
+  }
+}
+
+// Feat embedded sub-choices (scripts/data/feat-choices.json): wire a ChoiceSet onto feats whose
+// Foundry data didn't carry one — e.g. Basic/Greater/Major Lesson, which should let a witch pick
+// which lesson (and its hex). Keyed by feat id → FeatChoiceDef.
+if (existsSync('scripts/data/feat-choices.json')) {
+  const fc = JSON.parse(readFileSync('scripts/data/feat-choices.json', 'utf8'));
+  let n = 0;
+  for (const [featId, choice] of Object.entries(fc)) {
+    if (db.feats[featId]) {
+      db.feats[featId].choice = choice;
+      n++;
+    } else {
+      console.warn(`[import-core] feat-choices: no feat "${featId}" — skipped`);
+    }
+  }
+  if (n) console.log(`[import-core] wired ${n} feat sub-choice(s)`);
 }
 
 mkdirSync('public', { recursive: true });

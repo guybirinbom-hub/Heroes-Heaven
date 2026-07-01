@@ -1,0 +1,115 @@
+[
+  {
+    "id": "aon-kugaptee",
+    "name": "Kugaptee",
+    "traits": [],
+    "rarity": "common",
+    "description": "Kugaptee was one of the most formidable nindorus of the last millennium. Said to have four heads and four arms, each representing one of the seasons of the year, his reign over a remote reach of central Tian Xia was brought to an end in 6223 ic by the heroine Tan Sui-Jing, although she perished in the same battle where she defeated him. Her soul, reincarnated as an immense sugi tree, grows above Kugaptee’s grave, ensuring the dead fiend will never reincarnate and return to this world while the tree remains.\n\n**Areas of Concern** curses, defiled graves, haunted wildlands, seasonal disasters\n\n**Edicts** curse living creatures, defile graveyards and pastoral natural regions\n\n**Anathema** perform a burial ritual meant to provide peace to the dead, remove a curse from anyone other than yourself, restore a non-nindoru creature to life\n\n**Religious Symbol** twisted knot of wooden roots\n\n---\n\n## Divine details\n\n**Divine Font** Harm\n\n**Divine Skill** Nature\n\n**Favored Weapon** Kusarigama\n\n**Domains** Abomination, Death, Nature, Nightmares\n\n**Sanctification** Must choose unholy\n\n**Cleric Spells** Charm, Bestial Curse, Tree of Seasons",
+    "source": {
+      "book": "Pathfinder Season of Ghosts (Hardcover)",
+      "license": "ORC"
+    },
+    "domains": [
+      "abomination",
+      "death",
+      "nature",
+      "nightmares"
+    ],
+    "divineFont": [
+      "harm"
+    ],
+    "favoredWeapons": [
+      "kusarigama"
+    ],
+    "skill": "nature"
+  },
+  {
+    "id": "aon-musagani",
+    "name": "Musagani",
+    "traits": [],
+    "rarity": "common",
+    "description": "Immense Musagani, the largest of all known nindorus, led a ninsat that infiltrated the nation of Zi Ha in 6778 ic, during which Musagani claimed hundreds of victims before finally meeting an end at the hands of the City of Bone and Juniper’s giants. Prior to this banishment, Musagani absorbed the souls of 66 giants, swelling to behemoth proportions that no nindoru has replicated in the centuries since.\n\n**Areas of Concern** chaos, consumption of souls, immense monsters, warfare\n\n**Edicts** disrupt organizations, slay creatures larger than you, prevent resurrection or reincarnation\n\n**Anathema** provide aid to a samsaran, restore a non-nindoru creature to life, willingly reduce your size\n\n**Religious Symbol** fist clenching a shattering skull\n\n---\n\n## Divine details\n\n**Divine Font** Harm\n\n**Divine Skill** Intimidation\n\n**Favored Weapon** Naginata\n\n**Domains** Disorientation, Might, Tyranny, Zeal\n\n**Sanctification** Must choose unholy\n\n**Cleric Spells** Illusory Disguise, Enlarge, Confusion",
+    "source": {
+      "book": "Pathfinder Season of Ghosts (Hardcover)",
+      "license": "ORC"
+    },
+    "domains": [
+      "disorientation",
+      "might",
+      "tyranny",
+      "zeal"
+    ],
+    "divineFont": [
+      "harm"
+    ],
+    "favoredWeapons": [
+      "naginata"
+    ],
+    "skill": "intimidation"
+  },
+  {
+    "id": "aon-sigek",
+    "name": "Sigek",
+    "traits": [],
+    "rarity": "common",
+    "description": "Evidence related to Sigek’s return as a nindoru Ascetic was only recently discovered in 7214 ic, when a group of Pathfinders defeated three ninsats targeting samsaran communities in Tianjing. Each ninsat had a lair where dozens of corpses were placed around blue statues that resembled a multi-mawed nindoru with human facial features. The nindorus were in a frenzy when the Pathfinders arrived and fought to the death while repeatedly chanting the phrase “Sigek will be born again!” All the statues were transported to Goka’s Lantern Lodge, where they remain under lock and key to this day.\n\n**Areas of Concern** betrayals, parasites, physical agony, strange transformations\n\n**Edicts** betray your superiors and allies, cause crippling pain in others, host parasites\n\n**Anathema** cure parasitic infections in others, maintain an alliance longer than a year, restore a non-nindoru creature to life\n\n**Religious Symbol** blood-dripping spiky chrysalis\n\n---\n\n## Divine details\n\n**Divine Font** Harm\n\n**Divine Skill** Medicine\n\n**Favored Weapon** Rapier\n\n**Domains** Change, Pain, Secrecy, Trickery\n\n**Sanctification** Must choose unholy\n\n**Cleric Spells** Pest Form, Insect Form, Grisly Growths",
+    "source": {
+      "book": "Pathfinder Season of Ghosts (Hardcover)",
+      "license": "ORC"
+    },
+    "domains": [
+      "change",
+      "pain",
+      "secrecy",
+      "trickery"
+    ],
+    "divineFont": [
+      "harm"
+    ],
+    "favoredWeapons": [
+      "rapier"
+    ],
+    "skill": "medicine"
+  },
+  {
+    "id": "aon-atheism",
+    "name": "Atheism",
+    "traits": [],
+    "rarity": "common",
+    "description": "In a world where the gods demonstrably exist, few people uphold a strictly atheistic or agnostic worldview; that is, a belief that there are no gods, or that the existence of gods is unknowable. However, a good number of people choose not to worship any deities whatsoever. Many do so because of the value they place on freedom—not being beholden to a deity means no limitations, no censure, no anathema, and no strictures. While this decision might sound amoral to some, for atheists, it can be motivated by a desire for autonomy and the right to choose one's own fate.\n\n**Edicts** none\n\n**Anathema** none",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "OGL"
+    },
+    "domains": [],
+    "divineFont": [],
+    "favoredWeapons": []
+  },
+  {
+    "id": "aon-followers-of-fate",
+    "name": "Followers of Fate",
+    "traits": [
+      "ln"
+    ],
+    "rarity": "common",
+    "description": "On the Material Plane, some mortals worship norns as deities, while others, especially witches and bards, admire them as patrons or muses. Those who uphold norns as deities are known as Followers of Fate. Norns do little to discourage this veneration, but neither do they go out of their way to support such worship. Clerics who venerate norns might worship a specific norn or norn triumvirate, or all norns as a whole, but they gain the same benefits regardless of their choice. The religious symbol of Followers of Fate is a pair of shears cutting a golden thread, and their areas of concern are destiny, fate, and the aging process.\n\n**Areas of Concern** destiny, fate, the aging process\n\n**Edicts** make predictions of the future, offer advice and guidance to those in positions of power, provide comfort to the elderly\n\n**Anathema** apologize for making an incorrect prediction, disrespect mothers, accept payment for fortune-telling\n\n---\n\n## Divine details\n\n**Divine Font** Harm or Heal\n\n**Divine Skill** Occultism\n\n**Favored Weapon** Shears\n\n**Domains** Family, Fate, Knowledge, Truth\n\n**Sanctification** Can choose holy or unholy\n\n**Cleric Spells** Mindlink, Threefold Aspect, Prying Eye",
+    "source": {
+      "book": "Pathfinder Bestiary 2",
+      "license": "OGL"
+    },
+    "domains": [
+      "family",
+      "fate",
+      "knowledge",
+      "truth"
+    ],
+    "divineFont": [
+      "harm",
+      "heal"
+    ],
+    "favoredWeapons": [
+      "shears"
+    ],
+    "skill": "occultism"
+  }
+]

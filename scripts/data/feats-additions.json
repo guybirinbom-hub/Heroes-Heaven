@@ -1,0 +1,1866 @@
+[
+  {
+    "id": "aon-litany-against-wrath",
+    "name": "Litany Against Wrath",
+    "level": 6,
+    "category": "class",
+    "traits": [
+      "champion"
+    ],
+    "rarity": "common",
+    "description": "You excoriate a foe for its wrath against goodly creatures. You can cast the litany against wrath devotion spell. Increase the number of Focus Points in your focus pool by 1.",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "devotion spells",
+      "tenets of good"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-litany-against-sloth",
+    "name": "Litany Against Sloth",
+    "level": 10,
+    "category": "class",
+    "traits": [
+      "champion"
+    ],
+    "rarity": "common",
+    "description": "You rail against the sin of sloth, turning a foe’s laziness against it. You can cast the litany against sloth devotion spell. Increase the number of Focus Points in your focus pool by 1.",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "devotion spells",
+      "tenets of good"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-blade-of-justice",
+    "name": "Blade of Justice",
+    "level": 12,
+    "category": "class",
+    "traits": [
+      "champion"
+    ],
+    "rarity": "common",
+    "description": "You call upon divine power and make a weapon or unarmed Strike against a foe you have witnessed harming an ally or innocent. The Strike deals two extra weapon damage dice if the target of your Strike is unholy. Whether or not the target is unholy, you can convert all the physical damage from the attack into spirit damage, and if you are a paladin, the Strike applies all effects that normally apply on a Retributive Strike (such as divine smite).",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "tenets of good"
+    ],
+    "actionCost": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "id": "aon-litany-of-righteousness",
+    "name": "Litany of Righteousness",
+    "level": 14,
+    "category": "class",
+    "traits": [
+      "champion"
+    ],
+    "rarity": "common",
+    "description": "You call upon righteousness to expose an evil foe’s weakness. You can cast the litany of righteousness devotion spell. Increase the number of Focus Points in your focus pool by 1.",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "tenets of good"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-wyrmbane-aura",
+    "name": "Wyrmbane Aura",
+    "level": 14,
+    "category": "class",
+    "traits": [
+      "champion"
+    ],
+    "rarity": "common",
+    "description": "Your aura protects against destructive energies and dragons’ breath. You and all allies within 15 feet gain resistance equal to your Charisma modifier to acid, cold, electricity, fire, and poison. If the source of one of these types of damage is a dragon’s breath, increase the resistance to half your level.",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Dragonslayer Oath"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-celestial-mount",
+    "name": "Celestial Mount",
+    "level": 20,
+    "category": "class",
+    "traits": [
+      "champion"
+    ],
+    "rarity": "common",
+    "description": "Your steed gains incredible celestial powers granted by your deity. It gains darkvision, its maximum Hit Points increase by 40, and it gains weakness 10 to unholy.\n\n Additionally, it grows wings appropriate to a servitor of your deity (such as metallic wings for an archon), granting it a fly Speed equal to its Speed. It gains the celestial trait and the trait appropriate to the type of servitor it has become (archon, angel, or azata, for example).",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "divine ally (steed)",
+      "tenets of good"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-empty-body",
+    "name": "Empty Body",
+    "level": 18,
+    "category": "class",
+    "traits": [
+      "monk"
+    ],
+    "rarity": "common",
+    "description": "You transmute your body into an ethereal form. You gain the empty body ki spell. Increase the number of Focus Points in your focus pool by 1.",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "ki spells"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-meditative-wellspring",
+    "name": "Meditative Wellspring",
+    "level": 18,
+    "category": "class",
+    "traits": [
+      "monk"
+    ],
+    "rarity": "common",
+    "description": "When you clear your mind, your focus comes flowing back in a powerful rush. If you have spent at least 3 Focus Points since the last time you Refocused, you recover 3 Focus Points when you Refocus instead of 1.",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Meditative Focus"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-judgment-of-the-monolith",
+    "name": "Judgment of the Monolith",
+    "level": 12,
+    "category": "class",
+    "traits": [
+      "archetype"
+    ],
+    "rarity": "common",
+    "description": "You can use the oaths bound in your ka stone to compel the truth from the living and the dead. You can activate your ka stone to target a single living creature, causing that creature to experience the effects of being in a zone of truth. You can also activate it with a 10-minute activation (envision) to cast talking corpse.",
+    "source": {
+      "book": "Pathfinder Lost Omens World Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Ka Stone Ritual"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-warding-rune",
+    "name": "Warding Rune",
+    "level": 6,
+    "category": "class",
+    "traits": [
+      "archetype"
+    ],
+    "rarity": "common",
+    "description": "Your runes provide a warding effect that protects you against a specific school of magic. Choose a school of magic other than divination. You gain a rune on your body corresponding to that school, and you gain a +2 circumstance bonus to all saving throws against effects of that school.",
+    "source": {
+      "book": "Pathfinder Lost Omens World Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Runescarred Dedication"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-iruxi-unarmed-cunning",
+    "name": "Iruxi Unarmed Cunning",
+    "level": 5,
+    "category": "ancestry",
+    "traits": [
+      "lizardfolk"
+    ],
+    "rarity": "common",
+    "description": "You make the most of your iruxi unarmed attacks. Whenever you score a critical hit with a claw or an unarmed attack you gained from a lizardfolk ancestry feat, you apply the unarmed attack’s critical specialization effect.",
+    "source": {
+      "book": "Pathfinder Lost Omens Character Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-knight-vigilant",
+    "name": "Knight Vigilant",
+    "level": 6,
+    "category": "class",
+    "traits": [
+      "archetype",
+      "dedication"
+    ],
+    "rarity": "uncommon",
+    "description": "You are dedicated to the cause of the Shining Sentinels. You gain expert proficiency in Religion. When you are between an ally and a foe and would provide lesser cover to your ally against the foe’s attacks, you twist to become even more obtrusive, providing standard cover instead.\n\n**Special** You cannot select another dedication feat until you have gained two other feats from the Knight Vigilant archetype.",
+    "source": {
+      "book": "Pathfinder Lost Omens Character Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Trained in Religion",
+      "any good alignment",
+      "member of the Knights of Lastwall of knight rank"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-aura-of-unbreakable-virtue",
+    "name": "Aura of Unbreakable Virtue",
+    "level": 20,
+    "category": "class",
+    "traits": [
+      "champion"
+    ],
+    "rarity": "uncommon",
+    "description": "You are a paragon of all that is good, your overwhelming aura causing evildoers to cower. All evil creatures within 15 feet of you take a –1 status penalty to checks and DCs that target you or your allies. This penalty is –2 against creatures you have taken an oath against (such as dragons if you have the Dragonslayer Oath feat). You can choose to suppress or resume this aura as an action, which has the concentrate trait.",
+    "source": {
+      "book": "Pathfinder #150: Broken Promises",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "tenets of good"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-environmental-grace",
+    "name": "Environmental Grace",
+    "level": 7,
+    "category": "skill",
+    "traits": [
+      "general",
+      "skill"
+    ],
+    "rarity": "common",
+    "description": "You rapidly adapt to environments through a combination of skill, meditation, and divine grace. After spending an hour in an environment of severe cold or colder, you are protected from the effects of severe cold until you leave that environment. After spending an hour in an environment of severe heat or hotter, you are protected from the effects of severe heat until you leave that environment.",
+    "source": {
+      "book": "Pathfinder Lost Omens Gods & Magic",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Master in Survival",
+      "deity who grants the cold, fire, nature, or travel domain"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-sacred-ki",
+    "name": "Sacred Ki",
+    "level": 4,
+    "category": "class",
+    "traits": [
+      "monk"
+    ],
+    "rarity": "common",
+    "description": "The power of your faith suffuses your ki. When you select this feat, choose chaos, evil, good, or law. Your choice must match one of your deity’s alignment components.\n\n When you cast the ki strike focus spell and damage a creature whose alignment is opposite your chosen alignment, you can choose for the ki strike damage to be of the chosen type. Additionally, you can substitute the damage from ki blast (or other ki spells that deal force damage, at the GM’s discretion) with damage of your chosen alignment.",
+    "source": {
+      "book": "Pathfinder Lost Omens Gods & Magic",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Ki Strike",
+      "you follow a deity"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-azata-magic",
+    "name": "Azata Magic",
+    "level": 9,
+    "category": "ancestry",
+    "traits": [
+      "aasimar"
+    ],
+    "rarity": "common",
+    "description": "Your lineage traces back to the realm of Elysium, and you can harness its magic using this connection. You can cast glitterdust and remove paralysis each once per day as 2nd-level divine innate spells.",
+    "source": {
+      "book": "Pathfinder Advanced Player's Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Musetouched"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-conceited-mindset",
+    "name": "Conceited Mindset",
+    "level": 2,
+    "category": "class",
+    "traits": [
+      "champion"
+    ],
+    "rarity": "uncommon",
+    "description": "Because you know your mind is superior, you scoff at anyone who would alter your mental state—but this hubris gets the better of you when you're wrong. You gain a +2 circumstance bonus to saves against mental effects. If you succeed at a save against a mental effect, you critically succeed instead; similarly, if you fail at a save against a mental effect, you critically fail instead.",
+    "source": {
+      "book": "Pathfinder Advanced Player's Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "tenets of evil"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-corrupted-shield",
+    "name": "Corrupted Shield",
+    "level": 6,
+    "category": "class",
+    "traits": [
+      "champion",
+      "divine",
+      "necromancy",
+      "negative",
+      "void"
+    ],
+    "rarity": "uncommon",
+    "description": "Your shield ally is more than just a spirit of protection— it's a conduit for deadly divine magic. When you use your shield ally to Shield Block a melee unarmed attack or a melee weapon Strike from an adjacent creature, the attacker takes 1d6 void damage. If the attack or Strike breaks or destroys your shield, double this additional damage.\n\n The damage the attacker takes increases to 2d6 at 11th level and 3d6 at 16th level.",
+    "source": {
+      "book": "Pathfinder Advanced Player's Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "divine ally (shield)",
+      "tenets of evil"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-invigorating-mercy",
+    "name": "Invigorating Mercy",
+    "level": 6,
+    "category": "class",
+    "traits": [
+      "champion"
+    ],
+    "rarity": "common",
+    "description": "Your divine touch rejuvenates the weak and tired. When you use Mercy, you can instead attempt a counteract check to remove the clumsy or enfeebled conditions, using the source of that condition to determine the counteract level and DC. If the condition was caused by an ongoing effect and you don't remove that effect, the condition returns at the end of your next turn.",
+    "source": {
+      "book": "Pathfinder Advanced Player's Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Mercy"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-elucidating-mercy",
+    "name": "Elucidating Mercy",
+    "level": 10,
+    "category": "class",
+    "traits": [
+      "champion"
+    ],
+    "rarity": "common",
+    "description": "Your mercy grants clarity to those around you just when they need it most. When you use Mercy, you can instead attempt a counteract check to remove the confused or stupefied conditions, using the source of that condition to determine the counteract level and DC. If the condition was caused by an ongoing effect and you don't remove that effect, the condition returns at the end of your next turn.",
+    "source": {
+      "book": "Pathfinder Advanced Player's Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Mercy"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-litany-of-self-interest",
+    "name": "Litany of Self-Interest",
+    "level": 10,
+    "category": "class",
+    "traits": [
+      "champion"
+    ],
+    "rarity": "uncommon",
+    "description": "You compel a creature to act toward its own ends rather than consider others. You can cast the litany of self-interest devotion spell. Increase the number of Focus Points in your focus pool by 1.",
+    "source": {
+      "book": "Pathfinder Advanced Player's Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "devotion spells",
+      "tenets of evil"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-aura-of-preservation",
+    "name": "Aura of Preservation",
+    "level": 14,
+    "category": "class",
+    "traits": [
+      "champion"
+    ],
+    "rarity": "common",
+    "description": "Your aura protects against the twisting powers of aberrations. You and all allies within 15 feet gain a +1 status bonus to Fortitude and Will saves against effects from aberrations. You also gain a +1 status bonus to Fortitude saves against morph or polymorph effects and Will saves against mental effects; this bonus increases to +2 against aberrations' morph, polymorph, or mental effects.",
+    "source": {
+      "book": "Pathfinder Advanced Player's Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Esoteric Oath"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-litany-of-depravity",
+    "name": "Litany of Depravity",
+    "level": 14,
+    "category": "class",
+    "traits": [
+      "champion"
+    ],
+    "rarity": "uncommon",
+    "description": "You undercut your enemy's vain moralism, opening their heart to evil. You can cast the litany of depravity focus spell. Increase the number of Focus Points in your focus pool by 1.",
+    "source": {
+      "book": "Pathfinder Advanced Player's Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "tenets of evil"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-fiendish-mount",
+    "name": "Fiendish Mount",
+    "level": 20,
+    "category": "class",
+    "traits": [
+      "champion"
+    ],
+    "rarity": "uncommon",
+    "description": "Your steed ally manifests a suite of powerful and sinister gifts granted to it by your deity. It gains darkvision, its maximum Hit Points increase by 40, and it gains weakness 10 to holy.\n\n Additionally, it grows wings appropriate for a servitor of your deity (such as bat wings for a devil), granting it a fly Speed equal to its Speed. It gains the fiend trait and the trait appropriate to the type of servitor it has become (such as daemon, demon, or devil).",
+    "source": {
+      "book": "Pathfinder Advanced Player's Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "divine ally (steed)",
+      "tenets of evil"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-ki-form",
+    "name": "Ki Form",
+    "level": 18,
+    "category": "class",
+    "traits": [
+      "monk"
+    ],
+    "rarity": "common",
+    "description": "You have mastered a potent technique for using your ki to reinforce your physical form and propel yourself through the air. You gain the ki form ki spell. Increase the number of Focus Points in your focus pool by 1.",
+    "source": {
+      "book": "Pathfinder Advanced Player's Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "ki spells"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-terraforming-spell",
+    "name": "Terraforming Spell",
+    "level": 16,
+    "category": "class",
+    "traits": [
+      "concentrate",
+      "earth",
+      "metamagic",
+      "sorcerer",
+      "transmutation",
+      "spellshape"
+    ],
+    "rarity": "common",
+    "description": "You capture transformative fragments of magic and slam them into the ground, creating a shock wave that alters your surroundings. If your next action is to Cast a non-cantrip transmutation Spell, either each space adjacent to you becomes difficult terrain, or each space adjacent to you is no longer difficult terrain. This doesn't have any effect on greater difficult terrain and doesn't remove the damaging effects of hazardous terrain.",
+    "source": {
+      "book": "Pathfinder Advanced Player's Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "id": "aon-advanced-bow-training",
+    "name": "Advanced Bow Training",
+    "level": 6,
+    "category": "class",
+    "traits": [
+      "archetype"
+    ],
+    "rarity": "common",
+    "description": "Through constant practice and the crucible of experience, you increase your skill with advanced bows. You gain proficiency with all advanced bows as if they were martial weapons in the bow weapon group.",
+    "source": {
+      "book": "Pathfinder Advanced Player's Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Archer Dedication"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-innate-magic-intuition",
+    "name": "Innate Magic Intuition",
+    "level": 8,
+    "category": "class",
+    "traits": [
+      "archetype"
+    ],
+    "rarity": "common",
+    "description": "You've spent countless hours learning to recognize and predict a creature's innate magical abilities. The first time you successfully Recall Knowledge to identify a creature, in addition to any information you learn from your successful check, you learn the names of three of the highest-level innate spells it can cast, and you gain a +2 circumstance bonus on your next save against an innate spell cast by that creature.",
+    "source": {
+      "book": "Pathfinder PFS Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Scrollmaster Dedication"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-peri-magic",
+    "name": "Peri Magic",
+    "level": 9,
+    "category": "ancestry",
+    "traits": [
+      "aasimar"
+    ],
+    "rarity": "common",
+    "description": "The shimmering embers of the righteous peris crackle at your fingertips. You can cast glitterdust and status each once per day as 2nd-level divine innate spells.",
+    "source": {
+      "book": "Pathfinder Lost Omens Ancestry Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Emberkin"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-enforced-order",
+    "name": "Enforced Order",
+    "level": 13,
+    "category": "ancestry",
+    "traits": [
+      "aasimar"
+    ],
+    "rarity": "common",
+    "description": "You never fail to strike down the ever-expanding reaches of chaos. All your weapon and unarmed Strikes deal 1 additional lawful damage and have the lawful and magical traits.",
+    "source": {
+      "book": "Pathfinder Lost Omens Ancestry Guide",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Lawbringer"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-ceremony-of-the-strengthened-hand",
+    "name": "Ceremony of the Strengthened Hand",
+    "level": 9,
+    "category": "ancestry",
+    "traits": [
+      "conrasu"
+    ],
+    "rarity": "common",
+    "description": "Your exoskeleton's weapons are even more potent. If you have a claws unarmed attack, it gains the deadly d8 trait. If you have a branch unarmed attack, it gains the shove and trip traits.",
+    "source": {
+      "book": "Pathfinder Lost Omens The Mwangi Expanse",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Ceremony of the Evened Hand"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-grippli-lore",
+    "name": "Grippli Lore",
+    "level": 1,
+    "category": "ancestry",
+    "traits": [
+      "grippli"
+    ],
+    "rarity": "common",
+    "description": "You are well versed in grippli culture and tactics. You gain the trained proficiency in Nature and Stealth. If you would automatically become trained in one of those skills, you instead become trained in a skill of your choice. You also become trained in Grippli Lore.",
+    "source": {
+      "book": "Pathfinder Lost Omens The Mwangi Expanse",
+      "license": "OGL"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-nocturnal-grippli",
+    "name": "Nocturnal Grippli",
+    "level": 1,
+    "category": "ancestry",
+    "traits": [
+      "grippli"
+    ],
+    "rarity": "common",
+    "description": "You tend to do most of your hunting and work at night and have adapted to the requirements of nocturnal life. You gain darkvision, allowing you to see in darkness and dim light just as well as you can in bright light. However, in darkness, you see in black and white only.\n\n**Special** You can take this feat only at 1st level, and you can’t retrain out of this feat or into this feat.",
+    "source": {
+      "book": "Pathfinder Lost Omens The Mwangi Expanse",
+      "license": "OGL"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-grippli-glide",
+    "name": "Grippli Glide",
+    "level": 5,
+    "category": "ancestry",
+    "traits": [
+      "grippli"
+    ],
+    "rarity": "common",
+    "description": "You can use your webbed feet to guide your fall. You glide slowly toward the ground, 5 feet down (10 feet if you don't have both hands free) and up to 25 feet forward through the air. As long as you spend at least 1 action gliding each round and have not yet reached the ground, you remain in the air at the end of your turn.",
+    "source": {
+      "book": "Pathfinder Lost Omens The Mwangi Expanse",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Windweb Grippli heritage"
+    ],
+    "actionCost": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "id": "aon-link-wellspring",
+    "name": "Link Wellspring",
+    "level": 18,
+    "category": "class",
+    "traits": [
+      "summoner"
+    ],
+    "rarity": "common",
+    "description": "Your bond replenishes your focus. If you have spent at least 3 Focus Points since the last time you Refocused, you recover 3 Focus Points when you Refocus instead of 1.",
+    "source": {
+      "book": "Pathfinder Secrets of Magic",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Link Focus"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-master-summoner-spellcasting",
+    "name": "Master Summoner Spellcasting",
+    "level": 18,
+    "category": "class",
+    "traits": [
+      "archetype"
+    ],
+    "rarity": "common",
+    "description": "You gain the master bounded spellcasting benefits.",
+    "source": {
+      "book": "Pathfinder Secrets of Magic",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Expert Summoner Spellcasting",
+      "legendary in the skill associated with your eidolon's tradition"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-polearm-tricks",
+    "name": "Polearm Tricks",
+    "level": 6,
+    "category": "class",
+    "traits": [
+      "archetype"
+    ],
+    "rarity": "common",
+    "description": "Your connection to rune magic has revealed tricks to make polearms deadlier in your hands. You gain the critical specialization effects of polearms.",
+    "source": {
+      "book": "Pathfinder Secrets of Magic",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Runelord Dedication"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-fused-polearm",
+    "name": "Fused Polearm",
+    "level": 10,
+    "category": "class",
+    "traits": [
+      "archetype"
+    ],
+    "rarity": "common",
+    "description": "During your daily preparations, you can magically fuse your arcane bonded weapon and a magical staff together into one item, with the staff making up the haft of the weapon. You prepare the staff at the same time you do this, and you can do this only with a staff you're able to prepare. This fusion lasts until the next time you make your daily preparations. The staff and the weapon share their fundamental runes, using whichever weapon potency and whichever striking rune is higher level. They don’t share any other runes or specific abilities; use the polearm's.\n\nWhile the two are fused, the weapon’s haft takes on aesthetic aspects of the staff, and it can't change forms, such as with the shifting rune.",
+    "source": {
+      "book": "Pathfinder Secrets of Magic",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Runelord Dedication"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-school-counterspell",
+    "name": "School Counterspell",
+    "level": 12,
+    "category": "class",
+    "traits": [
+      "archetype"
+    ],
+    "rarity": "common",
+    "description": "Your intricate knowledge of your school lets you easily negate spells from that school. Instead of being able to counter a foe's spell with Counterspell only if you have the same spell prepared, if the foe casts a spell from the school matching your specialization, you can Counterspell it with any other spell of the same school.",
+    "source": {
+      "book": "Pathfinder Secrets of Magic",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Counterspell",
+      "Runelord Dedication"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-golem-dynamo",
+    "name": "Golem Dynamo",
+    "level": 12,
+    "category": "class",
+    "traits": [
+      "archetype"
+    ],
+    "rarity": "uncommon",
+    "description": "You've learned the secrets of Jistkan golem prostheses, allowing you to incorporate golem components into your dynamo and gain a portion of their magic. You gain a +1 status bonus to saving throws against magic, and your dynamo Strikes become magical.",
+    "source": {
+      "book": "Pathfinder Guns & Gears",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Sterling Dynamo Dedication"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-recycled-cogwheel",
+    "name": "Recycled Cogwheel",
+    "level": 8,
+    "category": "class",
+    "traits": [
+      "archetype"
+    ],
+    "rarity": "common",
+    "description": "You're able to scavenge the cogwheels from your daily quick-deploy snares that use gears. This allows you to deconstruct a snare that didn't trigger in order to set the snare up somewhere else. Doing so takes the same number of actions as setting the snare did. When you do, you recover the snare and can deploy it in another location.",
+    "source": {
+      "book": "Pathfinder Guns & Gears",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Trapsmith Dedication"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-harsh-judgment",
+    "name": "Harsh Judgment",
+    "level": 4,
+    "category": "class",
+    "traits": [
+      "archetype",
+      "vigilante"
+    ],
+    "rarity": "common",
+    "description": "Choose one creature you can see, and loudly declare the creature's life forfeit by your judgment. That creature becomes your condemned foe until they are defeated, you use Harsh Judgment on a different creature, or the encounter ends. You gain a +2 circumstance bonus to Perception checks to Seek your condemned foe and on Intimidation checks to Demoralize them. You have a –1 circumstance penalty to Perception checks to Seek creatures other than your condemned foe and on Intimidation checks to Demoralize anyone other than your condemned foe. You typically can use Harsh Judgment only during an encounter, and if you try to use it to declare someone's life forfeit during exploration or downtime, you are likely to start an encounter.",
+    "source": {
+      "book": "Pathfinder Night of the Gray Death",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Vigilante Dedication",
+      "member of the Gray Gardeners"
+    ],
+    "actionCost": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "id": "aon-no-hands-no-problems",
+    "name": "No Hands, No Problems",
+    "level": 5,
+    "category": "ancestry",
+    "traits": [
+      "poppet"
+    ],
+    "rarity": "common",
+    "description": "After a lifetime of using temporary, ghostly limbs to manipulate objects, you hardly need real hands. You can extend your limbs to perform simple Interact actions at a range 5 feet beyond your normal range, after which your limbs contract back to their normal length. You can also cast the telekinetic hand cantrip as an arcane or occult innate spell at will, which always takes the ghostlike form of telekinetic hand and is tethered to your body via a snaking, illusory arm. A cantrip is heightened to a spell rank equal to half your level rounded up.",
+    "source": {
+      "book": "Pathfinder Lost Omens Tian Xia Character Guide",
+      "license": "ORC"
+    },
+    "prerequisites": [
+      "Tsukumogami Poppet heritage"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-vermilion-threads",
+    "name": "Vermilion Threads",
+    "level": 10,
+    "category": "class",
+    "traits": [
+      "arcane",
+      "magus"
+    ],
+    "rarity": "common",
+    "description": "Your Arcane Cascade sends threads to the four directions, creating a web of strings dyed by your skill and your enemies’ blood. The web fills a 15-foot burst centered on you and is difficult terrain. You can ignore the difficult terrain, and the strings can support your weight, allowing you to walk on them as though you were benefiting from fly.\n\nThe web lasts for 1 minute but ends early if your Arcane Cascade ends or you leave the web.\n\nIf you Cast a Spell from a spell slot while in the web, the strings glow red until the beginning of your next turn, dealing damage equal to the spell’s rank to any creature other than you that moves through the web. The damage occurs at the end of the creature’s movement, with a basic Reflex save against your spell DC. A creature can take this damage only once each round.",
+    "source": {
+      "book": "Pathfinder Lost Omens Tian Xia Character Guide",
+      "license": "ORC"
+    },
+    "prerequisites": [
+      "Arcane Cascade",
+      "unfurling brocade hybrid study"
+    ],
+    "actionCost": {
+      "type": "reaction"
+    }
+  },
+  {
+    "id": "aon-lotus-above-the-mud",
+    "name": "Lotus Above the Mud",
+    "level": 6,
+    "category": "class",
+    "traits": [
+      "archetype"
+    ],
+    "rarity": "common",
+    "description": "Your qi, dancing ever diligently toward cultivation, eludes the grasp of the world’s muck and mire. When you cast your adapt self or athletic rush focus spells, you ignore difficult terrain until the end of your next turn.",
+    "source": {
+      "book": "Pathfinder Lost Omens Tian Xia Character Guide",
+      "license": "ORC"
+    },
+    "prerequisites": [
+      "Immortal Lightness"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-whisper-of-warning",
+    "name": "Whisper of Warning",
+    "level": 12,
+    "category": "class",
+    "traits": [
+      "animist",
+      "apparition",
+      "divine",
+      "misfortune",
+      "wandering"
+    ],
+    "rarity": "common",
+    "description": "Your protective apparitions alert you to an incoming attack. The attacker must roll its attack roll a second time and take the lower result.",
+    "source": {
+      "book": "Pathfinder War of Immortals",
+      "license": "ORC"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "reaction"
+    }
+  },
+  {
+    "id": "aon-exemplar-resilency",
+    "name": "Exemplar Resilency",
+    "level": 4,
+    "category": "class",
+    "traits": [
+      "archetype"
+    ],
+    "rarity": "common",
+    "description": "You gain 3 additional Hit Points for each exemplar archetype class feat you have. As you continue selecting exemplar archetype class feats, you continue to gain additional Hit Points in this way.",
+    "source": {
+      "book": "Pathfinder War of Immortals",
+      "license": "ORC"
+    },
+    "prerequisites": [
+      "Exemplar Dedication",
+      "class granting no more Hit Points per level than 8 + your Constitution modifier"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-vindicator-s-judgement",
+    "name": "Vindicator's Judgement",
+    "level": 10,
+    "category": "class",
+    "traits": [
+      "archetype"
+    ],
+    "rarity": "common",
+    "description": "You can pronounce judgment on your foes, making them magically susceptible to your attacks. You gain the vindicator’s judgment focus spell.",
+    "source": {
+      "book": "Pathfinder War of Immortals",
+      "license": "ORC"
+    },
+    "prerequisites": [
+      "Vindicator Dedication",
+      "Warden Spells"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-remember-thy-names",
+    "name": "Remember thy Names",
+    "level": 16,
+    "category": "general",
+    "traits": [
+      "auditory",
+      "linguistic",
+      "mental",
+      "mythic"
+    ],
+    "rarity": "common",
+    "description": "You peer into the eyes of a target of your Ultimatum of Liberation, as you say aloud the names of their victims, searing them into the oppressor’s mind, cursing them to feel their victims’ pain. The target takes 12d6 mental damage (basic Will save against your class DC or spell DC, whichever is higher). If the target fails or critically fails this check, they also take 2d6 persistent mental damage. For the next hour, when the target stops taking this persistent damage, you or one of your allies can mention a victim’s name as a single action to the target, forcing them to succeed at another Will save or begin taking the persistent damage again. This is a curse effect. Once you use Remember Their Names on a target, the target is immune to it for 24 hours.",
+    "source": {
+      "book": "Pathfinder War of Immortals",
+      "license": "ORC"
+    },
+    "prerequisites": [
+      "Broken Chain Dedication"
+    ],
+    "actionCost": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "id": "aon-fautless-defense",
+    "name": "Fautless Defense",
+    "level": 14,
+    "category": "general",
+    "traits": [
+      "mythic"
+    ],
+    "rarity": "common",
+    "description": "As you are struck, your steely determination reminds those who fight you that they are destined to be no more than footnotes in your tale. Spend a Mythic Point to gain resistance equal to half your level to the triggering damage, and then attempt a Strike at mythic proficiency against the creature that attacked you. If the Strike hits and deals damage, the creature is also slowed 1.",
+    "source": {
+      "book": "Pathfinder War of Immortals",
+      "license": "ORC"
+    },
+    "prerequisites": [
+      "Eternal Legend Dedication"
+    ],
+    "actionCost": {
+      "type": "reaction"
+    }
+  },
+  {
+    "id": "aon-pass-vengeful-judgement",
+    "name": "Pass Vengeful Judgement",
+    "level": 18,
+    "category": "general",
+    "traits": [
+      "mythic",
+      "sanctified"
+    ],
+    "rarity": "rare",
+    "description": "To prevent yourself from frivolously calling down the terrible power of divine wrath, you have vowed to do so only with the assent of your mortal hierophant. If your hierophant successfully Strikes a target, they can spend a single action to invoke your wrath. On your turn, you can then Pass Vengeful Judgment on the target, calling down a scouring pillar of divine energy that deals 20d10 spirit damage with a basic Fortitude save. You do not need to have line of effect to the target and it functions at any range. If one of your current domain spells can deal a type of damage other than spirit, you can choose to match this damage type (for instance, calling down a flaming pillar that deals fire damage if you have the fire domain).\n\nIf you spend a Mythic Point as part of Passing your Vengeful Judgment, the blast extends into the heavens, scattering the clouds in a detonation visible to all creatures within a 10-mile radius as a show of wrath and a warning to those who would dare harm your followers or question your commandments. For the next month, you and your hierophant gain a +2 status bonus to Intimidation checks against creatures in the area.\n\n**Special** If you have Font of Life or Death , you can choose for the damage type to be vitality (if you chose heal) or void (if you chose harm) when you use this ability.",
+    "source": {
+      "book": "Pathfinder War of Immortals",
+      "license": "ORC"
+    },
+    "prerequisites": [
+      "Godling Dedication"
+    ],
+    "actionCost": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "id": "aon-decree-of-banisment",
+    "name": "Decree of Banisment",
+    "level": 14,
+    "category": "general",
+    "traits": [
+      "auditory",
+      "incapacitation",
+      "mythic"
+    ],
+    "rarity": "common",
+    "description": "You assume a demeanor of authority and decree banishment upon a foe who has defied your authority. Speak your decree; a creature you designate within 60 feet who can hear your decree must succeed at a Will saving throw against your class DC or spell DC (whichever is higher) or spend its next turn moving as far away from you as it possibly can; this includes using magic or special movement modes, if it has any, to expedite its retreat.\n\nIf the target attempts to move back within 60 feet of you at any time in the next week, it must succeed at a Will saving throw against your class DC or spell DC (whichever is higher) or the attempt fails, any movement ends, and any actions or spell slots used in the attempt (such as if the target were attempting to magically approach you) are wasted.\n\nWhen you speak a Decree of Banishment, you can spend 1 Mythic Point as part of the action to have all friendly creatures and even the land itself within a 10-mile radius of you at that moment to reject the banished target. Within the affected area for the next month, the target has a –4 penalty to all Diplomacy checks to Gather Information or Make an Impression, all Intimidation checks to Coerce, and all Survival checks to Subsist. If the target defies your Decree of Banishment and continues to operate within the area, you hear about their activities the next time you encounter a group of friendly creatures with 10 or more members. You can have only one target affected by this month-long banishment at a time; if you inflict a month-long banishment on another target, the effects on the first target end.",
+    "source": {
+      "book": "Pathfinder War of Immortals",
+      "license": "ORC"
+    },
+    "prerequisites": [
+      "Prophesied Monarch Dedication"
+    ],
+    "actionCost": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "id": "aon-flash-of-omipotence",
+    "name": "Flash of Omipotence",
+    "level": 20,
+    "category": "class",
+    "traits": [
+      "archetype",
+      "divine",
+      "mythic"
+    ],
+    "rarity": "common",
+    "description": "For but a moment you hold the power of a god. You spend a Mythic Point. Until the end of your turn, any damage you deal ignores all the target’s resistance and immunities or triggers the target’s highest weakness if they have no resistance or immunities.",
+    "source": {
+      "book": "Pathfinder Lost Omens Divine Mysteries",
+      "license": "ORC"
+    },
+    "prerequisites": [
+      "Mortal Herald Dedication"
+    ],
+    "actionCost": {
+      "type": "free"
+    }
+  },
+  {
+    "id": "aon-embolded-with-glorious-purpose",
+    "name": "Embolded With Glorious Purpose",
+    "level": 18,
+    "category": "class",
+    "traits": [
+      "archetype",
+      "fortune",
+      "mental"
+    ],
+    "rarity": "common",
+    "description": "Communing with powerful spirits of the world and other powers far greater than yourself fills your heart with purpose and inspires you to strive for greater accomplishments. Whenever you Consult the Spirits, you gain a +1 status bonus to Will saving throws until the next time you make your daily preparations. This bonus increases to +2 against emotion and fear effects. In addition, until the next time you make your daily preparations, you can do each of the following once.\nRoll a Will save twice and use the better result.Roll an attack roll twice and use the better result.Roll a skill check twice and use the better result; this skill check must be made with the skill that the spirits blessed during Consult the Spirits.",
+    "source": {
+      "book": "Pathfinder Lost Omens Divine Mysteries",
+      "license": "ORC"
+    },
+    "prerequisites": [
+      "Consult the Spirits (Rivethun Emissary)"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-vengful-remnant",
+    "name": "Vengful Remnant",
+    "level": 14,
+    "category": "class",
+    "traits": [
+      "archetype",
+      "concentrate",
+      "manipulate",
+      "occult"
+    ],
+    "rarity": "common",
+    "description": "You wreathe yourself in the tatters of all the souls claimed by your blade. Until the start of your next turn, you gain resistance 10 to all damage except force, ghost touch, spirit, and vitality, doubled if the source of the damage is non-magical. If you slay a significant foe not immune to spirit damage with your spectral dagger while under this effect, its duration increases until the end of your next turn.",
+    "source": {
+      "book": "Pathfinder Lost Omens Shining Kingdoms",
+      "license": "ORC"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "id": "aon-armor-regiment-training",
+    "name": "Armor Regiment Training",
+    "level": 1,
+    "category": "class",
+    "traits": [
+      "commander"
+    ],
+    "rarity": "common",
+    "description": "You've trained for grueling marches in full battle kit. You treat heavy armor as being 1 Bulk lighter than it actually is, and you can rest normally while wearing armor of any type. In exploration mode, you and your allies use your normal Speeds without including your armors' Speed penalties to determine your travel Speed.",
+    "source": {
+      "book": "Pathfinder Battlecry!",
+      "license": "ORC"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-orator-s-fillibuster",
+    "name": "Orator's Fillibuster",
+    "level": 8,
+    "category": "class",
+    "traits": [
+      "archetype",
+      "auditory",
+      "concentrate",
+      "linguistic",
+      "mental"
+    ],
+    "rarity": "common",
+    "description": "When you seek to convince others of the worth of your cause, you are capable of unleashing such an entrancing torrent of rhetoric and metaphor that it is all but impossible to look away from you. When you begin a conversation or similar attempt with the goal of Making an Impression, all creatures who are observing you become fascinated unless they succeed at a Will save against the higher of your class DC or spell DC. Creatures who are familiar with you and your verbal techniques, such as allies you've known for at least several days, are immune to this effect, though newer allies who have not heard one of your speeches before might still be affected.   Affected creatures remain fascinated for as long as you continue your filibuster, though they can attempt a new save to end the effect at the end of each minute while your filibuster lasts. A creature who succeeds at a saving throw to end the fascinated condition from your filibuster is also unaffected by your attempt to Make an Impression.   You can continue your filibuster indefinitely, but after every 10 minutes you must attempt a Fortitude saving throw against a hard DC for your level. Failing this save results in your filibuster ending and prevents you from attempting another filibuster for 1 hour.",
+    "source": {
+      "book": "Pathfinder Battlecry!",
+      "license": "ORC"
+    },
+    "prerequisites": [
+      "Field Propagandist Dedication"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-lurching-chomp",
+    "name": "Lurching Chomp",
+    "level": 13,
+    "category": "ancestry",
+    "traits": [
+      "dragonet",
+      "mental",
+      "visual"
+    ],
+    "rarity": "common",
+    "description": "Through your wiles, charm, or a little bit of magic, you lure in a foe for a closer look—and a quick bite! Choose a creature within 30 feet. It must attempt a Will save against your class DC or spell DC, whichever is higher. If the target fails its save, you pull it up to 30 feet. If the target ends this movement in reach of your jaws, you can attempt a jaws Strike against it. Regardless of the result of its save, the target is temporarily immune for 24 hours.",
+    "source": {
+      "book": "Pathfinder Lost Omens Draconic Codex",
+      "license": "OGL"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "id": "aon-empathetic-envoy",
+    "name": "Empathetic Envoy",
+    "level": 4,
+    "category": "class",
+    "traits": [
+      "archetype"
+    ],
+    "rarity": "common",
+    "description": "You believe that treating others with respect is the fastest way into their hearts, and in turn others are more likely to believe in your good intentions and write off bad first impressions as flukes. If a creature’s attitude toward you becomes lower over the course of a social interaction (for example, from friendly to indifferent, or from indifferent to unfriendly), their impression of you returns to its starting level an hour after the social interaction ends. This ability has no effect if the creature you are interacting with becomes hostile.",
+    "source": {
+      "book": "Pathfinder Adventure Path: Gatewalkers",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Twilight Speaker Dedication"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-automatic-psychic-action",
+    "name": "Automatic Psychic Action",
+    "level": 20,
+    "category": "class",
+    "traits": [
+      "psychic"
+    ],
+    "rarity": "common",
+    "description": "Your power wants to be free. You're permanently quickened, and can use the additional action only for psyche actions.",
+    "source": {
+      "book": "Pathfinder Dark Archive (Remastered)",
+      "license": "OGL"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-oppurtune-trickster",
+    "name": "Oppurtune Trickster",
+    "level": 6,
+    "category": "class",
+    "traits": [
+      "archetype",
+      "mental"
+    ],
+    "rarity": "common",
+    "description": "You aren't above using underhanded tactics to gain an advantage, easily routing your opponents when they attack. Attempt a Deception check against the Perception DC of the creature that's the target of the triggering attack. Regardless of the result, the target is temporarily immune to your attempts to use Opportune Trickster for the next 10 minutes.\n\n**Special** If you have the Dirty Trick skill feat, you can attempt a Thievery check instead of a Deception check; if you do, this action loses the mental trait.\n\n**Critical Success** The target is off-guard (including against the triggering attack) until the end of your ally's turn.\n**Success** The target is off-guard against the triggering attack.\n**Critical Failure** You lose your balance in your attempt to assist your ally and fall prone.",
+    "source": {
+      "book": "Pathfinder #222: Hellbreakers",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Hellbreaker Dedication",
+      "Trained in Deception"
+    ],
+    "actionCost": {
+      "type": "reaction"
+    }
+  },
+  {
+    "id": "aon-wombat-style",
+    "name": "Wombat Style",
+    "level": 1,
+    "category": "class",
+    "traits": [
+      "monk",
+      "stance"
+    ],
+    "rarity": "common",
+    "description": "You enter the stance of the implacable wombat, your reinforced backside ready to jostle and batter those who offend you. The only Strikes you can make are wombat butt unarmed attacks. These deal 1d8 bludgeoning damage; are in the brawling group; and have the hampering, nonlethal, parry, shove, and unarmed traits.\n\nWhile you are in Wombat Stance, you can't be flanked by enemies of your level or lower.",
+    "source": {
+      "book": "Pathfinder Lost Omens: Fools Aplenty",
+      "license": "OGL"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "id": "aon-wombat-bastion",
+    "name": "Wombat Bastion",
+    "level": 6,
+    "category": "class",
+    "traits": [
+      "monk"
+    ],
+    "rarity": "common",
+    "description": "You make a quick attack before retreating to safety. You either make a wombat butt Strike or Shove an adjacent creature, after which you can Step and Take Cover. If your Strike or Shove is a critical success, you also gain a +2 circumstance bonus to your Fortitude DC to avoid being Repositioned or Shoved until the end of your next turn.\n\n**Special** If you have the Wombat Burrow feat, you can Burrow 5 feet instead of Stepping when using this feat.",
+    "source": {
+      "book": "Pathfinder Lost Omens: Fools Aplenty",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Wombat Style"
+    ],
+    "actionCost": {
+      "type": "actions",
+      "value": 2
+    }
+  },
+  {
+    "id": "aon-wombat-burrow",
+    "name": "Wombat Burrow",
+    "level": 10,
+    "category": "class",
+    "traits": [
+      "earth",
+      "monk"
+    ],
+    "rarity": "common",
+    "description": "While in Wombat Stance, you gain a Burrow speed equal to the Speed bonus granted by your Incredible Movement ability. You can Burrow through earth and soil, but not solid rock.",
+    "source": {
+      "book": "Pathfinder Lost Omens: Fools Aplenty",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Wombat Style",
+      "Incredible Movement"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-dad-joke",
+    "name": "Dad Joke",
+    "level": 1,
+    "category": "skill",
+    "traits": [
+      "auditory",
+      "general",
+      "mental",
+      "skill"
+    ],
+    "rarity": "common",
+    "description": "Using the power of punnery, you deliver a lovingly tailored joke at a creature within 60 feet. Attempt a skill check using the skill that would be used to identify the creature (e.g. Religion for a fiend); you can instead attempt a Lore check with a +2 circumstance bonus if the target is trained in that Lore or could be identified by that Lore when Recalling Knowledge. If you target a creature that isn’t a family member, this ability gains the incapacitation trait. The target is then immune to your Dad Jokes for 1 hour.\n\nIf you spend two actions to use this ability by setting up an especially elaborate punchline, your target also takes 1d4 mental damage, plus 1d4 additional damage at 3rd level and every 2 levels thereafter, with a basic Will save against the higher of your class DC or spell DC.\n\n**Critical Success** The joke is so blindingly perfect-yet-awful that the target dissociates from reality. The creature is dazzled and stupefied 1 until the end of your next turn. Double the mental damage dealt to the target.\n**Success** The target is stupefied 1 until the end of your next turn or until the creature targets you with a hostile effect, whichever happens first. The target takes full mental damage.\n**Failure** The target is unaffected.\n**Critical Failure** The target is unaffected. Your allies who hear the joke are so embarrassed by it that they can’t treat you as an ally for any effects until the end of your next turn.",
+    "source": {
+      "book": "Pathfinder Lost Omens: Fools Aplenty",
+      "license": "OGL"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "actions",
+      "value": 1
+    }
+  },
+  {
+    "id": "aon-ggghhhjjjjjk",
+    "name": "GGGHhhjjjJJK",
+    "level": 1,
+    "category": "general",
+    "traits": [
+      "general"
+    ],
+    "rarity": "common",
+    "description": "You have JBNNNMBMM<<<M thatEHERBEBNMDF<……///.? And can FHERWHFEWRGNMN>.",
+    "source": {
+      "book": "Pathfinder Lost Omens: Fools Aplenty",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Pet"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-festering-wound",
+    "name": "Festering Wound",
+    "level": 12,
+    "category": "class",
+    "traits": [
+      "archetype",
+      "disease",
+      "divine",
+      "necromancy"
+    ],
+    "rarity": "common",
+    "description": "Wounds you inflict with your unarmed attacks fester and rot, becoming infected and difficult to heal. The DC to Treat these Wounds using Medicine increases by 5, and magically or alchemically healing these wounds requires a counteract check against your class DC or spell DC, whichever is higher. Succeeding at any of these removes the disease. The effect also ends if the creature is healed to full Hit Points by any means.",
+    "source": {
+      "book": "Pathfinder Book of the Dead",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Zombie Dedication"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-repulse-the-wicken",
+    "name": "Repulse the Wicken",
+    "level": 6,
+    "category": "class",
+    "traits": [
+      "archetype"
+    ],
+    "rarity": "common",
+    "description": "You use your foe's failure as an opening to push them away. You attempt to Shove the undead.",
+    "source": {
+      "book": "Pathfinder Lost Omens Knights of Lastwall",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Lastwall Sentry Dedication"
+    ],
+    "actionCost": {
+      "type": "reaction"
+    }
+  },
+  {
+    "id": "aon-civil-service",
+    "name": "Civil Service",
+    "level": 1,
+    "category": "general",
+    "traits": [
+      "general",
+      "kingdom"
+    ],
+    "rarity": "common",
+    "description": "Everyone has a place and a role, and as long as those roles are filled, the government functions. When you select this feat, choose one leadership role; that role is now supported by your efficient civil servants, so its vacancy penalty is no longer applicable. If you wish to change the leadership role to which Civil Service applies, you can do so using the New Leadership activity at the start of a Kingdom turn.\n\n You gain a +2 status bonus to New Leadership checks.",
+    "source": {
+      "book": "Pathfinder Kingmaker Adventure Path",
+      "license": "OGL"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-cooperative-leadership",
+    "name": "Cooperative Leadership",
+    "level": 1,
+    "category": "general",
+    "traits": [
+      "general",
+      "kingdom"
+    ],
+    "rarity": "common",
+    "description": "Your leaders are skilled at working with one another. When a leader uses the Focused Attention kingdom activity to aid another leader's kingdom check, the circumstance bonus granted by a success is increased to +3.\n\n At 11th level, your leaders' collaborative style leads them to ever greater successes when they work together. When a leader uses the Focused Attention kingdom activity to aid another leader's check, treat a critical failure on the aided check as a failure. If your kingdom has at least the expert rank in the skill used in the aided check, treat a failure on the check as a success. (This does not allow you to ever improve a critical failure to a success.)",
+    "source": {
+      "book": "Pathfinder Kingmaker Adventure Path",
+      "license": "OGL"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-crush-dissent",
+    "name": "Crush Dissent",
+    "level": 1,
+    "category": "general",
+    "traits": [
+      "general",
+      "kingdom"
+    ],
+    "rarity": "common",
+    "description": "Your rule brooks no dissent and stamps out traitors, making harsh examples of them. Once per Kingdom turn when you gain Unrest, you can attempt to crush the dissent by attempting a basic Warfare check. On a success, the Unrest increase is canceled, but on a critical failure, the Unrest increase is doubled. In addition, you gain a +1 status bonus to checks to resolve dangerous kingdom events that involve internal bickering, such as Feud.",
+    "source": {
+      "book": "Pathfinder Kingmaker Adventure Path",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Trained in Warfare"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-endure-anarchy",
+    "name": "Endure Anarchy",
+    "level": 3,
+    "category": "general",
+    "traits": [
+      "general",
+      "kingdom"
+    ],
+    "rarity": "common",
+    "description": "Your kingdom holds together even in the midst of extreme peril. If your kingdom's Unrest is 6 or higher and you use a kingdom activity that decreases Unrest, decrease the Unrest by an additional 1. You do not fall into anarchy unless your kingdom's Unrest reaches 24 (see last paragraph of Step 2: Adjust Unrest on page 538).",
+    "source": {
+      "book": "Pathfinder Kingmaker Adventure Path",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Loyalty 14"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-fame-and-fortune",
+    "name": "Fame and Fortune",
+    "level": 11,
+    "category": "general",
+    "traits": [
+      "general",
+      "kingdom"
+    ],
+    "rarity": "common",
+    "description": "Your kingdom's reputation has spread far and wide, bringing in visitors to behold the spectacle of your greatness and pay their respects. Whenever you achieve a critical success on any Kingdom skill check during the Activity phase of a Kingdom turn, gain 1 bonus Resource Die at the start of your next Kingdom turn.",
+    "source": {
+      "book": "Pathfinder Kingmaker Adventure Path",
+      "license": "OGL"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-fortified-fiefs",
+    "name": "Fortified Fiefs",
+    "level": 1,
+    "category": "general",
+    "traits": [
+      "general",
+      "kingdom"
+    ],
+    "rarity": "common",
+    "description": "Your vassals take their duty to protect those under their stewardship seriously, and your engineers emphasize the value of a strong defense when it comes to building settlements and fortifications. You gain a +2 circumstance bonus to checks attempted as part of the Fortify Hex activity and on activities to build or repair a Barracks, Castle, Garrison, Keep, Stone Wall, or Wooden Wall. In addition, you gain a +1 status bonus to all kingdom checks attempted during dangerous events that directly impact your settlements' defenses.",
+    "source": {
+      "book": "Pathfinder Kingmaker Adventure Path",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Trained in Defense"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-free-and-fair",
+    "name": "Free and Fair",
+    "level": 7,
+    "category": "general",
+    "traits": [
+      "general",
+      "kingdom"
+    ],
+    "rarity": "common",
+    "description": "Your reputation for transparency and fairness in conducting elections, appointments, and other changes in government inspires tremendous public trust. You gain a +2 circumstance bonus to Loyalty-based checks attempted as part of the New Leadership and Pledge of Fealty activities. If you fail or critically fail such a check, you can spend 2 RP to reroll the check (but without the +2 circumstance bonus); attempting this adds the Fortune trait. You must take the result of the second roll, even if it is worse than the original roll.",
+    "source": {
+      "book": "Pathfinder Kingmaker Adventure Path",
+      "license": "OGL"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-insider-trading",
+    "name": "Insider Trading",
+    "level": 1,
+    "category": "general",
+    "traits": [
+      "general",
+      "kingdom"
+    ],
+    "rarity": "common",
+    "description": "Your leading citizens share valuable business information with one another and with associates in other lands, and they hire one another's workers to supply the labor they need to fuel their production. You gain a +1 status bonus to Establish Work Site, Establish Trade Agreement, and Trade Commodities activities. In addition, gain 1 bonus Resource Die at the start of each Kingdom turn.",
+    "source": {
+      "book": "Pathfinder Kingmaker Adventure Path",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Trained in Industry"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-inspiring-entertainment",
+    "name": "Inspiring Entertainment",
+    "level": 3,
+    "category": "general",
+    "traits": [
+      "general",
+      "kingdom"
+    ],
+    "rarity": "common",
+    "description": "Your kingdom's artists and entertainers are talented and prolific, and there's never a shortage of new plays, operas,  novels, music, sculptures, paintings, or other forms of distraction to entertain the citizens, even during times of upheaval. When you check for Unrest during the Upkeep phase of a Kingdom turn, you may roll a Culture-based check rather than a Loyalty-based check to determine the outcome. Your kingdom also gains a +2 status bonus to all Culture-based skill checks whenever your kingdom has at least 1 Unrest.",
+    "source": {
+      "book": "Pathfinder Kingmaker Adventure Path",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Culture 14"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-kingdom-assurance",
+    "name": "Kingdom Assurance",
+    "level": 1,
+    "category": "general",
+    "traits": [
+      "fortune",
+      "general",
+      "kingdom"
+    ],
+    "rarity": "common",
+    "description": "Even when things go poorly in other areas, you can count on consistency in carrying out kingdom activities with a chosen skill. Choose one Kingdom skill in which your kingdom is trained. Once per Kingdom turn, when you would attempt a skill check for that skill, you can forgo rolling and instead take a result equal to 10 + your proficiency bonus; do not apply any other bonuses, penalties, or modifiers to this result.\n\n**Special** You can select this feat multiple times. Each time, choose a different skill and gain the benefits of this feat for that skill.",
+    "source": {
+      "book": "Pathfinder Kingmaker Adventure Path",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Trained in at least three skills"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-liquidate-resources",
+    "name": "Liquidate Resources",
+    "level": 3,
+    "category": "general",
+    "traits": [
+      "general",
+      "kingdom"
+    ],
+    "rarity": "common",
+    "description": "Your kingdom's economy can liquidate resources in an emergency when funding runs out. The first time during a Kingdom turn in which you are forced to spend RP as the result of a failed skill check or a dangerous event, and that expense reduces you to 0 RP, you may instead reduce your RP to 1 and treat the expense as if it were paid in full. At the start of your next Kingdom turn, roll 4 fewer Resource Dice than normal.",
+    "source": {
+      "book": "Pathfinder Kingmaker Adventure Path",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Economy 14"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-muddle-through",
+    "name": "Muddle Through",
+    "level": 1,
+    "category": "general",
+    "traits": [
+      "general",
+      "kingdom"
+    ],
+    "rarity": "common",
+    "description": "Your people are independent-minded and take care of the small things around the kingdom, not letting them pile up into bigger problems. Increase two of your Ruin thresholds by 1 and one of them by 2.",
+    "source": {
+      "book": "Pathfinder Kingmaker Adventure Path",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Trained in Wilderness"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-practical-magic",
+    "name": "Practical Magic",
+    "level": 1,
+    "category": "general",
+    "traits": [
+      "general",
+      "kingdom"
+    ],
+    "rarity": "common",
+    "description": "Magic has an honored place in your society, and your people incorporate it into their everyday work to make life easier. You gain a +1 status bonus to Magic checks, and you can use Magic checks in place of Engineering checks. In addition, as magic-wielding NPCs find your nation a comfortable place to live and work, you reduce the cost of using the Hire Adventurers activity to 1 RP.",
+    "source": {
+      "book": "Pathfinder Kingmaker Adventure Path",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Trained in Magic"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-pull-together",
+    "name": "Pull Together",
+    "level": 1,
+    "category": "general",
+    "traits": [
+      "general",
+      "kingdom"
+    ],
+    "rarity": "common",
+    "description": "Your people are very reliable, and their swift decision-making keeps most projects from getting too far off track. Once per Kingdom turn when you roll a critical failure on a Kingdom skill check, attempt a DC 11 flat check. If this succeeds, your citizens heed the call to put in extra work to mitigate the disaster; treat the Kingdom skill check result as failure instead. The DC of this flat check increases by 5 each time you subsequently use it, but it decreases by 1 (to a minimum of 11) for each Kingdom turn that passes when you do not use it.",
+    "source": {
+      "book": "Pathfinder Kingmaker Adventure Path",
+      "license": "OGL"
+    },
+    "prerequisites": [
+      "Trained in Politics"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-quality-of-life",
+    "name": "Quality of Life",
+    "level": 7,
+    "category": "general",
+    "traits": [
+      "general",
+      "kingdom"
+    ],
+    "rarity": "common",
+    "description": "Your kingdom's robust economy makes the creature comforts of civilization more readily available to all, and even finer luxuries are more easily had. The first time you gain Luxury Commodities in a Kingdom turn, increase the total gained by 1. All of your settlements are treated as 1 level higher than their actual level for the purposes of determining what sorts of magic items might be offered for sale at their markets and shops.",
+    "source": {
+      "book": "Pathfinder Kingmaker Adventure Path",
+      "license": "OGL"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-camoflage-coat",
+    "name": "Camoflage Coat",
+    "level": 13,
+    "category": "ancestry",
+    "traits": [
+      "centaur"
+    ],
+    "rarity": "common",
+    "description": "You've learned to use your natural camouflage to your advantage, enhancing your ability to blend with your surroundings through careful movements and additional markings or attire. In your selected terrain, you can Hide or Sneak without cover or being concealed.",
+    "source": {
+      "book": "Pathfinder Howl of the Wild",
+      "license": "ORC"
+    },
+    "prerequisites": [
+      "Mottle-Coat Centaur heritage"
+    ],
+    "actionCost": {
+      "type": "passive"
+    }
+  },
+  {
+    "id": "aon-harbinger-s-claw",
+    "name": "Harbinger's Claw",
+    "level": 13,
+    "category": "ancestry",
+    "traits": [
+      "auditory",
+      "divine",
+      "misfortune",
+      "tengu"
+    ],
+    "rarity": "common",
+    "description": "You caw ominously, cursing the creature with misfortune. The target creature must roll the triggering check twice and take the lower result.",
+    "source": {
+      "book": "Pathfinder Player Core 2",
+      "license": "ORC"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "reaction"
+    }
+  },
+  {
+    "id": "aon-certain-strategem",
+    "name": "Certain Strategem",
+    "level": 2,
+    "category": "class",
+    "traits": [
+      "investigator"
+    ],
+    "rarity": "common",
+    "description": "You know exactly where to strike a foe to target their weak spots. When you make a Strike that you're adding your Intelligence modifier to due to Devising a Stratagem and miss, you deal half of your strategic strike damage to the target. This damage type is that of the weapon or unarmed attack you used for the Strike.",
+    "source": {
+      "book": "Pathfinder Player Core 2",
+      "license": "ORC"
+    },
+    "prerequisites": [],
+    "actionCost": {
+      "type": "passive"
+    }
+  }
+]

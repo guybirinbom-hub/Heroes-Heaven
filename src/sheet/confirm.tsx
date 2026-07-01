@@ -77,3 +77,72 @@ export function confirmDialog(opts: ConfirmOptions): Promise<boolean> {
     root.render(<ConfirmDialog opts={opts} onResolve={finish} />);
   });
 }
+
+export interface ChooseButton {
+  /** The value resolved when this button is clicked. */
+  value: string;
+  label: string;
+  /** Render as the primary (filled) button; first such by default. */
+  primary?: boolean;
+  /** Render as destructive (red). */
+  danger?: boolean;
+}
+export interface ChooseOptions {
+  title: string;
+  message?: ReactNode;
+  buttons: ChooseButton[];
+}
+
+function ChooseDialog({ opts, onResolve }: { opts: ChooseOptions; onResolve: (v: string | null) => void }) {
+  // Escape / click-outside / the X all dismiss (resolve null).
+  useEscapeClose(() => onResolve(null));
+  const { title, message, buttons } = opts;
+  return (
+    <div className="picker-overlay" onClick={() => onResolve(null)}>
+      <div className="picker confirm-modal" role="alertdialog" aria-modal="true" aria-label={title} onClick={(e) => e.stopPropagation()}>
+        <div className="picker-head">
+          <span className="info-title">{title}</span>
+          <button className="picker-close" onClick={() => onResolve(null)} aria-label="Close">
+            <i className="ti ti-x" aria-hidden="true" />
+          </button>
+        </div>
+        {message != null && <div className="confirm-body">{message}</div>}
+        <div className="confirm-actions">
+          {buttons.map((b) => (
+            <button
+              key={b.value}
+              className={b.danger ? 'btn-danger' : b.primary ? 'btn-primary' : 'btn-ghost'}
+              onClick={() => onResolve(b.value)}
+            >
+              {b.label}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Like {@link confirmDialog} but for an N-way choice. Resolves the clicked button's `value`, or
+ * `null` if dismissed (Escape / click-outside / X). Usage:
+ *   const c = await chooseDialog({ title: '…', buttons: [{value:'a',label:'A'},{value:'b',label:'B'}] });
+ */
+export function chooseDialog(opts: ChooseOptions): Promise<string | null> {
+  return new Promise((resolve) => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    const root = createRoot(container);
+    let settled = false;
+    const finish = (v: string | null) => {
+      if (settled) return;
+      settled = true;
+      resolve(v);
+      setTimeout(() => {
+        root.unmount();
+        container.remove();
+      }, 0);
+    };
+    root.render(<ChooseDialog opts={opts} onResolve={finish} />);
+  });
+}

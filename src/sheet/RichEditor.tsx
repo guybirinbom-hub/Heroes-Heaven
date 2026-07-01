@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useContent } from './ContentContext';
 import { useEscapeClose } from './useEscapeClose';
+import { useIsMobile } from './useIsMobile';
 
 /** Toolbar formatting commands (document.execCommand on the focused contentEditable) — the same set
  *  the Notes editor uses, so item descriptions get an identical toolbar. */
@@ -113,11 +114,14 @@ export function RichEditor({
   onChange,
   enableRefLink,
   placeholder,
+  hideToolbarUntilFocus,
 }: {
   initialHtml: string;
   onChange: (html: string) => void;
   enableRefLink?: boolean;
   placeholder?: string;
+  /** Item editor: don't show the formatting toolbar at all until the field is focused (keyboard open). */
+  hideToolbarUntilFocus?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const onChangeRef = useRef(onChange);
@@ -125,6 +129,38 @@ export function RichEditor({
   const savedRange = useRef<Range | null>(null);
   const [pop, setPop] = useState<'fore' | 'hili' | 'glyph' | null>(null);
   const [linking, setLinking] = useState(false);
+
+  const isMobile = useIsMobile();
+  const [focused, setFocused] = useState(false);
+  // Mobile keyboard detection that works across BOTH Android WebView modes: some shrink the window for
+  // the keyboard (innerHeight drops), some keep it and only the visual viewport shrinks. In either case
+  // the visual-viewport HEIGHT drops when the keyboard opens, so we remember the largest height seen and
+  // treat a meaningful drop as "keyboard up". `bottom` = how much the keyboard covers the layout viewport
+  // (0 when the window itself shrank — then bottom:0 already sits right above the keyboard).
+  const [kb, setKb] = useState<{ open: boolean; bottom: number }>({ open: false, bottom: 0 });
+  const maxVh = useRef(0);
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!isMobile || !vv) {
+      setKb({ open: false, bottom: 0 });
+      return;
+    }
+    const update = () => {
+      maxVh.current = Math.max(maxVh.current, vv.height);
+      const bottom = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+      setKb({ open: maxVh.current - vv.height > 120, bottom });
+    };
+    update();
+    vv.addEventListener('resize', update);
+    vv.addEventListener('scroll', update);
+    return () => {
+      vv.removeEventListener('resize', update);
+      vv.removeEventListener('scroll', update);
+    };
+  }, [isMobile]);
+  // Toolbar shows pinned above the keyboard only while focused AND the keyboard is actually up — so it
+  // appears when a field is tapped and disappears the instant the keyboard closes (even if focus lingers).
+  const kbShow = isMobile && focused && kb.open;
 
   useEffect(() => {
     if (ref.current) ref.current.innerHTML = initialHtml;
@@ -186,6 +222,11 @@ export function RichEditor({
 
   return (
     <>
+      {(!hideToolbarUntilFocus || !isMobile || kbShow) && (
+      <div
+        className={'rte-toolwrap' + (kbShow ? ' rte-toolwrap-sticky' : '')}
+        style={kbShow ? { bottom: kb.bottom } : undefined}
+      >
       <div className="toolbar">
         {TOOLS.map((t, i) => (
           <button
@@ -240,7 +281,18 @@ export function RichEditor({
           ))}
         </div>
       )}
-      <div className="editor-body" contentEditable suppressContentEditableWarning ref={ref} onInput={save} data-placeholder={placeholder ?? 'Write…'} />
+      </div>
+      )}
+      <div
+        className="editor-body"
+        contentEditable
+        suppressContentEditableWarning
+        ref={ref}
+        onInput={save}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        data-placeholder={placeholder ?? 'Write…'}
+      />
       {linking && <RefSearchModal onPick={applyLink} onClose={() => setLinking(false)} />}
     </>
   );

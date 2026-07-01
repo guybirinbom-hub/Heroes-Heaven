@@ -1,5 +1,6 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import type { Character, ContentDatabase, InventoryItem, Item } from '../rules/types';
+import { useIsMobile } from './useIsMobile';
 import { deriveBulk, containerLoads, effectiveItemBulk } from '../rules/derive';
 import { isAttachable, planAttach } from '../rules/attachments';
 import {
@@ -76,21 +77,26 @@ function equipControl(item: Item): { flag: 'worn' | 'equipped'; on: string; off:
  *  alchemical items — are already itemType 'consumable'; ammunition carries the 'consumable' trait.) */
 const EXPENDABLE_GEAR = new Set(['torch', 'caltrops', 'marbles', 'piton']);
 
-/** Items whose quantity changes often in play (consumables, ammunition, thrown weapons, expendable
- *  gear, or anything carried as a stack) keep the inline +/- stepper on the card. A single stable
- *  piece (one weapon, one suit of armor, a worn item) shows no counter and is re-counted from the
- *  item popup instead. Rations match via itemType==='consumable' (they carry NO traits); ammunition
- *  is itemType 'equipment' + the 'consumable' trait; thrown weapons carry 'thrown' OR a range-suffixed
- *  'thrown-N' trait — matched the same way derive.ts identifies thrown weapons. */
-function keepsInlineQuantity(item: Item, quantity = 1): boolean {
+/** Which item CATEGORIES keep the inline +/- quantity stepper on the card (the rest show a static ×N
+ *  badge next to the name when carried as a stack). Per the user's rule, only genuinely stocked/expended
+ *  goods get the stepper:
+ *    • Consumables    — itemType 'consumable' (potions, oils, scrolls, candles, chalk, rations, …)
+ *    • Trade Goods    — itemType 'treasure' (gems, art objects, coins, precious-material objects)
+ *    • Alchemical     — the 'alchemical' trait (bombs, elixirs, poisons, …)
+ *    • Materials      — the 'precious' trait = raw precious-material goods (adamantine/mithral chunks &
+ *                       ingots). NOT item.material, which flags weapons/armor MADE OF a material — a
+ *                       cold-iron longsword is a weapon, so it stays ×N.
+ *    • Ammunition     — the 'consumable' trait; Thrown weapons — 'thrown' / 'thrown-N' (used in quantity)
+ *  Everything else (weapons, armor, shields, worn/held gear, and most Adventuring Gear like a backpack,
+ *  rope, or lantern) shows ×N even when stacked. Adventuring Gear that IS expended but the source doesn't
+ *  tag 'consumable' — a torch burns out, caltrops/marbles scatter, a piton is left behind — is curated in
+ *  EXPENDABLE_GEAR. */
+function keepsInlineQuantity(item: Item): boolean {
   const traits = item.traits ?? [];
-  if (item.itemType === 'consumable') return true;
-  if (traits.includes('consumable')) return true;
+  if (item.itemType === 'consumable' || item.itemType === 'treasure') return true;
+  if (traits.includes('alchemical') || traits.includes('precious') || traits.includes('consumable')) return true;
   if (item.itemType === 'weapon' && (traits.includes('thrown') || traits.some((t) => t.startsWith('thrown-')))) return true;
   if (EXPENDABLE_GEAR.has(item.id)) return true;
-  // "Things the player uses an amount of and not just one" — any item carried as a stack (qty > 1)
-  // gets the live counter rather than a static ×N badge.
-  if (quantity > 1) return true;
   return false;
 }
 
@@ -105,8 +111,11 @@ function ItemCard({
   onPlay,
   investedCount = 0,
   rationsDayTracking = false,
+  isMobile = false,
   onDragStartItem,
   onDragEndItem,
+  onHoldDrag,
+  dragging = false,
   attachHost = false,
   attachValid = false,
   attachOver = false,
@@ -122,8 +131,14 @@ function ItemCard({
   investedCount?: number;
   /** "Individual day tracking of rations" option — suppress the Rations days counter. */
   rationsDayTracking?: boolean;
+  /** Phone layout: disable the desktop HTML5 drag (cards aren't draggable on touch). */
+  isMobile?: boolean;
   onDragStartItem?: (instanceId: string) => void;
   onDragEndItem?: () => void;
+  /** Phone hold-to-move: press-and-hold the card to pick the item up (pointerdown starts the hold timer). */
+  onHoldDrag?: (instanceId: string, e: React.PointerEvent) => void;
+  /** This card is the one currently being lifted on mobile — dim it in place while it's "in transit". */
+  dragging?: boolean;
   /** This card is a potential drop target for the attachment/rune currently being dragged. */
   attachHost?: boolean;
   /** The dragged attachment/rune would actually be accepted here (drives the green outline). */
@@ -137,7 +152,7 @@ function ItemCard({
   const equip = equipControl(item);
   const counters = rationsDayTracking && item.id === 'rations' ? [] : itemCounters(item, inv);
   const investable = item.traits?.includes('invested');
-  const inlineQty = keepsInlineQuantity(item, inv.quantity);
+  const inlineQty = keepsInlineQuantity(item);
   // The delete button moved to the item detail popup, so only render the actions row when there's
   // still a control to show — otherwise plain items would keep an empty 7px-margin gap.
   const hasActions = !!inv.attachedTo || !!equip || !!investable || counters.length > 0 || inlineQty;
@@ -150,11 +165,13 @@ function ItemCard({
         (inv.invested ? ' invested' : '') +
         ' clickable' +
         (onPlay ? ' draggable' : '') +
+        (dragging ? ' inv-dragging' : '') +
         (attachHost && attachValid ? ' attach-target' : '') +
         (attachOver && attachValid ? ' attach-over' : '')
       }
       onClick={onOpen}
-      draggable={!!onPlay}
+      onPointerDown={onHoldDrag ? (e) => onHoldDrag(inv.instanceId, e) : undefined}
+      draggable={!!onPlay && !isMobile}
       onDragStart={
         onPlay
           ? (e) => {
@@ -210,12 +227,12 @@ function ItemCard({
           {item.material ? ` · ${capWord(item.material.type.replace(/-/g, ' '))}` : ''}
         </div>
         {onPlay && hasActions && (
-          <div className="inv-actions" onClick={stop}>
+          <div className="inv-actions">
             {inv.attachedTo && <span className="inv-affixed" title="Affixed to another item">Affixed</span>}
             {equip && !inv.attachedTo && (
               <button
                 className={'inv-act' + (inv[equip.flag] ? ' on' : '')}
-                onClick={() => onPlay((p) => toggleItemFlag(p, inv.instanceId, equip.flag))}
+                onClick={(e) => { stop(e); onPlay((p) => toggleItemFlag(p, inv.instanceId, equip.flag)); }}
               >
                 {inv[equip.flag] ? equip.on : equip.off}
               </button>
@@ -229,7 +246,7 @@ function ItemCard({
                     ? `You can invest at most ${INVESTED_LIMIT} items`
                     : undefined
                 }
-                onClick={() => onPlay((p) => toggleItemFlag(p, inv.instanceId, 'invested'))}
+                onClick={(e) => { stop(e); onPlay((p) => toggleItemFlag(p, inv.instanceId, 'invested')); }}
               >
                 {inv.invested ? 'Invested' : 'Invest'}
               </button>
@@ -240,7 +257,7 @@ function ItemCard({
                 <button
                   aria-label={`Spend a use (${u.label})`}
                   disabled={u.current <= 0}
-                  onClick={() => onPlay((p) => setItemCounter(p, inv.instanceId, u.id, chargesFor(u, u.current - 1)))}
+                  onClick={(e) => { stop(e); onPlay((p) => setItemCounter(p, inv.instanceId, u.id, chargesFor(u, u.current - 1))); }}
                 >
                   <i className="ti ti-minus" aria-hidden="true" />
                 </button>
@@ -250,7 +267,7 @@ function ItemCard({
                 <button
                   aria-label={`Restore a use (${u.label})`}
                   disabled={u.current >= u.max}
-                  onClick={() => onPlay((p) => setItemCounter(p, inv.instanceId, u.id, chargesFor(u, u.current + 1)))}
+                  onClick={(e) => { stop(e); onPlay((p) => setItemCounter(p, inv.instanceId, u.id, chargesFor(u, u.current + 1))); }}
                 >
                   <i className="ti ti-plus" aria-hidden="true" />
                 </button>
@@ -262,12 +279,12 @@ function ItemCard({
                   aria-label="Decrease quantity"
                   disabled={inv.quantity <= 1}
                   title={inv.quantity <= 1 ? 'Use the trash button to remove' : undefined}
-                  onClick={() => onPlay((p) => setItemQuantity(p, inv.instanceId, inv.quantity - 1))}
+                  onClick={(e) => { stop(e); onPlay((p) => setItemQuantity(p, inv.instanceId, inv.quantity - 1)); }}
                 >
                   <i className="ti ti-minus" aria-hidden="true" />
                 </button>
                 <span>{inv.quantity}</span>
-                <button aria-label="Increase quantity" onClick={() => onPlay((p) => setItemQuantity(p, inv.instanceId, inv.quantity + 1))}>
+                <button aria-label="Increase quantity" onClick={(e) => { stop(e); onPlay((p) => setItemQuantity(p, inv.instanceId, inv.quantity + 1)); }}>
                   <i className="ti ti-plus" aria-hidden="true" />
                 </button>
               </span>
@@ -338,6 +355,20 @@ export function InventoryTab({
   const [query, setQuery] = useState('');
   const [dragId, setDragId] = useState<string | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
+  const isMobile = useIsMobile();
+  // Mobile hold-to-move: press-and-hold an item card to pick it up. `holdRef` tracks the pointer; once
+  // the hold arms, `ghost` is the floating item icon that follows the finger (the source card hides and
+  // the open section collapses so only tabs + headers remain as drop targets), and `dropTarget` is the
+  // tab/header currently under the finger. Reliable because the card is `touch-action:none` (a scroll
+  // can never steal the grab) and the pointer is captured on <html> at arm (so hiding the card mid-drag
+  // can't cancel it); pointer events are read off `window`.
+  const holdRef = useRef<{ id: string; startX: number; startY: number; lastX: number; lastY: number; active: boolean; pointerId: number; holdTimer: number | null; scrolling: boolean; scrollEl: HTMLElement | null } | null>(null);
+  const [ghost, setGhost] = useState<{ id: string; x: number; y: number; icon: string } | null>(null);
+  const [dropTarget, setDropTarget] = useState<string | null>(null);
+  // Mobile-only: which tab's item list is shown. 'equipped' | 'carried' | a container instanceId.
+  // The open accordion section: a section id, or null = all closed. Tabs open a section; a header taps
+  // toggles it (so the user can collapse everything).
+  const [activeTab, setActiveTab] = useState<string | null>('equipped');
   // drag-to-attach: the host card currently hovered, and a transient "why it can't attach" message.
   const [attachOver, setAttachOver] = useState<string | null>(null);
   const [attachMsg, setAttachMsg] = useState<string | null>(null);
@@ -450,6 +481,128 @@ export function InventoryTab({
     setOverId(null);
     setAttachOver(null);
   };
+
+  // --- mobile hold-to-move controller (see holdRef comment above) ---
+  const dropDestAt = (x: number, y: number): string | null => {
+    const el = document.elementFromPoint(x, y);
+    return (el?.closest('[data-drop-dest]') as HTMLElement | null)?.dataset.dropDest ?? null;
+  };
+  const cleanupHold = () => {
+    const d = holdRef.current;
+    if (d) {
+      if (d.holdTimer != null) clearTimeout(d.holdTimer);
+      window.removeEventListener('pointermove', onHoldMove);
+      window.removeEventListener('pointerup', onHoldEnd);
+      window.removeEventListener('pointercancel', onHoldEnd);
+      try {
+        document.documentElement.releasePointerCapture(d.pointerId);
+      } catch {
+        /* capture may already be released */
+      }
+    }
+    holdRef.current = null;
+    setGhost(null);
+    setDropTarget(null);
+  };
+  const armHold = () => {
+    const d = holdRef.current;
+    if (!d || d.active) return;
+    d.active = true;
+    // Capture on <html> (a stable element) BEFORE the source card hides/collapses, so the drag can't be
+    // cancelled by the card unmounting; window listeners keep receiving the events.
+    try {
+      document.documentElement.setPointerCapture(d.pointerId);
+    } catch {
+      /* capture unsupported — window listeners still fire */
+    }
+    const inv = character.inventory.find((i) => i.instanceId === d.id);
+    const item = inv ? resolve(inv) : undefined;
+    const icon = item ? TYPE_ICON[item.itemType] ?? 'ti-package' : 'ti-package';
+    setGhost({ id: d.id, x: d.lastX, y: d.lastY, icon });
+    try {
+      navigator.vibrate?.(12); // a little buzz: "picked up"
+    } catch {
+      /* no vibration support — non-fatal */
+    }
+  };
+  // The nearest scrollable ancestor of the item rows (or the page) — we scroll it ourselves on a swipe,
+  // because the rows are touch-action:none (so the browser never scrolls them and can't steal a hold).
+  const scrollParentOf = (el: HTMLElement | null): HTMLElement | null => {
+    let node = el?.parentElement ?? null;
+    while (node) {
+      const oy = getComputedStyle(node).overflowY;
+      if ((oy === 'auto' || oy === 'scroll') && node.scrollHeight > node.clientHeight + 2) return node;
+      node = node.parentElement;
+    }
+    return (document.scrollingElement as HTMLElement | null) ?? document.documentElement;
+  };
+  const onHoldMove = (e: PointerEvent) => {
+    const d = holdRef.current;
+    if (!d || e.pointerId !== d.pointerId) return;
+    if (d.active) {
+      // Dragging: the ghost follows the finger; the tab/header under it lights up as the drop target.
+      d.lastX = e.clientX;
+      d.lastY = e.clientY;
+      setGhost((g) => (g ? { ...g, x: e.clientX, y: e.clientY } : g));
+      setDropTarget(dropDestAt(e.clientX, e.clientY));
+      return;
+    }
+    const dy = e.clientY - d.lastY;
+    d.lastX = e.clientX;
+    d.lastY = e.clientY;
+    if (d.scrolling) {
+      if (d.scrollEl) d.scrollEl.scrollTop -= dy; // follow the finger (no browser fling, but rock-solid)
+      return;
+    }
+    // Still deciding: a clear swipe past the slop = a scroll → cancel the pending hold and start scrolling;
+    // otherwise keep waiting for the long-press timer to arm the grab.
+    if (Math.abs(e.clientX - d.startX) + Math.abs(e.clientY - d.startY) > 10) {
+      if (d.holdTimer != null) {
+        clearTimeout(d.holdTimer);
+        d.holdTimer = null;
+      }
+      d.scrolling = true;
+      if (d.scrollEl) d.scrollEl.scrollTop -= dy;
+    }
+  };
+  const onHoldEnd = (e: PointerEvent) => {
+    const d = holdRef.current;
+    if (!d || e.pointerId !== d.pointerId) return;
+    const wasActive = d.active;
+    const id = d.id;
+    const dest = wasActive && e.type !== 'pointercancel' ? dropDestAt(e.clientX, e.clientY) : null;
+    cleanupHold();
+    if (dest && dest !== id) {
+      moveTo(id, dest); // moveTo validates fit / equippable
+      setActiveTab(dest); // open the section it landed in (a tab or a header both carry the dest)
+    }
+  };
+  const startHold = (instanceId: string, e: React.PointerEvent) => {
+    if (!onPlay) return;
+    if (e.button != null && e.button > 0) return; // primary button / touch only
+    holdRef.current = {
+      id: instanceId,
+      startX: e.clientX,
+      startY: e.clientY,
+      lastX: e.clientX,
+      lastY: e.clientY,
+      active: false,
+      pointerId: e.pointerId,
+      holdTimer: window.setTimeout(armHold, 450), // longer hold so a quick swipe scrolls instead of grabbing
+      scrolling: false,
+      scrollEl: scrollParentOf(e.currentTarget as HTMLElement),
+    };
+    window.addEventListener('pointermove', onHoldMove);
+    window.addEventListener('pointerup', onHoldEnd);
+    window.addEventListener('pointercancel', onHoldEnd);
+  };
+  useEffect(() => () => cleanupHold(), []);
+
+  // If the open accordion section vanishes (its container was moved/removed), fall back to Equipped.
+  useEffect(() => {
+    if (isMobile && activeTab !== null && activeTab !== 'equipped' && activeTab !== 'carried' && !containerIds.has(activeTab)) setActiveTab('equipped');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile, activeTab, containers.map((c) => c.instanceId).join(',')]);
   /** Drop an attachment/rune onto a host card: validate, confirm, then etch the rune (and consume
    *  the loose rune) or affix the attachment. On failure, surface the specific reason. */
   const attachDrop = async (rawSrcId: string, hostId: string) => {
@@ -521,7 +674,14 @@ export function InventoryTab({
     /** Shown in place of an empty grid (e.g. an empty container is still a drop target). */
     emptyHint?: string;
   }) {
-    const expanded = !collapsed.has(id);
+    // Mobile = accordion: exactly one section open (driven by activeTab). The open section STAYS open
+    // during a drag — collapsing it would UNMOUNT the card the touch started on, and Android fires
+    // `touchcancel` when an active touch's target is removed, silently killing the drop (this is why it
+    // armed+vibrated but never moved). Collapsed sections still show their header, and the sticky tab
+    // row exposes every destination, so all drop targets stay reachable. Desktop = independent toggles.
+    // During a mobile hold-drag every section collapses to just its header, so the whole tab row + all
+    // headers are visible as drop targets and only the floating icon shows under the finger.
+    const expanded = isMobile ? id === activeTab && !ghost : !collapsed.has(id);
     const droppable = dropKind != null && !!onPlay;
     const validHere = droppable && dragId != null && canDrop(dropKind!);
     return (
@@ -548,7 +708,11 @@ export function InventoryTab({
             : undefined
         }
       >
-        <div className="inv-sec" onClick={() => toggle(id)}>
+        <div
+          className={'inv-sec' + (ghost && dropTarget === dropKind ? ' drop-over' : '')}
+          data-drop-dest={dropKind}
+          onClick={() => (isMobile ? setActiveTab(activeTab === id ? null : id) : toggle(id))}
+        >
           <i className={'ti ' + (expanded ? 'ti-chevron-down' : 'ti-chevron-right')} aria-hidden="true" />
           <span className="inv-sec-title">{title}</span>
           <span className="inv-count">{items.length} item{items.length === 1 ? '' : 's'}</span>
@@ -575,8 +739,11 @@ export function InventoryTab({
                   onPlay={onPlay}
                   investedCount={investedCount}
                   rationsDayTracking={rationsDayTracking}
+                  isMobile={isMobile}
                   onDragStartItem={setDragId}
                   onDragEndItem={endDrag}
+                  onHoldDrag={isMobile ? startHold : undefined}
+                  dragging={ghost?.id === inv.instanceId}
                   attachHost={attachHost}
                   attachValid={!!plan?.ok}
                   attachOver={attachOver === inv.instanceId}
@@ -597,6 +764,11 @@ export function InventoryTab({
 
   return (
     <div className="maincol">
+      {ghost && (
+        <div className="inv-drag-ghost" style={{ left: ghost.x, top: ghost.y }} aria-hidden="true">
+          <i className={'ti ' + ghost.icon} />
+        </div>
+      )}
       <div className="inv-top">
         <div className="search">
           <i className="ti ti-search" aria-hidden="true" />
@@ -629,18 +801,28 @@ export function InventoryTab({
           // "Ignore Bulk Limit" option: never flag encumbered/overloaded.
           const enc = character.options?.ignoreBulk ? '' : bulk.total > bulk.max ? 'over' : bulk.total > bulk.encumberedAt ? 'encumbered' : '';
           return (
-            <span
-              className={'bulk-badge' + (enc ? ' ' + enc : '')}
-              title={`Carrying ${bulk.total} Bulk. You can carry up to ${bulk.encumberedAt} Bulk with no penalty; carrying more makes you encumbered (Clumsy 1, −10 ft Speed). The most you can carry at all is ${bulk.max} Bulk.`}
-            >
-              <i className="ti ti-weight" aria-hidden="true" /> Bulk{' '}
-              <strong>
-                {bulk.total} / {bulk.encumberedAt}
-              </strong>
-              <span className="bulk-state"> · max {bulk.max}</span>
-              {enc === 'encumbered' && <span className="bulk-state"> · encumbered</span>}
-              {enc === 'over' && <span className="bulk-state"> · overloaded</span>}
-            </span>
+            <>
+              <span
+                className={'bulk-badge' + (enc ? ' ' + enc : '')}
+                title={`Carrying ${bulk.total} Bulk. You can carry up to ${bulk.encumberedAt} Bulk with no penalty; carrying more makes you encumbered (Clumsy 1, −10 ft Speed). The most you can carry at all is ${bulk.max} Bulk.`}
+              >
+                <i className="ti ti-weight" aria-hidden="true" /> Bulk{' '}
+                <strong>
+                  {bulk.total} / {bulk.encumberedAt}
+                </strong>
+                <span className="bulk-state"> · max {bulk.max}</span>
+                {enc === 'encumbered' && <span className="bulk-state"> · encumbered</span>}
+                {enc === 'over' && <span className="bulk-state"> · overloaded</span>}
+              </span>
+              {/* Phone-only inline consequence (CSS hides it on desktop, which keeps the hover title). */}
+              {enc && (
+                <span className={'bulk-penalty ' + enc}>
+                  {enc === 'over'
+                    ? 'Overloaded — over your max Bulk; you can’t carry more.'
+                    : 'Encumbered — Clumsy 1 and −10 ft Speed.'}
+                </span>
+              )}
+            </>
           );
         })()}
         {investedCount > 0 && (
@@ -693,32 +875,62 @@ export function InventoryTab({
         )}
       </div>
 
-      <Group id="equipped" title="Equipped" items={equipped} dropKind="equipped" />
-      <Group id="carried" title="Carried" items={carried} dropKind="carried" />
-      {containers.map((c) => {
-        const item = resolve(c);
-        const contents = character.inventory.filter((inv) => inv.containerInstanceId === c.instanceId).filter(match);
-        const load = loads[c.instanceId];
-        // The container item itself lives in its location section (Carried, or a parent
-        // container) — this section shows only what's INSIDE it, plus its Bulk load.
-        const right =
-          load && load.capacity != null ? (
-            <span className={'ignore-chip' + (load.used > load.capacity + 1e-9 ? ' over' : '')} title="Bulk held / capacity">
-              {load.used} / {load.capacity} Bulk
-            </span>
-          ) : undefined;
+      {(() => {
+        // Per-container section data (contents + Bulk-load chip) — shared by both layouts.
+        const containerGroup = (c: InventoryItem) => {
+          const item = resolve(c);
+          const contents = character.inventory.filter((inv) => inv.containerInstanceId === c.instanceId).filter(match);
+          const load = loads[c.instanceId];
+          // The container item itself lives in its location section (Carried, or a parent
+          // container) — this section shows only what's INSIDE it, plus its Bulk load.
+          const right =
+            load && load.capacity != null ? (
+              <span className={'ignore-chip' + (load.used > load.capacity + 1e-9 ? ' over' : '')} title="Bulk held / capacity">
+                {load.used} / {load.capacity} Bulk
+              </span>
+            ) : undefined;
+          return (
+            <Group
+              key={c.instanceId}
+              id={c.instanceId}
+              title={item ? `In ${item.name}` : 'In container'}
+              items={contents}
+              dropKind={c.instanceId}
+              right={right}
+              emptyHint="Drag items here to store them"
+            />
+          );
+        };
+
+        // Equipped, Carried, then each container — stacked. Desktop = independent collapse toggles;
+        // mobile = accordion (one section open at a time, driven by activeTab; headers double as the
+        // drag drop-targets, so dropping an item on a header moves it there and opens that section).
         return (
-          <Group
-            key={c.instanceId}
-            id={c.instanceId}
-            title={item ? `In ${item.name}` : 'In container'}
-            items={contents}
-            dropKind={c.instanceId}
-            right={right}
-            emptyHint="Drag items here to store them"
-          />
+          <>
+            {isMobile && (
+              <div className={'subtabs spell-subtabs inv-tabs' + (ghost ? ' inv-tabs-drag' : '')} role="tablist">
+                <button data-drop-dest="equipped" className={'stab' + (activeTab === 'equipped' ? ' on' : '') + (ghost && dropTarget === 'equipped' ? ' drop-over' : '')} onClick={() => setActiveTab('equipped')}>
+                  Equipped
+                </button>
+                <button data-drop-dest="carried" className={'stab' + (activeTab === 'carried' ? ' on' : '') + (ghost && dropTarget === 'carried' ? ' drop-over' : '')} onClick={() => setActiveTab('carried')}>
+                  Carried
+                </button>
+                {containers.map((c) => {
+                  const item = resolve(c);
+                  return (
+                    <button key={c.instanceId} data-drop-dest={c.instanceId} className={'stab' + (activeTab === c.instanceId ? ' on' : '') + (ghost && dropTarget === c.instanceId ? ' drop-over' : '')} onClick={() => setActiveTab(c.instanceId)}>
+                      {item ? item.name : 'Container'}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+            <Group id="equipped" title="Equipped" items={equipped} dropKind="equipped" />
+            <Group id="carried" title="Carried" items={carried} dropKind="carried" />
+            {containers.map(containerGroup)}
+          </>
         );
-      })}
+      })()}
 
       {detail && (
         <ItemDetail

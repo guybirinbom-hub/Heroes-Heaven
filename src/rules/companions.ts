@@ -13,6 +13,7 @@
  */
 import { deriveAc, deriveMaxHp, derivePerception, deriveSave, profBonus, pwl } from './derive';
 import { conditionPenalty } from './conditions';
+import { modeNumberBonus } from './modes';
 import { SPECIFIC_FAMILIARS_BY_ID } from './specificFamiliars';
 import type {
   AbilityId,
@@ -25,9 +26,13 @@ import type {
   DamageType,
   EidolonConfig,
   FamiliarAbility,
+  ModeDef,
   ProficiencyRank,
   SkillId,
 } from './types';
+
+/** A save's defining ability → the save name a mode targets (modes match saves by name, not ability). */
+const SAVE_NAME: Partial<Record<AbilityId, string>> = { con: 'fortitude', dex: 'reflex', wis: 'will' };
 
 export type Maturity = 'young' | 'mature' | 'nimble' | 'savage' | 'specialized';
 
@@ -188,6 +193,7 @@ export function deriveAnimalCompanion(
   content: ContentDatabase,
   conditions: ActiveCondition[] = [],
   withoutLevel = false,
+  modes: ModeDef[] = [],
 ): AnimalCompanionBlock {
   const maturity = (cfg.maturity as Maturity) || 'young';
   const m = COMPANION_FORMULA.maturities[maturity] ?? COMPANION_FORMULA.maturities.young;
@@ -213,24 +219,24 @@ export function deriveAnimalCompanion(
 
   const acRank = rankMax(m.ranks.ac, spec?.acRank);
   const dexForAc = gear.dexCap != null ? Math.min(ab.dex ?? 0, gear.dexCap) : ab.dex ?? 0;
-  const ac = 10 + dexForAc + profBonus(acRank, level, withoutLevel) + gear.acBonus + conditionPenalty(conditions, 'dex', 'ac');
+  const ac = 10 + dexForAc + profBonus(acRank, level, withoutLevel) + gear.acBonus + conditionPenalty(conditions, 'dex', 'ac') + modeNumberBonus(modes, { kind: 'ac' });
   // Per-type base HP (Bird 4 / Wolf 6 / Bear 8 …) + (6 + Con) per level.
   const hpBase = type.hp ?? COMPANION_FORMULA.hpBase;
   const hp = hpBase + (COMPANION_FORMULA.hpPerLevel + (COMPANION_FORMULA.hpAddConPerLevel ? (ab.con ?? 0) : 0)) * level;
   const save = (a: AbilityId): StatMod => ({
     name: '',
-    modifier: (ab[a] ?? 0) + profBonus(m.ranks.saves, level, withoutLevel) + conditionPenalty(conditions, a, 'save'),
+    modifier: (ab[a] ?? 0) + profBonus(m.ranks.saves, level, withoutLevel) + conditionPenalty(conditions, a, 'save') + modeNumberBonus(modes, { kind: 'save', detail: SAVE_NAME[a] }),
     rank: m.ranks.saves,
   });
 
   const buildAttack =(name: string, dice: number, dieSize: string, damageType: string, traits: string[], flatBonus: number) => {
     const finesse = traits.includes('finesse');
     const atkAbility: AbilityId = finesse && (ab.dex ?? 0) > (ab.str ?? 0) ? 'dex' : 'str';
-    const flat = (ab.str ?? 0) + flatBonus + conditionPenalty(conditions, atkAbility, 'damage');
+    const flat = (ab.str ?? 0) + flatBonus + conditionPenalty(conditions, atkAbility, 'damage') + modeNumberBonus(modes, { kind: 'damage' });
     const dmgFlat = flat > 0 ? `+${flat}` : flat < 0 ? `${flat}` : '';
     return {
       name,
-      attack: (ab[atkAbility] ?? 0) + profBonus(m.ranks.attack, level, withoutLevel) + conditionPenalty(conditions, atkAbility, 'attack'),
+      attack: (ab[atkAbility] ?? 0) + profBonus(m.ranks.attack, level, withoutLevel) + conditionPenalty(conditions, atkAbility, 'attack') + modeNumberBonus(modes, { kind: 'attack' }),
       damage: `${dice}d${dieSize}${dmgFlat} ${damageType}`,
       traits,
     };
@@ -249,7 +255,7 @@ export function deriveAnimalCompanion(
     if (specSkill.has(sk)) rank = rankMax(rank, specSkill.get(sk));
     const ability = SKILL_ABILITY[sk];
     const checkPen = ability === 'str' || ability === 'dex' ? gear.checkPenalty : 0;
-    return { name: cap(sk), modifier: (ab[ability] ?? 0) + profBonus(rank, level, withoutLevel) + checkPen + conditionPenalty(conditions, ability, 'skill'), rank };
+    return { name: cap(sk), modifier: (ab[ability] ?? 0) + profBonus(rank, level, withoutLevel) + checkPen + conditionPenalty(conditions, ability, 'skill') + modeNumberBonus(modes, { kind: 'skill', detail: sk }), rank };
   });
 
   const strMod = ab.str ?? 0;
@@ -274,7 +280,7 @@ export function deriveAnimalCompanion(
     saves: { fortitude: save('con'), reflex: save('dex'), will: save('wis') },
     perception: {
       name: 'Perception',
-      modifier: (ab.wis ?? 0) + profBonus(m.ranks.perception, level, withoutLevel) + conditionPenalty(conditions, 'wis', 'perception'),
+      modifier: (ab.wis ?? 0) + profBonus(m.ranks.perception, level, withoutLevel) + conditionPenalty(conditions, 'wis', 'perception') + modeNumberBonus(modes, { kind: 'perception' }),
       rank: m.ranks.perception,
     },
     speeds,
@@ -296,16 +302,16 @@ interface Defenses {
 
 /** A familiar / eidolon uses the master's AC, save modifiers, and Perception — then its
  * own conditions apply on top. */
-function masterDefenses(character: Character, content: ContentDatabase, conditions: ActiveCondition[] = []): Defenses {
+function masterDefenses(character: Character, content: ContentDatabase, conditions: ActiveCondition[] = [], modes: ModeDef[] = []): Defenses {
   return {
-    ac: deriveAc(character, content).value + conditionPenalty(conditions, 'dex', 'ac'),
+    ac: deriveAc(character, content).value + conditionPenalty(conditions, 'dex', 'ac') + modeNumberBonus(modes, { kind: 'ac' }),
     saves: {
       // Pass content so the master's resilient-rune bonus is included (deriveSave needs it).
-      fortitude: deriveSave(character, 'fortitude', content).modifier + conditionPenalty(conditions, 'con', 'save'),
-      reflex: deriveSave(character, 'reflex', content).modifier + conditionPenalty(conditions, 'dex', 'save'),
-      will: deriveSave(character, 'will', content).modifier + conditionPenalty(conditions, 'wis', 'save'),
+      fortitude: deriveSave(character, 'fortitude', content).modifier + conditionPenalty(conditions, 'con', 'save') + modeNumberBonus(modes, { kind: 'save', detail: 'fortitude' }),
+      reflex: deriveSave(character, 'reflex', content).modifier + conditionPenalty(conditions, 'dex', 'save') + modeNumberBonus(modes, { kind: 'save', detail: 'reflex' }),
+      will: deriveSave(character, 'will', content).modifier + conditionPenalty(conditions, 'wis', 'save') + modeNumberBonus(modes, { kind: 'save', detail: 'will' }),
     },
-    perception: derivePerception(character).modifier + conditionPenalty(conditions, 'wis', 'perception'),
+    perception: derivePerception(character).modifier + conditionPenalty(conditions, 'wis', 'perception') + modeNumberBonus(modes, { kind: 'perception' }),
   };
 }
 
@@ -337,6 +343,7 @@ export function deriveFamiliar(
   character: Character,
   content: ContentDatabase,
   conditions: ActiveCondition[] = [],
+  modes: ModeDef[] = [],
 ): FamiliarBlock {
   const abilities = (cfg.abilities ?? [])
     .map((id) => content.familiarAbilities[id])
@@ -360,7 +367,7 @@ export function deriveFamiliar(
     hp: (5 + (hasTough ? 2 : 0)) * character.level,
     speed: land,
     extraSpeeds,
-    ...masterDefenses(character, content, conditions),
+    ...masterDefenses(character, content, conditions, modes),
     abilities,
     specific: sf
       ? {
@@ -421,6 +428,7 @@ export function deriveEidolon(
   character: Character,
   content: ContentDatabase,
   conditions: ActiveCondition[] = [],
+  modes: ModeDef[] = [],
 ): EidolonBlock {
   const opt = content.classes.summoner?.subclass?.options.find((o) => o.id === cfg.typeId);
   const ec: EidolonConfig = cfg.eidolon ?? {};
@@ -441,7 +449,8 @@ export function deriveEidolon(
     cappedDex +
     profBonus(character.proficiencies.defenses.unarmored, level, withoutLevel) +
     (ec.acItemBonus ?? 0) +
-    conditionPenalty(conditions, 'dex', 'ac');
+    conditionPenalty(conditions, 'dex', 'ac') +
+    modeNumberBonus(modes, { kind: 'ac' });
 
   // Build an unarmed Strike: the summoner's eidolon-attack proficiency + the eidolon's Str (or Dex
   // when the attack is finesse and Dex is higher); damage is one die + Str. Runes/handwraps aren't
@@ -450,11 +459,11 @@ export function deriveEidolon(
   const strike = (rawName: string | undefined, fallback: string, die: number, traits: string[], dmgType?: DamageType) => {
     const finesse = traits.includes('finesse');
     const atkAbility: AbilityId = finesse && ab.dex > ab.str ? 'dex' : 'str';
-    const flat = ab.str + conditionPenalty(conditions, atkAbility, 'damage');
+    const flat = ab.str + conditionPenalty(conditions, atkAbility, 'damage') + modeNumberBonus(modes, { kind: 'damage' });
     const dmgFlat = flat > 0 ? `+${flat}` : flat < 0 ? `${flat}` : '';
     return {
       name: rawName?.trim() || fallback,
-      attack: ab[atkAbility] + profBonus(attackRank, level, withoutLevel) + conditionPenalty(conditions, atkAbility, 'attack'),
+      attack: ab[atkAbility] + profBonus(attackRank, level, withoutLevel) + conditionPenalty(conditions, atkAbility, 'attack') + modeNumberBonus(modes, { kind: 'attack' }),
       damage: `1d${die}${dmgFlat} ${dmgType ?? 'slashing'}`,
       traits: [...traits, 'unarmed'],
     };
@@ -474,7 +483,7 @@ export function deriveEidolon(
     speed: 25,
     abilities: ab,
     attacks,
-    ...masterDefenses(character, content, conditions),
+    ...masterDefenses(character, content, conditions, modes),
     ac: eidolonAc,
   };
 }

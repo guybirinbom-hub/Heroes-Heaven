@@ -1,5 +1,41 @@
 /* Character sheet styles. Every value reads from the design tokens. */
 
+/* Paint the themed background on the document itself so the edge-to-edge area behind the Android
+   status / navigation bars (viewport-fit=cover) shows the app bg — not a transparent strip / the prior page. */
+html,
+body {
+  background: var(--app-bg);
+  /* Phone safe-area insets as named vars (so the opaque system-bar bands below can be overridden for
+     testing). Resolve to 0 where there's no notch / nav bar. */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  /* No blue tap-flash on press (the "feels like a website" highlight). */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Opaque backing behind the phone's transparent (edge-to-edge) status bar (top) and navigation/home bar
+   (bottom), so app content can't be seen through them. Only on the real mobile platform (html.is-mobile);
+   sized to the safe-area insets (0-height when absent). z-index 59 sits under modals (.picker-overlay = 60),
+   which are fixed inset:0 and thus back their own bars; above normal page content. */
+.is-mobile body::before,
+.is-mobile body::after {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  background: var(--app-surface);
+  z-index: 59;
+  pointer-events: none;
+}
+.is-mobile body::before {
+  top: 0;
+  height: calc(var(--safe-top, env(safe-area-inset-top, 0px)) / var(--zoom, 1));
+}
+.is-mobile body::after {
+  bottom: 0;
+  height: calc(var(--safe-bottom, env(safe-area-inset-bottom, 0px)) / var(--zoom, 1));
+}
+
 .ws-app,
 .roster-screen,
 .hb-page {
@@ -715,6 +751,14 @@
 .hp-fill {
   height: 100%;
   background: var(--app-good);
+  transition: width 0.25s ease, background-color 0.25s ease;
+}
+/* Glance-view damage cue: yellow when bloodied (≤50%), red when critical (≤25%). */
+.hp-fill.low {
+  background: var(--app-warn);
+}
+.hp-fill.crit {
+  background: var(--app-bad);
 }
 .defs {
   display: grid;
@@ -743,6 +787,14 @@
   font-weight: 500;
   width: 34px;
   text-align: right;
+}
+/* The abbreviated save/perception label + the strip wrapper are desktop no-ops; the mobile media
+   query turns the wrapper into a 4-across tile strip (see the <=720px block). */
+.stat-short {
+  display: none;
+}
+.saves-strip {
+  display: contents;
 }
 .rank-pill {
   font-size: 11px;
@@ -778,6 +830,14 @@
    resistances made it look right-to-left). */
 .iwr-val.senses-val {
   text-align: left;
+}
+/* Speed + Senses are wrapped in .kv-cubes: transparent on desktop (still rendered as rail lines),
+   turned into a 2-up tile grid on mobile (see the <=720px block). */
+.kv-cubes {
+  display: contents;
+}
+.kv-cubes > .rail-kv:first-of-type {
+  margin-top: 8px;
 }
 /* A clickable rail row (e.g. Speed → opens its breakdown). */
 .rail-kv.openable {
@@ -815,6 +875,13 @@
 }
 .pip.on {
   background: var(--app-accent);
+}
+/* Mythic points use a warm gold so they read distinctly from hero points. */
+.pip.mythic {
+  border-color: #e0a93b;
+}
+.pip.mythic.on {
+  background: #e0a93b;
 }
 
 /* ---- class resources (rail) ---- */
@@ -1333,6 +1400,10 @@
   color: var(--app-accent-text);
   border-color: var(--app-accent);
 }
+/* The filter toggle only exists on mobile (desktop shows the .af-row filters inline). */
+.filter-toggle {
+  display: none;
+}
 .subtabs {
   display: flex;
   gap: 14px;
@@ -1791,6 +1862,10 @@ button.strike-name:hover {
 }
 
 /* ---- appearance menu ---- */
+.page-menu {
+  position: relative; /* anchors the absolute .topmenu dropdown to the hamburger button */
+  display: inline-flex;
+}
 .menu-backdrop {
   position: fixed;
   inset: 0;
@@ -3061,6 +3136,26 @@ button.strike-name:hover {
   padding: 7px 9px;
   border-bottom: var(--app-bw) solid var(--app-border);
 }
+/* RichEditor toolbar wrapper — transparent in normal flow; on mobile (kbBottom set) it pins just
+   above the on-screen keyboard via the visual viewport so formatting stays reachable while typing. */
+.rte-toolwrap {
+  display: contents;
+}
+/* Mobile: while the editor is focused, the toolbar sticks to the bottom of the scroll container — with
+   Android adjustResize the window shrinks for the keyboard, so the bar rides just above it. */
+.rte-toolwrap-sticky {
+  display: flex;
+  flex-direction: column-reverse; /* color/glyph palette opens above the pinned toolbar */
+  /* Fixed to the bottom of the (Android adjustResize-shrunk) window = just above the keyboard. Works
+     now that html{zoom} is forced to 1 on mobile, so position:fixed isn't broken by a zoom container. */
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  background: var(--app-surface);
+  box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.3);
+}
 /* Notes editor color/glyph popover (a swatch row under the toolbar). */
 .tb-pop {
   display: flex;
@@ -3556,6 +3651,10 @@ button.strike-name:hover {
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
+}
+/* Encumbrance consequence spelled out inline — phone only (desktop keeps it in the badge's hover title). */
+.bulk-penalty {
+  display: none;
 }
 .bulk-badge {
   display: flex;
@@ -5251,7 +5350,7 @@ button.strike-name:hover {
 .ci-field input,
 .ci-field select,
 .ci-field textarea {
-  background: var(--app-surface-2);
+  background-color: var(--app-surface-2);
   border: var(--app-bw) solid var(--app-border);
   border-radius: var(--app-radius-sm);
   color: var(--app-text);
@@ -6664,6 +6763,7 @@ button.strike-name:hover {
 .dice-entry-detail {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   font-size: 11px;
   color: var(--app-text-dim);
@@ -6908,9 +7008,106 @@ button.strike-name:hover {
 .fsel-list { flex: 1; overflow-y: auto; padding: 6px; }
 .fsel-empty { padding: 24px 16px; text-align: center; color: var(--app-text-dim); font-size: 12.5px; }
 
+/* Slot-count badge on spell rank tabs; blank-bio empty state; eidolon "more" toggle. */
+.stab-badge {
+  margin-left: 5px;
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 0.7;
+}
+.stab.on .stab-badge {
+  opacity: 0.9;
+}
+.gen-empty {
+  color: var(--app-text-dim);
+  font-size: 13px;
+  font-style: italic;
+}
+.sb-more {
+  background: none;
+  border: none;
+  color: var(--app-accent);
+  cursor: pointer;
+  font: inherit;
+  padding: 0 0 0 3px;
+  text-decoration: underline;
+}
+
+/* ============================================================
+   Motion — subtle enter animations for overlays, menus, drawers,
+   and stat changes. App-wide (phone + desktop); every rule here is
+   disabled under prefers-reduced-motion. Before this block the app
+   had no @keyframes at all, so every surface hard-cut in.
+   ============================================================ */
+@keyframes app-overlay-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes app-pop-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes app-menu-in {
+  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes app-drawer-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+@keyframes app-fade-slide {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes app-slide-in-right {
+  from { opacity: 0; transform: translateX(26px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes app-slide-in-left {
+  from { opacity: 0; transform: translateX(-26px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes app-entry-in {
+  0% { background: color-mix(in srgb, var(--app-accent) 20%, transparent); opacity: 0.35; transform: translateY(-5px); }
+  100% { background: transparent; opacity: 1; transform: translateY(0); }
+}
+@keyframes app-total-pop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.32); }
+  100% { transform: scale(1); }
+}
+
+/* Overlays fade in; their panels pop / slide / drop in. */
+.picker-overlay, .drawer-overlay, .portrait-lightbox { animation: app-overlay-in 140ms ease-out; }
+.picker { animation: app-pop-in 165ms cubic-bezier(0.2, 0.7, 0.3, 1); }
+.portrait-lightbox-img { animation: app-pop-in 190ms ease-out; }
+.topmenu, .appearance-menu { animation: app-menu-in 130ms ease-out; transform-origin: top right; }
+.dice-drawer { animation: app-drawer-in 210ms cubic-bezier(0.2, 0.7, 0.3, 1); }
+
+/* Companion Stats / Edit / Inventory body (keyed on mode) fades in on switch instead of hard-cutting. */
+.cmp-body { animation: app-fade-slide 165ms ease-out; }
+
+/* A new dice roll flashes in; a crit / fumble total pops. Entries are keyed by id, so only the
+   newly-prepended one animates. */
+.dice-entry { animation: app-entry-in 550ms ease-out; }
+.dice-entry.crit .dice-entry-total,
+.dice-entry.fumble .dice-entry-total { display: inline-block; animation: app-total-pop 480ms ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  .picker-overlay, .drawer-overlay, .portrait-lightbox, .picker, .portrait-lightbox-img,
+  .topmenu, .appearance-menu, .dice-drawer, .cmp-body, .dice-entry,
+  .dice-entry.crit .dice-entry-total, .dice-entry.fumble .dice-entry-total,
+  .notes-wrap .editor-card, .notes-wrap .notes-list-card { animation: none !important; }
+}
+
 @media (max-width: 720px) {
-  .fsel-body { flex-direction: column; }
-  .fsel-panel { width: auto; max-height: 45%; border-right: none; border-bottom: var(--app-bw) solid var(--app-border); }
+  /* Filters open as a full overlay COVERING the results; the panel's own sticky bar has a "Done"
+     button to close it and reveal the results again (a phone shows filters OR results, not both). */
+  .fsel-body { flex-direction: column; position: relative; }
+  .fsel-panel { position: absolute; inset: 0; z-index: 6; width: auto; max-height: none; border: none; background: var(--app-surface); overflow-y: auto; }
+  .fsel-panel .fsel-bar { position: sticky; top: 0; z-index: 1; background: var(--app-surface); flex-wrap: wrap; }
+  .fsel-done {
+    margin-left: auto; padding: 8px 14px; border-radius: var(--app-radius-sm);
+    border: var(--app-bw) solid var(--app-accent); background: var(--app-accent); color: var(--app-accent-text);
+    font-size: 13px; display: inline-flex; align-items: center; gap: 5px; cursor: pointer;
+  }
 
   /* ===== Phone / very-narrow layout (Android WebView + narrow windows) ===== */
   /* Stack the builder's setup sidebar above its main (the fixed 244px sidebar doesn't fit a phone). */
@@ -6918,7 +7115,7 @@ button.strike-name:hover {
   .roster-body { padding: 10px; }
   /* Reclaim the desktop window margins + add the Android status-bar safe area (roster/homebrew chrome). */
   .chrome { padding-left: 10px; padding-right: 10px; }
-  .is-mobile .chrome { padding-top: env(safe-area-inset-top, 0px); }
+  .is-mobile .chrome { padding-top: calc(env(safe-area-inset-top, 0px) / var(--zoom, 1)); }
   .is-mobile .builder-body,
   .is-mobile .roster-body { padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px)); }
 
@@ -6926,12 +7123,24 @@ button.strike-name:hover {
   /* Drop the desktop title bar + top tab strip; the identity row IS the top bar (the avatar opens the
      menu), and the bottom .mtabs nav holds every tab. Clamp the app to the viewport so only the body
      scrolls, between the pinned top bar and bottom nav. */
-  .ws-app { height: 100dvh; overflow: hidden; }
+  /* Fixed inset (not height:100dvh) so the shell fills the viewport at any zoom — `100dvh` mis-scales under
+     html{zoom} (leaves a blank band when zoomed out). Fixed top/right/bottom/left=0 pins to the viewport edges. */
+  .ws-app { position: fixed; inset: 0; overflow: hidden; }
+  /* Native-app feel: no text selection / long-press callout on the UI chrome (long-press is for drag,
+     not selecting). Keep selection where it matters — inputs, selects, and editable rich-text areas. */
+  .ws-app, .roster-screen, .hb-page {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+  input, textarea, select, [contenteditable="true"] {
+    -webkit-user-select: text;
+    user-select: text;
+  }
   .ws-app > .chrome { display: none; }
   .identity .tabs,
-  .identity .level-stack,
-  .identity > .icon-btn[title='Menu'] { display: none; }
-  .identity { flex: 0 0 auto; padding: calc(8px + env(safe-area-inset-top, 0px)) 12px 8px; }
+  .identity .level-stack { display: none; }
+  .identity { flex: 0 0 auto; padding: calc(8px + env(safe-area-inset-top, 0px) / var(--zoom, 1)) 12px 8px; }
   .identity-name { flex: 1 1 auto; max-width: none; }
 
   .ws-app > .body {
@@ -6948,6 +7157,140 @@ button.strike-name:hover {
   /* Vitals stat tiles flow into rows instead of a single narrow column. */
   .rail .defs { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 6px; }
   .rail .defs .shield-block { grid-column: 1 / -1; }
+
+  /* Saves & perception as a compact 4-across strip of tiles (name on top, big modifier below). */
+  .saves-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .saves-strip .stat-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    padding: 7px 2px;
+    border-top: none;
+    background: var(--app-surface-2);
+    border-radius: var(--app-radius-sm);
+    text-align: center;
+  }
+  .saves-strip .stat-name { display: none; }
+  .saves-strip .stat-short { display: block; font-size: 11px; color: var(--app-text-dim); }
+  .saves-strip .stat-mod { margin-left: 0; width: auto; font-size: 18px; }
+  .saves-strip .rank-pill { display: none; }
+
+  /* Skills: force a dense 2-column grid (auto-fill can collapse to 1 column on narrow phones). */
+  .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  /* Actions page: hide the per-row skill pill on action chips/rows (kept in the detail popup). */
+  .action .action-skill,
+  .action-chip .action-skill { display: none; }
+
+  /* Speed + Senses as a 2-up tile grid (cubes) instead of rail lines. */
+  .kv-cubes { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+  .kv-cubes > .rail-kv,
+  .kv-cubes > .rail-kv:first-of-type { flex-direction: column; align-items: stretch; gap: 2px; margin: 0; padding: 7px 9px; background: var(--app-surface-2); border-radius: var(--app-radius-sm); }
+  .kv-cubes .kv-label { width: auto; font-size: 11px; }
+  .kv-cubes .iwr-val { flex: none; margin-left: 0; text-align: left; font-size: 14px; }
+
+  /* Conditions as a grid of cube tiles instead of a wrapping pill row. */
+  /* Content-sized pills that wrap — a grid forced 96px cells, so wider pills (valued conditions with
+     steppers, long mode names) overflowed their cell and overlapped the neighbour. */
+  .cond-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+  .cond-wrap .cond-pill, .cond-wrap .mode-pill, .cond-wrap .add-btn { border-radius: var(--app-radius-sm); }
+
+  /* Spells: the spellcasting detail (key attribute / font / domains) moves into a popup opened by
+     tapping the header name; hide the inline copy. */
+  .sc-detail { display: none; }
+  .sc-name-btn { background: none; border: none; font: inherit; color: inherit; cursor: pointer; padding: 0; display: inline-flex; align-items: center; gap: 5px; }
+  .sc-name-btn .ti { font-size: 14px; color: var(--app-text-dim); }
+  .sc-detail-pop { padding: 6px 16px 16px; display: flex; flex-direction: column; gap: 4px; }
+
+  /* Sub-tab rows scroll horizontally on phones (Actions has 4 tabs; Spells can have many rank tabs). */
+  .subtabs { overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; }
+  .subtabs::-webkit-scrollbar { display: none; }
+  .subtabs .stab { flex: none; white-space: nowrap; min-height: 40px; padding: 9px 10px; font-size: 13.5px; display: inline-flex; align-items: center; }
+
+  /* Details: ancestry / heritage / background / class as a 2x2 box grid. */
+  .origin-boxes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .origin-boxes .obox { background: var(--app-surface-2); border-radius: var(--app-radius-sm); padding: 10px; display: flex; flex-direction: column; gap: 3px; }
+  .origin-boxes .obox .olead { font-size: 18px; color: var(--app-text-dim); }
+
+  /* Search: a filter toggle in the controls row reveals the action-cost filters as an overlay over the results. */
+  .acts-controls { position: relative; }
+  .filter-toggle {
+    display: inline-flex; align-items: center; justify-content: center; flex: none;
+    width: 38px; height: 38px; border-radius: var(--app-radius-sm);
+    border: var(--app-bw) solid var(--app-border); background: var(--app-surface-2);
+    color: var(--app-text-dim); font-size: 17px; cursor: pointer;
+  }
+  .filter-toggle.on { background: var(--app-accent); color: var(--app-accent-text); border-color: var(--app-accent); }
+  .acts-controls .af-row { display: none; }
+  .acts-controls .af-row.open {
+    display: flex; flex-wrap: wrap; position: absolute; top: calc(100% + 4px); right: 0; z-index: 6;
+    background: var(--app-surface-2); border: var(--app-bw) solid var(--app-border);
+    border-radius: var(--app-radius-sm); padding: 8px; gap: 6px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Notes: List → editor on phones — one full-width card at a time, richer list rows. */
+  .notes-wrap { display: block; min-height: 0; }
+  .notes-list-card, .editor-card { width: auto; }
+  .note-item-m { padding: 11px 12px; gap: 10px; align-items: center; }
+  .note-item-m .ni-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+  .note-item-m .ni-name { font-weight: 500; font-size: 14px; }
+  .note-item-m .ni-preview { font-size: 12px; color: var(--app-text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .note-item-m .ni-chev { color: var(--app-text-dim); font-size: 16px; flex: none; }
+  .notes-back { flex: none; }
+
+  /* Settings: full-screen page that opens to a Cards grid (desktop keeps the sidebar+pane modal). */
+  .settings-page-m {
+    /* !important beats any inline width/height saved by the picker resize grip; resize:none removes it.
+       Fixed inset (not 100dvh) so it fills the viewport at any zoom — see .ws-app. */
+    position: fixed !important; inset: 0 !important;
+    width: auto !important; max-width: none !important;
+    height: auto !important; max-height: none !important;
+    min-width: 0; border-radius: 0; resize: none; display: flex; flex-direction: column;
+  }
+  .settings-cards {
+    flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 14px;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    align-content: start; overflow-y: auto;
+  }
+  .settings-card {
+    display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px 10px;
+    background: var(--app-surface-2); border: var(--app-bw) solid var(--app-border);
+    border-radius: var(--app-radius-sm); color: var(--app-text); font-size: 13px; cursor: pointer;
+  }
+  .settings-card i { font-size: 24px; color: var(--app-accent); }
+  .settings-card.danger i, .settings-card.danger span { color: var(--app-danger, #e0584d); }
+  .settings-page-m .settings-pane { flex: 1; padding: 14px; padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px)); overflow-y: auto; }
+  .settings-back { flex: none; }
+  /* Full-screen Settings page: keep its header (back / title / close) below the phone status bar / notch. */
+  .settings-page-m .picker-head { padding-top: calc(11px + env(safe-area-inset-top, 0px)); }
+
+  /* ----- Mobile HP numpad: tap the HP number to open a Damage/Heal/Temp/Set keypad ----- */
+  .hp-cur-tap { background: none; border: none; font: inherit; color: inherit; cursor: pointer; padding: 0; text-decoration: underline dotted; text-underline-offset: 3px; }
+  .picker.hp-numpad { width: min(360px, 95vw); min-width: 0; min-height: 0; height: auto; resize: none; padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+  .picker.hp-numpad::before, .picker.hp-numpad::after { display: none; }
+  .hp-numpad .np-readout { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; text-align: center; font-size: 26px; font-weight: 500; padding: 12px 8px 2px; }
+  .hp-numpad .np-from-tap { background: none; border: none; font: inherit; color: var(--app-text-dim); cursor: pointer; padding: 0 2px; border-radius: var(--app-radius-sm); text-decoration: underline dotted; text-underline-offset: 4px; }
+  .hp-numpad .np-readout.set .np-from-tap { color: var(--app-text); background: var(--app-surface-3); text-decoration: none; }
+  .hp-numpad .np-readout.dmg .to { color: var(--app-bad); }
+  .hp-numpad .np-readout.heal .to { color: var(--app-good); }
+  .hp-numpad .np-dying { color: var(--app-bad); font-size: 13px; }
+  .hp-numpad .np-readout-sub { text-align: center; font-size: 13px; color: var(--app-text-dim); padding-bottom: 6px; }
+  .hp-numpad .seg { margin: 8px 12px 0; }
+  .hp-numpad .seg-btn { flex: 1; padding: 8px 4px; font-size: 13px; }
+  /* flex:none + centered so the typed number can't be shrink-clipped by the column (the old min-height:1.2em
+     let this box collapse under the tall line-height, cutting off the top of the number). */
+  .hp-numpad .np-display { flex: none; display: flex; align-items: center; justify-content: center; min-height: 48px; font-size: 28px; line-height: 1; padding: 6px 0; color: var(--app-text); }
+  .hp-numpad .np-display.empty { color: var(--app-text-dim); }
+  .hp-numpad .np-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 4px 12px; }
+  .hp-numpad .np-key { min-height: 52px; font-size: 20px; background: var(--app-surface-2); border: 1.5px solid var(--app-border); border-radius: var(--app-radius-sm); color: var(--app-text); font-family: inherit; cursor: pointer; }
+  .hp-numpad .np-key:active { background: var(--app-surface-3); }
+  .hp-numpad .np-key.np-util { color: var(--app-text-dim); }
+  .hp-numpad .np-apply { display: block; width: calc(100% - 24px); margin: 10px 12px 0; padding: 14px; font-size: 15px; }
+  .hp-numpad .np-apply:disabled { opacity: .5; }
   .rail .tile { text-align: center; }
 
   /* Bottom tab bar — horizontally scrollable, shows every tab with an icon + short label. */
@@ -6959,12 +7302,14 @@ button.strike-name:hover {
     scrollbar-width: none;
     border-top: var(--app-bw) solid var(--app-border);
     background: var(--app-surface);
-    padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px));
+    /* /var(--zoom): the bar lives inside the html{zoom}-scaled shell, so the safe-area pad must be
+       divided by the zoom to still clear the phone's home bar when zoomed out. */
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px) / var(--zoom, 1));
   }
   .mtabs::-webkit-scrollbar { display: none; }
   .mtab {
-    flex: 0 0 auto;
-    min-width: 62px;
+    flex: 1 1 0;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6984,6 +7329,233 @@ button.strike-name:hover {
     background: color-mix(in srgb, var(--app-accent) 14%, transparent);
   }
   .mtab-label { white-space: nowrap; }
+
+  /* Inventory tabs (Equipped / Carried / one per container): comfortably sized so the
+     container tabs are easy drag-and-drop targets. Reuses .subtabs.spell-subtabs scrolling. */
+  .inv-tabs { gap: 8px; margin-bottom: 10px; }
+  .inv-tabs .stab {
+    font-size: 13.5px;
+    padding: 9px 12px;
+    min-height: 40px;
+    border-radius: var(--app-radius-sm) var(--app-radius-sm) 0 0;
+  }
+
+  /* ============================================================
+     Phone-aesthetic pass: popups become bottom sheets + every control hits ~40px.
+     Phone-only (inside this @media block) — the desktop layout is untouched.
+     ============================================================ */
+
+  /* Popups → full-width bottom sheets; kill the desktop resize grip + centering.
+     The two that manage their own mobile size (HP numpad, full-screen Settings) opt out of sizing. */
+  /* Centered popups. `safe center` keeps them centred when they fit, but anchors a too-tall popup to
+     the TOP (moves it up) instead of clipping its top off-screen. Full-screen pickers opt out below. */
+  .picker-overlay { align-items: safe center; padding: 0; }
+  .picker:not(.hp-numpad):not(.settings-page-m) {
+    max-width: 94vw; min-width: 0; max-height: 90dvh; resize: none;
+  }
+  .picker::before, .picker::after { display: none !important; }
+
+  /* Search-based pickers (FilterableSelect feat/spell/item browser, ref-search) go FULL-SCREEN on a
+     phone — they have lots of results, so a short bottom sheet is cramped. */
+  .picker.fsel, .picker.ref-search, .picker.item-edit, .picker.cond-modal {
+    /* Fixed inset (not 100dvh) so full-screen modals fill the viewport at any zoom — see .ws-app. */
+    position: fixed !important; inset: 0 !important;
+    width: auto !important; max-width: none !important;
+    height: auto !important; max-height: none !important; border-radius: 0 !important;
+  }
+  .picker.fsel .fsel-head, .picker.ref-search .picker-head, .picker.item-edit .ie-head, .picker.cond-modal .picker-head {
+    padding-top: calc(11px + env(safe-area-inset-top, 0px));
+  }
+  /* Full-screen item editor: leave room so the focused field scrolls clear of the pinned toolbar. */
+  .picker.item-edit .ci-body { scroll-padding-bottom: 64px; }
+
+  /* Dice roller → true full-width drawer + tappable quick-roll buttons. */
+  /* Dice roller: full-screen on phones (its header X closes it). */
+  .drawer-overlay { justify-content: stretch; }
+  .dice-drawer { position: fixed; inset: 0; width: auto; max-width: none; height: auto; max-height: none; border-left: none; }
+  .dice-drawer .picker-head { padding-top: calc(11px + env(safe-area-inset-top, 0px)); }
+  .dice-drawer .dice-hist { padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px) / var(--zoom, 1)); }
+  /* Hero points: wide pills that fill the row (wider, not taller). */
+  .rail-kv .pips { flex: 1; gap: 6px; }
+  .rail-kv .pip { flex: 1; width: auto; border-radius: 7px; }
+  .dice-quick-btn { padding: 8px 14px; font-size: 13px; }
+
+  /* Icon buttons everywhere (top bar, editor/settings headers, utility) → 40px touch. */
+  .icon-btn { min-width: 40px; min-height: 40px; padding: 8px; font-size: 17px; display: inline-flex; align-items: center; justify-content: center; }
+
+  /* Segmented controls, chips, filter chips → ~40px with a touch-press cue. */
+  .seg-btn { min-height: 40px; padding: 9px 12px; font-size: 13px; }
+  /* Actions page: centre the Encounter / Exploration / Downtime control (desktop keeps it right-aligned). */
+  .acts-head .seg { margin: 0 auto; }
+  .chip { min-height: 40px; padding: 9px 12px; font-size: 13px; }
+  .chip:active { border-color: var(--app-accent); }
+  .action-chip { min-height: 40px; padding: 9px 12px; }
+  .action-chip:active { border-color: var(--app-accent); color: var(--app-accent); }
+  .fchip { min-height: 38px; padding: 9px 14px; font-size: 13px; }
+  .ai-chip { min-height: 36px; padding: 7px 12px; font-size: 12.5px; display: inline-flex; align-items: center; }
+  .acts-controls .af-row.open .af { width: 42px; height: 42px; font-size: 18px; }
+
+  /* Primary / CTA buttons → comfortable 44px. */
+  .btn-ghost, .btn-primary, .btn-danger { min-height: 44px; padding: 11px 16px; font-size: 14px; }
+  .add-item-btn { min-height: 44px; padding: 11px 16px; font-size: 14px; }
+
+  /* Rich-text toolbar (Notes + item descriptions) — pinned above the keyboard, so a prime touch surface. */
+  .toolbar .tb-btn { min-width: 40px; height: 40px; font-size: 17px; }
+  .tb-swatch { width: 30px; height: 30px; }
+  .tb-pop { gap: 8px; }
+  /* Let the item-editor RichEditor share the modal's scroll container so the sticky toolbar can pin
+     to the bottom of it (above the keyboard) rather than being clipped inside a fixed-height box. */
+  .ie-rich { overflow: visible; }
+  .ie-rich .editor-body { max-height: none; }
+
+  /* Collapsible section headers → full-width touch rows. */
+  .acts-sec-toggle { padding: 8px 0; }
+  .acts-sec-label { font-size: 12px; }
+
+  /* Strike rolls + item-spell cast button. */
+  .atk { padding: 9px 0; }
+  /* position/z-index lifts it above the neighbouring spell-card pip's invisible ::before tap overlay. */
+  .spell-cast-btn { font-size: 12px; padding: 6px 12px; position: relative; z-index: 1; }
+  .spell-meta { gap: 10px; }
+
+  /* Spell cards: one full-width column on a phone (legible names + tappable pips). */
+  .spell-grid { grid-template-columns: 1fr; }
+  .slot-pip.btn { width: 16px; height: 16px; }
+  .focus-circ.btn { width: 18px; height: 18px; }
+  /* Keep the small diamond/circle visual but extend the pressable area to ~40px via a transparent
+     ::before overlay (content-box padding would enlarge the fill). Homogeneous pip rows get extra
+     gap so neighbouring overlays don't cover each other's visible pip. */
+  .pool-pips, .item-charges, .focus-pool { gap: 20px; }
+  .pips { gap: 12px; }
+  .slot-pip.btn, .focus-circ.btn { position: relative; }
+  .slot-pip.btn::before { content: ''; position: absolute; inset: -8px; }
+  .focus-circ.btn::before { content: ''; position: absolute; inset: -11px; }
+
+  /* Condition tiles + their value/remove controls (VitalsRail + companions). */
+  .cond-pill-step button, .cond-pill-x { min-width: 32px; min-height: 32px; padding: 4px; font-size: 15px; display: inline-flex; align-items: center; justify-content: center; }
+  .cond-wrap .cond-pill, .cond-wrap .mode-pill, .cond-wrap .add-btn,
+  .sb-conditions .cond-pill, .sb-conditions .mode-pill, .sb-conditions .add-btn { min-height: 38px; padding: 6px 10px; font-size: 12.5px; }
+
+  /* Shield block on the mobile HP card. */
+  .shield-block .sh-step button { min-width: 34px; min-height: 34px; padding: 6px; }
+  .shield-block .sh-hp-input { width: 44px; min-height: 32px; }
+
+  /* Inventory item-card controls + coins onto their own row. */
+  .inv-act { min-height: 40px; padding: 8px 12px; font-size: 13px; }
+  .inv-qtystep { gap: 8px; }
+  .inv-qtystep button { width: 34px; height: 34px; }
+  .inv-uses { gap: 6px; }
+  .inv-uses button { width: 32px; height: 32px; font-size: 14px; }
+  .coins { width: 100%; margin-left: 0; flex-wrap: nowrap; gap: 8px; }
+  .coins .coin { flex: 1; min-width: 0; justify-content: center; }
+  .coins .coin-input { flex: 1; min-width: 0; width: auto; max-width: none; box-sizing: border-box; text-align: center; }
+
+  /* Companions. */
+  .cmp-modes { gap: 6px; }
+  .cmp-modes button { width: 40px; height: 40px; font-size: 17px; }
+  .cmp-pill { min-height: 40px; padding: 6px 14px 6px 6px; font-size: 13px; }
+  .comp-remove, .comp-manage-btn { min-height: 38px; padding: 8px 12px; font-size: 13px; }
+  .eid-abils { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .eid-abil > span { font-size: 12px; }
+  .eid-num { width: 100%; min-height: 38px; font-size: 14px; }
+
+  /* Feat & feature rows → roomier touch rows. */
+  .ff-row { padding: 13px 8px; }
+  .ff-lvl { width: 34px; height: 34px; font-size: 14px; }
+  .ff-name { font-size: 14px; }
+  .ff-desc { font-size: 12.5px; }
+
+  /* Notes / Settings sub-widgets. */
+  .icon-grid { grid-template-columns: repeat(3, 1fr); }
+  .icon-opt { font-size: 12px; padding: 11px 4px; }
+  .icon-opt i { font-size: 22px; }
+  .settings-pane .accent-swatch { width: 36px; height: 36px; }
+  .settings-pane .mode-edit { min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+  .ref-search-row { min-height: 44px; padding: 11px 12px; }
+  .origin-boxes .obox .oval { white-space: normal; font-size: 14px; }
+  .origin-boxes .obox .olabel { font-size: 12px; }
+
+  /* Sub-12px content labels → readable floor. */
+  .cmp-note, .comp-inv-bulk, .cond-valued-tag, .cmp-tag { font-size: 12px; }
+
+  /* Inputs that trigger iOS focus-zoom → 16px on phones. */
+  .search input, .gen-input, .gen-textarea, .me-field input, .me-field select, .ai-level input, .coin-input, .roster-select { font-size: 16px; }
+  .coin-input { min-height: 36px; padding: 6px; }
+
+  /* Native <select> boxes (rarity, damage type, etc.) had no styling → a blank gray OS control. Give
+     them the app's input look + a themed chevron; the open dropdown list already follows the theme via
+     color-scheme (set on <html> by theme-manager). background-color/-image kept separate so a more
+     specific rule that sets one doesn't wipe the chevron. */
+  select {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    background-color: var(--app-surface-2);
+    /* A downward chevron drawn with two gradients (reliable everywhere; a data-URI SVG was flaky).
+       !important so it survives the per-control rules (.ci-field/.me-field/.mp-select/…) that set the
+       `background:` shorthand (which would otherwise wipe the image); padding-right reserves its space. */
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--app-text-dim, #888) 50%),
+      linear-gradient(135deg, var(--app-text-dim, #888) 50%, transparent 50%) !important;
+    background-position: calc(100% - 16px) calc(50% - 1px), calc(100% - 11px) calc(50% - 1px) !important;
+    background-size: 5px 5px, 5px 5px !important;
+    background-repeat: no-repeat !important;
+    padding-right: 30px !important;
+    color: var(--app-text);
+    border: var(--app-bw) solid var(--app-border);
+    border-radius: var(--app-radius-sm);
+    min-height: 40px;
+    font: inherit;
+    font-size: 16px;
+  }
+  select:focus { border-color: var(--app-accent); outline: none; }
+
+  /* Top menu rows → comfortable touch height. */
+  .topmenu-item { padding: 13px 14px; font-size: 15px; }
+
+  /* Character details: roomier Appearance / Personality (and other) text boxes. */
+  .gen-textarea { min-height: 130px; }
+  /* Modes settings: stack the title + full-width New-mode button instead of a wide gap. */
+  .set-modes-head { flex-wrap: wrap; }
+  .set-modes-head .add-item-btn { width: 100%; }
+
+  /* Phones don't need visible scrollbars (touch scrolling) — hide them everywhere. */
+  ::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
+  * { scrollbar-width: none; }
+
+  /* Inventory accordion: section headers (Equipped / Carried / each container) are the tap-to-open
+     controls — one section open at a time. */
+  .inv-group { margin-bottom: 4px; }
+  .inv-sec { padding: 12px 8px; min-height: 46px; border-radius: var(--app-radius-sm); }
+
+  /* --- Hold-to-move --- The card is NON-scrollable, so a press-and-hold can never be stolen by a scroll
+     (that was the whole struggle). Hold ~300ms → a floating item icon appears under the finger and follows
+     it; drop on a tab or a section header to move the item there and open that section. Scroll a long list
+     via the tab row / section headers instead of the item rows. */
+  .inv-card { touch-action: none; }
+  .inv-card.inv-dragging { display: none; } /* picked up → only the floating ghost shows */
+  .inv-drag-ghost {
+    position: fixed; z-index: 9999; pointer-events: none; transform: translate(-50%, -55%);
+    width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    background: var(--app-surface-2); border: 2px solid var(--app-accent); color: var(--app-accent);
+    font-size: 26px; box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+  }
+  .inv-tabs.inv-tabs-drag { position: sticky; top: 0; z-index: 30; background: var(--app-bg); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25); }
+  .inv-tabs .stab.drop-over, .inv-sec.drop-over { background: var(--app-accent); }
+  .inv-tabs .stab.drop-over,
+  .inv-sec.drop-over, .inv-sec.drop-over i, .inv-sec.drop-over .inv-count, .inv-sec.drop-over .inv-sec-title { color: var(--app-accent-text); }
+
+  /* Notes: the list ↔ editor screen swap slides in instead of hard-cutting (keyframes defined above). */
+  .notes-wrap .editor-card { animation: app-slide-in-right 200ms ease-out; }
+  .notes-wrap .notes-list-card { animation: app-slide-in-left 190ms ease-out; }
+
+  /* Companion maturity segmented control (5 options): fill the row at a tappable height rather than
+     clipping the words in a cramped strip. */
+  .cmp-seg button { flex: 1; min-height: 38px; padding: 8px 4px; font-size: 11.5px; text-align: center; }
+
+  /* Encumbrance consequence spelled out inline beneath the bulk badge (the badge title is hover-only). */
+  .bulk-penalty { display: block; flex: 1 1 100%; width: 100%; margin-top: -2px; font-size: 12px; }
+  .bulk-penalty.encumbered { color: var(--app-warn); }
+  .bulk-penalty.over { color: var(--app-bad); }
 }
 
 /* ---- RangeSlider (dual-handle, quantized) ---- */

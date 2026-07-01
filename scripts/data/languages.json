@@ -1,0 +1,470 @@
+[
+  {
+    "name": "Adlet",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Aishmayar",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Akitonian",
+    "rarity": "rare"
+  },
+  {
+    "name": "Aklo",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Alghollthu",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Amurrun",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Anadi",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Ancient Osiriani",
+    "rarity": "rare"
+  },
+  {
+    "name": "Androffan",
+    "rarity": "rare"
+  },
+  {
+    "name": "Anugobu",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Arboreal",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Arcadian",
+    "rarity": "rare"
+  },
+  {
+    "name": "Azlanti",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Boggard",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Calda",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Caligni",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Chthonian",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Common",
+    "rarity": "common"
+  },
+  {
+    "name": "Cyclops",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "D'ziriak",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Daemonic",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Destrachan",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Diabolic",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Draconic",
+    "rarity": "common"
+  },
+  {
+    "name": "Drooni",
+    "rarity": "rare"
+  },
+  {
+    "name": "Dwarven",
+    "rarity": "common"
+  },
+  {
+    "name": "Ekujae",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Elder Thing",
+    "rarity": "rare"
+  },
+  {
+    "name": "Elven",
+    "rarity": "common"
+  },
+  {
+    "name": "Empyrean",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Erutaki",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Fey",
+    "rarity": "common"
+  },
+  {
+    "name": "Formian",
+    "rarity": "rare"
+  },
+  {
+    "name": "Garundi",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Girtablilu",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Gnomish",
+    "rarity": "common"
+  },
+  {
+    "name": "Goblin",
+    "rarity": "common"
+  },
+  {
+    "name": "Goloma",
+    "rarity": "rare"
+  },
+  {
+    "name": "Grioth",
+    "rarity": "rare"
+  },
+  {
+    "name": "Halfling",
+    "rarity": "common"
+  },
+  {
+    "name": "Hallit",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Hwan",
+    "rarity": "rare"
+  },
+  {
+    "name": "Ikeshti",
+    "rarity": "rare"
+  },
+  {
+    "name": "Iruxi",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Jistka",
+    "rarity": "rare"
+  },
+  {
+    "name": "Jistkan",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Jotun",
+    "rarity": "common"
+  },
+  {
+    "name": "Jyoti",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Kashrishi",
+    "rarity": "rare"
+  },
+  {
+    "name": "Kelish",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Khattibi",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Kholo",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Kibwani",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Kitsune",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Kovintal",
+    "rarity": "rare"
+  },
+  {
+    "name": "Lashunta",
+    "rarity": "rare"
+  },
+  {
+    "name": "Lirgeni",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Mi-Go",
+    "rarity": "rare"
+  },
+  {
+    "name": "Minatan",
+    "rarity": "rare"
+  },
+  {
+    "name": "Minkaian",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Muan",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Munavri",
+    "rarity": "rare"
+  },
+  {
+    "name": "Mwangi",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Mzunu",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Nagaji",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Necril",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Ninshaburian",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Ocotan",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Okaiyan",
+    "rarity": "rare"
+  },
+  {
+    "name": "Old Keleshite",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Orcish",
+    "rarity": "common"
+  },
+  {
+    "name": "Orvian",
+    "rarity": "rare"
+  },
+  {
+    "name": "Osiriani",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Petran",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Protean",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Pyric",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Rasu",
+    "rarity": "rare"
+  },
+  {
+    "name": "Ratajin",
+    "rarity": "rare"
+  },
+  {
+    "name": "Razatlani",
+    "rarity": "common"
+  },
+  {
+    "name": "Requian",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Sakvroth",
+    "rarity": "common"
+  },
+  {
+    "name": "Samsaran",
+    "rarity": "rare"
+  },
+  {
+    "name": "Sasquatch",
+    "rarity": "rare"
+  },
+  {
+    "name": "Senzar",
+    "rarity": "rare"
+  },
+  {
+    "name": "Shadowtongue",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Shae",
+    "rarity": "rare"
+  },
+  {
+    "name": "Shisk",
+    "rarity": "rare"
+  },
+  {
+    "name": "Shoanti",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Shobhad",
+    "rarity": "rare"
+  },
+  {
+    "name": "Shoony",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Skald",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Sphinx",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Strix",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Surki",
+    "rarity": "rare"
+  },
+  {
+    "name": "Sussuran",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Taldane",
+    "rarity": "common"
+  },
+  {
+    "name": "Talican",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Tengu",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Thalassic",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Thassilonian",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Thokol",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Tidespeech",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Tien",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Tripkee",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Utopian",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Vanara",
+    "rarity": "rare"
+  },
+  {
+    "name": "Varisian",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Varki",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Vishkanya",
+    "rarity": "rare"
+  },
+  {
+    "name": "Vishkanyan",
+    "rarity": "rare"
+  },
+  {
+    "name": "Vudrani",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Wayang",
+    "rarity": "rare"
+  },
+  {
+    "name": "Wildsong",
+    "rarity": "common"
+  },
+  {
+    "name": "Wyrwood",
+    "rarity": "rare"
+  },
+  {
+    "name": "Xanmba",
+    "rarity": "uncommon"
+  },
+  {
+    "name": "Yithian",
+    "rarity": "rare"
+  },
+  {
+    "name": "Ysoki",
+    "rarity": "common"
+  }
+]

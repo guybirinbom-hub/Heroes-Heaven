@@ -10,7 +10,9 @@ import { useEffect } from 'react';
  * lists), and any picker that already has an explicit height — the popup-size-sync feature sets one
  * itself, and a user resize sets one too, both of which should win.
  */
-const SELF_SIZED = ['fsel', 'ref-search'];
+// 'info-modal' = the description popup: it navigates (each linked term pushes a new node), so it must
+// re-fit each node's text rather than stay pinned at its opening height.
+const SELF_SIZED = ['fsel', 'ref-search', 'info-modal'];
 
 export function PopupSizeLock() {
   useEffect(() => {

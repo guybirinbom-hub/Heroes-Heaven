@@ -7,6 +7,7 @@ import {
   buildCharacter,
   applyOverrides,
   applySources,
+  applyContentToggles,
   collectChosenIds,
   canTakeNewDedication,
   checkPrerequisites,
@@ -23,10 +24,11 @@ import { casterSlots, wizardSpellbookSize, cantripsKnown } from '../rules/spellc
 import { activeCasterArchetype, archetypeSlots } from '../rules/casterArchetypes';
 import type { ContentDatabase, FeatCategory, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SourcesCard, START, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
+import { AbilitySelect, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SourcesCard, START, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
 import { ActionGlyph, isActionCost } from '../sheet/widgets';
 import { SPELL_SPEC_BUILDER, FEAT_SPEC } from '../sheet/filterSpecs';
+import { useIsMobile } from '../sheet/useIsMobile';
 
 const FEAT_LABEL: Record<FeatCategory, string> = {
   ancestry: 'Ancestry feat',
@@ -36,6 +38,7 @@ const FEAT_LABEL: Record<FeatCategory, string> = {
   general: 'General feat',
   archetype: 'Archetype feat',
   bonus: 'Bonus feat',
+  mythic: 'Mythic feat',
 };
 const FEAT_ICON: Record<FeatCategory, string> = {
   ancestry: 'ti-user',
@@ -45,6 +48,7 @@ const FEAT_ICON: Record<FeatCategory, string> = {
   general: 'ti-medal',
   archetype: 'ti-books',
   bonus: 'ti-plus',
+  mythic: 'ti-flame',
 };
 
 const RANK_ABBR: Record<ProficiencyRank, string> = {
@@ -96,19 +100,24 @@ export function Builder({
   const ovContent = useMemo(() => applyOverrides(baseContent, build.overrides), [baseContent, build.overrides]);
   const sourceCat = useMemo(() => sourceCatalog(baseContent), [baseContent]);
   const content = useMemo(() => {
+    const keep = collectChosenIds(build, ovContent);
     const enabled = enabledBookSet(build.enabledSources);
-    if (sourceCat.allBooks.every((b) => enabled.has(b))) return ovContent; // everything on → no filtering
-    return applySources(ovContent, enabled, collectChosenIds(build, ovContent));
+    const sourced = sourceCat.allBooks.every((b) => enabled.has(b)) ? ovContent : applySources(ovContent, enabled, keep);
+    // Mythic/Kingmaker campaign toggles hide their content from the pickers (off by default).
+    return applyContentToggles(sourced, { mythicEnabled: build.mythicEnabled, kingmakerEnabled: build.kingmakerEnabled }, keep);
     // `build` is read for keepIds but intentionally not a dep: re-running only when sources change is
     // enough — a freshly-picked item is always from an enabled book, so it's present regardless.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ovContent, build.enabledSources, sourceCat]);
+  }, [ovContent, build.enabledSources, build.mythicEnabled, build.kingmakerEnabled, sourceCat]);
   const actions = useBuilderActions(setBuild, ovContent);
   const [sel, setSel] = useState<Sel>(0);
   const [picker, setPicker] = useState<Picker | null>(null);
   // The full item catalog, sorted once, for the equipment picker's filter panel.
   // Class-feat picker: reveal archetype feats (multiclass/archetypes). Off by default.
   const [showArch, setShowArch] = useState(false);
+  const isMobile = useIsMobile();
+  // Mobile: the live "Character" stat preview collapses behind a chevron to reclaim builder space.
+  const [statsOpen, setStatsOpen] = useState(false);
   // When lowering the level would drop choices already made at that level, confirm first.
   // Holds the level we'd lower TO (= current level − 1), or null when no prompt is open.
   const [confirmLowerTo, setConfirmLowerTo] = useState<number | null>(null);
@@ -145,6 +154,8 @@ export function Builder({
       // Free Archetype slot: any archetype feat (these are stored as class-category feats carrying the
       // 'archetype' trait, so match on the trait rather than the category).
       if (p.category === 'archetype') return f.traits.includes('archetype');
+      // Mythic slot: any mythic-trait feat (callings + mythic destiny feats) at or below this level.
+      if (p.category === 'mythic') return f.traits.includes('mythic');
       // A general feat slot may take any qualifying SKILL feat (skill feats are a subset of general
       // feats). The reverse is not true — a skill slot takes only skill feats.
       if (f.category !== p.category && !(p.category === 'general' && f.category === 'skill')) return false;
@@ -472,7 +483,7 @@ export function Builder({
   const subclassAnchorId = (lvl: number): string | null => {
     const cls = build.classId ? content.classes[build.classId] : undefined;
     if (!cls?.subclass) return null;
-    const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2);
+    const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled);
     const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
     const sn = norm(cls.subclass.name);
     const exact = g.features.find((f) => norm(f.name) === sn);
@@ -487,7 +498,7 @@ export function Builder({
   // How many required choices at this level are still unfilled (feat slots, subclass,
   // skill increase, attribute boosts). 0 = the level is fully set.
   const pendingCount = (lvl: number) => {
-    const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2);
+    const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled);
     let n = g.featSlots.filter((c, i) => !build.featPicks[slotKey(lvl, c, i)]).length;
     if (g.skillIncrease && !build.skillIncreases[lvl]) n++;
     if (g.attributeBoosts && new Set((build.attributeBoosts[lvl] ?? []).filter(Boolean)).size < attributeBoostCount(build.variantRules)) n++;
@@ -575,6 +586,7 @@ export function Builder({
               <div className="lvl-cards">
                 <OptionsCard build={build} actions={actions} content={content} />
                 <VariantRulesCard build={build} actions={actions} content={content} />
+                <CampaignOptionsCard build={build} actions={actions} content={content} />
                 <SourcesCard build={build} actions={actions} catalog={sourceCat} />
                 {build.options?.overridesEnabled && (
                   <OverridesCard build={build} actions={actions} content={ovContent} character={featPrereqChar} />
@@ -701,7 +713,7 @@ export function Builder({
               if (baseSkills == null) return null; // unreachable (sel is a valid level here) — narrows the memo
               const future = lvl > build.level;
               const pending = pendingCount(lvl);
-              const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2);
+              const g = levelGrants(lvl, build.classId, content, build.subclassId, build.variantRules, build.classId2, build.subclassId2, build.mythicEnabled);
               const bg = resolveBackground(build, content);
               const bgFeatAtThisLevel = lvl === 1 && bg?.grantedFeatId;
               const anyContent =
@@ -878,7 +890,7 @@ export function Builder({
                                     placeholder={`${def.prompt}…`}
                                     value={build.featChoices[key] ?? ''}
                                     onChange={(v) => actions.setFeatChoice(key, v)}
-                                    options={opts.map((o) => ({ value: o.value, label: o.label }))}
+                                    options={opts.map((o) => ({ value: o.value, label: o.label, description: (o as { description?: string }).description }))}
                                   />
                                 </SubCard>
                               );
@@ -1047,8 +1059,21 @@ export function Builder({
         </div>
 
         <aside className="brail">
-          <div className="brail-title">Character</div>
-          <FullStats build={build} content={content} character={featPrereqChar} />
+          <div className="brail-title">
+            {isMobile && (
+              <button
+                type="button"
+                className="brail-toggle"
+                aria-label={statsOpen ? 'Hide character stats' : 'Show character stats'}
+                aria-expanded={statsOpen}
+                onClick={() => setStatsOpen((o) => !o)}
+              >
+                <i className={'ti ' + (statsOpen ? 'ti-chevron-down' : 'ti-chevron-right')} aria-hidden="true" />
+              </button>
+            )}
+            Character
+          </div>
+          {(!isMobile || statsOpen) && <FullStats build={build} content={content} character={featPrereqChar} />}
         </aside>
       </div>
 

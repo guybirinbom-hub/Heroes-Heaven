@@ -33,6 +33,23 @@ export interface SavedChar {
   archived?: boolean;
 }
 
+/** First roster entry whose character name matches `name` (case-insensitive, trimmed), or undefined.
+ *  Includes archived characters — a name clash with an archived char is still a real clash. */
+export function findByName(roster: SavedChar[], name: string): SavedChar | undefined {
+  const want = name.trim().toLowerCase();
+  return roster.find((c) => c.character.name.trim().toLowerCase() === want);
+}
+
+/** `base` if it's free, otherwise the first "base 2", "base 3", … not already taken (case-insensitive). */
+export function uniqueName(base: string, roster: SavedChar[]): string {
+  const taken = new Set(roster.map((c) => c.character.name.trim().toLowerCase()));
+  if (!taken.has(base.trim().toLowerCase())) return base;
+  for (let n = 2; ; n++) {
+    const cand = `${base} ${n}`;
+    if (!taken.has(cand.trim().toLowerCase())) return cand;
+  }
+}
+
 /** A deep copy of a saved character with a fresh roster id, a "(Copy)" name, and unarchived. */
 export function duplicateChar(c: SavedChar): SavedChar {
   const copy: SavedChar = structuredClone(c);

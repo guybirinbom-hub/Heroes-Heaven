@@ -19,13 +19,17 @@ import { NotesTab } from './NotesTab';
 import { SettingsPage } from './SettingsPage';
 import { WindowControls } from './WindowControls';
 import { useIsMobile } from './useIsMobile';
+import { useBackHandler } from './useEscapeClose';
 import { HeroesHeavenLogo } from './Logo';
 
 const TABS = ['Main', 'Spells', 'Inventory', 'Feats & features', 'Companions', 'Notes', 'Details'];
+// Mobile gets an extra "Actions" page (actions + activities split off Main); desktop keeps them on Main.
+const MOBILE_TABS = ['Main', 'Actions', 'Spells', 'Inventory', 'Feats & features', 'Companions', 'Notes', 'Details'];
 
 /** Icon + short label for each tab in the mobile bottom navigation bar. */
 const TAB_META: Record<string, { icon: string; short: string }> = {
-  Main: { icon: 'ti-layout-grid', short: 'Play' },
+  Main: { icon: 'ti-layout-grid', short: 'Main' },
+  Actions: { icon: 'ti-swords', short: 'Actions' },
   Spells: { icon: 'ti-sparkles', short: 'Spells' },
   Inventory: { icon: 'ti-briefcase', short: 'Items' },
   'Feats & features': { icon: 'ti-award', short: 'Feats' },
@@ -38,7 +42,7 @@ const TAB_KEY = 'wanderers-codex:tab:v1';
 function initialTab(): string {
   try {
     const t = localStorage.getItem(TAB_KEY);
-    return t && TABS.includes(t) ? t : 'Main';
+    return t && MOBILE_TABS.includes(t) ? t : 'Main';
   } catch {
     return 'Main';
   }
@@ -107,6 +111,12 @@ export function CharacterSheet({
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [restOpen, setRestOpen] = useState(false);
   const [portraitOpen, setPortraitOpen] = useState(false);
+  // Android Back (mobile): unwind one step — close the menu / portrait / rest sheet, else drop back to
+  // the home tab — instead of exiting the app. (Popups and the Settings page handle their own Back.)
+  useBackHandler(isMobile && menuOpen, () => setMenuOpen(false));
+  useBackHandler(isMobile && portraitOpen, () => setPortraitOpen(false));
+  useBackHandler(isMobile && restOpen, () => setRestOpen(false));
+  useBackHandler(isMobile && tab !== 'Main', () => setTab('Main'));
   useEffect(() => {
     try {
       localStorage.setItem(TAB_KEY, tab);
@@ -143,7 +153,7 @@ export function CharacterSheet({
   };
   /** Click-to-roll a 1d20 + modifier check (saves, skills, attacks). Suppressed when the dice roller
    *  is turned off, so no roll buttons appear anywhere. */
-  const diceOff = !!character.options?.diceRollerOff;
+  const diceOff = character.options?.diceRollerOff ?? true;
   const rollCheckFn = diceOff ? undefined : (label: string, modifier: number) => pushRoll(rollCheck(label, modifier));
 
   const commitAddXp = () => {
@@ -189,21 +199,11 @@ export function CharacterSheet({
           <button
             type="button"
             className="portrait portrait-btn"
-            title={isMobile ? 'Menu' : 'View portrait'}
-            aria-label={isMobile ? 'Open menu' : 'View portrait full size'}
-            onClick={() => (isMobile ? setMenuOpen(true) : setPortraitOpen(true))}
+            title="View portrait"
+            aria-label="View portrait full size"
+            onClick={() => setPortraitOpen(true)}
           >
             <img src={portrait} alt="" className="portrait-img" />
-          </button>
-        ) : isMobile ? (
-          <button
-            type="button"
-            className="portrait portrait-btn"
-            title="Menu"
-            aria-label="Open menu"
-            onClick={() => setMenuOpen(true)}
-          >
-            {initials}
           </button>
         ) : (
           <div className="portrait">{initials}</div>
@@ -369,7 +369,9 @@ export function CharacterSheet({
         )}
         <main className="content">
           {tab === 'Main' ? (
-            <MainTab character={character} content={content} onPlay={onPlay} onRoll={rollCheckFn} onOpenStat={setStatRef} />
+            <MainTab character={character} content={content} onPlay={onPlay} onRoll={rollCheckFn} onOpenStat={setStatRef} section={isMobile ? 'main' : 'all'} />
+          ) : tab === 'Actions' ? (
+            <MainTab character={character} content={content} onPlay={onPlay} onRoll={rollCheckFn} onOpenStat={setStatRef} section={isMobile ? 'actions' : 'all'} />
           ) : tab === 'Spells' ? (
             <SpellsTab character={character} content={content} onPlay={onPlay} onOpenStat={setStatRef} />
           ) : tab === 'Inventory' ? (
@@ -381,7 +383,7 @@ export function CharacterSheet({
           ) : tab === 'Notes' ? (
             <NotesTab character={character} onPlay={onPlay} />
           ) : tab === 'Companions' ? (
-            <CompanionsTab character={character} content={content} onPlay={onPlay} />
+            <CompanionsTab character={character} content={content} onPlay={onPlay} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} charKey={charKey} />
           ) : (
             // Every tab in TABS has a branch above; this is just a safe neutral fallback.
             <MainTab character={character} content={content} onPlay={onPlay} onRoll={rollCheckFn} onOpenStat={setStatRef} />
@@ -391,7 +393,7 @@ export function CharacterSheet({
 
       {isMobile && (
         <nav className="mtabs" role="tablist" aria-label="Sections">
-          {TABS.map((t) => (
+          {MOBILE_TABS.map((t) => (
             <button
               key={t}
               type="button"

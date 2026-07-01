@@ -10,6 +10,8 @@ import { setPref, usePrefs } from '../data/prefs';
 import type { ModeDef } from '../rules/types';
 import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
 import { ModeEditor, summarizeMod } from './ModesPanel';
+import { useIsMobile } from './useIsMobile';
+import { useBackHandler } from './useEscapeClose';
 
 const ACCENTS = [
   '#6366f1', '#818cf8', '#0ea5e9', '#22d3ee', '#14b8a6', '#10b981', '#84cc16', '#c9a227',
@@ -28,25 +30,30 @@ const SECTIONS: { id: SectionId; label: string; icon: string }[] = [
 /** Per-device tweaks to how the sheet behaves. */
 function CustomizationSection() {
   const prefs = usePrefs();
+  const isMobile = useIsMobile();
   return (
     <div className="settings-section">
       <h3 className="settings-h">Customization</h3>
       <p className="settings-desc">Tweak how parts of the character sheet behave. Saved on this device.</p>
 
-      <div className="menu-label">Hit points</div>
-      <div className="menu-row">
-        <button
-          className={'chip' + (prefs.hpCommandEntry ? ' active' : '')}
-          onClick={() => setPref('hpCommandEntry', !prefs.hpCommandEntry)}
-        >
-          Quick HP entry — {prefs.hpCommandEntry ? 'on' : 'off'}
-        </button>
-      </div>
-      <p className="settings-desc">
-        When on, the Damage and Heal buttons and the temporary-HP box are replaced by a single field: type a number
-        for <strong>damage</strong>, <strong>-N</strong> to <strong>heal</strong>, <strong>tN</strong> for{' '}
-        <strong>temporary HP</strong>, then Enter. You can still set current HP directly by typing into the HP value.
-      </p>
+      {!isMobile && (
+        <>
+          <div className="menu-label">Hit points</div>
+          <div className="menu-row">
+            <button
+              className={'chip' + (prefs.hpCommandEntry ? ' active' : '')}
+              onClick={() => setPref('hpCommandEntry', !prefs.hpCommandEntry)}
+            >
+              Quick HP entry — {prefs.hpCommandEntry ? 'on' : 'off'}
+            </button>
+          </div>
+          <p className="settings-desc">
+            When on, the Damage and Heal buttons and the temporary-HP box are replaced by a single field: type a number
+            for <strong>damage</strong>, <strong>-N</strong> to <strong>heal</strong>, <strong>tN</strong> for{' '}
+            <strong>temporary HP</strong>, then Enter. You can still set current HP directly by typing into the HP value.
+          </p>
+        </>
+      )}
 
       <div className="menu-label">Actions list</div>
       <div className="menu-row">
@@ -62,20 +69,42 @@ function CustomizationSection() {
         a row. Click a chip to open a popup with its full description, where you can also favorite it.
       </p>
 
-      <div className="menu-label">Popups</div>
-      <div className="menu-row">
-        <button
-          className={'chip' + (prefs.popupSizeSync ? ' active' : '')}
-          onClick={() => setPref('popupSizeSync', !prefs.popupSizeSync)}
-        >
-          Apply popup size to all — {prefs.popupSizeSync ? 'on' : 'off'}
-        </button>
-      </div>
-      <p className="settings-desc">
-        Popups can be resized by dragging the grip in their bottom-right corner. By default each popup resets to its
-        normal size. When this is on, resizing any popup makes <strong>every</strong> popup open at that size until you
-        change it again (saved on this device).
-      </p>
+      {isMobile && (
+        <>
+          <div className="menu-label">Spells</div>
+          <div className="menu-row">
+            <button
+              className={'chip' + (prefs.showSlotBadges ? ' active' : '')}
+              onClick={() => setPref('showSlotBadges', !prefs.showSlotBadges)}
+            >
+              Slot count on rank tabs — {prefs.showSlotBadges ? 'on' : 'off'}
+            </button>
+          </div>
+          <p className="settings-desc">
+            Shows a small <strong>available / total</strong> badge on each spell rank tab (and Focus), so you can see how
+            many slots you have left without opening each rank.
+          </p>
+        </>
+      )}
+
+      {!isMobile && (
+        <>
+          <div className="menu-label">Popups</div>
+          <div className="menu-row">
+            <button
+              className={'chip' + (prefs.popupSizeSync ? ' active' : '')}
+              onClick={() => setPref('popupSizeSync', !prefs.popupSizeSync)}
+            >
+              Apply popup size to all — {prefs.popupSizeSync ? 'on' : 'off'}
+            </button>
+          </div>
+          <p className="settings-desc">
+            Popups can be resized by dragging the grip in their bottom-right corner. By default each popup resets to its
+            normal size. When this is on, resizing any popup makes <strong>every</strong> popup open at that size until you
+            change it again (saved on this device).
+          </p>
+        </>
+      )}
 
       <div className="menu-label">Sources</div>
       <div className="menu-row">
@@ -91,19 +120,23 @@ function CustomizationSection() {
         specials) to the character builder's Sources list. Hidden by default to keep that list short.
       </p>
 
-      <div className="menu-label">Scrollbars</div>
-      <div className="menu-row">
-        <button
-          className={'chip' + (prefs.scrollbarAccent ? ' active' : '')}
-          onClick={() => setPref('scrollbarAccent', !prefs.scrollbarAccent)}
-        >
-          Accent scrollbars — {prefs.scrollbarAccent ? 'on' : 'off'}
-        </button>
-      </div>
-      <p className="settings-desc">
-        Scrollbars are a thin neutral grey by default. Turn this on to tint them with your <strong>accent</strong> colour
-        instead.
-      </p>
+      {!isMobile && (
+        <>
+          <div className="menu-label">Scrollbars</div>
+          <div className="menu-row">
+            <button
+              className={'chip' + (prefs.scrollbarAccent ? ' active' : '')}
+              onClick={() => setPref('scrollbarAccent', !prefs.scrollbarAccent)}
+            >
+              Accent scrollbars — {prefs.scrollbarAccent ? 'on' : 'off'}
+            </button>
+          </div>
+          <p className="settings-desc">
+            Scrollbars are a thin neutral grey by default. Turn this on to tint them with your <strong>accent</strong> colour
+            instead.
+          </p>
+        </>
+      )}
     </div>
   );
 }
@@ -114,6 +147,7 @@ function AppearanceSection() {
   const sync = () => setLocal(getAppearance());
   const [zoom, setZoomLocal] = useState(getZoom());
   useEffect(() => subscribeZoom(setZoomLocal), []);
+  const isMobile = useIsMobile();
 
   return (
     <div className="settings-section">
@@ -199,18 +233,20 @@ function AppearanceSection() {
 
       <div className="menu-label">Zoom</div>
       <div className="menu-row zoom-row">
-        <button className="chip" aria-label="Zoom out" onClick={() => bumpZoom(-ZOOM_STEP)} disabled={zoom <= ZOOM_MIN}>
+        <button className="chip" aria-label="Zoom out" onClick={() => bumpZoom(isMobile ? -0.05 : -ZOOM_STEP)} disabled={zoom <= ZOOM_MIN}>
           <i className="ti ti-minus" aria-hidden="true" />
         </button>
         <span className="zoom-val">{Math.round(zoom * 100)}%</span>
-        <button className="chip" aria-label="Zoom in" onClick={() => bumpZoom(ZOOM_STEP)} disabled={zoom >= ZOOM_MAX}>
+        <button className="chip" aria-label="Zoom in" onClick={() => bumpZoom(isMobile ? 0.05 : ZOOM_STEP)} disabled={zoom >= (isMobile ? 1 : ZOOM_MAX)}>
           <i className="ti ti-plus" aria-hidden="true" />
         </button>
         <button className="chip" onClick={() => resetZoom()} disabled={zoom === 1}>
           Reset
         </button>
       </div>
-      <p className="settings-desc">Also: hold Ctrl and scroll the wheel, or press Ctrl with + / − / 0.</p>
+      <p className="settings-desc">
+        {isMobile ? 'Zoom out to fit more on screen.' : 'Also: hold Ctrl and scroll the wheel, or press Ctrl with + / − / 0.'}
+      </p>
     </div>
   );
 }
@@ -451,38 +487,77 @@ export function SettingsPage({
   onDeleteMode?: (id: string) => void;
 }) {
   const [section, setSection] = useState<SectionId>('appearance');
+  const isMobile = useIsMobile();
+  // Mobile: a full-screen page that opens to a Cards grid; null = show the cards, else drill into a section.
+  const [mobileSection, setMobileSection] = useState<SectionId | null>(null);
+  // Android Back / Escape (mobile only): a drilled-in section steps back to the cards; the cards view closes the page.
+  useBackHandler(isMobile, onClose);
+  useBackHandler(isMobile && mobileSection !== null, () => setMobileSection(null));
+
+  const renderSection = (id: SectionId) => (
+    <>
+      {id === 'appearance' && <AppearanceSection />}
+      {id === 'customization' && <CustomizationSection />}
+      {id === 'modes' && <ModesSection modes={modes} characters={characters} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} />}
+      {id === 'about' && <AboutSection />}
+      {id === 'uninstall' && <UninstallSection />}
+    </>
+  );
+
+  const headTitle = isMobile && mobileSection ? SECTIONS.find((s) => s.id === mobileSection)?.label ?? 'Settings' : 'Settings';
 
   return (
     <div className="picker-overlay" onClick={onClose}>
-      <div className="picker settings-modal" role="dialog" aria-label="Settings" onClick={(e) => e.stopPropagation()}>
+      <div
+        className={'picker settings-modal' + (isMobile ? ' settings-page-m' : '')}
+        role="dialog"
+        aria-label="Settings"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="picker-head">
-          Settings
+          {isMobile && mobileSection && (
+            <button className="icon-btn settings-back" aria-label="Back to settings" onClick={() => setMobileSection(null)}>
+              <i className="ti ti-arrow-left" aria-hidden="true" />
+            </button>
+          )}
+          {headTitle}
           <button className="picker-close" onClick={onClose} aria-label="Close">
             <i className="ti ti-x" aria-hidden="true" />
           </button>
         </div>
-        <div className="settings-body">
-          <nav className="settings-nav" aria-label="Settings sections">
-            {SECTIONS.map((s) => (
-              <button
-                key={s.id}
-                className={'settings-navitem' + (section === s.id ? ' active' : '')}
-                onClick={() => setSection(s.id)}
-              >
-                <i className={'ti ' + s.icon} aria-hidden="true" /> {s.label}
-              </button>
-            ))}
-          </nav>
-          <div className="settings-pane">
-            {section === 'appearance' && <AppearanceSection />}
-            {section === 'customization' && <CustomizationSection />}
-            {section === 'modes' && (
-              <ModesSection modes={modes} characters={characters} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} />
-            )}
-            {section === 'about' && <AboutSection />}
-            {section === 'uninstall' && <UninstallSection />}
+        {isMobile ? (
+          mobileSection === null ? (
+            <div className="settings-cards">
+              {SECTIONS.map((s) => (
+                <button
+                  key={s.id}
+                  className={'settings-card' + (s.id === 'uninstall' ? ' danger' : '')}
+                  onClick={() => setMobileSection(s.id)}
+                >
+                  <i className={'ti ' + s.icon} aria-hidden="true" />
+                  <span>{s.label}</span>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="settings-pane">{renderSection(mobileSection)}</div>
+          )
+        ) : (
+          <div className="settings-body">
+            <nav className="settings-nav" aria-label="Settings sections">
+              {SECTIONS.map((s) => (
+                <button
+                  key={s.id}
+                  className={'settings-navitem' + (section === s.id ? ' active' : '')}
+                  onClick={() => setSection(s.id)}
+                >
+                  <i className={'ti ' + s.icon} aria-hidden="true" /> {s.label}
+                </button>
+              ))}
+            </nav>
+            <div className="settings-pane">{renderSection(section)}</div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

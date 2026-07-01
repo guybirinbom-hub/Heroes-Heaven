@@ -20,6 +20,7 @@ import { coinsToCp, cpToCoins } from './wealth';
 
 /** The maximum hero points a character can hold (the rail shows three pips). */
 export const MAX_HERO_POINTS = 3;
+export const MAX_MYTHIC_POINTS = 3;
 
 export interface PlayState {
   /** HP lost from max; current = max - damage, clamped to [0, max]. */
@@ -35,6 +36,8 @@ export interface PlayState {
   appearance?: { portrait?: string; accentColor?: string };
   /** Hero points currently held, 0..MAX_HERO_POINTS. */
   heroPoints: number;
+  /** Mythic points currently held, 0..MAX_MYTHIC_POINTS (only meaningful when the character is mythic). */
+  mythicPoints?: number;
   /** Total experience points toward the next level. */
   xp: number;
   /** Focus points spent; current = focus.max - focusUsed. */
@@ -65,6 +68,8 @@ export interface PlayState {
   companionConditions?: Record<string, ActiveCondition[]>;
   /** Tracked HP per companion: damage taken + temp HP (current = max − damage), by companion id. */
   companionHp?: Record<string, { damage: number; temp: number }>;
+  /** Ids of active modes per companion, keyed by companion id (mirrors `activeModes` for the PC). */
+  companionModes?: Record<string, string[]>;
   /** In-play companions; when set, overrides the build's (so the Companions tab can add/remove). */
   companions?: CompanionConfig[];
   /** In-play edits to bio fields (alignment, age, appearance, …), merged over the build's details. */
@@ -100,7 +105,7 @@ const condVal = (list: ActiveCondition[] | undefined, id: string): number => (li
 
 /** A fresh, undamaged play state (one hero point, as a new day begins). */
 export function emptyPlay(): PlayState {
-  return { damage: 0, tempHp: 0, heroPoints: 1, xp: 0, focusUsed: 0, expendedSlots: {}, slotsUsed: {}, conditions: [], pinned: [] };
+  return { damage: 0, tempHp: 0, heroPoints: 1, mythicPoints: MAX_MYTHIC_POINTS, xp: 0, focusUsed: 0, expendedSlots: {}, slotsUsed: {}, conditions: [], pinned: [] };
 }
 
 /**
@@ -126,6 +131,7 @@ export function initialPlay(ch: Character, content: ContentDatabase): PlayState 
     damage: clamp(max - ch.hitPoints.current, 0, max),
     tempHp: Math.max(0, ch.hitPoints.temp),
     heroPoints: clamp(ch.heroPoints, 0, MAX_HERO_POINTS),
+    mythicPoints: clamp(ch.mythicPoints ?? MAX_MYTHIC_POINTS, 0, MAX_MYTHIC_POINTS),
     xp: Math.max(0, ch.xp),
     focusUsed: ch.focus ? clamp(ch.focus.max - ch.focus.current, 0, ch.focus.max) : 0,
     expendedSlots,
@@ -218,6 +224,7 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     ...ch,
     xp: Math.max(0, play.xp),
     heroPoints: clamp(play.heroPoints, 0, MAX_HERO_POINTS),
+    mythicPoints: clamp(play.mythicPoints ?? MAX_MYTHIC_POINTS, 0, MAX_MYTHIC_POINTS),
     hitPoints: {
       ...ch.hitPoints,
       current: clamp(max - play.damage, 0, max),
@@ -239,6 +246,9 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     details: play.details ? { ...ch.details, ...play.details } : ch.details,
     appearance: play.appearance ? { ...ch.appearance, ...play.appearance } : ch.appearance,
     activeModes: (play.activeModes ?? []).map((id) => content.modes[id]).filter(Boolean),
+    companionModes: Object.fromEntries(
+      Object.entries(play.companionModes ?? {}).map(([cid, ids]) => [cid, ids.map((id) => content.modes[id]).filter(Boolean)]),
+    ),
     focus,
     spellcasting,
     commanderTactics: ch.commanderTactics
@@ -293,6 +303,10 @@ export function setHp(play: PlayState, value: number, max: number): PlayState {
 /** Set hero points directly (clicking the pips), clamped to the legal range. */
 export function setHeroPoints(play: PlayState, value: number): PlayState {
   return { ...play, heroPoints: clamp(value, 0, MAX_HERO_POINTS) };
+}
+
+export function setMythicPoints(play: PlayState, value: number): PlayState {
+  return { ...play, mythicPoints: clamp(value, 0, MAX_MYTHIC_POINTS) };
 }
 
 /** Set the temporary-HP pool directly (never negative). */
@@ -474,6 +488,18 @@ export function setCompanionConditionValue(play: PlayState, compId: string, id: 
   return withCompanionConditions(play, compId, (l) => condSet(l, id, value));
 }
 
+/** Toggle a mode active/inactive on a single companion (mirrors {@link toggleMode} for the PC, including
+ *  exclusive-group handling). */
+export function toggleCompanionMode(play: PlayState, compId: string, id: string, modeDefs?: Record<string, ModeDef>): PlayState {
+  const map = play.companionModes ?? {};
+  const active = map[compId] ?? [];
+  if (active.includes(id)) return { ...play, companionModes: { ...map, [compId]: active.filter((m) => m !== id) } };
+  let next = [...active, id];
+  const group = modeDefs?.[id]?.exclusiveGroup;
+  if (group) next = next.filter((mid) => mid === id || modeDefs?.[mid]?.exclusiveGroup !== group);
+  return { ...play, companionModes: { ...map, [compId]: next } };
+}
+
 // --- in-play companion roster (add / remove / configure from the Companions tab) ---
 
 /** A fresh companion id (cmp-N) that won't collide with existing ids. */
@@ -494,7 +520,9 @@ export function removePlayCompanion(play: PlayState, id: string): PlayState {
   delete companionConditions[id];
   const companionHp = { ...(play.companionHp ?? {}) };
   delete companionHp[id];
-  return { ...play, companions: (play.companions ?? []).filter((c) => c.id !== id), companionConditions, companionHp };
+  const companionModes = { ...(play.companionModes ?? {}) };
+  delete companionModes[id];
+  return { ...play, companions: (play.companions ?? []).filter((c) => c.id !== id), companionConditions, companionHp, companionModes };
 }
 
 /* ---- per-companion HP (vehicles/siege weapons track damage; creatures show current/max too) ---- */
@@ -697,7 +725,15 @@ export function setItemQuantity(play: PlayState, instanceId: string, qty: number
 export function toggleItemFlag(play: PlayState, instanceId: string, flag: ItemFlag): PlayState {
   return {
     ...play,
-    inventory: (play.inventory ?? []).map((i) => (i.instanceId === instanceId ? { ...i, [flag]: !i[flag] } : i)),
+    inventory: (play.inventory ?? []).map((i) => {
+      if (i.instanceId !== instanceId) return i;
+      const on = !i[flag];
+      // Wielding / wearing / investing an item pulls it OUT of any container into the Equipped section —
+      // you can't hold or wear something stowed in a backpack. (Matches drag-to-Equipped, which clears
+      // containerInstanceId too.) The Equipped section only lists "loose" items, so without this a
+      // container item would stay hidden in its backpack even after you equipped it.
+      return on ? { ...i, [flag]: true, containerInstanceId: undefined } : { ...i, [flag]: false };
+    }),
   };
 }
 
@@ -896,6 +932,7 @@ export function playForRebuild(play: PlayState): PlayState {
     shieldDamage: play.shieldDamage,
     tempSpeed: play.tempSpeed,
     heroPoints: play.heroPoints,
+    mythicPoints: play.mythicPoints,
     xp: play.xp,
     // Banked monster parts are harvested in play (not regenerated by the build), so keep them like XP.
     monsterParts: play.monsterParts,
@@ -904,6 +941,7 @@ export function playForRebuild(play: PlayState): PlayState {
     pinnedDescs: play.pinnedDescs,
     companionConditions: play.companionConditions,
     companionHp: play.companionHp,
+    companionModes: play.companionModes,
     companions: play.companions,
     details: play.details,
     appearance: play.appearance,
@@ -983,6 +1021,8 @@ export function rest(
     damage,
     tempHp: 0,
     focusUsed: 0,
+    // Mythic points are a daily resource (unlike session-based hero points) — refill on rest.
+    mythicPoints: MAX_MYTHIC_POINTS,
     expendedSlots: {},
     slotsUsed: {},
     innateUsed: {},

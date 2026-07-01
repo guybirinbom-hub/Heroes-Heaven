@@ -113,6 +113,7 @@ export function MainTab({
   onPlay,
   onRoll,
   onOpenStat,
+  section = 'all',
 }: {
   character: Character;
   content: ContentDatabase;
@@ -120,10 +121,15 @@ export function MainTab({
   onRoll?: (label: string, modifier: number) => void;
   /** Open the breakdown panel for an ability score or skill. */
   onOpenStat?: (ref: StatRef) => void;
+  /** Which slice to render. Used on mobile to split this tab into two pages:
+   *  'main' = abilities + skills only, 'actions' = pinned + activities/strikes only.
+   *  'all' (the default, desktop) renders everything as before. */
+  section?: 'all' | 'main' | 'actions';
 }) {
   const [mode, setMode] = useState('enc');
-  const [sub, setSub] = useState<'strikes' | 'actions'>('strikes');
+  const [sub, setSub] = useState<'strikes' | 'actions' | 'skill' | 'item'>('strikes');
   const [filters, setFilters] = useState<Set<string>>(new Set());
+  const [filtersOpen, setFiltersOpen] = useState(false); // mobile: filter row toggles open over the results
   const [query, setQuery] = useState('');
   // A pinned description re-opened from the Pinned section.
   const [openDesc, setOpenDesc] = useState<DescNode | null>(null);
@@ -225,6 +231,15 @@ export function MainTab({
   const pinnedActions = [...featActions, ...tacticActions, ...encActivities].filter((a) => pinned.has(actionKey(a.name)));
   const pinnedDescs = character.pinnedDescs ?? [];
   const hasPinned = pinnedStrikes.length + pinnedActions.length + pinnedDescs.length > 0;
+
+  // The mobile Actions page (section === 'actions') splits the encounter actions across FOUR
+  // sub-tabs — Strikes / Actions / Skills / Items. Desktop (section === 'all') keeps the two-tab
+  // Strikes / Actions with everything together (skill + item collapse back into Actions there).
+  const splitTabs = section === 'actions';
+  const subEff = !splitTabs && (sub === 'skill' || sub === 'item') ? 'actions' : sub;
+  const showGeneral = subEff === 'actions'; // tactics + feat + basic actions
+  const showSkill = splitTabs ? subEff === 'skill' : subEff === 'actions';
+  const showItem = splitTabs ? subEff === 'item' : subEff === 'actions';
 
   function toggleFilter(id: string) {
     setFilters((prev) => {
@@ -479,6 +494,8 @@ export function MainTab({
 
   return (
     <div className="maincol">
+      {section !== 'actions' && (
+        <>
       <section className="card">
         <div className="ct">
           <i className="ti ti-rosette" aria-hidden="true" />
@@ -534,7 +551,11 @@ export function MainTab({
           })}
         </div>
       </section>
+        </>
+      )}
 
+      {section !== 'main' && (
+        <>
       {hasPinned && (
         <section className="card pinned-card">
           <div className="ct">
@@ -554,13 +575,15 @@ export function MainTab({
 
       <section className="card">
         <div className="acts-head">
-          <div className="ct" style={{ margin: 0 }}>
-            <i className="ti ti-swords" aria-hidden="true" />
-            Activities
-          </div>
+          {section !== 'actions' && (
+            <div className="ct" style={{ margin: 0 }}>
+              <i className="ti ti-swords" aria-hidden="true" />
+              Activities
+            </div>
+          )}
           <div className="seg">
             {MODES.map((m) => (
-              <button key={m.id} type="button" role="tab" aria-selected={mode === m.id} className={'seg-btn' + (mode === m.id ? ' on' : '')} onClick={() => setMode(m.id)}>
+              <button key={m.id} type="button" role="tab" aria-selected={mode === m.id} className={'seg-btn' + (mode === m.id ? ' on' : '')} onClick={() => { setMode(m.id); if (m.id !== 'enc') setFiltersOpen(false); }}>
                 {m.name}
               </button>
             ))}
@@ -573,7 +596,17 @@ export function MainTab({
             <input placeholder="Search activities…" value={query} onChange={(e) => setQuery(e.target.value)} />
           </div>
           {mode === 'enc' && (
-            <div className="af-row">
+            <>
+              <button
+                type="button"
+                className={'filter-toggle' + (filtersOpen || filters.size > 0 ? ' on' : '')}
+                aria-label="Filters"
+                aria-expanded={filtersOpen}
+                onClick={() => setFiltersOpen((o) => !o)}
+              >
+                <i className="ti ti-filter" aria-hidden="true" />
+              </button>
+              <div className={'af-row' + (filtersOpen ? ' open' : '')}>
               {COST_FILTERS.map((c) => (
                 <button
                   key={c.id}
@@ -585,22 +618,33 @@ export function MainTab({
                   <ActionGlyph cost={c.cost} />
                 </button>
               ))}
-            </div>
+              </div>
+            </>
           )}
         </div>
 
         {mode === 'enc' ? (
           <>
             <div className="subtabs">
-              <button type="button" role="tab" aria-selected={sub === 'strikes'} className={'stab' + (sub === 'strikes' ? ' on' : '')} onClick={() => setSub('strikes')}>
+              <button type="button" role="tab" aria-selected={subEff === 'strikes'} className={'stab' + (subEff === 'strikes' ? ' on' : '')} onClick={() => setSub('strikes')}>
                 Strikes
               </button>
-              <button type="button" role="tab" aria-selected={sub === 'actions'} className={'stab' + (sub === 'actions' ? ' on' : '')} onClick={() => setSub('actions')}>
+              <button type="button" role="tab" aria-selected={subEff === 'actions'} className={'stab' + (subEff === 'actions' ? ' on' : '')} onClick={() => setSub('actions')}>
                 Actions
               </button>
+              {splitTabs && (
+                <>
+                  <button type="button" role="tab" aria-selected={subEff === 'skill'} className={'stab' + (subEff === 'skill' ? ' on' : '')} onClick={() => setSub('skill')}>
+                    Skills
+                  </button>
+                  <button type="button" role="tab" aria-selected={subEff === 'item'} className={'stab' + (subEff === 'item' ? ' on' : '')} onClick={() => setSub('item')}>
+                    Items
+                  </button>
+                </>
+              )}
             </div>
 
-            {sub === 'strikes' ? (
+            {subEff === 'strikes' ? (
               <div className="strikes">
                 {shownStrikes.map((s) => (
                   <StrikeRow key={s.instanceId} s={s} />
@@ -609,7 +653,7 @@ export function MainTab({
               </div>
             ) : (
               <div className="actions">
-                {shownTactics.length > 0 && (
+                {showGeneral && shownTactics.length > 0 && (
                   <Section
                     id="tactics"
                     label="Tactics"
@@ -634,21 +678,21 @@ export function MainTab({
                     ))}
                   </Section>
                 )}
-                {shownFeats.length > 0 && (
+                {showGeneral && shownFeats.length > 0 && (
                   <Section id="feats" label="Feat actions">
                     {shownFeats.map((a) => (
                       <ActionRow key={a.name} a={a} />
                     ))}
                   </Section>
                 )}
-                {shownBasic.length > 0 && (
+                {showGeneral && shownBasic.length > 0 && (
                   <Section id="basic" label="Basic actions">
                     {shownBasic.map((a) => (
                       <ActionRow key={a.name} a={a} />
                     ))}
                   </Section>
                 )}
-                {shownSkill.length > 0 && (
+                {showSkill && shownSkill.length > 0 && (
                   <Section id="skill" label="Skill actions" wrap={false}>
                     {compactActions
                       ? groupBySkill(shownSkill).map(([skill, group]) => (
@@ -661,14 +705,16 @@ export function MainTab({
                       : shownSkill.map((a) => <ActionRow key={a.name} a={a} />)}
                   </Section>
                 )}
-                {shownItemActions.length > 0 && (
+                {showItem && shownItemActions.length > 0 && (
                   <Section id="items" label="Item actions">
                     {shownItemActions.map((a) => (
                       <ActionRow key={a.key} a={a} pinnable={false} />
                     ))}
                   </Section>
                 )}
-                {shownTactics.length + shownFeats.length + shownBasic.length + shownSkill.length + shownItemActions.length ===
+                {(showGeneral ? shownTactics.length + shownFeats.length + shownBasic.length : 0) +
+                  (showSkill ? shownSkill.length : 0) +
+                  (showItem ? shownItemActions.length : 0) ===
                   0 && <div className="acts-empty">No actions match.</div>}
               </div>
             )}
@@ -701,6 +747,8 @@ export function MainTab({
           onOpenStat={onOpenStat}
           onClose={() => setStrikeDetail(null)}
         />
+      )}
+        </>
       )}
     </div>
   );

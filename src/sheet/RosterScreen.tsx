@@ -1,9 +1,10 @@
 import { useRef, useState } from 'react';
-import type { ContentDatabase } from '../rules/types';
+import type { ContentDatabase, Item, ModeDef } from '../rules/types';
 import type { SavedChar } from '../data/storage';
 import { applyPlayState } from '../rules/play';
 import { deriveMaxHp } from '../rules/derive';
 import { exportWg, exportNative, importCharacter, type ImportReport } from '../data/transfer';
+import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
 import { confirmDialog } from './confirm';
 import { HeroesHeavenLogo } from './Logo';
@@ -38,16 +39,22 @@ export function RosterScreen({
   onDuplicate,
   onArchive,
   onDelete,
+  onOpenHomebrew,
+  onSaveMode,
+  onDeleteMode,
 }: {
   roster: SavedChar[];
   activeId: string;
   content: ContentDatabase;
   onOpen: (id: string) => void;
   onNew: () => void;
-  onImport: (saved: SavedChar) => void;
+  onImport: (saved: SavedChar, customItems?: Item[]) => void | Promise<boolean>;
   onDuplicate: (id: string) => void;
   onArchive: (id: string, archived: boolean) => void;
   onDelete: (id: string) => void;
+  onOpenHomebrew?: () => void;
+  onSaveMode?: (mode: ModeDef) => void;
+  onDeleteMode?: (id: string) => void;
 }) {
   const [filter, setFilter] = useState<Filter>('active');
   const [query, setQuery] = useState('');
@@ -78,12 +85,14 @@ export function RosterScreen({
   const handleFile = (file: File | undefined) => {
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = () => {
+    reader.onload = async () => {
       try {
-        const { saved, report } = importCharacter(String(reader.result), content);
-        onImport(saved);
+        const { saved, report, customItems } = importCharacter(String(reader.result), content);
         setError(null);
-        setResult(report);
+        // onImport may prompt on a name collision; it returns false if the user cancelled. Only show
+        // the success report when the import was actually applied.
+        const applied = await onImport(saved, customItems);
+        if (applied !== false) setResult(report);
       } catch (e) {
         setResult(null);
         setError((e as Error).message);
@@ -110,6 +119,13 @@ export function RosterScreen({
           <HeroesHeavenLogo className="chrome-logo" /> Heroes Heaven
         </div>
         <WindowControls />
+        <PageMenu
+          items={onOpenHomebrew ? [{ label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew }] : []}
+          modes={content.modes}
+          characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
+          onSaveMode={onSaveMode}
+          onDeleteMode={onDeleteMode}
+        />
       </header>
 
       <div className="roster-body">

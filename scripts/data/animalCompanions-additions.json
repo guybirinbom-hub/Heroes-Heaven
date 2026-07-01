@@ -1,0 +1,2445 @@
+[
+  {
+    "id": "aon-camel",
+    "name": "Camel",
+    "size": "Medium or Large",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 35
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d6",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "The camel makes a ranged attack to spit a long string of saliva at a foe within 10 feet. On a hit, the foe is dazzled for 1 round.",
+    "maneuver": "Sand Stride"
+  },
+  {
+    "id": "aon-hyena",
+    "name": "Hyena",
+    "size": "Small",
+    "hp": 6,
+    "abilities": {
+      "str": 2,
+      "dex": 3,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 40
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [
+      "intimidation"
+    ],
+    "support": "The hyena mockingly yowls at your enemies and bites at them when you create an opening. Until the start of your next turn, each time you hit a creature in the hyena’s reach with a Strike, the creature becomes frightened 1.",
+    "maneuver": "Gnaw"
+  },
+  {
+    "id": "aon-vulture",
+    "name": "Vulture",
+    "size": "Small",
+    "hp": 6,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 2,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 10,
+      "fly": 45
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "The vulture retches and vomits onto a foe within 10 feet. Until the start of your next turn, if you hit and deal damage to the target, the target must succeed at a Fortitude save or become sickened 1 (sickened 2 on a critical failure). The DC of the Fortitude save is 12 (or 14, if the vulture is a specialized animal companion) + your level + the vulture’s Constitution modifier.",
+    "maneuver": "Feast on the Fallen"
+  },
+  {
+    "id": "aon-cave-gecko",
+    "name": "Cave Gecko",
+    "size": "Small",
+    "hp": 6,
+    "abilities": {
+      "str": 2,
+      "dex": 3,
+      "con": 1,
+      "int": -4,
+      "wis": 2,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 25,
+      "climb": 25
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d6",
+        "damageType": "piercing",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [
+      "stealth"
+    ],
+    "support": "Your cave gecko helps you stay afoot, leaning into you and propping you up as you maneuver your opponent. Until the end of your next turn, as long as you are adjacent to your cave gecko, if you attempt to Disarm, Shove, or Trip an opponent and roll a critical failure, you get a failure instead.",
+    "maneuver": "Tongue Pull"
+  },
+  {
+    "id": "aon-monitor-lizard",
+    "name": "Monitor Lizard",
+    "size": "Medium",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 30
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "The monitor lizard distracts an adjacent opponent with snapping jaws and rapid movements. Until the start of your next turn, if your Strike damages a foe, any time the foe attempts an action with the manipulate trait until the end of your next turn, it must attempt a DC 5 flat check. On a failure, the action is disrupted.",
+    "maneuver": "Lurching Rush"
+  },
+  {
+    "id": "aon-cave-pterosaur",
+    "name": "Cave Pterosaur",
+    "size": "Small",
+    "hp": 4,
+    "abilities": {
+      "str": 2,
+      "dex": 3,
+      "con": 1,
+      "int": -4,
+      "wis": 2,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 10,
+      "fly": 60
+    },
+    "attacks": [
+      {
+        "name": "Beak",
+        "die": "1d6",
+        "damageType": "piercing",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [
+      "thievery"
+    ],
+    "support": "Your pterosaur expands its wings and makes distracting flapping motions. Any creature that would gain lesser cover from the pterosaur gains standard cover instead.",
+    "maneuver": "Pterosaur Swoop"
+  },
+  {
+    "id": "aon-shadow-hound",
+    "name": "Shadow Hound",
+    "size": "Small",
+    "hp": 4,
+    "abilities": {
+      "str": 2,
+      "dex": 3,
+      "con": 1,
+      "int": -4,
+      "wis": 1,
+      "cha": 1
+    },
+    "senses": [
+      "darkvision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 30
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [
+      "intimidation"
+    ],
+    "support": "Your shadow hound shrouds your foes in shadow when you leave an opening. Until the start of your next turn, when you damage a creature with a Strike and that creature is within reach of your shadow hound, both you and your shadow hound become concealed to the creature until the end of your next turn.",
+    "maneuver": "Bay"
+  },
+  {
+    "id": "aon-capybara",
+    "name": "Capybara",
+    "size": "Small",
+    "hp": 6,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 2,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 30,
+      "swim": 15
+    },
+    "attacks": [
+      {
+        "name": "Head",
+        "die": "1d6",
+        "damageType": "bludgeoning",
+        "traits": [
+          "agile"
+        ]
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your capybara assists you in battle. You gain a +1 circumstance bonus on your next attack roll to Strike a foe within your capybara's reach. The bonus lasts until the first time you use it or until the beginning of your next turn, whichever comes first.",
+    "maneuver": "Distracting Spray"
+  },
+  {
+    "id": "aon-moth",
+    "name": "Moth",
+    "size": "Small",
+    "hp": 6,
+    "abilities": {
+      "str": 2,
+      "dex": 3,
+      "con": 1,
+      "int": -4,
+      "wis": 2,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 15,
+      "fly": 30
+    },
+    "attacks": [
+      {
+        "name": "Proboscis",
+        "die": "1d6",
+        "damageType": "piercing",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [
+      "stealth"
+    ],
+    "support": "Your moth releases a shower of dust to reveal your foes. Until the start of your next turn, if you damage a concealed or hidden creature in your moth's reach with a Strike, that creature requires only a DC 3 flat check to target it if it's concealed, or DC 9 if it's hidden. The reduced DC lasts until the end of your next turn.",
+    "maneuver": "Ultrasonic Scream"
+  },
+  {
+    "id": "aon-pangolin",
+    "name": "Pangolin",
+    "size": "Medium",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision"
+    ],
+    "speeds": {
+      "land": 25
+    },
+    "attacks": [
+      {
+        "name": "Body",
+        "die": "1d8",
+        "damageType": "bludgeoning",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your pangolin tears at your enemies with its serrated plates. Until the start of your next turn, your Strikes that damage a creature in your pangolin's reach also deal 1d6 persistent bleed damage. If your pangolin is nimble or savage, the persistent bleed damage increases to 2d6.",
+    "maneuver": "Defensive Curl"
+  },
+  {
+    "id": "aon-terror-bird",
+    "name": "Terror Bird",
+    "size": "Large",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision"
+    ],
+    "speeds": {
+      "land": 40
+    },
+    "attacks": [
+      {
+        "name": "Beak",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your terror bird screeches at your enemies when you create an opening. Until the start of your next turn, your Strikes that deal damage to a creature within your terror bird's reach make the target flat-footed until the start of your next turn.",
+    "maneuver": "Tearing Clutch"
+  },
+  {
+    "id": "aon-legchair",
+    "name": "Legchair",
+    "size": "Medium or Large",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 40
+    },
+    "attacks": [
+      {
+        "name": "Hoof",
+        "die": "1d6",
+        "damageType": "bludgeoning",
+        "traits": [
+          "agile"
+        ]
+      }
+    ],
+    "skills": [
+      "stealth"
+    ],
+    "support": "Your legchair moves its limbs in the way of enemy attacks. You gain lesser cover from your legchair against all attacks, not just ones where the legchair would be in the way.",
+    "maneuver": "Careful Withdraw"
+  },
+  {
+    "id": "aon-ulgrem-lurann",
+    "name": "Ulgrem-Lurann",
+    "size": "Medium",
+    "hp": 6,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 0,
+      "cha": 1
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 20,
+      "swim": 25
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "intimidation"
+    ],
+    "support": "The Ulgrem-Lurann grabs at your foe and zaps it. Until the start of your next turn, each time you hit a creature in the Ulgrem-Lurann's reach with a Strike, the creature takes an additional 1d4 piercing damage and 1d4 electricity damage from the Ulgrem-Lurann. If the Ulgrem-Lurann is nimble or savage, the piercing damage and electricity damage each increase to 2d4.",
+    "maneuver": "Snatch and Zap"
+  },
+  {
+    "id": "aon-elephant",
+    "name": "Elephant",
+    "size": "Large",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 1,
+      "con": 2,
+      "int": -4,
+      "wis": 2,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 35
+    },
+    "attacks": [
+      {
+        "name": "Tusk",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "intimidation"
+    ],
+    "support": "Your elephant trumpets noisily and menaces your enemy. The first creature within your elephant's reach that you hit and deal damage to before the start of your next turn has difficulty hearing as its ears ring from the noise, taking a –4 status penalty to purely auditory Perception checks until the end of your next turn.",
+    "maneuver": "Grabbing Trunk"
+  },
+  {
+    "id": "aon-rhinoceros",
+    "name": "Rhinoceros",
+    "size": "Large",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 1,
+      "con": 3,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 30
+    },
+    "attacks": [
+      {
+        "name": "Horn",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your rhino swings its heavy head to unbalance your enemy. The first creature within your rhino's reach that you hit and deal damage to before the start of your next turn becomes clumsy 1 until the end of your next turn.",
+    "maneuver": "Rhinoceros Charge"
+  },
+  {
+    "id": "aon-triceratops",
+    "name": "Triceratops",
+    "size": "Large",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 1,
+      "con": 2,
+      "int": -4,
+      "wis": 2,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 25
+    },
+    "attacks": [
+      {
+        "name": "Horn",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "intimidation"
+    ],
+    "support": "Your triceratops gores prone targets in your wake. Until the start of your next turn, your Strikes that damage a prone creature in your triceratops's reach also deal 1d8 persistent bleed damage. If your triceratops is nimble or savage, the persistent bleed damage increases to 2d8.",
+    "maneuver": "Lumbering Knockdown"
+  },
+  {
+    "id": "aon-tyrannosaurus",
+    "name": "Tyrannosaurus",
+    "size": "Large",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 1,
+      "con": 3,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 35
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "intimidation"
+    ],
+    "support": "Your tyrannosaurus roars and puts on a fearsome display as you attack, startling your foes. Until the start of your next turn, if you hit and deal damage to a creature within your tyrannosaurus's reach, the creature is frightened 1.",
+    "maneuver": "Overwhelm"
+  },
+  {
+    "id": "aon-ghost",
+    "name": "Ghost",
+    "size": "Small or Medium",
+    "hp": 4,
+    "abilities": {
+      "str": -5,
+      "dex": 3,
+      "con": 0,
+      "int": -4,
+      "wis": 1,
+      "cha": 2
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "fly": 20
+    },
+    "attacks": [],
+    "skills": [
+      "stealth"
+    ],
+    "support": "Your ghost spooks and scares your foes as you attack them. Until the start of your next turn, if you hit and deal damage to a creature in your ghost's reach, the creature becomes frightened 1.",
+    "maneuver": "Telekinetic Assault"
+  },
+  {
+    "id": "aon-vampiric-animal",
+    "name": "Vampiric Animal",
+    "size": "Small or Medium",
+    "hp": 4,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 1,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 30
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "When your vampiric animal senses blood it tears into your enemies. Until the start of your next turn, your Strikes that damage a creature in your vampiric animal's reach also deal 1d6 persistent bleed damage. If your vampiric animal is nimble or savage, the persistent bleed damage increases to 2d6.",
+    "maneuver": "Blood Feast"
+  },
+  {
+    "id": "aon-skeletal-mount",
+    "name": "Skeletal Mount",
+    "size": "Large",
+    "hp": 4,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 2,
+      "int": -5,
+      "wis": 0,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 35
+    },
+    "attacks": [
+      {
+        "name": "Hoof",
+        "die": "1d6",
+        "damageType": "bludgeoning",
+        "traits": [
+          "agile"
+        ]
+      }
+    ],
+    "skills": [],
+    "support": "Your skeletal mount strikes fear when it charges. Until the start of your next turn, if you are riding your skeletal mount and move at least 10 feet on the action before your attack, any creature damaged by the attack becomes frightened 1, or frightened 2 if the attack was a critical hit. This is an emotion, fear, and mental effect.",
+    "maneuver": "Gallop"
+  },
+  {
+    "id": "aon-skeletal-servant",
+    "name": "Skeletal Servant",
+    "size": "Small or Medium",
+    "hp": 4,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 1,
+      "int": -5,
+      "wis": 0,
+      "cha": 1
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 20
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [],
+    "support": "Your skeletal servant jabs bones into your enemies to distract them while you attack. Until the start of your next turn, when a Strike you make hits and deals damage to a creature within your skeletal servant's reach, that target becomes flat-footed until the end of your next turn.",
+    "maneuver": "Screaming Skull"
+  },
+  {
+    "id": "aon-zombie",
+    "name": "Zombie",
+    "size": "Small or Medium",
+    "hp": 10,
+    "abilities": {
+      "str": 2,
+      "dex": 0,
+      "con": 4,
+      "int": -5,
+      "wis": 0,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 20
+    },
+    "attacks": [
+      {
+        "name": "Fist",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [],
+    "support": "The zombie emits an aura of rot, causing wounds to fester. Until the start of your next turn, each time you hit a creature that's within 10 feet of the zombie and you deal damage, the creature takes an additional 1d6 damage as the wound festers. If your zombie is nimble or savage, the damage increases to 2d6. This is a disease and necromancy effect.",
+    "maneuver": "Take a Taste"
+  },
+  {
+    "id": "aon-skeletal-bird-of-prey",
+    "name": "Skeletal Bird of Prey",
+    "size": "Small",
+    "hp": 4,
+    "abilities": {
+      "str": 2,
+      "dex": 3,
+      "con": 1,
+      "int": -5,
+      "wis": 0,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 10,
+      "fly": 50
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d6",
+        "damageType": "piercing",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [],
+    "support": "The bird flaps around and throws your foe off balance. Until the start of your next turn, when you damage a creature in the bird's reach with a Strike, that creature becomes clumsy 1 until the end of your next turn.",
+    "maneuver": "Unnerving Screech"
+  },
+  {
+    "id": "aon-skeletal-constrictor",
+    "name": "Skeletal Constrictor",
+    "size": "Small",
+    "hp": 4,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 1,
+      "int": -5,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 20,
+      "climb": 20,
+      "swim": 20
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [],
+    "support": "Your snake sways, captivating an enemy. Choose one creature within 20 feet of the constrictor that can see it. Until the start of your next turn, your Strikes that deal damage to the chosen creature make the target flat-footed until the end of your next turn.",
+    "maneuver": "Bony Constriction"
+  },
+  {
+    "id": "aon-undead-hand",
+    "name": "Undead Hand",
+    "size": "Small",
+    "hp": 4,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 1,
+      "int": -5,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 20,
+      "climb": 20
+    },
+    "attacks": [],
+    "skills": [],
+    "support": "The hand viciously batters the foes you attack. Until the start of your next turn, each time you hit a creature in the hand's reach with a Strike, the creature takes 1d6 bludgeoning damage from the hand. If your hand is nimble or savage, the bludgeoning damage increases to 2d6.",
+    "maneuver": "Grip Throat"
+  },
+  {
+    "id": "aon-zombie-carrion-bird",
+    "name": "Zombie Carrion Bird",
+    "size": "Small",
+    "hp": 6,
+    "abilities": {
+      "str": 2,
+      "dex": 1,
+      "con": 3,
+      "int": -5,
+      "wis": 0,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 10,
+      "fly": 30
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [],
+    "support": "The zombie emits an aura of rot, causing wounds to fester. Until the start of your next turn, each time you hit and deal damage to a creature that's within 10 feet of the zombie carrion bird, the creature takes an additional 1d6 damage as the wound festers. If your carrion bird is nimble or savage, the damage increases to 2d6. This is a disease and necromancy effect.",
+    "maneuver": "Pick at the Meat"
+  },
+  {
+    "id": "aon-zombie-mount",
+    "name": "Zombie Mount",
+    "size": "Large",
+    "hp": 8,
+    "abilities": {
+      "str": 2,
+      "dex": 1,
+      "con": 3,
+      "int": -5,
+      "wis": 0,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 30
+    },
+    "attacks": [
+      {
+        "name": "Hoof",
+        "die": "1d8",
+        "damageType": "bludgeoning",
+        "traits": []
+      }
+    ],
+    "skills": [],
+    "support": "Your zombie mount chews on your enemies. Until the start of your next turn, each time you Strike while riding the zombie mount and hit a creature in the zombie mount's reach, the creature takes 1d4 bludgeoning damage from the zombie mount. If your zombie mount is nimble or savage, the bludgeoning damage increases to 2d4. This benefit is based on a zombie horse or camel, but might deal piercing damage if your mount has sharp teeth.",
+    "maneuver": "Disgusting Gallop"
+  },
+  {
+    "id": "aon-water-wraith",
+    "name": "Water Wraith",
+    "size": "Small",
+    "hp": 6,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "Normal"
+    ],
+    "speeds": {
+      "land": 20,
+      "swim": 25
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your water wraith hisses and changes colors swiftly in an iridescent clash, overwhelming your foes in an avalanche of shades and hues. Until the start of your next turn, each time you hit a creature within your water wraith's reach, the creature is dazzled for 1 round.",
+    "maneuver": "Gulp Blood"
+  },
+  {
+    "id": "aon-oozeform-chair",
+    "name": "Oozeform Chair",
+    "size": "Medium or Large",
+    "hp": 6,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 3,
+      "int": -4,
+      "wis": 0,
+      "cha": 0
+    },
+    "senses": [
+      "Motion Sense Your oozeform chair can sense nearby creatures through vibration in the air. This is an imprecise sense with a range of 30 feet."
+    ],
+    "speeds": {
+      "land": 20
+    },
+    "attacks": [
+      {
+        "name": "Pseudopod",
+        "die": "1d6",
+        "damageType": "bludgeoning",
+        "traits": [
+          "agile"
+        ]
+      }
+    ],
+    "skills": [
+      "athletics"
+    ],
+    "support": "A pseudopod extends out from your chair, retrieving an unattended object within 15 feet. If you don't have a hand free to receive the object, the chair drops it in your space.",
+    "maneuver": "Extend Pseudopod"
+  },
+  {
+    "id": "aon-rootball-chair",
+    "name": "Rootball Chair",
+    "size": "Medium or Large",
+    "hp": 8,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 3,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision"
+    ],
+    "speeds": {
+      "land": 30
+    },
+    "attacks": [
+      {
+        "name": "Vine",
+        "die": "1d8",
+        "damageType": "slashing",
+        "traits": [
+          "reach 10 feet"
+        ]
+      }
+    ],
+    "skills": [
+      "stealth"
+    ],
+    "support": "Your rootball chair extends its tendrils to move smoothly over terrain. It ignores difficult terrain until the end of the turn, and Strides.",
+    "maneuver": "Seedpod Spring"
+  },
+  {
+    "id": "aon-augdunar",
+    "name": "Augdunar",
+    "size": "Medium",
+    "hp": 10,
+    "abilities": {
+      "str": 3,
+      "dex": 1,
+      "con": 3,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent ( imprecise ) 30 feet"
+    ],
+    "speeds": {
+      "land": 25
+    },
+    "attacks": [
+      {
+        "name": "Hoof",
+        "die": "1d8",
+        "damageType": "bludgeoning",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "athletics"
+    ],
+    "support": "The augdunar shifts its weight, proffering you an item. You Interact to draw a weapon or item that is being carried by the augdunar.",
+    "maneuver": "Weighted Kick"
+  },
+  {
+    "id": "aon-goat",
+    "name": "Goat",
+    "size": "Medium",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "scent ( imprecise ) 30 feet"
+    ],
+    "speeds": {
+      "land": 35,
+      "climb": 15
+    },
+    "attacks": [
+      {
+        "name": "Headbutt",
+        "die": "1d8",
+        "damageType": "bludgeoning",
+        "traits": [
+          "shove"
+        ]
+      }
+    ],
+    "skills": [
+      "acrobatics"
+    ],
+    "support": "Your goat boosts you up a wall, allowing you to reach greater heights. You climb up a surface as if you had rolled a success on a Climb action.",
+    "maneuver": "Knock Aside"
+  },
+  {
+    "id": "aon-air-elemental",
+    "name": "Air Elemental",
+    "size": "Small",
+    "hp": 4,
+    "abilities": {
+      "str": 1,
+      "dex": 2,
+      "con": 1,
+      "int": -4,
+      "wis": 1,
+      "cha": 1
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "fly": 50
+    },
+    "attacks": [
+      {
+        "name": "Gust",
+        "die": "1d6",
+        "damageType": "bludgeoning",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [
+      "stealth"
+    ],
+    "support": "Your air elemental swirls around you with concealing gusts, making it harder for your foes to hit you and possibly giving you a moment to hide. Until the start of your next turn, if you hit with a Strike and deal damage to a creature in your air elemental's reach, you are concealed to that creature until the start of your next turn.",
+    "maneuver": "Circling Flyby"
+  },
+  {
+    "id": "aon-earth-elemental",
+    "name": "Earth Elemental",
+    "size": "Small",
+    "hp": 10,
+    "abilities": {
+      "str": 2,
+      "dex": 0,
+      "con": 3,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 20,
+      "burrow": 10
+    },
+    "attacks": [
+      {
+        "name": "Fist",
+        "die": "1d8",
+        "damageType": "bludgeoning",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your earth elemental cracks the earth beneath your foe's feet, making it difficult for the foe to move. Until the start of your next turn, if you hit with a Strike and deal damage to a creature in your earth elemental's reach, the first square the creature moves into after taking that damage is difficult terrain.",
+    "maneuver": "Rolling Knockdown"
+  },
+  {
+    "id": "aon-fire-elemental",
+    "name": "Fire Elemental",
+    "size": "Small",
+    "hp": 4,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 1,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 25
+    },
+    "attacks": [],
+    "skills": [
+      "intimidation"
+    ],
+    "support": "Your fire elemental burns your foes and sets them on fire. Until the start of your next turn, your Strikes that damage a creature in your fire elemental's reach also deal 1d6 persistent fire damage. If your fire elemental is nimble or savage, the persistent fire damage increases to 2d6.",
+    "maneuver": "Flamethrower"
+  },
+  {
+    "id": "aon-metal-elemental",
+    "name": "Metal Elemental",
+    "size": "Small",
+    "hp": 8,
+    "abilities": {
+      "str": 2,
+      "dex": 1,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 25
+    },
+    "attacks": [
+      {
+        "name": "Spike",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "intimidation"
+    ],
+    "support": "Your metal elemental pierces an enemy with metal spikes that cause it to bleed. Until the start of your next turn, your Strikes that damage a creature in your metal elemental's reach also deal 1d6 persistent bleed damage. If your metal elemental is nimble or savage, the persistent bleed damage increases to 2d6.",
+    "maneuver": "Spiked Bunker"
+  },
+  {
+    "id": "aon-water-elemental",
+    "name": "Water Elemental",
+    "size": "Small",
+    "hp": 6,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 1,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 15,
+      "swim": 35
+    },
+    "attacks": [
+      {
+        "name": "Wave",
+        "die": "1d8",
+        "damageType": "bludgeoning",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your water elemental waterlogs a foe. The first time before the start of your next turn you hit with a Strike that deals damage to a creature within your water elemental's reach, that creature becomes clumsy 1 until the end of your next turn.",
+    "maneuver": "Drench"
+  },
+  {
+    "id": "aon-wood-elemental",
+    "name": "Wood Elemental",
+    "size": "Small",
+    "hp": 8,
+    "abilities": {
+      "str": 2,
+      "dex": 1,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 25,
+      "climb": 25
+    },
+    "attacks": [
+      {
+        "name": "Branch",
+        "die": "1d8",
+        "damageType": "bludgeoning",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your wood elemental entangles your foes with detachable branches and roots. Until the start of your next turn, if you hit with a Strike that deals damage to a creature in your wood elemental's reach, the creature takes a –5-foot circumstance penalty to its Speeds for 1 minute (–10 on a critical success). The creature, or a creature adjacent to it, can use an Interact action to unravel the branches and roots and remove the penalty.",
+    "maneuver": "Grabbing Branches"
+  },
+  {
+    "id": "aon-antelope",
+    "name": "Antelope",
+    "size": "Medium or Large",
+    "hp": 6,
+    "abilities": {
+      "str": 2,
+      "dex": 3,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision"
+    ],
+    "speeds": {
+      "land": 40
+    },
+    "attacks": [
+      {
+        "name": "Horns",
+        "die": "1d6",
+        "damageType": "piercing",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "The antelope impales your distracted foes. Until the start of your next turn, while riding your antelope, your Strikes that damage a creature in your antelope’s reach also deal 1d6 persistent bleed damage. If your antelope is nimble or savage, the persistent bleed damage increases to 2d6.",
+    "maneuver": "Bounding Retreat"
+  },
+  {
+    "id": "aon-elk",
+    "name": "Elk",
+    "size": "Medium or Large",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision"
+    ],
+    "speeds": {
+      "land": 30
+    },
+    "attacks": [
+      {
+        "name": "Antlers",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "intimidation"
+    ],
+    "support": "Your elk makes a threatening display by waving its antlers. Until the start of your next turn, if you hit and deal damage to a creature within your elk’s reach, the creature is frightened 1.",
+    "maneuver": "Antler Catapult"
+  },
+  {
+    "id": "aon-flying-squirrel",
+    "name": "Flying Squirrel",
+    "size": "Small",
+    "hp": 6,
+    "abilities": {
+      "str": 2,
+      "dex": 3,
+      "con": 1,
+      "int": -4,
+      "wis": 2,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent ( imprecise ) 30 feet"
+    ],
+    "speeds": {
+      "land": 25,
+      "climb": 25
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d6",
+        "damageType": "piercing",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [
+      "stealth"
+    ],
+    "support": "Your flying squirrel wraps your foes in its skin flaps, hampering their movement. Until the end of your next turn, if your Strike damages a creature in your giant flying squirrel's reach, that creature takes a –10-foot circumstance penalty to its Speeds for 1 round.",
+    "maneuver": "Death From Above"
+  },
+  {
+    "id": "aon-giraffe",
+    "name": "Giraffe",
+    "size": "Large",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent ( imprecise ) 30 feet"
+    ],
+    "speeds": {
+      "land": 35
+    },
+    "attacks": [
+      {
+        "name": "Hoof",
+        "die": "1d6",
+        "damageType": "bludgeoning",
+        "traits": [
+          "agile"
+        ]
+      }
+    ],
+    "skills": [
+      "intimidation"
+    ],
+    "support": "Your giraffe pushes against opponents with its long neck. While riding on your giraffe this turn, you do not need a hand free to Shove and any foe you successfully Shove moves 10 feet (15 feet on a critical success).",
+    "maneuver": "Long Stomp"
+  },
+  {
+    "id": "aon-kangaroo",
+    "name": "Kangaroo",
+    "size": "Small",
+    "hp": 6,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision"
+    ],
+    "speeds": {
+      "land": 30
+    },
+    "attacks": [
+      {
+        "name": "Foot",
+        "die": "1d6",
+        "damageType": "bludgeoning",
+        "traits": [
+          "agile"
+        ]
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your kangaroo bounces and shifts back and forth. Until the start of your next turn, it counts as being in its space or an empty space of your choice within 5 feet when determining whether you and your companion are flanking; you can choose a different space for each of your attacks.",
+    "maneuver": "Spring Kick"
+  },
+  {
+    "id": "aon-mole",
+    "name": "Mole",
+    "size": "Small",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent ( imprecise ) 30 feet"
+    ],
+    "speeds": {
+      "land": 25,
+      "burrow": 20
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "stealth"
+    ],
+    "support": "Your mole leaps into the ground and burrows beneath your foes, disturbing their footing. Until the end of your next turn, if you hit and damage a creature adjacent to your mole, that creature is clumsy 1 until it moves from its current position.",
+    "maneuver": "Burrowing Ambush"
+  },
+  {
+    "id": "aon-mongoose",
+    "name": "Mongoose",
+    "size": "Small",
+    "hp": 4,
+    "abilities": {
+      "str": 2,
+      "dex": 3,
+      "con": 1,
+      "int": -4,
+      "wis": 1,
+      "cha": 1
+    },
+    "senses": [
+      "low-light vision",
+      "scent ( imprecise ) 30 feet"
+    ],
+    "speeds": {
+      "land": 25,
+      "burrow": 10
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d6",
+        "damageType": "piercing",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "The mongoose bounds to your side, alert and at the ready. Until the end of your next turn, creatures adjacent to the mongoose cannot flank you.",
+    "maneuver": "Liberating Bite"
+  },
+  {
+    "id": "aon-salamander",
+    "name": "Salamander",
+    "size": "Small",
+    "hp": 6,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 1
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 20,
+      "swim": 10
+    },
+    "attacks": [
+      {
+        "name": "Tail",
+        "die": "1d6",
+        "damageType": "bludgeoning",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your salamander secretes a poisonous, viscous fluid from its skin. Until the start of your next turn, if you or your salamander are hit by a creature adjacent to the salamander, that creature takes 1d6 poison damage. This damage increases to 2d6 if the salamander is nimble or savage.",
+    "maneuver": "Poisonous Sweep"
+  },
+  {
+    "id": "aon-shotalashu",
+    "name": "Shotalashu",
+    "size": "Medium or Large",
+    "hp": 8,
+    "abilities": {
+      "str": 2,
+      "dex": 3,
+      "con": 2,
+      "int": -3,
+      "wis": 1,
+      "cha": 2
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 40
+    },
+    "attacks": [
+      {
+        "name": "Claw",
+        "die": "1d6",
+        "damageType": "slashing",
+        "traits": [
+          "agile"
+        ]
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "The shotalashu telepathically assails your enemies when you create an opening. Until the start of your next turn, each time you hit a creature in the shotalashu's reach with a Strike, the creature takes 1d6 mental damage from the shotalashu. If your shotalashu is nimble or savage, the mental damage increases to 2d6.",
+    "maneuver": "Telepathic Pounce"
+  },
+  {
+    "id": "aon-giant-eel",
+    "name": "Giant Eel",
+    "size": "Large",
+    "hp": 4,
+    "abilities": {
+      "str": 3,
+      "dex": 1,
+      "con": 2,
+      "int": -4,
+      "wis": 2,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent ( imprecise ) 30 feet"
+    ],
+    "speeds": {
+      "land": 10,
+      "swim": 40
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "stealth"
+    ],
+    "support": "Your giant eel swims in confounding bursts. Until the start of your next turn, it counts as being in its space or an empty space of your choice within 10 feet when determining whether you and your companion are flanking; you can choose a different space for each of your attacks.",
+    "maneuver": "Swimming Snap"
+  },
+  {
+    "id": "aon-giant-frog",
+    "name": "Giant Frog",
+    "size": "Large",
+    "hp": 6,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 3,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision"
+    ],
+    "speeds": {
+      "land": 20,
+      "climb": 20,
+      "swim": 25
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your giant frog’s tongue darts into openings you create and sticks to opponents to disrupt their movements. Until the start of your next turn, whenever you successfully Strike a creature your giant frog threatens, that creature can’t use reactions triggered by your actions unless its level is higher than yours.",
+    "maneuver": "Tongue Grab"
+  },
+  {
+    "id": "aon-giant-wasp",
+    "name": "Giant Wasp",
+    "size": "Large",
+    "hp": 4,
+    "abilities": {
+      "str": 2,
+      "dex": 3,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 20,
+      "fly": 40
+    },
+    "attacks": [
+      {
+        "name": "Stinger",
+        "die": "1d6",
+        "damageType": "piercing",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your wasp drones its wings, unnerving your enemies. Until the start of your next turn, if you hit and deal damage to a creature in your giant wasp’s reach, the creature becomes frightened 1.",
+    "maneuver": "Darting Stab"
+  },
+  {
+    "id": "aon-griffon",
+    "name": "Griffon",
+    "size": "Large",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision",
+      "scent ( imprecise ) 30 feet"
+    ],
+    "speeds": {
+      "land": 25,
+      "fly": 60
+    },
+    "attacks": [
+      {
+        "name": "Beak",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your griffon adopts a noble pose, inspiring you to defy the horrors before you. Until the start of your next turn, you and your griffon gain a +2 circumstance bonus to saves against emotion effects.",
+    "maneuver": "Flying Strafe"
+  },
+  {
+    "id": "aon-hippocampus",
+    "name": "Hippocampus",
+    "size": "Large",
+    "hp": 6,
+    "abilities": {
+      "str": 3,
+      "dex": 1,
+      "con": 3,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision",
+      "scent ( imprecise ) 30 feet"
+    ],
+    "speeds": {
+      "land": 5,
+      "swim": 40
+    },
+    "attacks": [
+      {
+        "name": "Tail",
+        "die": "1d6",
+        "damageType": "bludgeoning",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Until the start of your next turn, if you’re mounted on your hippocampus and moved 10 feet or more on the action before a melee Strike, add a circumstance bonus to damage for that Strike equal to twice the number of weapon damage dice. If your weapon already has the jousting weapon trait, increase the trait’s damage bonus by 2 per die instead.",
+    "maneuver": "Sudden Retreat"
+  },
+  {
+    "id": "aon-hippogriff",
+    "name": "Hippogriff",
+    "size": "Large",
+    "hp": 8,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 2,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision",
+      "scent ( imprecise ) 30 feet"
+    ],
+    "speeds": {
+      "land": 30,
+      "fly": 60
+    },
+    "attacks": [
+      {
+        "name": "Beak",
+        "die": "1d6",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Until the start of your next turn, if you’re mounted on your hippogriff and moved 10 feet or more on the action before a melee Strike, add a circumstance bonus to damage for that Strike equal to twice the number of weapon damage dice. If your weapon already has the jousting weapon trait, increase the trait’s damage bonus by 2 per die instead.",
+    "maneuver": "Aerial Retreat"
+  },
+  {
+    "id": "aon-orca",
+    "name": "Orca",
+    "size": "Large",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 3,
+      "int": -4,
+      "wis": 0,
+      "cha": 0
+    },
+    "senses": [
+      "echolocation 30 feet (the orca can use hearing as a precise sense within this range while underwater)"
+    ],
+    "speeds": {
+      "land": 5,
+      "swim": 40
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your orca attempts to drag down unwary swimmers. Until the start of your next turn, each time you hit a swimming creature in the orca’s reach, the target is pulled 5 feet down into the water. This is forced movement.",
+    "maneuver": "Breach"
+  },
+  {
+    "id": "aon-riding-tarantula",
+    "name": "Riding Tarantula",
+    "size": "Large",
+    "hp": 4,
+    "abilities": {
+      "str": 2,
+      "dex": 3,
+      "con": 1,
+      "int": -4,
+      "wis": 2,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 30,
+      "climb": 30
+    },
+    "attacks": [
+      {
+        "name": "Fangs",
+        "die": "1d6",
+        "damageType": "piercing",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [
+      "stealth"
+    ],
+    "support": "Your riding tarantula flicks urticating hairs at your foe, disrupting their focus. Until the start of your next turn, if you hit and deal damage to a creature your riding tarantula threatens, the target must succeed at a DC 5 flat check whenever it takes a concentrate action or that action is lost.",
+    "maneuver": "Hair Barrage"
+  },
+  {
+    "id": "aon-roc",
+    "name": "Roc",
+    "size": "Huge",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 1,
+      "con": 3,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision"
+    ],
+    "speeds": {
+      "land": 15,
+      "fly": 60
+    },
+    "attacks": [
+      {
+        "name": "Beak",
+        "die": "1d10",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "intimidation"
+    ],
+    "support": "Your roc beats its wings, creating a powerful downdraft. Until the start of your next turn, your Strikes that damage a creature that your roc threatens push the target 5 feet away from your roc.",
+    "maneuver": "Snatch"
+  },
+  {
+    "id": "aon-umbrella-mushroom",
+    "name": "Umbrella Mushroom",
+    "size": "Large",
+    "hp": 6,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 3,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision"
+    ],
+    "speeds": {
+      "land": 15,
+      "fly": 30
+    },
+    "attacks": [
+      {
+        "name": "Stalk",
+        "die": "1d8",
+        "damageType": "bludgeoning",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "stealth"
+    ],
+    "support": "Your umbrella mushroom exudes sense dulling spores when you create an opening. Until the start of your next turn, your Strikes that damage a creature within your umbrella mushroom's reach becomes stupefied 1 for 1 round. This effect has the poison trait.",
+    "maneuver": "Support Benefit Your umbrella mushroom exudes sense dulling spores when you create an opening. Until the start of your next turn, your Strikes that damage a creature within your umbrella mushroom's reach becomes stupefied 1 for 1 round. This effect has the poison trait. Advanced Maneuver Float"
+  },
+  {
+    "id": "aon-durian-crab",
+    "name": "Durian Crab",
+    "size": "Small or Medium",
+    "hp": 6,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 1,
+      "int": -4,
+      "wis": 2,
+      "cha": 0
+    },
+    "senses": [
+      "Darkvision"
+    ],
+    "speeds": {
+      "land": 20,
+      "climb": 20,
+      "swim": 20
+    },
+    "attacks": [
+      {
+        "name": "Claw",
+        "die": "1d6",
+        "damageType": "piercing",
+        "traits": [
+          "agile"
+        ]
+      }
+    ],
+    "skills": [
+      "stealth"
+    ],
+    "support": "Your durian crab launches itself as part of your ranged attack to throw your enemies off balance. Until the start of your next turn, as long as your crab is within your reach, your ranged Strikes that deal damage to a creature within 30 feet make the target off-guard until the end of your next turn. Your crab scuttles or launches itself back to the same space from which you threw it immediately after making a Strike, allowing you to hurl it multiple times.",
+    "maneuver": "Crab Cannon"
+  },
+  {
+    "id": "aon-hermit-krait",
+    "name": "Hermit Krait",
+    "size": "Small",
+    "hp": 6,
+    "abilities": {
+      "str": 2,
+      "dex": 3,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 20,
+      "swim": 20,
+      "burrow": 15
+    },
+    "attacks": [],
+    "skills": [
+      "stealth"
+    ],
+    "support": "Your hermit krait bites at your foes with venomous fangs. Until the start of your next turn, your Strikes that damage a creature in your hermit krait’s reach also deal 1d6 persistent poison damage. If your hermit krait is nimble or savage, the persistent poison damage increases to 2d6.",
+    "maneuver": "Defensive Curl"
+  },
+  {
+    "id": "aon-tikar-urchinpad",
+    "name": "Tikar Urchinpad",
+    "size": "Small or Medium",
+    "hp": 6,
+    "abilities": {
+      "str": 2,
+      "dex": 3,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "scent (precise) 10 feet"
+    ],
+    "speeds": {
+      "land": 10,
+      "swim": 40
+    },
+    "attacks": [],
+    "skills": [
+      "stealth"
+    ],
+    "support": "Your tikar urchinpad attempts to wrap its tendrils around your foe’s limbs, pulling it off balance. Until the end of your next turn, as long as you’re adjacent to your urchinpad, if you attempt to Shove or Trip an opponent and roll a critical failure, you get a failure instead.",
+    "maneuver": "Wrapping Tendrils"
+  },
+  {
+    "id": "aon-yzobu",
+    "name": "Yzobu",
+    "size": "Large",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 40
+    },
+    "attacks": [
+      {
+        "name": "Horn",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "The next creature to make a melee attack against the yzobu or its rider before the start of your next turn is overwhelmed by the creature’s terrible stench and must attempt a Fortitude save. This DC is equal to your class DC or spell DC, whichever is higher. On a failure, the attacker takes a –2 circumstance penalty to its attack roll. This ability has the olfactory trait.",
+    "maneuver": "Raging Stampede"
+  },
+  {
+    "id": "aon-war-pig",
+    "name": "War Pig",
+    "size": "Large",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 1,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 1
+    },
+    "senses": [
+      "low-light vision",
+      "scent ( imprecise ) 30 feet"
+    ],
+    "speeds": {
+      "land": 35
+    },
+    "attacks": [
+      {
+        "name": "Hoof",
+        "die": "1d6",
+        "damageType": "bludgeoning",
+        "traits": [
+          "agile"
+        ]
+      }
+    ],
+    "skills": [
+      "intimidation"
+    ],
+    "support": "Your war pig bodychecks your enemies, leaving them numb from the impact. Until the start of your next turn, Strikes you make that deal damage to a creature within your war pig’s reach make the target clumsy 1 until the end of your next turn.",
+    "maneuver": "Bucking Frenzy"
+  },
+  {
+    "id": "aon-wyvern",
+    "name": "Wyvern",
+    "size": "Large",
+    "hp": 8,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision",
+      "scent ( imprecise ) 30 feet"
+    ],
+    "speeds": {
+      "land": 20,
+      "fly": 40
+    },
+    "attacks": [
+      {
+        "name": "Stinger",
+        "die": "1d6",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "stealth"
+    ],
+    "support": "Your wyvern whips its stinger at your foes. Until the start of your next turn, your Strikes that damage a creature in your wyvern’s reach also deal 1d6 persistent poison damage. If your wyvern is nimble or savage, the persistent damage increases to 2d6.",
+    "maneuver": "Diving Skewer"
+  },
+  {
+    "id": "aon-chetamog",
+    "name": "Chetamog",
+    "size": "Medium or Large",
+    "hp": 8,
+    "abilities": {
+      "str": 1,
+      "dex": 3,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 40
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "A chetamog ignores difficult terrain and greater difficult terrain from non-magical foliage.",
+    "maneuver": "Scurry"
+  },
+  {
+    "id": "aon-bacallia",
+    "name": "Bacallia",
+    "size": "Medium",
+    "hp": 8,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 1
+    },
+    "senses": [
+      "low-light vision"
+    ],
+    "speeds": {
+      "land": 40
+    },
+    "attacks": [
+      {
+        "name": "Foot",
+        "die": "1d8",
+        "damageType": "bludgeoning",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your bacallia’s shining fur reflects light into your enemy’s eyes. Until the start of your next turn, creatures within your bacallia’s reach that you damage with your Strikes are dazzled.",
+    "maneuver": "Spit"
+  },
+  {
+    "id": "aon-keulia",
+    "name": "Keulia",
+    "size": "Small",
+    "hp": 4,
+    "abilities": {
+      "str": 2,
+      "dex": 2,
+      "con": 3,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "low-light vision"
+    ],
+    "speeds": {
+      "land": 30,
+      "burrow": 10
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d6",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "thievery"
+    ],
+    "support": "With its hard shell of objects, your keulia rams into enemies when you create an opening. Until the start of your next turn, each time you hit a creature in your keulia’s reach with a Strike and deal physical damage, the creatures takes 1d8 bludgeoning damage from the keulia. If your keulia is nimble or savage, the bludgeoning damage increases to 2d8.",
+    "maneuver": "Lizard Leap"
+  },
+  {
+    "id": "aon-cragstone-bear",
+    "name": "Cragstone Bear",
+    "size": "Small",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 1,
+      "con": 3,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision",
+      "tremorsense (imprecise) 20 feet"
+    ],
+    "speeds": {
+      "land": 35
+    },
+    "attacks": [
+      {
+        "name": "Slam",
+        "die": "1d8",
+        "damageType": "bludgeoning",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your cragstone bear eagerly defends you. Until the start of your next turn, you gain a +1 circumstance bonus to your AC if your cragstone bear is adjacent to you. If your bear is nimble or savage, increase the bonus to +2.",
+    "maneuver": "Rolling Charge"
+  },
+  {
+    "id": "aon-giant-rock-tuatara",
+    "name": "Giant Rock Tuatara",
+    "size": "Medium",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 2,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision",
+      "scent (imprecise) 30 feet"
+    ],
+    "speeds": {
+      "land": 25
+    },
+    "attacks": [
+      {
+        "name": "Tail Slam",
+        "die": "1d8",
+        "damageType": "bludgeoning",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "intimidation"
+    ],
+    "support": "Your giant rock tuatara trips up your enemies when you create an opening. Until the start of your next turn, your Strikes that deal damage to a creature within your giant rock tuatara’s reach make the target clumsy 1 until the end of your next turn.",
+    "maneuver": "Tail Escape"
+  },
+  {
+    "id": "aon-gray-bladeling",
+    "name": "Gray Bladeling",
+    "size": "Small",
+    "hp": 10,
+    "abilities": {
+      "str": 2,
+      "dex": 1,
+      "con": 2,
+      "int": -4,
+      "wis": 0,
+      "cha": 1
+    },
+    "senses": [
+      "darkvision",
+      "lifesense ( imprecise ) 30 feet"
+    ],
+    "speeds": {
+      "land": 20
+    },
+    "attacks": [],
+    "skills": [
+      "athletics"
+    ],
+    "support": "The gray bladeling slashes viciously at your enemy when you create an opening. Until the start of your next turn, each time you hit a creature in the bladeling’s reach with a Strike, the creature takes 1d4 persistent bleed damage or becomes frightened 1 if it’s already taking persistent bleed damage. If the gray bladeling is specialized, the persistent bleed damage increases to 1d8.",
+    "maneuver": "Possessing Strike"
+  },
+  {
+    "id": "aon-severed-head",
+    "name": "Severed Head",
+    "size": "Small",
+    "hp": 4,
+    "abilities": {
+      "str": 2,
+      "dex": 1,
+      "con": 3,
+      "int": -5,
+      "wis": 0,
+      "cha": 0
+    },
+    "senses": [
+      "darkvision"
+    ],
+    "speeds": {
+      "land": 15,
+      "fly": 25
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d6",
+        "damageType": "piercing",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [],
+    "support": "The head latches on to your enemy with its jaws when you create an opening, distracting them and hampering their movement. The next creature within range of your severed head that you successfully Strike before the start of your next turn takes a –5-foot status penalty to its Speeds and must succeed at a DC 5 flat check to use reactions triggered by your actions until the start of your next turn. On a failure, the reaction is lost.",
+    "maneuver": "Gnash"
+  },
+  {
+    "id": "aon-isgeri-boarhound",
+    "name": "Isgeri Boarhound",
+    "size": "Small",
+    "hp": 6,
+    "abilities": {
+      "str": 2,
+      "dex": 3,
+      "con": 2,
+      "int": -4,
+      "wis": 1,
+      "cha": 0
+    },
+    "senses": [
+      "foe scent (precise) 40 feet",
+      "scent ( imprecise ) 40 feet"
+    ],
+    "speeds": {
+      "land": 40
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": [
+          "finesse"
+        ]
+      }
+    ],
+    "skills": [
+      "survival"
+    ],
+    "support": "Your boarhound is a faithful hunting companion. You gain a +1 circumstance bonus to your next attack roll to Strike a foe within your boarhound's reach. This bonus lasts until the first time you use it or until the beginning of your next turn, whichever comes first. If you damage a creature with the trait corresponding to your boarhound's designated foe with that Strike, the creature takes an additional 1d6 piercing damage from the boarhound. If your boarhound is nimble or savage, the damage increases to 2d6.",
+    "maneuver": "Lock Jaw"
+  },
+  {
+    "id": "aon-thruneosaurus-rex",
+    "name": "Thruneosaurus Rex",
+    "size": "Large",
+    "hp": 8,
+    "abilities": {
+      "str": 3,
+      "dex": 1,
+      "con": 2,
+      "int": -3,
+      "wis": 0,
+      "cha": 2
+    },
+    "senses": [
+      "darkvision",
+      "scent ( imprecise ) 30 feet"
+    ],
+    "speeds": {
+      "land": 35
+    },
+    "attacks": [
+      {
+        "name": "Jaws",
+        "die": "1d8",
+        "damageType": "piercing",
+        "traits": []
+      }
+    ],
+    "skills": [
+      "intimidation"
+    ],
+    "support": "Your thruneosaurus’s horns radiate heat, igniting distracted foes. Until the start of your next turn, your Strikes that damage a creature in your thruneosaurus’s reach also deal 1d6 persistent fire damage. If your thruneosaurus is nimble or savage, the persistent damage increases to 2d6.",
+    "maneuver": "gain the unholy trait. Support Benefit Your thruneosaurus’s horns radiate heat, igniting distracted foes. Until the start of your next turn, your Strikes that damage a creature in your thruneosaurus’s reach also deal 1d6 persistent fire damage. If your thruneosaurus is nimble or savage, the persistent damage increases to 2d6. Advanced Maneuver Hellfire Gaze"
+  }
+]

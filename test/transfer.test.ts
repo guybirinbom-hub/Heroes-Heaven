@@ -2,6 +2,9 @@ import { describe, it, expect } from 'vitest';
 import { content, build } from './_content';
 import type { SavedChar } from '../src/data/storage';
 import { exportNative, exportWg, importCharacter } from '../src/data/transfer';
+import { deriveBuildFromCharacter } from '../src/rules/build';
+import { emptyPlay } from '../src/rules/play';
+import { normalizeCharacter, normalizePlay } from '../src/rules/normalize';
 
 const c = content();
 
@@ -20,6 +23,40 @@ describe('native Codex export/import (lossless)', () => {
     expect(back.character.classId).toBe('cleric');
     expect(back.character.abilities).toEqual(s.character.abilities);
     expect(back.id).not.toBe(s.id); // a fresh roster id is assigned
+  });
+
+  it('losslessly round-trips a RICH character (spells, inventory, notes, build + play state)', () => {
+    const dazeId = Object.values(c.spells).find((s) => s.name === 'Daze')!.id;
+    const sootheId = Object.values(c.spells).find((s) => s.name === 'Soothe')!.id;
+    const weaponId = Object.values(c.items).find((i) => i.itemType === 'weapon')!.id;
+    const character = {
+      ...build('bard', 6, {
+        cantrips: [dazeId],
+        spells: { 1: [sootheId] },
+        inventory: [{ itemId: weaponId, quantity: 1, equipped: true, invested: false }],
+      }),
+      name: 'Round Trip',
+      notes: [{ id: 'n1', title: 'Lore', content: '<p>A storied past.</p>' }],
+    };
+    const buildState = deriveBuildFromCharacter(character, c);
+    const play = { ...emptyPlay(), damage: 7, heroPoints: 2, conditions: [{ id: 'frightened', value: 1 }] };
+    const s: SavedChar = { id: 'rt-1', character, build: buildState, play, archived: false };
+
+    const { saved: back, report } = importCharacter(exportNative(s), c);
+    expect(report.lossless).toBe(true);
+    // Everything comes back byte-for-byte (modulo the idempotent normalize + a fresh roster id).
+    expect(back.character).toEqual(normalizeCharacter(character));
+    expect(back.build).toEqual(buildState);
+    expect(back.play).toEqual(normalizePlay(play));
+    // spot-checks on the things people worry about losing:
+    const casting = back.character.spellcasting.find((e) => e.type === 'spontaneous')!;
+    expect([...(casting.cantrips ?? []), ...Object.values(casting.repertoire ?? {}).flat()]).toEqual(
+      expect.arrayContaining([dazeId, sootheId]),
+    );
+    expect(back.character.inventory.some((i) => i.itemId === weaponId)).toBe(true);
+    expect(back.character.notes?.[0]?.content).toContain('storied past');
+    expect(back.play?.damage).toBe(7);
+    expect(back.play?.conditions).toEqual([{ id: 'frightened', value: 1 }]);
   });
 });
 

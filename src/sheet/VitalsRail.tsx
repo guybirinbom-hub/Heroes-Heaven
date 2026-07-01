@@ -21,6 +21,7 @@ import {
   removeCondition,
   setConditionValue,
   setHeroPoints,
+  setMythicPoints,
   setHp,
   setResource,
   setShieldDamage,
@@ -29,6 +30,7 @@ import {
   toggleResource,
   updateInventoryItem,
   MAX_HERO_POINTS,
+  MAX_MYTHIC_POINTS,
   type PlayState,
 } from '../rules/play';
 import { usePrefs } from '../data/prefs';
@@ -41,8 +43,12 @@ import { ItemEditorModal } from './ItemEditorModal';
 import { InfoTerm } from './InfoTerm';
 import { senseDesc, languageDesc } from '../rules/glossary';
 import { RankPill } from './widgets';
+import { useIsMobile } from './useIsMobile';
+import { HpNumpadModal } from './HpNumpadModal';
 
 const SAVE_LABEL: Record<string, string> = { fortitude: 'Fortitude', reflex: 'Reflex', will: 'Will' };
+// Abbreviated labels for the compact 4-across saves strip on mobile (shown via CSS at <=720px).
+const SAVE_SHORT: Record<string, string> = { fortitude: 'Fort', reflex: 'Ref', will: 'Will' };
 const SENSE_LABEL: Record<string, string> = {
   normal: 'Normal vision',
   'low-light': 'Low-light vision',
@@ -95,6 +101,8 @@ export function VitalsRail({
   const [shieldEditOpen, setShieldEditOpen] = useState(false);
   const hpMax = deriveMaxHp(character, content);
   // Editable current-HP field (click the number to set it directly).
+  const isMobile = useIsMobile();
+  const [numpadOpen, setNumpadOpen] = useState(false);
   const [hpDraft, setHpDraft] = useState(String(character.hitPoints.current));
   useEffect(() => setHpDraft(String(character.hitPoints.current)), [character.hitPoints.current]);
   const commitHp = () => {
@@ -207,6 +215,17 @@ export function VitalsRail({
         </div>
         <div className="hp-line">
           {onPlay ? (
+            isMobile ? (
+              <button
+                type="button"
+                className="hp-cur hp-cur-tap"
+                aria-label="Edit hit points"
+                title="Edit hit points"
+                onClick={() => setNumpadOpen(true)}
+              >
+                {character.hitPoints.current}
+              </button>
+            ) : (
             <input
               className="hp-cur hp-cur-input"
               type="text"
@@ -228,11 +247,12 @@ export function VitalsRail({
                 }
               }}
             />
+            )
           ) : (
             <span className="hp-cur">{character.hitPoints.current}</span>
           )}
           <span className="hp-max">/ {hpMax}</span>
-          {onPlay && !hpCommandEntry ? (
+          {onPlay && !hpCommandEntry && !isMobile ? (
             <span className="hp-temp" title="Temporary HP — type to set">
               +
               <input
@@ -258,13 +278,13 @@ export function VitalsRail({
               temp
             </span>
           ) : (
-            <span className="hp-temp">+{character.hitPoints.temp} temp</span>
+            character.hitPoints.temp > 0 && <span className="hp-temp">+{character.hitPoints.temp} temp</span>
           )}
         </div>
         <div className="hp-track">
-          <div className="hp-fill" style={{ width: hpPct + '%' }} />
+          <div className={'hp-fill' + (hpPct <= 25 ? ' crit' : hpPct <= 50 ? ' low' : '')} style={{ width: hpPct + '%' }} />
         </div>
-        {onPlay &&
+        {onPlay && !isMobile &&
           (hpCommandEntry ? (
             <div className="hp-edit hp-edit-cmd">
               <input
@@ -415,6 +435,7 @@ export function VitalsRail({
           <i className="ti ti-shield-checkered" aria-hidden="true" />
           Saves &amp; perception
         </div>
+        <div className="saves-strip">
         {SAVES.map((s) => {
           const d = deriveSave(character, s, content);
           return (
@@ -426,6 +447,7 @@ export function VitalsRail({
             >
               <RankPill rank={d.rank} />
               <span className="stat-name">{SAVE_LABEL[s]}</span>
+              <span className="stat-short">{SAVE_SHORT[s]}</span>
               <span className="stat-mod">{formatMod(d.modifier)}</span>
             </div>
           );
@@ -437,7 +459,9 @@ export function VitalsRail({
         >
           <RankPill rank={perception.rank} />
           <span className="stat-name">Perception</span>
+          <span className="stat-short">Perc</span>
           <span className="stat-mod">{formatMod(perception.modifier)}</span>
+        </div>
         </div>
       </section>
 
@@ -466,6 +490,28 @@ export function VitalsRail({
             })}
           </span>
         </div>
+        {character.mythicEnabled && (
+          <div className="rail-kv">
+            <span className="kv-label">Mythic points</span>
+            <span className="pips">
+              {Array.from({ length: MAX_MYTHIC_POINTS }, (_, i) => {
+                const on = i < (character.mythicPoints ?? 0);
+                const cls = 'pip mythic' + (on ? ' on' : '') + (onPlay ? ' interactive' : '');
+                return onPlay ? (
+                  <button
+                    key={i}
+                    className={cls}
+                    aria-label={`Set mythic points to ${i + 1 === (character.mythicPoints ?? 0) ? i : i + 1}`}
+                    onClick={() => onPlay((p) => setMythicPoints(p, i + 1 === (character.mythicPoints ?? 0) ? i : i + 1))}
+                  />
+                ) : (
+                  <span key={i} className={cls} />
+                );
+              })}
+            </span>
+          </div>
+        )}
+        <div className="kv-cubes">
         <div
           className={'rail-kv' + (onOpenStat ? ' openable' : '') + (hasTempSpeed ? ' has-temp' : '')}
           onClick={onOpenStat ? () => onOpenStat({ kind: 'speed' }) : undefined}
@@ -498,6 +544,7 @@ export function VitalsRail({
               </span>
             ))}
           </span>
+        </div>
         </div>
       </section>
 
@@ -589,14 +636,16 @@ export function VitalsRail({
           <i className="ti ti-urgent" aria-hidden="true" />
           Conditions
         </div>
-        <div className="pill-wrap">
+        <div className="pill-wrap cond-wrap">
           {character.conditions.map((c) => {
             const def = content.conditions[c.id];
             const name = def?.name ?? conditionLabel(c.id);
             const valued = def?.valued;
             return (
-              <span className="cond-pill" key={c.id} title={def?.description}>
-                {name}
+              <span className="cond-pill" key={c.id}>
+                <InfoTerm title={name} description={def?.description} descRefs={def?.descRefs} descKey="conditions">
+                  {name}
+                </InfoTerm>
                 {valued && onPlay ? (
                   <span className="cond-pill-step">
                     <button aria-label="Decrease" onClick={() => onPlay((p) => setConditionValue(p, c.id, (c.value ?? 1) - 1))}>
@@ -654,9 +703,26 @@ export function VitalsRail({
         </div>
       </section>
 
+      {numpadOpen && isMobile && onPlay && (
+        <HpNumpadModal
+          current={character.hitPoints.current}
+          max={hpMax}
+          temp={character.hitPoints.temp}
+          onDamage={(n) => onPlay((p) => applyDamage(p, n, hpMax))}
+          onHeal={(n) => onPlay((p) => applyHeal(p, n, hpMax))}
+          onSetHp={(n) => onPlay((p) => setHp(p, n, hpMax))}
+          onSetTemp={(n) => onPlay((p) => setTempHp(p, n))}
+          onClose={() => setNumpadOpen(false)}
+        />
+      )}
+
       {condOpen && onPlay && (
         <ConditionsModal
-          conditions={content.conditions}
+          conditions={
+            character.kingmakerEnabled
+              ? content.conditions
+              : Object.fromEntries(Object.entries(content.conditions).filter(([, cd]) => !/kingmaker/i.test(cd.source?.book ?? '')))
+          }
           active={character.conditions}
           onAdd={(id, valued) => onPlay((p) => addCondition(p, id, valued ? 1 : undefined))}
           onRemove={(id) => onPlay((p) => removeCondition(p, id))}

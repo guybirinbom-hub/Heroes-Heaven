@@ -1,0 +1,11 @@
+{
+  "investigator": {
+    "subclassOptions": [
+      {
+        "id": "aon-esoterica-methodology",
+        "name": "Esoterica Methodology",
+        "description": "This methodology can be taken by Palatine Detectives You become trained in Occultism or Religion, and you gain the Quick Identification skill feat. In addition, choose one common cantrip from the divine spell list and one common cantrip from the occult spell list. You can cast those spells as innate spells at will. You become trained in the spell attack modifier and spell DCs statistics. Intelligence is your spellcasting attribute."
+      }
+    ]
+  }
+}

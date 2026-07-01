@@ -1,0 +1,425 @@
+[
+  {
+    "id": "aon-detect-alignment",
+    "name": "Detect Alignment",
+    "rank": 1,
+    "traditions": [
+      "divine",
+      "occult"
+    ],
+    "traits": [
+      "detection",
+      "divination",
+      "uncommon"
+    ],
+    "rarity": "uncommon",
+    "description": "Your eyes glow as you sense aligned auras. Choose chaotic, evil, good, or lawful. You detect auras of that alignment. You receive no information beyond presence or absence. You can choose not to detect creatures or effects you're aware have that alignment.\n\n Only creatures of 6th level or higher—unless divine spellcasters, undead, or beings from the Outer Sphere—have alignment auras.\n\n---\n\n**Heightened (2nd)** You learn each aura's location and strength.\n\nAlignment Aura The strength of an alignment aura depends on the level of the creature, item, or spell. The auras of undead, clerics and other divine spellcasters with a patron deity, and creatures from the Outer Sphere are one step stronger than normal (faint instead of none, for example).\n\n**Alignment Aura**\n\n **Creature or Item Level** | **Spell or Effect Level** | **Aura Strength** | 0-5 | — | None | 6-10 | 0-3 | Faint | 11-15 | 4-7 | Moderate | 16-20 | 8-9 | Powerful | 21+ | 10 | Overwhelming",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "ORC"
+    },
+    "cast": {
+      "type": "actions",
+      "value": 2
+    },
+    "area": "30-foot emanation",
+    "baseArea": {
+      "value": 30,
+      "kind": "emanation"
+    }
+  },
+  {
+    "id": "aon-misdirection",
+    "name": "Misdirection",
+    "rank": 2,
+    "traditions": [
+      "arcane",
+      "occult"
+    ],
+    "traits": [
+      "illusion"
+    ],
+    "rarity": "common",
+    "description": "You reshape the magic aura of one creature or object to resemble that of another. You designate one target as the primary target and the other as the secondary target. Effects that would detect auras on the primary target instead detect the same types of auras from the secondary target. A creature reading the aura can attempt to disbelieve the illusion. You can Dismiss the spell from up to a mile away.",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "ORC"
+    },
+    "cast": {
+      "type": "duration",
+      "text": "1 minute"
+    },
+    "range": "30 feet",
+    "targets": "2 creatures or objects",
+    "duration": "until the next time you make your daily preparations"
+  },
+  {
+    "id": "aon-undetectable-alignment",
+    "name": "Undetectable Alignment",
+    "rank": 2,
+    "traditions": [
+      "divine",
+      "occult"
+    ],
+    "traits": [
+      "abjuration",
+      "uncommon"
+    ],
+    "rarity": "uncommon",
+    "description": "You shroud a creature or object in wards that hide its alignment. The target appears to be neutral to all effects that would detect its alignment.",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "ORC"
+    },
+    "cast": {
+      "type": "duration",
+      "text": "1 minute"
+    },
+    "range": "touch",
+    "targets": "1 creature or object",
+    "duration": "until the next time you make your daily preparations"
+  },
+  {
+    "id": "aon-litany-against-sloth",
+    "name": "Litany against Sloth",
+    "rank": 5,
+    "traditions": [],
+    "traits": [
+      "champion",
+      "evocation",
+      "good",
+      "litany",
+      "uncommon",
+      "focus"
+    ],
+    "rarity": "uncommon",
+    "description": "Your litany rails against the sin of sloth, interfering with the target's ability to react. The target must attempt a Will save. A particularly slothful creature, such as a Sloth Demon, uses the outcome one degree of success worse than the result of its saving throw. The target becomes temporarily immune to all of your litanies for 1 minute.\n\n**Critical Success** The target is unaffected.\n\n**Success** The target can't use reactions.\n\n**Failure** The target can't use reactions and is slowed 1.\n\n**Critical Failure** The target can't use reactions and is slowed 2.",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "ORC"
+    },
+    "cast": {
+      "type": "actions",
+      "value": 1
+    },
+    "range": "30 feet",
+    "targets": "1 creature that isn't holy",
+    "duration": "1 round",
+    "save": {
+      "type": "will",
+      "basic": false
+    }
+  },
+  {
+    "id": "aon-litany-against-wrath",
+    "name": "Litany Against Wrath",
+    "rank": 3,
+    "traditions": [],
+    "traits": [
+      "champion",
+      "evocation",
+      "good",
+      "litany",
+      "uncommon",
+      "focus"
+    ],
+    "rarity": "uncommon",
+    "description": "Your litany rails against the sin of wrath, punishing the target for attacking good creatures. The target must attempt a Will save. A particularly wrathful creature, such as a wrath demon, uses the outcome one degree of success worse than the result of its saving throw. The target then becomes temporarily immune to all of your litanies for 1 minute.\n\n**Critical Success** The target is unaffected.\n\n**Success** The first time the target uses an action that deals damage to at least one creature that isn't unholy, the target takes 3d6 spirit damage.\n\n**Failure** Each time the target uses an action that deals damage to at least one creature that isn't unholy, the target takes 3d6 spirit damage.\n\n**Critical Failure** The target is enfeebled 2. Each time it uses an action that deals damage to at least one creature that isn't unholy, the target takes 3d6 spirit damage.\n\n---\n\n**Heightened (+1)** The damage increases by 1d6.",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "ORC"
+    },
+    "cast": {
+      "type": "actions",
+      "value": 1
+    },
+    "range": "30 feet",
+    "targets": "1 creature that isn't holy",
+    "duration": "1 round",
+    "save": {
+      "type": "will",
+      "basic": false
+    }
+  },
+  {
+    "id": "aon-litany-of-righteousness",
+    "name": "Litany of Righteousness",
+    "rank": 7,
+    "traditions": [],
+    "traits": [
+      "champion",
+      "evocation",
+      "good",
+      "litany",
+      "uncommon",
+      "focus"
+    ],
+    "rarity": "uncommon",
+    "description": "Your litany denounces an evildoer, rendering it susceptible to the powers of good. The target gains weakness 7 to holy. The target then becomes temporarily immune to all of your litanies for 1 minute.\n\n---\n\n**Heightened (+1)** The weakness increases by 1.",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "ORC"
+    },
+    "cast": {
+      "type": "actions",
+      "value": 1
+    },
+    "range": "30 feet",
+    "targets": "1 creature that isn't holy",
+    "duration": "1 round"
+  },
+  {
+    "id": "aon-dragon-claws",
+    "name": "Dragon Claws",
+    "rank": 1,
+    "traditions": [],
+    "traits": [
+      "morph",
+      "sorcerer",
+      "transmutation",
+      "uncommon",
+      "focus"
+    ],
+    "rarity": "uncommon",
+    "description": "Vicious claws grow from your fingers. They are finesse unarmed attacks that deal 1d4 slashing damage and 1d6 extra damage of a type determined by the dragon in your bloodline.\n\n**Dragon Claws**\n\n **Dragon Type** | **Damage Type** | Black, brine*, or copper | Acid | Blue, bronze, cloud*, or sky* | Electricity | Brass, gold, magma*, red, or underworld* | Fire | Crystal* or forest* | Piercing | Green | Poison | Sea* | Bludgeoning | Silver or white | Cold | Sovereign* | Mental | Umbral* | Negative\n\n ***Source** _Mwangi Expanse pg. 76_\n\n Your scales from blood magic glow with faint energy, giving you resistance 5 to the same damage type.\n\n---\n\n**Heightened (5th)** The extra damage increases to 2d6, and the resistance increases to 10.\n\n**Heightened (9th)** The extra damage increases to 3d6, and the resistance increases to 15.",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "ORC"
+    },
+    "cast": {
+      "type": "actions",
+      "value": 1
+    },
+    "duration": "1 minute"
+  },
+  {
+    "id": "aon-dread-aura",
+    "name": "Dread Aura",
+    "rank": 4,
+    "traditions": [],
+    "traits": [
+      "aura",
+      "emotion",
+      "enchantment",
+      "fear",
+      "mental",
+      "uncommon",
+      "wizard",
+      "focus"
+    ],
+    "rarity": "uncommon",
+    "description": "You emit an aura of terror. Foes in the area are frightened 1 and unable to reduce the condition.",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "ORC"
+    },
+    "cast": {
+      "type": "actions",
+      "value": 2
+    },
+    "area": "30-foot-radius emanation",
+    "duration": "sustained up to 1 minute",
+    "baseArea": {
+      "value": 30,
+      "kind": "emanation"
+    }
+  },
+  {
+    "id": "aon-touch-of-corruption",
+    "name": "Touch of Corruption",
+    "rank": 1,
+    "traditions": [],
+    "traits": [
+      "champion",
+      "necromancy",
+      "negative",
+      "uncommon",
+      "focus",
+      "void"
+    ],
+    "rarity": "uncommon",
+    "description": "You infuse the target with negative energy. If the target is living, this deals 1d6 negative damage (basic Fortitude save); on a failed save, the target also takes a –2 status penalty to AC for 1 round.\n\n If the target is a willing undead creature, the target instead regains 6 Hit Points, and if you are the undead target, you also gain a +2 status bonus to damage rolls for 1 round.\n\n---\n\n**Heightened (+1)** Increase the damage dealt to a living creature by 1d6 or increase the Hit Points regained by undead by 6.",
+    "source": {
+      "book": "Pathfinder Gamemastery Guide",
+      "license": "ORC"
+    },
+    "cast": {
+      "type": "actions",
+      "value": 1
+    },
+    "range": "touch",
+    "targets": "1 willing undead creature or 1 living creature"
+  },
+  {
+    "id": "aon-litany-of-depravity",
+    "name": "Litany of Depravity",
+    "rank": 7,
+    "traditions": [],
+    "traits": [
+      "champion",
+      "evil",
+      "evocation",
+      "litany",
+      "uncommon",
+      "focus"
+    ],
+    "rarity": "uncommon",
+    "description": "Your litany calls into question the morals your foe claims to hold dear. The target gains weakness 7 to unholy, then becomes temporarily immune to all your litanies for 1 minute.\n\n---\n\n**Heightened (+1)** The weakness increases by 1.",
+    "source": {
+      "book": "Pathfinder Advanced Player's Guide",
+      "license": "ORC"
+    },
+    "cast": {
+      "type": "actions",
+      "value": 1
+    },
+    "range": "30 feet",
+    "targets": "1 creature that isn't unholy",
+    "duration": "1 round"
+  },
+  {
+    "id": "aon-litany-of-self-interest",
+    "name": "Litany of Self-Interest",
+    "rank": 5,
+    "traditions": [],
+    "traits": [
+      "champion",
+      "enchantment",
+      "evil",
+      "litany",
+      "mental",
+      "uncommon",
+      "focus"
+    ],
+    "rarity": "uncommon",
+    "description": "You give a speech that fills your target with a drive to improve themself to the exclusion of assisting others. A creature that wants to gain the benefit of this spell and doesn't care about its limitations can voluntarily fail the save. The target then becomes temporarily immune to all your litanies for 1 minute.\n\n**Success** The target is unaffected.\n\n**Failure** The target gains a +2 status bonus to attack rolls, Perception checks, saving throws, and skill checks. The target can't Aid other creatures, consider any creature an ally, or use spells or abilities that directly benefit another creature (as determined by the GM), even if they also benefit the target. Other creatures allied with the spell's target can still consider the target an ally and affect it accordingly.\n\n---\n\n**Heightened (8th)** The status bonus increases to +3.",
+    "source": {
+      "book": "Pathfinder Advanced Player's Guide",
+      "license": "ORC"
+    },
+    "cast": {
+      "type": "actions",
+      "value": 1
+    },
+    "range": "30 feet",
+    "targets": "1 creature",
+    "duration": "1 round",
+    "save": {
+      "type": "will",
+      "basic": false
+    }
+  },
+  {
+    "id": "aon-efficient-apport",
+    "name": "Efficient Apport",
+    "rank": 1,
+    "traditions": [],
+    "traits": [
+      "conjuration",
+      "teleportation",
+      "uncommon",
+      "wizard",
+      "focus"
+    ],
+    "rarity": "uncommon",
+    "description": "Walking over to an item to pick it up is so much effort. Whether it's your spellbook, a reagent, or a glass of wine, it's simply more efficient to call it to your hand. You teleport the target into your open hand. If you don't have a hand free, it falls to the ground at your feet.\n\n---\n\n**Heightened (3rd)** You can target an unattended object with a Bulk of 1 or less\n\n**Heightened (5th)** The range increases to 120 feet, and you can target an unattended object with a Bulk of 1 or less.\n\n**Heightened (7th)** The range increases to 120 feet, and you can target an unattended object with a Bulk of 2 or less.",
+    "source": {
+      "book": "Pathfinder Secrets of Magic",
+      "license": "ORC"
+    },
+    "cast": {
+      "type": "actions",
+      "value": 1
+    },
+    "range": "60 feet",
+    "targets": "1 unattended object of light Bulk or less"
+  },
+  {
+    "id": "aon-discomfiting-whisper",
+    "name": "Discomfiting Whisper",
+    "rank": 1,
+    "traditions": [],
+    "traits": [
+      "animist",
+      "aura",
+      "focus",
+      "misfortune",
+      "uncommon",
+      "void",
+      "negative"
+    ],
+    "rarity": "uncommon",
+    "description": "You are surrounded by an aura of spiteful murmurings that incite bad luck and punish failure. Each creature that starts their turn within the area of this spell must succeed at a Will save or roll twice on their first attack roll that round and take the lower result. If an attack roll modified in this way results in a failure, the creature that rolled the failed attack takes 1d6 void damage.\n\n---\n\n**Heightened (+2)** The void damage dealt on a failure increases by 1d6.",
+    "source": {
+      "book": "Pathfinder War of Immortals",
+      "license": "ORC"
+    },
+    "cast": {
+      "type": "actions",
+      "value": 1
+    },
+    "area": "5-foot <%RULES%2387%%>emanation<%END>",
+    "duration": "sustained up to 1 minute",
+    "save": {
+      "type": "will",
+      "basic": false
+    },
+    "baseArea": {
+      "value": 5,
+      "kind": "emanation"
+    }
+  },
+  {
+    "id": "aon-vindicator-s-judgement",
+    "name": "Vindicator's Judgement",
+    "rank": 5,
+    "traditions": [],
+    "traits": [
+      "manipulate",
+      "uncommon",
+      "focus"
+    ],
+    "rarity": "uncommon",
+    "description": "You pronounce a terrible judgment upon your quarry that causes all of your attacks and divine spells to strike with deadly efficacy. The target takes extra damage from your attacks, depending on the result of its Fortitude save. The spell ends immediately if the target is no longer your hunted prey.\n\n**Critical Success** The target is unaffected.\n\n**Success** The target has weakness 5 to the next Strike you make against it or damaging divine spell you cast that includes it as a target before the end of your next turn.\n\n**Failure** The target has weakness 5 to all Strikes you make against it or damaging divine spells you cast that includes it as a target for the duration of the spell.\n\n**Critical Failure** As failure, but the target is off-guard against the first Strike or divine spell attack you make against it each round for the duration of the spell.\n\n---\n\n**Heightened (7th)** The weakness is 10.\n\n**Heightened (9th)** The weakness is 15.",
+    "source": {
+      "book": "Pathfinder War of Immortals",
+      "license": "ORC"
+    },
+    "cast": {
+      "type": "actions",
+      "value": 1
+    },
+    "range": "60 feet",
+    "targets": "your  hunted prey ",
+    "duration": "1 minute",
+    "save": {
+      "type": "fortitude",
+      "basic": false
+    }
+  },
+  {
+    "id": "aon-rite-of-the-blood-crown",
+    "name": "Rite of the Blood Crown",
+    "rank": 3,
+    "traditions": [],
+    "traits": [
+      "consecration",
+      "evocation",
+      "rare"
+    ],
+    "rarity": "rare",
+    "description": "Using resources left behind by the cult of Droskar, King Merlokrep hopes to use this ritual to complete the _Crown of the Kobold King_, allowing it to reach its true intended potential as the _Crown of Toil_. (Of course, Merlokrep has no intention of changing how he refers to the crown should he succeed at this ritual—it will always be the _Crown of the Kobold King_ to him and his subjects!)\n\n At one point during the casting of this ritual, an enemy of the primary caster must be sacrificed. Initially, Merlokrep intended to use the abducted victims as these sacrifices, but the blood of a PC will do just as well!\n\n If you wish to include this ritual as something the PCs must instead use to potentially undo the _Crown of the Kobold King's_ magic, the ritual instead requires rare incense and offerings worth a total value of 60 gp instead of a blood sacrifice.\n\n**Critical Success** The rite is a complete success, and the _Crown of the Kobold King_ is bolstered to its true potential. What these powers might be are left to the GM to devise as they see fit. If this rite is being performed to neutralize the _Crown of the Kobold King's_ potential, you instead render the magic item forever unsuitable for ascension to the _Crown of Toil_.\n\n**Success** The rite is a partial success, but the crown isn't yet complete. If you attempt this ritual again the next day, primary and secondary checks made to determine its success gain a +2 circumstance bonus.\n\n**Failure** The ritual fails but can be attempted again without additional penalties.\n\n**Critical Failure** The ritual fails, and the primary caster becomes stupefied 2. The _rite of the blood crown_ can't be attempted again for 1 month.",
+    "source": {
+      "book": "Pathfinder Crown of the Kobold King",
+      "license": "ORC"
+    },
+    "cast": {
+      "type": "duration",
+      "text": "1 day"
+    },
+    "range": "40 feet",
+    "targets": "the   Crown of the Kobold King  ",
+    "ritual": true,
+    "ritualPrimary": "Arcana"
+  }
+]

@@ -27,10 +27,12 @@ export interface Prefs {
   pinnedModes: string[];
   /** Use the brand-accent scrollbar instead of the default thin neutral one (toggles :root.sb-accent). */
   scrollbarAccent: boolean;
+  /** Show an available/total slot badge on each spell rank tab (phone Spells page). Default on. */
+  showSlotBadges: boolean;
 }
 
 const STORAGE_KEY = 'pf2e-codex.prefs';
-const DEFAULTS: Prefs = { hpCommandEntry: false, compactActions: false, popupSizeSync: false, showNicheSources: false, pinnedModes: [], scrollbarAccent: false };
+const DEFAULTS: Prefs = { hpCommandEntry: false, compactActions: true, popupSizeSync: false, showNicheSources: false, pinnedModes: [], scrollbarAccent: false, showSlotBadges: true };
 
 let prefs: Prefs = { ...DEFAULTS };
 const listeners = new Set<(p: Prefs) => void>();

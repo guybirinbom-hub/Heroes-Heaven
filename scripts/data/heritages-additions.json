@@ -1,0 +1,118 @@
+[
+  {
+    "id": "aon-half-elf",
+    "name": "Half-Elf",
+    "ancestryId": "elf",
+    "versatile": false,
+    "traits": [],
+    "rarity": "common",
+    "description": "Either one of your parents was an elf, or one or both were half-elves. You have pointed ears and other telltale signs of elf heritage. You gain the elf trait, the half-elf trait, and low-light vision. In addition, you can select elf, half-elf, and human feats whenever you gain an ancestry feat.",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "OGL"
+    }
+  },
+  {
+    "id": "aon-half-orc",
+    "name": "Half-Orc",
+    "ancestryId": "orc",
+    "versatile": false,
+    "traits": [],
+    "rarity": "common",
+    "description": "One of your parents was an orc, or one or both were half-orcs. You have a green tinge to your skin and other indicators of orc heritage. You gain the orc trait, the half-orc trait, and low-light vision. In addition, you can select orc, half-orc, and human feats whenever you gain an ancestry feat.",
+    "source": {
+      "book": "Pathfinder Core Rulebook",
+      "license": "OGL"
+    }
+  },
+  {
+    "id": "aon-aasimar",
+    "name": "Aasimar",
+    "ancestryId": null,
+    "versatile": true,
+    "traits": [
+      "aasimar"
+    ],
+    "rarity": "uncommon",
+    "description": "You descend from celestials or were touched by the celestial realms, gaining an air of awe and grace, as well as features distinctive to your celestial forebears. You gain the aasimar trait, in addition to the traits from your ancestry. You also gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. You can choose from aasimar feats and feats from your ancestry whenever you gain an ancestry feat.",
+    "source": {
+      "book": "Pathfinder Advanced Player's Guide",
+      "license": "OGL"
+    }
+  },
+  {
+    "id": "aon-tiefling",
+    "name": "Tiefling",
+    "ancestryId": null,
+    "versatile": true,
+    "traits": [
+      "tiefling"
+    ],
+    "rarity": "uncommon",
+    "description": "You descend from fiends or bear the mark of the fiendish realms, manifesting as some unusual feature that belies your heritage, such as horns or a tail. You gain the tiefling trait, in addition to the traits from your ancestry. You also gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. You can choose from tiefling feats and feats from your ancestry whenever you gain an ancestry feat.",
+    "source": {
+      "book": "Pathfinder Advanced Player's Guide",
+      "license": "OGL"
+    }
+  },
+  {
+    "id": "aon-aphorite",
+    "name": "Aphorite",
+    "ancestryId": null,
+    "versatile": true,
+    "traits": [
+      "aphorite"
+    ],
+    "rarity": "uncommon",
+    "description": "You were born with a connection to Axis, the Plane of Law. You gain the aphorite trait, in addition to the traits from your ancestry. You also gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. You can choose from aphorite feats and feats from your ancestry whenever you gain an ancestry feat.",
+    "source": {
+      "book": "Pathfinder Lost Omens Ancestry Guide",
+      "license": "OGL"
+    }
+  },
+  {
+    "id": "aon-ganzi",
+    "name": "Ganzi",
+    "ancestryId": null,
+    "versatile": true,
+    "traits": [
+      "ganzi"
+    ],
+    "rarity": "uncommon",
+    "description": "Your blood is touched by primal chaos. You gain the ganzi trait in addition to the traits from your ancestry. You gain resistance to a single damage type equal to half your level; at the beginning of each day, determine randomly whether this resistance applies to acid, electricity, or sonic damage. You also gain a +1 circumstance bonus to saving throws against effects that would cause you to gain the controlled condition. You can choose from ganzi feats and feats from your ancestry whenever you gain an ancestry feat.",
+    "source": {
+      "book": "Pathfinder Lost Omens Ancestry Guide",
+      "license": "OGL"
+    }
+  },
+  {
+    "id": "aon-ifrit",
+    "name": "Ifrit",
+    "ancestryId": null,
+    "versatile": true,
+    "traits": [
+      "ifrit"
+    ],
+    "rarity": "uncommon",
+    "description": "You descend from fire elementals or bear the mark of the Inner Spheres, and your features illustrate the influence that elemental fire has over you. You gain the ifrit trait, in addition to the traits from your ancestry. You gain resistance to fire equal to half your level (minimum 1), and you treat environmental heat effects as if they were one step less severe (incredible heat becomes extreme, extreme heat becomes severe, and so on). You can choose from ifrit feats and feats from your ancestry whenever you gain an ancestry feat.",
+    "source": {
+      "book": "Pathfinder Lost Omens Ancestry Guide",
+      "license": "OGL"
+    }
+  },
+  {
+    "id": "aon-three-kobolds-in-a-trench-coat",
+    "name": "Three Kobolds in a Trench Coat",
+    "ancestryId": "kobold",
+    "versatile": false,
+    "traits": [
+      "kobold"
+    ],
+    "rarity": "common",
+    "description": "_Nethys Note: This is a part of the April Fool's content from Paizo's blogs._\n\nYou are actually three individual kobolds in a trench coat acting as a single entity. You are Medium instead of Small. You gain a +10 circumstance bonus to Deception checks to Impersonate not being three kobolds in a trench coat. You also gain the Trenchcoat Topple reaction.\n\n**Trenchcoat Topple**  (Reaction)  **Frequency** twice per day; **Trigger** You would be affected by an ability that permanently removes a body part, such as the decapitation effect of a _vorpal_ weapon; **Effect** One of your kobolds jumps free of the trench coat, negating the effect.\n\n**Special** The second time you use this in a day, your size is reduced to Small until your next daily preparations.",
+    "source": {
+      "book": "Pathfinder Fools Aplenty",
+      "license": "OGL"
+    }
+  }
+]

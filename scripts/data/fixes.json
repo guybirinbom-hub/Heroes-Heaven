@@ -1,0 +1,332 @@
+[
+  {
+    "category": "feats",
+    "name": "Uplifting Winds",
+    "field": "level",
+    "value": 16
+  },
+  {
+    "category": "feats",
+    "name": "Devoted Focus",
+    "field": "level",
+    "value": 12
+  },
+  {
+    "category": "items",
+    "name": "Adamantine Chunk",
+    "field": "level",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "name": "Adamantine Ingot",
+    "field": "level",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "name": "Cold Iron Chunk",
+    "field": "level",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "name": "Cold Iron Ingot",
+    "field": "level",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "name": "Silver Chunk",
+    "field": "level",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "name": "Silver Ingot",
+    "field": "level",
+    "value": 2
+  },
+  {
+    "category": "items",
+    "name": "Dawnsilver Chunk",
+    "field": "level",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "name": "Dawnsilver Ingot",
+    "field": "level",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "name": "Duskwood Branch",
+    "field": "level",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "name": "Duskwood Lumber",
+    "field": "level",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "name": "Peachwood Branch",
+    "field": "level",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "name": "Peachwood Lumber",
+    "field": "level",
+    "value": 8
+  },
+  {
+    "category": "items",
+    "name": "Sovereign Steel Chunk",
+    "field": "level",
+    "value": 9
+  },
+  {
+    "category": "items",
+    "name": "Sovereign Steel Ingot",
+    "field": "level",
+    "value": 9
+  },
+  {
+    "category": "items",
+    "name": "Orichalcum Chunk",
+    "field": "level",
+    "value": 17
+  },
+  {
+    "category": "items",
+    "name": "Orichalcum Ingot",
+    "field": "level",
+    "value": 17
+  },
+  {
+    "category": "items",
+    "name": "Keep Stone Chunk",
+    "field": "level",
+    "value": 17
+  },
+  {
+    "category": "items",
+    "name": "Keep Stone Ingot",
+    "field": "level",
+    "value": 17
+  },
+  {
+    "category": "heritages",
+    "name": "Reflection",
+    "field": "rarity",
+    "value": "common"
+  },
+  {
+    "category": "backgrounds",
+    "name": "Second Chance Champion",
+    "field": "trainedSkill",
+    "value": "athletics"
+  },
+  {
+    "category": "backgrounds",
+    "name": "Gold Falls Regular",
+    "field": "trainedSkill",
+    "value": "acrobatics"
+  },
+  {
+    "category": "deities",
+    "name": "Scal",
+    "field": "divineFont",
+    "value": [
+      "harm"
+    ]
+  },
+  {
+    "category": "deities",
+    "name": "Ketephys",
+    "field": "divineFont",
+    "value": [
+      "heal"
+    ]
+  },
+  {
+    "category": "deities",
+    "name": "Uskyeria",
+    "field": "divineFont",
+    "value": [
+      "harm",
+      "heal"
+    ]
+  },
+  {
+    "category": "deities",
+    "name": "Ylimancha",
+    "field": "divineFont",
+    "value": [
+      "heal"
+    ]
+  },
+  {
+    "category": "deities",
+    "name": "Vavaalrav",
+    "field": "divineFont",
+    "value": [
+      "heal"
+    ]
+  },
+  {
+    "category": "deities",
+    "name": "Cixyron",
+    "field": "divineFont",
+    "value": [
+      "harm"
+    ]
+  },
+  {
+    "category": "deities",
+    "name": "Elion",
+    "field": "domains",
+    "value": [
+      "cities",
+      "family",
+      "nature",
+      "travel"
+    ]
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Ballista",
+    "field": "level",
+    "value": 5
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Ballista",
+    "field": "ac",
+    "value": 17
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Ballista",
+    "field": "hp",
+    "value": 40
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Ballista",
+    "field": "fort",
+    "value": 12
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Catapult",
+    "field": "level",
+    "value": 7
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Catapult",
+    "field": "ac",
+    "value": 20
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Catapult",
+    "field": "hp",
+    "value": 60
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Catapult",
+    "field": "hardness",
+    "value": 10
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Catapult",
+    "field": "fort",
+    "value": 15
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Trebuchet",
+    "field": "level",
+    "value": 10
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Trebuchet",
+    "field": "ac",
+    "value": 24
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Trebuchet",
+    "field": "hp",
+    "value": 68
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Trebuchet",
+    "field": "hardness",
+    "value": 17
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Trebuchet",
+    "field": "fort",
+    "value": 21
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Cannon",
+    "field": "level",
+    "value": 8
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Cannon",
+    "field": "ac",
+    "value": 22
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Cannon",
+    "field": "hp",
+    "value": 80
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Cannon",
+    "field": "hardness",
+    "value": 15
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Cannon",
+    "field": "fort",
+    "value": 16
+  },
+  {
+    "category": "siegeWeapons",
+    "name": "Battering Ram",
+    "field": "level",
+    "value": 5
+  },
+  {
+    "category": "vehicles",
+    "name": "Armored Carriage",
+    "field": "level",
+    "value": 5
+  },
+  {
+    "category": "vehicles",
+    "name": "Battery Tower",
+    "field": "level",
+    "value": 16
+  }
+]

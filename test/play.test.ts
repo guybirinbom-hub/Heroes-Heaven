@@ -49,6 +49,7 @@ describe('emptyPlay / initialPlay', () => {
       damage: 0,
       tempHp: 0,
       heroPoints: 1,
+      mythicPoints: 3,
       xp: 0,
       focusUsed: 0,
       expendedSlots: {},
@@ -263,6 +264,7 @@ describe('rest', () => {
       damage: 2, // 12 − (5 × 2)
       tempHp: 0,
       heroPoints: 0, // session-based, untouched
+      mythicPoints: 3, // daily resource, refilled on rest
       xp: 250,
       focusUsed: 0,
       expendedSlots: {},

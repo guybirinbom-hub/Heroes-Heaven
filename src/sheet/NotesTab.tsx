@@ -4,6 +4,9 @@ import { addNotePage, nextNoteId, removeNotePage, updateNotePage, type PlayState
 import { RefSearchModal, refLinkHtml, type RefTarget } from './RichEditor';
 import { confirmDialog } from './confirm';
 import { DescBody } from './DescBody';
+import { useIsMobile } from './useIsMobile';
+import { useBackHandler } from './useEscapeClose';
+import { decodeEntities } from './RichText';
 
 /** Toolbar formatting commands (document.execCommand on the focused contentEditable). */
 const TOOLS: { cmd: string; arg?: string; icon?: string; text?: string; title: string }[] = [
@@ -46,6 +49,11 @@ function NoteEditor({
   // Description-link flow: the saved selection + whether the ref-search modal is open.
   const savedRange = useRef<Range | null>(null);
   const [linking, setLinking] = useState(false);
+
+  // Mobile: while focused, pin the toolbar to the bottom of the scroll container via position:sticky
+  // (CSS .rte-toolwrap-sticky) — robust against Android adjustResize where the visualViewport math fails.
+  const isMobile = useIsMobile();
+  const [focused, setFocused] = useState(false);
 
   useEffect(() => {
     if (ref.current) ref.current.innerHTML = initialHtml;
@@ -125,6 +133,9 @@ function NoteEditor({
 
   return (
     <>
+      <div
+        className={'rte-toolwrap' + (isMobile && focused ? ' rte-toolwrap-sticky' : '')}
+      >
       <div className="toolbar">
         {TOOLS.map((t, i) => (
           <button
@@ -185,12 +196,15 @@ function NoteEditor({
           ))}
         </div>
       )}
+      </div>
       <div
         className="editor-body"
         contentEditable
         suppressContentEditableWarning
         ref={ref}
         onInput={save}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
         data-placeholder="Write your notes…"
       />
       {linking && <RefSearchModal onPick={applyLink} onClose={() => setLinking(false)} />}
@@ -293,12 +307,19 @@ export function NotesTab({ character, onPlay }: { character: Character; onPlay?:
   // Choosing an icon either creates a new page with it, or re-icons an existing page.
   const [iconPicker, setIconPicker] = useState<{ mode: 'new' } | { mode: 'edit'; id: string } | null>(null);
 
+  // Mobile uses a List → editor flow: false = show the page list; true = show the editor full-screen.
+  const isMobile = useIsMobile();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  // Android Back / Escape: from the full-screen editor, step back to the page list (don't exit the app).
+  useBackHandler(isMobile && mobileOpen, () => setMobileOpen(false));
+
   const pickIcon = (icon: string) => {
     if (!onPlay || !iconPicker) return;
     if (iconPicker.mode === 'new') {
       const id = nextNoteId(pages);
       onPlay((p) => addNotePage(p, icon));
       setActiveId(id);
+      setMobileOpen(true);
     } else {
       onPlay((p) => updateNotePage(p, iconPicker.id, { icon }));
     }
@@ -323,9 +344,13 @@ export function NotesTab({ character, onPlay }: { character: Character; onPlay?:
   }
 
   const activeIndex = pages.findIndex((p) => p.id === active.id);
+  const preview = (html: string) => decodeEntities(html.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+  const showList = !isMobile || !mobileOpen;
+  const showEditor = !isMobile || mobileOpen;
 
   return (
     <div className="notes-wrap">
+      {showList && (
       <div className="card notes-list-card">
         <div className="notes-search-row">
           <div className="search">
@@ -340,22 +365,44 @@ export function NotesTab({ character, onPlay }: { character: Character; onPlay?:
         </div>
         <div className="notes-list">
           {shown.map((p) => (
-            <div key={p.id} className={'note-item' + (p.id === active.id ? ' on' : '')} onClick={() => setActiveId(p.id)}>
+            <div
+              key={p.id}
+              className={'note-item' + (p.id === active.id && !isMobile ? ' on' : '') + (isMobile ? ' note-item-m' : '')}
+              onClick={() => {
+                setActiveId(p.id);
+                if (isMobile) setMobileOpen(true);
+              }}
+            >
               <i
                 className={'ti ' + (p.icon ?? 'ti-note')}
-                style={{ color: p.color ?? 'var(--app-text-dim)', fontSize: 15, flex: 'none' }}
+                style={{ color: p.color ?? 'var(--app-text-dim)', fontSize: isMobile ? 17 : 15, flex: 'none' }}
                 aria-hidden="true"
               />
-              <span className="ni-name">{p.title}</span>
+              {isMobile ? (
+                <div className="ni-text">
+                  <span className="ni-name">{p.title}</span>
+                  {preview(p.content) && <span className="ni-preview">{preview(p.content)}</span>}
+                </div>
+              ) : (
+                <span className="ni-name">{p.title}</span>
+              )}
               {p.private && <i className="ti ti-lock" style={{ fontSize: 12, opacity: 0.65, flex: 'none' }} aria-hidden="true" />}
+              {isMobile && <i className="ti ti-chevron-right ni-chev" aria-hidden="true" />}
             </div>
           ))}
           {shown.length === 0 && <div className="ff-empty">No pages match.</div>}
         </div>
       </div>
+      )}
 
+      {showEditor && (
       <div className="card editor-card">
         <div className="editor-head">
+          {isMobile && (
+            <button type="button" className="icon-btn notes-back" aria-label="Back to notes" onClick={() => setMobileOpen(false)}>
+              <i className="ti ti-arrow-left" aria-hidden="true" />
+            </button>
+          )}
           <button
             type="button"
             className={'editor-icon' + (onPlay ? ' editable' : '')}
@@ -403,8 +450,10 @@ export function NotesTab({ character, onPlay }: { character: Character; onPlay?:
                       confirmLabel: 'Delete',
                       danger: true,
                     })
-                  )
+                  ) {
                     onPlay((pl) => removeNotePage(pl, active.id));
+                    if (isMobile) setMobileOpen(false);
+                  }
                 }}
               >
                 <i className="ti ti-trash" aria-hidden="true" />
@@ -424,6 +473,7 @@ export function NotesTab({ character, onPlay }: { character: Character; onPlay?:
           <DescBody description={active.content} className="editor-body" />
         )}
       </div>
+      )}
 
       {iconPicker && onPlay && (
         <IconPickerModal

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { usePrefs } from '../data/prefs';
+import { useIsMobile } from './useIsMobile';
+import { HpNumpadModal } from './HpNumpadModal';
 
 /**
  * The HP tracker UI used in the sidebar — current/max + temp, a fill bar, and either Damage/Heal
@@ -27,6 +29,8 @@ export function HpControl({
   onHeal?: (n: number) => void;
 }) {
   const { hpCommandEntry } = usePrefs();
+  const isMobile = useIsMobile();
+  const [numpadOpen, setNumpadOpen] = useState(false);
   const live = editable && !!onSetCurrent;
   const [hpDraft, setHpDraft] = useState(String(current));
   useEffect(() => setHpDraft(String(current)), [current]);
@@ -70,7 +74,11 @@ export function HpControl({
   return (
     <>
       <div className="hp-line">
-        {live ? (
+        {live && isMobile ? (
+          <button type="button" className="hp-cur hp-cur-tap" aria-label="Edit hit points" title="Edit hit points" onClick={() => setNumpadOpen(true)}>
+            {current}
+          </button>
+        ) : live ? (
           <input
             className="hp-cur hp-cur-input"
             type="text"
@@ -96,7 +104,7 @@ export function HpControl({
           <span className="hp-cur">{current}</span>
         )}
         <span className="hp-max">/ {max}</span>
-        {live && !hpCommandEntry ? (
+        {live && !hpCommandEntry && !isMobile ? (
           <span className="hp-temp" title="Temporary HP — type to set">
             +
             <input
@@ -126,9 +134,9 @@ export function HpControl({
         )}
       </div>
       <div className="hp-track">
-        <div className="hp-fill" style={{ width: pct + '%' }} />
+        <div className={'hp-fill' + (pct <= 25 ? ' crit' : pct <= 50 ? ' low' : '')} style={{ width: pct + '%' }} />
       </div>
-      {live &&
+      {live && !isMobile &&
         (hpCommandEntry ? (
           <div className="hp-edit hp-edit-cmd">
             <input
@@ -161,6 +169,18 @@ export function HpControl({
             </button>
           </div>
         ))}
+      {numpadOpen && live && isMobile && (
+        <HpNumpadModal
+          current={current}
+          max={max}
+          temp={temp}
+          onDamage={(n) => onDamage?.(n)}
+          onHeal={(n) => onHeal?.(n)}
+          onSetHp={(n) => onSetCurrent?.(n)}
+          onSetTemp={(n) => onSetTemp?.(n)}
+          onClose={() => setNumpadOpen(false)}
+        />
+      )}
     </>
   );
 }

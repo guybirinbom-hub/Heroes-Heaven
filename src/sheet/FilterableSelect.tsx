@@ -5,6 +5,7 @@ import { spellCostMatches } from '../rules/spellFilter';
 import { RangeSlider } from './RangeSlider';
 import { DescriptionModal } from './DescriptionModal';
 import { useEscapeClose } from './useEscapeClose';
+import { useIsMobile } from './useIsMobile';
 import type { DescNode } from './descref';
 
 /** Build a description node for a content entry, or null when it has nothing to show.
@@ -283,9 +284,12 @@ export function FilterableSelect<T>({
     return out;
   }, [spec, items]);
 
+  const isMobile = useIsMobile();
   const [state, setState] = useState<FState>(() => defaultState(spec, effStops));
   const [metaQuery, setMetaQuery] = useState('');
-  const [showFilters, setShowFilters] = useState(true);
+  // Desktop opens with the filter panel beside the results; on a phone start on the results and let
+  // the user tap "Filters" to overlay them (closing the overlay reveals the results again).
+  const [showFilters, setShowFilters] = useState(!isMobile);
   const [descNode, setDescNode] = useState<DescNode | null>(null);
 
   const set = (id: string, v: unknown) => setState((s) => ({ ...s, [id]: v }));
@@ -369,6 +373,11 @@ export function FilterableSelect<T>({
                 {activeCount > 0 && (
                   <button className="fsel-clear" onClick={reset} title="Clear all filters">
                     Clear {activeCount}
+                  </button>
+                )}
+                {isMobile && (
+                  <button className="fsel-done" onClick={() => setShowFilters(false)} title="Show results">
+                    <i className="ti ti-check" aria-hidden="true" /> Done
                   </button>
                 )}
               </div>

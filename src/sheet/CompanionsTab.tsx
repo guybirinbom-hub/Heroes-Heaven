@@ -1,5 +1,7 @@
-import { useRef, useState, type ReactNode } from 'react';
-import type { ActiveCondition, Character, Coins, ContentDatabase, CompanionConfig, CompanionKind, DamageType, EidolonConfig, SimpleCompanion, VehicleStat, SiegeWeaponStat } from '../rules/types';
+import { Fragment, useRef, useState, type ReactNode } from 'react';
+import { isMobileNow } from './useIsMobile';
+import { traitDesc, senseDesc } from '../rules/glossary';
+import type { ActionCost, ActiveCondition, Character, Coins, ContentDatabase, CompanionConfig, CompanionKind, DamageType, EidolonConfig, ModeDef, SimpleCompanion, VehicleStat, SiegeWeaponStat } from '../rules/types';
 import {
   deriveAnimalCompanion,
   deriveEidolon,
@@ -28,6 +30,7 @@ import {
   setCompanionItemQty,
   setCompanionTempHp,
   toggleCompanionItemFlag,
+  toggleCompanionMode,
   updatePlayCompanion,
   type PlayState,
 } from '../rules/play';
@@ -35,7 +38,9 @@ import { formatMod } from '../rules/derive';
 import { HpControl } from './HpControl';
 import { SPECIFIC_FAMILIARS } from '../rules/specificFamiliars';
 import { ActionGlyph } from './widgets';
+import { InfoTerm } from './InfoTerm';
 import { ConditionsModal } from './ConditionsModal';
+import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
 import { AddItemsModal } from './AddItemsModal';
 import { downscaleImage } from './imageUtil';
 
@@ -150,7 +155,7 @@ function AddCompanionModal({ content, currency, onAdd, onClose }: { content: Con
           </div>
           <div className="search">
             <i className="ti ti-search" aria-hidden="true" />
-            <input autoFocus placeholder="Search companions" value={q} onChange={(e) => setQ(e.target.value)} />
+            <input autoFocus={!isMobileNow()} placeholder="Search companions" value={q} onChange={(e) => setQ(e.target.value)} />
           </div>
         </div>
         <div className="cond-list">
@@ -221,7 +226,7 @@ function FamiliarAbilityPicker({ content, chosen, onToggle, onClose }: { content
         <div className="picker-controls">
           <div className="search">
             <i className="ti ti-search" aria-hidden="true" />
-            <input autoFocus placeholder="Search abilities" value={q} onChange={(e) => setQ(e.target.value)} />
+            <input autoFocus={!isMobileNow()} placeholder="Search abilities" value={q} onChange={(e) => setQ(e.target.value)} />
           </div>
           <span className="ss-count">{chosen.length} chosen</span>
         </div>
@@ -292,16 +297,18 @@ function abilityLine(a: AnimalCompanionBlock['abilities']): string {
   return (['str', 'dex', 'con', 'int', 'wis', 'cha'] as const).map((k) => `${cap(k)} ${formatMod(a[k])}`).join(', ');
 }
 
-function CompanionConditions({ compId, conditions, content, onPlay, onOpen }: { compId: string; conditions: ActiveCondition[]; content: ContentDatabase; onPlay?: (fn: (play: PlayState) => PlayState) => void; onOpen: () => void }) {
-  if (!onPlay && conditions.length === 0) return null;
+function CompanionConditions({ compId, conditions, modes, content, onPlay, onOpen }: { compId: string; conditions: ActiveCondition[]; modes: ModeDef[]; content: ContentDatabase; onPlay?: (fn: (play: PlayState) => PlayState) => void; onOpen: () => void }) {
+  if (!onPlay && conditions.length === 0 && modes.length === 0) return null;
   return (
     <div className="sb-conditions">
       {conditions.map((c) => {
         const def = content.conditions[c.id];
         const name = def?.name ?? cap(c.id);
         return (
-          <span className="cond-pill" key={c.id} title={def?.description}>
-            {name}
+          <span className="cond-pill" key={c.id}>
+            <InfoTerm title={name} description={def?.description} descRefs={def?.descRefs} descKey="conditions">
+              {name}
+            </InfoTerm>
             {def?.valued && onPlay ? (
               <span className="cond-pill-step">
                 <button aria-label="Decrease" onClick={() => onPlay((p) => setCompanionConditionValue(p, compId, c.id, (c.value ?? 1) - 1))}>−</button>
@@ -319,9 +326,19 @@ function CompanionConditions({ compId, conditions, content, onPlay, onOpen }: { 
           </span>
         );
       })}
+      {modes.map((m) => (
+        <span className="mode-pill" key={m.id} title={m.note}>
+          {m.name}
+          {onPlay && (
+            <button className="cond-pill-x" aria-label={`Turn off ${m.name}`} onClick={() => onPlay((p) => toggleCompanionMode(p, compId, m.id, content.modes))}>
+              <i className="ti ti-x" aria-hidden="true" />
+            </button>
+          )}
+        </span>
+      ))}
       {onPlay && (
         <button className="add-btn" onClick={onOpen}>
-          <i className="ti ti-plus" aria-hidden="true" /> Condition
+          <i className="ti ti-plus" aria-hidden="true" /> Condition / Mode
         </button>
       )}
     </div>
@@ -348,13 +365,81 @@ function StatBlock({ name, kind, level, icon, children }: { name: string; kind: 
   );
 }
 
+// Animal-companion "Advanced maneuver" strings are "Name (cost): text" with the cost spelled out as
+// words in core.json — map the word to an ActionCost so it renders as the action-cost GLYPH, not text.
+const MANEUVER_COST: Record<string, ActionCost> = {
+  'single action': { type: 'actions', value: 1 },
+  'one action': { type: 'actions', value: 1 },
+  '1 action': { type: 'actions', value: 1 },
+  'two actions': { type: 'actions', value: 2 },
+  '2 actions': { type: 'actions', value: 2 },
+  'three actions': { type: 'actions', value: 3 },
+  '3 actions': { type: 'actions', value: 3 },
+  reaction: { type: 'reaction' },
+  free: { type: 'free' },
+  'free action': { type: 'free' },
+};
+function maneuverNode(maneuver: string): ReactNode {
+  const m = maneuver.match(/^(.*?)\s*\(([^)]+)\)\s*:?\s*/);
+  if (!m) return maneuver;
+  const name = m[1].trim();
+  const paren = m[2].trim();
+  const rest = maneuver.slice(m[0].length);
+  const cost = MANEUVER_COST[paren.toLowerCase()];
+  return (
+    <>
+      {name} {cost ? <ActionGlyph cost={cost} /> : `(${paren})`}
+      {rest ? <>: {rest}</> : null}
+    </>
+  );
+}
+
+// Stat-block terms that have a description (creature/weapon traits + senses) → tappable InfoTerm.
+// traitDesc/senseDesc resolve via the glossary (no content needed for the common ones).
+function TraitChipTerm({ trait, label, accent }: { trait: string; label: string; accent?: boolean }) {
+  return (
+    <InfoTerm className={'sb-trait' + (accent ? ' sb-trait-accent' : '')} title={cap(trait)} description={traitDesc(trait)}>
+      {label}
+    </InfoTerm>
+  );
+}
+function TraitParen({ traits }: { traits: string[] }) {
+  if (!traits.length) return null;
+  return (
+    <>
+      {' ('}
+      {traits.map((t, j) => (
+        <Fragment key={t}>
+          {j > 0 ? ', ' : ''}
+          <InfoTerm title={cap(t)} description={traitDesc(t)}>{t}</InfoTerm>
+        </Fragment>
+      ))}
+      {')'}
+    </>
+  );
+}
+function SenseList({ senses }: { senses: string[] }) {
+  if (!senses.length) return null;
+  return (
+    <>
+      {'; '}
+      {senses.map((s, j) => (
+        <Fragment key={s}>
+          {j > 0 ? ', ' : ''}
+          <InfoTerm title={cap(s)} description={senseDesc(s)}>{s}</InfoTerm>
+        </Fragment>
+      ))}
+    </>
+  );
+}
+
 function AnimalBlock({ b, cond, hp }: { b: AnimalCompanionBlock; cond?: ReactNode; hp?: ReactNode }) {
   const isConstruct = b.category === 'construct';
   const over = b.bulk.carried > b.bulk.max;
   return (
     <StatBlock name={b.name} kind={isConstruct ? 'Construct companion' : 'Animal companion'} level={b.level} icon={isConstruct ? 'ti-robot' : 'ti-paw'}>
       <div className="sb-traits">
-        <span className="sb-trait">{isConstruct ? 'Construct' : 'Animal'}</span>
+        <TraitChipTerm trait={isConstruct ? 'construct' : 'animal'} label={isConstruct ? 'Construct' : 'Animal'} />
         <span className="sb-trait">{b.size}</span>
         <span className="sb-trait sb-trait-accent">{cap(b.maturity)}</span>
         {b.specialization && <span className="sb-trait sb-trait-accent">{b.specialization.name}</span>}
@@ -362,7 +447,7 @@ function AnimalBlock({ b, cond, hp }: { b: AnimalCompanionBlock; cond?: ReactNod
       {cond}
       <div className="sb-line">
         <b>Perception</b> {formatMod(b.perception.modifier)}
-        {b.senses.length > 0 && `; ${b.senses.join(', ')}`}
+        <SenseList senses={b.senses} />
       </div>
       <div className="sb-line">
         <b>Skills</b> {b.skills.map((s) => `${s.name} ${formatMod(s.modifier)}`).join(', ')}
@@ -387,7 +472,7 @@ function AnimalBlock({ b, cond, hp }: { b: AnimalCompanionBlock; cond?: ReactNod
       {b.attacks.map((a, i) => (
         <div className="sb-line" key={i}>
           <b>Melee</b> <ActionGlyph cost={{ type: 'actions', value: 1 }} /> {a.name} {formatMod(a.attack)}
-          {a.traits.length > 0 && ` (${a.traits.join(', ')})`}, <b>Damage</b> {a.damage}
+          <TraitParen traits={a.traits} />, <b>Damage</b> {a.damage}
         </div>
       ))}
       {b.gearNote && (
@@ -407,7 +492,7 @@ function AnimalBlock({ b, cond, hp }: { b: AnimalCompanionBlock; cond?: ReactNod
       )}
       {b.maneuver && (
         <div className="sb-line">
-          <b>Advanced maneuver</b> {b.maneuver}
+          <b>Advanced maneuver</b> {maneuverNode(b.maneuver)}
         </div>
       )}
     </StatBlock>
@@ -430,9 +515,7 @@ function FamiliarBlockView({ b, cond, hp }: { b: FamiliarBlock; cond?: ReactNode
         <span className="sb-trait">Minion</span>
         <span className="sb-trait">Tiny</span>
         {sf?.traits.map((t) => (
-          <span className="sb-trait" key={t}>
-            {cap(t)}
-          </span>
+          <TraitChipTerm key={t} trait={t} label={cap(t)} />
         ))}
       </div>
       {cond}
@@ -484,6 +567,7 @@ function FamiliarBlockView({ b, cond, hp }: { b: FamiliarBlock; cond?: ReactNode
 }
 
 function EidolonBlockView({ b, cond }: { b: EidolonBlock; cond?: ReactNode }) {
+  const [descOpen, setDescOpen] = useState(false);
   return (
     <StatBlock name={b.name} kind="Eidolon" icon="ti-flare">
       <div className="sb-traits">
@@ -510,11 +594,11 @@ function EidolonBlockView({ b, cond }: { b: EidolonBlock; cond?: ReactNode }) {
       {b.attacks.map((a, i) => (
         <div className="sb-line" key={i}>
           <b>Melee</b> <ActionGlyph cost={{ type: 'actions', value: 1 }} /> {a.name} {formatMod(a.attack)}
-          {a.traits.length > 0 && <> ({a.traits.join(', ')})</>}, <b>Damage</b> {a.damage}
+          <TraitParen traits={a.traits} />, <b>Damage</b> {a.damage}
         </div>
       ))}
       <div className="sb-line sb-muted">Shares your Hit Points; uses your AC, saves &amp; Perception.</div>
-      <div className="sb-line sb-muted">
+      <div className="sb-line">
         <b>Manifest Eidolon</b> <ActionGlyph cost={{ type: 'actions', value: 3 }} /> (concentrate{b.tradition ? `, ${b.tradition}` : ''}) — it appears in an adjacent open
         space and can immediately take 1 action; if already manifested, you unmanifest it instead. It must stay within 100 ft of you, and unmanifests if you drop to 0 HP.
       </div>
@@ -526,7 +610,14 @@ function EidolonBlockView({ b, cond }: { b: EidolonBlock; cond?: ReactNode }) {
       {b.description && (
         <>
           <div className="sb-div" />
-          <div className="sb-line sb-muted">{b.description.slice(0, 320)}</div>
+          <div className="sb-line sb-muted">
+            {descOpen || b.description.length <= 320 ? b.description : b.description.slice(0, 320) + '… '}
+            {b.description.length > 320 && (
+              <button type="button" className="sb-more" onClick={() => setDescOpen((o) => !o)}>
+                {descOpen ? 'less' : 'more'}
+              </button>
+            )}
+          </div>
         </>
       )}
     </StatBlock>
@@ -536,7 +627,7 @@ function EidolonBlockView({ b, cond }: { b: EidolonBlock; cond?: ReactNode }) {
 function SimpleCompanionView({ sc, name, cond }: { sc: SimpleCompanion; name: string; cond?: ReactNode }) {
   return (
     <StatBlock name={name || sc.name} kind={cap(sc.kind)} icon={sc.kind === 'pet' ? 'ti-mood-smile' : 'ti-user'}>
-      <div className="sb-traits">{(sc.traits ?? []).map((t) => <span className="sb-trait" key={t}>{cap(t)}</span>)}</div>
+      <div className="sb-traits">{(sc.traits ?? []).map((t) => <TraitChipTerm key={t} trait={t} label={cap(t)} />)}</div>
       {cond}
       <div className="sb-line">{sc.description}</div>
       {sc.notes && (
@@ -573,9 +664,7 @@ function VehicleBlock({
       <div className="sb-traits">
         <span className="sb-trait">{v.size}</span>
         {(v.traits ?? []).map((t) => (
-          <span className="sb-trait" key={t}>
-            {cap(t.replace(/-/g, ' '))}
-          </span>
+          <TraitChipTerm key={t} trait={t} label={cap(t.replace(/-/g, ' '))} />
         ))}
         {status && <span className={'sb-trait ' + (status === 'Destroyed' ? 'sb-trait-bad' : 'sb-trait-warn')}>{status}</span>}
       </div>
@@ -907,7 +996,7 @@ function EditChoices({ cfg, content, onPlay, onAbilities, onSpecialization }: { 
 
 /* ============================ Main tab ============================ */
 
-export function CompanionsTab({ character, content, onPlay }: { character: Character; content: ContentDatabase; onPlay?: (fn: (play: PlayState) => PlayState) => void }) {
+export function CompanionsTab({ character, content, onPlay, onSaveMode, onDeleteMode, charKey }: { character: Character; content: ContentDatabase; onPlay?: (fn: (play: PlayState) => PlayState) => void; onSaveMode?: (mode: ModeDef) => void; onDeleteMode?: (id: string) => void; charKey?: string }) {
   const explicit = character.companions ?? [];
   const explicitIds = new Set(explicit.map((c) => c.id));
   const autoEidolon: CompanionConfig[] =
@@ -926,6 +1015,7 @@ export function CompanionsTab({ character, content, onPlay }: { character: Chara
 
   const current = companions.find((c) => c.id === selId) ?? companions[0];
   const condsOf = (id: string): ActiveCondition[] => character.companionConditions?.[id] ?? [];
+  const modesOf = (id: string): ModeDef[] => character.companionModes?.[id] ?? [];
   // Per-companion HP tracker (current = max − tracked damage), wired to the companion-HP mutations.
   const hpTrackerFor = (id: string, max: number): ReactNode => {
     const st = character.companionHp?.[id] ?? { damage: 0, temp: 0 };
@@ -993,7 +1083,7 @@ export function CompanionsTab({ character, content, onPlay }: { character: Chara
 
   /** Derive + render the selected companion's stat block. */
   const renderBlock = (cfg: CompanionConfig): { node: ReactNode; bulkMax?: number } => {
-    const cond = <CompanionConditions compId={cfg.id} conditions={condsOf(cfg.id)} content={content} onPlay={onPlay} onOpen={() => setCondFor(cfg.id)} />;
+    const cond = <CompanionConditions compId={cfg.id} conditions={condsOf(cfg.id)} modes={modesOf(cfg.id)} content={content} onPlay={onPlay} onOpen={() => setCondFor(cfg.id)} />;
     // Vehicles & siege weapons: own stat block, trackable HP, no conditions row.
     if (cfg.kind === 'vehicle' || cfg.kind === 'siege') {
       const v: VehicleStat | SiegeWeaponStat | undefined = cfg.typeId
@@ -1025,14 +1115,14 @@ export function CompanionsTab({ character, content, onPlay }: { character: Chara
     if (cfg.kind === 'animal') {
       const type = cfg.typeId ? content.animalCompanions[cfg.typeId] : undefined;
       if (!type) return { node: <StatBlock name={cfg.name || 'Animal companion'} kind="Animal companion" icon="ti-paw"><div className="sb-line sb-muted">Pick a type in Edit.</div></StatBlock> };
-      const b = deriveAnimalCompanion(cfg, type, character.level, content, condsOf(cfg.id), !!character.variantRules?.proficiencyWithoutLevel);
+      const b = deriveAnimalCompanion(cfg, type, character.level, content, condsOf(cfg.id), !!character.variantRules?.proficiencyWithoutLevel, modesOf(cfg.id));
       return { node: <AnimalBlock b={b} cond={cond} hp={hpTrackerFor(cfg.id, b.hp)} />, bulkMax: b.bulk.max };
     }
     if (cfg.kind === 'familiar') {
-      const b = deriveFamiliar(cfg, character, content, condsOf(cfg.id));
+      const b = deriveFamiliar(cfg, character, content, condsOf(cfg.id), modesOf(cfg.id));
       return { node: <FamiliarBlockView b={b} cond={cond} hp={hpTrackerFor(cfg.id, b.hp)} /> };
     }
-    if (cfg.kind === 'eidolon') return { node: <EidolonBlockView b={deriveEidolon(cfg, character, content, condsOf(cfg.id))} cond={cond} /> };
+    if (cfg.kind === 'eidolon') return { node: <EidolonBlockView b={deriveEidolon(cfg, character, content, condsOf(cfg.id), modesOf(cfg.id))} cond={cond} /> };
     const sc = cfg.typeId ? (cfg.kind === 'follower' ? content.followers : content.pets)?.[cfg.typeId] : undefined;
     if (!sc) return { node: <StatBlock name={cfg.name || cap(cfg.kind)} kind={cap(cfg.kind)} icon={KIND_ICON[cfg.kind]}><div className="sb-line sb-muted">Pick a type in Edit.</div></StatBlock> };
     return { node: <SimpleCompanionView sc={sc} name={cfg.name} cond={cond} /> };
@@ -1054,6 +1144,18 @@ export function CompanionsTab({ character, content, onPlay }: { character: Chara
           onRemove={(id) => onPlay((p) => removeCompanionCondition(p, condFor, id))}
           onSetValue={(id, value) => onPlay((p) => setCompanionConditionValue(p, condFor, id, value))}
           onClose={() => setCondFor(null)}
+          modesEnabled
+          library={Object.values(content.modes).filter((m) => !CATALOG_MODE_MAP[m.id] && (!m.charId || m.charId === charKey))}
+          predefined={CATALOG_MODES}
+          catalog={CATALOG_MODES}
+          classId={character.classId}
+          ancestryId={character.ancestryId}
+          featIds={new Set(character.feats.map((f) => f.featId))}
+          charKey={charKey}
+          activeModeIds={modesOf(condFor).map((m) => m.id)}
+          onToggleMode={(id) => onPlay((p) => toggleCompanionMode(p, condFor, id, content.modes))}
+          onSaveMode={onSaveMode}
+          onDeleteMode={onDeleteMode}
         />
       )}
       {addOpen && onPlay && <AddCompanionModal content={content} currency={character.currency} onAdd={addCompanion} onClose={() => setAddOpen(false)} />}
@@ -1170,7 +1272,7 @@ export function CompanionsTab({ character, content, onPlay }: { character: Chara
             </div>
           )}
         </div>
-        <div className="cmp-body">
+        <div className="cmp-body" key={mode}>
           {(!canEdit || mode === 'stats') && block.node}
           {canEdit && mode === 'edit' && onPlay && (
             <EditChoices cfg={current} content={content} onPlay={onPlay} onAbilities={() => setAbilityFor(current.id)} onSpecialization={() => setSpecFor(current.id)} />

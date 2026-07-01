@@ -1,8 +1,15 @@
-import { type ReactNode } from 'react';
+import { type ReactNode, useMemo } from 'react';
 import type { DescRef } from '../rules/types';
+import { useContent } from './ContentContext';
+import { autoRefs } from './autolink';
 
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/** Normalize a term for self-comparison: drop a trailing value ("Frightened 2") or parenthetical. */
+function normTerm(s: string): string {
+  return s.toLowerCase().replace(/\s*\([^)]*\)\s*$/, '').replace(/\s+\d+$/, '').trim();
 }
 
 // SRD descriptions are cleaned at import, but homebrew/authored text bypasses the importer and can
@@ -170,6 +177,8 @@ interface Ctx {
   byLabel: Map<string, DescRef>;
   re: RegExp | null;
   onOpen: (ref: DescRef) => void;
+  /** The term currently being viewed (the popup's own title) — it's never linked to itself. */
+  selfLabel?: string;
 }
 
 /** Turn referenced terms in a plain-text run into clickable links (word-boundary, longest-first). */
@@ -187,7 +196,8 @@ function linkify(text: string, ctx: Ctx, keyBase: string): ReactNode[] {
     const after = end >= text.length ? '' : text[end];
     const boundaryOk = !/[A-Za-z0-9]/.test(before) && !/[A-Za-z0-9]/.test(after);
     const ref = ctx.byLabel.get(m[0].toLowerCase());
-    if (!boundaryOk || !ref) continue;
+    // Skip linking a term to the very thing being viewed (e.g. "frightened" inside the Frightened popup).
+    if (!boundaryOk || !ref || (ctx.selfLabel && normTerm(m[0]) === normTerm(ctx.selfLabel))) continue;
     if (start > last) out.push(text.slice(last, start));
     out.push(
       <button key={`${keyBase}-l${key++}`} type="button" className="desc-link" onClick={() => ctx.onOpen(ref!)}>
@@ -318,17 +328,27 @@ export function RichText({
   text,
   refs,
   onOpen,
+  selfLabel,
 }: {
   text: string;
   refs?: DescRef[];
   onOpen: (ref: DescRef) => void;
+  /** The title of the thing this description belongs to — that term won't be linked to itself. */
+  selfLabel?: string;
 }) {
+  const content = useContent();
+  // Entry refs (the SRD's own @UUID links) win on a label tie; then merge the app-wide auto-link
+  // terms (conditions + actions) so known terms are clickable in EVERY description — including
+  // popups-inside-popups, since DescriptionModal re-renders each node through this same RichText.
+  const { byLabel, re } = useMemo(() => {
+    const merged = [...(refs ?? []), ...(content ? autoRefs(content) : [])];
+    const bl = new Map<string, DescRef>();
+    for (const r of merged) if (!bl.has(r.label.toLowerCase())) bl.set(r.label.toLowerCase(), r);
+    const labels = [...new Set(merged.map((r) => r.label))].sort((a, b) => b.length - a.length).map(escapeRegExp);
+    return { byLabel: bl, re: labels.length ? new RegExp('(' + labels.join('|') + ')', 'gi') : null };
+  }, [refs, content]);
   if (!text) return null;
-  const byLabel = new Map<string, DescRef>();
-  for (const r of refs ?? []) if (!byLabel.has(r.label.toLowerCase())) byLabel.set(r.label.toLowerCase(), r);
-  const labels = [...new Set((refs ?? []).map((r) => r.label))].sort((a, b) => b.length - a.length).map(escapeRegExp);
-  const re = labels.length ? new RegExp('(' + labels.join('|') + ')', 'gi') : null;
-  const ctx: Ctx = { byLabel, re, onOpen };
+  const ctx: Ctx = { byLabel, re, onOpen, selfLabel };
   const blocks = parseBlocks(text);
   return <>{blocks.map((b, i) => renderBlock(b, ctx, i))}</>;
 }

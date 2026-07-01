@@ -20,6 +20,7 @@ import type {
 } from '../rules/types';
 import { PopupSelect, SearchSelect } from '../builder/shared';
 import { RichEditor } from './RichEditor';
+import { useIsMobile } from './useIsMobile';
 import { useEscapeClose } from './useEscapeClose';
 
 /* ---- option catalogs ---- */
@@ -226,6 +227,7 @@ export function ItemEditorModal({
   // replaced wholesale (copy-from-item, reset) so they reflect the new value.
   const [editorKey, setEditorKey] = useState(0);
   const upd = (patch: Partial<Draft>) => setD((prev) => ({ ...prev, ...patch }));
+  const isMobile = useIsMobile();
   const isOpen = (id: string) => open.has(id);
   const toggle = (id: string) =>
     setOpen((prev) => {
@@ -447,17 +449,25 @@ export function ItemEditorModal({
             </label>
             <div className="ci-field">
               <span>Rarity</span>
-              <div className="ie-pills">
-                {(['common', 'uncommon', 'rare', 'unique'] as Rarity[]).map((r) => (
-                  <button type="button" key={r} className={d.rarity === r ? 'on' : ''} onClick={() => upd({ rarity: r })}>{cap(r)}</button>
-                ))}
-              </div>
+              {isMobile ? (
+                <select value={d.rarity} onChange={(e) => upd({ rarity: e.target.value as Rarity })}>
+                  {(['common', 'uncommon', 'rare', 'unique'] as Rarity[]).map((r) => (
+                    <option key={r} value={r}>{cap(r)}</option>
+                  ))}
+                </select>
+              ) : (
+                <div className="ie-pills">
+                  {(['common', 'uncommon', 'rare', 'unique'] as Rarity[]).map((r) => (
+                    <button type="button" key={r} className={d.rarity === r ? 'on' : ''} onClick={() => upd({ rarity: r })}>{cap(r)}</button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
           <label className="ci-field">
             <span>Name <span className="ie-req">✦</span></span>
-            <input autoFocus value={d.name} onChange={(e) => upd({ name: e.target.value })} placeholder="e.g. Stormcaller blade" />
+            <input autoFocus={!isMobile} value={d.name} onChange={(e) => upd({ name: e.target.value })} placeholder="e.g. Stormcaller blade" />
           </label>
 
           <div className="ci-field">
@@ -628,13 +638,13 @@ export function ItemEditorModal({
                 <div className="ci-field">
                   <span>Description <span className="ie-req">✦</span></span>
                   <div className="ie-rich">
-                    <RichEditor key={`desc-${editorKey}`} initialHtml={d.description} onChange={(html) => upd({ description: html })} enableRefLink placeholder="What the item does…" />
+                    <RichEditor key={`desc-${editorKey}`} initialHtml={d.description} onChange={(html) => upd({ description: html })} enableRefLink hideToolbarUntilFocus placeholder="What the item does…" />
                   </div>
                 </div>
                 <div className="ci-field">
                   <span>Craft requirements</span>
                   <div className="ie-rich ie-rich-sm">
-                    <RichEditor key={`craft-${editorKey}`} initialHtml={d.craft} onChange={(html) => upd({ craft: html })} enableRefLink placeholder="e.g. Supply one casting of fireball" />
+                    <RichEditor key={`craft-${editorKey}`} initialHtml={d.craft} onChange={(html) => upd({ craft: html })} enableRefLink hideToolbarUntilFocus placeholder="e.g. Supply one casting of fireball" />
                   </div>
                 </div>
               </div>

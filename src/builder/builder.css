@@ -317,6 +317,16 @@
   letter-spacing: 0.05em;
   margin-bottom: 9px;
 }
+/* Mobile collapse chevron for the live "Character" stat preview. */
+.brail-toggle {
+  background: none;
+  border: none;
+  color: var(--app-text-dim);
+  cursor: pointer;
+  padding: 0 4px 0 0;
+  font-size: 14px;
+  vertical-align: -1px;
+}
 .brow {
   display: flex;
   justify-content: space-between;
@@ -1653,4 +1663,44 @@
   font-family: inherit;
   line-height: 1.4;
   resize: vertical;
+}
+
+/* ============================================================
+   Phone layout (≤720px): the builder shell was desktop-only. Collapse the fixed 244px rail grid
+   to a single fluid column so content fits a 375px screen. Desktop is untouched (no rule above
+   this point uses a media query). Matches useIsMobile() / the sheet.css mobile breakpoint.
+   ============================================================ */
+@media (max-width: 720px) {
+  /* The load-bearing fix: kill the 244px rail track that crushed the content column. */
+  .builder-body { grid-template-columns: 1fr; gap: 12px; padding: 12px; }
+
+  /* The FullStats rail stops being a pinned first-column sidebar; it sits below the content
+     (collapsed by default via the chevron) instead of reserving a fixed track. */
+  .brail { order: 0; position: static; top: auto; }
+
+  /* Header wraps instead of overflowing; the name field goes full-width, the level stepper unpins. */
+  /* Clear the phone status bar (÷zoom so it still clears when zoomed out — the page is html{zoom}-scaled). */
+  .builder-head { flex-wrap: wrap; gap: 8px; padding: calc(10px + env(safe-area-inset-top, 0px) / var(--zoom, 1)) 12px 10px; }
+  .name-input { min-width: 0; flex: 1 1 100%; margin-left: 0; }
+  .lvl-ctl { margin-left: 0; }
+
+  .card-sec { padding: 10px; }
+
+  /* Nothing inside can force horizontal overflow. */
+  .bmain, .lvl-cards, .lvl-card, .lvl-slot { min-width: 0; }
+  .lvl-card { flex-wrap: wrap; }
+
+  /* Top section: the 21-chip level strip scrolls sideways instead of wrapping into a block; the header
+     reads as title / full-width name / (level + Cancel + Save) rows rather than an overflowing jumble. */
+  .lstrip { overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; }
+  .lstrip::-webkit-scrollbar { display: none; }
+  .lstrip .lchip { flex: 0 0 auto; }
+  .builder-head .builder-title { flex: 1 1 100%; }
+  .builder-head .lvl-ctl { margin-right: auto; }
+  .builder-head .b-cancel, .builder-head .b-create { flex: 1 1 auto; min-height: 40px; }
+
+  /* Popup-select — THE builder choice control (subclass, boosts, skills, feats, deity) — to a 40px
+     touch target; the compact pill variant (ability-boost rows) to ~38px. */
+  .popsel { min-height: 40px; font-size: 14px; padding: 9px 12px; }
+  .popsel.pill { min-height: 38px; padding: 8px 14px; }
 }

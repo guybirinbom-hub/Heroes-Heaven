@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { DescRef } from '../rules/types';
 import { useContent } from './ContentContext';
 import { usePinDesc } from './PinContext';
@@ -34,6 +34,17 @@ export function DescriptionModal({
   const cur = stack[stack.length - 1];
   const pinned = pin?.has(cur) ?? false;
 
+  // Re-fit the popup to each node's text. The modal element persists across the stack, so without this
+  // it keeps the previous node's height (and any size the desktop resize-grip left) instead of shrinking.
+  const modalRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = modalRef.current;
+    if (el) {
+      el.style.width = '';
+      el.style.height = '';
+    }
+  }, [cur]);
+
   const open = (ref: DescRef) => {
     if (!content) return;
     const node = lookupRef(content, ref);
@@ -47,7 +58,7 @@ export function DescriptionModal({
 
   return (
     <div className="picker-overlay" onClick={exit}>
-      <div className="picker info-modal" onClick={(e) => e.stopPropagation()}>
+      <div ref={modalRef} className="picker info-modal" onClick={(e) => e.stopPropagation()}>
         <div className="picker-head">
           {showBack && (
             <button
@@ -81,7 +92,7 @@ export function DescriptionModal({
           </button>
         </div>
         <div className="info-body">
-          <RichText text={cur.description} refs={cur.descRefs} onOpen={open} />
+          <RichText text={cur.description} refs={cur.descRefs} onOpen={open} selfLabel={cur.title} />
         </div>
       </div>
     </div>

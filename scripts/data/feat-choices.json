@@ -1,0 +1,118 @@
+{
+  "basic-lesson": {
+    "flag": "basic_lesson",
+    "prompt": "Basic Lesson",
+    "kind": "array",
+    "options": [
+      {
+        "value": "aon-lesson-of-calamity",
+        "label": "Lesson of Calamity",
+        "description": "You gain the Stumbling Curse hex, and your familiar learns Ill Omen."
+      },
+      {
+        "value": "aon-lesson-of-dreams",
+        "label": "Lesson of Dreams",
+        "description": "Dreams can be a window to greater insights. You gain the Veil of Dreams hex, and your familiar learns Sleep."
+      },
+      {
+        "value": "aon-lesson-of-life",
+        "label": "Lesson of Life",
+        "description": "Life can be shared. You gain the Life Boost hex, and your familiar learns Spirit Link."
+      },
+      {
+        "value": "aon-lesson-of-protection",
+        "label": "Lesson of Protection",
+        "description": "An ounce of protection is worth a pound of cure. You gain the Blood Ward hex, and your familiar learns Mystic Armor."
+      },
+      {
+        "value": "aon-lesson-of-the-elements",
+        "label": "Lesson of the Elements",
+        "description": "Natural disasters and inclement weather hold more power than the mightiest creature. You gain the Elemental Betrayal hex. Your familiar learns your choice of breathe fire , gust of wind , hydraulic push , or pummeling rubble ."
+      },
+      {
+        "value": "aon-lesson-of-vengeance",
+        "label": "Lesson of Vengeance",
+        "description": "Suffer not even the smallest slights. You gain the Needle of Vengeance hex, and your familiar learns Phantom Pain."
+      }
+    ]
+  },
+  "greater-lesson": {
+    "flag": "greater_lesson",
+    "prompt": "Greater Lesson",
+    "kind": "array",
+    "options": [
+      {
+        "value": "aon-lesson-of-decay",
+        "label": "Lesson of Decay",
+        "description": "All living things eventually decay, feeding fungus and insect. You gain the Mycological Malady hex, and your familiar learns Insect Form."
+      },
+      {
+        "value": "aon-lesson-of-favors",
+        "label": "Lesson of Favors",
+        "description": "You gain the Return the Favor hex, and your familiar learns Mind of Menace."
+      },
+      {
+        "value": "aon-lesson-of-memory",
+        "label": "Lesson of Memory",
+        "description": "Cobyslarni has untold years of memories, which he’s learned how to shape, recalling information—or obliterating it. You gain the Unravel Knowledge hex, and your familiar learns Hypercognition."
+      },
+      {
+        "value": "aon-lesson-of-mischief",
+        "label": "Lesson of Mischief",
+        "description": "Nothing's wrong with some mischief, now and then. You gain the Deceiver's Cloak hex, and your familiar learns Mad Monkeys."
+      },
+      {
+        "value": "aon-lesson-of-shadow",
+        "label": "Lesson of Shadow",
+        "description": "A shadow is far from empty—it contains something of the person who casts it. You gain the Malicious Shadow hex, and your familiar learns Chilling Darkness."
+      },
+      {
+        "value": "aon-lesson-of-snow",
+        "label": "Lesson of Snow",
+        "description": "Emulate snow, for it can snuff out life despite its gentleness. You gain the Personal Blizzard hex, and your familiar learns Wall of Wind."
+      },
+      {
+        "value": "aon-lesson-of-the-flock",
+        "label": "Lesson of the Flock",
+        "description": "Power flows when many work as one. You gain the Sheltering Wings hex, and your familiar learns Levitate."
+      },
+      {
+        "value": "aon-lesson-of-the-shark",
+        "label": "Lesson of the Shark",
+        "description": "Learn the ways of this deadly oceanic predator. You gain the Blood in the Water hex, and your familiar learns Feet to Fins."
+      },
+      {
+        "value": "aon-lesson-of-vows",
+        "label": "Lesson of Vows",
+        "description": "Words have power, and those who use them to deceive should be prepared to face the consequences. You gain the Censure Falsehoods hex, and your familiar learns Ring of Truth."
+      }
+    ]
+  },
+  "major-lesson": {
+    "flag": "major_lesson",
+    "prompt": "Major Lesson",
+    "kind": "array",
+    "options": [
+      {
+        "value": "aon-lesson-of-bargains",
+        "label": "Lesson of Bargains",
+        "description": "You gain the Over the Coals hex, and your familiar learns Subconscious Suggestion."
+      },
+      {
+        "value": "aon-lesson-of-death",
+        "label": "Lesson of Death",
+        "description": "Death is final, yet not as inescapable as it may seem. You gain the Curse of Death hex, and your familiar learns Raise Dead."
+      },
+      {
+        "value": "aon-lesson-of-renewal",
+        "label": "Lesson of Renewal",
+        "description": "Entropy comes for all, but it can be wound back through effort. You gain the Restorative Moment hex, and your familiar learns Field of Life."
+      },
+      {
+        "value": "aon-lesson-of-the-frozen-queen",
+        "label": "Lesson of the Frozen Queen",
+        "description": "You gain the Glacial Heart hex, and your familiar learns Wall of Ice."
+      }
+    ]
+  }
+}

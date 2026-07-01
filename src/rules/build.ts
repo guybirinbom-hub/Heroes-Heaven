@@ -76,6 +76,12 @@ export interface BuildState {
   /** Enabled source books — content from other books is hidden from the builder pickers. Absent =
    *  the four Core books only (the default for a new character). */
   enabledSources?: string[];
+  /** Campaign content toggles (off by default). Mythic → enables the mythic subsystem + shows
+   *  `mythic`-trait content; Kingmaker → shows its actions/conditions. */
+  mythicEnabled?: boolean;
+  kingmakerEnabled?: boolean;
+  /** The chosen Mythic Calling (a [calling]-trait classFeature id), when Mythic is enabled. */
+  mythicCalling?: string | null;
   /** Dual Class variant: the second class + its subclass. */
   classId2?: string | null;
   subclassId2?: string | null;
@@ -760,6 +766,45 @@ export function applySources(content: ContentDatabase, enabled: Set<string>, kee
     if (dropped) {
       (next as unknown as Record<string, unknown>)[m] = filtered;
       changed = true;
+    }
+  }
+  return changed ? next : content;
+}
+
+/** Campaign content toggles, applied wherever the player browses/selects content. Mythic OFF hides
+ *  every `mythic`-trait entry; Kingmaker OFF hides Kingmaker-sourced actions/conditions/feats/etc.
+ *  Already-chosen ids (`keepIds`) are always kept so a toggle never breaks an existing character.
+ *  Returns the same ref when nothing is dropped (memo-safe). */
+export function applyContentToggles(
+  content: ContentDatabase,
+  opts: { mythicEnabled?: boolean; kingmakerEnabled?: boolean },
+  keepIds: Set<string>,
+): ContentDatabase {
+  const dropMythic = !opts.mythicEnabled;
+  const dropKM = !opts.kingmakerEnabled;
+  if (!dropMythic && !dropKM) return content;
+  const maps = new Set<string>();
+  if (dropMythic) ['feats', 'spells', 'items', 'actions'].forEach((m) => maps.add(m));
+  if (dropKM) ['actions', 'conditions', 'feats', 'backgrounds', 'items'].forEach((m) => maps.add(m));
+  let next: ContentDatabase = content;
+  let changed = false;
+  for (const m of maps) {
+    const map = content[m as keyof ContentDatabase] as Record<string, { traits?: string[]; source?: { book?: string } }> | undefined;
+    if (!map) continue;
+    let dropped = false;
+    const filtered: Record<string, unknown> = {};
+    for (const [id, e] of Object.entries(map)) {
+      const hideMythic = dropMythic && (e.traits ?? []).includes('mythic');
+      const hideKM = dropKM && /kingmaker/i.test(e.source?.book ?? '');
+      if (keepIds.has(id) || (!hideMythic && !hideKM)) filtered[id] = e;
+      else dropped = true;
+    }
+    if (dropped) {
+      if (!changed) {
+        next = { ...content };
+        changed = true;
+      }
+      (next as unknown as Record<string, unknown>)[m] = filtered;
     }
   }
   return changed ? next : content;
@@ -1683,6 +1728,21 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       ...(f.rarity ? { rarity: f.rarity } : {}),
     });
   }
+  // Mythic Calling: grant the chosen calling's feature (a [calling]-trait classFeature) for display.
+  if (build.mythicEnabled && build.mythicCalling) {
+    const f = content.classFeatures[build.mythicCalling];
+    if (f)
+      grantedFeatures.push({
+        featureId: build.mythicCalling,
+        name: f.name,
+        level: 1,
+        description: f.description,
+        ...(f.descRefs ? { descRefs: f.descRefs } : {}),
+        traits: f.traits ?? [],
+        ...(f.actionCost ? { actionCost: f.actionCost } : {}),
+        ...(f.rarity ? { rarity: f.rarity } : {}),
+      });
+  }
 
   // Max-HP feats (Toughness = +level, Thick Hide Mask = +20, …) raise maximum HP, and a freshly built
   // character starts at full HP — so fold them into the starting `current` to match deriveMaxHp().
@@ -1709,6 +1769,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(build.options ? { options: build.options } : {}),
     ...(build.overrides ? { overrides: build.overrides } : {}),
     ...(build.enabledSources ? { enabledSources: build.enabledSources } : {}),
+    ...(build.mythicEnabled ? { mythicEnabled: true } : {}),
+    ...(build.kingmakerEnabled ? { kingmakerEnabled: true } : {}),
+    ...(build.mythicEnabled && build.mythicCalling ? { mythicCalling: build.mythicCalling } : {}),
     ...(grantedFeatures.length ? { grantedFeatures } : {}),
     ...(naturalAttacks.length ? { naturalAttacks } : {}),
     ...(build.variantRules?.dualClass && build.classId2 ? { classId2: build.classId2, subclassId2: build.subclassId2 ?? null } : {}),
@@ -1803,6 +1866,9 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   if (c.options) b.options = { ...c.options };
   if (c.overrides) b.overrides = JSON.parse(JSON.stringify(c.overrides)) as BuildOverrides;
   if (c.enabledSources) b.enabledSources = [...c.enabledSources];
+  if (c.mythicEnabled) b.mythicEnabled = true;
+  if (c.mythicCalling) b.mythicCalling = c.mythicCalling;
+  if (c.kingmakerEnabled) b.kingmakerEnabled = true;
   if (c.naturalAttacks?.length) {
     // Keep only user/WG-imported attacks in the build — feat/feature-granted ones are re-derived on
     // every build, so subtract them here to stay idempotent (no double-count on round-trip).
@@ -2045,7 +2111,7 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   }
   let synthIdx = 90;
   for (const [lvl, fs] of featsByLevel) {
-    const slotCats = c.classId ? levelGrants(lvl, c.classId, content, c.subclassId, c.variantRules, c.classId2, c.subclassId2).featSlots : [];
+    const slotCats = c.classId ? levelGrants(lvl, c.classId, content, c.subclassId, c.variantRules, c.classId2, c.subclassId2, c.mythicEnabled).featSlots : [];
     const usedSlot = new Set<number>();
     for (const f of fs) {
       let i = slotCats.findIndex((cat, idx) => cat === f.category && !usedSlot.has(idx));
@@ -2156,6 +2222,7 @@ export function levelGrants(
   variant?: VariantRules,
   classId2?: string | null,
   subclassId2?: string | null,
+  mythicEnabled?: boolean,
 ): LevelGrants {
   const cls = classId ? content.classes[classId] : undefined;
   // Dual Class: the second class contributes its own features and class feats at every level.
@@ -2187,6 +2254,9 @@ export function levelGrants(
     if ((cls.id === 'fighter' || cls2?.id === 'fighter') && (level === 9 || level === 15)) featSlots.push('bonus');
     // Free Archetype: a bonus archetype-only class feat at every even level (2–20).
     if (variant?.freeArchetype && level >= 2 && level % 2 === 0) featSlots.push('archetype');
+    // Mythic (War of Immortals): a mythic-feat slot at every even level (2–20), fillable only with
+    // mythic-trait feats. Gated by the campaign Mythic toggle.
+    if (mythicEnabled && level >= 2 && level % 2 === 0) featSlots.push('mythic');
   }
   return {
     features,

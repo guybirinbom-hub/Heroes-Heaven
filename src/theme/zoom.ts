@@ -11,9 +11,20 @@ export const ZOOM_STEP = 0.1;
 let zoom = 1;
 const listeners = new Set<(z: number) => void>();
 
-const clamp = (z: number) => Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, Math.round(z * 10) / 10));
+// On phones, cap zoom at 1.0 — zooming IN past 100% makes content exceed the viewport (the bottom nav
+// scrolls off-screen); zoom-OUT (down to ZOOM_MIN) is the useful direction on a small screen.
+const clamp = (z: number) => {
+  const mobile = typeof window !== 'undefined' && !!window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
+  const max = mobile ? 1 : ZOOM_MAX;
+  // Finer 0.05 snapping on phones so zoom-out is gradual (small eases) rather than big 10% jumps.
+  const snap = mobile ? 20 : 10;
+  return Math.min(max, Math.max(ZOOM_MIN, Math.round(z * snap) / snap));
+};
 
 function apply(): void {
+  // Expose the factor as --zoom and set the `zoom` property. The mobile shell + full-screen modals use
+  // position:fixed (not 100dvh), so they fill the viewport at any zoom; mobile zoom is clamped to ≤1 (see clamp).
+  document.documentElement.style.setProperty('--zoom', String(zoom));
   document.documentElement.style.setProperty('zoom', String(zoom));
 }
 function save(): void {

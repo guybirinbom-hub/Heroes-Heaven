@@ -1,26 +1,36 @@
 # Heroes Heaven
 
-A fast, fully-offline **Pathfinder Second Edition (Remaster)** character builder and digital character sheet for Windows. Build a character from level 1 to 20, then play from a complete interactive sheet — everything runs locally on your machine, with no account and no internet connection required.
+A fast, fully-offline **Pathfinder Second Edition (Remaster)** character builder and digital character sheet for **Windows and Android**. Build a character from level 1 to 20, then play from a complete interactive sheet — everything runs locally on your device, with no account and no internet connection required.
 
 <p align="center">
   <a href="https://github.com/guybirinbom-hub/character-builder-/releases/latest/download/Heroes-Heaven-Setup.exe">
     <img alt="Download Heroes Heaven for Windows" src="https://img.shields.io/badge/Download-Windows%20Installer-5B4FC7?style=for-the-badge&logo=windows&logoColor=white&labelColor=2C2A4A" height="46">
   </a>
+  &nbsp;&nbsp;
+  <a href="https://github.com/guybirinbom-hub/character-builder-/releases/latest/download/Heroes-Heaven-Android.apk">
+    <img alt="Download Heroes Heaven for Android" src="https://img.shields.io/badge/Download-Android%20APK-3DDC84?style=for-the-badge&logo=android&logoColor=white&labelColor=2C2A4A" height="46">
+  </a>
 </p>
 
 <p align="center">
-  <sub>One-click download of the latest installer · <a href="https://github.com/guybirinbom-hub/character-builder-/releases">browse all releases</a></sub>
+  <sub>Latest Windows installer &amp; Android APK · <a href="https://github.com/guybirinbom-hub/character-builder-/releases">browse all releases</a></sub>
 </p>
 
 ---
 
 ## Installing
 
-1. Click the button above to download `Heroes-Heaven-Setup.exe`.
+### Windows
+1. Click the **Windows Installer** button above to download `Heroes-Heaven-Setup.exe`.
 2. Run it. The app isn't code-signed yet, so Windows SmartScreen may show a blue warning — click **More info → Run anyway**.
 3. It installs for the current user (no admin prompt) and adds a Start-menu shortcut.
 
-Your characters and settings are stored locally on your device. There is no cloud sync and no telemetry — nothing leaves your machine.
+### Android
+1. On your phone, tap the **Android APK** button above to download `Heroes-Heaven-Android.apk`.
+2. Open the downloaded file. Android will ask you to allow installs from your browser or files app the first time — enable it, then tap **Install**.
+3. This is a debug build (a larger download, and not from the Play Store), but everything still runs locally with no account or internet needed.
+
+Your characters and settings are stored locally on your device. There is no cloud sync and no telemetry — nothing leaves your device.
 
 ## What it does
 
@@ -53,7 +63,7 @@ npm run tauri build  # build the Windows installer → src-tauri/target/release/
 npm test             # run the test suite
 ```
 
-> **Releasing:** every GitHub release should include a stable-named `Heroes-Heaven-Setup.exe` asset (a copy of the generated `*_x64-setup.exe`) so the download button above always points at the newest installer.
+> **Releasing:** every GitHub release should include stable-named assets — `Heroes-Heaven-Setup.exe` (a copy of the generated `*_x64-setup.exe`) and `Heroes-Heaven-Android.apk` (a copy of `app-arm64-debug.apk`) — so the download buttons above always point at the newest builds.
 
 ## Content & license
 
