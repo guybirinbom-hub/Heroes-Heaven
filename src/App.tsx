@@ -1,9 +1,12 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CharacterSheet } from './sheet/CharacterSheet';
 import { RosterScreen } from './sheet/RosterScreen';
 import { HomebrewPage } from './sheet/HomebrewPage';
 import { Builder } from './builder/Builder';
 import { ErrorBoundary } from './sheet/ErrorBoundary';
+import { UpdateNotice } from './sheet/UpdateNotice';
+import { WindowControls } from './sheet/WindowControls';
+import { HeroesHeavenLogo } from './sheet/Logo';
 import { kyra } from './rules/seed';
 import { loadContent, rebuildContent } from './data';
 import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, type SavedChar } from './data/storage';
@@ -35,7 +38,12 @@ export default function App() {
     const saved = loadActiveId();
     return r.some((c) => c.id === saved) ? (saved as string) : r[0].id;
   });
-  const [mode, setMode] = useState<'sheet' | 'builder' | 'roster' | 'homebrew'>('sheet');
+  // Boot on the roster: it's driven entirely by localStorage so it paints immediately, while the
+  // heavy content database (public/core.json) loads in the background. Once content arrives we
+  // continue to the last-active sheet — the app's usual landing screen — unless the user already
+  // started interacting with the roster (then yanking them away would be jarring).
+  const [mode, setMode] = useState<'sheet' | 'builder' | 'roster' | 'homebrew'>('roster');
+  const autoOpenSheet = useRef(true);
   // The build being edited: a BuildState (edit existing) or null (creating new).
   const [editing, setEditing] = useState<{ id: string; build: BuildState } | null>(null);
   // True when the last persist attempt was rejected (e.g. localStorage quota) — surfaced as a banner
@@ -43,7 +51,22 @@ export default function App() {
   const [saveFailed, setSaveFailed] = useState(false);
 
   useEffect(() => {
-    loadContent().then(setContent);
+    // Any interaction while loading cancels the boot-time jump to the sheet.
+    const cancel = () => {
+      autoOpenSheet.current = false;
+    };
+    window.addEventListener('pointerdown', cancel, true);
+    window.addEventListener('keydown', cancel, true);
+    loadContent().then((c) => {
+      setContent(c);
+      if (autoOpenSheet.current) setMode((m) => (m === 'roster' ? 'sheet' : m));
+      window.removeEventListener('pointerdown', cancel, true);
+      window.removeEventListener('keydown', cancel, true);
+    });
+    return () => {
+      window.removeEventListener('pointerdown', cancel, true);
+      window.removeEventListener('keydown', cancel, true);
+    };
   }, []);
   useEffect(() => setSaveFailed(!saveRoster(roster)), [roster]);
   useEffect(() => saveActiveId(activeId), [activeId]);
@@ -115,14 +138,16 @@ export default function App() {
     [content, active?.character.overrides],
   );
 
-  // The game data is fetched at runtime; hold the UI until it's ready.
-  if (!content || !active || !character) {
+  if (!active) {
     return <div className="app-loading">Loading…</div>;
   }
 
   // Update the active character's in-play runtime state (seeding from its built
   // starting values the first time it's touched), then persist via the roster.
-  const updatePlay = (fn: (play: PlayState) => PlayState) => {
+  // Each call is a distinct undo step unless the caller opts in with a coalesceTag:
+  // rapid calls sharing a tag (a scrubbed +/- stepper, a per-keystroke field) merge into one step.
+  const updatePlay = (fn: (play: PlayState) => PlayState, coalesceTag?: string) => {
+    if (!content) return; // sheet mutations can't happen before the content database is loaded
     const id = active.id;
     setRoster(
       (r) =>
@@ -131,8 +156,7 @@ export default function App() {
           // state on top, so a play saved before newer fields existed gets them filled in.
           c.id === id ? { ...c, play: fn({ ...initialPlay(c.character, content), ...(c.play ?? {}) }) } : c,
         ),
-      // Coalesce rapid same-character edits (typing an HP/currency/notes value) into ONE undo step.
-      { coalesce: true, tag: 'play:' + id },
+      coalesceTag ? { coalesce: true, tag: `play:${id}:${coalesceTag}` } : undefined,
     );
   };
 
@@ -219,6 +243,26 @@ export default function App() {
         onSaveMode={saveModeDef}
         onDeleteMode={removeModeDef}
       />
+    );
+  } else if (!content || !character) {
+    // A content-dependent screen (sheet/builder/homebrew) was opened before core.json finished
+    // loading — hold just that screen behind a lightweight shell; the roster stays a tap away.
+    screen = (
+      <div className="roster-screen">
+        <header className="chrome" data-tauri-drag-region>
+          <div className="chrome-brand" data-tauri-drag-region>
+            <HeroesHeavenLogo className="chrome-logo" /> Heroes Heaven
+          </div>
+          <WindowControls />
+        </header>
+        <div className="app-loading content-loading">
+          <span className="app-loading-spin" aria-hidden="true" />
+          <span>Loading game content…</span>
+          <button className="btn" onClick={() => setMode('roster')}>
+            View characters
+          </button>
+        </div>
+      </div>
     );
   } else if (mode === 'builder') {
     screen = (
@@ -307,6 +351,7 @@ export default function App() {
       <PopupSizeController />
       <PopupSizeLock />
       <OverlayDismissGuard />
+      <UpdateNotice />
       {saveFailed && (
         <div className="save-warning" role="alert">
           <i className="ti ti-alert-triangle" aria-hidden="true" />

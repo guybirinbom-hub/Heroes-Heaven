@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Character, ContentDatabase, Item, ModeDef, SenseEntry } from '../rules/types';
 import { SAVES } from '../rules/types';
+import { dyingDeathThreshold } from '../rules/conditions';
 import {
   abilityMod,
   deriveAc,
@@ -31,7 +32,7 @@ import {
   updateInventoryItem,
   MAX_HERO_POINTS,
   MAX_MYTHIC_POINTS,
-  type PlayState,
+  type PlayUpdater,
 } from '../rules/play';
 import { usePrefs } from '../data/prefs';
 import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
@@ -86,7 +87,7 @@ export function VitalsRail({
   content: ContentDatabase;
   /** Roster id of this character — scopes character-specific modes. */
   charKey?: string;
-  onPlay?: (fn: (play: PlayState) => PlayState) => void;
+  onPlay?: PlayUpdater;
   /** Open the breakdown panel for a stat (clicking any number). */
   onOpenStat?: (ref: StatRef) => void;
   onSaveMode?: (mode: ModeDef) => void;
@@ -95,6 +96,9 @@ export function VitalsRail({
   onCreateItem?: (item: Item) => void;
 }) {
   const [hpAmt, setHpAmt] = useState('');
+  // Shield-HP draft (null = show the live value): a controlled number input that wrote on every keystroke
+  // snapped the shield to full HP the moment you cleared it to retype — buffer + commit on blur/Enter.
+  const [shDraft, setShDraft] = useState<string | null>(null);
   const { hpCommandEntry } = usePrefs();
   const [condOpen, setCondOpen] = useState(false);
   const [shieldDetailOpen, setShieldDetailOpen] = useState(false);
@@ -361,24 +365,33 @@ export function VitalsRail({
                 <span className="res-step sh-step" title="Shield HP — − for damage taken, + to repair">
                   <button
                     aria-label="Shield takes 1 damage"
-                    onClick={() => onPlay((p) => setShieldDamage(p, (character.shieldDamage ?? 0) + 1, shield.hp))}
+                    onClick={() => onPlay((p) => setShieldDamage(p, (character.shieldDamage ?? 0) + 1, shield.hp), 'shield-hp')}
                   >
                     <i className="ti ti-minus" aria-hidden="true" />
                   </button>
                   <input
                     className="sh-hp-input"
                     type="number"
-                    value={shield.current}
+                    value={shDraft ?? String(shield.current)}
                     aria-label="Current shield HP"
-                    onChange={(e) => {
-                      const v = parseInt(e.target.value, 10);
-                      onPlay((p) => setShieldDamage(p, shield.hp - (Number.isFinite(v) ? v : shield.hp), shield.hp));
+                    onFocus={(e) => {
+                      setShDraft(String(shield.current));
+                      e.currentTarget.select();
+                    }}
+                    onChange={(e) => setShDraft(e.target.value.replace(/[^0-9]/g, ''))}
+                    onBlur={() => {
+                      const n = parseInt(shDraft ?? '', 10);
+                      if (Number.isFinite(n)) onPlay((p) => setShieldDamage(p, shield.hp - Math.max(0, Math.min(shield.hp, n)), shield.hp));
+                      setShDraft(null);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') e.currentTarget.blur();
                     }}
                   />
                   <span className="sh-hp-max">/ {shield.hp}</span>
                   <button
                     aria-label="Repair shield 1"
-                    onClick={() => onPlay((p) => setShieldDamage(p, (character.shieldDamage ?? 0) - 1, shield.hp))}
+                    onClick={() => onPlay((p) => setShieldDamage(p, (character.shieldDamage ?? 0) - 1, shield.hp), 'shield-hp')}
                   >
                     <i className="ti ti-plus" aria-hidden="true" />
                   </button>
@@ -610,13 +623,13 @@ export function VitalsRail({
                 </span>
                 {onPlay ? (
                   <span className="res-step">
-                    <button aria-label="Decrease" onClick={() => onPlay((p) => setResource(p, r.id, val - 1, max))}>
+                    <button aria-label="Decrease" onClick={() => onPlay((p) => setResource(p, r.id, val - 1, max), `res:${r.id}`)}>
                       <i className="ti ti-minus" aria-hidden="true" />
                     </button>
                     <span className="res-val">
                       {val} / {max}
                     </span>
-                    <button aria-label="Increase" onClick={() => onPlay((p) => setResource(p, r.id, val + 1, max))}>
+                    <button aria-label="Increase" onClick={() => onPlay((p) => setResource(p, r.id, val + 1, max), `res:${r.id}`)}>
                       <i className="ti ti-plus" aria-hidden="true" />
                     </button>
                   </span>
@@ -641,18 +654,22 @@ export function VitalsRail({
             const def = content.conditions[c.id];
             const name = def?.name ?? conditionLabel(c.id);
             const valued = def?.valued;
+            // Dying at/above its death threshold (4, reduced by Doomed) means the character is DEAD —
+            // make that unmistakable instead of showing the same neutral pill as Dying 1.
+            const doomedVal = character.conditions.find((x) => x.id === 'doomed')?.value ?? 0;
+            const dead = c.id === 'dying' && (c.value ?? 1) >= dyingDeathThreshold(doomedVal);
             return (
-              <span className="cond-pill" key={c.id}>
+              <span className={'cond-pill' + (dead ? ' cond-dead' : '')} key={c.id}>
                 <InfoTerm title={name} description={def?.description} descRefs={def?.descRefs} descKey="conditions">
-                  {name}
+                  {dead ? `Dead — ${name}` : name}
                 </InfoTerm>
                 {valued && onPlay ? (
                   <span className="cond-pill-step">
-                    <button aria-label="Decrease" onClick={() => onPlay((p) => setConditionValue(p, c.id, (c.value ?? 1) - 1))}>
+                    <button aria-label="Decrease" onClick={() => onPlay((p) => setConditionValue(p, c.id, (c.value ?? 1) - 1), `cond:${c.id}`)}>
                       −
                     </button>
                     {c.value ?? 1}
-                    <button aria-label="Increase" onClick={() => onPlay((p) => setConditionValue(p, c.id, (c.value ?? 1) + 1))}>
+                    <button aria-label="Increase" onClick={() => onPlay((p) => setConditionValue(p, c.id, (c.value ?? 1) + 1), `cond:${c.id}`)}>
                       +
                     </button>
                   </span>
@@ -726,7 +743,7 @@ export function VitalsRail({
           active={character.conditions}
           onAdd={(id, valued) => onPlay((p) => addCondition(p, id, valued ? 1 : undefined))}
           onRemove={(id) => onPlay((p) => removeCondition(p, id))}
-          onSetValue={(id, value) => onPlay((p) => setConditionValue(p, id, value))}
+          onSetValue={(id, value) => onPlay((p) => setConditionValue(p, id, value), `cond:${id}`)}
           onClose={() => setCondOpen(false)}
           modesEnabled
           library={Object.values(content.modes).filter((m) => !CATALOG_MODE_MAP[m.id] && (!m.charId || m.charId === charKey))}

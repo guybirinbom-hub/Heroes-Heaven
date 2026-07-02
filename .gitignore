@@ -21,3 +21,7 @@ src-tauri/gen
 
 # Foundry source clone for the data importer (not tracked)
 .import-src/
+
+# Android release signing — NEVER commit the keystore or its passwords.
+# BACK THESE UP somewhere safe: losing the keystore means release updates can no longer be installed.
+signing/

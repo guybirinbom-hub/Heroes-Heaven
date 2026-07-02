@@ -12,7 +12,7 @@ import {
   skillTakesArmorPenalty,
   type Strike,
 } from '../rules/derive';
-import { togglePin, togglePinnedDesc, toggleTactic, descId, type PlayState } from '../rules/play';
+import { togglePin, togglePinnedDesc, toggleTactic, descId, type PlayUpdater } from '../rules/play';
 import { critSpec } from '../rules/critSpec';
 import { ACTIVITIES, type ActivityDef } from '../rules/actions';
 import { traitDesc } from '../rules/glossary';
@@ -117,7 +117,7 @@ export function MainTab({
 }: {
   character: Character;
   content: ContentDatabase;
-  onPlay?: (fn: (play: PlayState) => PlayState) => void;
+  onPlay?: PlayUpdater;
   onRoll?: (label: string, modifier: number) => void;
   /** Open the breakdown panel for an ability score or skill. */
   onOpenStat?: (ref: StatRef) => void;

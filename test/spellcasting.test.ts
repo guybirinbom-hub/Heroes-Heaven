@@ -45,11 +45,12 @@ describe('two-rank caster (magus / summoner)', () => {
 });
 
 describe('psychic slots', () => {
-  it('is the full rank progression at 2 slots/rank, 10th at 19', () => {
+  it('is a limited caster: 2 slots/rank, capped at 9th (no 10th-rank slot)', () => {
     expect(psychicSlots(1)).toEqual({ 1: 1 });
     expect(psychicSlots(2)).toEqual({ 1: 2 });
     expect(psychicSlots(17)).toEqual({ 1: 2, 2: 2, 3: 2, 4: 2, 5: 2, 6: 2, 7: 2, 8: 2, 9: 1 });
-    expect(psychicSlots(19)[10]).toBe(1);
+    expect(psychicSlots(19)[10]).toBeUndefined();
+    expect(psychicSlots(20)[9]).toBe(2);
   });
 });
 

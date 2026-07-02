@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { themeList } from '../theme/themes';
 import { styleList } from '../theme/styles';
 import { fontList } from '../theme/fonts';
 import { getAppearance, setAccent, setFont, setStyle, setTheme } from '../theme/theme-manager';
 import { bumpZoom, getZoom, resetZoom, subscribeZoom, ZOOM_MAX, ZOOM_MIN, ZOOM_STEP } from '../theme/zoom';
 import { loadRoster, wipeAllData } from '../data/storage';
+import { backupCharCount, backupFilename, createBackup, parseBackup, restoreBackup } from '../data/backup';
+import { downloadText } from './download';
+import { chooseDialog, confirmDialog } from './confirm';
 import { isDesktopApp, isMobilePlatform } from '../platform';
 import { setPref, usePrefs } from '../data/prefs';
 import type { ModeDef } from '../rules/types';
@@ -18,11 +21,12 @@ const ACCENTS = [
   '#f59e0b', '#f97316', '#ef4444', '#f43f5e', '#ec4899', '#a855f7',
 ];
 
-type SectionId = 'appearance' | 'customization' | 'modes' | 'about' | 'uninstall';
+type SectionId = 'appearance' | 'customization' | 'modes' | 'backup' | 'about' | 'uninstall';
 const SECTIONS: { id: SectionId; label: string; icon: string }[] = [
   { id: 'appearance', label: 'Appearance', icon: 'ti-palette' },
   { id: 'customization', label: 'Customization', icon: 'ti-adjustments' },
   { id: 'modes', label: 'Modes', icon: 'ti-toggle-left' },
+  { id: 'backup', label: 'Backup', icon: 'ti-database-export' },
   { id: 'about', label: 'About', icon: 'ti-info-circle' },
   { id: 'uninstall', label: 'Uninstall', icon: 'ti-trash' },
 ];
@@ -246,6 +250,97 @@ function AppearanceSection() {
       </div>
       <p className="settings-desc">
         {isMobile ? 'Zoom out to fit more on screen.' : 'Also: hold Ctrl and scroll the wheel, or press Ctrl with + / − / 0.'}
+      </p>
+    </div>
+  );
+}
+
+/** Whole-device backup: export everything the app has stored into one file, or restore such a
+ *  file (replacing all characters, homebrew, and settings on this device, then reloading). */
+function BackupSection() {
+  const fileRef = useRef<HTMLInputElement>(null);
+  const charCount = loadRoster().length;
+
+  const showError = (message: string) =>
+    void chooseDialog({ title: 'Import failed', message, buttons: [{ value: 'ok', label: 'OK', primary: true }] });
+
+  const doExport = () => {
+    try {
+      downloadText(backupFilename(), createBackup());
+    } catch (e) {
+      showError(`Export failed: ${(e as Error).message}`);
+    }
+  };
+
+  const handleFile = (file: File | undefined) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const env = parseBackup(String(reader.result));
+        const n = backupCharCount(env);
+        const when = env.savedAt?.slice(0, 10) || 'an unknown date';
+        const ok = await confirmDialog({
+          title: 'Restore this backup?',
+          message: (
+            <>
+              This replaces <strong>ALL</strong> characters, homebrew, and settings on this device with the backup from{' '}
+              {when}
+              {n !== null ? ` (${n} character${n === 1 ? '' : 's'})` : ''}. This can’t be undone.
+            </>
+          ),
+          confirmLabel: 'Replace everything',
+          danger: true,
+        });
+        if (!ok) return;
+        restoreBackup(env);
+        window.location.reload();
+      } catch (e) {
+        showError((e as Error).message);
+      }
+    };
+    reader.onerror = () => showError('Could not read that file.');
+    reader.readAsText(file);
+  };
+
+  return (
+    <div className="settings-section">
+      <h3 className="settings-h">Backup</h3>
+      <p className="settings-desc">
+        Everything lives on this device only. Export it all into a single file to keep a backup or move to another
+        device, and import such a file to restore it.
+      </p>
+
+      <div className="menu-label">Export</div>
+      <div className="menu-row">
+        <button className="add-item-btn" onClick={doExport}>
+          <i className="ti ti-file-export" aria-hidden="true" /> Export everything
+        </button>
+      </div>
+      <p className="settings-desc">
+        Downloads one file with your {charCount} saved character{charCount === 1 ? '' : 's'}, all homebrew, custom
+        modes, and every setting.
+      </p>
+
+      <div className="menu-label">Import</div>
+      <div className="menu-row">
+        <button className="add-item-btn ghost" onClick={() => fileRef.current?.click()}>
+          <i className="ti ti-file-import" aria-hidden="true" /> Import backup…
+        </button>
+        <input
+          ref={fileRef}
+          type="file"
+          accept=".json,application/json"
+          style={{ display: 'none' }}
+          onChange={(e) => {
+            handleFile(e.currentTarget.files?.[0]);
+            e.currentTarget.value = '';
+          }}
+        />
+      </div>
+      <p className="settings-desc">
+        Restores a backup file, <strong>replacing</strong> all characters, homebrew, and settings currently on this
+        device. The app reloads afterwards.
       </p>
     </div>
   );
@@ -499,6 +594,7 @@ export function SettingsPage({
       {id === 'appearance' && <AppearanceSection />}
       {id === 'customization' && <CustomizationSection />}
       {id === 'modes' && <ModesSection modes={modes} characters={characters} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} />}
+      {id === 'backup' && <BackupSection />}
       {id === 'about' && <AboutSection />}
       {id === 'uninstall' && <UninstallSection />}
     </>

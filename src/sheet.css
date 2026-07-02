@@ -2891,6 +2891,30 @@ button.strike-name:hover {
   padding: 2px;
 }
 
+/* ---- "Update available" banner (same shape as the save-warning row) ---- */
+.update-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: var(--app-accent, #6366f1);
+  color: #fff;
+  font-size: 13px;
+}
+.update-banner > .ti {
+  font-size: 16px;
+  flex: none;
+}
+.update-banner span {
+  flex: 1;
+}
+.update-banner a {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
 /* ---- Details: traits & size ---- */
 .id-row {
   display: flex;
@@ -5707,6 +5731,15 @@ button.strike-name:hover {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+/* Dying at/above its death threshold = dead: a loud red pill (see VitalsRail). */
+.cond-pill.cond-dead {
+  background: var(--app-bad);
+  border-color: var(--app-bad);
+  color: #fff;
+}
+.cond-pill.cond-dead .info-term {
+  color: #fff;
+}
 .cond-stepper {
   display: inline-flex;
   align-items: center;
@@ -6019,6 +6052,35 @@ button.strike-name:hover {
   min-height: 100vh;
   color: var(--app-text-dim);
   font-size: 15px;
+  letter-spacing: 0.04em;
+}
+/* Variant shown inside the app shell (under the chrome header) while core.json loads. */
+.app-loading.content-loading {
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 14px;
+}
+.app-loading-spin {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--app-border);
+  border-top-color: var(--app-accent);
+  animation: app-loading-spin 0.8s linear infinite;
+}
+@keyframes app-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* Roster placeholders while the content database is still loading. */
+.roster-loading {
+  color: var(--app-text-dim);
+}
+.rcard-stats-loading {
+  color: var(--app-text-dim);
+  font-size: 12px;
   letter-spacing: 0.04em;
 }
 
@@ -7352,6 +7414,9 @@ button.strike-name:hover {
   .picker-overlay { align-items: safe center; padding: 0; }
   .picker:not(.hp-numpad):not(.settings-page-m) {
     max-width: 94vw; min-width: 0; max-height: 90dvh; resize: none;
+    /* Bottom-sheet pickers sit at the viewport edge (align-items:flex-end), so their scrollable option
+       list would run under the gesture/home bar — pad it clear. */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   .picker::before, .picker::after { display: none !important; }
 
@@ -7362,12 +7427,23 @@ button.strike-name:hover {
     position: fixed !important; inset: 0 !important;
     width: auto !important; max-width: none !important;
     height: auto !important; max-height: none !important; border-radius: 0 !important;
+    /* The header already clears the status bar; pad the bottom so the scrollable option list ends
+       above the gesture/home bar instead of the last options being hidden under it. */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   .picker.fsel .fsel-head, .picker.ref-search .picker-head, .picker.item-edit .ie-head, .picker.cond-modal .picker-head {
     padding-top: calc(11px + env(safe-area-inset-top, 0px));
   }
   /* Full-screen item editor: leave room so the focused field scrolls clear of the pinned toolbar. */
   .picker.item-edit .ci-body { scroll-padding-bottom: 64px; }
+
+  /* Dropdown menus: cap height + scroll (and keep them within the safe area) so a long menu can never
+     run its bottom options under the status bar or gesture/home bar. */
+  .topmenu, .appearance-menu, .rcard-export-menu {
+    max-height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 24px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
 
   /* Dice roller → true full-width drawer + tappable quick-roll buttons. */
   /* Dice roller: full-screen on phones (its header X closes it). */
@@ -7556,6 +7632,11 @@ button.strike-name:hover {
   .bulk-penalty { display: block; flex: 1 1 100%; width: 100%; margin-top: -2px; font-size: 12px; }
   .bulk-penalty.encumbered { color: var(--app-warn); }
   .bulk-penalty.over { color: var(--app-bad); }
+
+  /* Touch targets the earlier phone pass missed: Add-item catalog Buy/Give + valued-condition steppers. */
+  .ai-buy { gap: 8px; }
+  .ai-buy button { min-height: 38px; padding: 8px 14px; }
+  .cond-stepper button { width: 34px; height: 34px; }
 }
 
 /* ---- RangeSlider (dual-handle, quantized) ---- */

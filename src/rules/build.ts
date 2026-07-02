@@ -133,6 +133,10 @@ export interface BuildState {
   classSkills: ProficiencyKey[];
   /** Skilled-heritage trained skill, if applicable. */
   heritageSkill: SkillId | null;
+  /** The pick for a background offering a trained-skill CHOICE (Background.trainedSkillChoice). */
+  backgroundSkillChoice?: SkillId | null;
+  /** The general feat granted by a feat-granting heritage (Versatile Human). */
+  heritageFeatId?: string | null;
   /** Chosen bonus languages (Int-based + ancestry extra), beyond the granted ones. */
   languages: string[];
   /** Chosen feats, keyed by slot id `"level:category:idx"` -> feat id. */
@@ -215,6 +219,8 @@ export function emptyBuild(): BuildState {
     levelBoosts: [null, null, null, null],
     classSkills: [],
     heritageSkill: null,
+    backgroundSkillChoice: null,
+    heritageFeatId: null,
     languages: [],
     featPicks: {},
     featChoices: {},
@@ -260,6 +266,19 @@ export function resolveBackground(build: BuildState, content: ContentDatabase): 
     };
   }
   return build.backgroundId ? content.backgrounds[build.backgroundId] : undefined;
+}
+
+/** The background's granted trained skill: the fixed one, or — for a "trained in your choice of
+ *  X or Y" background — the player's pick, defaulting to the first offered option so the built
+ *  character is always legal even before the pick is made. */
+export function backgroundTrainedSkill(build: BuildState, background: Background | undefined): SkillId | undefined {
+  if (!background) return undefined;
+  if (background.trainedSkill) return background.trainedSkill;
+  const choice = background.trainedSkillChoice;
+  if (!choice?.length) return undefined;
+  return build.backgroundSkillChoice && choice.includes(build.backgroundSkillChoice)
+    ? build.backgroundSkillChoice
+    : choice[0];
 }
 
 export const SKILL_INCREASE_LEVELS = [3, 5, 7, 9, 11, 13, 15, 17, 19];
@@ -344,14 +363,80 @@ export function subclassKeyAbility(build: BuildState, content: ContentDatabase):
   const cls = build.classId ? content.classes[build.classId] : undefined;
   if (!cls) return undefined;
   const sub = cls.subclass?.options.find((o) => o.id === build.subclassId);
-  if (sub?.keyAbility) return sub.keyAbility;
+  if (sub) {
+    const k = resolveOptionKeyAbility(sub, build.keyAbility);
+    if (k) return k;
+  }
   for (const g of cls.extraChoices ?? []) {
     for (const id of build.extraChoices?.[g.id] ?? []) {
       const o = g.options.find((opt) => opt.id === id);
-      if (o?.keyAbility) return o.keyAbility;
+      const k = o ? resolveOptionKeyAbility(o, build.keyAbility) : undefined;
+      if (k) return k;
     }
   }
   return undefined;
+}
+
+/** A chosen option's key attribute: a keyAbilityOptions option (rogue racket) honors the player's
+ *  pick when it's one of the offered attributes, else defaults to the FIRST option (the racket's
+ *  own attribute); a plain keyAbility is fixed. */
+function resolveOptionKeyAbility(o: SubclassOption, picked: AbilityId | null): AbilityId | undefined {
+  if (o.keyAbilityOptions?.length) {
+    return picked && o.keyAbilityOptions.includes(picked) ? picked : o.keyAbilityOptions[0];
+  }
+  return o.keyAbility;
+}
+
+/**
+ * The REQUIRED level-0/Setup choices still unmade, as short human-readable labels. Drives the
+ * builder's level-0 pending marker ("N choices left") and the Create/Save confirmation list.
+ * Empty array = the setup is fully chosen. Never blocks — defaults keep the build legal.
+ */
+export function setupMissing(build: BuildState, content: ContentDatabase): string[] {
+  const out: string[] = [];
+  const ancestry = build.ancestryId ? content.ancestries[build.ancestryId] : undefined;
+  const background = resolveBackground(build, content);
+  const cls = build.classId ? content.classes[build.classId] : undefined;
+  if (!ancestry) out.push('Ancestry');
+  if (!build.heritageId) out.push('Heritage');
+  if (!background) out.push('Background');
+  if (!cls) out.push('Class');
+  if (ancestry) {
+    const slots = build.options?.alternateAncestryBoosts ? 2 : boostSlots(ancestry.abilityBoosts).length;
+    let n = 0;
+    for (let i = 0; i < slots; i++) if (!build.ancestryBoosts[i]) n++;
+    if (n) out.push(n === 1 ? 'Ancestry boost' : `Ancestry boosts (${n})`);
+  }
+  if (background && build.backgroundId !== CUSTOM_BACKGROUND_ID) {
+    const slots = boostSlots(background.abilityBoosts).length;
+    let n = 0;
+    for (let i = 0; i < slots; i++) if (!build.backgroundBoosts[i]) n++;
+    if (n) out.push(n === 1 ? 'Background boost' : `Background boosts (${n})`);
+    if (
+      background.trainedSkillChoice?.length &&
+      !(build.backgroundSkillChoice && background.trainedSkillChoice.includes(build.backgroundSkillChoice))
+    )
+      out.push('Background trained skill');
+  }
+  if (cls) {
+    // The key-attribute choice: a racket-style keyAbilityOptions subclass, or the class's own
+    // multi-key list when no chosen option fixes the attribute.
+    const sub = cls.subclass?.options.find((o) => o.id === build.subclassId);
+    const opts = sub?.keyAbilityOptions?.length
+      ? sub.keyAbilityOptions
+      : subclassKeyAbility(build, content)
+        ? []
+        : cls.keyAbility;
+    if (opts.length > 1 && !(build.keyAbility && opts.includes(build.keyAbility))) out.push('Key attribute');
+  }
+  const heritage = build.heritageId ? content.heritages[build.heritageId] : undefined;
+  if (heritage?.grantsGeneralFeat && !build.heritageFeatId) out.push('Heritage general feat');
+  {
+    const n = build.levelBoosts.filter((b) => !b).length;
+    if (n) out.push(n === 1 ? 'Free attribute boost' : `Free attribute boosts (${n})`);
+  }
+  if (build.options?.voluntaryFlaw && !build.options.voluntaryFlawAbility) out.push('Voluntary flaw attribute');
+  return out;
 }
 
 function collectBoosts(
@@ -379,7 +464,10 @@ function collectBoosts(
     } else {
       boosts.push(...fixedBoosts(ancestry.abilityBoosts));
       flaws.push(...ancestry.abilityFlaws);
-      pushDistinct(build.ancestryBoosts);
+      // The free ancestry boost must differ from the ancestry's fixed boosts AND its flaw (all granted
+      // by the same source at the same time) — filter those out so a pick can't double-boost one attribute.
+      const ancTaken = new Set<AbilityId>([...fixedBoosts(ancestry.abilityBoosts), ...ancestry.abilityFlaws]);
+      pushDistinct((build.ancestryBoosts ?? []).filter((a) => a == null || !ancTaken.has(a)));
     }
   }
   // Voluntary Flaw: an additional attribute flaw the player elected to take (toggle in Setup, attribute
@@ -389,7 +477,9 @@ function collectBoosts(
   const background = resolveBackground(build, content);
   if (background) {
     boosts.push(...fixedBoosts(background.abilityBoosts));
-    pushDistinct(build.backgroundBoosts);
+    // The free background boost must differ from the background's fixed boost (same-source rule).
+    const bgFixed = new Set<AbilityId>(fixedBoosts(background.abilityBoosts));
+    pushDistinct((build.backgroundBoosts ?? []).filter((a) => a == null || !bgFixed.has(a)));
   }
 
   const cls = build.classId ? content.classes[build.classId] : undefined;
@@ -502,7 +592,9 @@ function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 function slug(s: string): string {
-  return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'character';
+  // Strip apostrophes FIRST (matches the importer's slug, so "Cat's Luck" -> "cats-luck", not
+  // "cat-s-luck") — otherwise a has-feat prerequisite naming an apostrophe feat never matches its id.
+  return s.toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'character';
 }
 
 /** Build a complete, renderable Character from the current choices. */
@@ -717,6 +809,7 @@ export function collectChosenIds(build: BuildState, content: ContentDatabase): S
   for (const v of Object.values(build.featChoices)) add(v);
   for (const arr of Object.values(build.extraChoices)) for (const v of arr) add(v);
   add(resolveBackground(build, content)?.grantedFeatId);
+  add(build.heritageFeatId);
   add(build.voiceOfNature);
   add(build.primaryApparition);
   add(build.devotionSpell);
@@ -865,7 +958,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // Every option that confers grants (both classes' subclasses + any extra-choice picks).
   const grantOptions = [subOption, subOption2, ...extraOptions].filter(Boolean) as SubclassOption[];
   // A chosen option can set the spellcasting key ability (psychic subconscious mind = Int/Cha).
-  const choiceKeyAbility = grantOptions.find((o) => o.keyAbility)?.keyAbility;
+  // A keyAbilityOptions option (rogue racket) resolves through the player's pick instead.
+  const keyOption = grantOptions.find((o) => o.keyAbility || o.keyAbilityOptions?.length);
+  const choiceKeyAbility = keyOption ? resolveOptionKeyAbility(keyOption, build.keyAbility) : undefined;
   const ancestry = build.ancestryId ? content.ancestries[build.ancestryId] : undefined;
 
   // Tradition + key ability for a FOCUS pool. Slot casters reuse their spellcasting;
@@ -905,7 +1000,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     locked.add(pick);
   }
   if (cls?.trainedSkills.lore) skills[`lore:${cls.trainedSkills.lore}`] = 'trained';
-  if (background?.trainedSkill) (skills[background.trainedSkill] = 'trained'), locked.add(background.trainedSkill);
+  const bgTrainedSkill = backgroundTrainedSkill(build, background);
+  if (bgTrainedSkill) (skills[bgTrainedSkill] = 'trained'), locked.add(bgTrainedSkill);
   if (background?.trainedLore) skills[`lore:${background.trainedLore}`] = 'trained';
   if (build.heritageSkill) (skills[build.heritageSkill] = 'trained'), locked.add(build.heritageSkill);
   // Skilled Heritage (human): the chosen skill becomes expert at 5th level.
@@ -1395,6 +1491,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   if (background?.grantedFeatId) {
     feats.push({ featId: background.grantedFeatId, level: 1, category: 'skill' });
     takenFeats.add(background.grantedFeatId);
+  }
+  // A feat-granting heritage (Versatile Human → a level-1 general feat) — injected like the
+  // background's skill feat, from the player's Heritage-card pick.
+  const buildHeritage = build.heritageId ? content.heritages[build.heritageId] : undefined;
+  if (
+    buildHeritage?.grantsGeneralFeat &&
+    build.heritageFeatId &&
+    content.feats[build.heritageFeatId] &&
+    !takenFeats.has(build.heritageFeatId)
+  ) {
+    feats.push({ featId: build.heritageFeatId, level: 1, category: 'general' });
+    takenFeats.add(build.heritageFeatId);
   }
   // Subclass/extra-choice options can grant a fixed bonus feat (bard muse feat, warpriest Shield
   // Block, druid order feat). Auto-grant those with no sub-choice; a choice-gated grant like Domain
@@ -2095,6 +2203,9 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   // builder shows it in the right slot; idx is otherwise ignored by buildCharacter.
   const bgFeat = background?.grantedFeatId;
   let bgFeatDropped = false;
+  // A feat-granting heritage (Versatile Human): the level-1 GENERAL feat is its grant (no class has
+  // a general slot at level 1), so recover it into heritageFeatId rather than a slot pick.
+  const heritageGrantsFeat = !!(c.heritageId && content.heritages[c.heritageId]?.grantsGeneralFeat);
   // Override-granted bonus feats are re-injected by buildCharacter from overrides.addedFeats, so they
   // must NOT be reconstructed into a slot pick (else they'd consume a feat slot on reopen).
   const addedFeatIds = new Set((c.overrides?.addedFeats ?? []).map((a) => a.featId));
@@ -2102,6 +2213,10 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   for (const f of c.feats) {
     if (!bgFeatDropped && bgFeat && f.featId === bgFeat && f.level === 1 && f.category === 'skill') {
       bgFeatDropped = true;
+      continue;
+    }
+    if (heritageGrantsFeat && !b.heritageFeatId && f.level === 1 && f.category === 'general') {
+      b.heritageFeatId = f.featId;
       continue;
     }
     if (addedFeatIds.has(f.featId)) continue;
@@ -2131,6 +2246,14 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     const granted = new Set<ProficiencyKey>();
     for (const sk of cls?.trainedSkills.fixed ?? []) granted.add(sk);
     if (background?.trainedSkill) granted.add(background.trainedSkill);
+    // A choice-skill background: recover which offered skill is trained as the player's pick.
+    if (background?.trainedSkillChoice?.length) {
+      const pick = background.trainedSkillChoice.find(
+        (sk) => c.proficiencies.skills[sk] && c.proficiencies.skills[sk] !== 'untrained',
+      );
+      b.backgroundSkillChoice = pick ?? null;
+      granted.add(pick ?? background.trainedSkillChoice[0]);
+    }
     if (background?.trainedLore) granted.add(`lore:${background.trainedLore}`);
     for (const o of grantOptions) for (const sk of o.grants?.skills ?? []) granted.add(sk);
 

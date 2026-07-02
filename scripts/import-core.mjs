@@ -118,6 +118,11 @@ const SUBCLASS_KEY_ABILITY = {
   'way-of-the-spellshot': 'int',
 };
 
+// Subclass options whose Foundry keyOptions describe something OTHER than the class's key attribute and
+// must NOT set it. Eldritch Trickster's keyOptions are its required multiclass DEDICATION's attributes
+// (int/cha/wis), not the rogue's — a rogue's key attribute stays Dexterity regardless of this racket.
+const KEY_ABILITY_IGNORE = new Set(['eldritch-trickster']);
+
 // Class-feature id fixups: a class's items[] name slugs to an id the class-features pack stores
 // differently, leaving the feature without a description. Map the slug to the real feature id.
 const FEATURE_ID_ALIAS = {
@@ -445,18 +450,21 @@ const db = {
 const langSet = new Set(['common']);
 
 /** Strike-damage property runes (Foundry has no structured damage on the rune item; this is the
- *  well-known elemental set). Greater variants deal the same per-hit die (+persistent on a crit). */
+ *  well-known elemental set). Greater variants deal the SAME 1d6 per hit; only Greater Flaming adds
+ *  persistent damage on a crit (2d10 fire). The other greater elementals' crit effects (Frost → slowed,
+ *  Shock → arcs to a second creature, Corrosive → damages armor, Thundering → deafened) aren't per-hit
+ *  damage, so they're not modelled as a damage rider. */
 const RUNE_DAMAGE = {
   flaming: { dice: 1, die: 'd6', type: 'fire' },
-  'flaming-greater': { dice: 1, die: 'd6', type: 'fire', persistent: true },
+  'flaming-greater': { dice: 1, die: 'd6', type: 'fire', critPersistent: { dice: 2, die: 'd10' } },
   frost: { dice: 1, die: 'd6', type: 'cold' },
-  'frost-greater': { dice: 1, die: 'd6', type: 'cold', persistent: true },
+  'frost-greater': { dice: 1, die: 'd6', type: 'cold' },
   corrosive: { dice: 1, die: 'd6', type: 'acid' },
-  'corrosive-greater': { dice: 1, die: 'd6', type: 'acid', persistent: true },
+  'corrosive-greater': { dice: 1, die: 'd6', type: 'acid' },
   shock: { dice: 1, die: 'd6', type: 'electricity' },
-  'shock-greater': { dice: 1, die: 'd6', type: 'electricity', persistent: true },
+  'shock-greater': { dice: 1, die: 'd6', type: 'electricity' },
   thundering: { dice: 1, die: 'd6', type: 'sonic' },
-  'thundering-greater': { dice: 1, die: 'd6', type: 'sonic', persistent: true },
+  'thundering-greater': { dice: 1, die: 'd6', type: 'sonic' },
 };
 
 /** Parse a standalone "etched-onto-…" equipment item into a RuneDef (or null if not a rune). */
@@ -955,11 +963,17 @@ function grantedStrikesField(rules, name) {
 
 for (const e of readPack('heritages')) {
   const s = e.system;
+  // Versatile Human: a ChoiceSet over level-1 GENERAL feats + a GrantItem of the selection. Detected
+  // structurally so any future heritage with the same grant pattern picks it up too.
+  const grantsGeneralFeat = (s.rules || []).some(
+    (r) => r.key === 'ChoiceSet' && r.choices?.itemType === 'feat' && (r.choices.filter || []).includes('item:trait:general'),
+  );
   db.heritages[idOf(e)] = {
     id: idOf(e),
     name: e.name,
     ancestryId: s.ancestry?.slug || null,
     versatile: !s.ancestry,
+    ...(grantsGeneralFeat ? { grantsGeneralFeat: true } : {}),
     traits: traitsOf(s),
     rarity: rarityOf(s),
     ...descFields(s.description?.value),
@@ -973,10 +987,54 @@ for (const e of readPack('heritages')) {
   };
 }
 
+// The core skill ids, for conservative description parsing of backgrounds whose structured
+// trainedSkills are empty upstream. Only these count as skills; "<Subject> Lore" is the lore.
+const CORE_SKILL_IDS = new Set([
+  'acrobatics', 'arcana', 'athletics', 'crafting', 'deception', 'diplomacy', 'intimidation', 'medicine',
+  'nature', 'occultism', 'performance', 'religion', 'society', 'stealth', 'survival', 'thievery',
+]);
+/**
+ * Fallback for backgrounds whose structured trainedSkills.value is EMPTY: recover the training from
+ * the description's "Trained in …" clause. Two shapes:
+ *  - a CHOICE ("your choice of Deception or Diplomacy", "either Arcana or Occultism",
+ *    "Diplomacy, Performance, or Society") -> { choice: [skills…] }
+ *  - a FIXED skill ("trained in the Crafting skill and the Architecture Lore skill") -> { skill }
+ * The lore is the single unambiguous "<Subject> Lore" in the clause (skipped when the clause offers
+ * several lores, or the subject is only described — "a Lore skill related to…"). Parenthesized
+ * examples ("(such as Fire Lore)") are stripped first so they can't be mistaken for a grant.
+ */
+function parseBackgroundSkills(html) {
+  const text = String(html || '')
+    .replace(/@UUID\[[^\]]*\](?:\{([^}]*)\})?/g, '$1')
+    .replace(/<[^>]+>/g, ' ');
+  const m = text.match(/trained in[^.;]*/i);
+  if (!m) return {};
+  const clause = m[0].replace(/\([^)]*\)/g, ' ');
+  const skills = [];
+  for (const w of clause.matchAll(/\b([A-Z][a-z]+)\b(?!\s+Lore)/g)) {
+    const id = w[1].toLowerCase();
+    if (CORE_SKILL_IDS.has(id) && !skills.includes(id)) skills.push(id);
+  }
+  const lores = [...new Set([...clause.matchAll(/\b((?:[A-Z][A-Za-z'-]*\s+)*[A-Z][A-Za-z'-]*)\s+Lore\b/g)].map((x) => x[1]))];
+  const out = {};
+  if (skills.length >= 2 && /\bor\b/i.test(clause)) out.choice = skills;
+  else if (skills.length >= 1) out.skill = skills[0];
+  if (lores.length === 1) out.lore = slug(lores[0].replace(/\s*lore$/i, ''));
+  return out;
+}
+
+let bgFallbackFixed = 0, bgFallbackChoice = 0;
 for (const e of readPack('backgrounds')) {
   const s = e.system;
   const granted = Object.values(s.items || {})[0];
   const lore = (s.trainedSkills?.lore || [])[0];
+  const structured = s.trainedSkills?.value || [];
+  // Upstream gap: many backgrounds have empty structured trainedSkills — either because the training
+  // is a player CHOICE (only expressed in prose) or because the data is simply missing. Recover both
+  // from the description; a background with structured data is never second-guessed.
+  const parsed = structured.length ? {} : parseBackgroundSkills(s.description?.value);
+  if (parsed.skill) bgFallbackFixed++;
+  if (parsed.choice) bgFallbackChoice++;
   db.backgrounds[idOf(e)] = {
     id: idOf(e),
     name: e.name,
@@ -985,11 +1043,13 @@ for (const e of readPack('backgrounds')) {
     ...descWithBlock(s.description?.value, backgroundStatBlock(s)),
     source: sourceOf(e),
     abilityBoosts: boosts(s.boosts),
-    trainedSkill: (s.trainedSkills?.value || [])[0],
-    trainedLore: lore ? slug(String(lore).replace(/\s*lore$/i, '')) : undefined,
+    trainedSkill: structured[0] ?? parsed.skill,
+    ...(parsed.choice ? { trainedSkillChoice: parsed.choice } : {}),
+    trainedLore: lore ? slug(String(lore).replace(/\s*lore$/i, '')) : parsed.lore,
     grantedFeatId: granted ? slug(granted.name) : undefined,
   };
 }
+console.log(`backgrounds: description fallback recovered ${bgFallbackFixed} fixed skills, ${bgFallbackChoice} skill choices`);
 
 // Collect subclass option features (Player Core) keyed by their otherTag.
 // Subclass features reference their granted/curriculum spells in prose via @UUID;
@@ -1146,7 +1206,15 @@ for (const e of readPack('class-features')) {
         (tradFromRules || tradFromDesc)?.toLowerCase() ?? PATRON_TRADITION[idOf(e)],
       // Psychic subconscious mind sets the spellcasting key ability (Int or Cha); a few options
       // (Way of the Spellshot) set it via a FlatModifier the importer can't read, so hand-map those.
-      keyAbility: e.system.subfeatures?.keyOptions?.[0] ?? SUBCLASS_KEY_ABILITY[idOf(e)],
+      keyAbility: (KEY_ABILITY_IGNORE.has(idOf(e)) ? undefined : e.system.subfeatures?.keyOptions?.[0]) ?? SUBCLASS_KEY_ABILITY[idOf(e)],
+      // PC2: a rogue racket makes the key attribute a CHOICE between the racket's attribute and
+      // Dexterity (a Dex Ruffian is legal). Also surface any genuinely multi-valued keyOptions.
+      // First entry = the default when the player hasn't picked (the racket's own attribute).
+      ...((() => {
+        const raw = KEY_ABILITY_IGNORE.has(idOf(e)) ? [] : e.system.subfeatures?.keyOptions ?? [];
+        const opts = t === 'rogue-racket' && raw.length ? [...new Set([...raw, 'dex'])] : [...new Set(raw)];
+        return opts.length > 1 ? { keyAbilityOptions: opts } : {};
+      })()),
       // Psychic conscious mind grants a spell ladder to the repertoire.
       grantedSpells: GRANTED_SPELL_TAGS.has(t) ? spellRefs(e.system.description?.value) : undefined,
       grantedFeats: SUBCLASS_FEAT_TAGS.has(t) ? featRefs(e.system.description?.value) : undefined,
@@ -1469,6 +1537,8 @@ for (const e of readPack('equipment')) {
     source: sourceOf(e),
     usage: s.usage?.value,
     ...(s.material?.type ? { material: { type: s.material.type, ...(s.material.grade ? { grade: s.material.grade } : {}) } } : {}),
+    // Apex items: the attribute the item raises while invested (Belt of Giant Strength → str).
+    ...(s.apex?.attribute ? { apexAttribute: s.apex.attribute } : {}),
     ...(freq ? { frequency: freq } : {}),
     ...(counters.length ? { counters } : {}),
     ...((() => {
@@ -1777,6 +1847,10 @@ for (const f of readdirSync('scripts/data').filter((f) => f.endsWith('-additions
   let n = 0;
   for (const e of JSON.parse(readFileSync(`scripts/data/${f}`, 'utf8'))) {
     if (e && e.id && !db[key][e.id]) {
+      // Skip broken ancestry stubs: a handful of versatile HERITAGES were authored here as "ancestries"
+      // with hp:0 / no boosts and would show up as unbuildable ancestries. A real ancestry always has HP.
+      // (They already exist correctly as versatile heritages.)
+      if (key === 'ancestries' && !(e.hp > 0)) continue;
       db[key][e.id] = e;
       n++;
     }

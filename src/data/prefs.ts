@@ -29,6 +29,8 @@ export interface Prefs {
   scrollbarAccent: boolean;
   /** Show an available/total slot badge on each spell rank tab (phone Spells page). Default on. */
   showSlotBadges: boolean;
+  /** Release tag (e.g. "v0.1.5") whose update banner the user dismissed — that version never re-nags. */
+  dismissedUpdate?: string;
 }
 
 const STORAGE_KEY = 'pf2e-codex.prefs';

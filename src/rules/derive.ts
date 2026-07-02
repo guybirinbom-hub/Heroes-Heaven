@@ -629,6 +629,9 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   const item = db.items[inv.itemId];
   if (!item || item.itemType !== 'weapon') return null;
   const w = item;
+  // Material/precious-metal placeholder "weapons" (cold iron, adamantine ingots, silver, …) carry no
+  // damage object; guard so a stray equip can't crash the entire Strikes computation + Main tab.
+  if (!w.damage) return null;
 
   const strMod = abilityMod(c.abilities.str);
   const dexMod = abilityMod(c.abilities.dex);
@@ -685,22 +688,22 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   const usesStrDamage = !projectile || propulsive;
   const dmgBonus =
     dmgAbMod + (usesStrDamage ? conditionPenalty(c.conditions, 'str', 'damage') : 0) + specDamage + modeNumberBonus(c.activeModes, { kind: 'damage' });
-  // Property-rune extra damage (Flaming → 1d6 fire, etc.). Greater elemental runes additionally deal
-  // PERSISTENT damage of their type on a critical hit — shown as a separate crit rider, not per-hit.
+  // Property-rune extra damage (Flaming → 1d6 fire, etc.). Only Greater Flaming adds persistent damage
+  // on a critical hit (2d10 fire) — carried as `critPersistent` and shown as a separate crit rider.
   const runeDamage = (runes?.property ?? [])
     .map((p) => db.runes[p]?.damage)
     .filter((d): d is NonNullable<typeof d> => !!d);
   const runeDmg = runeDamage.map((d) => `${d.dice}${d.die} ${DAMAGE_ABBR[d.type] ?? d.type}`);
   const critPersistent = runeDamage
-    .filter((d) => d.persistent)
-    .map((d) => `${d.dice}${d.die} persistent ${DAMAGE_ABBR[d.type] ?? d.type}`);
+    .filter((d) => d.critPersistent)
+    .map((d) => `${d.critPersistent!.dice}${d.critPersistent!.die} persistent ${DAMAGE_ABBR[d.type] ?? d.type}`);
   // Monster Parts imbued damage folds in alongside property-rune damage as per-hit "plus" terms.
   const extraDmg = [...runeDmg, ...mpImbuedStrikeDamage(mp, w.damage.type)];
   // Deadly dN adds bonus weapon dice on a crit (1 die; 2 with greater striking, 3 with major); Fatal dN
   // upgrades the crit dice to dN and adds one; Two-Hand dN uses a larger die when wielded two-handed.
   const traitDie = (re: RegExp) => w.traits.map((t) => re.exec(t)?.[1]).find(Boolean);
   const deadlyDie = traitDie(/^deadly-(d\d+)$/);
-  const fatalDie = traitDie(/^fatal-(d\d+)$/);
+  const fatalDie = traitDie(/^fatal(?:-aim)?-(d\d+)$/);
   const twoHandDie = traitDie(/^two-hand-(d\d+)$/);
   const critRiders = [...(deadlyDie ? [`${Math.max(1, strikingExtra)}${deadlyDie}`] : []), ...critPersistent];
   const damage =
@@ -760,6 +763,10 @@ export function deriveBlastStrikes(c: Character, _db: ContentDatabase): Strike[]
   // Unconditional damage-mode bonuses (e.g. Courageous Anthem) apply to blasts too; fold them into
   // dmgBonus so the strike-damage breakdown (which sums these via modeAdjust) reconciles with the total.
   const dmgMode = modeNumberBonus(c.activeModes, { kind: 'damage' });
+  // Kineticist Weapon Specialization (level 13+) adds flat damage to Elemental Blasts, keyed to the
+  // blast's (class DC) proficiency rank — exactly like a weapon's specialization.
+  const specDamage = weaponSpecDamage(c.proficiencies.classDc, weaponSpecialization(c, _db));
+  const flat = dmgMode + specDamage;
   return elements
     .filter((el) => ELEMENT_BLAST[el])
     .map((el) => {
@@ -768,7 +775,7 @@ export function deriveBlastStrikes(c: Character, _db: ContentDatabase): Strike[]
         instanceId: `blast:${el}`,
         name: `Elemental Blast (${el.charAt(0).toUpperCase() + el.slice(1)})`,
         attack,
-        damage: `${dice}${b.die}${dmgMode ? formatMod(dmgMode) : ''} ${DAMAGE_ABBR[b.type] ?? b.type} (+Con if 2 actions; +Str in melee)`,
+        damage: `${dice}${b.die}${flat ? formatMod(flat) : ''} ${DAMAGE_ABBR[b.type] ?? b.type} (+Con if 2 actions; +Str in melee)`,
         traits: ['attack', 'impulse', 'kineticist', el],
         ranged: true,
         range: b.range,
@@ -832,8 +839,8 @@ function deriveUnarmedStrike(c: Character, db: ContentDatabase, p: UnarmedProfil
     .filter((d): d is NonNullable<typeof d> => !!d);
   const runeDmg = runeDamage.map((d) => `${d.dice}${d.die} ${DAMAGE_ABBR[d.type] ?? d.type}`);
   const critPersistent = runeDamage
-    .filter((d) => d.persistent)
-    .map((d) => `${d.dice}${d.die} persistent ${DAMAGE_ABBR[d.type] ?? d.type}`);
+    .filter((d) => d.critPersistent)
+    .map((d) => `${d.critPersistent!.dice}${d.critPersistent!.die} persistent ${DAMAGE_ABBR[d.type] ?? d.type}`);
   // Natural attacks can carry Deadly/Fatal (e.g. a creature's jaws) — surface their crit damage too.
   const nDie = (re: RegExp) => p.traits.map((t) => re.exec(t)?.[1]).find(Boolean);
   const nDeadly = nDie(/^deadly-(d\d+)$/);
@@ -932,6 +939,10 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
 
 export interface BulkResult {
   total: number;
+  /** RAW-floored Bulk for the encumbered/overloaded thresholds (Light-item and coin remainders are
+   *  dropped per the rules) — so e.g. 5 Bulk + 6 torches (5.6) isn't falsely flagged Encumbered. The
+   *  fractional `total` is kept for display + container-nesting math. */
+  encTotal: number;
   encumberedAt: number;
   max: number;
 }
@@ -980,7 +991,7 @@ export function deriveBulk(c: Character, db: ContentDatabase): BulkResult {
   const coins = (c.currency.pp ?? 0) + (c.currency.gp ?? 0) + (c.currency.sp ?? 0) + (c.currency.cp ?? 0);
   total += coins / 1000;
   total = Math.max(0, Math.round(total * 10) / 10);
-  return { total, encumberedAt: 5 + strMod, max: 10 + strMod };
+  return { total, encTotal: Math.floor(total), encumberedAt: 5 + strMod, max: 10 + strMod };
 }
 
 /** How full each container is: the raw Bulk of its DIRECT contents vs its capacity. Used to

@@ -14,7 +14,7 @@ import {
   setItemQuantity,
   toggleItemFlag,
   updateInventoryItem,
-  type PlayState,
+  type PlayUpdater,
 } from '../rules/play';
 import { chargesFor, itemCounters } from '../rules/itemUses';
 import { monsterPartsEnabled } from '../rules/sources';
@@ -66,6 +66,9 @@ function stateBadge(inv: InventoryItem): { label: string; kind: string } | null 
 /** The primary equip action for an item type: armor is worn, weapons/shields are wielded. */
 function equipControl(item: Item): { flag: 'worn' | 'equipped'; on: string; off: string } | null {
   if (item.itemType === 'armor') return { flag: 'worn', on: 'Worn', off: 'Wear' };
+  // Material/precious-metal placeholder "weapons" (ingots, chunks) carry no damage object — they aren't
+  // really wieldable, so don't offer a Wield control (deriveStrike guards the same case for safety).
+  if (item.itemType === 'weapon' && !item.damage) return null;
   if (item.itemType === 'weapon' || item.itemType === 'shield') return { flag: 'equipped', on: 'Wielded', off: 'Wield' };
   return null;
 }
@@ -127,7 +130,7 @@ function ItemCard({
   item: Item;
   content: ContentDatabase;
   onOpen: () => void;
-  onPlay?: (fn: (play: PlayState) => PlayState) => void;
+  onPlay?: PlayUpdater;
   investedCount?: number;
   /** "Individual day tracking of rations" option — suppress the Rations days counter. */
   rationsDayTracking?: boolean;
@@ -257,7 +260,7 @@ function ItemCard({
                 <button
                   aria-label={`Spend a use (${u.label})`}
                   disabled={u.current <= 0}
-                  onClick={(e) => { stop(e); onPlay((p) => setItemCounter(p, inv.instanceId, u.id, chargesFor(u, u.current - 1))); }}
+                  onClick={(e) => { stop(e); onPlay((p) => setItemCounter(p, inv.instanceId, u.id, chargesFor(u, u.current - 1)), `uses:${inv.instanceId}:${u.id}`); }}
                 >
                   <i className="ti ti-minus" aria-hidden="true" />
                 </button>
@@ -267,7 +270,7 @@ function ItemCard({
                 <button
                   aria-label={`Restore a use (${u.label})`}
                   disabled={u.current >= u.max}
-                  onClick={(e) => { stop(e); onPlay((p) => setItemCounter(p, inv.instanceId, u.id, chargesFor(u, u.current + 1))); }}
+                  onClick={(e) => { stop(e); onPlay((p) => setItemCounter(p, inv.instanceId, u.id, chargesFor(u, u.current + 1)), `uses:${inv.instanceId}:${u.id}`); }}
                 >
                   <i className="ti ti-plus" aria-hidden="true" />
                 </button>
@@ -279,12 +282,12 @@ function ItemCard({
                   aria-label="Decrease quantity"
                   disabled={inv.quantity <= 1}
                   title={inv.quantity <= 1 ? 'Use the trash button to remove' : undefined}
-                  onClick={(e) => { stop(e); onPlay((p) => setItemQuantity(p, inv.instanceId, inv.quantity - 1)); }}
+                  onClick={(e) => { stop(e); onPlay((p) => setItemQuantity(p, inv.instanceId, inv.quantity - 1), `qty:${inv.instanceId}`); }}
                 >
                   <i className="ti ti-minus" aria-hidden="true" />
                 </button>
                 <span>{inv.quantity}</span>
-                <button aria-label="Increase quantity" onClick={(e) => { stop(e); onPlay((p) => setItemQuantity(p, inv.instanceId, inv.quantity + 1)); }}>
+                <button aria-label="Increase quantity" onClick={(e) => { stop(e); onPlay((p) => setItemQuantity(p, inv.instanceId, inv.quantity + 1), `qty:${inv.instanceId}`); }}>
                   <i className="ti ti-plus" aria-hidden="true" />
                 </button>
               </span>
@@ -305,7 +308,7 @@ function ItemCard({
 
 /** Fallback card for an inventory entry whose item definition is missing from the data,
  *  so it stays visible and removable instead of silently vanishing. */
-function UnknownItemCard({ inv, onPlay }: { inv: InventoryItem; onPlay?: (fn: (play: PlayState) => PlayState) => void }) {
+function UnknownItemCard({ inv, onPlay }: { inv: InventoryItem; onPlay?: PlayUpdater }) {
   return (
     <div className="inv-card unknown">
       <span className="inv-icon">
@@ -341,7 +344,7 @@ export function InventoryTab({
 }: {
   character: Character;
   content: ContentDatabase;
-  onPlay?: (fn: (play: PlayState) => PlayState) => void;
+  onPlay?: PlayUpdater;
   onCreateItem?: (item: Item) => void;
 }) {
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
@@ -353,6 +356,10 @@ export function InventoryTab({
   // A bound scroll/wand can't hold a spell above what the character could cast.
   const maxSpellRank = Math.min(10, Math.max(1, Math.ceil(character.level / 2)));
   const [query, setQuery] = useState('');
+  // Coin-input drafts (denomination → typed string, absent = show live value): the coin fields wrote to
+  // the wallet on every keystroke, so clearing one to retype briefly wrote 0 and could lose money if
+  // interrupted. Buffer per denomination, commit on blur/Enter.
+  const [coinDraft, setCoinDraft] = useState<Record<string, string>>({});
   const [dragId, setDragId] = useState<string | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
   const isMobile = useIsMobile();
@@ -799,7 +806,7 @@ export function InventoryTab({
       <div className="inv-meta">
         {(() => {
           // "Ignore Bulk Limit" option: never flag encumbered/overloaded.
-          const enc = character.options?.ignoreBulk ? '' : bulk.total > bulk.max ? 'over' : bulk.total > bulk.encumberedAt ? 'encumbered' : '';
+          const enc = character.options?.ignoreBulk ? '' : bulk.encTotal > bulk.max ? 'over' : bulk.encTotal > bulk.encumberedAt ? 'encumbered' : '';
           return (
             <>
               <span
@@ -842,10 +849,26 @@ export function InventoryTab({
                   className="coin-input"
                   type="text"
                   inputMode="numeric"
-                  value={coins[d] || ''}
+                  value={d in coinDraft ? coinDraft[d] : String(coins[d] || '')}
                   placeholder="0"
                   aria-label={d}
-                  onChange={(e) => onPlay((p) => setCurrency(p, { ...coins, [d]: Math.max(0, parseInt(e.target.value.replace(/[^0-9]/g, ''), 10) || 0) }))}
+                  onFocus={(e) => {
+                    setCoinDraft((cd) => ({ ...cd, [d]: String(coins[d] || '') }));
+                    e.currentTarget.select();
+                  }}
+                  onChange={(e) => setCoinDraft((cd) => ({ ...cd, [d]: e.target.value.replace(/[^0-9]/g, '') }))}
+                  onBlur={() => {
+                    const v = Math.max(0, parseInt(coinDraft[d] ?? '', 10) || 0);
+                    onPlay((p) => setCurrency(p, { ...coins, [d]: v }));
+                    setCoinDraft((cd) => {
+                      const n = { ...cd };
+                      delete n[d];
+                      return n;
+                    });
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') e.currentTarget.blur();
+                  }}
                 />
               ) : (
                 <>{grp(coins[d] ?? 0)} </>
@@ -865,7 +888,7 @@ export function InventoryTab({
                 value={bankedParts || ''}
                 placeholder="0"
                 aria-label="Banked monster parts"
-                onChange={(e) => onPlay((p) => setMonsterParts(p, parseInt(e.target.value.replace(/[^0-9]/g, ''), 10) || 0))}
+                onChange={(e) => onPlay((p) => setMonsterParts(p, parseInt(e.target.value.replace(/[^0-9]/g, ''), 10) || 0), 'monster-parts')}
               />
             ) : (
               <strong>{grp(bankedParts)}</strong>

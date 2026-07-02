@@ -28,9 +28,9 @@ A fast, fully-offline **Pathfinder Second Edition (Remaster)** character builder
 ### Android
 1. On your phone, tap the **Android APK** button above to download `Heroes-Heaven-Android.apk`.
 2. Open the downloaded file. Android will ask you to allow installs from your browser or files app the first time — enable it, then tap **Install**.
-3. This is a debug build (a larger download, and not from the Play Store), but everything still runs locally with no account or internet needed.
+3. It's not from the Play Store, but everything runs locally with no account or internet needed. Installing a newer version over an older one keeps your characters.
 
-Your characters and settings are stored locally on your device. There is no cloud sync and no telemetry — nothing leaves your device.
+Your characters and settings are stored locally on your device. There is no cloud sync and no telemetry — nothing leaves your device. Use **Settings → Backup → Export everything** to save a full backup file of all characters and settings, and the app will let you know when a newer version is available.
 
 ## What it does
 
@@ -63,7 +63,7 @@ npm run tauri build  # build the Windows installer → src-tauri/target/release/
 npm test             # run the test suite
 ```
 
-> **Releasing:** every GitHub release should include stable-named assets — `Heroes-Heaven-Setup.exe` (a copy of the generated `*_x64-setup.exe`) and `Heroes-Heaven-Android.apk` (a copy of `app-arm64-debug.apk`) — so the download buttons above always point at the newest builds.
+> **Releasing:** every GitHub release should include stable-named assets — `Heroes-Heaven-Setup.exe` (a copy of the generated `*_x64-setup.exe`) and `Heroes-Heaven-Android.apk` (a copy of the **signed release** `app-arm64-release.apk` from `npm run android:release`; the release keystore lives outside the repo) — so the download buttons above always point at the newest builds.
 
 ## Content & license
 

@@ -12,7 +12,7 @@
  * changes — a Con boost, a level-up — the character stays as hurt as they were,
  * rather than the current value silently desyncing from the new max.
  */
-import type { ActiveCondition, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ModeDef, NotePage, PinnedDesc, PreparedSlot } from './types';
+import type { AbilityId, ActiveCondition, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ModeDef, NotePage, PinnedDesc, PreparedSlot } from './types';
 import { deriveMaxHp, deriveBulk } from './derive';
 import { monsterPartApex } from './monsterParts';
 import { dyingDeathThreshold } from './conditions';
@@ -91,6 +91,12 @@ export interface PlayState {
 /** A toggleable per-item carry state. */
 export type ItemFlag = 'worn' | 'equipped' | 'invested';
 
+/** The sheet's play-state mutation dispatcher. Every call is its own undo step UNLESS the caller
+ *  passes a `coalesceTag`: rapid successive calls sharing the same tag (scrubbing a +/- stepper,
+ *  typing into a per-keystroke field) merge into ONE step. Distinct actions must stay untagged so
+ *  they never merge (equip + rest must be two Ctrl+Zs). */
+export type PlayUpdater = (fn: (play: PlayState) => PlayState, coalesceTag?: string) => void;
+
 /** Stable key for one prepared slot (entry + rank + slot index). */
 export const preparedKey = (entryId: string, rank: number, slotIndex: number) => `${entryId}:${rank}:${slotIndex}`;
 /** Stable key for a spontaneous rank's slot pool. */
@@ -148,13 +154,26 @@ export function initialPlay(ch: Character, content: ContentDatabase): PlayState 
   };
 }
 
+/** The attribute raised by the first INVESTED regular apex item in the inventory (item.apexAttribute,
+ *  from the Foundry apex data), or null. Investiture is the gate — a carried-but-uninvested apex item
+ *  does nothing — and only the first qualifying item applies (one apex item at a time). */
+export function itemApex(inventory: InventoryItem[] | undefined, content: ContentDatabase): AbilityId | null {
+  for (const inv of inventory ?? []) {
+    if (!inv.invested) continue;
+    const apex = content.items[inv.itemId]?.apexAttribute;
+    if (apex) return apex;
+  }
+  return null;
+}
+
 /** Overlay the in-play runtime values onto a freshly-built (snapshot) character. */
 export function applyPlayState(ch: Character, play: PlayState | undefined, content: ContentDatabase): Character {
   if (!play) return ch;
-  // Monster Parts apex: an invested item imbued with an apex property at level 17+ raises one attribute
-  // (to 18, or +2 if already 18+). Bump it on the overlaid character so it ripples through every derived
-  // stat (HP, saves, skills…). One apex item at a time.
-  const apexAbility = monsterPartApex(play.inventory ?? ch.inventory);
+  // Apex items — regular (an invested item with an apexAttribute, e.g. Belt of Giant Strength) or
+  // Monster Parts (an invested/worn item imbued with an apex property at level 17+) — raise one
+  // attribute (to 18, or +2 if already 18+). Bump it on the overlaid character so it ripples through
+  // every derived stat (HP, saves, skills…). Only one apex item works at a time — the first wins.
+  const apexAbility = monsterPartApex(play.inventory ?? ch.inventory) ?? itemApex(play.inventory ?? ch.inventory, content);
   if (apexAbility) {
     const score = ch.abilities[apexAbility];
     ch = { ...ch, abilities: { ...ch.abilities, [apexAbility]: score >= 18 ? score + 2 : 18 } };
@@ -168,7 +187,7 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
   // unless the "Ignore Bulk Limit" option is on. Derived from the live inventory so it tracks gear.
   if (!ch.options?.ignoreBulk && !conditions.some((c) => c.id === 'encumbered')) {
     const bulk = deriveBulk({ ...ch, inventory: play.inventory ?? ch.inventory }, content);
-    if (bulk.total > bulk.encumberedAt) conditions = [...conditions, { id: 'encumbered' }];
+    if (bulk.encTotal > bulk.encumberedAt) conditions = [...conditions, { id: 'encumbered' }];
   }
   // Max HP must reflect the overlaid conditions (Drained lowers it), so the
   // damage clamp below uses the same max the sheet will display.
@@ -918,12 +937,12 @@ export function buyItem(play: PlayState, itemId: string, price: Coins | undefine
 }
 
 /**
- * Reconcile a play state after the build is edited/rebuilt. The rebuild authoritatively
- * regenerates gear, currency, spell preparation, and class resources, so we DROP those
- * overrides (they get re-seeded from the new character) and reset the usage counters
- * (slots/focus refill). Genuine in-play progress is kept: damage, temp HP, hero points,
- * XP, active conditions, pins, notes, and companion conditions. Without this, stale
- * play.inventory/currency would shadow the rebuilt gear and edits would have no effect.
+ * Reconcile a play state after the build is edited/rebuilt. The rebuild re-derives spell preparation
+ * and class resources from the new choices, so we drop those (re-seeded from the new character) and
+ * refill usage counters (slots/focus). Genuine in-play progress is KEPT: damage, temp HP, hero points,
+ * XP, conditions, pins, notes, companion state — AND the player's actual inventory + currency (real
+ * progress, not build-derived; left undefined for a character that never touched inventory in play so
+ * the rebuilt build gear still seeds correctly).
  */
 export function playForRebuild(play: PlayState): PlayState {
   return {
@@ -947,8 +966,12 @@ export function playForRebuild(play: PlayState): PlayState {
     appearance: play.appearance,
     activeModes: play.activeModes,
     notes: play.notes,
-    // inventory / currency / resources / prepared / repertoire / signature are omitted
-    // so applyPlayState falls back to the rebuilt character's values.
+    // Keep the player's real gear + wallet across the edit: items bought/looted and gold spent are
+    // genuine progress, not build-derived. (Undefined falls back to the rebuilt build gear for a
+    // character that never managed inventory in play, so fresh builds still seed correctly.) Spell
+    // prep / repertoire / signature and class resources ARE re-derived from the new build, so omitted.
+    inventory: play.inventory,
+    currency: play.currency,
     expendedSlots: {},
     slotsUsed: {},
     focusUsed: 0,

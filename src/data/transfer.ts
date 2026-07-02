@@ -434,13 +434,16 @@ function mapImportPrice(p: any): Coins | undefined {
 function synthImportedItem(wgItem: any): Item {
   const name = String(wgItem?.name ?? '').trim() || 'Unknown item';
   const price = mapImportPrice(wgItem?.price);
+  const level = Number(wgItem?.level) || 0;
   const item: Item = {
-    id: `custom-${slugifyItem(name)}-${Math.random().toString(36).slice(2, 7)}`,
+    // Deterministic id (name + level) so re-importing the SAME character doesn't mint a fresh homebrew
+    // copy each time — it dedupes against the existing one instead of piling up "Unknown item" clones.
+    id: `custom-${slugifyItem(name)}${level ? `-l${level}` : ''}`,
     name,
     itemType: 'equipment',
     traits: [],
     rarity: ITEM_RARITIES.has(wgItem?.rarity) ? (wgItem.rarity as Rarity) : 'common',
-    level: Number(wgItem?.level) || 0,
+    level,
     bulk: parseImportBulk(wgItem?.bulk),
     description: typeof wgItem?.description === 'string' ? wgItem.description : '',
     source: { license: 'homebrew' },

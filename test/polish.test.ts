@@ -55,21 +55,26 @@ describe('Skilled Heritage', () => {
 });
 
 describe('rogue racket key ability', () => {
-  const rogue = (racket: string) =>
-    buildCharacter(mk({ classId: 'rogue', keyAbility: 'dex', subclassId: racket, levelBoosts: ['str', 'con', 'wis', 'cha'] }), c);
-  it('a Ruffian rogue keys off Strength (overriding the Dex default) and gets the Str key boost', () => {
-    const before = mk({ classId: 'rogue', keyAbility: 'dex', subclassId: 'ruffian', levelBoosts: ['str', 'con', 'wis', 'cha'] });
+  // PC2: a racket makes the key attribute a CHOICE between Dex and the racket's attribute.
+  // Unpicked (keyAbility null) defaults to the racket attribute; an explicit Dex pick is honored.
+  const rogue = (racket: string, key: 'dex' | null = null) =>
+    buildCharacter(mk({ classId: 'rogue', keyAbility: key, subclassId: racket, levelBoosts: ['str', 'con', 'wis', 'cha'] }), c);
+  it('an unpicked Ruffian keys off Strength (the racket default) and gets the Str key boost', () => {
+    const before = mk({ classId: 'rogue', keyAbility: null, subclassId: 'ruffian', levelBoosts: ['str', 'con', 'wis', 'cha'] });
     const noKeyBoost = computeAbilities({ ...before, classId: null }, c).str; // baseline without the class key boost
     const ch = rogue('ruffian');
     expect(ch.keyAbility).toBe('str');
     expect(ch.abilities.str).toBe(noKeyBoost + 2);
   });
-  it('a Scoundrel keys off Charisma and a Mastermind off Intelligence', () => {
+  it('a Ruffian who PICKED Dexterity keeps it (a Dex Ruffian is legal)', () => {
+    expect(rogue('ruffian', 'dex').keyAbility).toBe('dex');
+  });
+  it('an unpicked Scoundrel keys off Charisma and a Mastermind off Intelligence', () => {
     expect(rogue('scoundrel').keyAbility).toBe('cha');
     expect(rogue('mastermind').keyAbility).toBe('int');
   });
   it('a Thief racket leaves the Dexterity default in place', () => {
-    expect(rogue('thief').keyAbility).toBe('dex');
+    expect(rogue('thief', 'dex').keyAbility).toBe('dex');
   });
 });
 

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { Character, ContentDatabase, Item, ModeDef } from '../rules/types';
-import { addXp, setXp, setTempSpeed, togglePinnedDesc, descId, type PlayState } from '../rules/play';
+import { addXp, setXp, setTempSpeed, togglePinnedDesc, descId, type PlayUpdater } from '../rules/play';
 import { abilityMod, deriveSpeeds } from '../rules/derive';
 import type { BuildState } from '../rules/build';
 import { explainStat, type StatRef } from '../rules/explain';
@@ -91,7 +91,7 @@ export function CharacterSheet({
   character: Character;
   content: ContentDatabase;
   build?: BuildState;
-  onPlay?: (fn: (play: PlayState) => PlayState) => void;
+  onPlay?: PlayUpdater;
   onCreateItem?: (item: Item) => void;
   onSaveMode?: (mode: ModeDef) => void;
   onDeleteMode?: (id: string) => void;
@@ -492,7 +492,7 @@ function SpeedTempControl({
 }: {
   character: Character;
   content: ContentDatabase;
-  onPlay: (fn: (play: PlayState) => PlayState) => void;
+  onPlay: PlayUpdater;
 }) {
   const defaultLand = deriveSpeeds(character, content).land ?? 0;
   const override = character.speedOverride;
@@ -505,7 +505,8 @@ function SpeedTempControl({
   const apply = (val: number) => {
     const v = Math.max(0, val);
     setDraft(String(v));
-    onPlay((p) => setTempSpeed(p, v === defaultLand ? undefined : v));
+    // Coalesced: the ±5 bump buttons are scrubbed to a target Speed — one undo step, not one per click.
+    onPlay((p) => setTempSpeed(p, v === defaultLand ? undefined : v), 'temp-speed');
   };
   const commit = () => {
     const n = parseInt(draft, 10);

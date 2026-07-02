@@ -3,7 +3,7 @@ import type { Character, ContentDatabase, ProficiencyRank, SenseEntry, Character
 import { RankPill } from './widgets';
 import { InfoTerm } from './InfoTerm';
 import { deriveDefenses } from '../rules/derive';
-import { setDetail, setPortrait, type PlayState } from '../rules/play';
+import { setDetail, setPortrait, type PlayUpdater } from '../rules/play';
 import { proficiencyDesc, senseDesc, traitDesc, languageDesc } from '../rules/glossary';
 import { downscaleImage } from './imageUtil';
 import { useIsMobile } from './useIsMobile';
@@ -55,7 +55,7 @@ export function DetailsTab({
 }: {
   character: Character;
   content: ContentDatabase;
-  onPlay?: (fn: (play: PlayState) => PlayState) => void;
+  onPlay?: PlayUpdater;
 }) {
   const isMobile = useIsMobile();
   const ancestry = character.ancestryId ? content.ancestries[character.ancestryId] : undefined;
@@ -278,7 +278,8 @@ export function DetailsTab({
                   <input
                     className="gen-input"
                     value={d[f.key] ?? ''}
-                    onChange={(e) => onPlay((p) => setDetail(p, f.key, e.target.value))}
+                    // Writes per keystroke — coalesce so typing a value is one undo step, not one per key.
+                    onChange={(e) => onPlay((p) => setDetail(p, f.key, e.target.value), `detail:${f.key}`)}
                   />
                 </label>
               ))}
@@ -290,7 +291,7 @@ export function DetailsTab({
                   className="gen-textarea"
                   rows={2}
                   value={d[f.key] ?? ''}
-                  onChange={(e) => onPlay((p) => setDetail(p, f.key, e.target.value))}
+                  onChange={(e) => onPlay((p) => setDetail(p, f.key, e.target.value), `detail:${f.key}`)}
                 />
               </label>
             ))}

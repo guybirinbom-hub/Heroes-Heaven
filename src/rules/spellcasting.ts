@@ -58,10 +58,10 @@ export function twoRankCasterSlots(level: number): Record<number, number> {
 }
 
 /**
- * Psychic spell slots: the full-caster rank progression (new rank every 2 levels,
- * 10th at 19th) but only 2 slots per rank — 1 the level a rank is first gained.
- * (Transcribed from the Archives of Nethys psychic table.) Amped psi cantrips are
- * a separate focus subsystem, not modelled here.
+ * Psychic spell slots: a rank every 2 levels but only 2 slots per rank (1 the level a rank is first
+ * gained). The psychic is a LIMITED caster and caps at 9th-rank spells — it does NOT get a 10th-rank
+ * slot (only full casters do). (Transcribed from the Archives of Nethys psychic table.) Amped psi
+ * cantrips are a separate focus subsystem, not modelled here.
  */
 export function psychicSlots(level: number): Record<number, number> {
   const slots: Record<number, number> = {};
@@ -69,7 +69,6 @@ export function psychicSlots(level: number): Record<number, number> {
     if (level >= 2 * r) slots[r] = 2;
     else if (level === 2 * r - 1) slots[r] = 1;
   }
-  if (level >= 19) slots[10] = 1;
   return slots;
 }
 

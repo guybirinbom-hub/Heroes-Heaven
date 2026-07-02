@@ -59,6 +59,7 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
 
 let cached: ContentDatabase | null = null;
 let cachedCore: Partial<ContentDatabase> = {};
+let pending: Promise<ContentDatabase> | null = null;
 
 /** Re-merge seed + core + the current homebrew (re-read from storage) without re-fetching core.json.
  *  Call after the user edits homebrew so the live content DB reflects it immediately. */
@@ -67,20 +68,24 @@ export function rebuildContent(): ContentDatabase {
   return cached;
 }
 
-/** Fetch + parse public/core.json once, merged with the seed. Cached after first call. */
-export async function loadContent(): Promise<ContentDatabase> {
-  if (cached) return cached;
-  try {
-    const res = await fetch(`${import.meta.env.BASE_URL}core.json`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const core = (await res.json()) as Partial<ContentDatabase>;
-    cachedCore = core;
-    cached = mergeWithSeed(core);
-  } catch (err) {
-    // Fall back to the seed alone so the app still boots (and the example
-    // character resolves) if the data file is missing or unreadable.
-    console.error('Failed to load core.json; falling back to seed content.', err);
-    cached = mergeWithSeed({});
-  }
-  return cached;
+/** Fetch + parse public/core.json once, merged with the seed. Concurrent callers share the
+ *  in-flight promise (main.tsx prefetches before React mounts; App awaits the same load). */
+export function loadContent(): Promise<ContentDatabase> {
+  if (cached) return Promise.resolve(cached);
+  pending ??= (async () => {
+    try {
+      const res = await fetch(`${import.meta.env.BASE_URL}core.json`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const core = (await res.json()) as Partial<ContentDatabase>;
+      cachedCore = core;
+      cached = mergeWithSeed(core);
+    } catch (err) {
+      // Fall back to the seed alone so the app still boots (and the example
+      // character resolves) if the data file is missing or unreadable.
+      console.error('Failed to load core.json; falling back to seed content.', err);
+      cached = mergeWithSeed({});
+    }
+    return cached;
+  })();
+  return pending;
 }

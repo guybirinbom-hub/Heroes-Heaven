@@ -10,7 +10,9 @@ describe('campaign content toggles + new content', () => {
   const km = (e: { source?: { book?: string } }) => /kingmaker/i.test(e.source?.book ?? '');
 
   it('shipped the newly-added AoN content', () => {
-    expect(c.ancestries['aon-nephilim']).toBeTruthy();
+    // Versatile heritages (Nephilim, Dhampir, …) ship as heritages — NOT as broken 0-HP "ancestries".
+    expect(c.heritages['nephilim']).toBeTruthy();
+    expect(c.ancestries['aon-nephilim']).toBeUndefined();
     expect(c.feats['aon-wombat-style']?.description).toBeTruthy();
     expect(c.spells['aon-detect-alignment']).toBeTruthy();
     expect(Object.keys(c.languages).length).toBeGreaterThan(110);

@@ -630,6 +630,13 @@
   font-weight: 500;
   margin-left: auto;
 }
+/* A picked feat whose prerequisites are NO LONGER met (broken by a later edit) — warn, don't remove. */
+.lvl-invalid {
+  color: var(--app-warn);
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+}
 .lvl-future-tag {
   text-transform: none;
   letter-spacing: 0;
@@ -1676,7 +1683,9 @@
 
   /* The FullStats rail stops being a pinned first-column sidebar; it sits below the content
      (collapsed by default via the chevron) instead of reserving a fixed track. */
-  .brail { order: 0; position: static; top: auto; }
+  /* Put the live-stats (FullStats) rail ABOVE the choices on mobile so the "did my AC/HP change?"
+     feedback is visible without scrolling to the very bottom. It stays collapsed by default. */
+  .brail { order: -1; position: static; top: auto; }
 
   /* Header wraps instead of overflowing; the name field goes full-width, the level stepper unpins. */
   /* Clear the phone status bar (÷zoom so it still clears when zoomed out — the page is html{zoom}-scaled). */

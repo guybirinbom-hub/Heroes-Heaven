@@ -285,6 +285,9 @@ export interface Heritage extends ContentBase, DefenseGrants {
   /** The owning ancestry, or null for a versatile heritage (any ancestry). */
   ancestryId: string | null;
   versatile: boolean;
+  /** Grants a level-1 general feat of the player's choice (Versatile Human). The pick lives in
+   *  BuildState.heritageFeatId. */
+  grantsGeneralFeat?: boolean;
   /** Innate spells this heritage grants (e.g. Seer Elf → detect magic). */
   innateSpells?: InnateSpellGrant[];
 }
@@ -293,6 +296,9 @@ export interface Background extends ContentBase {
   abilityBoosts: AbilityBoost[];
   /** Skill the background trains you in. */
   trainedSkill?: SkillId;
+  /** A "trained in your choice of X or Y" background: the offered skills (trainedSkill is unset).
+   *  The pick lives in BuildState.backgroundSkillChoice; unpicked defaults to the first option. */
+  trainedSkillChoice?: SkillId[];
   /** Lore subject granted (the `lore:` part). */
   trainedLore?: string;
   /** A skill feat granted by the background. */
@@ -398,6 +404,9 @@ export interface SubclassOption {
   tradition?: Tradition;
   /** Overrides the spellcasting key ability (e.g. psychic subconscious mind = Int or Cha). */
   keyAbility?: AbilityId;
+  /** The option makes the key attribute a CHOICE among these (rogue racket = the racket's attribute
+   *  or Dex). First entry is the default when the player hasn't picked. */
+  keyAbilityOptions?: AbilityId[];
   /** Focus spell ids this option grants (druid order spell, wizard school spell, witch hex). */
   focusSpells?: string[];
   /** Feat-gated advanced focus spell (Advanced Bloodline / Advanced Revelation grants this). */
@@ -575,6 +584,9 @@ interface ItemBase extends ContentBase {
   counters?: ItemCounter[];
   /** Free-text Craft requirements (formulas, special ingredients) shown when crafting the item. */
   craftRequirements?: string;
+  /** Apex item (trait `apex`): the attribute it raises while invested — to 18, or +2 if already 18+.
+   *  Only one apex item works at a time. */
+  apexAttribute?: AbilityId;
 }
 
 /** A static descriptor of one trackable pool/ability on an item definition. */
@@ -907,7 +919,7 @@ export interface RuneDef {
   level: number;
   price?: Price;
   /** Property runes that add Strike damage (e.g. Flaming → 1d6 fire). */
-  damage?: { dice: number; die: DieSize; type: DamageType; persistent?: boolean };
+  damage?: { dice: number; die: DieSize; type: DamageType; critPersistent?: { dice: number; die: DieSize } };
 }
 
 /* =========================================================================

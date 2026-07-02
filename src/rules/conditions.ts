@@ -8,7 +8,7 @@
  *
  * Most valued conditions map to an attribute: Clumsy→Dex, Enfeebled→Str, Drained→Con,
  * Stupefied→Int/Wis/Cha. Frightened and Sickened hit every check and DC. A handful are
- * flat (Fatigued −1 to AC & saves; Off-guard −2 circ AC; Prone −2 circ attacks).
+ * flat (Fatigued −1 to AC & saves; Off-guard/Prone/Restrained/Grabbed −2 circ AC; Prone also −2 circ attacks).
  *
  * Out of scope (no flat number to display): action-economy conditions (Slowed, Stunned,
  * Quickened), and situational ones (Blinded, Dazzled, Deafened, Confused, …).
@@ -50,7 +50,12 @@ const CONDITION_EFFECTS: Record<string, ConditionEffect[]> = {
   // Encumbered makes you Clumsy 1 (Dex penalty) and reduces Speed by 10 ft (handled in deriveSpeeds).
   encumbered: [{ type: 'status', amount: 1, abilities: ['dex'] }],
   'off-guard': [{ type: 'circumstance', amount: 2, slots: ['ac'] }],
-  prone: [{ type: 'circumstance', amount: 2, slots: ['attack'] }],
+  // Prone makes you off-guard (−2 circ AC) AND gives −2 circ to your own attacks. Restrained and
+  // Grabbed also make you off-guard (−2 circ AC). (Same circumstance type, so they don't stack with
+  // off-guard — conditionPenalty takes the worst.)
+  prone: [{ type: 'circumstance', amount: 2, slots: ['attack', 'ac'] }],
+  restrained: [{ type: 'circumstance', amount: 2, slots: ['ac'] }],
+  grabbed: [{ type: 'circumstance', amount: 2, slots: ['ac'] }],
 };
 
 function effectMatches(e: ConditionEffect, ability: AbilityId, slot: ConditionSlot): boolean {

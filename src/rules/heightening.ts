@@ -116,7 +116,7 @@ export function scaleDamage(spell: Spell, castRank: number): string | null {
   const base = spell.baseDamage;
   if (!base || !h) return null;
   if (h.type === 'interval' && h.damageIncr) {
-    const out = addDice(base, h.damageIncr, heightenSteps(spell.rank, castRank, h.interval));
+    const out = addDice(base, h.damageIncr, heightenSteps(Math.max(1, spell.rank), castRank, h.interval));
     return out !== base ? out : null;
   }
   if (h.type === 'fixed') {
@@ -132,7 +132,7 @@ export function scaleArea(spell: Spell, castRank: number): number | null {
   const base = spell.baseArea;
   if (!base || !h) return null;
   if (h.type === 'interval' && h.areaIncr) {
-    const steps = heightenSteps(spell.rank, castRank, h.interval);
+    const steps = heightenSteps(Math.max(1, spell.rank), castRank, h.interval);
     return steps > 0 ? base.value + h.areaIncr * steps : null;
   }
   if (h.type === 'fixed') {

@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import type { ContentDatabase, InventoryItem, Item } from '../rules/types';
-import { removeInventoryItem, setItemCounter, setItemQuantity, updateInventoryItem, type PlayState } from '../rules/play';
+import { removeInventoryItem, setItemCounter, setItemQuantity, updateInventoryItem, type PlayUpdater } from '../rules/play';
 import { formatPrice } from '../rules/wealth';
 import { useEscapeClose } from './useEscapeClose';
+import { confirmDialog } from './confirm';
 import { chargesFor, itemCounters } from '../rules/itemUses';
 import { traitDesc } from '../rules/glossary';
 import { InfoTerm } from './InfoTerm';
@@ -141,7 +142,7 @@ export function ItemDetail({
   item: Item;
   content: ContentDatabase;
   onClose: () => void;
-  onPlay?: (fn: (play: PlayState) => PlayState) => void;
+  onPlay?: PlayUpdater;
   /** The character's full inventory — needed to show affixed attachments. */
   inventory?: InventoryItem[];
   /** "Individual day tracking of rations" option — suppress the Rations days counter. */
@@ -251,7 +252,7 @@ export function ItemDetail({
                 <span className="sd-uses-row" key={u.id}>
                   <button
                     className="sd-uses-btn"
-                    onClick={() => onPlay((p) => setItemCounter(p, id, u.id, chargesFor(u, u.current - 1)))}
+                    onClick={() => onPlay((p) => setItemCounter(p, id, u.id, chargesFor(u, u.current - 1)), `uses:${id}:${u.id}`)}
                     disabled={u.current <= 0}
                     aria-label="Spend a use"
                   >
@@ -262,7 +263,7 @@ export function ItemDetail({
                   </span>
                   <button
                     className="sd-uses-btn"
-                    onClick={() => onPlay((p) => setItemCounter(p, id, u.id, chargesFor(u, u.current + 1)))}
+                    onClick={() => onPlay((p) => setItemCounter(p, id, u.id, chargesFor(u, u.current + 1)), `uses:${id}:${u.id}`)}
                     disabled={u.current >= u.max}
                     aria-label="Restore a use"
                   >
@@ -280,7 +281,7 @@ export function ItemDetail({
               <span className="sd-uses-row">
                 <button
                   className="sd-uses-btn"
-                  onClick={() => onPlay((p) => setItemQuantity(p, id, inv.quantity - 1))}
+                  onClick={() => onPlay((p) => setItemQuantity(p, id, inv.quantity - 1), `qty:${id}`)}
                   disabled={inv.quantity <= 1}
                   aria-label="Decrease quantity"
                 >
@@ -291,7 +292,7 @@ export function ItemDetail({
                 </span>
                 <button
                   className="sd-uses-btn"
-                  onClick={() => onPlay((p) => setItemQuantity(p, id, inv.quantity + 1))}
+                  onClick={() => onPlay((p) => setItemQuantity(p, id, inv.quantity + 1), `qty:${id}`)}
                   aria-label="Increase quantity"
                 >
                   <i className="ti ti-plus" aria-hidden="true" />
@@ -331,7 +332,8 @@ export function ItemDetail({
               <button
                 className="sd-remove-btn"
                 aria-label="Remove item"
-                onClick={() => {
+                onClick={async () => {
+                  if (!(await confirmDialog({ title: `Remove ${item.name}?`, message: 'This removes the item (and any runes or attachments on it) from your inventory. You can undo with Ctrl+Z.', confirmLabel: 'Remove', danger: true }))) return;
                   onPlay((p) => removeInventoryItem(p, id));
                   onClose();
                 }}

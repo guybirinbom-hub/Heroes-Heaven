@@ -8,6 +8,7 @@ import {
   type BuildState,
   CUSTOM_BACKGROUND_ID,
   additionalClassSkills,
+  backgroundTrainedSkill,
   bonusLanguageSlots,
   type BoostSlot,
   boostSlots,
@@ -224,6 +225,7 @@ export function useBuilderActions(
           heritageId: her?.id ?? null,
           ancestryBoosts: slots.map(() => null),
           heritageSkill: null,
+          heritageFeatId: null,
           languages: [],
           featPicks,
           featChoices,
@@ -231,8 +233,8 @@ export function useBuilderActions(
       });
     },
     changeHeritage(id) {
-      // A new heritage may not grant a trained skill, so drop any stale one.
-      patch({ heritageId: id, heritageSkill: null });
+      // A new heritage may not grant a trained skill / a bonus feat, so drop any stale picks.
+      patch({ heritageId: id, heritageSkill: null, heritageFeatId: null });
     },
     setHeritageSkill(skill) {
       patch({ heritageSkill: skill });
@@ -249,7 +251,8 @@ export function useBuilderActions(
       }
       const b = content.backgrounds[id];
       const slots = b ? boostSlots(b.abilityBoosts) : [];
-      patch({ backgroundId: id, backgroundBoosts: slots.map(() => null) });
+      // A different background's skill choice no longer applies — clear the stale pick.
+      patch({ backgroundId: id, backgroundBoosts: slots.map(() => null), backgroundSkillChoice: null });
     },
     setCustomBackground(p) {
       setBuild((b) => ({ ...b, customBackground: { ...(b.customBackground ?? emptyCustomBackground()), ...p } }));
@@ -509,7 +512,8 @@ export function useBuilderActions(
         const locked = new Set<string>();
         if (cls) cls.trainedSkills.fixed.forEach((x) => locked.add(x));
         const bg = resolveBackground(b, content);
-        if (bg?.trainedSkill) locked.add(bg.trainedSkill);
+        const bgSkill = backgroundTrainedSkill(b, bg);
+        if (bgSkill) locked.add(bgSkill);
         if (b.heritageSkill) locked.add(b.heritageSkill);
         const sub = cls?.subclass?.options.find((o) => o.id === b.subclassId);
         sub?.grants?.skills?.forEach((x) => locked.add(x));
@@ -1691,9 +1695,25 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
   const ancSlots = !ancestry ? [] : altBoosts ? ([{ kind: 'free' }, { kind: 'free' }] as BoostSlot[]) : boostSlots(ancestry.abilityBoosts);
   const ancFixed = ancestry && !altBoosts ? fixedBoosts(ancestry.abilityBoosts) : [];
   const bgSlots = background ? boostSlots(background.abilityBoosts) : [];
+  const bgFixed = background ? fixedBoosts(background.abilityBoosts) : [];
   const subKey = subclassKeyAbility(build, content);
-  const keyChoice = !subKey && cls && cls.keyAbility.length > 1;
+  // A racket-style subclass offers a key-attribute CHOICE (Dex or the racket's attribute) — show
+  // the picker restricted to those; otherwise a multi-key class shows its own list.
+  const subKeyOptions = cls?.subclass?.options.find((o) => o.id === build.subclassId)?.keyAbilityOptions;
+  const keyOptions = subKeyOptions?.length ? subKeyOptions : !subKey && cls ? cls.keyAbility : [];
+  const keyChoice = keyOptions.length > 1;
   const keyAbility = subKey ?? build.keyAbility ?? cls?.keyAbility[0] ?? null;
+  const heritage = build.heritageId ? content.heritages[build.heritageId] : undefined;
+  // Level-1 general feats (skill feats are a subset of general feats) for a feat-granting heritage
+  // (Versatile Human). Content-static, so memoize away per-keystroke re-filters.
+  const heritageFeatOpts = useMemo(
+    () =>
+      Object.values(content.feats)
+        .filter((f) => f.level <= 1 && (f.category === 'general' || f.category === 'skill'))
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((f) => ({ id: f.id, name: f.name, note: f.category === 'skill' ? 'skill feat' : undefined })),
+    [content.feats],
+  );
   // Surface non-common rarity (uncommon/rare from adventure-path content) as a note.
   const note = (r?: string) => (r && r !== 'common' ? r : undefined);
   // Changing class clears class-specific picks (feats, class skills, spells/cantrips, subclass
@@ -1751,7 +1771,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
               key={i}
               value={build.ancestryBoosts[i] ?? null}
               options={slot.kind === 'choice' && slot.options ? slot.options : ABILITIES}
-              exclude={build.ancestryBoosts}
+              exclude={altBoosts ? build.ancestryBoosts : [...build.ancestryBoosts, ...ancFixed, ...ancestry.abilityFlaws]}
               onChange={(v) => actions.setBoost('ancestryBoosts', i, v)}
             />
           ))}
@@ -1801,6 +1821,24 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           />
         </SubCard>
       )}
+      {/* A feat-granting heritage (Versatile Human): pick the level-1 general feat it grants, or
+          it's silently lost. Injected into the character by buildCharacter. */}
+      {heritage?.grantsGeneralFeat && (
+        <SubCard icon="ti-medal" label="Heritage general feat">
+          <SearchSelect
+            bare
+            label="General feat"
+            placeholder="Choose a general feat…"
+            value={build.heritageFeatId}
+            onChange={(id) => actions.patch({ heritageFeatId: id })}
+            options={heritageFeatOpts}
+          />
+          {(() => {
+            const f = build.heritageFeatId ? content.feats[build.heritageFeatId] : undefined;
+            return f?.description ? <ChoiceDetails name={f.name} flavor={f.description} descRefs={f.descRefs} /> : null;
+          })()}
+        </SubCard>
+      )}
       <SetupCard icon="ti-briefcase" label="Background">
         <SearchSelect
           bare
@@ -1819,10 +1857,15 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             descRefs={background.descRefs}
             grants={
               <div className="cc-grants">
-                {background.trainedSkill && (
+                {(background.trainedSkill || background.trainedSkillChoice?.length || background.trainedLore) && (
                   <span className="cc-g">
-                    <i className="ti ti-bulb" aria-hidden="true" /> Trained: {cap(background.trainedSkill)}
-                    {background.trainedLore ? `, ${cap(background.trainedLore)} Lore` : ''}
+                    <i className="ti ti-bulb" aria-hidden="true" /> Trained:{' '}
+                    {background.trainedSkill
+                      ? cap(background.trainedSkill)
+                      : (background.trainedSkillChoice ?? []).map(cap).join(' or ')}
+                    {background.trainedLore
+                      ? `${background.trainedSkill || background.trainedSkillChoice?.length ? ', ' : ''}${loreLabel(background.trainedLore)}`
+                      : ''}
                   </span>
                 )}
                 {background.grantedFeatId && content.feats[background.grantedFeatId] && (
@@ -1834,16 +1877,36 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
         )}
       </SetupCard>
       {background && bgSlots.length > 0 && (
-        <SubCard icon="ti-arrow-up" label={`Background boost${bgSlots.length > 1 ? 's' : ''}`}>
+        <SubCard
+          icon="ti-arrow-up"
+          label={`Background boost${bgSlots.length > 1 ? 's' : ''}${bgFixed.length ? ` · +${bgFixed.map((a) => ABILITY_LABEL[a]).join(', ')}` : ''}`}
+        >
           {bgSlots.map((slot, i) => (
             <AbilitySelect
               key={i}
               value={build.backgroundBoosts[i] ?? null}
               options={slot.kind === 'choice' && slot.options ? slot.options : ABILITIES}
-              exclude={build.backgroundBoosts}
+              exclude={[...build.backgroundBoosts, ...bgFixed]}
               onChange={(v) => actions.setBoost('backgroundBoosts', i, v)}
             />
           ))}
+        </SubCard>
+      )}
+      {/* A "trained in your choice of X or Y" background: pick which skill it trains (unpicked
+          defaults to the first option, so the character is legal either way). */}
+      {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && !!background.trainedSkillChoice?.length && (
+        <SubCard icon="ti-bulb" label="Background skill">
+          <PopupSelect
+            title="Background trained skill"
+            placeholder="Choose a skill"
+            value={
+              build.backgroundSkillChoice && background.trainedSkillChoice.includes(build.backgroundSkillChoice)
+                ? build.backgroundSkillChoice
+                : ''
+            }
+            onChange={(v) => actions.patch({ backgroundSkillChoice: (v || null) as SkillId | null })}
+            options={background.trainedSkillChoice.map((s) => ({ value: s, label: cap(s) }))}
+          />
         </SubCard>
       )}
       {showCustomBg && build.backgroundId === CUSTOM_BACKGROUND_ID && (
@@ -1878,7 +1941,11 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
       {cls && (
         <SubCard icon="ti-rosette" label="Key attribute">
           {keyChoice ? (
-            <AbilitySelect value={build.keyAbility} options={cls.keyAbility} onChange={(v) => actions.patch({ keyAbility: v })} />
+            <AbilitySelect
+              value={build.keyAbility && keyOptions.includes(build.keyAbility) ? build.keyAbility : null}
+              options={keyOptions}
+              onChange={(v) => actions.patch({ keyAbility: v })}
+            />
           ) : (
             <span className="fixed-val">{keyAbility ? ABILITY_LABEL[keyAbility] : '—'}</span>
           )}
@@ -2436,7 +2503,8 @@ export function SkillEditor({ build, actions, content }: EditorProps) {
   const addlCount = additionalClassSkills(build, content);
   const locked = new Set<string>();
   if (cls) cls.trainedSkills.fixed.forEach((s) => locked.add(s));
-  if (background?.trainedSkill) locked.add(background.trainedSkill);
+  const bgSkill = backgroundTrainedSkill(build, background);
+  if (bgSkill) locked.add(bgSkill);
   subOption?.grants?.skills?.forEach((s) => locked.add(s));
   // A heritage-granted skill (Skilled human) is locked too — chosen via its own picker,
   // not consumable as a class pick (matches toggleSkill's locked set).

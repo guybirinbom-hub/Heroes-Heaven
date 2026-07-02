@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Character } from '../rules/types';
-import { addNotePage, nextNoteId, removeNotePage, updateNotePage, type PlayState } from '../rules/play';
+import { addNotePage, nextNoteId, removeNotePage, updateNotePage, type PlayUpdater } from '../rules/play';
 import { RefSearchModal, refLinkHtml, type RefTarget } from './RichEditor';
 import { confirmDialog } from './confirm';
 import { DescBody } from './DescBody';
@@ -295,7 +295,7 @@ function IconPickerModal({
   );
 }
 
-export function NotesTab({ character, onPlay }: { character: Character; onPlay?: (fn: (play: PlayState) => PlayState) => void }) {
+export function NotesTab({ character, onPlay }: { character: Character; onPlay?: PlayUpdater }) {
   const pages = character.notes;
   const [activeId, setActiveId] = useState<string | null>(pages[0]?.id ?? null);
   const [query, setQuery] = useState('');
@@ -421,7 +421,8 @@ export function NotesTab({ character, onPlay }: { character: Character; onPlay?:
               <input
                 className="editor-title-input"
                 value={active.title}
-                onChange={(e) => onPlay((pl) => updateNotePage(pl, active.id, { title: e.target.value }))}
+                // Writes per keystroke — coalesce so typing a title is one undo step, not one per key.
+                onChange={(e) => onPlay((pl) => updateNotePage(pl, active.id, { title: e.target.value }), `note-title:${active.id}`)}
               />
             ) : (
               <div className="editor-title">{active.title}</div>

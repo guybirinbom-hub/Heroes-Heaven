@@ -1,5 +1,5 @@
 import { type ReactNode, useId, useMemo, useState } from 'react';
-import { attachItem, detachItem, removeInventoryItem, setItemQuantity, updateInventoryItem, type PlayState } from '../rules/play';
+import { attachItem, detachItem, removeInventoryItem, setItemQuantity, updateInventoryItem, type PlayUpdater } from '../rules/play';
 import { canAttachTo } from '../rules/attachments';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { RUNE_SPEC } from './filterSpecs';
@@ -213,7 +213,7 @@ export function ItemEditorModal({
   /** Highest spell rank a bound scroll/wand may hold (caps the rank picker). */
   maxSpellRank?: number;
   /** Mutate play state — needed to etch runes / affix attachments on the instance. */
-  onPlay?: (fn: (play: PlayState) => PlayState) => void;
+  onPlay?: PlayUpdater;
   onSave: (item: Item) => void;
   onClose: () => void;
 }) {
@@ -733,7 +733,7 @@ function RuneEditor({
   inv: InventoryItem;
   item: Item;
   content: ContentDatabase;
-  onPlay: (fn: (play: PlayState) => PlayState) => void;
+  onPlay: PlayUpdater;
 }) {
   const [pickingSlot, setPickingSlot] = useState<number | null>(null);
   // Property runes carry their rich data (description/traits/level) only on their equipment twin
@@ -931,7 +931,7 @@ function AttachmentsSection({
   hostItem: Item;
   inventory: InventoryItem[];
   content: ContentDatabase;
-  onPlay: (fn: (play: PlayState) => PlayState) => void;
+  onPlay: PlayUpdater;
 }) {
   if (!['weapon', 'armor', 'shield'].includes(hostItem.itemType)) return null;
   const attached = inventory.filter((i) => i.attachedTo === host.instanceId);

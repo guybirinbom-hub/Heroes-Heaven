@@ -9026,6 +9026,7 @@
       "magical"
     ],
     "rarity": "common",
+    "apexAttribute": "str",
     "description": "Only the leader of an army could wear this diamond and ruby-encrusted scabbard that somehow always remains shiny no matter how terrible the conditions. While wearing the scabbard, you feel exceptionally powerful, and you gain a +3 item bonus to Athletics checks. When you invest the scabbard, you either increase your Strength modifier by 1 or increase it to +4, whichever would give you a higher value. The commandant’s scabbard holds one melee weapon of 1 Bulk or lighter. Whenever a weapon is drawn from the scabbard, it gains a +4 status bonus to damage for 1 round. Activate—Commanding Draw Single Action (fortune) Frequency once per hour; Requirements You have a weapon sheathed in your commandant’s scabbard ; Effect You Interact to draw your weapon from your scabbard and Strike with it. On that Strike, you can roll twice and take the better result.",
     "source": {
       "book": "Pathfinder Battlecry!",

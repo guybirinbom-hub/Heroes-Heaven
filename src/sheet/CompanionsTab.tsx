@@ -32,7 +32,7 @@ import {
   toggleCompanionItemFlag,
   toggleCompanionMode,
   updatePlayCompanion,
-  type PlayState,
+  type PlayUpdater,
 } from '../rules/play';
 import { formatMod } from '../rules/derive';
 import { HpControl } from './HpControl';
@@ -297,7 +297,7 @@ function abilityLine(a: AnimalCompanionBlock['abilities']): string {
   return (['str', 'dex', 'con', 'int', 'wis', 'cha'] as const).map((k) => `${cap(k)} ${formatMod(a[k])}`).join(', ');
 }
 
-function CompanionConditions({ compId, conditions, modes, content, onPlay, onOpen }: { compId: string; conditions: ActiveCondition[]; modes: ModeDef[]; content: ContentDatabase; onPlay?: (fn: (play: PlayState) => PlayState) => void; onOpen: () => void }) {
+function CompanionConditions({ compId, conditions, modes, content, onPlay, onOpen }: { compId: string; conditions: ActiveCondition[]; modes: ModeDef[]; content: ContentDatabase; onPlay?: PlayUpdater; onOpen: () => void }) {
   if (!onPlay && conditions.length === 0 && modes.length === 0) return null;
   return (
     <div className="sb-conditions">
@@ -311,9 +311,9 @@ function CompanionConditions({ compId, conditions, modes, content, onPlay, onOpe
             </InfoTerm>
             {def?.valued && onPlay ? (
               <span className="cond-pill-step">
-                <button aria-label="Decrease" onClick={() => onPlay((p) => setCompanionConditionValue(p, compId, c.id, (c.value ?? 1) - 1))}>−</button>
+                <button aria-label="Decrease" onClick={() => onPlay((p) => setCompanionConditionValue(p, compId, c.id, (c.value ?? 1) - 1), `ccond:${compId}:${c.id}`)}>−</button>
                 {c.value ?? 1}
-                <button aria-label="Increase" onClick={() => onPlay((p) => setCompanionConditionValue(p, compId, c.id, (c.value ?? 1) + 1))}>+</button>
+                <button aria-label="Increase" onClick={() => onPlay((p) => setCompanionConditionValue(p, compId, c.id, (c.value ?? 1) + 1), `ccond:${compId}:${c.id}`)}>+</button>
               </span>
             ) : (
               c.value ? ' ' + c.value : ''
@@ -749,7 +749,7 @@ function VehicleBlock({
 
 /* ============================ Inventory (player-style, Bulk-managed) ============================ */
 
-function CompanionInventory({ cfg, content, onPlay, onAdd, bulkMax }: { cfg: CompanionConfig; content: ContentDatabase; onPlay: (fn: (play: PlayState) => PlayState) => void; onAdd: () => void; bulkMax?: number }) {
+function CompanionInventory({ cfg, content, onPlay, onAdd, bulkMax }: { cfg: CompanionConfig; content: ContentDatabase; onPlay: PlayUpdater; onAdd: () => void; bulkMax?: number }) {
   const items = cfg.inventory ?? [];
   const carried = Math.round(items.reduce((sum, inv) => sum + (content.items[inv.itemId]?.bulk || 0) * inv.quantity, 0) * 10) / 10;
   const over = bulkMax != null && carried > bulkMax;
@@ -788,11 +788,11 @@ function CompanionInventory({ cfg, content, onPlay, onAdd, bulkMax }: { cfg: Com
                   </button>
                 )}
                 <span className="inv-qtystep">
-                  <button aria-label="Decrease quantity" disabled={inv.quantity <= 1} onClick={() => onPlay((p) => setCompanionItemQty(p, cfg.id, inv.instanceId, inv.quantity - 1))}>
+                  <button aria-label="Decrease quantity" disabled={inv.quantity <= 1} onClick={() => onPlay((p) => setCompanionItemQty(p, cfg.id, inv.instanceId, inv.quantity - 1), `cqty:${cfg.id}:${inv.instanceId}`)}>
                     <i className="ti ti-minus" aria-hidden="true" />
                   </button>
                   <span>{inv.quantity}</span>
-                  <button aria-label="Increase quantity" onClick={() => onPlay((p) => setCompanionItemQty(p, cfg.id, inv.instanceId, inv.quantity + 1))}>
+                  <button aria-label="Increase quantity" onClick={() => onPlay((p) => setCompanionItemQty(p, cfg.id, inv.instanceId, inv.quantity + 1), `cqty:${cfg.id}:${inv.instanceId}`)}>
                     <i className="ti ti-plus" aria-hidden="true" />
                   </button>
                 </span>
@@ -814,7 +814,7 @@ const MATURITIES = ['young', 'mature', 'nimble', 'savage', 'specialized'];
 /** An eidolon's unarmed attack damage type is its form's physical type (GM may allow others). */
 const EID_DMG_TYPES: DamageType[] = ['bludgeoning', 'piercing', 'slashing'];
 
-function EditChoices({ cfg, content, onPlay, onAbilities, onSpecialization }: { cfg: CompanionConfig; content: ContentDatabase; onPlay: (fn: (play: PlayState) => PlayState) => void; onAbilities: () => void; onSpecialization: () => void }) {
+function EditChoices({ cfg, content, onPlay, onAbilities, onSpecialization }: { cfg: CompanionConfig; content: ContentDatabase; onPlay: PlayUpdater; onAbilities: () => void; onSpecialization: () => void }) {
   const set = (patch: Partial<CompanionConfig>) => onPlay((p) => updatePlayCompanion(p, cfg.id, patch));
   const ec: EidolonConfig = cfg.eidolon ?? {};
   const setEid = (patch: Partial<EidolonConfig>) => set({ eidolon: { ...ec, ...patch } });
@@ -996,7 +996,7 @@ function EditChoices({ cfg, content, onPlay, onAbilities, onSpecialization }: { 
 
 /* ============================ Main tab ============================ */
 
-export function CompanionsTab({ character, content, onPlay, onSaveMode, onDeleteMode, charKey }: { character: Character; content: ContentDatabase; onPlay?: (fn: (play: PlayState) => PlayState) => void; onSaveMode?: (mode: ModeDef) => void; onDeleteMode?: (id: string) => void; charKey?: string }) {
+export function CompanionsTab({ character, content, onPlay, onSaveMode, onDeleteMode, charKey }: { character: Character; content: ContentDatabase; onPlay?: PlayUpdater; onSaveMode?: (mode: ModeDef) => void; onDeleteMode?: (id: string) => void; charKey?: string }) {
   const explicit = character.companions ?? [];
   const explicitIds = new Set(explicit.map((c) => c.id));
   const autoEidolon: CompanionConfig[] =
@@ -1142,7 +1142,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           active={condsOf(condFor)}
           onAdd={(id, valued) => onPlay((p) => addCompanionCondition(p, condFor, id, valued ? 1 : undefined))}
           onRemove={(id) => onPlay((p) => removeCompanionCondition(p, condFor, id))}
-          onSetValue={(id, value) => onPlay((p) => setCompanionConditionValue(p, condFor, id, value))}
+          onSetValue={(id, value) => onPlay((p) => setCompanionConditionValue(p, condFor, id, value), `ccond:${condFor}:${id}`)}
           onClose={() => setCondFor(null)}
           modesEnabled
           library={Object.values(content.modes).filter((m) => !CATALOG_MODE_MAP[m.id] && (!m.charId || m.charId === charKey))}

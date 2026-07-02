@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Item, InventoryItem } from '../rules/types';
 import { SKILLS } from '../rules/types';
-import { setItemMonsterPart, type PlayState } from '../rules/play';
+import { setItemMonsterPart, type PlayUpdater } from '../rules/play';
 import {
   type MpItemKind,
   weaponRefinement,
@@ -59,7 +59,7 @@ export function MonsterPartsSection({
   inv: InventoryItem;
   item: Item;
   charLevel: number;
-  onPlay: (fn: (play: PlayState) => PlayState) => void;
+  onPlay: PlayUpdater;
 }) {
   const [adding, setAdding] = useState(false);
   const auto = autoKind(item);

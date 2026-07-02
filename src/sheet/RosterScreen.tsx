@@ -6,29 +6,40 @@ import { deriveMaxHp } from '../rules/derive';
 import { exportWg, exportNative, importCharacter, type ImportReport } from '../data/transfer';
 import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
+import { sanitizeImportedPortrait } from './imageUtil';
 import { confirmDialog } from './confirm';
 import { HeroesHeavenLogo } from './Logo';
+import { downloadText } from './download';
 
 type Filter = 'all' | 'active' | 'archived';
-
-/** Trigger a browser download of a text file. */
-function downloadText(filename: string, text: string): void {
-  const blob = new Blob([text], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
 
 function fileSlug(name: string): string {
   return (name || 'character').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'character';
 }
 
-/** The character roster: search, filter, import/export, and per-character cards with actions. */
+/** Shrink any embedded data-URL portraits an imported file carries (a WG export stores the image
+ *  verbatim — multi-MB base64 that would be deep-copied into every undo step). Same downscale as
+ *  an in-app upload; a huge portrait that can't be re-encoded is dropped rather than stored raw. */
+async function sanitizePortraits(saved: SavedChar): Promise<SavedChar> {
+  const out = { ...saved };
+  const buildPortrait = saved.character.appearance?.portrait;
+  const cleanBuild = await sanitizeImportedPortrait(buildPortrait);
+  if (cleanBuild !== buildPortrait) {
+    out.character = { ...out.character, appearance: { ...out.character.appearance, portrait: cleanBuild } };
+  }
+  const playPortrait = saved.play?.appearance?.portrait;
+  if (saved.play?.appearance) {
+    const cleanPlay = await sanitizeImportedPortrait(playPortrait);
+    if (cleanPlay !== playPortrait) {
+      out.play = { ...saved.play, appearance: { ...saved.play.appearance, portrait: cleanPlay } };
+    }
+  }
+  return out;
+}
+
+/** The character roster: search, filter, import/export, and per-character cards with actions.
+ *  Renders straight from localStorage — `content` is null while core.json is still loading, in
+ *  which case content-derived card details (HP, ancestry/class names) show placeholders. */
 export function RosterScreen({
   roster,
   activeId,
@@ -45,7 +56,7 @@ export function RosterScreen({
 }: {
   roster: SavedChar[];
   activeId: string;
-  content: ContentDatabase;
+  content: ContentDatabase | null;
   onOpen: (id: string) => void;
   onNew: () => void;
   onImport: (saved: SavedChar, customItems?: Item[]) => void | Promise<boolean>;
@@ -71,8 +82,8 @@ export function RosterScreen({
     if (filter === 'active' && c.archived) return false;
     if (filter === 'archived' && !c.archived) return false;
     if (!q) return true;
-    const anc = c.character.ancestryId ? content.ancestries[c.character.ancestryId]?.name : '';
-    const cls = c.character.classId ? content.classes[c.character.classId]?.name : '';
+    const anc = content && c.character.ancestryId ? content.ancestries[c.character.ancestryId]?.name : '';
+    const cls = content && c.character.classId ? content.classes[c.character.classId]?.name : '';
     return [c.character.name, anc, cls].some((s) => (s ?? '').toLowerCase().includes(q));
   });
 
@@ -83,7 +94,8 @@ export function RosterScreen({
   ];
 
   const handleFile = (file: File | undefined) => {
-    if (!file) return;
+    if (!file || !content) return; // import needs the content database to resolve entries
+
     const reader = new FileReader();
     reader.onload = async () => {
       try {
@@ -91,7 +103,7 @@ export function RosterScreen({
         setError(null);
         // onImport may prompt on a name collision; it returns false if the user cancelled. Only show
         // the success report when the import was actually applied.
-        const applied = await onImport(saved, customItems);
+        const applied = await onImport(await sanitizePortraits(saved), customItems);
         if (applied !== false) setResult(report);
       } catch (e) {
         setResult(null);
@@ -103,9 +115,10 @@ export function RosterScreen({
   };
 
   const doExport = (c: SavedChar, target: 'wg' | 'native') => {
+    if (target === 'wg' && !content) return; // WG export resolves against the content database
     setExportFor(null);
     try {
-      const text = target === 'wg' ? exportWg(c, content) : exportNative(c);
+      const text = target === 'wg' && content ? exportWg(c, content) : exportNative(c);
       downloadText(`${fileSlug(c.character.name)}${target === 'wg' ? '.wg' : '.codex'}.json`, text);
     } catch (e) {
       setError(`Export failed: ${(e as Error).message}`);
@@ -121,7 +134,7 @@ export function RosterScreen({
         <WindowControls />
         <PageMenu
           items={onOpenHomebrew ? [{ label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew }] : []}
-          modes={content.modes}
+          modes={content?.modes}
           characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
           onSaveMode={onSaveMode}
           onDeleteMode={onDeleteMode}
@@ -134,10 +147,16 @@ export function RosterScreen({
             <h1 className="roster-title">Characters</h1>
             <div className="roster-sub">
               {activeCount} active{archivedCount ? ` · ${archivedCount} archived` : ''}
+              {!content && <span className="roster-loading"> · loading game data…</span>}
             </div>
           </div>
           <div className="roster-hero-actions">
-            <button className="add-item-btn ghost" onClick={() => fileRef.current?.click()}>
+            <button
+              className="add-item-btn ghost"
+              disabled={!content}
+              title={content ? undefined : 'Available once game data finishes loading'}
+              onClick={() => fileRef.current?.click()}
+            >
               <i className="ti ti-upload" aria-hidden="true" /> Import
             </button>
             <button className="add-item-btn" onClick={onNew}>
@@ -172,10 +191,12 @@ export function RosterScreen({
 
         <div className="roster-grid">
           {shown.map((c) => {
-            const ch = applyPlayState(c.character, c.play, content);
-            const anc = ch.ancestryId ? content.ancestries[ch.ancestryId]?.name : undefined;
-            const cls = ch.classId ? content.classes[ch.classId]?.name : undefined;
-            const hpMax = deriveMaxHp(ch, content);
+            // Before the content database arrives, render from the saved character alone —
+            // the derived stats (current/max HP) need content, so that row shows a placeholder.
+            const ch = content ? applyPlayState(c.character, c.play, content) : c.character;
+            const anc = content && ch.ancestryId ? content.ancestries[ch.ancestryId]?.name : undefined;
+            const cls = content && ch.classId ? content.classes[ch.classId]?.name : undefined;
+            const hpMax = content ? deriveMaxHp(ch, content) : null;
             const initials = ch.name.slice(0, 2).toUpperCase();
             return (
               <div className={'rcard' + (c.id === activeId ? ' active' : '')} key={c.id}>
@@ -189,18 +210,22 @@ export function RosterScreen({
                       {c.archived && <span className="rcard-arch">archived</span>}
                     </div>
                     <div className="rcard-meta">
-                      {anc ?? '—'} · {cls ?? '—'} · level {ch.level}
+                      {content ? `${anc ?? '—'} · ${cls ?? '—'} · ` : ''}level {ch.level}
                     </div>
-                    <div className="rcard-stats">
-                      <span className="rcard-hp">
-                        <i className="ti ti-heart" aria-hidden="true" /> {ch.hitPoints.current} / {hpMax}
-                      </span>
-                      <span className="rcard-hero">
-                        {Array.from({ length: 3 }, (_, i) => (
-                          <span key={i} className={'pip' + (i < ch.heroPoints ? ' on' : '')} />
-                        ))}
-                      </span>
-                    </div>
+                    {hpMax !== null ? (
+                      <div className="rcard-stats">
+                        <span className="rcard-hp">
+                          <i className="ti ti-heart" aria-hidden="true" /> {ch.hitPoints.current} / {hpMax}
+                        </span>
+                        <span className="rcard-hero">
+                          {Array.from({ length: 3 }, (_, i) => (
+                            <span key={i} className={'pip' + (i < ch.heroPoints ? ' on' : '')} />
+                          ))}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="rcard-stats rcard-stats-loading">loading…</div>
+                    )}
                   </div>
                 </button>
                 <div className="rcard-actions">
@@ -213,7 +238,7 @@ export function RosterScreen({
                         <div className="rcard-export-back" onClick={() => setExportFor(null)} />
                         <div className="rcard-export-menu" role="menu">
                           <div className="rxm-q">Export to Wanderer&apos;s Guide?</div>
-                          <button role="menuitem" onClick={() => doExport(c, 'wg')}>
+                          <button role="menuitem" disabled={!content} onClick={() => doExport(c, 'wg')}>
                             <i className="ti ti-external-link" aria-hidden="true" /> Yes — Wanderer&apos;s Guide
                           </button>
                           <button role="menuitem" onClick={() => doExport(c, 'native')}>

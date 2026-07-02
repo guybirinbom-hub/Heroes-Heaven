@@ -16,7 +16,7 @@ import {
   setSlotsUsed,
   toggleExpended,
   toggleInnateCast,
-  type PlayState,
+  type PlayUpdater,
 } from '../rules/play';
 import { itemCounters, chargesFor, chargeCounterId, chargeCostToCast, canCastFromItem } from '../rules/itemUses';
 import { getMpProperty, imbuementGrantedSpells } from '../rules/monsterParts';
@@ -205,7 +205,7 @@ function ManageSpellsModal({
   entry: SpellcastingEntry;
   character: Character;
   content: ContentDatabase;
-  onPlay: (fn: (play: PlayState) => PlayState) => void;
+  onPlay: PlayUpdater;
   onClose: () => void;
 }) {
   useEscapeClose(onClose);
@@ -525,7 +525,7 @@ export function SpellsTab({
 }: {
   character: Character;
   content: ContentDatabase;
-  onPlay?: (fn: (play: PlayState) => PlayState) => void;
+  onPlay?: PlayUpdater;
   onOpenStat?: (ref: StatRef) => void;
 }) {
   const isMobile = useIsMobile();

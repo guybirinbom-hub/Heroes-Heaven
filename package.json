@@ -1,7 +1,7 @@
 {
   "name": "pf2e-codex",
   "private": true,
-  "version": "0.1.4",
+  "version": "0.1.5",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "android": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-android.ps1",
+    "android:release": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-android-release.ps1",
     "test": "vitest run",
     "test:watch": "vitest"
   },

@@ -88,7 +88,7 @@ export const COMPANION_FORMULA: {
       speedBonus: 0, abilityBoosts: { str: 3, dex: 2, con: 2, wis: 2 }, damageDice: 2, flatDamage: 3,
     },
     specialized: {
-      ranks: { ac: 'trained', saves: 'master', perception: 'master', attack: 'expert', signatureSkills: 'expert', otherSkills: 'trained' },
+      ranks: { ac: 'trained', saves: 'master', perception: 'master', attack: 'expert', signatureSkills: 'master', otherSkills: 'trained' },
       speedBonus: 0, abilityBoosts: { str: 2, dex: 4, con: 2, wis: 2, int: 2 }, damageDice: 3, flatDamage: 4,
     },
   },
@@ -251,7 +251,9 @@ export function deriveAnimalCompanion(
   const extraSpecSkills = (spec?.skills ?? []).map((s) => s.skill).filter((s) => !sig.has(s) && !UNIVERSAL_SKILLS.includes(s));
   const skillList = [...new Set<SkillId>([...UNIVERSAL_SKILLS, ...type.skills, ...extraSpecSkills])];
   const skills: StatMod[] = skillList.map((sk) => {
-    let rank = sig.has(sk) || UNIVERSAL_SKILLS.includes(sk) ? m.ranks.signatureSkills : m.ranks.otherSkills;
+    // Only the companion's SIGNATURE skill advances with maturity; the universal Acrobatics/Athletics
+    // (and any other non-signature skill) stay trained (otherSkills rank).
+    let rank = sig.has(sk) ? m.ranks.signatureSkills : m.ranks.otherSkills;
     if (specSkill.has(sk)) rank = rankMax(rank, specSkill.get(sk));
     const ability = SKILL_ABILITY[sk];
     const checkPen = ability === 'str' || ability === 'dex' ? gear.checkPenalty : 0;

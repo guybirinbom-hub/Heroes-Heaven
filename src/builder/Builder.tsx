@@ -13,7 +13,9 @@ import {
   checkPrerequisites,
   kineticistElements,
   levelGrants,
+  setupMissing,
 } from '../rules/build';
+import { confirmDialog } from '../sheet/confirm';
 import { sourceCatalog, enabledBookSet } from '../rules/sources';
 import { classFeatureDescription } from '../rules/featureText';
 import {
@@ -510,6 +512,33 @@ export function Builder({
   // below the target level — higher levels aren't part of the character yet.)
   const requiredUnmet = (lvl: number) => pendingCount(lvl) > 0;
 
+  // The level-0/Setup required choices still unmade (ancestry/background/class, boosts, key
+  // attribute, …) — drives the level-0 chip marker and the Create/Save confirmation.
+  const setupMissingList = useMemo(() => setupMissing(build, content), [build, content]);
+
+  const submit = async () => {
+    // Under-built characters are allowed (never hard-block), but confirm what's missing first.
+    if (setupMissingList.length > 0) {
+      const ok = await confirmDialog({
+        title: initial ? 'Save with choices left?' : 'Create with choices left?',
+        message: (
+          <>
+            <p>These character-creation choices haven&apos;t been made yet:</p>
+            <ul style={{ margin: '6px 0 0', paddingLeft: 20 }}>
+              {setupMissingList.map((m) => (
+                <li key={m}>{m}</li>
+              ))}
+            </ul>
+          </>
+        ),
+        confirmLabel: initial ? 'Save anyway' : 'Create anyway',
+        cancelLabel: 'Keep editing',
+      });
+      if (!ok) return;
+    }
+    onCreate(build);
+  };
+
   const nextRank = (cur: ProficiencyRank, lvl: number): ProficiencyRank => {
     const ni = Math.min(PROFICIENCY_RANKS.indexOf(cur) + 1, PROFICIENCY_RANKS.indexOf(skillIncreaseCap(lvl)));
     return PROFICIENCY_RANKS[Math.max(ni, PROFICIENCY_RANKS.indexOf(cur))];
@@ -556,7 +585,7 @@ export function Builder({
         <button className="b-cancel" onClick={onCancel}>
           Cancel
         </button>
-        <button className="b-create" onClick={() => onCreate(build)}>
+        <button className="b-create" onClick={() => void submit()}>
           {initial ? 'Save changes' : 'Create'}
         </button>
       </header>
@@ -564,7 +593,9 @@ export function Builder({
       <div className="lstrip">
         {strip.map((s) => {
           const future = typeof s === 'number' && s > build.level;
-          const pending = typeof s === 'number' && s >= 1 && s <= build.level && requiredUnmet(s);
+          const pending =
+            (typeof s === 'number' && s >= 1 && s <= build.level && requiredUnmet(s)) ||
+            (s === 0 && setupMissingList.length > 0);
           return (
             <button
               key={String(s)}
@@ -601,6 +632,16 @@ export function Builder({
                 <div className="lvl-page-head">
                   <span className="bsec-title">Level 0</span>
                   <span className="lvl-sub-tag">character creation</span>
+                  {setupMissingList.length > 0 ? (
+                    <span className="lvl-pending-tag" title={setupMissingList.join(', ')}>
+                      <i className="ti ti-alert-circle" aria-hidden="true" /> {setupMissingList.length}{' '}
+                      {setupMissingList.length === 1 ? 'choice' : 'choices'} left
+                    </span>
+                  ) : (
+                    <span className="lvl-done-tag">
+                      <i className="ti ti-check" aria-hidden="true" /> all set
+                    </span>
+                  )}
                 </div>
                 <div className="lvl-group">
                   <div className="lvl-group-h">
@@ -837,6 +878,14 @@ export function Builder({
                           {g.featSlots.map((catg, i) => {
                       const key = slotKey(lvl, catg, i);
                       const picked = build.featPicks[key];
+                      // Re-validate an already-picked feat: later edits (boosts, removed feats, a
+                      // different subclass) can break prerequisites that were met when picking.
+                      // Warn only — never auto-remove — and respect a deliberate override.
+                      const pickedFeat = picked ? content.feats[picked] : undefined;
+                      const overridden = !!picked && (build.overrides?.allowedFeats?.includes(picked) ?? false);
+                      const revalidation =
+                        pickedFeat && !overridden ? checkPrerequisites(pickedFeat, featPrereqChar, content) : null;
+                      const nowInvalid = !!revalidation && !revalidation.met;
                       return (
                         <div className="lvl-slot-wrap" key={key}>
                           <div className="lvl-slot">
@@ -852,6 +901,14 @@ export function Builder({
                                 <div className="lvl-card-label">{FEAT_LABEL[catg]}</div>
                                 <div className="lvl-card-val">{picked ? content.feats[picked]?.name ?? picked : 'Choose…'}</div>
                               </div>
+                              {picked && nowInvalid && (
+                                <span
+                                  className="lvl-invalid"
+                                  title={`Prerequisites no longer met: ${revalidation!.unmet.join('; ')}`}
+                                >
+                                  <i className="ti ti-alert-triangle" aria-hidden="true" />
+                                </span>
+                              )}
                               {!picked && <span className="lvl-pending">!</span>}
                             </button>
                             {picked && (
@@ -1121,6 +1178,9 @@ export function Builder({
               const unmet = !pre.met || dedBlocked;
               // Overrides (creative editing): a feat you don't qualify for isn't dead-greyed — you can
               // "Take anyway", which records this one feat as a deliberate override (no global switch).
+              // Offered ONLY when the Overrides feature is enabled; otherwise unmet feats stay blocked
+              // (no hidden override state).
+              const canOverride = !!build.options?.overridesEnabled;
               const allowed = build.overrides?.allowedFeats?.includes(f.id) ?? false;
               const node = descNodeOf(f, 'feats');
               return (
@@ -1146,7 +1206,7 @@ export function Builder({
                           {f.prerequisites.join(', ')}
                         </div>
                       )}
-                      {unmet && (
+                      {unmet && (allowed || canOverride) && (
                         <div className="picker-override-note">
                           {allowed ? 'Allowed via override.' : 'Override: you can take this anyway, ignoring the rule.'}
                         </div>
@@ -1155,7 +1215,7 @@ export function Builder({
                   }
                   onOpenDesc={node ? () => openDesc(node) : undefined}
                   selectLabel={
-                    unmet && !allowed ? (
+                    unmet && !allowed && canOverride ? (
                       <span className="ovr-take">
                         <i className="ti ti-alert-triangle" aria-hidden="true" /> Take anyway
                       </span>
@@ -1164,8 +1224,17 @@ export function Builder({
                     )
                   }
                   dim={unmet && !allowed}
+                  selectDisabled={unmet && !allowed && !canOverride}
+                  disabledReason={
+                    unmet && !allowed && !canOverride
+                      ? dedBlocked
+                        ? 'Take two feats from your current archetype first.'
+                        : 'Prerequisites not met.'
+                      : undefined
+                  }
                   onSelect={() => {
                     if (unmet && !allowed) {
+                      if (!canOverride) return;
                       actions.patch({
                         overrides: { ...build.overrides, allowedFeats: [...(build.overrides?.allowedFeats ?? []), f.id] },
                       });
