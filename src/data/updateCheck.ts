@@ -5,7 +5,7 @@
  */
 import { APP_VERSION } from '../version';
 
-const REPO = 'guybirinbom-hub/character-builder-';
+const REPO = 'guybirinbom-hub/Heroes-Heaven';
 export const RELEASES_PAGE = `https://github.com/${REPO}/releases/latest`;
 const LATEST_API = `https://api.github.com/repos/${REPO}/releases/latest`;
 

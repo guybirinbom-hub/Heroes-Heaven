@@ -3,17 +3,17 @@
 A fast, fully-offline **Pathfinder Second Edition (Remaster)** character builder and digital character sheet for **Windows and Android**. Build a character from level 1 to 20, then play from a complete interactive sheet — everything runs locally on your device, with no account and no internet connection required.
 
 <p align="center">
-  <a href="https://github.com/guybirinbom-hub/character-builder-/releases/latest/download/Heroes-Heaven-Setup.exe">
+  <a href="https://github.com/guybirinbom-hub/Heroes-Heaven/releases/latest/download/Heroes-Heaven-Setup.exe">
     <img alt="Download Heroes Heaven for Windows" src="https://img.shields.io/badge/Download-Windows%20Installer-5B4FC7?style=for-the-badge&logo=windows&logoColor=white&labelColor=2C2A4A" height="46">
   </a>
   &nbsp;&nbsp;
-  <a href="https://github.com/guybirinbom-hub/character-builder-/releases/latest/download/Heroes-Heaven-Android.apk">
+  <a href="https://github.com/guybirinbom-hub/Heroes-Heaven/releases/latest/download/Heroes-Heaven-Android.apk">
     <img alt="Download Heroes Heaven for Android" src="https://img.shields.io/badge/Download-Android%20APK-3DDC84?style=for-the-badge&logo=android&logoColor=white&labelColor=2C2A4A" height="46">
   </a>
 </p>
 
 <p align="center">
-  <sub>Latest Windows installer &amp; Android APK · <a href="https://github.com/guybirinbom-hub/character-builder-/releases">browse all releases</a></sub>
+  <sub>Latest Windows installer &amp; Android APK · <a href="https://github.com/guybirinbom-hub/Heroes-Heaven/releases">browse all releases</a></sub>
 </p>
 
 ---
