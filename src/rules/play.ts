@@ -123,6 +123,7 @@ export function initialPlay(ch: Character, content: ContentDatabase): PlayState 
   const max = deriveMaxHp(ch, content);
   const expendedSlots: Record<string, boolean> = {};
   const slotsUsed: Record<string, number> = {};
+  const innateUsed: Record<string, boolean> = {};
   for (const e of ch.spellcasting ?? []) {
     if (e.prepared)
       for (const [rankStr, slots] of Object.entries(e.prepared))
@@ -132,6 +133,9 @@ export function initialPlay(ch: Character, content: ContentDatabase): PlayState 
     if (e.slots)
       for (const [rankStr, pool] of Object.entries(e.slots))
         if (pool.used) slotsUsed[poolKey(e.id, Number(rankStr))] = pool.used;
+    // Seed already-cast innate spells (e.g. from a Wanderer's Guide import) so the first play
+    // mutation doesn't silently reset them — applyPlayState treats play.innateUsed as authoritative.
+    for (const spellId of e.innateUsed ?? []) innateUsed[`${e.id}:${spellId}`] = true;
   }
   return {
     damage: clamp(max - ch.hitPoints.current, 0, max),
@@ -142,6 +146,7 @@ export function initialPlay(ch: Character, content: ContentDatabase): PlayState 
     focusUsed: ch.focus ? clamp(ch.focus.max - ch.focus.current, 0, ch.focus.max) : 0,
     expendedSlots,
     slotsUsed,
+    ...(Object.keys(innateUsed).length ? { innateUsed } : {}),
     conditions: (ch.conditions ?? []).map((c) => ({ ...c })),
     inventory: (ch.inventory ?? []).map((i) => ({ ...i })),
     currency: { ...ch.currency },

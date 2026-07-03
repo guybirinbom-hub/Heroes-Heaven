@@ -202,7 +202,7 @@ export default function App() {
           setEditing(null);
           setMode('builder');
         }}
-        onImport={async (saved, customItems) => {
+        onImport={async (saved, customItems, customModes) => {
           const norm = (n: string) => n.trim().toLowerCase();
           const collide = roster.find((c) => norm(c.character.name) === norm(saved.character.name));
           let action: 'add' | 'update' | 'rename' = 'add';
@@ -222,15 +222,20 @@ export default function App() {
           }
           // Register any unrecognized imported items as custom homebrew items so the inventory resolves.
           (customItems ?? []).forEach(addCustomItem);
+          let finalId: string;
           if (action === 'update' && collide) {
             // Replace the existing entry in place (keep its roster id so the card/undo/active-id stay valid).
             setRoster((r) => r.map((c) => (c.id === collide.id ? { ...saved, id: collide.id, archived: c.archived ?? false } : c)));
             setActiveId(collide.id);
+            finalId = collide.id;
           } else {
             const entry = action === 'rename' ? { ...saved, character: { ...saved.character, name: uniqueName(saved.character.name, roster) } } : saved;
             setRoster((r) => [...r, entry]);
             setActiveId(entry.id);
+            finalId = entry.id;
           }
+          // Persist any imported Wanderer's Guide custom modes, scoped to the imported character.
+          (customModes ?? []).forEach((m) => saveModeDef({ ...m, charId: finalId }));
           return true;
         }}
         onDuplicate={(id) => {

@@ -11,12 +11,12 @@ import {
   collectChosenIds,
   canTakeNewDedication,
   checkPrerequisites,
-  kineticistElements,
   levelGrants,
   setupMissing,
 } from '../rules/build';
 import { confirmDialog } from '../sheet/confirm';
 import { sourceCatalog, enabledBookSet } from '../rules/sources';
+import { eligibleFeatsForSlot, findHiddenFeatMatches } from '../rules/featSlots';
 import { classFeatureDescription } from '../rules/featureText';
 import {
   resolveBackground,
@@ -24,7 +24,7 @@ import {
 } from '../rules/build';
 import { casterSlots, wizardSpellbookSize, cantripsKnown } from '../rules/spellcasting';
 import { activeCasterArchetype, archetypeSlots } from '../rules/casterArchetypes';
-import type { ContentDatabase, FeatCategory, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
+import type { ContentDatabase, Feat, FeatCategory, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
 import { AbilitySelect, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SourcesCard, START, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
@@ -112,7 +112,9 @@ export function Builder({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ovContent, build.enabledSources, build.mythicEnabled, build.kingmakerEnabled, sourceCat]);
   const actions = useBuilderActions(setBuild, ovContent);
-  const [sel, setSel] = useState<Sel>(0);
+  // Editing an existing character opens on the Setup page (options/sources/overrides at a glance);
+  // creating a new one starts on Level 0 (identity: ancestry/background/class).
+  const [sel, setSel] = useState<Sel>(initial ? 'setup' : 0);
   const [picker, setPicker] = useState<Picker | null>(null);
   // The full item catalog, sorted once, for the equipment picker's filter panel.
   // Class-feat picker: reveal archetype feats (multiclass/archetypes). Off by default.
@@ -141,49 +143,11 @@ export function Builder({
   const strip: Sel[] = ['setup', 0, ...Array.from({ length: build.level }, (_, i) => i + 1)];
   const slotKey = (lvl: number, cat: FeatCategory, idx: number) => `${lvl}:${cat}:${idx}`;
 
-  // Feats eligible for a given slot: right category + level, not already taken in
-  // another slot (a feat can only be taken once), and — for ancestry/class feats
-  // — gated to the chosen ancestry/class by trait.
-  const eligibleFor = (p: { level: number; category: FeatCategory; idx: number }) => {
-    const currentKey = slotKey(p.level, p.category, p.idx);
-    const taken = new Set<string>();
-    for (const [k, v] of Object.entries(build.featPicks)) if (v && k !== currentKey) taken.add(v);
-    const granted = resolveBackground(build, content)?.grantedFeatId;
-    if (granted) taken.add(granted);
-    return Object.values(content.feats).filter((f) => {
-      if (f.level > p.level) return false;
-      if (taken.has(f.id)) return false;
-      // Free Archetype slot: any archetype feat (these are stored as class-category feats carrying the
-      // 'archetype' trait, so match on the trait rather than the category).
-      if (p.category === 'archetype') return f.traits.includes('archetype');
-      // Mythic slot: any mythic-trait feat (callings + mythic destiny feats) at or below this level.
-      if (p.category === 'mythic') return f.traits.includes('mythic');
-      // A general feat slot may take any qualifying SKILL feat (skill feats are a subset of general
-      // feats). The reverse is not true — a skill slot takes only skill feats.
-      if (f.category !== p.category && !(p.category === 'general' && f.category === 'skill')) return false;
-      if (p.category === 'ancestry' && build.ancestryId && !f.traits.includes(build.ancestryId)) return false;
-      // Class slots take your class's feats OR any archetype feat (multiclass/archetypes). Dual Class
-      // also accepts the second class's feats.
-      if (
-        p.category === 'class' &&
-        build.classId &&
-        !f.traits.includes(build.classId) &&
-        !(build.variantRules?.dualClass && build.classId2 && f.traits.includes(build.classId2)) &&
-        !f.traits.includes('archetype')
-      )
-        return false;
-      // Kineticist impulses are gated to the elements of your kinetic gate (incl. elements gained via
-      // Fork the Path): an impulse feat is only available if it carries one of your elements.
-      if ((build.classId === 'kineticist' || (build.variantRules?.dualClass && build.classId2 === 'kineticist')) && f.traits.includes('impulse')) {
-        const elements = kineticistElements(build, build.level).map((id) => id.replace(/-gate$/, ''));
-        if (elements.length && !f.traits.some((t) => elements.includes(t))) return false;
-      }
-      // Fighter Combat/Improved Flexibility bonus slots take a fighter feat of level ≤8 (L9 slot) / ≤14 (L15).
-      if (p.category === 'bonus' && build.classId === 'fighter' && (!f.traits.includes('fighter') || f.level > p.level - 1))
-        return false;
-      return true;
-    });
-  };
+  // Feats eligible for a given slot (right category + level, not already taken, trait-gated to the
+  // chosen ancestry/class) — see eligibleFeatsForSlot. `db` defaults to the source-FILTERED content
+  // (what the picker offers); the picker also runs it against ovContent to explain hidden matches.
+  const eligibleFor = (p: { level: number; category: FeatCategory; idx: number }, db: ContentDatabase = content) =>
+    eligibleFeatsForSlot(build, db, p);
 
   // Caster info (for the Spells section + spell picker). A subclass can override
   // the tradition (e.g. a witch patron), so resolve the effective tradition.
@@ -977,8 +941,8 @@ export function Builder({
                                   placeholder="Choose a skill…"
                                   value={chosenIncrease ?? ''}
                                   onChange={(v) => actions.setSkillIncrease(lvl, (v || null) as ProficiencyKey | null)}
+                                  clearLabel="Clear"
                                   options={[
-                                    { value: '', label: '— none —' },
                                     ...skillOptions.map((k) => {
                                       const cur = baseSkills[k] ?? 'untrained';
                                       const next = naturalNextRank(cur);
@@ -1044,10 +1008,8 @@ export function Builder({
                                     placeholder="Choose a save…"
                                     value={picks[tier.n] ?? ''}
                                     onChange={(v) => actions.setPathToPerfection(tier.n, (v || null) as SaveId | null)}
-                                    options={[
-                                      { value: '', label: '— none —' },
-                                      ...saves.map(([v, label]) => ({ value: v, label, disabled: !allowed(v) })),
-                                    ]}
+                                    clearLabel="Clear"
+                                    options={saves.map(([v, label]) => ({ value: v, label, disabled: !allowed(v) }))}
                                   />
                                 </div>
                               </div>
@@ -1142,15 +1104,47 @@ export function Builder({
           .filter(([k, v]) => v && k !== pickerKey)
           .map(([, v]) => v);
         const dedicationOK = canTakeNewDedication(takenForRule, content);
+        const archHidden = isClassSlot && !showArch;
         const feats = eligibleFor(picker)
           // Class slots: hide archetype feats unless the Archetypes toggle is on.
-          .filter((f) => !isClassSlot || showArch || !f.traits.includes('archetype'))
+          .filter((f) => !archHidden || !f.traits.includes('archetype'))
           // When showing archetypes, surface the dedications (entry points) first.
           .sort((a, b) => {
             const ad = a.traits.includes('dedication') ? 0 : 1;
             const bd = b.traits.includes('dedication') ? 0 : 1;
             return ad - bd || a.level - b.level || a.name.localeCompare(b.name);
           });
+        // "Hide ineligible" filter predicate — mirrors the row's unmet/allowed logic below.
+        const featIneligible = (f: Feat) => {
+          if (build.overrides?.allowedFeats?.includes(f.id)) return false;
+          if (f.traits.includes('dedication') && !dedicationOK) return true;
+          return !checkPrerequisites(f, featPrereqChar, content).met;
+        };
+        // "Why is my feat missing?" — everything needed to diff a search against the FULL content
+        // (ovContent, the same pool the Overrides add-feat picker browses).
+        const shownIds = new Set(feats.map((f) => f.id));
+        const slotEligibleIds = new Set(eligibleFor(picker, ovContent).map((f) => f.id));
+        const enabledBooks = enabledBookSet(build.enabledSources);
+        // Picking a feat from a disabled book: confirm, then enable that book for this character —
+        // the feat then appears as a normal result (with the usual prerequisite gating). Never
+        // silently changes sources.
+        const enableBookFor = async (f: Feat) => {
+          const book = f.source?.book?.trim();
+          if (!book) return;
+          const ok = await confirmDialog({
+            title: 'Enable source book?',
+            message: (
+              <>
+                <p>
+                  <strong>{f.name}</strong> comes from <strong>{book}</strong>, which is disabled for this character.
+                </p>
+                <p>Enable the book? Its content becomes available in this character&apos;s pickers (you can change this any time in Setup → Sources).</p>
+              </>
+            ),
+            confirmLabel: 'Enable book',
+          });
+          if (ok) actions.patch({ enabledSources: [...new Set([...enabledBooks, book])].sort() });
+        };
         return (
           <FilterableSelect
             title={`Choose a ${FEAT_LABEL[picker.category].toLowerCase()}`}
@@ -1159,6 +1153,64 @@ export function Builder({
             spec={FEAT_SPEC}
             rowKey={(f) => f.id}
             onClose={() => setPicker(null)}
+            ineligible={featIneligible}
+            resultsFooter={(query, openDesc) => {
+              const hidden = findHiddenFeatMatches({
+                query,
+                allFeats: Object.values(ovContent.feats),
+                shownIds,
+                slotEligibleIds,
+                enabledBooks,
+                mythicEnabled: build.mythicEnabled,
+                kingmakerEnabled: build.kingmakerEnabled,
+                archetypesHidden: archHidden,
+              });
+              if (!hidden) return null;
+              const parts: string[] = [];
+              if (hidden.sources.length) parts.push(`${hidden.sources.length} from disabled source books — shown below`);
+              if (hidden.archetype) parts.push(`${hidden.archetype} archetype feat${hidden.archetype === 1 ? '' : 's'} — turn on “Archetypes” above`);
+              if (hidden.campaign) parts.push(`${hidden.campaign} behind a campaign toggle (Mythic / Kingmaker — see Setup)`);
+              if (hidden.invalid) parts.push(`${hidden.invalid} not valid for this slot (wrong type, level too high, or already taken)`);
+              const CAP = 20;
+              return (
+                <>
+                  <div className="fsel-hidden-note">
+                    <i className="ti ti-eye-off" aria-hidden="true" />
+                    <span>
+                      {hidden.total} matching feat{hidden.total === 1 ? ' is' : 's are'} hidden from this picker: {parts.join('; ')}.
+                    </span>
+                  </div>
+                  {hidden.sources.slice(0, CAP).map((f) => {
+                    const node = descNodeOf(f, 'feats');
+                    return (
+                      <div key={'hidden-' + f.id} className="fsel-rowwrap">
+                        <PickerRow
+                          lead={<span className="picker-lvl">{f.level}</span>}
+                          name={f.name}
+                          meta={
+                            <>
+                              {f.traits.length > 0 && <div className="picker-traits">{f.traits.join(' · ')}</div>}
+                              <div className="picker-srcbook">
+                                <i className="ti ti-book-2" aria-hidden="true" /> {f.source?.book?.trim()} — disabled source
+                              </div>
+                            </>
+                          }
+                          onOpenDesc={node ? () => openDesc(node) : undefined}
+                          dim
+                          selectLabel="Enable book…"
+                          onSelect={() => void enableBookFor(f)}
+                        />
+                      </div>
+                    );
+                  })}
+                  {hidden.sources.length > CAP && (
+                    <div className="picker-more">
+                      {hidden.sources.length - CAP} more from disabled sources — refine your search, or enable books in Setup → Sources.
+                    </div>
+                  )}
+                </>
+              );
+            }}
             headerExtra={
               isClassSlot ? (
                 <button

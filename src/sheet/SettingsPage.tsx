@@ -8,7 +8,7 @@ import { loadRoster, wipeAllData } from '../data/storage';
 import { backupCharCount, backupFilename, createBackup, parseBackup, restoreBackup } from '../data/backup';
 import { downloadText } from './download';
 import { chooseDialog, confirmDialog } from './confirm';
-import { isDesktopApp, isMobilePlatform } from '../platform';
+import { isMobilePlatform, isTauri } from '../platform';
 import { setPref, usePrefs } from '../data/prefs';
 import type { ModeDef } from '../rules/types';
 import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
@@ -22,7 +22,7 @@ const ACCENTS = [
 ];
 
 type SectionId = 'appearance' | 'customization' | 'modes' | 'backup' | 'about' | 'uninstall';
-const SECTIONS: { id: SectionId; label: string; icon: string }[] = [
+const ALL_SECTIONS: { id: SectionId; label: string; icon: string }[] = [
   { id: 'appearance', label: 'Appearance', icon: 'ti-palette' },
   { id: 'customization', label: 'Customization', icon: 'ti-adjustments' },
   { id: 'modes', label: 'Modes', icon: 'ti-toggle-left' },
@@ -30,6 +30,9 @@ const SECTIONS: { id: SectionId; label: string; icon: string }[] = [
   { id: 'about', label: 'About', icon: 'ti-info-circle' },
   { id: 'uninstall', label: 'Uninstall', icon: 'ti-trash' },
 ];
+// Uninstall only where there's an installed app to remove: the Tauri shells (Windows desktop,
+// Android). In a plain browser tab there's nothing to uninstall, so the section is hidden.
+const SECTIONS = ALL_SECTIONS.filter((s) => s.id !== 'uninstall' || isTauri);
 
 /** Per-device tweaks to how the sheet behaves. */
 function CustomizationSection() {
@@ -364,23 +367,28 @@ function AboutSection() {
   );
 }
 
-/** Erase all local data, then (in the desktop build) launch the OS uninstaller. Returns a message
- *  to show if the program itself couldn't be removed automatically (data is wiped either way). */
+/** Erase all local data, then ask the OS to remove the app itself. Returns a message to show if
+ *  the program couldn't be removed automatically (data is wiped either way). Both Tauri shells
+ *  have the `uninstall_app` command: Windows launches the NSIS uninstaller (the app exits and the
+ *  uninstaller takes over); Android opens the system "uninstall this app?" dialog for our own
+ *  package — Android itself asks the user to confirm, then removes the app. */
 async function runUninstall(): Promise<string | null> {
   wipeAllData();
-  // The OS uninstaller is desktop-only (it launches the Windows uninstaller). On mobile/browser there's
-  // no such command — wiping data is the action; the app itself is removed from the launcher/app store.
-  if (isDesktopApp) {
+  if (isTauri) {
     try {
       const { invoke } = await import('@tauri-apps/api/core');
-      await invoke('uninstall_app'); // on success the app exits and the uninstaller takes over
-      return null;
+      await invoke('uninstall_app');
+      // Android: the app is still open behind the system dialog, so leave a note in case the
+      // user cancels it. Windows: on success the app has already exited (message never shows).
+      return isMobilePlatform ? 'Your data has been erased. Confirm removing the app in the dialog Android shows.' : null;
     } catch {
-      // Older build without the command, a portable run, or no uninstaller found.
-      return 'Your data has been erased. To remove the application itself, uninstall “Heroes Heaven” from Windows Settings → Apps.';
+      // Older build without the command, a portable/dev run, or the OS refused.
+      return isMobilePlatform
+        ? 'Your data has been erased. To remove the app itself, uninstall Heroes Heaven from your device’s app manager.'
+        : 'Your data has been erased. To remove the application itself, uninstall “Heroes Heaven” from Windows Settings → Apps.';
     }
   }
-  if (isMobilePlatform) return 'Your data has been erased. To remove the app itself, uninstall Heroes Heaven from your device’s app manager.';
+  // Plain browser tab: nothing is installed — wiping the data is the whole action.
   window.location.reload();
   return null;
 }
@@ -407,8 +415,9 @@ function UninstallSection() {
     <div className="settings-section">
       <h3 className="settings-h">Uninstall</h3>
       <p className="settings-desc">
-        Remove Heroes Heaven and everything it has stored on this device. Everything lives locally — there is no
-        cloud backup, so this cannot be undone.
+        {isMobilePlatform
+          ? 'Removes the app and everything it has stored on this device; Android will ask you to confirm removing the app. Everything lives locally — there is no cloud backup, so this cannot be undone.'
+          : 'Remove Heroes Heaven and everything it has stored on this device. Everything lives locally — there is no cloud backup, so this cannot be undone.'}
       </p>
       <div className="danger-zone">
         <div className="menu-label">This permanently deletes</div>
@@ -418,7 +427,7 @@ function UninstallSection() {
           </li>
           <li>Every homebrew item and custom mode</li>
           <li>Your theme, zoom, and all other preferences</li>
-          <li>{isMobilePlatform ? 'The app itself — remove it from your device’s app manager afterward' : 'On the desktop app: the program itself (launches the system uninstaller, then closes)'}</li>
+          <li>{isMobilePlatform ? 'The app itself — Android will show its own “uninstall this app?” dialog to confirm' : 'On the desktop app: the program itself (launches the system uninstaller, then closes)'}</li>
         </ul>
         {status ? (
           <p className="settings-desc danger-note">{status}</p>

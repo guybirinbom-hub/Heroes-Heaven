@@ -20,7 +20,9 @@ function ConfirmDialog({ opts, onResolve }: { opts: ConfirmOptions; onResolve: (
   useEscapeClose(() => onResolve(false));
   const { title, message, confirmLabel = 'Confirm', cancelLabel = 'Cancel', danger } = opts;
   return (
-    <div className="picker-overlay" onClick={() => onResolve(false)}>
+    // confirm-overlay: lifts the dialog above every other layer (dice drawer, ref-search) — a
+    // confirm is always the topmost interaction.
+    <div className="picker-overlay confirm-overlay" onClick={() => onResolve(false)}>
       <div
         className="picker confirm-modal"
         role="alertdialog"
@@ -98,7 +100,7 @@ function ChooseDialog({ opts, onResolve }: { opts: ChooseOptions; onResolve: (v:
   useEscapeClose(() => onResolve(null));
   const { title, message, buttons } = opts;
   return (
-    <div className="picker-overlay" onClick={() => onResolve(null)}>
+    <div className="picker-overlay confirm-overlay" onClick={() => onResolve(null)}>
       <div className="picker confirm-modal" role="alertdialog" aria-modal="true" aria-label={title} onClick={(e) => e.stopPropagation()}>
         <div className="picker-head">
           <span className="info-title">{title}</span>

@@ -22,6 +22,7 @@ import { PopupSelect, SearchSelect } from '../builder/shared';
 import { RichEditor } from './RichEditor';
 import { useIsMobile } from './useIsMobile';
 import { useEscapeClose } from './useEscapeClose';
+import { confirmDialog } from './confirm';
 
 /* ---- option catalogs ---- */
 const ITEM_TYPES: { value: Item['itemType']; label: string }[] = [
@@ -89,9 +90,10 @@ function coins(pp: string, gp: string, sp: string, cp: string): Coins | undefine
   return Object.keys(o).length ? o : undefined;
 }
 
-/** Build a {value,label} list for an open-vocab picker, keeping the current custom value visible. */
+/** Build a {value,label} list for an open-vocab picker, keeping the current custom value visible.
+ *  (No "None" pseudo-option — clearing is the picker's clearLabel ACTION, not an option row.) */
 function optList(vals: string[], cur: string): { value: string; label: string }[] {
-  const opts = [{ value: '', label: 'None' }, ...vals.map((v) => ({ value: v, label: label(v) }))];
+  const opts = vals.map((v) => ({ value: v, label: label(v) }));
   if (cur && !vals.includes(cur)) opts.push({ value: cur, label: label(cur) });
   return opts;
 }
@@ -534,7 +536,7 @@ export function ItemEditorModal({
                       </div>
                       <div className="ie-grid3">
                         <label className="ci-field"><span>Category</span><select value={d.wCat} onChange={(e) => upd({ wCat: e.target.value as WeaponCategory })}>{WEAPON_CATS.map((x) => <option key={x} value={x}>{cap(x)}</option>)}</select></label>
-                        <div className="ci-field"><span>Weapon group</span><PopupSelect title="Weapon group" placeholder="Choose group" value={d.wGroup || ''} options={optList(WEAPON_GROUPS, d.wGroup)} onChange={(v) => upd({ wGroup: v })} addCustom={{ label: 'Custom group…', placeholder: 'e.g. laser', onAdd: (t) => upd({ wGroup: slugify(t) }) }} /></div>
+                        <div className="ci-field"><span>Weapon group</span><PopupSelect title="Weapon group" placeholder="Choose group" value={d.wGroup || ''} options={optList(WEAPON_GROUPS, d.wGroup)} clearLabel="Clear" onChange={(v) => upd({ wGroup: v })} addCustom={{ label: 'Custom group…', placeholder: 'e.g. laser', onAdd: (t) => upd({ wGroup: slugify(t) }) }} /></div>
                         <label className="ci-field"><span>Range (ft)</span><input type="number" min={0} value={d.wRange} onChange={(e) => upd({ wRange: e.target.value })} placeholder="—" /></label>
                       </div>
                       <div className="ie-grid3">
@@ -555,7 +557,7 @@ export function ItemEditorModal({
                         <label className="ci-field"><span>Speed penalty</span><input type="number" value={d.aSpeed} onChange={(e) => upd({ aSpeed: e.target.value })} /></label>
                         <label className="ci-field"><span>Min Str</span><input type="number" value={d.aStr} onChange={(e) => upd({ aStr: e.target.value })} placeholder="—" /></label>
                       </div>
-                      <div className="ci-field"><span>Armor group</span><PopupSelect title="Armor group" placeholder="Choose group" value={d.aGroup || ''} options={optList(ARMOR_GROUPS, d.aGroup)} onChange={(v) => upd({ aGroup: v })} addCustom={{ label: 'Custom group…', placeholder: 'e.g. skeletal', onAdd: (t) => upd({ aGroup: slugify(t) }) }} /></div>
+                      <div className="ci-field"><span>Armor group</span><PopupSelect title="Armor group" placeholder="Choose group" value={d.aGroup || ''} options={optList(ARMOR_GROUPS, d.aGroup)} clearLabel="Clear" onChange={(v) => upd({ aGroup: v })} addCustom={{ label: 'Custom group…', placeholder: 'e.g. skeletal', onAdd: (t) => upd({ aGroup: slugify(t) }) }} /></div>
                     </AccRow>
                   )}
 
@@ -616,7 +618,7 @@ export function ItemEditorModal({
                   {d.itemType !== 'treasure' && (
                     <AccRow id="material" icon="ti-diamond" name="Material" summary={d.matType ? label(d.matType) : 'none'}>
                       <div className="ie-grid2">
-                        <div className="ci-field"><span>Precious material</span><PopupSelect title="Precious material" placeholder="None" value={d.matType || ''} options={optList(MATERIALS, d.matType)} onChange={(v) => upd({ matType: v })} addCustom={{ label: 'Custom material…', placeholder: 'e.g. living steel', onAdd: (t) => upd({ matType: slugify(t) }) }} /></div>
+                        <div className="ci-field"><span>Precious material</span><PopupSelect title="Precious material" placeholder="None" value={d.matType || ''} options={optList(MATERIALS, d.matType)} clearLabel="Clear" onChange={(v) => upd({ matType: v })} addCustom={{ label: 'Custom material…', placeholder: 'e.g. living steel', onAdd: (t) => upd({ matType: slugify(t) }) }} /></div>
                         <label className="ci-field"><span>Grade</span><select value={d.matGrade} onChange={(e) => upd({ matGrade: e.target.value as Draft['matGrade'] })}><option value="">—</option><option value="low">Low</option><option value="standard">Standard</option><option value="high">High</option></select></label>
                       </div>
                     </AccRow>
@@ -958,9 +960,17 @@ function AttachmentsSection({
                   <button
                     className="sd-attach-btn"
                     title="Activate — a talisman is consumed when used"
-                    onClick={() =>
-                      onPlay((p) => (a.quantity > 1 ? setItemQuantity(p, a.instanceId, a.quantity - 1) : removeInventoryItem(p, a.instanceId)))
-                    }
+                    onClick={async () => {
+                      if (
+                        await confirmDialog({
+                          title: `Activate ${def?.name ?? 'talisman'}?`,
+                          message: 'A talisman is consumed when activated.',
+                          confirmLabel: 'Activate',
+                          danger: true,
+                        })
+                      )
+                        onPlay((p) => (a.quantity > 1 ? setItemQuantity(p, a.instanceId, a.quantity - 1) : removeInventoryItem(p, a.instanceId)));
+                    }}
                   >
                     Activate
                   </button>

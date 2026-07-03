@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { DieSides, DicePreset, RollResult } from '../rules/dice';
 import { useEscapeClose } from './useEscapeClose';
+import { confirmDialog } from './confirm';
 
 const DICE: DieSides[] = [4, 6, 8, 10, 12, 20, 100];
 
@@ -87,7 +88,7 @@ export function DiceDrawer({
         <div className="dice-hist-head">
           <span>Presets</span>
           <button
-            className="dice-clear"
+            className="dice-save"
             title="Save the current Count/Die/Mod as a preset"
             onClick={() => onSavePreset({ label: label.trim() || `${count}d${sides}${modifier ? (modifier > 0 ? `+${modifier}` : modifier) : ''}`, count, sides, modifier })}
           >
@@ -101,7 +102,15 @@ export function DiceDrawer({
               <button className="dice-quick-btn" title={`Roll ${p.count}d${p.sides}${p.modifier ? (p.modifier > 0 ? `+${p.modifier}` : p.modifier) : ''}`} onClick={() => onRoll(p.label, p.count, p.sides, p.modifier)}>
                 {p.label}
               </button>
-              <button className="dice-preset-x" title="Delete preset" aria-label="Delete preset" onClick={() => onDeletePreset(p.id)}>
+              <button
+                className="dice-preset-x"
+                title="Delete preset"
+                aria-label="Delete preset"
+                onClick={async () => {
+                  if (await confirmDialog({ title: `Delete preset “${p.label}”?`, confirmLabel: 'Delete', danger: true }))
+                    onDeletePreset(p.id);
+                }}
+              >
                 <i className="ti ti-x" aria-hidden="true" />
               </button>
             </span>
@@ -111,8 +120,15 @@ export function DiceDrawer({
         <div className="dice-hist-head">
           <span>History</span>
           {rolls.length > 0 && (
-            <button className="dice-clear" onClick={onClear}>
-              Clear
+            <button
+              className="dice-clear"
+              title="Clear the roll history"
+              onClick={async () => {
+                if (await confirmDialog({ title: 'Clear roll history?', message: 'All past rolls are removed.', confirmLabel: 'Clear', danger: true }))
+                  onClear();
+              }}
+            >
+              <i className="ti ti-trash" aria-hidden="true" /> Clear
             </button>
           )}
         </div>

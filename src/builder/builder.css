@@ -1,5 +1,6 @@
 .builder {
-  min-height: 100vh;
+  /* / var(--zoom): vh renders multiplied by the html{zoom} factor — divide so this means the real viewport. */
+  min-height: calc(100vh / var(--zoom, 1));
   background: var(--app-bg);
   color: var(--app-text);
   display: flex;
@@ -915,7 +916,8 @@
   border-radius: var(--app-radius);
   width: 420px;
   max-width: 100%;
-  max-height: 70vh;
+  /* / var(--zoom): keep the popup within the REAL viewport at any app zoom. */
+  max-height: calc(70vh / var(--zoom, 1));
   display: flex;
   flex-direction: column;
   box-shadow: var(--app-shadow);

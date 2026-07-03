@@ -59,7 +59,7 @@ export function RosterScreen({
   content: ContentDatabase | null;
   onOpen: (id: string) => void;
   onNew: () => void;
-  onImport: (saved: SavedChar, customItems?: Item[]) => void | Promise<boolean>;
+  onImport: (saved: SavedChar, customItems?: Item[], customModes?: ModeDef[]) => void | Promise<boolean>;
   onDuplicate: (id: string) => void;
   onArchive: (id: string, archived: boolean) => void;
   onDelete: (id: string) => void;
@@ -99,11 +99,11 @@ export function RosterScreen({
     const reader = new FileReader();
     reader.onload = async () => {
       try {
-        const { saved, report, customItems } = importCharacter(String(reader.result), content);
+        const { saved, report, customItems, customModes } = importCharacter(String(reader.result), content);
         setError(null);
         // onImport may prompt on a name collision; it returns false if the user cancelled. Only show
         // the success report when the import was actually applied.
-        const applied = await onImport(await sanitizePortraits(saved), customItems);
+        const applied = await onImport(await sanitizePortraits(saved), customItems, customModes);
         if (applied !== false) setResult(report);
       } catch (e) {
         setResult(null);
@@ -242,7 +242,7 @@ export function RosterScreen({
                             <i className="ti ti-external-link" aria-hidden="true" /> Yes — Wanderer&apos;s Guide
                           </button>
                           <button role="menuitem" onClick={() => doExport(c, 'native')}>
-                            <i className="ti ti-device-floppy" aria-hidden="true" /> No — Codex file (lossless)
+                            <i className="ti ti-device-floppy" aria-hidden="true" /> No — Heroes Heaven file (lossless .codex)
                           </button>
                         </div>
                       </>

@@ -260,6 +260,8 @@ export function FilterableSelect<T>({
   onClose,
   headerExtra,
   limit = 150,
+  ineligible,
+  resultsFooter,
 }: {
   title: string;
   icon?: string;
@@ -274,6 +276,14 @@ export function FilterableSelect<T>({
   headerExtra?: ReactNode;
   /** Max rows rendered (the rest collapse behind a "refine your filters" note). */
   limit?: number;
+  /** Marks an item the character can't take (unmet prerequisites). When set, a "Hide ineligible"
+   *  toggle appears in the results bar — but only while the current results actually contain
+   *  ineligible entries (or the toggle is already on). */
+  ineligible?: (item: T) => boolean;
+  /** Rendered at the END of the results list, given the current name-search text. Used by the
+   *  feat picker to surface matches that exist in the full content but are hidden from this
+   *  picker (disabled source books / wrong slot). */
+  resultsFooter?: (query: string, openDesc: (node: DescNode) => void) => ReactNode;
 }) {
   useEscapeClose(onClose);
   // Each range slider's scale is trimmed to the values present in THIS list, so the whole
@@ -332,6 +342,20 @@ export function FilterableSelect<T>({
     [items, liveFields, state, effStops],
   );
 
+  // "Hide ineligible" — an opt-in eligibility filter (feat pickers). The ineligible set is computed
+  // once per items/predicate identity so keystrokes don't re-run prerequisite checks over the list.
+  const [hideInel, setHideInel] = useState(false);
+  const inelKeys = useMemo(() => {
+    if (!ineligible) return null;
+    const s = new Set<string>();
+    for (const it of items) if (ineligible(it)) s.add(rowKey(it));
+    return s;
+    // rowKey is stable per call site
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ineligible, items]);
+  const inelCount = inelKeys ? filtered.reduce((n, it) => n + (inelKeys.has(rowKey(it)) ? 1 : 0), 0) : 0;
+  const results = hideInel && inelKeys ? filtered.filter((it) => !inelKeys.has(rowKey(it))) : filtered;
+
   // The primary text field is surfaced as an always-visible search box in the results bar (every
   // picker gets a search); the remaining filters live in the collapsible panel.
   const searchField = liveFields.find((f) => f.kind === 'text');
@@ -352,7 +376,7 @@ export function FilterableSelect<T>({
           <i className={'ti ' + icon} aria-hidden="true" />
           <span className="fsel-title">{title}</span>
           {headerExtra}
-          <span className="fsel-count">{filtered.length}</span>
+          <span className="fsel-count">{results.length}</span>
           <button className="picker-close" onClick={onClose} aria-label="Close">
             <i className="ti ti-x" aria-hidden="true" />
           </button>
@@ -423,24 +447,35 @@ export function FilterableSelect<T>({
               ) : (
                 <span />
               )}
+              {inelKeys && (inelCount > 0 || hideInel) && (
+                <button
+                  type="button"
+                  className={'fsel-inel' + (hideInel ? ' on' : '')}
+                  onClick={() => setHideInel((v) => !v)}
+                  title={hideInel ? 'Show options whose prerequisites you don’t meet' : 'Hide options whose prerequisites you don’t meet'}
+                >
+                  <i className="ti ti-eye-off" aria-hidden="true" /> Hide ineligible{!hideInel && inelCount > 0 ? ` · ${inelCount}` : ''}
+                </button>
+              )}
               {hasPanel && (
                 <button className="fsel-toggle" onClick={() => setShowFilters((v) => !v)} title="Toggle the filter panel">
                   <i className={'ti ' + (showFilters ? 'ti-layout-sidebar-left-collapse' : 'ti-adjustments')} aria-hidden="true" />
                   Filters{panelActiveCount > 0 ? ` · ${panelActiveCount}` : ''}
                 </button>
               )}
-              <span className="fsel-results-count">{filtered.length} result{filtered.length === 1 ? '' : 's'}</span>
+              <span className="fsel-results-count">{results.length} result{results.length === 1 ? '' : 's'}</span>
             </div>
             <div className="fsel-list">
-              {filtered.slice(0, limit).map((it) => (
+              {results.slice(0, limit).map((it) => (
                 <div key={rowKey(it)} className="fsel-rowwrap">
                   {renderRow(it, setDescNode)}
                 </div>
               ))}
-              {filtered.length > limit && (
-                <div className="picker-more">{filtered.length - limit} more — refine your filters to narrow the list.</div>
+              {results.length > limit && (
+                <div className="picker-more">{results.length - limit} more — refine your filters to narrow the list.</div>
               )}
-              {filtered.length === 0 && <div className="fsel-empty">Nothing matches these filters.</div>}
+              {results.length === 0 && <div className="fsel-empty">Nothing matches these filters.</div>}
+              {resultsFooter?.((searchField ? ((state[searchField.id] as string) ?? '') : ''), setDescNode)}
             </div>
           </div>
         </div>

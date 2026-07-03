@@ -65,7 +65,11 @@ export function StrikeDetailModal({
             >
               <span className="sds-label">Attack bonus</span>
               <span className="sds-value">{formatMod(strike.attack[0])}</span>
-              {onOpenStat && <span className="sds-hint">show calculation</span>}
+              {onOpenStat && (
+                <span className="sds-hint">
+                  show calculation <i className="ti ti-chevron-right" aria-hidden="true" />
+                </span>
+              )}
             </button>
             <button
               type="button"
@@ -74,7 +78,11 @@ export function StrikeDetailModal({
             >
               <span className="sds-label">Damage</span>
               <span className="sds-value">{strike.damage}</span>
-              {onOpenStat && <span className="sds-hint">show calculation</span>}
+              {onOpenStat && (
+                <span className="sds-hint">
+                  show calculation <i className="ti ti-chevron-right" aria-hidden="true" />
+                </span>
+              )}
             </button>
           </div>
           {showsCrit && (

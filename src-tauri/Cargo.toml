@@ -23,3 +23,9 @@ serde = { version = "1.0", features = ["derive"] }
 log = "0.4"
 tauri = { version = "2.11.2", features = [] }
 tauri-plugin-log = "2"
+
+# Android-only: raw JNI for the in-app uninstall (ACTION_DELETE intent). Same jni version the
+# Tauri stack already uses (Cargo.lock pins 0.21.1), so it unifies to a single crate instance —
+# required for the closure types passed to wry's JniHandle::exec to line up.
+[target.'cfg(target_os = "android")'.dependencies]
+jni = "0.21"

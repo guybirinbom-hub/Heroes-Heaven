@@ -23,7 +23,8 @@ import { MONSTER_PARTS_CAPABILITY } from '../rules/sources';
 import { ItemEditorModal } from './ItemEditorModal';
 import { confirmDialog } from './confirm';
 import { RichEditor } from './RichEditor';
-import { useEscapeClose } from './useEscapeClose';
+import { useEscapeClose, useBackHandler } from './useEscapeClose';
+import { useIsMobile } from './useIsMobile';
 import { WindowControls } from './WindowControls';
 import { HeroesHeavenLogo } from './Logo';
 import { PageMenu } from './PageMenu';
@@ -195,6 +196,11 @@ export function HomebrewPage({
   characters?: { id: string; name: string }[];
 }) {
   useEscapeClose(onClose);
+  const isMobile = useIsMobile();
+  // Mobile drill-in: the page opens on the sources LIST; tapping a source drills into its content
+  // pane. Android Back / Escape / the header arrow steps back to the list (desktop keeps the
+  // sidebar+pane layout and is untouched).
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [sources, setSources] = useState<Record<string, HomebrewSource>>(() => loadHomebrewSources());
   const saveEntry = (type: HomebrewType, entry: EntryRec) => {
     saveHomebrewEntry(type, entry as unknown as HomebrewContent[typeof type][string]);
@@ -209,6 +215,9 @@ export function HomebrewPage({
   const [editing, setEditing] = useState<{ type: HomebrewType; entry?: EntryRec } | null>(null);
 
   const selected = selectedId ? sources[selectedId] : null;
+  const drilledIn = isMobile && mobileOpen && !!selected;
+  // Android Back / Escape from a drilled-in source returns to the sources list.
+  useBackHandler(drilledIn, () => setMobileOpen(false));
 
   const persistSource = (src: HomebrewSource) => {
     saveHomebrewSource(src);
@@ -218,6 +227,7 @@ export function HomebrewPage({
     const src: HomebrewSource = { id: `hbsrc-${newRosterId()}`, name: 'New source' };
     persistSource(src);
     setSelectedId(src.id);
+    setMobileOpen(true); // on a phone, drill straight into the new source
   };
   const removeSource = async (id: string) => {
     if (
@@ -237,6 +247,7 @@ export function HomebrewPage({
       return next;
     });
     setSelectedId((cur) => (cur === id ? null : cur));
+    setMobileOpen(false); // a deleted source drops back to the sources list on a phone
   };
 
   // Entries of a given type belonging to the selected source (read from the live content DB).
@@ -251,10 +262,15 @@ export function HomebrewPage({
     <div className="hb-page">
       <header className="chrome" data-tauri-drag-region>
         <div className="chrome-brand" data-tauri-drag-region>
-          <button className="icon-btn hb-back" onClick={onClose} title="Back" aria-label="Back to character">
+          <button
+            className="icon-btn hb-back"
+            onClick={drilledIn ? () => setMobileOpen(false) : onClose}
+            title="Back"
+            aria-label={drilledIn ? 'Back to sources' : 'Back to character'}
+          >
             <i className="ti ti-arrow-left" aria-hidden="true" />
           </button>
-          <HeroesHeavenLogo className="chrome-logo" /> Homebrew
+          <HeroesHeavenLogo className="chrome-logo" /> {drilledIn ? selected!.name || 'Homebrew' : 'Homebrew'}
         </div>
         <WindowControls />
         <PageMenu
@@ -265,6 +281,33 @@ export function HomebrewPage({
           onDeleteMode={onDeleteMode}
         />
       </header>
+      {isMobile && !drilledIn ? (
+        /* Phone: the 168px sidebar layout doesn't fit — drill in from a full-width sources list instead. */
+        <div className="hb-sources-m">
+          <p className="hb-sources-hint">
+            A <strong>source</strong> holds your custom content — items, feats, spells, ancestries, heritages,
+            backgrounds, and actions. Tap one to open it; enable it per character under Setup → Sources.
+          </p>
+          {sourceList.map((src) => (
+            <button
+              key={src.id}
+              className="hb-source-row"
+              onClick={() => {
+                setSelectedId(src.id);
+                setMobileOpen(true);
+              }}
+            >
+              <i className="ti ti-folder" aria-hidden="true" />
+              <span className="hb-row-name">{src.name}</span>
+              <i className="ti ti-chevron-right hb-row-chev" aria-hidden="true" />
+            </button>
+          ))}
+          <button className="hb-source-row hb-row-new" onClick={createSource}>
+            <i className="ti ti-plus" aria-hidden="true" />
+            <span className="hb-row-name">New source</span>
+          </button>
+        </div>
+      ) : (
       <div className="settings-body">
           <nav className="settings-nav" aria-label="Homebrew sources">
             {sourceList.map((src) => (
@@ -382,6 +425,7 @@ export function HomebrewPage({
             )}
           </div>
         </div>
+      )}
 
       {/* Editors */}
       {editing && editing.type === 'items' && selected && (

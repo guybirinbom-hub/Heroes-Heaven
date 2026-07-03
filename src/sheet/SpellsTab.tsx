@@ -24,6 +24,7 @@ import { ActionGlyph } from './widgets';
 import { ItemDetail } from './ItemDetail';
 import { useEscapeClose } from './useEscapeClose';
 import { useIsMobile } from './useIsMobile';
+import { confirmDialog } from './confirm';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { SPELL_SPEC_BUILDER } from './filterSpecs';
 import { DescBody } from './DescBody';
@@ -380,7 +381,17 @@ function ManageSpellsModal({
                             className="ms-remove"
                             aria-label="Remove from repertoire"
                             title="Remove from repertoire"
-                            onClick={() => removeKnown(rank, id)}
+                            onClick={async () => {
+                              if (
+                                await confirmDialog({
+                                  title: `Remove ${sp?.name ?? id}?`,
+                                  message: 'The spell is removed from your repertoire.',
+                                  confirmLabel: 'Remove',
+                                  danger: true,
+                                })
+                              )
+                                removeKnown(rank, id);
+                            }}
                           >
                             <i className="ti ti-x" aria-hidden="true" />
                           </button>

@@ -560,10 +560,8 @@ export function AbilitySelect({
       placeholder=""
       value={value ?? ''}
       onChange={(v) => onChange((v || null) as AbilityId | null)}
-      options={[
-        { value: '', label: 'Clear' },
-        ...options.map((o) => ({ value: o, label: ABILITY_LABEL[o], disabled: o !== value && !!exclude?.includes(o) })),
-      ]}
+      clearLabel="Clear"
+      options={options.map((o) => ({ value: o, label: ABILITY_LABEL[o], disabled: o !== value && !!exclude?.includes(o) }))}
     />
   );
 }
@@ -689,6 +687,7 @@ export function PopupSelect({
   icon,
   cardLabel,
   addCustom,
+  clearLabel,
 }: {
   value: string | null | undefined;
   options: { value: string; label: string; note?: string; disabled?: boolean; description?: string; descRefs?: DescRef[] }[];
@@ -708,6 +707,11 @@ export function PopupSelect({
   /** Adds a "type your own" entry to the popup (e.g. a custom Lore): picking it swaps the list
    *  for a text field, all inside the same popup. onAdd receives the typed text. */
   addCustom?: { label: string; placeholder: string; onAdd: (text: string) => void };
+  /** Offer a "clear the current selection" ACTION (calls onChange('')). Renders as a pinned row
+   *  below the option list — separator above, dimmed with an ✕ icon — so it reads as an action,
+   *  not another option. Only shown while something is selected. Replaces the old pattern of a
+   *  `{ value: '', label: '— none —' }` entry styled like a real option. */
+  clearLabel?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState('');
@@ -881,6 +885,19 @@ export function PopupSelect({
                     </div>
                   )}
                 </div>
+                {clearLabel && current && (
+                  <button
+                    type="button"
+                    className="picker-clear"
+                    onClick={() => {
+                      onChange('');
+                      close();
+                    }}
+                  >
+                    <i className="ti ti-x" aria-hidden="true" /> {clearLabel}
+                    <span className="picker-clear-cur">{current.label}</span>
+                  </button>
+                )}
               </>
             )}
           </div>
@@ -929,10 +946,8 @@ function CustomBackgroundForm({ build, actions, content }: EditorProps) {
               placeholder="Choose"
               value={cb.boosts[i] ?? ''}
               onChange={(v) => setBoost(i, v)}
-              options={[
-                { value: '', label: '—' },
-                ...ABILITIES.map((ab) => ({ value: ab, label: ab.toUpperCase(), disabled: cb.boosts[1 - i] === ab })),
-              ]}
+              clearLabel="Clear"
+              options={ABILITIES.map((ab) => ({ value: ab, label: ab.toUpperCase(), disabled: cb.boosts[1 - i] === ab }))}
             />
           </label>
         ))}
@@ -945,7 +960,8 @@ function CustomBackgroundForm({ build, actions, content }: EditorProps) {
             placeholder="Choose a skill"
             value={cb.trainedSkill ?? ''}
             onChange={(v) => set({ trainedSkill: (v || null) as SkillId | null })}
-            options={[{ value: '', label: '—' }, ...SKILLS.map((s) => ({ value: s, label: capSkill(s) }))]}
+            clearLabel="Clear"
+            options={SKILLS.map((s) => ({ value: s, label: capSkill(s) }))}
           />
         </label>
         <label className="cbg-field">
@@ -1050,13 +1066,11 @@ export function VariantRulesCard({ build, actions, content }: EditorProps) {
             title="Second class"
             value={build.classId2 ?? ''}
             onChange={(v) => actions.setSecondClass(v || null)}
-            options={[
-              { value: '', label: '— none —' },
-              ...Object.values(content.classes)
-                .filter((cl) => cl.id !== build.classId)
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .map((cl) => ({ value: cl.id, label: cl.name, description: cl.description, descRefs: cl.descRefs })),
-            ]}
+            clearLabel="Clear — no second class"
+            options={Object.values(content.classes)
+              .filter((cl) => cl.id !== build.classId)
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((cl) => ({ value: cl.id, label: cl.name, description: cl.description, descRefs: cl.descRefs }))}
           />
           {(() => {
             const cl = build.classId2 ? content.classes[build.classId2] : undefined;
@@ -1067,10 +1081,8 @@ export function VariantRulesCard({ build, actions, content }: EditorProps) {
               title={content.classes[build.classId2]!.subclass!.name}
               value={build.subclassId2 ?? ''}
               onChange={(v) => actions.patch({ subclassId2: v || null })}
-              options={[
-                { value: '', label: '— none —' },
-                ...content.classes[build.classId2]!.subclass!.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs })),
-              ]}
+              clearLabel="Clear"
+              options={content.classes[build.classId2]!.subclass!.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs }))}
             />
           )}
         </SubCard>
@@ -1114,13 +1126,11 @@ export function CampaignOptionsCard({ build, actions, content }: EditorProps) {
             title="Mythic Calling"
             value={build.mythicCalling ?? ''}
             onChange={(v) => actions.patch({ mythicCalling: v || null })}
-            options={[
-              { value: '', label: '— none —' },
-              ...Object.values(content.classFeatures)
-                .filter((f) => (f.traits ?? []).includes('calling'))
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .map((f) => ({ value: f.id, label: f.name, description: f.description, descRefs: f.descRefs })),
-            ]}
+            clearLabel="Clear"
+            options={Object.values(content.classFeatures)
+              .filter((f) => (f.traits ?? []).includes('calling'))
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((f) => ({ value: f.id, label: f.name, description: f.description, descRefs: f.descRefs }))}
           />
           {calling?.description && <ChoiceDetails name={calling.name} flavor={calling.description} descRefs={calling.descRefs} />}
           <p className="setup-hint">You gain a mythic feat slot at every even level (2–20), fillable with mythic feats.</p>
@@ -1817,7 +1827,8 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             placeholder="Choose a skill"
             value={build.heritageSkill ?? ''}
             onChange={(v) => actions.setHeritageSkill((v || null) as SkillId | null)}
-            options={[{ value: '', label: '—' }, ...SKILLS.map((s) => ({ value: s, label: cap(s) }))]}
+            clearLabel="Clear"
+            options={SKILLS.map((s) => ({ value: s, label: cap(s) }))}
           />
         </SubCard>
       )}

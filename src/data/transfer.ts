@@ -21,10 +21,31 @@
  *         items/skills) to our slugs. Anything whose name we don't carry is dropped and
  *         listed in the returned ImportReport.
  */
-import type { AbilityId, Character, CharacterOptions, Coins, ContentDatabase, Item, NaturalAttack, NotePage, ProficiencyRank, Rarity, Tradition, VariantRules } from '../rules/types';
+import type {
+  AbilityId,
+  ActiveCondition,
+  ArmorCategory,
+  Character,
+  CharacterOptions,
+  Coins,
+  CompanionConfig,
+  ContentDatabase,
+  Item,
+  ModeDef,
+  ModeModifier,
+  NaturalAttack,
+  NotePage,
+  PinnedDesc,
+  ProficiencyRank,
+  Rarity,
+  Tradition,
+  VariantRules,
+  WeaponCategory,
+} from '../rules/types';
 import { ABILITIES, SKILLS } from '../rules/types';
 import { newRosterId, type SavedChar } from './storage';
-import { buildCharacter, classChoosesDeity, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
+import { buildCharacter, classChoosesDeity, CUSTOM_BACKGROUND_ID, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
+import { CORE_BOOKS, sourceCatalog } from '../rules/sources';
 import { applyPlayState } from '../rules/play';
 import { normalizeCharacter, normalizePlay } from '../rules/normalize';
 import {
@@ -110,6 +131,7 @@ function wgVariants(v?: VariantRules): Record<string, boolean> {
   if (v?.gradualBoosts) out.gradual_attribute_boosts = true;
   if (v?.proficiencyWithoutLevel) out.proficiency_without_level = true;
   if (v?.dualClass) out.dual_class = true;
+  if (v?.abp) out.automatic_bonus_progression = true;
   return out;
 }
 function variantsFromWg(v: any): VariantRules {
@@ -119,6 +141,7 @@ function variantsFromWg(v: any): VariantRules {
   if (v?.gradual_attribute_boosts) out.gradualBoosts = true;
   if (v?.proficiency_without_level) out.proficiencyWithoutLevel = true;
   if (v?.dual_class) out.dualClass = true;
+  if (v?.automatic_bonus_progression) out.abp = true;
   return out;
 }
 function wgOptions(o?: CharacterOptions): Record<string, boolean> {
@@ -206,6 +229,7 @@ function wgNotes(notes: NotePage[] | undefined): unknown {
       name: p.title,
       icon: p.icon ?? '',
       color: p.color ?? '',
+      shared: p.private ? false : true,
       contents: tiptap(stripHtml(p.content || '')),
     })),
   };
@@ -278,15 +302,25 @@ export function exportWg(saved: SavedChar, content: ContentDatabase): string {
       // WG inventory items must be full WG item rows (its own ids/operations), which we
       // can't author — so we leave items empty here; the readable list lives in `content`.
       items: [] as unknown[],
+      ...(ch.monsterParts ? { monster_parts: { value: ch.monsterParts } } : {}),
     },
     notes: wgNotes(ch.notes),
     roll_history: null,
-    // Spells reference WG integer spell IDs we don't have → can't map; see `content.spells`.
-    spells: null,
+    // Spell LISTS reference WG integer spell IDs we don't have → can't map (see `content.spells`),
+    // but the focus-point counter is a plain number WG reads back verbatim.
+    spells: ch.focus ? { slots: [], list: [], focus_point_current: ch.focus.current, innate_casts: [] } : null,
     operation_data: { selections: {}, notes: {} },
     meta_data: {},
     details: {
       image_url: ch.appearance?.portrait ?? '',
+      // Active conditions in WG's shape (name + optional value); WG re-imports these verbatim.
+      conditions: ch.conditions.map((c) => ({
+        name: content.conditions[c.id]?.name ?? c.id,
+        description: '',
+        ...(c.value != null ? { value: c.value } : {}),
+        for_object: false,
+        for_creature: true,
+      })),
       info: {
         appearance: d.appearance ?? '',
         personality: d.personality ?? '',
@@ -316,9 +350,20 @@ export function exportWg(saved: SavedChar, content: ContentDatabase): string {
 // IMPORT
 // ===========================================================================
 
+/** Everything an import produces: the roster entry, the transparency report, plus any content the
+ *  app must register on accept (homebrew items for unrecognized gear, user modes for WG custom modes). */
+export interface ImportResult {
+  saved: SavedChar;
+  report: ImportReport;
+  customItems: Item[];
+  /** Wanderer's Guide character-scoped custom modes, converted to app ModeDefs. The caller scopes
+   *  them to the final roster id (charId) and persists them. */
+  customModes: ModeDef[];
+}
+
 /** Parse any supported file into a roster entry + a report of what happened. Throws a
  *  human-readable Error if the file isn't recognized. */
-export function importCharacter(text: string, content: ContentDatabase): { saved: SavedChar; report: ImportReport; customItems: Item[] } {
+export function importCharacter(text: string, content: ContentDatabase): ImportResult {
   let obj: any;
   try {
     obj = JSON.parse(text);
@@ -330,13 +375,13 @@ export function importCharacter(text: string, content: ContentDatabase): { saved
   if (obj && typeof obj.version === 'number' && obj.version !== WG_VERSION) {
     throw new Error(`This looks like a Wanderer’s Guide file of version ${obj.version}. Only version ${WG_VERSION} is supported.`);
   }
-  throw new Error('Unrecognized file. Expected a Wanderer’s Codex export or a Wanderer’s Guide version-4 JSON.');
+  throw new Error('Unrecognized file. Expected a Heroes Heaven character export (.codex) or a Wanderer’s Guide version-4 JSON.');
 }
 
-function importNative(obj: any): { saved: SavedChar; report: ImportReport; customItems: Item[] } {
+function importNative(obj: any): ImportResult {
   const character = obj.character as Character | undefined;
   if (!character || typeof character !== 'object' || typeof character.name !== 'string') {
-    throw new Error('This Codex file is missing its character data.');
+    throw new Error('This character file is missing its character data.');
   }
   const saved: SavedChar = {
     id: newRosterId(),
@@ -354,6 +399,7 @@ function importNative(obj: any): { saved: SavedChar; report: ImportReport; custo
       warnings: [],
     },
     customItems: [],
+    customModes: [],
   };
 }
 
@@ -452,7 +498,111 @@ function synthImportedItem(wgItem: any): Item {
   return item;
 }
 
-function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; report: ImportReport; customItems: Item[] } {
+// ---- WG variable names → app proficiency tracks (weapon/armor categories + lore skills) ----
+const WG_WEAPON_CATS: Record<string, WeaponCategory> = {
+  SIMPLE_WEAPONS: 'simple',
+  MARTIAL_WEAPONS: 'martial',
+  ADVANCED_WEAPONS: 'advanced',
+  UNARMED_ATTACKS: 'unarmed',
+};
+const WG_ARMOR_CATS: Record<string, ArmorCategory> = {
+  UNARMORED_DEFENSE: 'unarmored',
+  LIGHT_ARMOR: 'light',
+  MEDIUM_ARMOR: 'medium',
+  HEAVY_ARMOR: 'heavy',
+};
+
+/** WG lore variable ("SKILL_LORE___DEEP_EARTH") → the app's lore key ("lore:deep earth"). */
+function loreKeyFromWgVar(key: string): string | null {
+  const m = /^SKILL_LORE___(.+)$/.exec(key);
+  if (!m || m[1] === 'NONE') return null;
+  const subject = m[1].toLowerCase().replace(/_/g, ' ').trim();
+  return subject ? `lore:${subject}` : null;
+}
+
+/** WG attribute strings ('STR') / skill strings ('ATHLETICS') → app ids, or null. */
+function abilityFromWg(v: unknown): AbilityId | null {
+  const s = String(v ?? '').toLowerCase();
+  return (ABILITIES as readonly string[]).includes(s) ? (s as AbilityId) : null;
+}
+function skillFromWg(v: unknown): (typeof SKILLS)[number] | null {
+  const s = String(v ?? '').toLowerCase();
+  return (SKILLS as readonly string[]).includes(s) ? (s as (typeof SKILLS)[number]) : null;
+}
+
+/** Collect every WG spell-id → name pair the compiled `content` dump exposes (spell rows appear —
+ *  with their WG integer id — in spells.all/cantrips/normal/rituals, focus_spells, innate_spells
+ *  (nested under .spell), spell_slots (nested under .spell), and all_spells). Lets us resolve the
+ *  id-keyed `character.spells` block (signature flags, slot preparations) by name. */
+function wgSpellIdNames(snap: any): Map<number, string> {
+  const m = new Map<number, string>();
+  const add = (rows: unknown) => {
+    if (!Array.isArray(rows)) return;
+    for (const r of rows as any[]) {
+      const row = r?.spell ?? r;
+      if (row && typeof row.id === 'number' && typeof row.name === 'string') m.set(row.id, row.name);
+    }
+  };
+  add(snap?.all_spells);
+  add(snap?.spells?.all);
+  add(snap?.spells?.cantrips);
+  add(snap?.spells?.normal);
+  add(snap?.spells?.rituals);
+  add(snap?.focus_spells);
+  add(snap?.innate_spells);
+  add(snap?.spell_slots);
+  return m;
+}
+
+/** Convert a WG character-scoped custom mode ({name, description, effects:[{variable,value,type,text}]})
+ *  to an app ModeDef. Effects on variables the app has no mode target for land in the mode's note
+ *  instead of being dropped. Returns null for an empty/unusable row. */
+function modeFromWg(m: any): ModeDef | null {
+  if (!m || typeof m.name !== 'string' || !m.name.trim()) return null;
+  const modifiers: ModeModifier[] = [];
+  const unmapped: string[] = [];
+  for (const e of Array.isArray(m.effects) ? m.effects : []) {
+    const value = Number(e?.value);
+    const variable = String(e?.variable ?? '');
+    if (!variable || !Number.isFinite(value) || value === 0) {
+      if (e?.text) unmapped.push(String(e.text));
+      continue;
+    }
+    const type: ModeModifier['type'] = e?.type === 'status' || e?.type === 'circumstance' || e?.type === 'item' ? e.type : 'untyped';
+    const base = { value, type, ...(typeof e?.text === 'string' && e.text ? { appliesWhen: e.text } : {}) };
+    const lore = loreKeyFromWgVar(variable);
+    const skill = variable.startsWith('SKILL_') ? skillFromWg(variable.slice('SKILL_'.length)) : null;
+    if (variable === 'AC') modifiers.push({ ...base, target: 'ac' });
+    else if (variable === 'PERCEPTION') modifiers.push({ ...base, target: 'perception' });
+    else if (variable === 'CLASS_DC') modifiers.push({ ...base, target: 'class-dc' });
+    else if (variable === 'SPELL_ATTACK') modifiers.push({ ...base, target: 'spell-attack' });
+    else if (variable === 'SPELL_DC') modifiers.push({ ...base, target: 'spell-dc' });
+    else if (variable === 'SAVE_FORT') modifiers.push({ ...base, target: 'save', detail: 'fortitude' });
+    else if (variable === 'SAVE_REFLEX') modifiers.push({ ...base, target: 'save', detail: 'reflex' });
+    else if (variable === 'SAVE_WILL') modifiers.push({ ...base, target: 'save', detail: 'will' });
+    else if (lore) modifiers.push({ ...base, target: 'skill', detail: lore });
+    else if (skill) modifiers.push({ ...base, target: 'skill', detail: skill });
+    else if (/ATTACK/.test(variable)) modifiers.push({ ...base, target: 'attack' });
+    else if (/DMG|DAMAGE/.test(variable)) modifiers.push({ ...base, target: 'damage' });
+    else unmapped.push(`${variable} ${value > 0 ? '+' : ''}${value}`);
+  }
+  const note = [
+    typeof m.description === 'string' && m.description ? stripHtml(m.description) : '',
+    unmapped.length ? `Unmapped effects: ${unmapped.join(', ')}` : '',
+  ]
+    .filter(Boolean)
+    .join(' — ');
+  if (!modifiers.length && !note) return null;
+  return {
+    id: `wg-mode-${slugifyItem(m.name)}-${newRosterId()}`,
+    name: m.name.trim(),
+    category: 'Imported',
+    modifiers,
+    ...(note ? { note } : {}),
+  };
+}
+
+function importFromWg(obj: any, content: ContentDatabase): ImportResult {
   const c = obj.character ?? {};
   const snap = obj.content ?? {};
   const resolved: string[] = [];
@@ -614,6 +764,25 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
     if (best) keyAbility = best;
   }
 
+  // Deep Background variant: WG stores the player-authored background under details.info; the app
+  // models the same thing as a custom background (backgroundId = CUSTOM_BACKGROUND_ID).
+  const wgDeep = c.details?.info?.deep_background;
+  const wantsDeepBg = !!(c.variants?.deep_background && wgDeep && typeof wgDeep === 'object');
+  const customBackground = wantsDeepBg
+    ? {
+        name: String(wgDeep.name || 'Custom background'),
+        description: typeof wgDeep.description === 'string' ? wgDeep.description : '',
+        boosts: [abilityFromWg(wgDeep.boost1), abilityFromWg(wgDeep.boost2)] as [AbilityId | null, AbilityId | null],
+        trainedSkill: skillFromWg(wgDeep.prereq_skill),
+        loreSubject: String(wgDeep.lore_name ?? ''),
+        skillFeatId: null, // WG stores its own integer feat id — unmappable; re-pick in the builder
+      }
+    : undefined;
+  if (wantsDeepBg) {
+    resolved.push(`Custom (deep) background: ${customBackground!.name}`);
+    warnings.push('Deep-background skill feat could not be carried over — re-pick it in the builder.');
+  }
+
   // Baseline character from identity alone, then layer the WG specifics onto it.
   const baseBuild: BuildState = {
     ...emptyBuild(),
@@ -621,7 +790,8 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
     level: clampLevel(c.level),
     ancestryId,
     heritageId,
-    backgroundId,
+    backgroundId: wantsDeepBg ? CUSTOM_BACKGROUND_ID : backgroundId,
+    ...(customBackground ? { customBackground } : {}),
     classId,
     classId2,
     subclassId,
@@ -678,10 +848,10 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
     // A chosen name is genuinely dropped only if we didn't match it as a feat AND it wasn't accounted
     // for as a subclass / extraChoice option / tactic / auto-granted class feature.
     const dropped = [...new Set(chosenNames.filter((nm) => !matchFeat(nm) && !accountedFor.has(norm(nm))))];
-    if (dropped.length) warnings.push(`Feats not in Codex content — re-add in the builder: ${dropped.join(', ')}`);
+    if (dropped.length) warnings.push(`Feats not in Heroes Heaven content — re-add in the builder: ${dropped.join(', ')}`);
   } else {
     for (const f of features) if (!matchFeat(f.name) && !accountedFor.has(norm(f.name)) && /feat|dedication|prowess/i.test(f.name)) unmatchedFeats.push(f.name);
-    if (unmatchedFeats.length) warnings.push(`Feats not in Codex content (dropped): ${unmatchedFeats.slice(0, 12).join(', ')}${unmatchedFeats.length > 12 ? '…' : ''}`);
+    if (unmatchedFeats.length) warnings.push(`Feats not in Heroes Heaven content (dropped): ${unmatchedFeats.slice(0, 12).join(', ')}${unmatchedFeats.length > 12 ? '…' : ''}`);
   }
 
   // Trained skills from the proficiency snapshot (best-effort; ranks above trained are approximate).
@@ -721,9 +891,42 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
   }
 
   // Layer in the matched per-class multi-picks the reverse-derive can't see: extraChoices
-  // (Kineticist elements, Animist apparitions, …) and the Commander folio.
+  // (Kineticist elements, Animist apparitions, …), the Commander folio, and the deep background.
   if (Object.keys(matchedExtra).length) build.extraChoices = { ...build.extraChoices, ...matchedExtra };
   if (matchedTactics.length) build.commanderTactics = matchedTactics;
+  if (wantsDeepBg) {
+    build.backgroundId = CUSTOM_BACKGROUND_ID;
+    build.customBackground = customBackground;
+  }
+
+  // Enabled source books: WG stores enabled integer source ids; its `content.all_sources` block
+  // carries the id → name rows. Match those names to our book catalog so non-Core books the
+  // character uses stay visible in the builder pickers.
+  {
+    const wgEnabled: number[] = Array.isArray(c.content_sources?.enabled) ? c.content_sources.enabled : [];
+    const wgSourceRows: any[] = Array.isArray(snap.all_sources) ? snap.all_sources : [];
+    if (wgEnabled.length && wgSourceRows.length) {
+      const { allBooks, homebrew } = sourceCatalog(content);
+      const bookIdx = new Map<string, string>();
+      for (const b of [...allBooks, ...homebrew.map((h) => h.name)]) {
+        bookIdx.set(norm(b), b);
+        bookIdx.set(norm(b.replace(/^Pathfinder /, '')), b);
+      }
+      const matched = new Set<string>();
+      for (const row of wgSourceRows) {
+        if (typeof row?.id !== 'number' || !wgEnabled.includes(row.id)) continue;
+        const nm = typeof row?.name === 'string' ? row.name : '';
+        if (!nm) continue;
+        const hit = bookIdx.get(norm(nm)) ?? bookIdx.get(norm(`Pathfinder ${nm}`));
+        if (hit) matched.add(hit);
+      }
+      const extra = [...matched].filter((b) => !CORE_BOOKS.includes(b));
+      if (extra.length) {
+        build.enabledSources = [...CORE_BOOKS, ...extra];
+        resolved.push(`${extra.length} non-Core source book${extra.length === 1 ? '' : 's'} enabled to match the Wanderer’s Guide character.`);
+      }
+    }
+  }
 
   // Spells & cantrips by name → onto the build, then rebuild.
   const spellWarn: string[] = [];
@@ -733,7 +936,45 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
   if (Object.keys(byRank).length) build.spells = byRank;
   const spellCount = cantrips.length + Object.values(byRank).reduce((n, a) => n + a.length, 0);
   if (spellCount) resolved.push(`${spellCount} spell${spellCount === 1 ? '' : 's'} matched.`);
-  if (spellWarn.length) warnings.push(`Spells not in Codex content (dropped): ${spellWarn.slice(0, 12).join(', ')}${spellWarn.length > 12 ? '…' : ''}`);
+
+  // Signature spells: flagged per-row in WG's id-keyed character.spells.list; resolve the id via
+  // the compiled dump's spell rows, then by name to our content. One per rank (the app's model).
+  const idNames = wgSpellIdNames(snap);
+  {
+    const list: any[] = Array.isArray(c.spells?.list) ? c.spells.list : [];
+    const signatures: Record<number, string> = {};
+    for (const row of list) {
+      if (!row?.signature) continue;
+      const nm = idNames.get(Number(row.spell_id));
+      const id = nm ? spellsIdx.get(norm(nm)) : undefined;
+      if (!id) continue;
+      const rank = Number(row.rank) || content.spells[id]?.rank || 1;
+      if (!signatures[rank]) signatures[rank] = id;
+    }
+    if (Object.keys(signatures).length) {
+      build.signatures = { ...build.signatures, ...signatures };
+      resolved.push(`${Object.keys(signatures).length} signature spell${Object.keys(signatures).length === 1 ? '' : 's'} marked.`);
+    }
+  }
+
+  // Rituals: the app stores a character's rituals as override-added spells (they render in the
+  // Spells page's Rituals section).
+  {
+    const rows: any[] = Array.isArray(snap.spells?.rituals) ? snap.spells.rituals : [];
+    const adds: { spellId: string; rank: number }[] = [];
+    for (const s of rows) {
+      const nm = typeof s?.name === 'string' ? s.name : undefined;
+      if (!nm) continue;
+      const id = spellsIdx.get(norm(nm));
+      if (id) adds.push({ spellId: id, rank: Number(s?.rank) || content.spells[id]?.rank || 1 });
+      else spellWarn.push(nm);
+    }
+    if (adds.length) {
+      build.overrides = { ...build.overrides, addedSpells: [...(build.overrides?.addedSpells ?? []), ...adds] };
+      resolved.push(`${adds.length} ritual${adds.length === 1 ? '' : 's'} imported.`);
+    }
+  }
+  if (spellWarn.length) warnings.push(`Spells not in Heroes Heaven content (dropped): ${spellWarn.slice(0, 12).join(', ')}${spellWarn.length > 12 ? '…' : ''}`);
 
   // Inventory by name (WG embeds the item name on each row).
   const customItems: Item[] = [];
@@ -752,9 +993,34 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
   const wgItems: any[] = flattenWgItems(Array.isArray(c.inventory?.items) ? c.inventory.items : []);
   const builtInv: BuildState['inventory'] = [];
   const naturals: NaturalAttack[] = [];
+  let formulaCount = 0;
+  let battlezooItems = 0;
+  // Per-instance state WG stores on the item row: limited-use charges and the spell a generic
+  // scroll/wand holds.
+  const wgItemExtras = (row: any): { charges?: { current: number; max: number }; heldSpell?: string } => {
+    const out: { charges?: { current: number; max: number }; heldSpell?: string } = {};
+    const chg = row?.item?.meta_data?.charges;
+    const max = Number(chg?.max);
+    if (Number.isFinite(max) && max > 0) {
+      const cur = Number(chg?.current);
+      out.charges = { current: clamp(Number.isFinite(cur) ? cur : max, 0, max), max };
+    }
+    const sw = row?.item?.meta_data?.scroll_wand;
+    if (sw && typeof sw.spell_name === 'string') {
+      const id = spellsIdx.get(norm(sw.spell_name));
+      if (id) out.heldSpell = id;
+    }
+    return out;
+  };
   for (const row of wgItems) {
     const nm: string | undefined = row?.item?.name;
     if (!nm) continue;
+    // Crafting formulas are a known-recipes list, not carried gear — the app has no formula book.
+    if (row?.is_formula) {
+      formulaCount++;
+      continue;
+    }
+    if (row?.item?.meta_data?.battlezoo?.enabled) battlezooItems++;
     // Match by name; if a descriptor variant like "Rope (50 ft.)" / "Rations (1 week)" misses, retry
     // without the trailing parenthetical — but NOT for tier parentheticals (a missing "Healing Potion
     // (Greater)" must not silently become a base "Healing Potion").
@@ -779,13 +1045,32 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
       const custom = synthImportedItem(row.item);
       customItems.push(custom);
       const cqty = Number(row?.item?.meta_data?.quantity) || 1;
-      builtInv.push({ itemId: custom.id, quantity: cqty, equipped: !!row.is_equipped, invested: !!row.is_invested });
+      builtInv.push({ itemId: custom.id, quantity: cqty, equipped: !!row.is_equipped, invested: !!row.is_invested, ...wgItemExtras(row) });
       continue;
     }
     const qty = Number(row?.item?.meta_data?.quantity) || 1;
-    const runes = mapWgRunes(row?.item?.meta_data?.runes, content.items[id]?.itemType ?? '', runesIdx);
-    builtInv.push({ itemId: id, quantity: qty, equipped: !!row.is_equipped, invested: !!row.is_invested, ...(runes ? { runes } : {}) });
+    const appItem = content.items[id];
+    const runes = mapWgRunes(row?.item?.meta_data?.runes, appItem?.itemType ?? '', runesIdx);
+    // WG has a single is_equipped flag; the app distinguishes WORN (armor + worn magic items — what
+    // AC/resilient-rune math reads) from EQUIPPED (held/wielded). Without this split an imported
+    // breastplate would sit "held" in the pack and grant no AC.
+    // Foundry usage strings are "worn", "worncloak", "wornshoes", … — prefix match, not word match.
+    const wearable = appItem?.itemType === 'armor' || /^worn/i.test(String(appItem?.usage ?? '').trim());
+    const carried = !!(row.is_equipped || row.is_invested);
+    builtInv.push({
+      itemId: id,
+      quantity: qty,
+      ...(wearable ? { worn: carried } : { equipped: !!row.is_equipped }),
+      invested: !!row.is_invested,
+      ...(runes ? { runes } : {}),
+      ...wgItemExtras(row),
+    });
   }
+  if (formulaCount) warnings.push(`${formulaCount} crafting formula${formulaCount === 1 ? '' : 's'} skipped (the app has no formula book).`);
+  if (battlezooItems)
+    warnings.push(
+      `${battlezooItems} item${battlezooItems === 1 ? ' uses' : 's use'} Wanderer’s Guide Monster Parts refinement — refine ${battlezooItems === 1 ? 'it' : 'them'} again from the Inventory tab (the two apps track refinement differently).`,
+    );
   if (builtInv.length) {
     build.inventory = builtInv;
     resolved.push(`${builtInv.length} item${builtInv.length === 1 ? '' : 's'} matched.`);
@@ -889,11 +1174,100 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
     resolved.push(`${wgInnate.length} innate spell${wgInnate.length === 1 ? '' : 's'} imported.`);
   }
 
+  // --- Today's casting state: which prepared slots hold which spell (and which are cast), how many
+  //     spontaneous slots are spent, focus points, and innate casts already used. WG's `spell_slots`
+  //     dump carries the resolved spell row per slot, so this maps by name like everything else. ---
+  {
+    const slotRows: any[] = Array.isArray(snap.spell_slots) ? snap.spell_slots : [];
+    const prepEntry = character.spellcasting.find((e) => e.type === 'prepared');
+    const spontEntry = character.spellcasting.find((e) => e.type === 'spontaneous');
+    if (slotRows.length && prepEntry?.prepared) {
+      const byRankRows = new Map<number, any[]>();
+      for (const r of slotRows) {
+        const rk = Number(r?.rank);
+        if (!Number.isFinite(rk)) continue;
+        if (!byRankRows.has(rk)) byRankRows.set(rk, []);
+        byRankRows.get(rk)!.push(r);
+      }
+      let prepCount = 0;
+      for (const [rk, rows] of byRankRows) {
+        const slots = prepEntry.prepared[rk];
+        if (!slots) continue;
+        rows.forEach((row, i) => {
+          if (i >= slots.length) return;
+          const nm: unknown = row?.spell?.name ?? (row?.spell_id != null ? idNames.get(Number(row.spell_id)) : undefined);
+          const id = typeof nm === 'string' ? spellsIdx.get(norm(nm)) : undefined;
+          if (id) {
+            slots[i] = { spellId: id, expended: !!row?.exhausted };
+            prepCount++;
+          } else if (row?.exhausted && slots[i]) {
+            slots[i] = { ...slots[i], expended: true };
+          }
+        });
+      }
+      if (prepCount) resolved.push(`${prepCount} prepared spell slot${prepCount === 1 ? '' : 's'} filled.`);
+    }
+    if (slotRows.length && spontEntry?.slots) {
+      for (const [rkStr, pool] of Object.entries(spontEntry.slots)) {
+        const used = slotRows.filter((r) => Number(r?.rank) === Number(rkStr) && r?.exhausted).length;
+        if (used) pool.used = Math.min(pool.max, used);
+      }
+    }
+    const fpc = c.spells?.focus_point_current;
+    if (typeof fpc === 'number' && character.focus) {
+      character.focus = { ...character.focus, current: clamp(fpc, 0, character.focus.max) };
+    }
+    // Innate casts already spent today (casts_current > 0 in WG = used casts).
+    for (const row of Array.isArray(snap.innate_spells) ? snap.innate_spells : []) {
+      if (!(Number(row?.casts_current) > 0)) continue;
+      const nm = row?.spell?.name ?? row?.name;
+      const id = typeof nm === 'string' ? spellsIdx.get(norm(nm)) : undefined;
+      if (!id) continue;
+      for (const e of character.spellcasting) {
+        if (e.type !== 'innate') continue;
+        const has = (e.cantrips ?? []).includes(id) || Object.values(e.repertoire ?? {}).some((a) => a.includes(id));
+        if (has) e.innateUsed = [...new Set([...(e.innateUsed ?? []), id])];
+      }
+    }
+  }
+
+  // Active conditions (Frightened 2, Prone, …) live on WG's details.conditions.
+  {
+    const rows: any[] = Array.isArray(c.details?.conditions) ? c.details.conditions : [];
+    if (rows.length) {
+      const condIdx = nameIndex(content.conditions);
+      const active: ActiveCondition[] = [];
+      const missing: string[] = [];
+      for (const cond of rows) {
+        const nm = typeof cond?.name === 'string' ? cond.name : '';
+        if (!nm) continue;
+        const id = condIdx.get(norm(nm));
+        if (!id) {
+          missing.push(nm);
+          continue;
+        }
+        const v = Number(cond?.value);
+        if (!active.some((a) => a.id === id)) active.push({ id, ...(Number.isFinite(v) && v > 0 ? { value: v } : {}) });
+      }
+      if (active.length) {
+        character.conditions = active;
+        resolved.push(`${active.length} active condition${active.length === 1 ? '' : 's'} imported.`);
+      }
+      if (missing.length) warnings.push(`Conditions not recognized (dropped): ${missing.join(', ')}`);
+    }
+  }
+
   // Patch in coins, vitals, bio, and portrait the build doesn't carry.
   const coins = c.inventory?.coins;
   if (coins) character.currency = { pp: coins.pp ?? 0, gp: coins.gp ?? 0, sp: coins.sp ?? 0, cp: coins.cp ?? 0 };
   character.xp = c.experience ?? 0;
   character.heroPoints = clamp(c.hero_points ?? 1, 0, 3);
+  if (build.enabledSources) character.enabledSources = build.enabledSources;
+  const bankedParts = Number(c.inventory?.monster_parts?.value);
+  if (Number.isFinite(bankedParts) && bankedParts > 0) {
+    character.monsterParts = bankedParts;
+    resolved.push(`${bankedParts} gp of banked monster parts imported.`);
+  }
   const maxHp = deriveMaxHp(character, content);
   character.hitPoints = {
     ...character.hitPoints,
@@ -943,11 +1317,39 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
         bumped++;
       }
     }
+    // Lore skills: WG names them SKILL_LORE___<SUBJECT>; the app keys them `lore:<subject>`.
+    let lores = 0;
+    for (const key of Object.keys(snap.proficiencies)) {
+      const lk = loreKeyFromWgVar(key);
+      if (!lk) continue;
+      const r = wgRank(key);
+      if (!r || r === 'untrained') continue;
+      const before = skills[lk] ?? 'untrained';
+      if (RANK_ORDER.indexOf(r) > RANK_ORDER.indexOf(before)) {
+        skills[lk] = r;
+        lores++;
+      }
+    }
+    if (lores) resolved.push(`${lores} Lore skill${lores === 1 ? '' : 's'} imported.`);
     character.proficiencies.saves.fortitude = bump(character.proficiencies.saves.fortitude, 'SAVE_FORT');
     character.proficiencies.saves.reflex = bump(character.proficiencies.saves.reflex, 'SAVE_REFLEX');
     character.proficiencies.saves.will = bump(character.proficiencies.saves.will, 'SAVE_WILL');
     character.proficiencies.perception = bump(character.proficiencies.perception, 'PERCEPTION');
     character.proficiencies.classDc = bump(character.proficiencies.classDc, 'CLASS_DC');
+    // Weapon + armor category proficiencies (an archetype's martial training, etc.).
+    for (const [wgKey, cat] of Object.entries(WG_WEAPON_CATS)) {
+      character.proficiencies.attacks[cat] = bump(character.proficiencies.attacks[cat], wgKey);
+    }
+    for (const [wgKey, cat] of Object.entries(WG_ARMOR_CATS)) {
+      character.proficiencies.defenses[cat] = bump(character.proficiencies.defenses[cat], wgKey);
+    }
+    // Spellcasting proficiency: WG tracks one SPELL_ATTACK/SPELL_DC pair; raise any lower entry.
+    const spellRank = wgRank('SPELL_ATTACK') ?? wgRank('SPELL_DC');
+    if (spellRank && spellRank !== 'untrained') {
+      for (const e of character.spellcasting) {
+        if (RANK_ORDER.indexOf(spellRank) > RANK_ORDER.indexOf(e.proficiency)) e.proficiency = spellRank;
+      }
+    }
     if (bumped) resolved.push(`Skill & save proficiencies set from Wanderer’s Guide.`);
   }
 
@@ -976,14 +1378,132 @@ function importFromWg(obj: any, content: ContentDatabase): { saved: SavedChar; r
     resolved.push(`${wgPages.length} note page${wgPages.length === 1 ? '' : 's'} imported.`);
   }
 
+  // Bio fields the app has no Details slot for (beliefs, faction, reputation, organized play) —
+  // preserved on a note page instead of being dropped.
+  {
+    const bits: string[] = [];
+    const addBit = (label: string, v: unknown) => {
+      if (v == null || v === '') return;
+      bits.push(`<p><strong>${escapeHtml(label)}:</strong> ${escapeHtml(String(v))}</p>`);
+    };
+    addBit('Beliefs', info.beliefs);
+    addBit('Faction', info.faction);
+    addBit('Reputation', info.reputation);
+    addBit('Organized Play ID', info.organized_play_id);
+    if (bits.length) {
+      character.notes = [
+        ...character.notes,
+        {
+          id: `wg-note-${newRosterId()}`,
+          title: 'Imported from Wanderer’s Guide',
+          icon: 'ti-file-import',
+          content: bits.join(''),
+        },
+      ];
+      resolved.push('Extra bio fields (beliefs/faction/…) saved to a note page.');
+    }
+  }
+
+  // Companions: WG stores full creature stat blocks; match them by name to the app's companion
+  // catalogs (animal companions, pets, followers). Unmatched ones are reported, not silently lost.
+  {
+    const rows: any[] = Array.isArray(c.companions?.list) ? c.companions.list : [];
+    if (rows.length) {
+      const animalIdx = nameIndex(content.animalCompanions);
+      const petIdx = nameIndex(content.pets ?? {});
+      const followerIdx = nameIndex(content.followers ?? {});
+      const comps: CompanionConfig[] = [];
+      const missing: string[] = [];
+      rows.forEach((row, i) => {
+        const nm = typeof row?.name === 'string' ? row.name.trim() : '';
+        if (!nm) return;
+        const key = norm(nm);
+        const animal = animalIdx.get(key);
+        const pet = petIdx.get(key);
+        const follower = followerIdx.get(key);
+        if (animal) comps.push({ id: `wg-comp-${i}-${newRosterId()}`, kind: 'animal', name: nm, typeId: animal, maturity: 'young' });
+        else if (pet) comps.push({ id: `wg-comp-${i}-${newRosterId()}`, kind: 'pet', name: nm, typeId: pet });
+        else if (follower) comps.push({ id: `wg-comp-${i}-${newRosterId()}`, kind: 'follower', name: nm, typeId: follower });
+        else missing.push(nm);
+      });
+      if (comps.length) {
+        character.companions = [...(character.companions ?? []), ...comps];
+        build.companions = [...(build.companions ?? []), ...comps];
+        resolved.push(`${comps.length} companion${comps.length === 1 ? '' : 's'} matched (${comps.map((x) => x.name).join(', ')}).`);
+      }
+      if (missing.length)
+        warnings.push(`Companions not in the app's companion catalog (dropped): ${missing.join(', ')}. Re-add them from the Companions tab.`);
+    }
+  }
+
+  // Favorites (starred descriptions) → the app's pinned descriptions, resolved by name.
+  {
+    const rows: any[] = Array.isArray(c.meta_data?.favorites) ? c.meta_data.favorites : [];
+    if (rows.length) {
+      const favSources: { key: string; idx: Map<string, string>; map: Record<string, { name: string; description?: string; descRefs?: any }> }[] = [
+        { key: 'feats', idx: featsIdx, map: content.feats },
+        { key: 'spells', idx: spellsIdx, map: content.spells },
+        { key: 'items', idx: itemsIdx, map: content.items },
+        { key: 'actions', idx: nameIndex(content.actions), map: content.actions },
+        { key: 'classFeatures', idx: nameIndex(content.classFeatures), map: content.classFeatures },
+        { key: 'conditions', idx: nameIndex(content.conditions), map: content.conditions },
+      ];
+      const typeToKey: Record<string, string> = {
+        feat: 'feats',
+        spell: 'spells',
+        item: 'items',
+        'inv-item': 'items',
+        action: 'actions',
+        'class-feature': 'classFeatures',
+        condition: 'conditions',
+      };
+      const pins: PinnedDesc[] = [];
+      for (const f of rows) {
+        const nm = typeof f?.name === 'string' ? f.name : '';
+        if (!nm) continue;
+        const prefer = typeToKey[String(f?.type ?? '')];
+        const ordered = prefer ? [...favSources].sort((a, b) => (a.key === prefer ? -1 : b.key === prefer ? 1 : 0)) : favSources;
+        for (const src of ordered) {
+          const id = src.idx.get(norm(nm));
+          const entry = id ? src.map[id] : undefined;
+          if (!entry) continue;
+          if (!pins.some((p) => p.title === entry.name && p.key === src.key)) {
+            pins.push({ title: entry.name, description: entry.description ?? '', ...(entry.descRefs ? { descRefs: entry.descRefs } : {}), key: src.key });
+          }
+          break;
+        }
+      }
+      if (pins.length) {
+        character.pinnedDescs = [...(character.pinnedDescs ?? []), ...pins];
+        resolved.push(`${pins.length} favorite${pins.length === 1 ? '' : 's'} pinned.`);
+      }
+    }
+  }
+
+  // Character-scoped custom modes → app user modes (the caller persists them, scoped to this character).
+  const customModes: ModeDef[] = (Array.isArray(c.meta_data?.custom_modes) ? c.meta_data.custom_modes : [])
+    .map(modeFromWg)
+    .filter((m: ModeDef | null): m is ModeDef => !!m);
+  if (customModes.length)
+    resolved.push(`${customModes.length} custom mode${customModes.length === 1 ? '' : 's'} imported — toggle ${customModes.length === 1 ? 'it' : 'them'} from the Modes menu.`);
+
+  // Things WG models that the app deliberately has no slot for — surfaced, never silently eaten.
+  if (c.variants?.stamina || Number(c.stamina_current) > 0) warnings.push('The Stamina variant isn’t supported — stamina/resolve were skipped.');
+  if (c.variants?.proficiency_half_level) warnings.push('The proficiency-half-level variant isn’t supported — ignored.');
+  const clsArchName = c.details?.class_archetype?.name ?? c.details?.class_archetype_2?.name;
+  if (typeof clsArchName === 'string' && clsArchName) warnings.push(`Class archetype “${clsArchName}” isn’t supported — its changes were not applied.`);
+  const custOps = Array.isArray(c.custom_operations) ? c.custom_operations.length : 0;
+  if (custOps) warnings.push(`${custOps} custom operation${custOps === 1 ? '' : 's'} (Wanderer’s Guide homebrew adjustments) can’t be executed — skipped.`);
+
   warnings.push(
-    'Wanderer’s Guide build choices are matched to Codex content by name; anything unmatched above was dropped. Review the character in the builder.',
+    'Wanderer’s Guide build choices are matched to Heroes Heaven content by name; anything unmatched above was dropped. Review the character in the builder.',
   );
 
   return {
     saved: { id: newRosterId(), character, build, archived: false },
     report: { source: 'Wanderer’s Guide', lossless: false, resolved, warnings },
     customItems,
+    customModes,
   };
 }
 
