@@ -79,6 +79,7 @@ body {
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 18px;
+  flex-wrap: wrap;
 }
 .roster-title {
   font-size: 26px;
@@ -298,6 +299,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
 }
 .add-item-btn.ghost {
   background: var(--app-surface-2);
@@ -335,6 +337,35 @@ body {
   color: var(--app-text-dim);
   font-size: 13px;
   padding: 40px;
+}
+.roster-empty-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 64px 24px;
+}
+.roster-empty-logo {
+  width: 56px;
+  height: 56px;
+  opacity: 0.85;
+  margin-bottom: 4px;
+}
+.roster-empty-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--app-text);
+}
+.roster-empty-sub {
+  max-width: 380px;
+  line-height: 1.5;
+}
+.roster-empty-cta {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 /* ---- window chrome ---- */
@@ -7804,6 +7835,31 @@ button.strike-name:hover {
   .hb-row-chev { color: var(--app-text-dim); font-size: 16px; }
   .hb-row-new { background: none; border-style: dashed; color: var(--app-text-dim); }
   .hb-row-new > i:first-child { color: inherit; }
+
+  /* App-wide banners (update available / can't-save). The app shell (.ws-app / .roster-screen /
+     .hb-page) is position:fixed;inset:0 on mobile and paints OVER static-flow siblings, so on phone
+     the banners must float fixed above it — otherwise the critical "storage full" warning is
+     invisible. Stack them at the top with safe-area padding; stop short of the full width so a tap
+     on the dismiss X is reachable. */
+  .app-banners {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2000;
+    padding-top: calc(env(safe-area-inset-top, 0px) / var(--zoom, 1));
+    display: flex;
+    flex-direction: column;
+  }
+  .app-banners:empty { display: none; }
+  .app-banners .update-banner,
+  .app-banners .save-warning {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  }
+}
+/* Desktop: .app-banners is a plain flow container (banners stack above the app as before). */
+@media (min-width: 721px) {
+  .app-banners { display: contents; }
 }
 
 /* ---- RangeSlider (dual-handle, quantized) ---- */

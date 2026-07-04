@@ -275,11 +275,28 @@ export function RosterScreen({
               </div>
             );
           })}
-          {shown.length === 0 && (
-            <div className="roster-empty">
-              {q ? 'No characters match your search.' : filter === 'archived' ? 'No archived characters.' : 'No characters yet.'}
-            </div>
-          )}
+          {shown.length === 0 &&
+            (roster.length === 0 ? (
+              // A genuinely empty roster (fresh install / deleted the last character): a friendly
+              // welcome with a clear call to action, not a terse one-liner.
+              <div className="roster-empty roster-empty-welcome">
+                <HeroesHeavenLogo className="roster-empty-logo" />
+                <div className="roster-empty-title">No characters yet</div>
+                <div className="roster-empty-sub">Create your first character to get started, or import one you already have.</div>
+                <div className="roster-empty-cta">
+                  <button className="add-item-btn" onClick={onNew}>
+                    <i className="ti ti-user-plus" aria-hidden="true" /> Create your first character
+                  </button>
+                  <button className="btn" onClick={() => fileRef.current?.click()}>
+                    <i className="ti ti-upload" aria-hidden="true" /> Import
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="roster-empty">
+                {q ? 'No characters match your search.' : filter === 'archived' ? 'No archived characters.' : 'No characters yet.'}
+              </div>
+            ))}
         </div>
       </div>
 

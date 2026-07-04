@@ -51,6 +51,7 @@ import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
 import { abilityMod } from './derive';
 import { CLASS_ADVANCEMENT } from './advancement';
+import { FEAT_GRANTS } from './featGrants';
 import { DOMAIN_SPELLS } from './domains';
 import { initialClassResources } from './classResources';
 import { activeCasterArchetype, archetypeProficiency, archetypeSlots } from './casterArchetypes';
@@ -101,6 +102,9 @@ export interface BuildState {
   pathToPerfection?: (SaveId | null)[];
   /** Druid Voice of Nature feat choice: animal-empathy or plant-empathy. */
   voiceOfNature?: string | null;
+  /** Fighter Weapon Mastery / Weapon Legend chosen weapon GROUP (e.g. 'sword'). That group's
+   *  simple/martial/unarmed weapons reach master@5 → legendary@13 (advanced expert@5 → master@13). */
+  fighterWeaponGroup?: string | null;
   /** Animist primary apparition (option id); only the primary grants its vessel focus spell. */
   primaryApparition?: string | null;
   /** A subclass's restricted skill-choice pick (gunslinger Pistolero way, investigator Empiricism). */
@@ -137,6 +141,19 @@ export interface BuildState {
   backgroundSkillChoice?: SkillId | null;
   /** The general feat granted by a feat-granting heritage (Versatile Human). */
   heritageFeatId?: string | null;
+  /** The bonus level-1 wizard class feat granted by the School of Unified Magical Theory (UMT). */
+  umtFeatId?: string | null;
+  /**
+   * Skill-training choices offered by a feat's FEAT_GRANTS.skillChoices (Fighter Dedication:
+   * Acrobatics/Athletics; Rogue Dedication: Stealth/Thievery + one free). Keyed `<featId>:<slotIdx>`
+   * → chosen SkillId. An unset slot falls back to the first option (buildCharacter default).
+   */
+  featSkillChoices?: Record<string, SkillId>;
+  /**
+   * The bonus skill feat a dedication grants via FEAT_GRANTS.bonusSkillFeat (Rogue Dedication),
+   * keyed by the dedication's feat id → chosen skill-feat id. Injected as an extra skill-feat slot.
+   */
+  dedicationSkillFeats?: Record<string, string>;
   /** Chosen bonus languages (Int-based + ancestry extra), beyond the granted ones. */
   languages: string[];
   /** Chosen feats, keyed by slot id `"level:category:idx"` -> feat id. */
@@ -153,6 +170,12 @@ export interface BuildState {
   spells: Record<number, string[]>;
   /** Spontaneous signature spell per rank (rank -> repertoire spell id) — one per rank. */
   signatures: Record<number, string>;
+  /** Dual Class: the SECOND caster class's own spell surface — cantrips, spells-per-rank
+   *  (repertoire for spontaneous / prepared list for prepared), and signatures. Without these,
+   *  the second class's caster entry would be rebuilt empty on every builder edit. */
+  cantrips2?: string[];
+  spells2?: Record<number, string[]>;
+  signatures2?: Record<number, string>;
   /** Chosen tradition for a choice-tradition caster archetype (sorcerer/witch/eldritch-archer/beast-gunner). */
   archetypeTradition?: Tradition | null;
   /** Chosen key attribute for a choice-key caster archetype (psychic dedication = Int or Cha). */
@@ -204,6 +227,7 @@ export function emptyBuild(): BuildState {
     devotionSpell: null,
     pathToPerfection: [],
     voiceOfNature: null,
+    fighterWeaponGroup: null,
     primaryApparition: null,
     subclassSkill: null,
     dragonExemplar: null,
@@ -221,6 +245,9 @@ export function emptyBuild(): BuildState {
     heritageSkill: null,
     backgroundSkillChoice: null,
     heritageFeatId: null,
+    umtFeatId: null,
+    featSkillChoices: {},
+    dedicationSkillFeats: {},
     languages: [],
     featPicks: {},
     featChoices: {},
@@ -640,6 +667,21 @@ export function championDevotionSpell(cls: { features?: { featureId: string }[] 
   return opts.find((o) => o !== 'shields-of-the-spirit') ?? 'shields-of-the-spirit';
 }
 
+/**
+ * Deadly Simplicity (cleric/warpriest) has the prerequisite "deity with a simple or unarmed attack
+ * favored weapon". So a longsword-deity warpriest (Iomedae) does NOT get it, but a simple/unarmed
+ * favored-weapon deity does. A favored weapon is unarmed when it's not a real weapon ITEM (e.g.
+ * Irori's "fist"); otherwise it qualifies only when the item's category is `simple`.
+ */
+export function deityFavorsSimpleOrUnarmed(deityId: string | null | undefined, content: ContentDatabase): boolean {
+  const deity = deityId ? content.deities[deityId] : undefined;
+  return (deity?.favoredWeapons ?? []).some((w) => {
+    const item = content.items[w];
+    // A favored weapon that isn't a real weapon ITEM is an unarmed attack (Irori's "fist") → qualifies.
+    return !item || (item.itemType === 'weapon' && item.category === 'simple');
+  });
+}
+
 const TACTIC_TIER_RANK = { basic: 0, expert: 1, master: 2, legendary: 3 } as const;
 type TacticTier = keyof typeof TACTIC_TIER_RANK;
 
@@ -810,6 +852,8 @@ export function collectChosenIds(build: BuildState, content: ContentDatabase): S
   for (const arr of Object.values(build.extraChoices)) for (const v of arr) add(v);
   add(resolveBackground(build, content)?.grantedFeatId);
   add(build.heritageFeatId);
+  add(build.umtFeatId);
+  for (const v of Object.values(build.dedicationSkillFeats ?? {})) add(v);
   add(build.voiceOfNature);
   add(build.primaryApparition);
   add(build.devotionSpell);
@@ -1144,6 +1188,11 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // A subclass can override the slot progression (cleric Battle Creed uses the reduced two-rank table).
     const progression = subOption?.slotProgression ?? sp.progression;
     const slotCounts = casterSlots(level, progression); // rank -> number of slots
+    // Wizard School of Unified Magical Theory (Player Core): "No Curriculum" — it grants NO curriculum
+    // spell slot and NO extra school cantrip (unlike every other arcane school). Instead it gives a bonus
+    // L1 wizard class feat + one extra spellbook spell (feat/spellbook grants handled elsewhere). Gate the
+    // school slot and the 6th cantrip off for it.
+    const isUmt = subOption?.id === 'school-of-unified-magical-theory';
     // Spells the subclass grants to this pool's repertoire (psychic conscious mind
     // ladder), by rank. Apparition grants feed a separate pool (added below), not this.
     const grantedByRank: Record<number, string[]> = {};
@@ -1158,7 +1207,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       proficiency: 'trained',
       // Dedup so a subclass-granted cantrip (psychic conscious mind) doesn't duplicate a
       // player-picked one.
-      cantrips: [...new Set([...build.cantrips.slice(0, cantripsKnown(cls.id)), ...(grantedByRank[0] ?? [])])],
+      cantrips: [...new Set([...build.cantrips.slice(0, cantripsKnown(cls.id) - (isUmt ? 1 : 0)), ...(grantedByRank[0] ?? [])])],
     };
     if (sp.repertoire) {
       // Spontaneous: a repertoire of known spells per rank + a slot pool.
@@ -1189,25 +1238,31 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         (f) => f.featureId === 'unlimited-signature-spells' && f.level <= level,
       );
       if (unlimitedSig) entry.signature = [...new Set(Object.values(entry.repertoire).flat())];
-    } else if (cls.id === 'wizard') {
-      // Wizard: build.spells is the SPELLBOOK (learned spells per rank); the daily
-      // preparation is auto-filled from it (the player can re-prepare in play).
-      // The Arcane School grants ONE extra prepared slot of each rank you can cast (the
-      // curriculum slot), so a wizard prepares one more per rank than the base full-caster
-      // table; the extra cantrip is already counted by cantripsKnown('wizard'). (The slot
-      // is meant to hold a curriculum spell; that restriction isn't enforced here.)
-      const hasSchool = (cls.features ?? []).some((f) => f.featureId === 'arcane-school' || f.featureId === 'arcane-thesis') || !!subOption;
+    } else if (cls.id === 'wizard' || cls.id === 'witch') {
+      // LEARNED prepared casters — build.spells is a SPELLBOOK of known spells (the wizard's
+      // physical spellbook; the witch's familiar, "the source and repository of the spells your
+      // patron has bestowed"). They can prepare only spells they've learned, so the daily
+      // preparation is auto-filled from the spellbook (the player can re-prepare in play).
+      // The wizard's Arcane School grants ONE extra prepared slot of each rank you can cast (the
+      // curriculum slot), so a wizard prepares one more per rank than the base full-caster table;
+      // that extra cantrip is already counted by cantripsKnown('wizard'). UMT has no curriculum, so
+      // it grants no extra curriculum slot even though it IS an arcane school. The witch has no
+      // curriculum slot at all.
+      const hasSchool =
+        cls.id === 'wizard' &&
+        !isUmt &&
+        ((cls.features ?? []).some((f) => f.featureId === 'arcane-school' || f.featureId === 'arcane-thesis') || !!subOption);
       entry.spellbook = {};
       entry.prepared = {};
       for (const [rankStr, count] of Object.entries(slotCounts)) {
         const rank = Number(rankStr);
         const learned = build.spells[rank] ?? [];
         entry.spellbook[rank] = [...learned];
-        const total = count + (hasSchool ? 1 : 0); // +1 curriculum slot per castable rank
+        const total = count + (hasSchool ? 1 : 0); // +1 curriculum slot per castable rank (wizard only)
         entry.prepared[rank] = Array.from({ length: total }, (_, i) => ({ spellId: learned[i] ?? null, expended: false }));
       }
     } else {
-      // Cleric/druid/witch: prepare from the whole tradition list each day.
+      // Cleric/druid: prepare from the whole tradition list each day.
       entry.prepared = {};
       for (const [rankStr, count] of Object.entries(slotCounts)) {
         const rank = Number(rankStr);
@@ -1264,16 +1319,20 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       });
     }
 
-    // Cleric divine font: 1 + Cha modifier extra heal/harm slots (validated against the deity's allowed
-    // font). Applied to the prepared entry. Battle Creed replaces it with a BATTLE FONT: 4/5/6 Bane-or-
-    // Bless slots at the highest rank, cast with the class DC (not the spell DC).
+    // Divine Font (Player Core, cleric): 4 additional heal/harm slots at your HIGHEST rank of cleric
+    // spell slots, increasing to 5 at 5th level and 6 at 15th (NOT Cha-based). The font rank must be
+    // the highest NORMAL spell rank — the 10th-rank slot at L19+ is the Miraculous Spell capstone, not
+    // a "highest rank of cleric spell slots" the font can fill, so ranks 10+ are excluded here.
+    // Battle Creed replaces the font with a BATTLE FONT: same 4/5/6 count of Bane-or-Bless slots, cast
+    // with the class DC (not the spell DC).
+    const fontSlots = level >= 15 ? 6 : level >= 5 ? 5 : 4;
     const hasFont = (cls.features ?? []).some((f) => f.featureId === 'divine-font');
-    const ranks = Object.keys(entry.prepared ?? {}).map(Number);
+    const ranks = Object.keys(entry.prepared ?? {}).map(Number).filter((r) => r <= 9);
     const topRank = ranks.length ? Math.max(...ranks) : 1;
     if (subOption?.id === 'battle-creed') {
       entry.font = {
         type: 'battle',
-        slots: level >= 15 ? 6 : level >= 5 ? 5 : 4,
+        slots: fontSlots,
         rank: topRank,
         useClassDc: true,
         allowed: ['bane', 'bless'],
@@ -1283,7 +1342,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       if (hasFont && build.divineFont && (!deityFont?.length || deityFont.includes(build.divineFont))) {
         entry.font = {
           type: build.divineFont,
-          slots: Math.max(0, 1 + abilityMod(abilities.cha)),
+          slots: fontSlots,
           rank: topRank,
         };
       }
@@ -1299,6 +1358,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const sp2 = cls2.spellcasting;
     const tradition2 = subOption2?.tradition ?? sp2.tradition;
     const slotCounts2 = casterSlots(level, subOption2?.slotProgression ?? sp2.progression);
+    // The second class's chosen spells live on BuildState.{cantrips2,spells2,signatures2} — mirroring
+    // the primary surface — so a builder edit rebuilds the second entry with its spells INTACT.
+    const cantrips2 = build.cantrips2 ?? [];
+    const spells2 = build.spells2 ?? {};
     const entry2: SpellcastingEntry = {
       id: `${cls2.id}-casting`,
       name: `${cap(tradition2)} ${sp2.type} spellcasting`,
@@ -1306,20 +1369,41 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       tradition: tradition2,
       keyAbility: sp2.keyAbility,
       proficiency: 'trained',
-      cantrips: [],
+      cantrips: [...new Set([...cantrips2.slice(0, cantripsKnown(cls2.id))])],
     };
     const hasSchool2 = cls2.id === 'wizard'; // wizard curriculum: +1 prepared slot per castable rank
     if (sp2.repertoire) {
       entry2.repertoire = {};
       entry2.slots = {};
       for (const [rankStr, count] of Object.entries(slotCounts2)) {
-        entry2.slots[Number(rankStr)] = { max: count, used: 0 };
-        entry2.repertoire[Number(rankStr)] = [];
+        const rank = Number(rankStr);
+        entry2.slots[rank] = { max: count, used: 0 };
+        entry2.repertoire[rank] = [...new Set((spells2[rank] ?? []).slice(0, count))];
+      }
+      // Signature spells (spontaneous, once granted) — each must be in the repertoire.
+      const sig2Available = (cls2.features ?? []).some((f) => f.featureId === 'signature-spells' && f.level <= level);
+      if (sig2Available) {
+        const sig2 = Object.entries(build.signatures2 ?? {})
+          .filter(([rankStr, id]) => entry2.repertoire?.[Number(rankStr)]?.includes(id))
+          .map(([, id]) => id);
+        if (sig2.length) entry2.signature = sig2;
+      }
+    } else if (cls2.id === 'wizard') {
+      // Wizard second class: spells2 is the spellbook; auto-prepare from it (+1 curriculum slot/rank).
+      entry2.spellbook = {};
+      entry2.prepared = {};
+      for (const [rankStr, count] of Object.entries(slotCounts2)) {
+        const rank = Number(rankStr);
+        const learned = spells2[rank] ?? [];
+        entry2.spellbook[rank] = [...learned];
+        entry2.prepared[rank] = Array.from({ length: count + 1 }, (_, i) => ({ spellId: learned[i] ?? null, expended: false }));
       }
     } else {
       entry2.prepared = {};
       for (const [rankStr, count] of Object.entries(slotCounts2)) {
-        entry2.prepared[Number(rankStr)] = Array.from({ length: count + (hasSchool2 ? 1 : 0) }, () => ({ spellId: null, expended: false }));
+        const rank = Number(rankStr);
+        const chosen = spells2[rank] ?? [];
+        entry2.prepared[rank] = Array.from({ length: count + (hasSchool2 ? 1 : 0) }, (_, i) => ({ spellId: chosen[i] ?? null, expended: false }));
       }
     }
     // Magus Studious Spells: bonus auto-prepared slots at the tier rank (curated, not player-chosen).
@@ -1327,15 +1411,17 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const studious2 = magusStudiousSpells(level);
       if (studious2) entry2.prepared[studious2.rank] = [...(entry2.prepared[studious2.rank] ?? []), ...studious2.spells.map((id) => ({ spellId: content.spells[id] ? id : null, expended: false }))];
     }
-    // Cleric divine font (or Battle Creed's battle font) on the second class.
+    // Cleric divine font (or Battle Creed's battle font) on the second class — 4/5/6 slots at the
+    // highest NORMAL rank (rank 10 is the Miraculous Spell capstone, excluded), matching the primary.
     if (entry2.prepared) {
-      const ranks2 = Object.keys(entry2.prepared).map(Number);
+      const fontSlots2 = level >= 15 ? 6 : level >= 5 ? 5 : 4;
+      const ranks2 = Object.keys(entry2.prepared).map(Number).filter((r) => r <= 9);
       const top2 = ranks2.length ? Math.max(...ranks2) : 1;
       if (subOption2?.id === 'battle-creed') {
-        entry2.font = { type: 'battle', slots: level >= 15 ? 6 : level >= 5 ? 5 : 4, rank: top2, useClassDc: true, allowed: ['bane', 'bless'] };
+        entry2.font = { type: 'battle', slots: fontSlots2, rank: top2, useClassDc: true, allowed: ['bane', 'bless'] };
       } else if ((cls2.features ?? []).some((f) => f.featureId === 'divine-font') && build.divineFont) {
         const deityFont2 = build.deityId ? content.deities[build.deityId]?.divineFont : undefined;
-        if (!deityFont2?.length || deityFont2.includes(build.divineFont)) entry2.font = { type: build.divineFont, slots: Math.max(0, 1 + abilityMod(abilities.cha)), rank: top2 };
+        if (!deityFont2?.length || deityFont2.includes(build.divineFont)) entry2.font = { type: build.divineFont, slots: fontSlots2, rank: top2 };
       }
     }
     spellcasting.push(entry2);
@@ -1438,6 +1524,15 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     focus = { current: poolMax, max: poolMax };
   }
 
+  // Psychic: the psi cantrips/amps are cantrips in the occult repertoire (granted via the
+  // conscious mind's grantedSpells), NOT focus spells — so the block above never fires for a
+  // psychic. But the psychic DOES have a Focus Pool (RAW: "You start with a focus pool of 2
+  // Focus Points"), spent to power amps and refilled by Refocus. Seed it independently so the
+  // sheet shows Focus Points + Refocus. No psychic class feat increases the pool beyond 2.
+  if (!focus && (ownsClass('psychic'))) {
+    focus = { current: 2, max: 2 };
+  }
+
   // Class proficiency advancement: raise tracks to expert/master/legendary at the
   // class-defined levels (everything up to the target level). A subclass-specific
   // table (e.g. warpriest doctrine) overrides the class default when present.
@@ -1458,6 +1553,17 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     // light-armor rank onto medium for these rackets (trained@1, expert@13, master@19).
     if ([build.subclassId, build.subclassId2].some((s) => s === 'ruffian' || s === 'avenger')) {
       proficiencies.defenses.medium = maxRank(proficiencies.defenses.medium, proficiencies.defenses.light);
+    }
+    // Fighter Weapon Mastery (L5) / Weapon Legend (L13): the chosen weapon GROUP's simple/martial/
+    // unarmed weapons reach master@5, then legendary@13 — routed through weaponGroups so only that
+    // group is elevated above the general fighter progression. (Advanced weapons in the group lag one
+    // rank per RAW; the one-rank-per-group model tracks the common simple/martial/unarmed case.)
+    if ((build.classId === 'fighter' || build.classId2 === 'fighter') && build.fighterWeaponGroup && level >= 5) {
+      const groupRank: ProficiencyRank = level >= 13 ? 'legendary' : 'master';
+      (proficiencies.weaponGroups ??= {})[build.fighterWeaponGroup] = maxRank(
+        proficiencies.weaponGroups[build.fighterWeaponGroup] ?? 'untrained',
+        groupRank,
+      );
     }
   }
 
@@ -1504,13 +1610,25 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     feats.push({ featId: build.heritageFeatId, level: 1, category: 'general' });
     takenFeats.add(build.heritageFeatId);
   }
+  // Wizard School of Unified Magical Theory (Player Core): "you gain an additional 1st-level wizard
+  // class feat." Injected as an extra level-1 CLASS feat from the player's UMT picker — same mechanism
+  // as the Versatile-Human bonus feat above.
+  const isUmtSchool = cls?.id === 'wizard' && build.subclassId === 'school-of-unified-magical-theory';
+  if (isUmtSchool && build.umtFeatId && content.feats[build.umtFeatId] && !takenFeats.has(build.umtFeatId)) {
+    feats.push({ featId: build.umtFeatId, level: 1, category: 'class' });
+    takenFeats.add(build.umtFeatId);
+  }
   // Subclass/extra-choice options can grant a fixed bonus feat (bard muse feat, warpriest Shield
   // Block, druid order feat). Auto-grant those with no sub-choice; a choice-gated grant like Domain
   // Initiate is left for a manual slot so its domain pick is surfaced.
+  const favorsSimpleOrUnarmed = deityFavorsSimpleOrUnarmed(build.deityId, content);
   for (const o of grantOptions) {
     for (const fid of o.grantedFeats ?? []) {
       const f = content.feats[fid];
       if (!f || f.choice || takenFeats.has(fid)) continue;
+      // Deadly Simplicity (warpriest / battle-creed doctrines auto-grant it) requires the deity's
+      // favored weapon be simple or unarmed — a longsword-deity (Iomedae) warpriest doesn't get it.
+      if (fid === 'deadly-simplicity' && !favorsSimpleOrUnarmed) continue;
       feats.push({ featId: fid, level: 1, category: f.category });
       takenFeats.add(fid);
     }
@@ -1565,6 +1683,17 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     takenFeats.add(featId);
     feats.push({ featId, level: lvl, category: (cat as FeatCategory) ?? 'class', choice: featChoiceById[slotKey] });
   }
+  // Dedication BONUS skill feats (Rogue Dedication: "You gain a skill feat"). Once the dedication is
+  // among the taken feats, inject its chosen skill feat as an extra skill-feat slot at the dedication's
+  // level — same mechanism as the Versatile-Human bonus feat. Only if the player picked one.
+  for (const fc of [...feats]) {
+    if (!FEAT_GRANTS[fc.featId]?.bonusSkillFeat) continue;
+    const chosen = build.dedicationSkillFeats?.[fc.featId];
+    if (chosen && content.feats[chosen] && !takenFeats.has(chosen)) {
+      feats.push({ featId: chosen, level: fc.level, category: 'skill' });
+      takenFeats.add(chosen);
+    }
+  }
   // Overrides — bonus feats force-granted with no slot (deduped against what's already taken), then
   // suppress any feats the user explicitly removed. buildCharacter doesn't re-validate, so this is safe.
   for (const a of build.overrides?.addedFeats ?? []) {
@@ -1577,6 +1706,28 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     for (let i = feats.length - 1; i >= 0; i--) if (removed.has(feats[i].featId)) feats.splice(i, 1);
   }
   feats.sort((a, b) => a.level - b.level);
+
+  // Feat-granted proficiencies (archetype dedications etc.). Applied AFTER class advancement so a
+  // dedication can raise a proficiency the class hasn't (Sentinel → light+medium armor, Fighter
+  // Dedication → martial weapons, …). Only RAISES a rank (maxRank), never lowers. See featGrants.ts.
+  for (const fc of feats) {
+    const g = FEAT_GRANTS[fc.featId];
+    if (!g) continue;
+    for (const [c, r] of Object.entries(g.armor ?? {})) if (r) proficiencies.defenses[c as ArmorCategory] = maxRank(proficiencies.defenses[c as ArmorCategory], r);
+    for (const [c, r] of Object.entries(g.weapon ?? {})) if (r) proficiencies.attacks[c as WeaponCategory] = maxRank(proficiencies.attacks[c as WeaponCategory], r);
+    for (const [s, r] of Object.entries(g.save ?? {})) if (r) proficiencies.saves[s as SaveId] = maxRank(proficiencies.saves[s as SaveId], r);
+    if (g.perception) proficiencies.perception = maxRank(proficiencies.perception, g.perception);
+    for (const [k, r] of Object.entries(g.skills ?? {})) if (r) proficiencies.skills[k as ProficiencyKey] = maxRank(proficiencies.skills[k as ProficiencyKey] ?? 'untrained', r);
+    // Skill-training CHOICES ("your choice of Acrobatics or Athletics"): resolve each slot to the
+    // player's pick, defaulting to the first option (or Acrobatics for an 'any' slot). Trains that
+    // skill (RAISES only).
+    (g.skillChoices ?? []).forEach((slot, idx) => {
+      const opts = slot.options === 'any' ? SKILLS : slot.options;
+      const picked = build.featSkillChoices?.[`${fc.featId}:${idx}`];
+      const skill = picked && opts.includes(picked) ? picked : opts[0];
+      proficiencies.skills[skill] = maxRank(proficiencies.skills[skill] ?? 'untrained', slot.rank);
+    });
+  }
 
   // Granted melee strikes from feats/heritage/ancestry/class features (Iruxi Fangs, Razortooth jaws,
   // …). Seeded with any WG-imported natural-attack names so a feat grant doesn't duplicate one the
@@ -1953,6 +2104,34 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
 }
 
 /**
+ * Locate the PRIMARY class's spellcasting entry inside a finished character, tolerant of a
+ * non-canonical entry id. buildCharacter tags the primary caster `${cls.id}-casting`, but imported
+ * characters / hand-authored data / the old seed may carry a different id (e.g. `cleric-divine`).
+ * Matching by exact id alone silently drops all of that character's spells on the next rebuild, so
+ * we fall back to a structural match: the entry whose type equals the class's spellcasting type,
+ * excluding entries that are provably NOT the primary class pool — the caster-archetype pool
+ * (`-dedication-casting`), focus spells, the animist apparition pool, and (Dual Class) the second
+ * class's own caster entry.
+ */
+function findPrimaryCasterEntry(c: Character, cls: ClassDef, cls2?: ClassDef): SpellcastingEntry | undefined {
+  const exact = c.spellcasting.find((e) => e.id === `${cls.id}-casting`);
+  if (exact) return exact;
+  if (!cls.spellcasting) return undefined;
+  const wantType = cls.spellcasting.type; // 'prepared' | 'spontaneous'
+  const secondId = cls2 ? `${cls2.id}-casting` : undefined;
+  const candidates = c.spellcasting.filter(
+    (e) =>
+      e.type === wantType &&
+      e.type !== 'focus' &&
+      !e.id.endsWith('-dedication-casting') &&
+      e.id !== 'animist-apparition-casting' &&
+      e.id !== secondId,
+  );
+  // Prefer a spellbook/repertoire/prepared-bearing entry over an empty stub; else the first match.
+  return candidates.find((e) => e.spellbook || e.repertoire || e.prepared) ?? candidates[0];
+}
+
+/**
  * Reverse of buildCharacter — reconstruct an editable BuildState from a finished Character, so
  * ANY character (including hand-authored seeds with no stored build) can be reopened in the
  * builder and leveled up. Rebuilding from the result reproduces an EQUIVALENT character (same
@@ -2166,6 +2345,14 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
         : null;
   }
 
+  // Fighter Weapon Mastery group — recover the chosen group from the elevated weaponGroups rank
+  // (fighters only elevate a group via this pick, so any weaponGroups entry ≥ master is it).
+  if (dcOwns('fighter')) {
+    const wg = c.proficiencies.weaponGroups ?? {};
+    b.fighterWeaponGroup =
+      Object.keys(wg).find((g) => wg[g] === 'legendary') ?? Object.keys(wg).find((g) => wg[g] === 'master') ?? null;
+  }
+
   // Subclass restricted skill choice (Pistolero way, Empiricism methodology) — recover the trained pick.
   {
     const subOpt = cls?.subclass?.options.find((o) => o.id === b.subclassId);
@@ -2209,6 +2396,15 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   // Override-granted bonus feats are re-injected by buildCharacter from overrides.addedFeats, so they
   // must NOT be reconstructed into a slot pick (else they'd consume a feat slot on reopen).
   const addedFeatIds = new Set((c.overrides?.addedFeats ?? []).map((a) => a.featId));
+  // UMT wizard bonus feat: a wizard's first real class-feat slot is level 2, so a level-1 CLASS feat on
+  // a UMT wizard is unambiguously the School of Unified Magical Theory bonus feat — recover it into
+  // umtFeatId rather than a slot pick (same clean invariant as the Versatile-Human general feat).
+  const isUmtWizard = c.classId === 'wizard' && b.subclassId === 'school-of-unified-magical-theory';
+  // Dedication bonus skill feats: a taken dedication with FEAT_GRANTS.bonusSkillFeat contributes an
+  // extra skill feat at its own level. Recover the FIRST unclaimed skill feat at that level into
+  // dedicationSkillFeats so it doesn't consume a real skill-feat slot on reopen.
+  const bonusSkillDedications = c.feats.filter((f) => FEAT_GRANTS[f.featId]?.bonusSkillFeat);
+  const claimedBonusSkill = new Set<string>();
   const featsByLevel = new Map<number, FeatChoice[]>();
   for (const f of c.feats) {
     if (!bgFeatDropped && bgFeat && f.featId === bgFeat && f.level === 1 && f.category === 'skill') {
@@ -2218,6 +2414,25 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     if (heritageGrantsFeat && !b.heritageFeatId && f.level === 1 && f.category === 'general') {
       b.heritageFeatId = f.featId;
       continue;
+    }
+    if (isUmtWizard && !b.umtFeatId && f.level === 1 && f.category === 'class') {
+      b.umtFeatId = f.featId;
+      continue;
+    }
+    // Match a skill feat to a dedication's bonus grant at the same level (dedication feat itself excluded).
+    if (
+      f.category === 'skill' &&
+      !FEAT_GRANTS[f.featId]?.bonusSkillFeat &&
+      !claimedBonusSkill.has(f.featId)
+    ) {
+      const ded = bonusSkillDedications.find(
+        (d) => d.level === f.level && !(b.dedicationSkillFeats ?? {})[d.featId],
+      );
+      if (ded) {
+        (b.dedicationSkillFeats ??= {})[ded.featId] = f.featId;
+        claimedBonusSkill.add(f.featId);
+        continue;
+      }
     }
     if (addedFeatIds.has(f.featId)) continue;
     const arr = featsByLevel.get(f.level) ?? [];
@@ -2275,7 +2490,14 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   {
     const grantedSpellSet = new Set<string>();
     for (const o of grantOptions) for (const s of o.grantedSpells ?? []) grantedSpellSet.add(s);
-    const classEntry = cls ? c.spellcasting.find((e) => e.id === `${cls.id}-casting`) : undefined;
+    // Find the PRIMARY class's caster entry. Prefer the canonical id `${cls.id}-casting`, but fall
+    // back to a STRUCTURAL match: any character whose entry id differs (imported characters, the old
+    // seed, hand-authored data) would otherwise have its cantrips/prepared/repertoire/signatures
+    // silently dropped on the next rebuild. We match the class's own caster by its declared type
+    // (prepared/spontaneous), excluding the entries that are NOT the primary class pool: the caster
+    // archetype pool (`-dedication-casting`), focus spells (`type === 'focus'`), the animist apparition
+    // pool, and — under Dual Class — the SECOND class's entry (recovered separately below).
+    const classEntry = cls ? findPrimaryCasterEntry(c, cls, cls2dc) : undefined;
     if (classEntry) {
       b.cantrips = classEntry.cantrips.filter((s) => !grantedSpellSet.has(s));
       if (classEntry.type === 'spontaneous' && classEntry.repertoire) {
@@ -2294,6 +2516,30 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
             .filter((id): id is string => !!id && !studious.has(id) && !grantedSpellSet.has(id));
         }
       }
+    }
+    // Dual Class: recover the SECOND caster class's own spell surface into cantrips2/spells2/
+    // signatures2, so it survives a builder rebuild (buildCharacter re-populates the entry from these).
+    const classEntry2 = cls2dc ? c.spellcasting.find((e) => e.id === `${cls2dc.id}-casting`) : undefined;
+    if (classEntry2) {
+      b.cantrips2 = [...classEntry2.cantrips];
+      const spells2: Record<number, string[]> = {};
+      if (classEntry2.type === 'spontaneous' && classEntry2.repertoire) {
+        for (const [rank, ids] of Object.entries(classEntry2.repertoire)) spells2[Number(rank)] = [...ids];
+        const signatures2: Record<number, string> = {};
+        for (const sigId of classEntry2.signature ?? []) {
+          const r = content.spells[sigId]?.rank;
+          if (r != null) signatures2[r] = sigId;
+        }
+        if (Object.keys(signatures2).length) b.signatures2 = signatures2;
+      } else if (classEntry2.spellbook) {
+        for (const [rank, ids] of Object.entries(classEntry2.spellbook)) spells2[Number(rank)] = [...ids];
+      } else if (classEntry2.prepared) {
+        const studious2 = new Set(magusStudiousSpells(c.level)?.spells ?? []);
+        for (const [rank, slots] of Object.entries(classEntry2.prepared)) {
+          spells2[Number(rank)] = slots.map((s) => s.spellId).filter((id): id is string => !!id && !studious2.has(id));
+        }
+      }
+      b.spells2 = spells2;
     }
     // Caster archetype pool (dedication-based id). Recover it SEPARATELY from the class pool: into
     // build.archetypeSpells when the class is itself a caster (two casters), else the legacy single

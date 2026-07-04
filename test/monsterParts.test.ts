@@ -13,6 +13,7 @@ import {
   propertiesForKind,
   imbuementGrantedSpells,
 } from '../src/rules/monsterParts';
+import { explainStat } from '../src/rules/explain';
 import { monsterPartsEnabled } from '../src/rules/sources';
 import { MONSTER_PART_PROPERTIES } from '../src/rules/monsterParts';
 import type { Character, InventoryItem } from '../src/rules/types';
@@ -193,6 +194,29 @@ describe('Monster Parts — Perception/skill item refinement + apex (deferral fi
     const ch2: Character = { ...ch, inventory: [...ch.inventory, { instanceId: 'mp', itemId: equip(), quantity: 1, worn: true, monsterPart: { kind: 'skill', skillKey: 'athletics', refinedLevel: 3 } }] };
     expect(deriveSkill(ch2, 'athletics', db).modifier).toBe(deriveSkill(ch, 'athletics', db).modifier + 1); // +1 at level 3
     expect(deriveSkill(ch2, 'acrobatics', db).modifier).toBe(deriveSkill(ch, 'acrobatics', db).modifier); // other skills unaffected
+  });
+
+  it('the Perception/skill/AC breakdown popups include the MP refinement item bonus (parts sum to total)', () => {
+    // Perception refinement
+    const chP = build('fighter', 9, { keyAbility: 'str' });
+    const chP2: Character = { ...chP, inventory: [...chP.inventory, { instanceId: 'mp', itemId: equip(), quantity: 1, invested: true, monsterPart: { kind: 'perception', refinedLevel: 9 } }] };
+    const bdP = explainStat(chP2, db, { kind: 'perception' });
+    expect(bdP.parts.find((p) => p.label === 'Monster Parts refinement')?.value).toBe(2);
+    expect(bdP.parts.reduce((a, p) => a + p.value, 0)).toBe(derivePerception(chP2).modifier);
+
+    // Skill refinement
+    const chS = build('fighter', 3, { keyAbility: 'str' });
+    const chS2: Character = { ...chS, inventory: [...chS.inventory, { instanceId: 'mp', itemId: equip(), quantity: 1, worn: true, monsterPart: { kind: 'skill', skillKey: 'athletics', refinedLevel: 3 } }] };
+    const bdS = explainStat(chS2, db, { kind: 'skill', skill: 'athletics' });
+    expect(bdS.parts.find((p) => p.label === 'Monster Parts refinement')?.value).toBe(1);
+    expect(bdS.parts.reduce((a, p) => a + p.value, 0)).toBe(deriveSkill(chS2, 'athletics', db).modifier);
+
+    // Armor AC refinement
+    const chA = build('fighter', 9, { keyAbility: 'str' });
+    const findArmor = () => Object.keys(db.items).find((id) => db.items[id].itemType === 'armor' && db.items[id].category !== 'unarmored')!;
+    const chA2: Character = { ...chA, inventory: [...chA.inventory, { instanceId: 'arm', itemId: findArmor(), quantity: 1, worn: true, monsterPart: { refinedLevel: 12 } }] };
+    const bdA = explainStat(chA2, db, { kind: 'ac' });
+    expect(bdA.parts.reduce((a, p) => a + p.value, 0)).toBe(deriveAc(chA2, db).value);
   });
 
   it('an invested apex skill item (level 17+) raises its attribute on the live character', () => {

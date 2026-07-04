@@ -452,6 +452,106 @@ describe('Wanderer’s Guide import — kitchen sink (overhaul mappings)', () =>
   });
 });
 
+describe('Wanderer’s Guide import — data-loss fixes (implanted / monster-parts gate / normalize)', () => {
+  const db = content();
+
+  it('treats is_implanted like is_invested (an implanted item is not silently dropped)', () => {
+    const file = JSON.stringify({
+      version: 4,
+      character: {
+        name: 'Grafted', level: 5,
+        details: { ancestry: { name: 'Human' }, background: { name: 'Acolyte' }, class: { name: 'Fighter' } },
+        inventory: {
+          coins: {},
+          items: [
+            // A matched item, implanted (not equipped/invested) — must import as invested, not dropped.
+            { id: 'a', item: { name: 'Dagger' }, is_formula: false, is_equipped: false, is_invested: false, is_implanted: true, container_contents: [] },
+            // An unmatched (custom) item, implanted — same treatment on the synth path.
+            { id: 'b', item: { name: 'Gizmo Graft', level: 3, description: 'Implanted gizmo.' }, is_formula: false, is_equipped: false, is_invested: false, is_implanted: true, container_contents: [] },
+          ],
+        },
+      },
+      content: {
+        attributes: { ATTRIBUTE_STR: { value: 4 } },
+        feats_features: { classFeats: [], ancestryFeats: [], generalAndSkillFeats: [], otherFeats: [] },
+        spells: { cantrips: [], normal: [] },
+        languages: [],
+      },
+    });
+    const { saved } = importCharacter(file, db);
+    const inv = saved.character.inventory;
+    const dagger = inv.find((i) => i.itemId === 'dagger');
+    expect(dagger?.invested).toBe(true);
+    const graft = (saved.build!.inventory as any[]).find((i) => i.invested === true && i.itemId !== 'dagger');
+    expect(graft).toBeTruthy();
+  });
+
+  it('coerces a hand-edited string "experience" via normalizeCharacter (no poisoned math)', () => {
+    const file = JSON.stringify({
+      version: 4,
+      character: {
+        name: 'Handedited', level: 3,
+        experience: '120' as any, // a hand-edited WG file: string where a number is expected
+        details: { ancestry: { name: 'Human' }, background: { name: 'Acolyte' }, class: { name: 'Fighter' } },
+        inventory: { coins: {}, items: [] },
+      },
+      content: {
+        attributes: { ATTRIBUTE_STR: { value: 4 } },
+        feats_features: { classFeats: [], ancestryFeats: [], generalAndSkillFeats: [], otherFeats: [] },
+        spells: { cantrips: [], normal: [] },
+        languages: [],
+      },
+    });
+    const { saved } = importCharacter(file, db);
+    // normalizeCharacter drops a non-number xp to 0 rather than leaking a string into later math.
+    expect(saved.character.xp).toBe(0);
+    expect(typeof saved.character.xp).toBe('number');
+  });
+
+  it('re-enables the Monster Parts capability when banked parts survive (homebrew unlock source)', () => {
+    // Seed a homebrew Source that unlocks monsterParts, so the importer can union its name back into
+    // enabledSources (which a WG round-trip otherwise replaces wholesale, closing the gate).
+    const store: Record<string, string> = {
+      'wanderers-codex:homebrew-sources:v1': JSON.stringify({
+        'hb-mp': { id: 'hb-mp', name: 'My Monster Parts', unlocks: ['monsterParts'] },
+      }),
+    };
+    (globalThis as unknown as { localStorage: Storage }).localStorage = {
+      get length() { return Object.keys(store).length; },
+      getItem: (k: string) => (k in store ? store[k] : null),
+      setItem: (k: string, v: string) => { store[k] = String(v); },
+      removeItem: (k: string) => { delete store[k]; },
+      clear: () => { for (const k of Object.keys(store)) delete store[k]; },
+      key: (i: number) => Object.keys(store)[i] ?? null,
+    } as unknown as Storage;
+
+    try {
+      const file = JSON.stringify({
+        version: 4,
+        character: {
+          name: 'Parts Hoarder', level: 5,
+          details: { ancestry: { name: 'Human' }, background: { name: 'Acolyte' }, class: { name: 'Fighter' } },
+          inventory: { coins: {}, monster_parts: { value: 30 }, items: [] },
+          content_sources: { enabled: [1] },
+        },
+        content: {
+          all_sources: [{ id: 1, name: 'Player Core' }],
+          attributes: { ATTRIBUTE_STR: { value: 4 } },
+          feats_features: { classFeats: [], ancestryFeats: [], generalAndSkillFeats: [], otherFeats: [] },
+          spells: { cantrips: [], normal: [] },
+          languages: [],
+        },
+      });
+      const { saved } = importCharacter(file, db);
+      expect(saved.character.monsterParts).toBe(30);
+      // The unlock Source's NAME must be present in enabledSources so monsterPartsEnabled() reopens.
+      expect(saved.character.enabledSources).toContain('My Monster Parts');
+    } finally {
+      delete (globalThis as unknown as { localStorage?: Storage }).localStorage;
+    }
+  });
+});
+
 /** Deep Background variant → the app's custom background. */
 describe('Wanderer’s Guide import — deep background', () => {
   const db = content();

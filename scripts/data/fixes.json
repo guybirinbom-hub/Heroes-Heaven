@@ -328,5 +328,26 @@
     "name": "Battery Tower",
     "field": "level",
     "value": 16
+  },
+  {
+    "category": "spells",
+    "id": "soulshelter-vessel",
+    "name": "Soulshelter Vessel",
+    "field": "traditions",
+    "value": ["divine"]
+  },
+  {
+    "category": "spells",
+    "id": "suffocate",
+    "name": "Suffocate",
+    "field": "traditions",
+    "value": ["occult"]
+  },
+  {
+    "category": "spells",
+    "id": "web-of-influence",
+    "name": "Web of Influence",
+    "field": "traditions",
+    "value": ["occult"]
   }
 ]

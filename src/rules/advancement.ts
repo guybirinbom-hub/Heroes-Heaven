@@ -118,10 +118,12 @@ export const CLASS_ADVANCEMENT: Record<string, AdvancementEntry[]> = {
   ],
   fighter: [
     { level: 3, track: 'will', rank: 'expert', source: 'bravery' },
-    { level: 5, track: 'unarmed', rank: 'master', source: 'fighter-weapon-mastery' },
-    { level: 5, track: 'simple', rank: 'master', source: 'fighter-weapon-mastery' },
-    { level: 5, track: 'martial', rank: 'master', source: 'fighter-weapon-mastery' },
-    { level: 5, track: 'advanced', rank: 'expert', source: 'fighter-weapon-mastery' },
+    // Fighter Weapon Mastery (L5) and Weapon Legend (L13) raise proficiency for the simple/martial/
+    // unarmed weapons in ONE CHOSEN weapon GROUP (master@5 / legendary@13), not for ALL weapons — that
+    // group bump is applied in buildCharacter via proficiencies.weaponGroups keyed off the player's
+    // fighterWeaponGroup pick. Only the GENERAL, all-weapon clause of Weapon Legend belongs in this
+    // table: at L13 all simple/martial/unarmed become master and all advanced become expert. Before
+    // L13 a fighter is merely expert in simple/martial/unarmed (class chassis) outside their group.
     { level: 7, track: 'perception', rank: 'master', source: 'battlefield-surveyor' },
     { level: 9, track: 'fortitude', rank: 'master', source: 'battle-hardened' },
     { level: 11, track: 'unarmored', rank: 'expert', source: 'armor-expertise' },
@@ -129,10 +131,10 @@ export const CLASS_ADVANCEMENT: Record<string, AdvancementEntry[]> = {
     { level: 11, track: 'medium', rank: 'expert', source: 'armor-expertise' },
     { level: 11, track: 'heavy', rank: 'expert', source: 'armor-expertise' },
     { level: 11, track: 'classDc', rank: 'expert', source: 'fighter-expertise' },
-    { level: 13, track: 'unarmed', rank: 'legendary', source: 'weapon-legend' },
-    { level: 13, track: 'simple', rank: 'legendary', source: 'weapon-legend' },
-    { level: 13, track: 'martial', rank: 'legendary', source: 'weapon-legend' },
-    { level: 13, track: 'advanced', rank: 'master', source: 'weapon-legend' },
+    { level: 13, track: 'unarmed', rank: 'master', source: 'weapon-legend (general)' },
+    { level: 13, track: 'simple', rank: 'master', source: 'weapon-legend (general)' },
+    { level: 13, track: 'martial', rank: 'master', source: 'weapon-legend (general)' },
+    { level: 13, track: 'advanced', rank: 'expert', source: 'weapon-legend (general)' },
     { level: 15, track: 'reflex', rank: 'master', source: 'tempered-reflexes' },
     { level: 17, track: 'unarmored', rank: 'master', source: 'armor-mastery' },
     { level: 17, track: 'light', rank: 'master', source: 'armor-mastery' },

@@ -34,10 +34,12 @@ import {
   deriveSpellcasting,
   deriveStrikes,
   formatMod,
+  mpSenseSkillBonus,
   profBonus,
   pwl,
   shieldSwappedModes,
 } from './derive';
+import { armorRefinement } from './monsterParts';
 
 export type StatRef =
   | { kind: 'skill'; skill: ProficiencyKey }
@@ -249,10 +251,12 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       const d = deriveSkill(c, ref.skill, db);
       const ability = skillAbilityOf(ref.skill);
       const parts: CalcPart[] = [profPart(d.rank, lvl, pwl(c)), abilityPart(c, ability)];
-      if (abpOn(c)) {
-        const sp = abpSkillBonus(c, ref.skill);
-        if (sp) parts.push({ label: 'ABP skill potency', note: 'item bonus', value: sp });
-      }
+      // Skill item bonus: the higher of ABP skill potency and a Monster Parts sense/skill refinement
+      // (both are item bonuses; derive.ts takes Math.max, so only the winner is shown here).
+      const abpSp = abpOn(c) ? abpSkillBonus(c, ref.skill) : 0;
+      const mpSp = mpSenseSkillBonus(c, 'skill', ref.skill);
+      if (mpSp > abpSp) parts.push({ label: 'Monster Parts refinement', note: 'item bonus', value: mpSp });
+      else if (abpSp) parts.push({ label: 'ABP skill potency', note: 'item bonus', value: abpSp });
       if (ability === 'str' || ability === 'dex') {
         const acp = deriveArmorCheckPenalty(c, db);
         if (acp.value) parts.push({ label: 'Armor check penalty', note: acp.source ?? undefined, value: acp.value });
@@ -323,10 +327,12 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       const d = derivePerception(c);
       const cls = c.classId ? db.classes[c.classId] : undefined;
       const parts: CalcPart[] = [profPart(d.rank, lvl, pwl(c)), abilityPart(c, 'wis')];
-      if (abpOn(c)) {
-        const v = abpPerception(lvl);
-        if (v) parts.push({ label: 'ABP Perception potency', note: 'item bonus', value: v });
-      }
+      // Perception item bonus: the higher of ABP Perception potency and a Monster Parts sense
+      // refinement (derive.ts takes Math.max — show only the winner).
+      const abpPerc = abpOn(c) ? abpPerception(lvl) : 0;
+      const mpPerc = mpSenseSkillBonus(c, 'perception');
+      if (mpPerc > abpPerc) parts.push({ label: 'Monster Parts refinement', note: 'item bonus', value: mpPerc });
+      else if (abpPerc) parts.push({ label: 'ABP Perception potency', note: 'item bonus', value: abpPerc });
       const cond = conditionPart(c, 'wis', 'perception');
       if (cond) parts.push(cond);
       const situational = modeAdjust(c, { kind: 'perception' }, parts);
@@ -358,8 +364,13 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       ];
       if (armor) {
         // ABP defense potency replaces the armor potency rune's numeric bonus (shown separately below).
-        const potency = abpOn(c) ? 0 : (worn!.i.runes as { potency?: number } | undefined)?.potency ?? 0;
-        parts.push({ label: `${armor.name}`, note: potency ? `+${armor.acBonus} armor + ${potency} potency` : 'armor item bonus', value: armor.acBonus + potency });
+        // Otherwise the armor's AC potency is the higher of its potency rune and a Monster Parts armor
+        // refinement (derive.ts takes Math.max of the two).
+        const refAc = worn!.i.monsterPart?.refinedLevel ? armorRefinement(worn!.i.monsterPart.refinedLevel).ac : 0;
+        const runePotency = (worn!.i.runes as { potency?: number } | undefined)?.potency ?? 0;
+        const potency = abpOn(c) ? 0 : Math.max(runePotency, refAc);
+        const potencyLabel = potency && refAc > runePotency ? 'refinement' : 'potency';
+        parts.push({ label: `${armor.name}`, note: potency ? `+${armor.acBonus} armor + ${potency} ${potencyLabel}` : 'armor item bonus', value: armor.acBonus + potency });
       }
       if (abpOn(c)) {
         const v = abpDefense(lvl);
@@ -569,20 +580,31 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       const strike = deriveStrikes(c, db).find((s) => s.instanceId === ref.instanceId);
       if (!strike) return { title: 'Strike', totalText: '—', parts: [], timeline: [] };
       const parts: CalcPart[] = [];
+      // Kineticist Elemental Blast: Con is a 2-action STATUS bonus, not a normal ability-to-damage.
+      const isBlast = strike.instanceId.startsWith('blast:');
       if (strike.dmgAbility) {
         const full = abilityMod(c.abilities[strike.dmgAbility]);
+        const note = isBlast
+          ? '2-action status bonus'
+          : strike.dmgAbMod !== full
+            ? 'half (propulsive)'
+            : `${ABIL_LABEL[strike.dmgAbility]} ${c.abilities[strike.dmgAbility]}`;
         parts.push({
-          label: `${ABIL_LABEL[strike.dmgAbility]} modifier`,
-          note: strike.dmgAbMod !== full ? 'half (propulsive)' : `${ABIL_LABEL[strike.dmgAbility]} ${c.abilities[strike.dmgAbility]}`,
+          label: isBlast ? `${ABIL_LABEL[strike.dmgAbility]} (2 actions)` : `${ABIL_LABEL[strike.dmgAbility]} modifier`,
+          note,
           value: strike.dmgAbMod,
         });
       }
       if (strike.specDamage) parts.push({ label: 'Weapon specialization', value: strike.specDamage });
-      if (strike.dmgAbility === 'str') {
-        const cond = conditionPart(c, 'str', 'damage');
+      // Enfeebled/etc. hits the actual damage ability (Str, or Dex under the thief racket); blasts add none.
+      if (strike.dmgAbility === 'str' || strike.dmgAbility === 'dex') {
+        const cond = conditionPart(c, strike.dmgAbility, 'damage');
         if (cond) parts.push(cond);
       }
       const situational = modeAdjust(c, { kind: 'damage' }, parts);
+      // Surface conditional precision/sneak riders (they aren't in the flat total) alongside the
+      // situational mode notes so the breakdown matches the annotated strike row.
+      for (const r of strike.conditionalDamage ?? []) situational.push(`+${r.text} — ${r.note}`);
       return {
         title: strike.name,
         subtitle: `Damage · ${strike.damage}`,

@@ -59,7 +59,8 @@ export function duplicateChar(c: SavedChar): SavedChar {
   return copy;
 }
 
-const KEY = 'wanderers-codex:roster:v1';
+export const ROSTER_KEY = 'wanderers-codex:roster:v1';
+const KEY = ROSTER_KEY;
 
 export function loadRoster(): SavedChar[] {
   try {

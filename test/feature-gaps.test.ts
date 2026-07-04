@@ -218,13 +218,15 @@ describe('feature-gap fixes (granted spells/feats, deity, champion devotion)', (
     const l1 = build('kineticist', 1, { extraChoices: { element: ['fire-gate'] }, keyAbility: 'con' });
     const blasts1 = deriveStrikes(l1, content()).filter((s) => s.instanceId.startsWith('blast:'));
     expect(blasts1.map((b) => b.name)).toContain('Elemental Blast (Fire)');
-    expect(blasts1[0].damage).toMatch(/^1d6 /); // 1 die at L1, fire d6
+    // 1 die at L1, fire d6; a 2-action blast adds the Con modifier (+1 here) as a status bonus to damage.
+    expect(blasts1[0].damage).toMatch(/^1d6\+1 /);
+    expect(blasts1[0].dmgAbMod).toBe(1); // Con +1 (build helper Con 12)
     expect(blasts1[0].ranged).toBe(true);
     // Two elements → two blasts; dice scale to 2 at L5.
     const l5 = build('kineticist', 5, { extraChoices: { element: ['fire-gate', 'earth-gate'] }, keyAbility: 'con' });
     const blasts5 = deriveStrikes(l5, content()).filter((s) => s.instanceId.startsWith('blast:'));
     expect(blasts5.length).toBe(2);
-    expect(blasts5.find((b) => b.name.includes('Earth'))?.damage).toMatch(/^2d8 /); // earth d8, 2 dice at L5
+    expect(blasts5.find((b) => b.name.includes('Earth'))?.damage).toMatch(/^2d8\+1 /); // earth d8, 2 dice + Con at L5
   });
 
   it('Kineticist Expand the Portal grants a bonus impulse feat (when not forking)', () => {

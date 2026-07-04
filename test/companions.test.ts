@@ -62,12 +62,55 @@ describe('familiar + eidolon use the master / summoner defenses', () => {
       c,
     );
     expect(eid.attacks).toHaveLength(2);
-    // primary 1d8 (trip): attack = Str5 + trained(2) + level5 = 12; damage 1d8 + Str5
-    expect(eid.attacks[0]).toMatchObject({ name: 'Claw', attack: 12, damage: '1d8+5 slashing' });
+    // primary 1d8 (trip): the eidolon reaches EXPERT unarmed at level 5 (Eidolon Unarmed Expertise),
+    // so attack = Str5 + expert(4)+level5 = 14; damage 1d8 + Str5 (no weapon spec until level 7).
+    expect(eid.attacks[0]).toMatchObject({ name: 'Claw', attack: 14, damage: '1d8+5 slashing' });
     expect(eid.attacks[0].traits).toEqual(expect.arrayContaining(['trip', 'unarmed']));
     // secondary is ALWAYS 1d6 with agile + finesse
     expect(eid.attacks[1]).toMatchObject({ name: 'Tail', damage: '1d6+5 bludgeoning' });
     expect(eid.attacks[1].traits).toEqual(expect.arrayContaining(['agile', 'finesse', 'unarmed']));
+  });
+
+  it('the eidolon reaches master unarmed at level 13 and gains Eidolon Weapon Specialization', () => {
+    // Eidolon Unarmed Mastery @13 → master; Eidolon Weapon Specialization @7 → +2 (expert), +3 (master).
+    const ch = build('summoner', 13, { keyAbility: 'cha' });
+    const eid = deriveEidolon(
+      {
+        id: 'e', kind: 'eidolon', name: '', typeId: ch.subclassId ?? undefined,
+        eidolon: { abilities: { str: 5 }, primary: { name: 'Claw', damageType: 'slashing', option: 'd8-trip' } },
+      },
+      ch,
+      c,
+    );
+    // master unarmed: attack = Str5 + master(6)+level13 = 24; damage 1d8 + Str5 + spec 3 (master) = +8
+    expect(eid.attacks[0]).toMatchObject({ name: 'Claw', attack: 24, damage: '1d8+8 slashing' });
+  });
+
+  it("the eidolon's Strikes benefit from the summoner's handwraps striking rune (die-size rule)", () => {
+    // eidolon.json: the eidolon's Strikes benefit from the fundamental + property runes on the
+    // summoner's handwraps of mighty blows — a greater striking rune adds two dice of the attack's die.
+    const base = build('summoner', 13, { keyAbility: 'cha' });
+    const ch: typeof base = {
+      ...base,
+      inventory: [
+        ...base.inventory,
+        {
+          instanceId: 'hw', itemId: 'handwraps-of-mighty-blows', quantity: 1, invested: true, worn: true,
+          runes: { potency: 2, striking: 'greater' },
+        } as (typeof base.inventory)[number],
+      ],
+    };
+    const eid = deriveEidolon(
+      {
+        id: 'e', kind: 'eidolon', name: '', typeId: ch.subclassId ?? undefined,
+        eidolon: { abilities: { str: 5 }, primary: { name: 'Claw', damageType: 'slashing', option: 'd8-trip' } },
+      },
+      ch,
+      c,
+    );
+    // greater striking (+2 dice) → 3d8; +2 potency raises the attack to Str5 + master(6)+13 + 2 = 26
+    expect(eid.attacks[0].damage).toMatch(/^3d8\+8 slashing/);
+    expect(eid.attacks[0].attack).toBe(26);
   });
 
   it('a cleared ability input falls back to the default (no NaN)', () => {

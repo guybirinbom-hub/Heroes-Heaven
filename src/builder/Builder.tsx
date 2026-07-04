@@ -22,8 +22,9 @@ import {
   resolveBackground,
   skillIncreaseCap,
 } from '../rules/build';
-import { casterSlots, wizardSpellbookSize, cantripsKnown } from '../rules/spellcasting';
+import { casterSlots, wizardSpellbookBudget, cantripsKnown } from '../rules/spellcasting';
 import { activeCasterArchetype, archetypeSlots } from '../rules/casterArchetypes';
+import { FEAT_GRANTS } from '../rules/featGrants';
 import type { ContentDatabase, Feat, FeatCategory, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
 import { AbilitySelect, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SourcesCard, START, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
@@ -180,9 +181,13 @@ export function Builder({
   const sigAvailable =
     casting?.type === 'spontaneous' &&
     !!casterCls?.features?.some((f) => f.featureId === 'signature-spells' && f.level <= build.level);
-  // Wizards learn a SPELLBOOK (a single budget across ranks) and prepare from it.
-  const isWizardBook = !!casting && isPrepared && casterCls?.id === 'wizard';
-  const spellbookSize = wizardSpellbookSize(build.level);
+  // Wizards and witches are LEARNED prepared casters: they learn a SPELLBOOK (a single budget across
+  // ranks — the wizard's book, the witch's familiar) and can prepare only from it.
+  const isWizardBook = !!casting && isPrepared && (casterCls?.id === 'wizard' || casterCls?.id === 'witch');
+  // Wizard School of Unified Magical Theory (Player Core): "you add one 1st-rank spell of your choice
+  // to your spellbook" — a larger initial spellbook. Applies as a flat +1 to the across-rank budget.
+  const isUmtBook = casterCls?.id === 'wizard' && subOption?.id === 'school-of-unified-magical-theory';
+  const spellbookSize = wizardSpellbookBudget(build.level, isUmtBook);
   const learnedTotal = Object.values(build.spells).reduce((n, arr) => n + arr.length, 0);
   const slotCounts = casting
     ? casterSlots(build.level, castProgression)
@@ -235,13 +240,32 @@ export function Builder({
     () => Object.values(content.familiarAbilities).sort((a, b) => a.name.localeCompare(b.name)),
     [content],
   );
+  // Level-1 wizard class feats — the option list for the School of Unified Magical Theory bonus feat.
+  const umtFeatOpts = useMemo(
+    () =>
+      Object.values(content.feats)
+        .filter((f) => f.category === 'class' && f.level <= 1 && (f.traits ?? []).includes('wizard'))
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((f) => ({ value: f.id, label: f.name, description: f.description })),
+    [content.feats],
+  );
+  const isUmtSchool = build.classId === 'wizard' && build.subclassId === 'school-of-unified-magical-theory';
+  // Skill feats — option list for a dedication's bonus skill feat (Rogue Dedication).
+  const skillFeatOpts = useMemo(
+    () =>
+      Object.values(content.feats)
+        .filter((f) => f.category === 'skill')
+        .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
+        .map((f) => ({ value: f.id, label: f.name, description: f.description })),
+    [content.feats],
+  );
 
   // --- per-level spell progression (spells are chosen on the level where they're gained) ---
   // Spell slots per rank at a given character level (0 = before play).
   const slotsAt = (L: number): Record<number, number> =>
     L < 1 ? {} : casting ? casterSlots(L, castProgression) : archCaster ? archetypeSlots(L, archCaster) : {};
-  // Wizard spellbook budget (a single across-rank total) at a given level.
-  const bookAt = (L: number) => (L < 1 ? 0 : wizardSpellbookSize(L));
+  // Wizard spellbook budget (a single across-rank total) at a given level — includes the UMT +1.
+  const bookAt = (L: number) => (L < 1 ? 0 : wizardSpellbookBudget(L, isUmtBook));
   // The first level this character can cast — cantrips, tradition, and divine font live here.
   const firstCasterLevel = (() => {
     if (!showSpells) return 0;
@@ -839,6 +863,27 @@ export function Builder({
                               const opt = cls.subclass!.options.find((o) => o.id === build.subclassId);
                               return opt ? <ChoiceDetails name={opt.name} flavor={opt.description} descRefs={opt.descRefs} /> : null;
                             })()}
+                          {/* School of Unified Magical Theory (Player Core): grants a BONUS 1st-level
+                              wizard class feat (an extra class-feat slot) — pick it here. */}
+                          {isUmtSchool && subAnchorId && lvl === 1 && (
+                            <div className={'lvl-card lvl-choice' + (build.umtFeatId ? '' : ' empty')}>
+                              <span className="lvl-card-icon">
+                                <i className="ti ti-wand" aria-hidden="true" />
+                              </span>
+                              <div className="lvl-card-text">
+                                <div className="lvl-card-label">Bonus wizard feat (Unified Magical Theory)</div>
+                                <PopupSelect
+                                  className="lvl-subsel"
+                                  title="Bonus wizard class feat"
+                                  placeholder="Choose a feat…"
+                                  value={build.umtFeatId ?? ''}
+                                  onChange={(v) => actions.patch({ umtFeatId: v || null })}
+                                  options={umtFeatOpts}
+                                />
+                              </div>
+                              {!build.umtFeatId && <span className="lvl-pending">!</span>}
+                            </div>
+                          )}
                           {g.featSlots.map((catg, i) => {
                       const key = slotKey(lvl, catg, i);
                       const picked = build.featPicks[key];
@@ -916,6 +961,44 @@ export function Builder({
                                 </SubCard>
                               );
                             })()}
+                          {/* Dedication skill-training CHOICES ("trained in Acrobatics or Athletics") and
+                              the bonus skill feat (Rogue Dedication) — surfaced from FEAT_GRANTS below
+                              the picked feat, so the player resolves each grant in context. */}
+                          {picked &&
+                            (FEAT_GRANTS[picked]?.skillChoices ?? []).map((slot, si) => {
+                              const opts = slot.options === 'any' ? SKILLS : slot.options;
+                              const skKey = `${picked}:${si}`;
+                              return (
+                                <SubCard key={skKey} icon="ti-bulb" label="Trained skill">
+                                  <PopupSelect
+                                    title="Trained skill"
+                                    placeholder="Choose a skill…"
+                                    value={build.featSkillChoices?.[skKey] ?? opts[0]}
+                                    onChange={(v) =>
+                                      actions.patch({
+                                        featSkillChoices: { ...(build.featSkillChoices ?? {}), [skKey]: v as (typeof SKILLS)[number] },
+                                      })
+                                    }
+                                    options={opts.map((s) => ({ value: s, label: cap(s) }))}
+                                  />
+                                </SubCard>
+                              );
+                            })}
+                          {picked && FEAT_GRANTS[picked]?.bonusSkillFeat && (
+                            <SubCard icon="ti-medal" label="Bonus skill feat">
+                              <PopupSelect
+                                title="Bonus skill feat"
+                                placeholder="Choose a skill feat…"
+                                value={build.dedicationSkillFeats?.[picked] ?? ''}
+                                onChange={(v) =>
+                                  actions.patch({
+                                    dedicationSkillFeats: { ...(build.dedicationSkillFeats ?? {}), [picked]: v },
+                                  })
+                                }
+                                options={skillFeatOpts}
+                              />
+                            </SubCard>
+                          )}
                         </div>
                       );
                     })}

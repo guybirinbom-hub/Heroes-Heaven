@@ -45,4 +45,16 @@ describe('normalizeCharacter', () => {
     expect(c.details).toEqual({});
     expect(c.currency).toEqual({});
   });
+
+  it('clamps an out-of-range level into [1,20] (bad import / legacy roster entry)', () => {
+    expect(normalizeCharacter({ level: 0 }).level).toBe(1);
+    expect(normalizeCharacter({ level: -3 }).level).toBe(1);
+    expect(normalizeCharacter({ level: 25 }).level).toBe(20);
+    expect(normalizeCharacter({ level: 21 }).level).toBe(20);
+    // A legal level is left alone (and a fractional one floored into range).
+    expect(normalizeCharacter({ level: 7 }).level).toBe(7);
+    expect(normalizeCharacter({ level: 12.9 }).level).toBe(12);
+    // A non-number falls back to 1.
+    expect(normalizeCharacter({ level: 'nope' as unknown as number }).level).toBe(1);
+  });
 });

@@ -117,6 +117,98 @@ describe('deriveBuildFromCharacter — full structural round-trip', () => {
   });
 });
 
+describe('deriveBuildFromCharacter — spell-wipe root cause (non-standard caster entry id)', () => {
+  it('a caster whose entry id is NOT `${class}-casting` keeps its spells across a rebuild', () => {
+    const b: BuildState = {
+      ...emptyBuild(),
+      name: 'Imported Cleric',
+      level: 5,
+      classId: 'cleric',
+      ancestryId: 'human',
+      backgroundId: 'acolyte',
+      keyAbility: 'wis',
+      subclassId: firstSubclass('cleric'),
+      deityId: 'sarenrae',
+      divineFont: 'heal',
+      ancestryBoosts: ['str', 'con'],
+      backgroundBoosts: ['wis', 'int'],
+      levelBoosts: ['wis', 'dex', 'con', 'cha'],
+      cantrips: ['light', 'guidance', 'stabilize'],
+      spells: { 1: ['heal', 'bless'], 2: ['heal'], 3: ['heal'] },
+    };
+    const ch0 = buildCharacter(b, C);
+    // The canonical derive (id = `cleric-casting`) is the ground truth.
+    const canonical = deriveBuildFromCharacter(ch0, C);
+    expect(canonical.cantrips.length).toBeGreaterThan(0);
+    expect(Object.keys(canonical.spells).length).toBeGreaterThan(0);
+
+    // Simulate an imported character whose caster entry carries a different id (e.g. WG's own).
+    const mangled: Character = {
+      ...ch0,
+      spellcasting: ch0.spellcasting.map((e) => (e.id === 'cleric-casting' ? { ...e, id: 'cleric-divine' } : e)),
+    };
+    // Before the fix, deriveBuildFromCharacter matched only `cleric-casting` and dropped everything.
+    // The structural fallback must recover the SAME cantrips and spells.
+    const derived = deriveBuildFromCharacter(mangled, C);
+    expect(derived.cantrips.sort()).toEqual(canonical.cantrips.sort());
+    expect(derived.spells).toEqual(canonical.spells);
+    // And a full rebuild reproduces the spells (proving no silent wipe).
+    const rebuilt = buildCharacter(derived, C);
+    const casting = rebuilt.spellcasting.find((e) => e.id === 'cleric-casting');
+    expect(casting?.cantrips.sort()).toEqual(canonical.cantrips.sort());
+    // Every prepared spell id that was chosen survives the round-trip.
+    const preparedIds = (e: Character['spellcasting'][number] | undefined) =>
+      Object.values(e?.prepared ?? {}).flatMap((slots) => slots.map((s) => s.spellId).filter(Boolean)).sort();
+    expect(preparedIds(casting)).toEqual(preparedIds(ch0.spellcasting.find((e) => e.id === 'cleric-casting')));
+  });
+});
+
+describe('deriveBuildFromCharacter — Dual Class second caster spells', () => {
+  it('a Bard × Wizard dual-class character keeps BOTH casters’ spells across a rebuild', () => {
+    const b: BuildState = {
+      ...emptyBuild(),
+      name: 'Dual Caster',
+      level: 5,
+      classId: 'bard',
+      ancestryId: 'human',
+      backgroundId: 'acolyte',
+      keyAbility: 'cha',
+      subclassId: firstSubclass('bard'),
+      variantRules: { dualClass: true },
+      classId2: 'wizard',
+      subclassId2: firstSubclass('wizard'),
+      ancestryBoosts: ['con', 'int'],
+      backgroundBoosts: ['str', 'dex'],
+      levelBoosts: ['cha', 'int', 'con', 'wis'],
+      // Primary (bard, spontaneous/occult) spells:
+      cantrips: ['light', 'guidance'],
+      spells: { 1: ['heal'], 2: ['heal'] },
+      // Second class (wizard, prepared/arcane) spellbook:
+      cantrips2: ['detect-magic'],
+      spells2: { 1: ['grease'], 2: ['see-the-unseen'] },
+    };
+    const ch0 = buildCharacter(b, C);
+    const bard0 = ch0.spellcasting.find((e) => e.id === 'bard-casting');
+    const wiz0 = ch0.spellcasting.find((e) => e.id === 'wizard-casting');
+    expect(bard0).toBeTruthy();
+    expect(wiz0).toBeTruthy();
+    // The wizard's spellbook must hold the chosen second-class spells.
+    expect(wiz0?.spellbook?.[1]).toContain('grease');
+    expect(wiz0?.spellbook?.[2]).toContain('see-the-unseen');
+    expect(wiz0?.cantrips).toContain('detect-magic');
+
+    // Round-trip: rebuild from the derived build and confirm the SECOND caster still has its spells.
+    const rebuilt = roundTrip(ch0);
+    const wiz1 = rebuilt.spellcasting.find((e) => e.id === 'wizard-casting');
+    expect(wiz1?.spellbook?.[1], 'wizard spellbook wiped on rebuild').toContain('grease');
+    expect(wiz1?.spellbook?.[2]).toContain('see-the-unseen');
+    expect(wiz1?.cantrips).toContain('detect-magic');
+    // The primary caster is preserved too.
+    const bard1 = rebuilt.spellcasting.find((e) => e.id === 'bard-casting');
+    expect(bard1?.cantrips.sort()).toContain('light');
+  });
+});
+
 describe('deriveBuildFromCharacter — the hand-authored seed (Kyra)', () => {
   it('reopening Kyra reproduces her abilities, identity, feats, and languages', () => {
     const reb = roundTrip(kyra);

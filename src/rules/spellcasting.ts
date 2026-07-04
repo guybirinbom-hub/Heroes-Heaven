@@ -52,9 +52,12 @@ export function twoRankCasterSlots(level: number): Record<number, number> {
   if (level === 2) return { 1: 2 };
   if (level === 3) return { 1: 2, 2: 1 };
   const maxR = Math.min(9, Math.ceil(level / 2));
-  // A newly-unlocked top rank starts with ONE slot (gained at the odd level), filling to two at the
-  // next (even) level — the same first-access ramp the full-caster/psychic tables use.
-  return { [maxR - 1]: 2, [maxR]: level % 2 === 1 ? 1 : 2 };
+  // A newly-unlocked top rank starts with ONE slot (gained the level it's first accessible), filling
+  // to two at the following even level — the same first-access ramp the full-caster/psychic tables use.
+  // The rank R is first accessible at level 2R-1; at L19+ the 9th rank was already unlocked at L17, so
+  // it must stay at 2 slots (`level % 2` alone would wrongly reset it to 1 every odd level once capped).
+  const justUnlocked = level === 2 * maxR - 1;
+  return { [maxR - 1]: 2, [maxR]: justUnlocked ? 1 : 2 };
 }
 
 /**
@@ -148,4 +151,13 @@ export function casterSlots(
  */
 export function wizardSpellbookSize(level: number): number {
   return 5 + 2 * (Math.max(1, level) - 1);
+}
+
+/**
+ * A wizard's total spellbook budget at a level, including the School of Unified Magical Theory bonus.
+ * UMT (Player Core): "you add one 1st-rank spell of your choice to your spellbook" — a flat +1 to the
+ * initial spellbook, so the across-rank budget is one larger at every level.
+ */
+export function wizardSpellbookBudget(level: number, isUmt = false): number {
+  return wizardSpellbookSize(level) + (isUmt ? 1 : 0);
 }

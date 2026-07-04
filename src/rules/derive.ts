@@ -149,7 +149,7 @@ export function deriveSave(c: Character, save: SaveId, db?: ContentDatabase): St
 
 /** Item bonus from a refined Monster Parts Perception/skill item (Tables 4D/4E, +1/+2/+3). An item
  *  bonus, so it takes the higher of it and any other item bonus to the same statistic (e.g. ABP). */
-function mpSenseSkillBonus(c: Character, kind: 'perception' | 'skill', skillKey?: string): number {
+export function mpSenseSkillBonus(c: Character, kind: 'perception' | 'skill', skillKey?: string): number {
   let best = 0;
   for (const inv of c.inventory) {
     const mp = inv.monsterPart;
@@ -287,7 +287,8 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
     // Parts) gives an AC item bonus of the same class — take the higher of it and the potency rune.
     const refAc = worn.inv.monsterPart?.refinedLevel ? armorRefinement(worn.inv.monsterPart.refinedLevel).ac : 0;
     const potency = abpOn(c) ? 0 : Math.max((worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0, refAc);
-    itemBonus = worn.armor.acBonus + potency;
+    // Guard against a data-incomplete armor (missing acBonus) corrupting AC into NaN.
+    itemBonus = (worn.armor.acBonus ?? 0) + potency;
   }
   // ABP defense potency is an automatic AC bonus regardless of worn armor.
   if (abpOn(c)) itemBonus += abpDefense(c.level);
@@ -337,11 +338,13 @@ export function deriveShield(c: Character, db: ContentDatabase): ShieldInfo | nu
   const rein = (held.inv.runes as ArmorRunes | undefined)?.reinforcing;
   const r = rein ? REINFORCING[rein] : undefined;
   const ref = held.inv.monsterPart?.refinedLevel ? shieldRefinement(held.inv.monsterPart.refinedLevel) : null;
-  const hardness = Math.max(s.hardness, r?.hardness ?? 0, ref?.hardness ?? 0);
-  const hp = Math.max(s.hp, r?.hp ?? 0, ref?.hp ?? 0);
-  const brokenThreshold = Math.max(s.brokenThreshold, r?.bt ?? 0, ref?.bt ?? 0);
+  // Guard every shield stat against a data-incomplete item (missing hardness/hp/BT/acBonus) so the
+  // shield block — and the AC breakdown that reads it — can never compute NaN.
+  const hardness = Math.max(s.hardness ?? 0, r?.hardness ?? 0, ref?.hardness ?? 0);
+  const hp = Math.max(s.hp ?? 0, r?.hp ?? 0, ref?.hp ?? 0);
+  const brokenThreshold = Math.max(s.brokenThreshold ?? 0, r?.bt ?? 0, ref?.bt ?? 0);
   const current = Math.max(0, hp - Math.max(0, c.shieldDamage ?? 0));
-  return { name: s.name, ac: s.acBonus, hardness, hp, brokenThreshold, current, broken: current <= brokenThreshold };
+  return { name: s.name, ac: s.acBonus ?? 0, hardness, hp, brokenThreshold, current, broken: current <= brokenThreshold };
 }
 
 /** Reinforcing-rune tiers → the shield Hardness/HP/Broken-Threshold maximum each sets. */
@@ -460,6 +463,55 @@ const DAMAGE_ABBR: Record<string, string> = {
 
 const STRIKING_DICE = { striking: 1, greater: 2, major: 3 } as const;
 
+/** Weapon damage-die progression, smallest → largest. Used to step a die up one size. */
+const DIE_LADDER = ['d4', 'd6', 'd8', 'd10', 'd12'] as const;
+
+/** Step a damage die up one size (d4→d6→d8→d10→d12, capped at d12). Unknown dice are returned as-is. */
+function stepDie(die: string): string {
+  const i = DIE_LADDER.indexOf(die as (typeof DIE_LADDER)[number]);
+  if (i < 0) return die;
+  return DIE_LADDER[Math.min(i + 1, DIE_LADDER.length - 1)];
+}
+
+/** Deadly Simplicity (Player Core): while wielding your deity's favored weapon, increase its damage
+ *  die by one step. If the favored weapon is an UNARMED attack with a die smaller than d6, instead
+ *  raise the die to d6 (not a full step past d6). Returns the adjusted die given the current die,
+ *  whether the strike is with the deity's favored weapon, and whether that weapon is unarmed. */
+function deadlySimplicityDie(die: string, isFavored: boolean, isUnarmed: boolean): string {
+  if (!isFavored) return die;
+  if (isUnarmed) {
+    // Only bump sub-d6 unarmed dice, and only up to d6 (a d6+ unarmed favored weapon is unchanged).
+    const i = DIE_LADDER.indexOf(die as (typeof DIE_LADDER)[number]);
+    const d6i = DIE_LADDER.indexOf('d6');
+    return i >= 0 && i < d6i ? 'd6' : die;
+  }
+  return stepDie(die);
+}
+
+/** True if the character has taken the Deadly Simplicity feat. */
+function hasDeadlySimplicity(c: Character): boolean {
+  return c.feats.some((f) => f.featId === 'deadly-simplicity');
+}
+
+/** The set of the character's deity's favored weapon item ids that are SIMPLE weapons (real items),
+ *  which is what Deadly Simplicity's die-step applies to for wielded weapons. */
+function deitySimpleFavoredWeaponIds(c: Character, db: ContentDatabase): Set<string> {
+  const deity = c.details.deityId ? db.deities[c.details.deityId] : undefined;
+  const out = new Set<string>();
+  for (const w of deity?.favoredWeapons ?? []) {
+    const item = db.items[w];
+    if (item && item.itemType === 'weapon' && item.category === 'simple') out.add(w);
+  }
+  return out;
+}
+
+/** True if the character's deity's favored weapon is an UNARMED attack (e.g. Irori's fist — a favored
+ *  "weapon" id that isn't a real weapon item). Deadly Simplicity then applies to the Fist Strike. */
+function deityFavorsUnarmed(c: Character, db: ContentDatabase): boolean {
+  const deity = c.details.deityId ? db.deities[c.details.deityId] : undefined;
+  return (deity?.favoredWeapons ?? []).some((w) => !db.items[w]);
+}
+
 /** Per-hit extra-damage strings from an item's Monster Parts imbuements (folds in like property-rune
  *  damage). Per-hit only — situational crit riders are reference text on the item, not computed. */
 function mpImbuedStrikeDamage(mp: InventoryItem['monsterPart'], baseType: string): string[] {
@@ -529,6 +581,10 @@ export interface Strike {
   strikingDice: number;
   /** Multiple-attack-penalty step (4 agile, 5 otherwise). */
   mapStep: number;
+  /** Conditional extra-damage riders that apply only in a specific circumstance (Sneak Attack when
+   *  off-guard, Ranger Precision on the first hit vs hunted prey). Rendered as an annotation on the
+   *  strike row and in the damage breakdown — NOT folded into the flat `dmgBonus`/`damage` dice. */
+  conditionalDamage?: { text: string; note: string }[];
 }
 
 /** Handwraps of Mighty Blows (and kin): worn-gloves UNARMED "weapons" whose runes buff every
@@ -567,6 +623,46 @@ export function weaponSpecialization(c: Character, db: ContentDatabase): { spec:
   // 'eidolon-weapon-specialization' (summoner) is the pet's, not the character's — excluded by exact match.
   const spec = greater || owned.some((id) => id === 'weapon-specialization' || id === 'psychic-weapon-specialization');
   return { spec, greater };
+}
+
+/** The class-feature ids the character owns at their current level (auto-granted class features only —
+ *  not feats or subclass options). Lets strike math key off level-1 features like Powerful Fist,
+ *  Sneak Attack, or Hunt Prey by exact id. */
+export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> {
+  const cls = c.classId ? db.classes[c.classId] : undefined;
+  const out = new Set<string>();
+  if (cls) for (const f of cls.features) if (f.level <= c.level) out.add(f.featureId);
+  return out;
+}
+
+/** Conditional precision-damage riders that apply to a qualifying Strike only in a specific
+ *  circumstance. Two Remaster sources:
+ *   • Rogue Sneak Attack — 1d6 (→2/3/4d6 at L5/11/17) precision when the target is off-guard, with an
+ *     agile/finesse melee/unarmed attack or a ranged attack (thrown must be agile/finesse). (sneak-attack.json)
+ *   • Ranger Precision hunter's edge — 1d8 (→2/3d8 at L11/19) precision on the FIRST hit each round vs
+ *     your hunted prey. (class-features/precision.json; requires Hunt Prey.)
+ *  Returned as annotations; the caller renders them like crit riders and never adds them to the flat total. */
+function strikePrecisionRiders(c: Character, db: ContentDatabase, strike: { traits: string[]; ranged: boolean }): { text: string; note: string }[] {
+  const owned = ownedFeatureIds(c, db);
+  const out: { text: string; note: string }[] = [];
+  const agileOrFinesse = strike.traits.includes('agile') || strike.traits.includes('finesse');
+  const thrown = strike.traits.includes('thrown') || strike.traits.some((t) => t.startsWith('thrown-'));
+  // Sneak Attack qualifies for an agile/finesse melee or unarmed attack, or a ranged attack (a thrown
+  // ranged attack must itself be agile or finesse); off-guard target.
+  if (owned.has('sneak-attack')) {
+    const qualifies = strike.ranged ? (!thrown || agileOrFinesse) : agileOrFinesse;
+    if (qualifies) {
+      const dice = 1 + [5, 11, 17].filter((l) => c.level >= l).length;
+      out.push({ text: `${dice}d6 precision`, note: 'sneak attack when target is off-guard' });
+    }
+  }
+  // Ranger Precision hunter's edge applies to ANY Strike vs your hunted prey (no weapon restriction),
+  // on the first hit of the round. It's the `precision` Hunter's Edge subclass option + Hunt Prey.
+  if (c.subclassId === 'precision' && owned.has('hunt-prey')) {
+    const dice = c.level >= 19 ? 3 : c.level >= 11 ? 2 : 1;
+    out.push({ text: `${dice}d8 precision`, note: 'first hit vs hunted prey' });
+  }
+  return out;
 }
 
 /** A source that grants weapon critical specialization: the level it activates and the weapon
@@ -679,15 +775,29 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     mpRef?.extraDice ?? 0,
   );
   const dice = w.damage.dice + strikingExtra;
+  // Deadly Simplicity steps the damage die of the deity's favored SIMPLE weapon up one size while
+  // it's wielded (Player Core). Only real simple weapon items qualify here; unarmed favored weapons
+  // (Irori's fist) are handled on the Fist Strike in deriveUnarmedStrike.
+  const dsFavored = hasDeadlySimplicity(c) && deitySimpleFavoredWeaponIds(c, db).has(w.id);
+  const effDie = deadlySimplicityDie(w.damage.die, dsFavored, false);
   // Weapon specialization adds flat damage to weapons you're expert+ in (melee and ranged).
   const specDamage = weaponSpecDamage(rank, weaponSpecialization(c, db));
+  // Thief racket (rogue): on a MELEE Strike with a finesse weapon/unarmed attack, add Dexterity to
+  // damage instead of Strength. RAW it's a choice ("you can"), so use it only when it helps (Dex>Str).
+  // (class-features/thief.json: FlatModifier ability=dex, selector melee-strike-damage, item:trait:finesse.)
+  const thiefDexDamage = c.subclassId === 'thief' && !projectile && finesse && dexMod > strMod;
   // Damage attribute: melee & thrown add full Str; propulsive adds half Str (rounded down,
   // or the full penalty if Str is negative); other projectiles add none. Finesse affects the
-  // attack roll, not damage, so the Str (not Dex) modifier and its Enfeebled penalty apply.
-  const dmgAbMod = projectile ? (propulsive ? (strMod > 0 ? Math.floor(strMod / 2) : strMod) : 0) : strMod;
-  const usesStrDamage = !projectile || propulsive;
+  // attack roll, not damage, so the Str (not Dex) modifier and its Enfeebled penalty apply — unless
+  // the thief racket swaps in Dex (then the Dex modifier and its Clumsy/enfeeble-equivalent apply).
+  const dmgAbMod = thiefDexDamage ? dexMod : projectile ? (propulsive ? (strMod > 0 ? Math.floor(strMod / 2) : strMod) : 0) : strMod;
+  const usesStrDamage = !thiefDexDamage && (!projectile || propulsive);
+  const dmgAbilityId: AbilityId | null = thiefDexDamage ? 'dex' : usesStrDamage ? 'str' : null;
   const dmgBonus =
-    dmgAbMod + (usesStrDamage ? conditionPenalty(c.conditions, 'str', 'damage') : 0) + specDamage + modeNumberBonus(c.activeModes, { kind: 'damage' });
+    dmgAbMod +
+    (thiefDexDamage ? conditionPenalty(c.conditions, 'dex', 'damage') : usesStrDamage ? conditionPenalty(c.conditions, 'str', 'damage') : 0) +
+    specDamage +
+    modeNumberBonus(c.activeModes, { kind: 'damage' });
   // Property-rune extra damage (Flaming → 1d6 fire, etc.). Only Greater Flaming adds persistent damage
   // on a critical hit (2d10 fire) — carried as `critPersistent` and shown as a separate crit rider.
   const runeDamage = (runes?.property ?? [])
@@ -707,17 +817,18 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   const twoHandDie = traitDie(/^two-hand-(d\d+)$/);
   const critRiders = [...(deadlyDie ? [`${Math.max(1, strikingExtra)}${deadlyDie}`] : []), ...critPersistent];
   const damage =
-    `${dice}${w.damage.die}${dmgBonus ? formatMod(dmgBonus) : ''} ${DAMAGE_ABBR[w.damage.type] ?? w.damage.type}` +
+    `${dice}${effDie}${dmgBonus ? formatMod(dmgBonus) : ''} ${DAMAGE_ABBR[w.damage.type] ?? w.damage.type}` +
     (extraDmg.length ? ` plus ${extraDmg.join(' plus ')}` : '') +
     (critRiders.length ? ` (plus ${critRiders.join(', ')} on a crit)` : '') +
     (fatalDie ? ` (fatal ${fatalDie})` : '') +
     (twoHandDie ? ` (${dice}${twoHandDie}${dmgBonus ? formatMod(dmgBonus) : ''} two-handed)` : '');
+  const conditionalDamage = strikePrecisionRiders(c, db, { traits: w.traits, ranged });
 
   return {
     instanceId: inv.instanceId,
     name: item.name,
     attack,
-    damage,
+    damage: damage + conditionalRiderText(conditionalDamage),
     traits: w.traits,
     ranged,
     range: w.range,
@@ -727,13 +838,21 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     specDamage: specDamage || undefined,
     rank,
     atkAbility,
-    dmgAbility: usesStrDamage ? 'str' : null,
+    dmgAbility: dmgAbilityId,
     dmgAbMod,
     potencyBonus,
     dmgBonus,
     strikingDice: strikingExtra,
     mapStep: step,
+    conditionalDamage: conditionalDamage.length ? conditionalDamage : undefined,
   };
+}
+
+/** Render conditional damage riders as a compact suffix on the `damage` string, e.g.
+ *  " (plus 1d6 precision when target is off-guard)". */
+function conditionalRiderText(riders: { text: string; note: string }[]): string {
+  if (!riders.length) return '';
+  return ' ' + riders.map((r) => `(plus ${r.text} ${r.note})`).join(' ');
 }
 
 /** Per-element Elemental Blast profile (die + damage types + range), from the kineticist gate data. */
@@ -766,7 +885,12 @@ export function deriveBlastStrikes(c: Character, _db: ContentDatabase): Strike[]
   // Kineticist Weapon Specialization (level 13+) adds flat damage to Elemental Blasts, keyed to the
   // blast's (class DC) proficiency rank — exactly like a weapon's specialization.
   const specDamage = weaponSpecDamage(c.proficiencies.classDc, weaponSpecialization(c, _db));
-  const flat = dmgMode + specDamage;
+  // A 2-action Elemental Blast gains a STATUS bonus to damage equal to the Con modifier (a melee blast
+  // adds Str instead of a status bonus). The app renders the common 2-action ranged blast, so include
+  // Con by default and annotate the melee alternative. (actions/…/elemental-blast.json.) Con is only a
+  // *bonus* — a negative Con doesn't reduce blast damage, so clamp at 0.
+  const conBonus = Math.max(0, conMod);
+  const flat = dmgMode + specDamage + conBonus;
   return elements
     .filter((el) => ELEMENT_BLAST[el])
     .map((el) => {
@@ -775,16 +899,17 @@ export function deriveBlastStrikes(c: Character, _db: ContentDatabase): Strike[]
         instanceId: `blast:${el}`,
         name: `Elemental Blast (${el.charAt(0).toUpperCase() + el.slice(1)})`,
         attack,
-        damage: `${dice}${b.die}${flat ? formatMod(flat) : ''} ${DAMAGE_ABBR[b.type] ?? b.type} (+Con if 2 actions; +Str in melee)`,
+        damage: `${dice}${b.die}${flat ? formatMod(flat) : ''} ${DAMAGE_ABBR[b.type] ?? b.type} (2 actions; +Str instead in melee)`,
         traits: ['attack', 'impulse', 'kineticist', el],
         ranged: true,
         range: b.range,
         rank: c.proficiencies.classDc,
         atkAbility: 'con',
-        dmgAbility: null,
-        dmgAbMod: 0,
+        dmgAbility: 'con',
+        dmgAbMod: conBonus,
+        specDamage: specDamage || undefined,
         potencyBonus: 0,
-        dmgBonus: dmgMode,
+        dmgBonus: flat,
         strikingDice: dice - 1,
         mapStep: 5,
       };
@@ -815,7 +940,10 @@ const FIST_PROFILE: UnarmedProfile = {
  *  Blows etch their runes onto ALL unarmed attacks: potency raises the attack, striking adds dice
  *  OF THIS ATTACK'S OWN DIE SIZE (striking d4 Fist = 2d4, striking d8 fangs = 2d8 — the die-size
  *  rule), and damage-property runes add their riders. ABP, when on, replaces potency/striking. */
-function deriveUnarmedStrike(c: Character, db: ContentDatabase, p: UnarmedProfile, hwRunes?: WeaponRunes): Strike {
+function deriveUnarmedStrike(c: Character, db: ContentDatabase, p: UnarmedProfile, hwRunes?: WeaponRunes, dsUnarmed = false): Strike {
+  // Deadly Simplicity: if the deity's favored weapon is this unarmed attack and its die is smaller
+  // than d6, raise it to d6 (Player Core). dsUnarmed is set by the caller for the qualifying attack.
+  const die = deadlySimplicityDie(p.die, dsUnarmed, true);
   const strMod = abilityMod(c.abilities.str);
   const dexMod = abilityMod(c.abilities.dex);
   const usesDex = p.traits.includes('finesse') && dexMod > strMod;
@@ -828,7 +956,11 @@ function deriveUnarmedStrike(c: Character, db: ContentDatabase, p: UnarmedProfil
   const step = p.traits.includes('agile') ? 4 : 5;
   const attack = [base, base - step, base - step * 2];
   const specDamage = weaponSpecDamage(rank, weaponSpecialization(c, db));
-  const dmgBonus = strMod + conditionPenalty(c.conditions, 'str', 'damage') + specDamage + modeNumberBonus(c.activeModes, { kind: 'damage' });
+  // Thief racket also applies to a finesse UNARMED attack (thief.json selector melee-strike-damage) —
+  // add Dex to damage instead of Str when it helps.
+  const thiefDexDamage = c.subclassId === 'thief' && p.traits.includes('finesse') && dexMod > strMod;
+  const dmgAbMod = thiefDexDamage ? dexMod : strMod;
+  const dmgBonus = dmgAbMod + conditionPenalty(c.conditions, thiefDexDamage ? 'dex' : 'str', 'damage') + specDamage + modeNumberBonus(c.activeModes, { kind: 'damage' });
   // ABP devastating attacks OR a handwraps striking rune add dice to THIS attack's own die.
   const strikingExtra = abpOn(c) ? abpStrikingDice(c.level) : hwRunes?.striking ? STRIKING_DICE[hwRunes.striking] : 0;
   const dice = 1 + strikingExtra;
@@ -847,15 +979,16 @@ function deriveUnarmedStrike(c: Character, db: ContentDatabase, p: UnarmedProfil
   const nFatal = nDie(/^fatal-(d\d+)$/);
   const nCritRiders = [...(nDeadly ? [`${Math.max(1, strikingExtra)}${nDeadly}`] : []), ...critPersistent];
   const damage =
-    `${dice}${p.die}${dmgBonus ? formatMod(dmgBonus) : ''} ${DAMAGE_ABBR[p.damageType] ?? p.damageType}` +
+    `${dice}${die}${dmgBonus ? formatMod(dmgBonus) : ''} ${DAMAGE_ABBR[p.damageType] ?? p.damageType}` +
     (runeDmg.length ? ` plus ${runeDmg.join(' plus ')}` : '') +
     (nCritRiders.length ? ` (plus ${nCritRiders.join(', ')} on a crit)` : '') +
     (nFatal ? ` (fatal ${nFatal})` : '');
+  const conditionalDamage = strikePrecisionRiders(c, db, { traits: p.traits, ranged: false });
   return {
     instanceId: p.instanceId,
     name: p.name,
     attack,
-    damage,
+    damage: damage + conditionalRiderText(conditionalDamage),
     traits: p.traits,
     ranged: false,
     group: p.group,
@@ -863,12 +996,13 @@ function deriveUnarmedStrike(c: Character, db: ContentDatabase, p: UnarmedProfil
     specDamage: specDamage || undefined,
     rank,
     atkAbility,
-    dmgAbility: 'str',
-    dmgAbMod: strMod,
+    dmgAbility: thiefDexDamage ? 'dex' : 'str',
+    dmgAbMod,
     potencyBonus,
     dmgBonus,
     strikingDice: strikingExtra,
     mapStep: step,
+    conditionalDamage: conditionalDamage.length ? conditionalDamage : undefined,
   };
 }
 
@@ -895,8 +1029,16 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
       hwRunes,
     ),
   );
+  // Powerful Fist (level-1 monk class feature): the Fist's damage die increases to 1d6 and it loses
+  // the nonlethal trait / lethal-attack penalty. (class-features/powerful-fist.json.)
+  const fistProfile: UnarmedProfile = ownedFeatureIds(c, db).has('powerful-fist')
+    ? { ...FIST_PROFILE, die: 'd6', traits: FIST_PROFILE.traits.filter((t) => t !== 'nonlethal') }
+    : FIST_PROFILE;
+  // Deadly Simplicity: when the deity's favored weapon is an unarmed attack (Irori's fist), the Fist
+  // Strike's die is raised to d6 (its d4 → d6). Applies only to the baseline Fist, not natural attacks.
+  const dsFist = hasDeadlySimplicity(c) && deityFavorsUnarmed(c, db);
   // Always offer the baseline Fist (PF2e gives every character an unarmed Strike), listed after naturals.
-  return [...weapons, ...deriveBlastStrikes(c, db), ...naturals, deriveUnarmedStrike(c, db, FIST_PROFILE, hwRunes)];
+  return [...weapons, ...deriveBlastStrikes(c, db), ...naturals, deriveUnarmedStrike(c, db, fistProfile, hwRunes, dsFist)];
 }
 
 export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {

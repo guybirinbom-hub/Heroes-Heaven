@@ -65,3 +65,28 @@ describe('Regular apex items (in play)', () => {
     expect(itemApex(undefined, db)).toBeNull();
   });
 });
+
+describe('Apex items vs Automatic Bonus Progression (no double-boost)', () => {
+  const withItems = (ch: ReturnType<typeof build>, items: InventoryItem[]) => ({
+    ...initialPlay(ch, db),
+    inventory: [...ch.inventory, ...items],
+  });
+
+  it('under ABP, an invested apex item grants NO attribute benefit (ABP already applied its apex)', () => {
+    // ABP L17 bakes the attribute apex into the built character; the play overlay must not re-apply it.
+    const ch = build('fighter', 17, { keyAbility: 'str', variantRules: { abp: true }, abpApex: 'str' });
+    const before = ch.abilities.str;
+    const live = applyPlayState(ch, withItems(ch, [apexEntry('belt-of-giant-strength')]), db);
+    expect(live.abilities.str).toBe(before); // no second boost
+    // A non-str apex item is likewise inert under ABP.
+    const live2 = applyPlayState(ch, withItems(ch, [apexEntry('amulet-of-the-third-eye')]), db);
+    expect(live2.abilities.wis).toBe(ch.abilities.wis);
+  });
+
+  it('without ABP, the same invested apex item still boosts', () => {
+    const ch = build('fighter', 17, { keyAbility: 'str' });
+    expect(ch.abilities.wis).toBeLessThan(18);
+    const live = applyPlayState(ch, withItems(ch, [apexEntry('amulet-of-the-third-eye')]), db);
+    expect(live.abilities.wis).toBe(18);
+  });
+});

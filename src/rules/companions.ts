@@ -11,7 +11,8 @@
  * The maturity ranks + HP formula are sourced from the published Animal Companion
  * rules (Archives of Nethys), authored into COMPANION_FORMULA below.
  */
-import { deriveAc, deriveMaxHp, derivePerception, deriveSave, profBonus, pwl } from './derive';
+import { deriveAc, deriveMaxHp, derivePerception, deriveSave, profBonus, pwl, bestHandwrapsRunes } from './derive';
+import { abpOn, abpAttack, abpStrikingDice } from './abp';
 import { conditionPenalty } from './conditions';
 import { modeNumberBonus } from './modes';
 import { SPECIFIC_FAMILIARS_BY_ID } from './specificFamiliars';
@@ -416,11 +417,24 @@ export const EIDOLON_PRIMARY_OPTIONS: { id: string; label: string; die: number; 
  *  overwrites these with their actual array + boost values in the Edit panel. */
 const EIDOLON_DEFAULT_ABILITIES: Record<AbilityId, number> = { str: 4, dex: 2, con: 3, int: 0, wis: 1, cha: 1 };
 
-/** The summoner's proficiency in the eidolon's unarmed attacks: trained → expert (7) → master (15). */
+/** The summoner's proficiency in the eidolon's unarmed attacks: trained → expert at 5 (Eidolon Unarmed
+ *  Expertise) → master at 13 (Eidolon Unarmed Mastery). (class-features/eidolon-unarmed-expertise.json,
+ *  eidolon-unarmed-mastery.json.) */
 function eidolonAttackRank(level: number): ProficiencyRank {
-  if (level >= 15) return 'master';
-  if (level >= 7) return 'expert';
+  if (level >= 13) return 'master';
+  if (level >= 5) return 'expert';
   return 'trained';
+}
+
+/** Eidolon Weapon Specialization: +2 damage with unarmed attacks it's expert in, +3 master, +4
+ *  legendary, gained at level 7 (Eidolon Weapon Specialization) and doubled to +4/+6/+8 at level 15
+ *  (Greater Eidolon Specialization). (class-features/eidolon-weapon-specialization.json,
+ *  greater-eidolon-specialization.json.) */
+function eidolonWeaponSpecDamage(level: number, rank: ProficiencyRank): number {
+  if (level < 7) return 0;
+  const tier = rank === 'legendary' ? 3 : rank === 'master' ? 2 : rank === 'expert' ? 1 : 0;
+  if (tier === 0) return 0;
+  return level >= 15 ? tier * 2 + 2 : tier + 1;
 }
 
 /** An eidolon shares the summoner's Hit Points and uses their AC/saves/Perception; its
@@ -455,18 +469,42 @@ export function deriveEidolon(
     modeNumberBonus(modes, { kind: 'ac' });
 
   // Build an unarmed Strike: the summoner's eidolon-attack proficiency + the eidolon's Str (or Dex
-  // when the attack is finesse and Dex is higher); damage is one die + Str. Runes/handwraps aren't
-  // applied yet. dmgType defaults to slashing (the player picks B/P/S to match the chosen form).
+  // when the attack is finesse and Dex is higher); damage is one die + Str, plus the summoner's
+  // Eidolon Weapon Specialization flat. dmgType defaults to slashing (player picks B/P/S to match form).
   const attackRank = eidolonAttackRank(level);
+  const specDamage = eidolonWeaponSpecDamage(level, attackRank);
+  // The eidolon's Strikes benefit from the summoner's handwraps of mighty blows fundamental runes:
+  // striking adds damage dice OF THE ATTACK'S OWN DIE (die-size rule); potency raises the attack roll.
+  // ABP (Automatic Bonus Progression), when on, supplies these instead. (eidolon.json rune-sharing.)
+  const hwRunes = bestHandwrapsRunes(character, content);
+  const strikingTier = hwRunes?.striking === 'major' ? 3 : hwRunes?.striking === 'greater' ? 2 : hwRunes?.striking === 'striking' ? 1 : 0;
+  const strikingDice = abpOn(character) ? abpStrikingDice(level) : strikingTier;
+  const potencyBonus = abpOn(character) ? abpAttack(level) : hwRunes?.potency ?? 0;
+  // Property runes on the shared Handwraps of Mighty Blows also ride on the eidolon's unarmed Strikes
+  // (eidolon.json rune-sharing) — flaming → +1d6 fire, greater flaming → +2d10 persistent fire on a
+  // crit, etc. Mirror the PC's own unarmed-strike rider math (deriveUnarmedStrike). ABP grants no
+  // property runes, so these come only from real handwraps.
+  const runeDamage = (hwRunes?.property ?? [])
+    .map((pp) => content.runes[pp]?.damage)
+    .filter((d): d is NonNullable<typeof d> => !!d);
+  const runeDmg = runeDamage.map((d) => `${d.dice}${d.die} ${d.type}`);
+  const runeCritPersistent = runeDamage
+    .filter((d) => d.critPersistent)
+    .map((d) => `${d.critPersistent!.dice}${d.critPersistent!.die} persistent ${d.type}`);
   const strike = (rawName: string | undefined, fallback: string, die: number, traits: string[], dmgType?: DamageType) => {
     const finesse = traits.includes('finesse');
     const atkAbility: AbilityId = finesse && ab.dex > ab.str ? 'dex' : 'str';
-    const flat = ab.str + conditionPenalty(conditions, atkAbility, 'damage') + modeNumberBonus(modes, { kind: 'damage' });
+    const flat = ab.str + specDamage + conditionPenalty(conditions, atkAbility, 'damage') + modeNumberBonus(modes, { kind: 'damage' });
     const dmgFlat = flat > 0 ? `+${flat}` : flat < 0 ? `${flat}` : '';
+    const dice = 1 + strikingDice;
+    const damage =
+      `${dice}d${die}${dmgFlat} ${dmgType ?? 'slashing'}` +
+      (runeDmg.length ? ` plus ${runeDmg.join(' plus ')}` : '') +
+      (runeCritPersistent.length ? ` (plus ${runeCritPersistent.join(', ')} on a crit)` : '');
     return {
       name: rawName?.trim() || fallback,
-      attack: ab[atkAbility] + profBonus(attackRank, level, withoutLevel) + conditionPenalty(conditions, atkAbility, 'attack') + modeNumberBonus(modes, { kind: 'attack' }),
-      damage: `1d${die}${dmgFlat} ${dmgType ?? 'slashing'}`,
+      attack: ab[atkAbility] + profBonus(attackRank, level, withoutLevel) + potencyBonus + conditionPenalty(conditions, atkAbility, 'attack') + modeNumberBonus(modes, { kind: 'attack' }),
+      damage,
       traits: [...traits, 'unarmed'],
     };
   };

@@ -24,13 +24,28 @@ export interface BackupEnvelope {
 
 /** Keys a restore must always replace, so they're always present in an export — even when the
  *  source device never wrote them (fresh install). Without this, restoring a near-empty device's
- *  backup onto a used one would keep the old roster/homebrew instead of replacing them. */
+ *  backup onto a used one would keep the old roster/homebrew/settings instead of replacing them.
+ *  The empty-string entries (prefs, appearance, active-character-id) have no meaningful "empty"
+ *  default — they're listed so a restore CLEARS them when the backup omits them (see restoreBackup),
+ *  but a '' value is skipped on write so we don't materialize a bogus key. */
 const ALWAYS_KEYS: Record<string, string> = {
   'wanderers-codex:roster:v1': '[]',
   'wanderers-codex:homebrew-sources:v1': '{}',
   'wanderers-codex:homebrew-content:v1': '{}',
   'wanderers-codex:modes:v1': '{}',
+  'wanderers-codex:active:v1': '',
+  'pf2e-codex.prefs': '',
+  'pf2e-codex.appearance': '',
 };
+
+/** Every localStorage key this app owns and a restore must clear before writing, so "replace
+ *  everything" truly replaces (a target-device-only key — e.g. a pref or appearance the backup
+ *  never wrote — must not survive the restore). Any key present in the backup is written on top;
+ *  ALWAYS_KEYS names the ones that may be absent from the backup yet must still be cleared. */
+export const APP_KEY_PREFIXES = ['wanderers-codex:', 'pf2e-codex.'];
+function isAppKey(key: string): boolean {
+  return APP_KEY_PREFIXES.some((p) => key.startsWith(p));
+}
 
 /** Serialize everything the app has stored on this device into one backup-file JSON string. */
 export function createBackup(now = new Date()): string {
@@ -95,15 +110,54 @@ export function backupCharCount(env: BackupEnvelope): number | null {
   }
 }
 
-/** Write every backed-up key into localStorage — unknown keys included (forward compat). Keys
- *  absent from the backup are left untouched (the roster/homebrew keys are always present, see
- *  ALWAYS_KEYS). Throws when storage rejects a write (e.g. quota); the caller reloads on success. */
+/** Atomically replace this app's stored data with the backup's. Snapshots every app-owned key,
+ *  clears them (so target-device-only keys — a pref/appearance the backup never wrote — don't
+ *  survive), then writes the backup's keys (unknown keys included, for forward compat). If ANY write
+ *  throws (e.g. quota), the whole app-owned storage is rolled back to the pre-restore snapshot and a
+ *  clear Error is rethrown, so a mid-restore failure can never leave a half-restored roster with
+ *  dangling homebrew/mode references. The caller reloads only on success. Returns keys written. */
 export function restoreBackup(env: BackupEnvelope): number {
-  let written = 0;
-  for (const [key, value] of Object.entries(env.data)) {
-    if (typeof value !== 'string') continue; // tolerate a hand-edited file
-    localStorage.setItem(key, value);
-    written++;
+  // Snapshot current app-owned values so we can roll back on any failure.
+  const snapshot: Record<string, string> = {};
+  const clearKeys = new Set<string>(Object.keys(ALWAYS_KEYS)); // always cleared, even if absent from backup
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key === null || !isAppKey(key)) continue;
+    const value = localStorage.getItem(key);
+    if (value !== null) snapshot[key] = value;
+    clearKeys.add(key);
   }
-  return written;
+
+  // The values to write: every backup key with a real string value ('' placeholders from ALWAYS_KEYS
+  // are treated as "no value" — the key stays cleared rather than materializing an empty entry).
+  const toWrite: [string, string][] = [];
+  for (const [key, value] of Object.entries(env.data)) {
+    if (typeof value !== 'string' || value === '') continue; // tolerate a hand-edited file / skip placeholders
+    toWrite.push([key, value]);
+  }
+
+  const rollback = () => {
+    try {
+      for (const key of clearKeys) localStorage.removeItem(key);
+      for (const [key, value] of Object.entries(snapshot)) localStorage.setItem(key, value);
+    } catch {
+      // Best-effort: storage is already misbehaving; nothing more we can safely do.
+    }
+  };
+
+  try {
+    for (const key of clearKeys) localStorage.removeItem(key);
+    let written = 0;
+    for (const [key, value] of toWrite) {
+      localStorage.setItem(key, value);
+      written++;
+    }
+    return written;
+  } catch (e) {
+    rollback();
+    throw new Error(
+      `Restore failed partway through (${(e as Error).message || 'storage error'}); your existing data was left unchanged. ` +
+        'Free up space and try again.',
+    );
+  }
 }

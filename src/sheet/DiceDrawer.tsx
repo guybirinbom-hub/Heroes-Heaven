@@ -56,7 +56,13 @@ export function DiceDrawer({
           <div className="dice-row">
             <label>
               Count
-              <input type="number" min={1} value={count} onChange={(e) => setCount(Math.max(1, parseInt(e.target.value, 10) || 1))} />
+              <input
+                type="number"
+                min={1}
+                max={100}
+                value={count}
+                onChange={(e) => setCount(Math.max(1, Math.min(100, parseInt(e.target.value, 10) || 1)))}
+              />
             </label>
             <label>
               Die

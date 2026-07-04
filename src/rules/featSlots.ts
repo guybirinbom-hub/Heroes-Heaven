@@ -120,10 +120,15 @@ export function findHiddenFeatMatches(opts: {
       (!opts.kingmakerEnabled && /kingmaker/i.test(f.source?.book ?? ''))
     ) {
       campaign++;
+    } else if (opts.archetypesHidden && f.traits.includes('archetype')) {
+      // Check the archetype-toggle reason BEFORE the disabled-book reason: an archetype feat from a
+      // non-Core book, viewed in a class slot with Archetypes OFF, would otherwise be reported as
+      // "enable book…" — but enabling the book can't reveal it (the archetype filter still hides it).
+      // Tell the user to enable Archetypes, which is the actual gate.
+      archetype++;
     } else {
       const book = f.source?.book?.trim();
       if (book && !opts.enabledBooks.has(book)) sources.push(f);
-      else if (opts.archetypesHidden && f.traits.includes('archetype')) archetype++;
       else invalid++; // unexpected residue — count it honestly rather than dropping it
     }
   }

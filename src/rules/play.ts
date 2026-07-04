@@ -178,7 +178,10 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
   // Monster Parts (an invested/worn item imbued with an apex property at level 17+) — raise one
   // attribute (to 18, or +2 if already 18+). Bump it on the overlaid character so it ripples through
   // every derived stat (HP, saves, skills…). Only one apex item works at a time — the first wins.
-  const apexAbility = monsterPartApex(play.inventory ?? ch.inventory) ?? itemApex(play.inventory ?? ch.inventory, content);
+  // Under Automatic Bonus Progression, apex items grant NO attribute benefit (build.ts already applies
+  // the ABP attribute apex at level 17), so this overlay must do nothing — otherwise it double-boosts.
+  const abpOn = !!ch.variantRules?.abp;
+  const apexAbility = abpOn ? null : monsterPartApex(play.inventory ?? ch.inventory) ?? itemApex(play.inventory ?? ch.inventory, content);
   if (apexAbility) {
     const score = ch.abilities[apexAbility];
     ch = { ...ch, abilities: { ...ch.abilities, [apexAbility]: score >= 18 ? score + 2 : 18 } };

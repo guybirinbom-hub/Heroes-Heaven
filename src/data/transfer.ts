@@ -43,11 +43,12 @@ import type {
   WeaponCategory,
 } from '../rules/types';
 import { ABILITIES, SKILLS } from '../rules/types';
-import { newRosterId, type SavedChar } from './storage';
+import { loadHomebrewSources, newRosterId, type SavedChar } from './storage';
 import { buildCharacter, classChoosesDeity, CUSTOM_BACKGROUND_ID, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
-import { CORE_BOOKS, sourceCatalog } from '../rules/sources';
+import { CORE_BOOKS, MONSTER_PARTS_CAPABILITY, sourceCatalog } from '../rules/sources';
 import { applyPlayState } from '../rules/play';
 import { normalizeCharacter, normalizePlay } from '../rules/normalize';
+import { sanitize } from '../sheet/sanitizeHtml';
 import {
   abilityMod,
   deriveAc,
@@ -491,7 +492,7 @@ function synthImportedItem(wgItem: any): Item {
     rarity: ITEM_RARITIES.has(wgItem?.rarity) ? (wgItem.rarity as Rarity) : 'common',
     level,
     bulk: parseImportBulk(wgItem?.bulk),
-    description: typeof wgItem?.description === 'string' ? wgItem.description : '',
+    description: typeof wgItem?.description === 'string' ? sanitize(wgItem.description) : '',
     source: { license: 'homebrew' },
     ...(price ? { price } : {}),
   };
@@ -771,7 +772,7 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
   const customBackground = wantsDeepBg
     ? {
         name: String(wgDeep.name || 'Custom background'),
-        description: typeof wgDeep.description === 'string' ? wgDeep.description : '',
+        description: typeof wgDeep.description === 'string' ? sanitize(wgDeep.description) : '',
         boosts: [abilityFromWg(wgDeep.boost1), abilityFromWg(wgDeep.boost2)] as [AbilityId | null, AbilityId | null],
         trainedSkill: skillFromWg(wgDeep.prereq_skill),
         loreSubject: String(wgDeep.lore_name ?? ''),
@@ -1040,12 +1041,15 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
       }
       continue;
     }
+    // WG's is_implanted (a grafted/implanted magic item, e.g. Grafts) is a form of investment the app
+    // has no separate slot for — fold it into `invested` so the item isn't silently dropped as inert.
+    const invested = !!(row.is_invested || row.is_implanted);
     if (!id) {
       // Not in our content — synthesize a custom (homebrew) item from the import so it isn't dropped.
       const custom = synthImportedItem(row.item);
       customItems.push(custom);
       const cqty = Number(row?.item?.meta_data?.quantity) || 1;
-      builtInv.push({ itemId: custom.id, quantity: cqty, equipped: !!row.is_equipped, invested: !!row.is_invested, ...wgItemExtras(row) });
+      builtInv.push({ itemId: custom.id, quantity: cqty, equipped: !!row.is_equipped, invested, ...wgItemExtras(row) });
       continue;
     }
     const qty = Number(row?.item?.meta_data?.quantity) || 1;
@@ -1056,12 +1060,12 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
     // breastplate would sit "held" in the pack and grant no AC.
     // Foundry usage strings are "worn", "worncloak", "wornshoes", … — prefix match, not word match.
     const wearable = appItem?.itemType === 'armor' || /^worn/i.test(String(appItem?.usage ?? '').trim());
-    const carried = !!(row.is_equipped || row.is_invested);
+    const carried = !!(row.is_equipped || invested);
     builtInv.push({
       itemId: id,
       quantity: qty,
       ...(wearable ? { worn: carried } : { equipped: !!row.is_equipped }),
-      invested: !!row.is_invested,
+      invested,
       ...(runes ? { runes } : {}),
       ...wgItemExtras(row),
     });
@@ -1267,6 +1271,18 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
   if (Number.isFinite(bankedParts) && bankedParts > 0) {
     character.monsterParts = bankedParts;
     resolved.push(`${bankedParts} gp of banked monster parts imported.`);
+    // The Monster Parts subsystem is gated by a homebrew Source that `unlocks: ['monsterParts']`,
+    // enabled by its NAME in enabledSources. But enabledSources was just replaced wholesale from the
+    // matched WG books (which never include a private homebrew source), so the gate would close and
+    // this banked value become dead data. Re-enable the capability: union in the name of every local
+    // homebrew Source that unlocks it, keeping the character's other enabled books.
+    const unlockNames = Object.values(loadHomebrewSources())
+      .filter((s) => s.unlocks?.includes(MONSTER_PARTS_CAPABILITY))
+      .map((s) => s.name);
+    if (unlockNames.length) {
+      const base = character.enabledSources ?? [...CORE_BOOKS];
+      character.enabledSources = [...new Set([...base, ...unlockNames])];
+    }
   }
   const maxHp = deriveMaxHp(character, content);
   character.hitPoints = {
@@ -1500,7 +1516,10 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
   );
 
   return {
-    saved: { id: newRosterId(), character, build, archived: false },
+    // Normalize before returning (the native path does too): a hand-edited WG file can carry
+    // string/NaN numerics (experience, coins, hp) that would otherwise poison later math. This
+    // coerces those to the character's canonical shape without dropping any of the patched-in data.
+    saved: { id: newRosterId(), character: normalizeCharacter(character), build, archived: false },
     report: { source: 'Wanderer’s Guide', lossless: false, resolved, warnings },
     customItems,
     customModes,

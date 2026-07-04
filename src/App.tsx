@@ -7,9 +7,9 @@ import { ErrorBoundary } from './sheet/ErrorBoundary';
 import { UpdateNotice } from './sheet/UpdateNotice';
 import { WindowControls } from './sheet/WindowControls';
 import { HeroesHeavenLogo } from './sheet/Logo';
-import { kyra } from './rules/seed';
 import { loadContent, rebuildContent } from './data';
-import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, type SavedChar } from './data/storage';
+import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, ROSTER_KEY, type SavedChar } from './data/storage';
+import { setupPersist, schedulePersist, persistNow, flushPersist, cancelPersist } from './data/persist';
 import { chooseDialog } from './sheet/confirm';
 import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from './rules/build';
 import { useUndoableState } from './useUndoableState';
@@ -23,8 +23,9 @@ import { bumpZoom, resetZoom, ZOOM_STEP } from './theme/zoom';
 import type { ContentDatabase, Item, ModeDef } from './rules/types';
 
 function initialRoster(): SavedChar[] {
-  const saved = loadRoster();
-  return saved.length ? saved : [{ id: kyra.id, character: kyra }];
+  // A fresh install starts with an EMPTY roster — no demo character is injected. The RosterScreen
+  // renders a friendly empty state that guides the user to create their first character.
+  return loadRoster();
 }
 
 export default function App() {
@@ -33,10 +34,10 @@ export default function App() {
   // through setRoster) becomes an undoable step, driving Ctrl+Z / Ctrl+Shift+Z below.
   const { state: roster, set: setRoster, undo, redo } = useUndoableState<SavedChar[]>(initialRoster);
   const [activeId, setActiveId] = useState<string>(() => {
-    // Reopen the last-active character if it still exists, else the first.
+    // Reopen the last-active character if it still exists, else the first (or '' on an empty roster).
     const r = initialRoster();
     const saved = loadActiveId();
-    return r.some((c) => c.id === saved) ? (saved as string) : r[0].id;
+    return r.some((c) => c.id === saved) ? (saved as string) : (r[0]?.id ?? '');
   });
   // Boot on the roster: it's driven entirely by localStorage so it paints immediately, while the
   // heavy content database (public/core.json) loads in the background. Once content arrives we
@@ -49,6 +50,13 @@ export default function App() {
   // True when the last persist attempt was rejected (e.g. localStorage quota) — surfaced as a banner
   // so the user knows their changes aren't being saved rather than losing them silently.
   const [saveFailed, setSaveFailed] = useState(false);
+  // Set by structural roster changes (create/delete/import/duplicate) so the NEXT persist writes
+  // immediately instead of debouncing — a crash inside the debounce window must not drop a whole
+  // character. Play mutations leave it false and take the debounced path. See the persist effect.
+  const persistImmediately = useRef(false);
+  const commitStructural = () => {
+    persistImmediately.current = true;
+  };
 
   useEffect(() => {
     // Any interaction while loading cancels the boot-time jump to the sheet.
@@ -59,7 +67,9 @@ export default function App() {
     window.addEventListener('keydown', cancel, true);
     loadContent().then((c) => {
       setContent(c);
-      if (autoOpenSheet.current) setMode((m) => (m === 'roster' ? 'sheet' : m));
+      // Auto-jump to the last-active sheet — but only if there's actually a character to show.
+      // An empty roster (fresh install) stays on the roster's empty state.
+      if (autoOpenSheet.current && activeId) setMode((m) => (m === 'roster' ? 'sheet' : m));
       window.removeEventListener('pointerdown', cancel, true);
       window.removeEventListener('keydown', cancel, true);
     });
@@ -68,7 +78,39 @@ export default function App() {
       window.removeEventListener('keydown', cancel, true);
     };
   }, []);
-  useEffect(() => setSaveFailed(!saveRoster(roster)), [roster]);
+  // Roster persistence is DEBOUNCED (see data/persist.ts): a burst of play mutations (HP ticks,
+  // condition toggles, resource pips, a scrubbed stepper, per-keystroke XP) coalesces into one write
+  // after a short idle gap, instead of JSON-stringifying the whole roster (portraits included) on
+  // every event — the Android input-lag fix. Teardown handlers below flush any pending write so
+  // nothing is lost when the app closes or is backgrounded.
+  useEffect(() => {
+    setupPersist(saveRoster, (ok) => setSaveFailed(!ok));
+  }, []);
+  useEffect(() => {
+    if (persistImmediately.current) {
+      persistImmediately.current = false;
+      persistNow(roster);
+    } else {
+      schedulePersist(roster);
+    }
+  }, [roster]);
+  // Flush pending writes on app teardown: beforeunload (close/reload) and visibilitychange→hidden
+  // (Android background / tab switch — the only reliable "app is going away" signal on mobile).
+  useEffect(() => {
+    const flush = () => flushPersist();
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') flushPersist();
+    };
+    window.addEventListener('beforeunload', flush);
+    window.addEventListener('pagehide', flush);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      window.removeEventListener('beforeunload', flush);
+      window.removeEventListener('pagehide', flush);
+      document.removeEventListener('visibilitychange', onVisibility);
+      flushPersist(); // component teardown (e.g. HMR) shouldn't drop a pending write
+    };
+  }, []);
   useEffect(() => saveActiveId(activeId), [activeId]);
 
   // App zoom: Ctrl+wheel and Ctrl +/-/0 scale the whole UI (also adjustable in Settings).
@@ -112,6 +154,27 @@ export default function App() {
     };
   }, [undo, redo]);
 
+  // Cross-tab guard: the whole roster is one localStorage key written on every change, so a SECOND
+  // context (another browser tab, or a dev tab open alongside the Tauri webview) would silently
+  // overwrite this tab's characters — whoever saves last wins, and the other tab never notices its
+  // work vanished. The `storage` event fires only in OTHER tabs when a key changes, so when the
+  // roster key is written elsewhere we adopt that value (reloading it into our timeline) instead of
+  // continuing to overwrite it. Comparing to our current serialization skips our own echo — the
+  // reload triggers a re-persist of the identical value, which would otherwise ping-pong forever.
+  // Desktop/web-relevant; the lone Tauri webview rarely hits it, so this stays lightweight.
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key !== ROSTER_KEY || e.newValue === null) return;
+      if (e.newValue === JSON.stringify(roster)) return; // our own write echoed back — ignore
+      // Another tab wrote the roster. Drop any of OUR pending debounced writes first so a stale
+      // in-flight value can't clobber the version we're about to adopt, then reload theirs.
+      cancelPersist();
+      setRoster(loadRoster());
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, [roster, setRoster]);
+
   const active = roster.find((c) => c.id === activeId) ?? roster[0];
   // Derive the in-play character ONCE per (character, play, content) change. Inlining this in JSX
   // produced a fresh Character every App render, defeating all downstream memoization on the tabs.
@@ -138,9 +201,10 @@ export default function App() {
     [content, active?.character.overrides],
   );
 
-  if (!active) {
-    return <div className="app-loading">Loading…</div>;
-  }
+  // With an EMPTY roster (fresh install, or the user deleted their last character) there's no active
+  // character. The sheet/homebrew screens can't render without one, so force a character-less mode:
+  // the roster (its empty state) unless the user is mid-create in the builder.
+  const effectiveMode = active ? mode : mode === 'builder' ? 'builder' : 'roster';
 
   // Update the active character's in-play runtime state (seeding from its built
   // starting values the first time it's touched), then persist via the roster.
@@ -181,14 +245,15 @@ export default function App() {
   const onHomebrewChanged = () => setContent(rebuildContent());
 
   const deleteChar = (id: string) => {
-    if (roster.length <= 1) return; // keep at least one character
+    // Deleting the last character is allowed — the roster can go to zero (empty state).
     const remaining = roster.filter((c) => c.id !== id);
+    commitStructural(); // structural change — persist immediately, don't debounce
     setRoster(remaining);
-    if (id === activeId) setActiveId(remaining[0].id);
+    if (id === activeId) setActiveId(remaining[0]?.id ?? '');
   };
 
   let screen: ReactNode;
-  if (mode === 'roster') {
+  if (effectiveMode === 'roster') {
     screen = (
       <RosterScreen
         roster={roster}
@@ -223,6 +288,7 @@ export default function App() {
           // Register any unrecognized imported items as custom homebrew items so the inventory resolves.
           (customItems ?? []).forEach(addCustomItem);
           let finalId: string;
+          commitStructural(); // importing a character is structural — persist immediately
           if (action === 'update' && collide) {
             // Replace the existing entry in place (keep its roster id so the card/undo/active-id stay valid).
             setRoster((r) => r.map((c) => (c.id === collide.id ? { ...saved, id: collide.id, archived: c.archived ?? false } : c)));
@@ -240,7 +306,10 @@ export default function App() {
         }}
         onDuplicate={(id) => {
           const c = roster.find((x) => x.id === id);
-          if (c) setRoster((r) => [...r, duplicateChar(c)]);
+          if (c) {
+            commitStructural(); // new character — persist immediately
+            setRoster((r) => [...r, duplicateChar(c)]);
+          }
         }}
         onArchive={(id, archived) => setRoster((r) => r.map((c) => (c.id === id ? { ...c, archived } : c)))}
         onDelete={deleteChar}
@@ -269,7 +338,7 @@ export default function App() {
         </div>
       </div>
     );
-  } else if (mode === 'builder') {
+  } else if (effectiveMode === 'builder') {
     screen = (
       <Builder
         content={content}
@@ -280,6 +349,7 @@ export default function App() {
         }}
         onCreate={(build) => {
           const built = buildCharacter(build, applyOverrides(content, build.overrides));
+          commitStructural(); // create/rebuild a character — persist immediately
           if (editing) {
             const id = editing.id;
             // Keep in-play progress across a rebuild, but reconcile build-derived overrides
@@ -298,7 +368,7 @@ export default function App() {
         }}
       />
     );
-  } else if (mode === 'homebrew') {
+  } else if (effectiveMode === 'homebrew') {
     screen = (
       <HomebrewPage
         content={content}
@@ -356,16 +426,21 @@ export default function App() {
       <PopupSizeController />
       <PopupSizeLock />
       <OverlayDismissGuard />
-      <UpdateNotice />
-      {saveFailed && (
-        <div className="save-warning" role="alert">
-          <i className="ti ti-alert-triangle" aria-hidden="true" />
-          <span>Changes can’t be saved — browser storage is full or unavailable. Export your characters so you don’t lose work.</span>
-          <button className="save-warning-x" onClick={() => setSaveFailed(false)} aria-label="Dismiss">
-            <i className="ti ti-x" aria-hidden="true" />
-          </button>
-        </div>
-      )}
+      {/* App-wide banners. On desktop these sit in normal flow above the app; on mobile the app
+          shell is position:fixed;inset:0 and would paint over them, so .app-banners floats fixed at
+          the top (with safe-area padding) — see the mobile block in sheet.css. */}
+      <div className="app-banners">
+        <UpdateNotice />
+        {saveFailed && (
+          <div className="save-warning" role="alert">
+            <i className="ti ti-alert-triangle" aria-hidden="true" />
+            <span>Changes can’t be saved — browser storage is full or unavailable. Export your characters so you don’t lose work.</span>
+            <button className="save-warning-x" onClick={() => setSaveFailed(false)} aria-label="Dismiss">
+              <i className="ti ti-x" aria-hidden="true" />
+            </button>
+          </div>
+        )}
+      </div>
       <ErrorBoundary
         resetKeys={[activeId, mode, roster.length]}
         title="This screen ran into a problem"

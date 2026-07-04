@@ -22,9 +22,23 @@ describe('proficiency advancement', () => {
     expect(prof(build('fighter', 11), 'medium')).toBe('expert');
     expect(prof(build('fighter', 17), 'medium')).toBe('master');
   });
-  it('fighter weapons reach legendary at 13, classDC master at 19', () => {
-    expect(prof(build('fighter', 13), 'martial')).toBe('legendary');
+  it('fighter general weapons reach MASTER at 13 (not legendary — that is per chosen group), classDC master at 19', () => {
+    // Weapon Legend's general clause: all simple/martial/unarmed → master@13; advanced → expert@13.
+    // Legendary is granted ONLY to the chosen weapon group (see the weapon-group test below).
+    expect(prof(build('fighter', 13), 'martial')).toBe('master');
+    expect(prof(build('fighter', 13), 'advanced')).toBe('expert');
     expect(prof(build('fighter', 20), 'classDc')).toBe('master');
+  });
+  it('fighter Weapon Mastery/Legend elevate ONLY the chosen weapon group', () => {
+    // A sword-group fighter: swords hit master@5 (group) while off-group stays expert (chassis);
+    // at 13 swords reach legendary via the group while general martial is only master.
+    const g = { fighterWeaponGroup: 'sword' };
+    const l5 = build('fighter', 5, g);
+    expect(l5.proficiencies.weaponGroups?.sword).toBe('master');
+    expect(prof(l5, 'martial')).toBe('expert'); // off-group / general martial unchanged at 5
+    const l13 = build('fighter', 13, g);
+    expect(l13.proficiencies.weaponGroups?.sword).toBe('legendary'); // chosen group
+    expect(prof(l13, 'martial')).toBe('master'); // general martial (off-group) only master
   });
   it('champion reaches legendary armor at 17', () => {
     expect(prof(build('champion', 17), 'heavy')).toBe('legendary');
@@ -140,5 +154,31 @@ describe('non-caster subsystems', () => {
     const ch = build('kineticist', 5, { extraChoices: { element: els } });
     expect(ch.spellcasting.length).toBe(0);
     expect(content().classes.kineticist.features.some((f) => f.featureId === 'elemental-blast')).toBe(true);
+  });
+});
+
+describe('caster-math accuracy (audit Section 3A)', () => {
+  const prepared = (ch: ReturnType<typeof build>) => ch.spellcasting.find((e) => e.type === 'prepared')!;
+  const counts = (e: ReturnType<typeof prepared>) =>
+    Object.fromEntries(Object.entries(e.prepared ?? {}).map(([r, a]) => [Number(r), a.length]));
+
+  it('witch is a LEARNED prepared caster (a spellbook, no curriculum inflation)', () => {
+    const w = prepared(build('witch', 5, { keyAbility: 'int' }));
+    // The familiar is "the source and repository of the spells" — a spellbook, like the wizard's.
+    expect(w.spellbook).toBeTruthy();
+    // Plain full-caster slot table with NO extra curriculum slot (which was the cleric/druid path bug).
+    expect(counts(w)).toEqual({ 1: 3, 2: 3, 3: 2 });
+  });
+
+  it('wizard arcane school grants a +1 curriculum slot per castable rank', () => {
+    const s = prepared(build('wizard', 5, { subclassId: 'school-of-battle-magic', keyAbility: 'int' }));
+    expect(counts(s)).toEqual({ 1: 4, 2: 4, 3: 3 });
+  });
+
+  it('UMT has no curriculum: no extra slot and no 6th cantrip', () => {
+    // School of Unified Magical Theory grants NO curriculum spells and NO extra school cantrip.
+    const umt = build('wizard', 5, { subclassId: 'school-of-unified-magical-theory', keyAbility: 'int' });
+    const e = prepared(umt);
+    expect(counts(e)).toEqual({ 1: 3, 2: 3, 3: 2 }); // base full-caster table, no +1
   });
 });

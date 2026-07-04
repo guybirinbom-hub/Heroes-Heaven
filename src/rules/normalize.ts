@@ -21,8 +21,35 @@ import {
   type ProficiencyRank,
 } from './types';
 import type { PlayState } from './play';
+import { resolveItemAlias } from './itemAliases';
 
 const UNTRAINED: ProficiencyRank = 'untrained';
+
+/**
+ * Migrate away removed item ids. Some AoN-scraped duplicate item stubs (aon-*) were deleted after the
+ * canonical Foundry twin was confirmed; a saved character may still reference the old id in its
+ * inventory. Rewrite every inventory entry's `itemId` to the canonical id so it keeps resolving.
+ * `attachedTo` / `containerInstanceId` reference per-entry instanceIds (not item-definition ids), so
+ * they are intentionally left untouched.
+ */
+function migrateInventoryIds(inventory: unknown): unknown {
+  if (!Array.isArray(inventory)) return inventory;
+  return inventory.map((entry) => {
+    if (!entry || typeof entry !== 'object') return entry;
+    const e = entry as { itemId?: unknown };
+    if (typeof e.itemId !== 'string') return entry;
+    const resolved = resolveItemAlias(e.itemId);
+    return resolved === e.itemId ? entry : { ...entry, itemId: resolved };
+  });
+}
+
+/** Apply migrateInventoryIds to each companion's inventory (companions carry their own gear). */
+function migrateCompanionInventories<T>(companions: T[]): T[] {
+  return companions.map((c) => {
+    if (!c || typeof c !== 'object' || !Array.isArray((c as { inventory?: unknown }).inventory)) return c;
+    return { ...c, inventory: migrateInventoryIds((c as unknown as { inventory: unknown }).inventory) };
+  });
+}
 
 function normAbilities(a: unknown): AbilityScores {
   const src = a && typeof a === 'object' ? (a as Record<string, unknown>) : {};
@@ -78,7 +105,10 @@ export function normalizeCharacter(input: unknown): Character {
     schemaVersion: typeof c.schemaVersion === 'number' ? c.schemaVersion : CHARACTER_SCHEMA_VERSION,
     id: typeof c.id === 'string' && c.id ? c.id : `char-${(c.name ?? 'unnamed').toString().toLowerCase().replace(/\s+/g, '-')}`,
     name: typeof c.name === 'string' ? c.name : 'Unnamed',
-    level: typeof c.level === 'number' ? c.level : 1,
+    // Clamp level to the legal [1,20] range: a bad native .codex import or legacy roster entry with
+    // level 0 / negative / 21+ otherwise derives broken HP and proficiency. (Mirrors clampLevel in
+    // transfer.ts, which guards the WG import path.)
+    level: typeof c.level === 'number' && Number.isFinite(c.level) ? Math.min(20, Math.max(1, Math.floor(c.level))) : 1,
     xp: typeof c.xp === 'number' ? c.xp : 0,
     ancestryId: c.ancestryId ?? null,
     heritageId: c.heritageId ?? null,
@@ -92,7 +122,7 @@ export function normalizeCharacter(input: unknown): Character {
     conditions: arr(c.conditions),
     languages: arr(c.languages),
     feats: arr(c.feats),
-    inventory: arr(c.inventory),
+    inventory: migrateInventoryIds(arr(c.inventory)) as Character['inventory'],
     currency: obj<Coins>(c.currency, {}),
     spellcasting: arr(c.spellcasting),
     details: obj<Character['details']>(c.details, {}),
@@ -102,7 +132,7 @@ export function normalizeCharacter(input: unknown): Character {
     ...(c.classChoices !== undefined ? { classChoices: arr(c.classChoices) } : {}),
     ...(c.partialBoosts !== undefined ? { partialBoosts: arr(c.partialBoosts) } : {}),
     ...(c.skillIncreases !== undefined ? { skillIncreases: arr(c.skillIncreases) } : {}),
-    ...(c.companions !== undefined ? { companions: arr(c.companions) } : {}),
+    ...(c.companions !== undefined ? { companions: migrateCompanionInventories(arr(c.companions)) } : {}),
     ...(c.activeModes !== undefined ? { activeModes: arr(c.activeModes) } : {}),
     ...(c.pinned !== undefined ? { pinned: arr(c.pinned) } : {}),
     ...(c.pinnedDescs !== undefined ? { pinnedDescs: arr(c.pinnedDescs) } : {}),
@@ -131,8 +161,8 @@ export function normalizePlay(input: unknown): PlayState {
     pinned: arr(p.pinned),
     ...(p.pinnedDescs !== undefined ? { pinnedDescs: arr(p.pinnedDescs) } : {}),
     ...(p.notes !== undefined ? { notes: arr(p.notes) } : {}),
-    ...(p.companions !== undefined ? { companions: arr(p.companions) } : {}),
-    ...(p.inventory !== undefined ? { inventory: arr(p.inventory) } : {}),
+    ...(p.companions !== undefined ? { companions: migrateCompanionInventories(arr(p.companions)) } : {}),
+    ...(p.inventory !== undefined ? { inventory: migrateInventoryIds(arr(p.inventory)) as PlayState['inventory'] } : {}),
     ...(p.activeModes !== undefined ? { activeModes: arr(p.activeModes) } : {}),
     ...(p.preparedTactics !== undefined ? { preparedTactics: arr(p.preparedTactics) } : {}),
     // Objects the overlay reads by key / spreads.

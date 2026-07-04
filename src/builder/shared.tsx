@@ -1682,6 +1682,18 @@ export function SubCard({ icon, label, count, children }: { icon: string; label:
   );
 }
 
+/** Weapon groups a fighter can pick for Weapon Mastery — the distinct groups of the simple/martial/
+ *  unarmed/advanced weapons in content, with a capitalized label. Excludes non-weapon "shield" group. */
+function fighterWeaponGroupOptions(content: ContentDatabase): { id: string; label: string }[] {
+  const groups = new Set<string>();
+  for (const it of Object.values(content.items)) {
+    if (it.itemType === 'weapon' && it.group && it.group !== 'shield') groups.add(it.group);
+  }
+  return [...groups]
+    .sort()
+    .map((g) => ({ id: g, label: g.charAt(0).toUpperCase() + g.slice(1) }));
+}
+
 export function OriginPickers({ build, actions, content }: EditorProps) {
   const heritageOpts = Object.values(content.heritages).filter(
     (h) => h.ancestryId === build.ancestryId || h.ancestryId === null,
@@ -2402,6 +2414,20 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             const f = content.feats[build.voiceOfNature ?? 'animal-empathy'];
             return f?.description ? <ChoiceDetails name={f.name} flavor={f.description} descRefs={f.descRefs} /> : null;
           })()}
+        </SetupCard>
+      )}
+      {(build.classId === 'fighter' || (build.variantRules?.dualClass && build.classId2 === 'fighter')) && build.level >= 5 && (
+        <SetupCard icon="ti-sword" label="Weapon group mastery">
+          <div className="bsec-note">
+            Fighter Weapon Mastery (5th) — and Weapon Legend (13th) — raise your proficiency with the
+            simple, martial, and unarmed weapons of one weapon group. Choose that group.
+          </div>
+          <PopupSelect
+            title="Weapon group"
+            value={build.fighterWeaponGroup ?? ''}
+            onChange={(v) => actions.patch({ fighterWeaponGroup: v || null })}
+            options={fighterWeaponGroupOptions(content).map((g) => ({ value: g.id, label: g.label }))}
+          />
         </SetupCard>
       )}
       {pendingClass != null && (

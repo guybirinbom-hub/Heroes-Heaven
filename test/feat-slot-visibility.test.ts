@@ -92,6 +92,25 @@ describe('feat-slot source visibility (the missing-feats bug)', () => {
     expect(hidden!.sources.some((f) => f.id === 'wizard-dedication')).toBe(false);
   });
 
+  it('a non-Core archetype feat with Archetypes OFF is reported as `archetype`, not a disabled book', () => {
+    // Aldori Duelist Dedication — Battlecry! (a book that is disabled by default), archetype + dedication.
+    // In a class slot with the Archetypes toggle off, enabling the book alone can't reveal it (the
+    // archetype filter still hides it), so the notice must tell the user to enable Archetypes.
+    expect(full.feats['aldori-duelist-dedication']).toBeTruthy();
+    const hidden = findHiddenFeatMatches({
+      query: 'Aldori Duelist Dedication',
+      allFeats: Object.values(full.feats),
+      shownIds: new Set(), // picker shows nothing matching (book disabled + archetypes off)
+      slotEligibleIds: ids(eligibleFeatsForSlot(elfFighter, full, classSlot)),
+      enabledBooks: enabledBookSet(undefined), // Battlecry! NOT enabled
+      archetypesHidden: true,
+    });
+    expect(hidden).not.toBeNull();
+    expect(hidden!.archetype).toBeGreaterThan(0);
+    // It must NOT be filed under `sources` (which would render an unhelpful "enable book" row).
+    expect(hidden!.sources.some((f) => f.id === 'aldori-duelist-dedication')).toBe(false);
+  });
+
   it('an empty query reports nothing', () => {
     expect(
       findHiddenFeatMatches({

@@ -4,21 +4,11 @@ import { useContent } from './ContentContext';
 import { lookupRef, type DescNode } from './descref';
 import { RichText } from './RichText';
 import { DescriptionModal } from './DescriptionModal';
+import { sanitize } from './sanitizeHtml';
 
 /** A description is treated as rich HTML (user-authored, from the item editor) if it carries any
  *  HTML tag; otherwise it's curated markdown and RichText parses + auto-linkifies it. */
 const HTML_TAG = /<(a|strong|em|b|i|u|s|h[1-6]|ul|ol|li|blockquote|span|br|div|p|hr|mark)\b/i;
-
-/** Strip script/style, inline event handlers, javascript: URLs, and embedded/external-resource tags
- *  (img/iframe/etc.) from user-authored HTML — so a description pasted from a web page can't render a
- *  broken remote image, silently fetch a tracker from this offline app, or embed a remote iframe. */
-function sanitizeHtml(html: string): string {
-  return html
-    .replace(/<\s*(script|style)\b[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, '')
-    .replace(/<\/?(?:img|iframe|object|embed|video|audio|source|track|link|meta|base|svg)\b[^>]*>/gi, '')
-    .replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '')
-    .replace(/\s(href|src)\s*=\s*("\s*javascript:[^"]*"|'\s*javascript:[^']*')/gi, '');
-}
 
 /**
  * Renders an inline description with its cross-references linkified; clicking a link opens the
@@ -56,7 +46,7 @@ export function DescBody({
       <>
         <div
           className={className + ' rich-html'}
-          dangerouslySetInnerHTML={{ __html: sanitizeHtml(description) }}
+          dangerouslySetInnerHTML={{ __html: sanitize(description) }}
           onClick={(ev) => {
             const a = (ev.target as HTMLElement).closest?.('.ref-link') as HTMLElement | null;
             if (a?.dataset.refKey && a.dataset.refId) {

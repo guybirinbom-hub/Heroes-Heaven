@@ -6,6 +6,7 @@ import { getAppearance, setAccent, setFont, setStyle, setTheme } from '../theme/
 import { bumpZoom, getZoom, resetZoom, subscribeZoom, ZOOM_MAX, ZOOM_MIN, ZOOM_STEP } from '../theme/zoom';
 import { loadRoster, wipeAllData } from '../data/storage';
 import { backupCharCount, backupFilename, createBackup, parseBackup, restoreBackup } from '../data/backup';
+import { cancelPersist, flushPersist } from '../data/persist';
 import { downloadText } from './download';
 import { chooseDialog, confirmDialog } from './confirm';
 import { isMobilePlatform, isTauri } from '../platform';
@@ -269,6 +270,10 @@ function BackupSection() {
 
   const doExport = () => {
     try {
+      // createBackup() reads localStorage directly, so force out any pending debounced roster write
+      // first — otherwise a just-made change (still in the debounce window) would be missing from
+      // the exported backup. See data/persist.ts.
+      flushPersist();
       downloadText(backupFilename(), createBackup());
     } catch (e) {
       showError(`Export failed: ${(e as Error).message}`);
@@ -296,6 +301,10 @@ function BackupSection() {
           danger: true,
         });
         if (!ok) return;
+        // Drop any pending debounced roster write BEFORE restoring: otherwise the beforeunload flush
+        // fired by reload() below would write our stale in-memory roster over the freshly-restored
+        // data. Cancel it, restore, then reload to pick up the restored storage. See data/persist.ts.
+        cancelPersist();
         restoreBackup(env);
         window.location.reload();
       } catch (e) {
@@ -367,28 +376,45 @@ function AboutSection() {
   );
 }
 
-/** Erase all local data, then ask the OS to remove the app itself. Returns a message to show if
- *  the program couldn't be removed automatically (data is wiped either way). Both Tauri shells
- *  have the `uninstall_app` command: Windows launches the NSIS uninstaller (the app exits and the
- *  uninstaller takes over); Android opens the system "uninstall this app?" dialog for our own
- *  package — Android itself asks the user to confirm, then removes the app. */
+/** Ask the OS to remove the app, and erase all local data. Returns a message to show if the program
+ *  couldn't be removed automatically. Both Tauri shells have the `uninstall_app` command, but the
+ *  ORDER and the pre-wipe differ by platform:
+ *
+ *  - Android: `uninstall_app` only OPENS the system "uninstall this app?" dialog, which the user can
+ *    CANCEL. So we trigger it FIRST and DON'T pre-wipe — pre-wiping would leave the app installed but
+ *    permanently empty if they cancel. Android clears the app's data on an actual uninstall anyway.
+ *  - Desktop (Windows): the NSIS uninstaller doesn't clear our localStorage, so we DO wipe first,
+ *    then launch it (the app exits and the uninstaller takes over). */
 async function runUninstall(): Promise<string | null> {
-  wipeAllData();
+  // Drop any pending debounced roster write so the beforeunload flush (on reload/exit below) can't
+  // resurrect the roster we're about to wipe. See data/persist.ts.
+  cancelPersist();
+  if (isTauri && isMobilePlatform) {
+    try {
+      const { invoke } = await import('@tauri-apps/api/core');
+      // Trigger the cancelable OS dialog FIRST; do not pre-wipe (Android wipes data on real removal).
+      await invoke('uninstall_app');
+      return 'Confirm removing the app in the dialog Android shows. Your data is deleted when the app is removed.';
+    } catch {
+      // Older build without the command, a portable/dev run, or the OS refused — fall back to a
+      // manual wipe + instructions (no OS uninstall happened, so the data must be cleared here).
+      wipeAllData();
+      return 'Your data has been erased. To remove the app itself, uninstall Heroes Heaven from your device’s app manager.';
+    }
+  }
   if (isTauri) {
+    // Desktop: wipe our data (the NSIS uninstaller won't), then hand off to the uninstaller.
+    wipeAllData();
     try {
       const { invoke } = await import('@tauri-apps/api/core');
       await invoke('uninstall_app');
-      // Android: the app is still open behind the system dialog, so leave a note in case the
-      // user cancels it. Windows: on success the app has already exited (message never shows).
-      return isMobilePlatform ? 'Your data has been erased. Confirm removing the app in the dialog Android shows.' : null;
+      return null; // on success the app has already exited (message never shows).
     } catch {
-      // Older build without the command, a portable/dev run, or the OS refused.
-      return isMobilePlatform
-        ? 'Your data has been erased. To remove the app itself, uninstall Heroes Heaven from your device’s app manager.'
-        : 'Your data has been erased. To remove the application itself, uninstall “Heroes Heaven” from Windows Settings → Apps.';
+      return 'Your data has been erased. To remove the application itself, uninstall “Heroes Heaven” from Windows Settings → Apps.';
     }
   }
   // Plain browser tab: nothing is installed — wiping the data is the whole action.
+  wipeAllData();
   window.location.reload();
   return null;
 }

@@ -15,4 +15,16 @@ describe('focus spells for non-spellcasting classes', () => {
     expect(Object.values(focus!.repertoire ?? {}).flat()).toContain('vindicators-mark');
     expect(ch.focus?.max ?? 0).toBeGreaterThanOrEqual(1);
   });
+
+  // Audit finding (Section 4B): the psychic's psi cantrips/amps are cantrips in the occult
+  // repertoire (granted via the conscious mind), NOT focus spells — so the focus-spell block
+  // never fired and the psychic got no focus pool, no Refocus, no Amp affordance. RAW: the
+  // psychic "starts with a focus pool of 2 Focus Points" to power amps.
+  it('a level-1 psychic has a focus pool of 2 even though it has no focus spells', () => {
+    const ch = build('psychic', 1);
+    // The psychic has no focus-type spellcasting entry (psi cantrips live in the occult repertoire).
+    expect(ch.spellcasting.find((s) => s.type === 'focus')).toBeUndefined();
+    // …but it still has a focus pool of 2, so the sheet shows Focus Points + Refocus.
+    expect(ch.focus).toEqual({ current: 2, max: 2 });
+  });
 });

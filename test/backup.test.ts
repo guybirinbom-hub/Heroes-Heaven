@@ -114,8 +114,10 @@ describe('restoreBackup', () => {
     expect(localStorage.getItem('pf2e-codex.appearance')).toBe('{"themeId":"dark"}');
   });
 
-  it('writes unknown keys as-is (forward compat) and leaves keys missing from the backup untouched', () => {
-    localStorage.setItem('pf2e-codex.zoom', '1.2'); // on this device, but not in the backup
+  it('writes unknown app keys as-is (forward compat) and CLEARS target-only keys the backup omits', () => {
+    // A newer feature's key lives only on this device (not in the backup): "replace everything" must
+    // remove it so the restore truly matches the backup rather than leaving stray target-device data.
+    localStorage.setItem('pf2e-codex.zoom', '1.2');
     const env = parseBackup(createBackup());
     delete env.data['pf2e-codex.zoom'];
     env.data['pf2e-codex.some-newer-feature'] = '{"on":true}';
@@ -123,10 +125,45 @@ describe('restoreBackup', () => {
     localStorage.setItem('wanderers-codex:roster:v1', '["overwritten"]');
     const written = restoreBackup(env);
 
-    expect(written).toBe(Object.keys(env.data).length);
+    // Empty-string ALWAYS_KEYS placeholders (active/prefs/appearance the source never wrote) are
+    // skipped on write, so `written` counts only the real values.
+    const nonEmpty = Object.values(env.data).filter((v) => typeof v === 'string' && v !== '').length;
+    expect(written).toBe(nonEmpty);
     expect(localStorage.getItem('pf2e-codex.some-newer-feature')).toBe('{"on":true}');
-    expect(localStorage.getItem('pf2e-codex.zoom')).toBe('1.2'); // untouched
+    expect(localStorage.getItem('pf2e-codex.zoom')).toBe(null); // target-only key cleared
     expect(localStorage.getItem('wanderers-codex:roster:v1')).toBe('[]'); // roster always replaced
+  });
+
+  it('is ATOMIC: a mid-write failure rolls back to the original state', () => {
+    // Seed a device with real data, then take a backup that will be restored on top of NEW data.
+    localStorage.setItem('wanderers-codex:roster:v1', '[{"id":"c-restored","character":{}}]');
+    localStorage.setItem('wanderers-codex:homebrew-content:v1', '{"items":{"hb-restored":{}}}');
+    const file = createBackup();
+
+    // Now the device holds different, must-not-be-lost data.
+    localStorage.setItem('wanderers-codex:roster:v1', '[{"id":"c-original","character":{}}]');
+    localStorage.setItem('wanderers-codex:homebrew-content:v1', '{"items":{"hb-original":{}}}');
+    localStorage.setItem('wanderers-codex:modes:v1', '{"m-original":{}}');
+
+    // Inject a setItem that fails partway through the FORWARD write (a restored value), simulating a
+    // quota error mid-restore. Rollback writes back the '-original' snapshot values, which must still
+    // succeed (they fit — we just cleared everything), so only the forward '-restored' writes throw.
+    const realSet = localStorage.setItem.bind(localStorage);
+    let restoredWrites = 0;
+    (localStorage as unknown as { setItem: (k: string, v: string) => void }).setItem = (k: string, v: string) => {
+      if (v.includes('restored') && ++restoredWrites > 1) throw new DOMException('quota', 'QuotaExceededError');
+      realSet(k, v);
+    };
+
+    expect(() => restoreBackup(parseBackup(file))).toThrow(/Restore failed/);
+
+    // Restore the real setItem so later tests aren't affected.
+    (localStorage as unknown as { setItem: (k: string, v: string) => void }).setItem = realSet;
+
+    // Rollback must have reproduced the ORIGINAL (pre-restore) values, not left a half-restored mix.
+    expect(localStorage.getItem('wanderers-codex:roster:v1')).toBe('[{"id":"c-original","character":{}}]');
+    expect(localStorage.getItem('wanderers-codex:homebrew-content:v1')).toBe('{"items":{"hb-original":{}}}');
+    expect(localStorage.getItem('wanderers-codex:modes:v1')).toBe('{"m-original":{}}');
   });
 
   it('replaces roster + homebrew even when restoring a fresh device’s backup', () => {

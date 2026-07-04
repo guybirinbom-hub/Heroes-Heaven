@@ -467,6 +467,19 @@ const RUNE_DAMAGE = {
   'thundering-greater': { dice: 1, die: 'd6', type: 'sonic' },
 };
 
+// Reinforcing rune (Player Core 2) additive bonuses to a shield's Hardness / HP / BT, keyed by the
+// rune's numeric tier (minor=1 … supreme=6). Foundry stores a reinforced shield's boosted HP in
+// `system.hp.value` but leaves `system.hardness` at the base value, so we apply this table when a shield
+// carries `system.runes.reinforcing`. Values sourced from the reinforcing-rune equipment descriptions.
+const REINFORCING_STATS = {
+  1: { hardness: 3, hp: 44, bt: 22 },
+  2: { hardness: 3, hp: 52, bt: 26 },
+  3: { hardness: 3, hp: 64, bt: 32 },
+  4: { hardness: 5, hp: 80, bt: 40 },
+  5: { hardness: 5, hp: 84, bt: 42 },
+  6: { hardness: 7, hp: 108, bt: 54 },
+};
+
 /** Parse a standalone "etched-onto-…" equipment item into a RuneDef (or null if not a rune). */
 function parseRune(id, name, usage, level, price) {
   const slot = /armor/.test(usage) ? 'armor' : /shield/.test(usage) ? 'shield' : 'weapon';
@@ -1514,8 +1527,25 @@ for (const e of readPack('spells')) {
   };
 }
 
-for (const e of readPack('equipment')) {
+// Foundry "specific magic items" (e.g. Hero's Plate, Splintering Spear, an Energized Shield)
+// reference a plain base weapon/armor/shield via `system.baseItem` and OFTEN omit the base's core
+// stat fields (damage / category / group / acBonus / dexCap / checkPenalty / hardness / hp) — those
+// live only on the base item. Index every equipment entry by its slug so a specific item can inherit
+// the base's stats; without this, deriveAc/deriveShield/deriveStrike see undefined → NaN AC / no Strike.
+const EQUIP_PACK = readPack('equipment');
+const baseItemBySlug = {};
+for (const e of EQUIP_PACK) baseItemBySlug[e.system?.slug || slug(e.name)] = e;
+/** The referenced base weapon/armor/shield for a specific magic item, if it resolves. */
+const resolveBaseItem = (sys) => (sys?.baseItem ? baseItemBySlug[sys.baseItem] : undefined);
+/** First defined value; treats null/undefined (and, for numbers, 0-as-placeholder handled by caller) as "missing". */
+const pick = (...vals) => vals.find((v) => v !== undefined && v !== null);
+
+for (const e of EQUIP_PACK) {
   const s = e.system;
+  // A specific magic item's own `system` for stat fields the base defines; fall back to the base item's
+  // system so category/damage/acBonus/hardness/hp are never dropped. Foundry stores base-derived hardness/hp
+  // as 0 on the specific item, so a 0/absent value here means "inherit from base".
+  const bs = resolveBaseItem(s)?.system;
   const id = idOf(e);
   const hands = s.usage?.value === 'held-in-two-hands' ? 2 : s.usage?.value === 'held-in-one-hand' ? 1 : undefined;
   const { text: desc, refs: descR } = cleanDescRich(s.description?.value);
@@ -1586,33 +1616,51 @@ for (const e of readPack('equipment')) {
       ...base,
       itemType: 'weapon',
       hands,
-      category: s.category,
-      group: s.group || '',
-      damage: { dice: s.damage?.dice || 1, die: s.damage?.die || 'd4', type: s.damage?.damageType || 'untyped' },
-      range: explicitRange ?? (thrownTrait ? Number(thrownTrait.split('-')[1]) : undefined),
+      category: pick(s.category, bs?.category),
+      group: pick(s.group, bs?.group) || '',
+      damage: {
+        dice: pick(s.damage?.dice, bs?.damage?.dice) || 1,
+        die: pick(s.damage?.die, bs?.damage?.die) || 'd4',
+        type: pick(s.damage?.damageType, bs?.damage?.damageType) || 'untyped',
+      },
+      range: explicitRange ?? (thrownTrait ? Number(thrownTrait.split('-')[1]) : undefined) ?? (typeof bs?.range === 'number' ? bs.range : bs?.range?.value || undefined),
       reload: s.reload?.value != null && s.reload.value !== '' ? Number(s.reload.value) : undefined,
     };
   } else if (e.type === 'armor') {
     db.items[id] = {
       ...base,
       itemType: 'armor',
-      category: s.category,
-      group: s.group || undefined,
-      acBonus: s.acBonus || 0,
-      dexCap: s.dexCap,
-      checkPenalty: s.checkPenalty,
-      speedPenalty: s.speedPenalty,
-      strength: s.strength,
+      category: pick(s.category, bs?.category),
+      group: pick(s.group, bs?.group) || undefined,
+      acBonus: pick(s.acBonus, bs?.acBonus) ?? 0,
+      dexCap: pick(s.dexCap, bs?.dexCap),
+      checkPenalty: pick(s.checkPenalty, bs?.checkPenalty),
+      speedPenalty: pick(s.speedPenalty, bs?.speedPenalty),
+      strength: pick(s.strength, bs?.strength),
     };
   } else if (e.type === 'shield') {
+    // Foundry stores a specific magic shield's Hardness/HP as 0 (they live on the base shield), so a
+    // 0/absent value inherits from the referenced base item — otherwise shields read 0 hardness / 0 HP.
+    let hardness = (s.hardness || bs?.hardness) ?? 0;
+    let hp = (s.hp?.max || bs?.hp?.max) ?? 0;
+    let brokenThreshold = s.hp?.brokenThreshold || bs?.hp?.brokenThreshold || Math.floor(hp / 2);
+    // A shield with a reinforcing rune (e.g. the Energized Shields) reads its base steel Hardness/HP in
+    // Foundry; the rune's boost lives only in `system.hp.value`. Apply the reinforcing table so the
+    // reinforced Hardness/HP/BT surface instead of the bare base steel 5/20.
+    const reinf = REINFORCING_STATS[s.runes?.reinforcing];
+    if (reinf) {
+      hardness += reinf.hardness;
+      hp += reinf.hp;
+      brokenThreshold += reinf.bt;
+    }
     db.items[id] = {
       ...base,
       itemType: 'shield',
-      acBonus: s.acBonus || 0,
-      hardness: s.hardness || 0,
-      hp: s.hp?.max || 0,
-      brokenThreshold: s.hp?.brokenThreshold || Math.floor((s.hp?.max || 0) / 2),
-      speedPenalty: s.speedPenalty,
+      acBonus: (s.acBonus || bs?.acBonus) ?? 0,
+      hardness,
+      hp,
+      brokenThreshold,
+      speedPenalty: pick(s.speedPenalty, bs?.speedPenalty),
     };
   } else if (e.type === 'consumable') {
     db.items[id] = {
@@ -1856,6 +1904,62 @@ for (const f of readdirSync('scripts/data').filter((f) => f.endsWith('-additions
     }
   }
   if (n) console.log(`[import-core] +${n} → ${key} (from ${f})`);
+}
+
+// Backfill core stats on ADDED weapons/armor/shields. AoN-scraped additions (items-additions.json)
+// arrive as description-only stubs with no damage / acBonus / hardness / hp — equipping one shows NaN
+// AC / NaN shield or gives no Strike. When such an addition names a `baseItem` (a base weapon/armor/
+// shield slug in the Foundry pack), inherit the base's stat fields; also guarantee every one of these
+// items has a finite fallback so the sheet math can never see undefined. Existing (Foundry-derived)
+// items already carry their stats, so this only touches items still missing them.
+{
+  let n = 0;
+  for (const it of Object.values(db.items)) {
+    // Only touch additions that either declare a `baseItem` to inherit from, or are a weapon/armor/shield
+    // still missing its core stat field (a NaN-causing stub). Foundry-derived items already carry stats
+    // and have no baseItem, so they're left untouched.
+    const bs = it.baseItem ? baseItemBySlug[it.baseItem]?.system : undefined;
+    if (it.itemType === 'weapon') {
+      if (bs && !it.damage) {
+        const d = bs.damage;
+        if (d) it.damage = { dice: d.dice || 1, die: d.die || 'd4', type: d.damageType || 'untyped' };
+      }
+      if (bs) {
+        if (it.category === undefined) it.category = bs.category;
+        if (it.group === undefined || it.group === '') it.group = bs.group || '';
+      }
+      // Last-resort finite fallback so deriveStrike never sees a half-populated weapon.
+      if (!it.damage) it.damage = { dice: 1, die: 'd4', type: 'untyped' };
+      if (bs) n++;
+    } else if (it.itemType === 'armor') {
+      if (bs) {
+        if (it.acBonus === undefined || it.acBonus === null) it.acBonus = bs.acBonus ?? 0;
+        if (it.category === undefined) it.category = bs.category;
+        if (it.group === undefined || it.group === null) it.group = bs.group;
+        if (it.dexCap === undefined) it.dexCap = bs.dexCap;
+        if (it.checkPenalty === undefined) it.checkPenalty = bs.checkPenalty;
+        if (it.speedPenalty === undefined) it.speedPenalty = bs.speedPenalty;
+        if (it.strength === undefined) it.strength = bs.strength;
+        n++;
+      }
+      if (it.acBonus === undefined || it.acBonus === null) it.acBonus = 0;
+    } else if (it.itemType === 'shield') {
+      if (bs) {
+        if (it.acBonus === undefined || it.acBonus === null || it.acBonus === 0) it.acBonus = bs.acBonus ?? it.acBonus ?? 0;
+        if (!it.hardness) it.hardness = bs.hardness ?? 0;
+        if (!it.hp) it.hp = bs.hp?.max ?? 0;
+        if (it.brokenThreshold === undefined || it.brokenThreshold === null || it.brokenThreshold === 0)
+          it.brokenThreshold = bs.hp?.brokenThreshold || Math.floor((it.hp || 0) / 2);
+        n++;
+      }
+      if (it.acBonus === undefined || it.acBonus === null) it.acBonus = 0;
+      if (it.hardness === undefined || it.hardness === null) it.hardness = 0;
+      if (it.hp === undefined || it.hp === null) it.hp = 0;
+      if (it.brokenThreshold === undefined || it.brokenThreshold === null)
+        it.brokenThreshold = Math.floor((it.hp || 0) / 2);
+    }
+  }
+  if (n) console.log(`[import-core] backfilled base stats on ${n} added weapons/armor/shields`);
 }
 
 // Targeted corrections to inaccurate existing entries (see scripts/data/fixes.json).

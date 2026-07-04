@@ -39,6 +39,9 @@ describe('two-rank caster (magus / summoner)', () => {
     expect(twoRankCasterSlots(6)).toEqual({ 2: 2, 3: 2 });
     expect(twoRankCasterSlots(17)).toEqual({ 8: 2, 9: 1 });
     expect(twoRankCasterSlots(18)).toEqual({ 8: 2, 9: 2 });
+    // Rank 9 was unlocked at L17, so by L19 it must be full (2 slots) — it is NOT "just unlocked".
+    // (Regression: the old `level % 2` heuristic wrongly reset the capped top rank to 1 slot at L19.)
+    expect(twoRankCasterSlots(19)).toEqual({ 8: 2, 9: 2 });
     expect(twoRankCasterSlots(20)).toEqual({ 8: 2, 9: 2 });
     expect(twoRankCasterSlots(20)[10]).toBeUndefined();
   });
@@ -75,6 +78,13 @@ describe('casterSlots dispatch', () => {
     expect(casterSlots(5, 'two-rank')).toEqual(twoRankCasterSlots(5));
     expect(casterSlots(5, 'psychic')).toEqual(psychicSlots(5));
     expect(casterSlots(10, 'animist')).toEqual(animistPreparedSlots(10));
+  });
+  it('falls back to the FULL prepared table when the progression is undefined (no `progression` field)', () => {
+    // A shipped full prepared caster (cleric/druid/witch/wizard) carries no `progression` field, so
+    // build.ts passes `undefined` — the default param must yield the complete standard slot table with
+    // rank 1 present (not a partial table missing the low ranks).
+    expect(casterSlots(5, undefined)).toEqual({ 1: 3, 2: 3, 3: 2 });
+    expect(casterSlots(11, undefined)).toEqual({ 1: 3, 2: 3, 3: 3, 4: 3, 5: 3, 6: 2 });
   });
 });
 
