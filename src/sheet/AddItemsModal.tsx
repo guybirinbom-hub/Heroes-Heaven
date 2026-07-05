@@ -3,7 +3,7 @@ import type { Coins, ContentDatabase, Item } from '../rules/types';
 import { canAfford } from '../rules/play';
 import { formatPrice } from '../rules/wealth';
 import { FilterableSelect, descNodeOf } from './FilterableSelect';
-import { ITEM_SPEC } from './filterSpecs';
+import { ITEM_SPEC, SERVICE_MARK } from './filterSpecs';
 
 /** Browse the item catalog and Buy (deduct coins) or Give (free) items to the character. Services
  *  also appear here (searchable by name/description) but are REFERENCE-ONLY — they aren't inventory
@@ -33,7 +33,8 @@ export function AddItemsModal({
           name: s.name,
           level: s.level ?? 0,
           itemType: 'equipment',
-          traits: s.traits ?? [],
+          // Tag with the sentinel so itemCategories routes these to the "Services" chip.
+          traits: [...(s.traits ?? []), SERVICE_MARK],
           rarity: 'common',
           bulk: 0,
           price: undefined,

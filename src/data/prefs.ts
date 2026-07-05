@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { setConsumableColorOverride } from '../theme/theme-manager';
 
 /*
  * Device-global UI customization preferences — apply to every character on this device, persisted
@@ -31,6 +32,10 @@ export interface Prefs {
   showSlotBadges: boolean;
   /** Release tag (e.g. "v0.1.5") whose update banner the user dismissed — that version never re-nags. */
   dismissedUpdate?: string;
+  /** Override hex for the consumable inventory-card highlight. Absent = use the active theme's
+   *  recommended consumableColor (see src/theme/themes.ts). Drives the --app-consumable CSS variable
+   *  via theme-manager.setConsumableColorOverride. */
+  consumableColor?: string;
 }
 
 const STORAGE_KEY = 'pf2e-codex.prefs';
@@ -51,10 +56,12 @@ export function getPrefs(): Prefs {
   return prefs;
 }
 
-/** Apply the prefs that drive global CSS (the accent-scrollbar class on <html>). */
+/** Apply the prefs that drive global CSS (the accent-scrollbar class on <html>, the consumable-colour
+ *  override baked into --app-consumable by the theme manager). */
 function applyDomPrefs(): void {
   try {
     document.documentElement.classList.toggle('sb-accent', prefs.scrollbarAccent);
+    setConsumableColorOverride(prefs.consumableColor ?? null);
   } catch {
     /* no DOM — non-fatal */
   }

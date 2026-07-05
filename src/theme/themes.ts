@@ -16,6 +16,13 @@ export interface Theme {
   polarity: Polarity;
   /** Values for the color tokens in tokens.css. */
   tokens: Record<string, string>;
+  /**
+   * Recommended highlight colour for consumable inventory cards (the left accent border + faint tint).
+   * Picked per-theme to harmonise with the palette while reading clearly against the card surface and
+   * staying distinct from the accent (used for the invested/equipped highlight). A device-level user
+   * override (prefs.consumableColor) supersedes this when set.
+   */
+  consumableColor: string;
 }
 
 export const themes: Record<string, Theme> = {
@@ -23,6 +30,7 @@ export const themes: Record<string, Theme> = {
     id: 'midnight',
     name: 'Midnight',
     polarity: 'dark',
+    consumableColor: '#f0b429',
     tokens: {
       '--app-bg': '#14161f',
       '--app-surface': '#1c1f2b',
@@ -42,6 +50,7 @@ export const themes: Record<string, Theme> = {
     id: 'parchment',
     name: 'Parchment',
     polarity: 'light',
+    consumableColor: '#2f8f83',
     tokens: {
       '--app-bg': '#ece3d0',
       '--app-surface': '#f5eedd',
@@ -61,6 +70,7 @@ export const themes: Record<string, Theme> = {
     id: 'daylight',
     name: 'Daylight',
     polarity: 'light',
+    consumableColor: '#c2740c',
     tokens: {
       '--app-bg': '#f4f6fa',
       '--app-surface': '#ffffff',
@@ -80,6 +90,7 @@ export const themes: Record<string, Theme> = {
     id: 'nocturne',
     name: 'Nocturne',
     polarity: 'dark',
+    consumableColor: '#f0a53a',
     tokens: {
       '--app-bg': '#000000',
       '--app-surface': '#0c0e12',
@@ -99,6 +110,7 @@ export const themes: Record<string, Theme> = {
     id: 'ember',
     name: 'Ember',
     polarity: 'dark',
+    consumableColor: '#4ec9c0',
     tokens: {
       '--app-bg': '#1a1413',
       '--app-surface': '#241a18',
@@ -118,6 +130,7 @@ export const themes: Record<string, Theme> = {
     id: 'forest',
     name: 'Forest',
     polarity: 'dark',
+    consumableColor: '#e08a5a',
     tokens: {
       '--app-bg': '#0f150f',
       '--app-surface': '#18211a',
@@ -137,6 +150,7 @@ export const themes: Record<string, Theme> = {
     id: 'arcane',
     name: 'Arcane',
     polarity: 'dark',
+    consumableColor: '#f0b429',
     tokens: {
       '--app-bg': '#140f1f',
       '--app-surface': '#1d1630',
@@ -156,6 +170,7 @@ export const themes: Record<string, Theme> = {
     id: 'contrast',
     name: 'High contrast',
     polarity: 'dark',
+    consumableColor: '#00e5ff',
     tokens: {
       '--app-bg': '#000000',
       '--app-surface': '#0a0a0a',
@@ -175,6 +190,7 @@ export const themes: Record<string, Theme> = {
     id: 'slate',
     name: 'Slate',
     polarity: 'dark',
+    consumableColor: '#f0a832',
     tokens: {
       '--app-bg': '#0f1419',
       '--app-surface': '#171d26',
@@ -194,6 +210,7 @@ export const themes: Record<string, Theme> = {
     id: 'crimson',
     name: 'Crimson',
     polarity: 'dark',
+    consumableColor: '#37c0a8',
     tokens: {
       '--app-bg': '#160f12',
       '--app-surface': '#211519',
@@ -213,6 +230,7 @@ export const themes: Record<string, Theme> = {
     id: 'abyss',
     name: 'Abyss',
     polarity: 'dark',
+    consumableColor: '#f5b544',
     tokens: {
       '--app-bg': '#08131c',
       '--app-surface': '#0e1d2a',
@@ -232,6 +250,7 @@ export const themes: Record<string, Theme> = {
     id: 'royal',
     name: 'Royal',
     polarity: 'dark',
+    consumableColor: '#5ab0f0',
     tokens: {
       '--app-bg': '#0e1024',
       '--app-surface': '#181a35',
@@ -251,6 +270,7 @@ export const themes: Record<string, Theme> = {
     id: 'sage',
     name: 'Sage',
     polarity: 'light',
+    consumableColor: '#b06a1f',
     tokens: {
       '--app-bg': '#e8ede3',
       '--app-surface': '#f3f6ee',
@@ -270,6 +290,7 @@ export const themes: Record<string, Theme> = {
     id: 'mono',
     name: 'Mono',
     polarity: 'dark',
+    consumableColor: '#d99a2b',
     tokens: {
       '--app-bg': '#121212',
       '--app-surface': '#1b1b1b',

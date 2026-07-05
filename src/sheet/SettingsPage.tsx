@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { themeList } from '../theme/themes';
 import { styleList } from '../theme/styles';
 import { fontList } from '../theme/fonts';
-import { getAppearance, setAccent, setFont, setStyle, setTheme } from '../theme/theme-manager';
+import { getAppearance, setAccent, setFont, setStyle, setTheme, themeConsumableColor } from '../theme/theme-manager';
 import { bumpZoom, getZoom, resetZoom, subscribeZoom, ZOOM_MAX, ZOOM_MIN, ZOOM_STEP } from '../theme/zoom';
 import { loadRoster, wipeAllData } from '../data/storage';
 import { backupCharCount, backupFilename, createBackup, parseBackup, restoreBackup } from '../data/backup';
@@ -156,6 +156,10 @@ function AppearanceSection() {
   const [zoom, setZoomLocal] = useState(getZoom());
   useEffect(() => subscribeZoom(setZoomLocal), []);
   const isMobile = useIsMobile();
+  const prefs = usePrefs();
+  // Effective consumable-highlight colour: the user override if set, else the active theme's
+  // recommended default (which changes when the palette above changes).
+  const consumableColor = prefs.consumableColor ?? themeConsumableColor();
 
   return (
     <div className="settings-section">
@@ -238,6 +242,31 @@ function AppearanceSection() {
           />
         ))}
       </div>
+
+      <div className="menu-label">Consumables</div>
+      <div className="menu-row consumable-row">
+        <label className="color-field" title="Highlight colour for consumable inventory cards">
+          <input
+            type="color"
+            value={consumableColor}
+            aria-label="Consumable highlight colour"
+            onChange={(e) => setPref('consumableColor', e.target.value)}
+          />
+          <span>{prefs.consumableColor ? 'Custom colour' : 'Theme default'}</span>
+        </label>
+        <button
+          className={'chip' + (prefs.consumableColor === undefined ? ' active' : '')}
+          onClick={() => setPref('consumableColor', undefined)}
+          disabled={prefs.consumableColor === undefined}
+        >
+          Use theme default
+        </button>
+      </div>
+      <p className="settings-desc">
+        Consumables (potions, scrolls, elixirs, ammunition, and other expendables) are marked in your inventory with a
+        coloured left edge and a faint tint. Each palette recommends a colour that suits it; pick your own here to override
+        it, or reset to the theme default.
+      </p>
 
       <div className="menu-label">Zoom</div>
       <div className="menu-row zoom-row">

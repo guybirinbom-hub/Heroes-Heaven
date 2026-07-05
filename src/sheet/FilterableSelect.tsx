@@ -98,6 +98,9 @@ export function PickerRow({
 export type FilterField<T> =
   | { id: string; label: string; kind: 'text'; accessor: (t: T) => string; placeholder?: string }
   | { id: string; label: string; kind: 'chips'; options: { id: string; label: string }[]; accessor: (t: T) => string | string[]; mode?: 'any' | 'all' }
+  /** Multi-select chips with a runtime "match any (OR)" ↔ "match all (AND)" toggle. State is
+   *  `{ ids: string[]; all: boolean }`. Used by the damage-type facet. */
+  | { id: string; label: string; kind: 'chipsToggle'; options: { id: string; label: string }[]; accessor: (t: T) => string[] }
   | { id: string; label: string; kind: 'traits'; accessor: (t: T) => string[] }
   | { id: string; label: string; kind: 'range'; stops: SliderStop[]; magnitude: (t: T) => number }
   | { id: string; label: string; kind: 'castTime'; accessor: (t: T) => ActionCost | undefined };
@@ -146,6 +149,7 @@ function defaultState<T>(spec: FilterSpec<T>, eff: EffStops): FState {
   for (const f of spec.fields) {
     if (f.kind === 'text') s[f.id] = '';
     else if (f.kind === 'chips' || f.kind === 'traits' || f.kind === 'castTime') s[f.id] = [];
+    else if (f.kind === 'chipsToggle') s[f.id] = { ids: [], all: false };
     else if (f.kind === 'range') s[f.id] = [0, stopsOf(f, eff).length - 1];
   }
   return s;
@@ -165,6 +169,13 @@ function computePresence<T>(spec: FilterSpec<T>, items: T[]): Record<string, { s
       for (const it of items) {
         const raw = f.accessor(it);
         const vals = Array.isArray(raw) ? raw : [raw];
+        for (const o of f.options) if (vals.includes(o.id)) opts.add(o.id);
+      }
+      out[f.id] = { show: opts.size >= 1, opts };
+    } else if (f.kind === 'chipsToggle') {
+      const opts = new Set<string>();
+      for (const it of items) {
+        const vals = f.accessor(it);
         for (const o of f.options) if (vals.includes(o.id)) opts.add(o.id);
       }
       out[f.id] = { show: opts.size >= 1, opts };
@@ -202,8 +213,15 @@ function valueLabel<T>(f: FilterField<T>, v: unknown, eff: EffStops): string {
     const n = ((v as string[]) ?? []).length;
     return n ? `${n}` : '';
   }
+  if (f.kind === 'chipsToggle') {
+    const st = (v as ChipsToggleState) ?? { ids: [], all: false };
+    return st.ids.length ? `${st.ids.length} · ${st.all ? 'all' : 'any'}` : '';
+  }
   return '';
 }
+
+/** Runtime state of a `chipsToggle` field. */
+type ChipsToggleState = { ids: string[]; all: boolean };
 
 function isActive<T>(f: FilterField<T>, v: unknown, eff: EffStops): boolean {
   if (f.kind === 'text') return ((v as string) ?? '').trim() !== '';
@@ -211,6 +229,7 @@ function isActive<T>(f: FilterField<T>, v: unknown, eff: EffStops): boolean {
     const [lo, hi] = (v as [number, number]) ?? [0, 0];
     return lo !== 0 || hi !== stopsOf(f, eff).length - 1;
   }
+  if (f.kind === 'chipsToggle') return (((v as ChipsToggleState) ?? { ids: [] }).ids ?? []).length > 0;
   return Array.isArray(v) && v.length > 0;
 }
 
@@ -226,6 +245,12 @@ function fieldPass<T>(f: FilterField<T>, v: unknown, item: T, eff: EffStops): bo
       const raw = f.accessor(item);
       const vals = Array.isArray(raw) ? raw : [raw];
       return f.mode === 'all' ? sel.every((s) => vals.includes(s)) : sel.some((s) => vals.includes(s));
+    }
+    case 'chipsToggle': {
+      const st = (v as ChipsToggleState) ?? { ids: [], all: false };
+      if (st.ids.length === 0) return true;
+      const vals = f.accessor(item);
+      return st.all ? st.ids.every((s) => vals.includes(s)) : st.ids.some((s) => vals.includes(s));
     }
     case 'traits': {
       const sel = (v as string[]) ?? [];
@@ -304,6 +329,9 @@ export function FilterableSelect<T>({
 
   const set = (id: string, v: unknown) => setState((s) => ({ ...s, [id]: v }));
   const reset = () => setState(defaultState(spec, effStops));
+  // Reset one field to its default (per-facet "Reset", AoN-style).
+  const resetField = (f: FilterField<T>) =>
+    setState((s) => ({ ...s, [f.id]: defaultState({ fields: [f] }, effStops)[f.id] }));
 
   const presence = useMemo(() => computePresence(spec, items), [spec, items]);
   // The searchable text of each field's individual options (chip labels, the trait vocabulary, the
@@ -313,7 +341,7 @@ export function FilterableSelect<T>({
     const out: Record<string, string[]> = {};
     for (const f of spec.fields) {
       const set = new Set<string>();
-      if (f.kind === 'chips') {
+      if (f.kind === 'chips' || f.kind === 'chipsToggle') {
         for (const o of f.options)
           if (presence[f.id].opts.has(o.id)) {
             set.add(o.label.toLowerCase());
@@ -409,11 +437,17 @@ export function FilterableSelect<T>({
               <div className="fsel-fields">
                 {shownFields.map((f) => {
                   const vl = valueLabel(f, state[f.id], effStops);
+                  const active = isActive(f, state[f.id], effStops);
                   return (
                     <div className="fsel-sec" key={f.id}>
                       <div className="fsel-sec-label">
                         <span>{f.label}</span>
                         {vl && <span className="fsel-sec-val">{vl}</span>}
+                        {active && (
+                          <button type="button" className="fsel-sec-reset" onClick={() => resetField(f)} title={`Reset ${f.label}`}>
+                            Reset
+                          </button>
+                        )}
                       </div>
                       <FieldControl
                         field={f}
@@ -530,6 +564,46 @@ function FieldControl<T>({
             {o.label}
           </button>
         ))}
+      </div>
+    );
+  }
+
+  if (field.kind === 'chipsToggle') {
+    const st = (value as ChipsToggleState) ?? { ids: [], all: false };
+    const toggle = (id: string) =>
+      onChange({ ...st, ids: st.ids.includes(id) ? st.ids.filter((x) => x !== id) : [...st.ids, id] });
+    const opts = present ? field.options.filter((o) => present.has(o.id)) : field.options;
+    return (
+      <div className="fsel-chipstoggle">
+        <div className="fsel-anyall" role="group" aria-label="Match mode">
+          <button
+            type="button"
+            className={'fsel-anyall-btn' + (!st.all ? ' on' : '')}
+            onClick={() => onChange({ ...st, all: false })}
+            title="Match items that have ANY of the selected types"
+          >
+            Any (OR)
+          </button>
+          <button
+            type="button"
+            className={'fsel-anyall-btn' + (st.all ? ' on' : '')}
+            onClick={() => onChange({ ...st, all: true })}
+            title="Match items that have ALL of the selected types"
+          >
+            All (AND)
+          </button>
+        </div>
+        <div className="fsel-chips">
+          {opts.map((o) => (
+            <button
+              key={o.id}
+              className={'fsel-chip' + (st.ids.includes(o.id) ? ' on' : '') + (chipMatch(o.label, o.id) ? ' match' : '')}
+              onClick={() => toggle(o.id)}
+            >
+              {o.label}
+            </button>
+          ))}
+        </div>
       </div>
     );
   }

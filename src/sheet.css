@@ -2035,6 +2035,38 @@ button.strike-name:hover {
   outline-offset: 2px;
 }
 
+/* Consumable-colour picker (Appearance): a native colour input fronted by a labelled swatch. */
+.consumable-row {
+  align-items: center;
+  gap: 10px;
+}
+.color-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--app-text-dim);
+}
+.color-field input[type='color'] {
+  /* Style the native colour input itself as the swatch (strip the default padding/border chrome). */
+  width: 30px;
+  height: 24px;
+  padding: 0;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: 6px;
+  background: none;
+  cursor: pointer;
+  flex: none;
+}
+.color-field input[type='color']::-webkit-color-swatch-wrapper {
+  padding: 2px;
+}
+.color-field input[type='color']::-webkit-color-swatch {
+  border: none;
+  border-radius: 4px;
+}
+
 /* ---- Details: origin ---- */
 .origin-wrap {
   display: flex;
@@ -3874,6 +3906,24 @@ button.strike-name:hover {
 }
 .inv-card.invested {
   border-color: var(--app-accent);
+}
+/* Consumables (potions, scrolls, elixirs, ammunition, …) get a left accent bar + faint tint in the
+   theme's recommended consumable colour (or the user's override), so expendables read at a glance and
+   stay distinct from the accent used for invested/equipped highlights. --app-consumable is set by the
+   theme manager (per-theme default, or prefs.consumableColor override). */
+.inv-card.consumable {
+  border-left: 3px solid var(--app-consumable);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--app-consumable) 10%, var(--app-surface)),
+    var(--app-surface) 46%
+  );
+}
+/* Keep the consumable bar even when the card is also an invested item (accent border on the other 3
+   sides), and when hovered (hover repaints border-color to the accent — restore the left bar). */
+.inv-card.consumable.invested,
+.inv-card.consumable.clickable:hover {
+  border-left-color: var(--app-consumable);
 }
 .inv-card.unknown {
   border-style: dashed;
@@ -6983,6 +7033,35 @@ button.strike-name:hover {
   outline: none;
 }
 .fsel-text:focus { border-color: var(--app-accent); }
+/* Per-facet "Reset" — a subtle text button shown in a section header once that facet is active. */
+.fsel-sec-reset {
+  margin-left: auto;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--app-text-dim);
+  background: transparent;
+  border: none;
+  padding: 0 2px;
+  cursor: pointer;
+}
+.fsel-sec-reset:hover { color: var(--app-accent); text-decoration: underline; }
+
+/* Damage-type facet: an Any(OR)/All(AND) segmented toggle above its chips. */
+.fsel-chipstoggle { display: flex; flex-direction: column; gap: 7px; }
+.fsel-anyall { display: inline-flex; align-self: flex-start; border: var(--app-bw) solid var(--app-border); border-radius: 999px; overflow: hidden; }
+.fsel-anyall-btn {
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 3px 11px;
+  background: transparent;
+  color: var(--app-text-dim);
+  border: none;
+  cursor: pointer;
+}
+.fsel-anyall-btn.on { background: var(--app-accent); color: #fff; }
+
 .fsel-chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .fsel-chip {
   display: inline-flex;

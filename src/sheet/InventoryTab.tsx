@@ -100,6 +100,13 @@ function keepsInlineQuantity(item: Item): boolean {
   return false;
 }
 
+/** A consumable for the purposes of the inventory colour-highlight: itemType 'consumable' (potions,
+ *  oils, scrolls, elixirs, …) OR anything carrying the 'consumable' trait (ammunition, etc.). Matches
+ *  the consumable arm of keepsInlineQuantity so the highlighted items are exactly the expendables. */
+function isConsumable(item: Item): boolean {
+  return item.itemType === 'consumable' || (item.traits ?? []).includes('consumable');
+}
+
 /** PF2e caps a character at 10 invested magic items. */
 const INVESTED_LIMIT = 10;
 
@@ -163,6 +170,7 @@ function ItemCard({
       className={
         'inv-card' +
         (inv.invested ? ' invested' : '') +
+        (isConsumable(item) ? ' consumable' : '') +
         ' clickable' +
         (onPlay ? ' draggable' : '') +
         (dragging ? ' inv-dragging' : '') +

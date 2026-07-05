@@ -124,6 +124,28 @@ export const PRICE_STOPS: SliderStop[] = [
   { label: '∞', value: Infinity },
 ];
 
+/** Weapon damage-die stops (die faces: d4..d12). Low stop 1 lets "no die" (dice-less) items pass. */
+export const DAMAGE_DIE_STOPS: SliderStop[] = [
+  { label: '1', value: 1 },
+  { label: 'd4', value: 4 },
+  { label: 'd6', value: 6 },
+  { label: 'd8', value: 8 },
+  { label: 'd10', value: 10 },
+  { label: 'd12', value: 12 },
+];
+
+/** Weapon range-increment stops (feet). 0 = melee (no increment). */
+export const WEAPON_RANGE_STOPS: SliderStop[] = [
+  { label: 'Melee', value: 0 },
+  { label: '10 ft', value: 10 },
+  { label: '20 ft', value: 20 },
+  { label: '30 ft', value: 30 },
+  { label: '60 ft', value: 60 },
+  { label: '100 ft', value: 100 },
+  { label: '120 ft', value: 120 },
+  { label: '240 ft', value: 240 },
+];
+
 /** Item bulk stops. 0 = negligible ("—"), 0.1 = Light ("L"). */
 export const BULK_STOPS: SliderStop[] = [
   { label: '—', value: 0 },

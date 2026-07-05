@@ -23,6 +23,14 @@ const DEFAULT: AppearanceState = { themeId: 'midnight', styleId: 'modern', fontI
 
 let state: AppearanceState = { ...DEFAULT };
 
+/**
+ * Device-level override for the consumable-highlight colour, or null to use the active theme's
+ * recommended value. Kept here (not in AppearanceState) because it's a device pref persisted by the
+ * prefs module — prefs pushes it in via setConsumableColorOverride so applyAppearance can bake the
+ * effective colour into the --app-consumable CSS variable alongside the rest of the palette.
+ */
+let consumableOverride: string | null = null;
+
 function loadState(): AppearanceState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -107,10 +115,28 @@ export function applyAppearance(): void {
     '--app-focus': accent,
   });
 
+  // Consumable-card highlight: device override wins, else the theme's recommended colour.
+  setVars({ '--app-consumable': consumableOverride ?? theme.consumableColor });
+
   const root = document.documentElement;
   root.dataset.theme = theme.id;
   root.dataset.polarity = theme.polarity;
   root.style.colorScheme = theme.polarity;
+}
+
+/** The active theme's recommended consumable-highlight colour (ignores any user override). */
+export function themeConsumableColor(): string {
+  const theme = themes[state.themeId] ?? themes[DEFAULT.themeId];
+  return theme.consumableColor;
+}
+
+/**
+ * Set (hex) or clear (null) the device-level consumable-colour override and re-apply. Called by the
+ * prefs module whenever prefs.consumableColor changes so the CSS variable stays in sync.
+ */
+export function setConsumableColorOverride(color: string | null): void {
+  consumableOverride = color;
+  applyAppearance();
 }
 
 /** Load persisted state and apply it. Call once before first paint. */
