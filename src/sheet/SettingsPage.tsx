@@ -244,28 +244,38 @@ function AppearanceSection() {
       </div>
 
       <div className="menu-label">Consumables</div>
-      <div className="menu-row consumable-row">
-        <label className="color-field" title="Highlight colour for consumable inventory cards">
-          <input
-            type="color"
-            value={consumableColor}
-            aria-label="Consumable highlight colour"
-            onChange={(e) => setPref('consumableColor', e.target.value)}
-          />
-          <span>{prefs.consumableColor ? 'Custom colour' : 'Theme default'}</span>
-        </label>
+      <div className="menu-row">
         <button
-          className={'chip' + (prefs.consumableColor === undefined ? ' active' : '')}
-          onClick={() => setPref('consumableColor', undefined)}
-          disabled={prefs.consumableColor === undefined}
+          className={'chip' + (prefs.consumableHighlight ? ' active' : '')}
+          onClick={() => setPref('consumableHighlight', !prefs.consumableHighlight)}
         >
-          Use theme default
+          Colour-code consumables — {prefs.consumableHighlight ? 'on' : 'off'}
         </button>
       </div>
+      {prefs.consumableHighlight && (
+        <div className="menu-row consumable-row">
+          <label className="color-field" title="Highlight colour for consumable inventory cards">
+            <input
+              type="color"
+              value={consumableColor}
+              aria-label="Consumable highlight colour"
+              onChange={(e) => setPref('consumableColor', e.target.value)}
+            />
+            <span>{prefs.consumableColor ? 'Custom colour' : 'Theme default'}</span>
+          </label>
+          <button
+            className={'chip' + (prefs.consumableColor === undefined ? ' active' : '')}
+            onClick={() => setPref('consumableColor', undefined)}
+            disabled={prefs.consumableColor === undefined}
+          >
+            Use theme default
+          </button>
+        </div>
+      )}
       <p className="settings-desc">
         Consumables (potions, scrolls, elixirs, ammunition, and other expendables) are marked in your inventory with a
-        coloured left edge and a faint tint. Each palette recommends a colour that suits it; pick your own here to override
-        it, or reset to the theme default.
+        coloured left edge and a faint tint. Turn this off to render them like ordinary items; while it&rsquo;s on, each
+        palette recommends a colour that suits it — pick your own here to override it, or reset to the theme default.
       </p>
 
       <div className="menu-label">Zoom</div>

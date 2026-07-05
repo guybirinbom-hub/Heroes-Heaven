@@ -12,7 +12,12 @@ import { useEffect } from 'react';
  */
 // 'info-modal' = the description popup: it navigates (each linked term pushes a new node), so it must
 // re-fit each node's text rather than stay pinned at its opening height.
-const SELF_SIZED = ['fsel', 'ref-search', 'info-modal'];
+// 'settings-modal' = the Settings dialog: it already has an explicit `height: 70vh` with a flex body
+// that scrolls internally (.settings-body/.settings-pane). Pinning it to a `offsetHeight` snapshot
+// read the instant it's inserted — before the icon webfont / flex layout have settled on the very
+// first open of a session — freezes it at a wrong ("baggy") height that later opens don't hit. Let
+// its CSS height stand.
+const SELF_SIZED = ['fsel', 'ref-search', 'info-modal', 'settings-modal'];
 
 export function PopupSizeLock() {
   useEffect(() => {

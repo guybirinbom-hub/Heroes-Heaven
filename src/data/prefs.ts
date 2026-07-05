@@ -32,6 +32,9 @@ export interface Prefs {
   showSlotBadges: boolean;
   /** Release tag (e.g. "v0.1.5") whose update banner the user dismissed — that version never re-nags. */
   dismissedUpdate?: string;
+  /** Colour-code consumable inventory cards (coloured left edge + faint tint). Default on. When off,
+   *  consumables render like ordinary items and the colour picker below is irrelevant (hidden). */
+  consumableHighlight: boolean;
   /** Override hex for the consumable inventory-card highlight. Absent = use the active theme's
    *  recommended consumableColor (see src/theme/themes.ts). Drives the --app-consumable CSS variable
    *  via theme-manager.setConsumableColorOverride. */
@@ -39,7 +42,7 @@ export interface Prefs {
 }
 
 const STORAGE_KEY = 'pf2e-codex.prefs';
-const DEFAULTS: Prefs = { hpCommandEntry: false, compactActions: true, popupSizeSync: false, showNicheSources: false, pinnedModes: [], scrollbarAccent: false, showSlotBadges: true };
+const DEFAULTS: Prefs = { hpCommandEntry: false, compactActions: true, popupSizeSync: false, showNicheSources: false, pinnedModes: [], scrollbarAccent: false, showSlotBadges: true, consumableHighlight: true };
 
 let prefs: Prefs = { ...DEFAULTS };
 const listeners = new Set<(p: Prefs) => void>();

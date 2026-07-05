@@ -18,6 +18,7 @@ export function PopupSizeController() {
     const attach = (el: HTMLElement) => {
       if (observed.has(el)) return;
       if (el.classList.contains('info-modal')) return; // description popup re-fits each node — never size-sync it
+      if (el.classList.contains('settings-modal')) return; // Settings keeps its deliberate 70vh; don't size-sync it
       observed.add(el);
       const saved = getPrefs().popupSize;
       if (saved) {

@@ -27,6 +27,7 @@ import { confirmDialog } from './confirm';
 import { ActionGlyph, isActionCost } from './widgets';
 import { AddItemsModal } from './AddItemsModal';
 import { ItemEditorModal } from './ItemEditorModal';
+import { usePrefs } from '../data/prefs';
 
 const TYPE_ICON: Record<string, string> = {
   weapon: 'ti-sword',
@@ -160,6 +161,7 @@ function ItemCard({
   onAttachLeave?: () => void;
   onAttachDrop?: (srcId: string, hostId: string) => void;
 }) {
+  const { consumableHighlight } = usePrefs();
   const badge = stateBadge(inv);
   const equip = equipControl(item);
   const counters = rationsDayTracking && item.id === 'rations' ? [] : itemCounters(item, inv);
@@ -175,7 +177,7 @@ function ItemCard({
       className={
         'inv-card' +
         (inv.invested ? ' invested' : '') +
-        (isConsumable(item) ? ' consumable' : '') +
+        (consumableHighlight && isConsumable(item) ? ' consumable' : '') +
         ' clickable' +
         (onPlay ? ' draggable' : '') +
         (dragging ? ' inv-dragging' : '') +
