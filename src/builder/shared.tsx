@@ -1033,9 +1033,124 @@ function AbpPotencyEditor({ build, actions }: { build: BuildState; actions: Buil
   );
 }
 
-/** The optional-variant-rules toggles (Ancestry Paragon, ABP, Dual Class, …) + their sub-pickers
- *  (second class, ABP skill potency / apex). Lives on the builder's Setup page. */
-export function VariantRulesCard({ build, actions, content }: EditorProps) {
+/** Per-character SELECTIONS that a Setup toggle unlocks, made here on the Level 0 (character-creation)
+ *  page rather than in Setup: the Dual Class second class/subclass, ABP skill potency + attribute apex,
+ *  and the Mythic Calling. The on/off toggles stay in Setup (Variant Rules / Campaign cards); this
+ *  renders only when at least one such toggle is on. Reads/writes the same build state as before, so a
+ *  character configured under the old (Setup-side) UI shows its choice unchanged. */
+export function SetupUnlockedChoices({ build, actions, content }: EditorProps) {
+  const dualClass = !!build.variantRules?.dualClass;
+  const abp = !!build.variantRules?.abp;
+  const mythic = !!build.mythicEnabled;
+  if (!dualClass && !abp && !mythic) return null;
+  const cls2 = build.classId2 ? content.classes[build.classId2] : undefined;
+  const calling = build.mythicCalling ? content.classFeatures[build.mythicCalling] : undefined;
+  return (
+    <>
+      {dualClass && (
+        <SetupCard icon="ti-versions" label="Dual Class — second class">
+          <PopupSelect
+            title="Second class"
+            value={build.classId2 ?? ''}
+            onChange={(v) => actions.setSecondClass(v || null)}
+            clearLabel="Clear — no second class"
+            options={Object.values(content.classes)
+              .filter((cl) => cl.id !== build.classId)
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((cl) => ({ value: cl.id, label: cl.name, description: cl.description, descRefs: cl.descRefs }))}
+          />
+          {cls2?.description && <ChoiceDetails name={cls2.name} flavor={cls2.description} descRefs={cls2.descRefs} />}
+          {cls2?.subclass && (
+            <PopupSelect
+              title={cls2.subclass.name}
+              value={build.subclassId2 ?? ''}
+              onChange={(v) => actions.patch({ subclassId2: v || null })}
+              clearLabel="Clear"
+              options={cls2.subclass.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs }))}
+            />
+          )}
+        </SetupCard>
+      )}
+      {abp && (
+        <SetupCard icon="ti-star" label="Automatic Bonus Progression">
+          <AbpPotencyEditor build={build} actions={actions} />
+          {build.level >= 17 && (
+            <SubCard icon="ti-rosette" label="Attribute apex (level 17)">
+              <AbilitySelect value={build.abpApex ?? null} options={ABILITIES} onChange={(v) => actions.setAbpApex(v)} />
+            </SubCard>
+          )}
+        </SetupCard>
+      )}
+      {mythic && (
+        <SetupCard icon="ti-flame" label="Mythic Calling">
+          <PopupSelect
+            title="Mythic Calling"
+            value={build.mythicCalling ?? ''}
+            onChange={(v) => actions.patch({ mythicCalling: v || null })}
+            clearLabel="Clear"
+            options={Object.values(content.classFeatures)
+              .filter((f) => (f.traits ?? []).includes('calling'))
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((f) => ({ value: f.id, label: f.name, description: f.description, descRefs: f.descRefs }))}
+          />
+          {calling?.description && <ChoiceDetails name={calling.name} flavor={calling.description} descRefs={calling.descRefs} />}
+          <p className="setup-hint">You gain a mythic feat slot at every even level (2–20), fillable with mythic feats.</p>
+        </SetupCard>
+      )}
+    </>
+  );
+}
+
+/** A small "i" info affordance that opens a pinnable description popup for a Setup rule/toggle.
+ *  Sits next to a toggle chip; reuses the app's DescriptionModal (so the popup gets the pin star). */
+export function RuleInfo({ title, description }: { title: string; description: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button
+        type="button"
+        className="rule-info"
+        aria-label={`About ${title}`}
+        title={`About ${title}`}
+        onClick={() => setOpen(true)}
+      >
+        <i className="ti ti-info-circle" aria-hidden="true" />
+      </button>
+      {open && <DescriptionModal root={{ title, description, key: 'setupRules' }} onClose={() => setOpen(false)} />}
+    </>
+  );
+}
+
+/** A toggle chip paired with its "i" info button, wrapped so the pair wraps together. */
+function ToggleWithInfo({
+  label,
+  description,
+  on,
+  onToggle,
+  className,
+  children,
+}: {
+  label: string;
+  description: string;
+  on: boolean;
+  onToggle: () => void;
+  className?: string;
+  children?: ReactNode;
+}) {
+  return (
+    <span className="rule-toggle">
+      <button type="button" className={'inv-toggle' + (className ? ' ' + className : '') + (on ? ' on' : '')} onClick={onToggle}>
+        {children ?? label}
+      </button>
+      <RuleInfo title={label} description={description} />
+    </span>
+  );
+}
+
+/** The optional-variant-rules toggles (Ancestry Paragon, ABP, Dual Class, …). Lives on the builder's
+ *  Setup page. Their dependent per-character SELECTIONS (the second class/subclass, ABP skill potency
+ *  / apex) are made on the Level 0 page — see SetupUnlockedChoices — so only the on/off toggle is here. */
+export function VariantRulesCard({ build, actions }: EditorProps) {
   return (
     <SetupCard icon="ti-adjustments-alt" label="Variant rules">
       <div className="spr-chips">
@@ -1049,57 +1164,23 @@ export function VariantRulesCard({ build, actions, content }: EditorProps) {
             ['dualClass', 'Dual Class', 'Gain the proficiencies, Hit Points, class features and class feats of a second class.'],
           ] as const
         ).map(([flag, label, desc]) => (
-          <button
+          <ToggleWithInfo
             key={flag}
-            type="button"
-            title={desc}
-            className={'inv-toggle' + (build.variantRules?.[flag] ? ' on' : '')}
-            onClick={() => actions.patch({ variantRules: { ...build.variantRules, [flag]: !build.variantRules?.[flag] } })}
-          >
-            {label}
-          </button>
+            label={label}
+            description={desc}
+            on={!!build.variantRules?.[flag]}
+            onToggle={() => actions.patch({ variantRules: { ...build.variantRules, [flag]: !build.variantRules?.[flag] } })}
+          />
         ))}
       </div>
-      {build.variantRules?.dualClass && (
-        <SubCard icon="ti-versions" label="Second class">
-          <PopupSelect
-            title="Second class"
-            value={build.classId2 ?? ''}
-            onChange={(v) => actions.setSecondClass(v || null)}
-            clearLabel="Clear — no second class"
-            options={Object.values(content.classes)
-              .filter((cl) => cl.id !== build.classId)
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .map((cl) => ({ value: cl.id, label: cl.name, description: cl.description, descRefs: cl.descRefs }))}
-          />
-          {(() => {
-            const cl = build.classId2 ? content.classes[build.classId2] : undefined;
-            return cl?.description ? <ChoiceDetails name={cl.name} flavor={cl.description} descRefs={cl.descRefs} /> : null;
-          })()}
-          {build.classId2 && content.classes[build.classId2]?.subclass && (
-            <PopupSelect
-              title={content.classes[build.classId2]!.subclass!.name}
-              value={build.subclassId2 ?? ''}
-              onChange={(v) => actions.patch({ subclassId2: v || null })}
-              clearLabel="Clear"
-              options={content.classes[build.classId2]!.subclass!.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs }))}
-            />
-          )}
-        </SubCard>
-      )}
-      {build.variantRules?.abp && <AbpPotencyEditor build={build} actions={actions} />}
-      {build.variantRules?.abp && build.level >= 17 && (
-        <SubCard icon="ti-rosette" label="Attribute apex (level 17)">
-          <AbilitySelect value={build.abpApex ?? null} options={ABILITIES} onChange={(v) => actions.setAbpApex(v)} />
-        </SubCard>
-      )}
     </SetupCard>
   );
 }
 
-/** Campaign content toggles (Mythic, Kingmaker) — top-level build flags that show/hide their content. */
-export function CampaignOptionsCard({ build, actions, content }: EditorProps) {
-  const calling = build.mythicCalling ? content.classFeatures[build.mythicCalling] : undefined;
+/** Campaign content toggles (Mythic, Kingmaker) — top-level build flags that show/hide their content.
+ *  The dependent Mythic Calling SELECTION is made on the Level 0 page (see SetupUnlockedChoices); only
+ *  the on/off toggle lives here. */
+export function CampaignOptionsCard({ build, actions }: EditorProps) {
   return (
     <SetupCard icon="ti-flag" label="Campaign">
       <div className="spr-chips">
@@ -1109,33 +1190,15 @@ export function CampaignOptionsCard({ build, actions, content }: EditorProps) {
             ['kingmakerEnabled', 'Kingmaker', 'Show the Kingmaker Adventure Path content — its kingdom actions and conditions.'],
           ] as const
         ).map(([flag, label, desc]) => (
-          <button
+          <ToggleWithInfo
             key={flag}
-            type="button"
-            title={desc}
-            className={'inv-toggle' + (build[flag] ? ' on' : '')}
-            onClick={() => actions.patch({ [flag]: !build[flag] })}
-          >
-            {label}
-          </button>
+            label={label}
+            description={desc}
+            on={!!build[flag]}
+            onToggle={() => actions.patch({ [flag]: !build[flag] })}
+          />
         ))}
       </div>
-      {build.mythicEnabled && (
-        <SubCard icon="ti-flame" label="Mythic Calling">
-          <PopupSelect
-            title="Mythic Calling"
-            value={build.mythicCalling ?? ''}
-            onChange={(v) => actions.patch({ mythicCalling: v || null })}
-            clearLabel="Clear"
-            options={Object.values(content.classFeatures)
-              .filter((f) => (f.traits ?? []).includes('calling'))
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .map((f) => ({ value: f.id, label: f.name, description: f.description, descRefs: f.descRefs }))}
-          />
-          {calling?.description && <ChoiceDetails name={calling.name} flavor={calling.description} descRefs={calling.descRefs} />}
-          <p className="setup-hint">You gain a mythic feat slot at every even level (2–20), fillable with mythic feats.</p>
-        </SubCard>
-      )}
     </SetupCard>
   );
 }
@@ -1604,62 +1667,53 @@ export function OptionsCard({ build, actions }: EditorProps) {
   return (
     <SetupCard icon="ti-settings" label="Options">
       <div className="spr-chips">
-        <button
-          type="button"
-          title="Replace your ancestry's listed attribute boosts AND flaws with two free attribute boosts."
-          className={'inv-toggle' + (opts.alternateAncestryBoosts ? ' on' : '')}
-          onClick={() => set({ alternateAncestryBoosts: !opts.alternateAncestryBoosts })}
-        >
-          Alternate Ancestry Boosts
-        </button>
-        <button
-          type="button"
-          title="Disable the negative effects of carrying too much Bulk — no encumbered/over-limit warnings."
-          className={'inv-toggle' + (opts.ignoreBulk ? ' on' : '')}
-          onClick={() => set({ ignoreBulk: !opts.ignoreBulk })}
-        >
-          Ignore Bulk Limit
-        </button>
-        <button
-          type="button"
-          title="Take an additional attribute flaw (regardless of your ancestry). Pick which attribute at level 0."
-          className={'inv-toggle' + (opts.voluntaryFlaw ? ' on' : '')}
-          onClick={() => set({ voluntaryFlaw: !opts.voluntaryFlaw })}
-        >
-          Voluntary Flaw
-        </button>
-        <button
-          type="button"
-          title="Turn the dice roller on or off. When off, its button (and per-stat roll triggers) is hidden everywhere on the sheet."
-          className={'inv-toggle' + (opts.diceRollerOff === false ? ' on' : '')}
-          onClick={() => set({ diceRollerOff: opts.diceRollerOff === false })}
+        <ToggleWithInfo
+          label="Alternate Ancestry Boosts"
+          description="Replace your ancestry's listed attribute boosts AND flaws with two free attribute boosts (of your choice). A GM Core option for players who want their ancestry to impose no attribute penalty and full flexibility."
+          on={!!opts.alternateAncestryBoosts}
+          onToggle={() => set({ alternateAncestryBoosts: !opts.alternateAncestryBoosts })}
+        />
+        <ToggleWithInfo
+          label="Ignore Bulk Limit"
+          description="Disable the negative effects of carrying too much Bulk — no encumbered or over-limit warnings. A convenience option for tables that don't track encumbrance."
+          on={!!opts.ignoreBulk}
+          onToggle={() => set({ ignoreBulk: !opts.ignoreBulk })}
+        />
+        <ToggleWithInfo
+          label="Voluntary Flaw"
+          description="Take an additional attribute flaw beyond your ancestry's (regardless of your ancestry) to gain no mechanical benefit but reflect your character's weakness. You pick which attribute takes the extra flaw at level 0."
+          on={!!opts.voluntaryFlaw}
+          onToggle={() => set({ voluntaryFlaw: !opts.voluntaryFlaw })}
+        />
+        <ToggleWithInfo
+          label="Dice roller"
+          description="Turn the built-in dice roller on or off. When off, its button (and per-stat roll triggers) is hidden everywhere on the sheet — useful if you roll physical dice or use another roller."
+          on={opts.diceRollerOff === false}
+          onToggle={() => set({ diceRollerOff: opts.diceRollerOff === false })}
         >
           Dice roller {opts.diceRollerOff === false ? 'on' : 'off'}
-        </button>
-        <button
-          type="button"
-          title="Track rations day-by-day yourself (via quantity) instead of the built-in 7-day counter. When on, the Rations item shows no days counter."
-          className={'inv-toggle' + (opts.rationsDayTracking ? ' on' : '')}
-          onClick={() => set({ rationsDayTracking: !opts.rationsDayTracking })}
-        >
-          Individual day tracking of rations
-        </button>
-        <button
-          type="button"
-          title="Build a fully custom background of your own — pick its trained skills, lore, skill feat, and attribute boosts — instead of choosing a published one."
-          className={'inv-toggle' + (opts.deepBackground ? ' on' : '')}
-          onClick={() => set({ deepBackground: !opts.deepBackground })}
-        >
-          Deep background
-        </button>
-        <button
-          type="button"
-          title="Reveal the Overrides section — creative, deliberate rule-breaking for specific cases (take feats you don't qualify for, grant or remove feats/features, edit attributes/proficiencies, and more)."
-          className={'inv-toggle ovr-opt' + (opts.overridesEnabled ? ' on' : '')}
-          onClick={() => set({ overridesEnabled: !opts.overridesEnabled })}
+        </ToggleWithInfo>
+        <ToggleWithInfo
+          label="Individual day tracking of rations"
+          description="Track rations day-by-day yourself (via item quantity) instead of the built-in 7-day counter. When on, the Rations item shows no days counter."
+          on={!!opts.rationsDayTracking}
+          onToggle={() => set({ rationsDayTracking: !opts.rationsDayTracking })}
+        />
+        <ToggleWithInfo
+          label="Deep background"
+          description="Build a fully custom background of your own — pick its trained skills, lore, skill feat, and attribute boosts — instead of choosing a published one."
+          on={!!opts.deepBackground}
+          onToggle={() => set({ deepBackground: !opts.deepBackground })}
+        />
+        <ToggleWithInfo
+          label="Overrides"
+          description="Reveal the Overrides section — creative, deliberate rule-breaking for specific cases: take feats you don't qualify for, grant or remove feats and features, edit attributes and proficiencies, and more."
+          on={!!opts.overridesEnabled}
+          onToggle={() => set({ overridesEnabled: !opts.overridesEnabled })}
+          className="ovr-opt"
         >
           <i className="ti ti-wand" aria-hidden="true" /> Overrides
-        </button>
+        </ToggleWithInfo>
       </div>
     </SetupCard>
   );

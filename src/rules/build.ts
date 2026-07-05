@@ -45,6 +45,7 @@ import type {
   GrantedStrike,
   WeaponCategory,
   WeaponRunes,
+  PinnedDesc,
 } from './types';
 import type { SourceInfo } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
@@ -70,6 +71,9 @@ export interface BuildState {
   subclassId: string | null;
   /** Optional variant rules (Ancestry Paragon, ABP, Dual Class, …) toggled at setup. */
   variantRules?: VariantRules;
+  /** Favorited description popups starred in the builder (e.g. from the Setup rule "i" icons).
+   *  Carried onto the built Character so they appear in the sheet's Main-tab Pinned section. */
+  pinnedDescs?: PinnedDesc[];
   /** Per-character convenience/house options (alternate ancestry boosts, voluntary flaw, ignore bulk, dice roller). */
   options?: CharacterOptions;
   /** Creative "Overrides" — deliberate per-case rule-breaks (allowed-ineligible feats, bonus/removed feats). */
@@ -2026,6 +2030,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(classChoices.length ? { classChoices } : {}),
     ...(build.variantRules ? { variantRules: build.variantRules } : {}),
     ...(build.options ? { options: build.options } : {}),
+    ...(build.pinnedDescs && build.pinnedDescs.length ? { pinnedDescs: build.pinnedDescs } : {}),
     ...(build.overrides ? { overrides: build.overrides } : {}),
     ...(build.enabledSources ? { enabledSources: build.enabledSources } : {}),
     ...(build.mythicEnabled ? { mythicEnabled: true } : {}),
@@ -2150,6 +2155,7 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   b.classId = c.classId;
   b.subclassId = c.subclassId ?? null;
   if (c.variantRules) b.variantRules = { ...c.variantRules };
+  if (c.pinnedDescs?.length) b.pinnedDescs = c.pinnedDescs.map((d) => ({ ...d }));
   if (c.options) b.options = { ...c.options };
   if (c.overrides) b.overrides = JSON.parse(JSON.stringify(c.overrides)) as BuildOverrides;
   if (c.enabledSources) b.enabledSources = [...c.enabledSources];

@@ -933,6 +933,7 @@
 }
 .picker-list {
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 6px;
   display: flex;
   flex-direction: column;
@@ -1009,6 +1010,28 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+}
+/* A toggle chip paired with its "i" info button; wraps together as a unit. */
+.rule-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.rule-info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--app-text-faint);
+  cursor: pointer;
+  padding: 2px;
+  font-size: 15px;
+  line-height: 1;
+  border-radius: 999px;
+}
+.rule-info:hover {
+  color: var(--app-accent);
 }
 .spr-chip {
   display: inline-flex;

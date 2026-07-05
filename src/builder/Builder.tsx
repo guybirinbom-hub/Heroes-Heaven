@@ -27,11 +27,13 @@ import { activeCasterArchetype, archetypeSlots } from '../rules/casterArchetypes
 import { FEAT_GRANTS } from '../rules/featGrants';
 import type { ContentDatabase, Feat, FeatCategory, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SourcesCard, START, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
+import { AbilitySelect, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SetupUnlockedChoices, SourcesCard, START, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
 import { ActionGlyph, isActionCost } from '../sheet/widgets';
 import { SPELL_SPEC_BUILDER, FEAT_SPEC } from '../sheet/filterSpecs';
 import { useIsMobile } from '../sheet/useIsMobile';
+import { PinContext, type PinDescApi } from '../sheet/PinContext';
+import { descId } from '../rules/play';
 
 const FEAT_LABEL: Record<FeatCategory, string> = {
   ancestry: 'Ancestry feat',
@@ -127,6 +129,23 @@ export function Builder({
   // Holds the level we'd lower TO (= current level − 1), or null when no prompt is open.
   const [confirmLowerTo, setConfirmLowerTo] = useState<number | null>(null);
   useEffect(() => setShowArch(false), [picker]);
+
+  // Lets description popups in the builder (e.g. the Setup rule "i" icons) offer the "favorite" star.
+  // Pins live on the build's pinnedDescs and are carried onto the built Character, surfacing in the
+  // sheet's Main-tab Pinned section.
+  const pinApi: PinDescApi = useMemo(() => {
+    const list = build.pinnedDescs ?? [];
+    return {
+      has: (node) => list.some((d) => descId(d) === descId(node)),
+      toggle: (node) => {
+        const id = descId(node);
+        const next = list.some((d) => descId(d) === id)
+          ? list.filter((d) => descId(d) !== id)
+          : [...list, { title: node.title, description: node.description, descRefs: node.descRefs, key: node.key }];
+        actions.patch({ pinnedDescs: next });
+      },
+    };
+  }, [build.pinnedDescs, actions]);
 
   // Skill ranks the character has *before* the selected level's increase (for the "X → Y" display).
   // Memoized so the full buildCharacter pipeline doesn't re-run on every level-page render.
@@ -537,6 +556,7 @@ export function Builder({
     PROFICIENCY_RANKS[Math.min(PROFICIENCY_RANKS.indexOf(cur) + 1, PROFICIENCY_RANKS.length - 1)];
 
   return (
+    <PinContext.Provider value={pinApi}>
     <div className="builder">
       <header className="builder-head">
         <div className="builder-title">
@@ -656,6 +676,18 @@ export function Builder({
                     <LanguageEditor build={build} actions={actions} content={content} />
                   </div>
                 </div>
+                {/* Per-character selections unlocked by a Setup toggle (Dual Class second class, ABP
+                    skill potency / apex, Mythic Calling). The on/off toggles stay on the Setup page. */}
+                {(build.variantRules?.dualClass || build.variantRules?.abp || build.mythicEnabled) && (
+                  <div className="lvl-group">
+                    <div className="lvl-group-h">
+                      <i className="ti ti-adjustments-alt" aria-hidden="true" /> Variant &amp; campaign choices
+                    </div>
+                    <div className="lvl-cards">
+                      <SetupUnlockedChoices build={build} actions={actions} content={content} />
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Equipment isn't chosen in the builder — starting gear and purchases are managed
@@ -1519,5 +1551,6 @@ export function Builder({
         </div>
       )}
     </div>
+    </PinContext.Provider>
   );
 }
