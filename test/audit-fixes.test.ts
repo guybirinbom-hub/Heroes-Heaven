@@ -52,12 +52,12 @@ describe('audit fixes — advancement & proficiency', () => {
 });
 
 describe('audit fixes — spellcasting', () => {
-  it('Two-rank caster (magus) gets ONE slot of a newly-unlocked top rank: L5 → 1× rank 3', () => {
+  it('Two-rank caster (magus) gets a full 2 slots of a newly-unlocked top rank: L5 → 2× rank 3 (per AoN)', () => {
     const entry = build('magus', 5, { keyAbility: 'int' }).spellcasting.find((e) => e.id === 'magus-casting')!;
     expect(entry.prepared?.[2]?.length).toBe(2);
-    expect(entry.prepared?.[3]?.length).toBe(1); // first access → ONE slot
+    expect(entry.prepared?.[3]?.length).toBe(2); // AoN magus table: 3rd rank arrives with its full 2 slots at L5
     const l6 = build('magus', 6, { keyAbility: 'int' }).spellcasting.find((e) => e.id === 'magus-casting')!;
-    expect(l6.prepared?.[3]?.length).toBe(2); // fills to two the next level
+    expect(l6.prepared?.[3]?.length).toBe(2);
   });
 
   it('Sorcerer bloodline-granted spells are recorded in grantedRepertoire (so they do not eat the known cap)', () => {

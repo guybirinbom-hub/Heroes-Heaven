@@ -41,23 +41,24 @@ export function maxSpellRank(level: number): number {
 }
 
 /**
- * Magus / summoner spell slots: a short progression of 2 slots of the highest rank
- * plus 2 of the rank below (max 4 leveled slots), gaining a new rank every 2 levels
- * up to 9th at 19th, with a 1→2→3-slot ramp over levels 1–3. (Transcribed from the
- * Archives of Nethys magus & summoner tables, which are identical.) Magus's bonus
- * Studious Spells slots and summoner's are not added here.
+ * Magus / summoner spell slots: 2 slots of the highest rank plus 2 of the rank below
+ * (max 4 leveled slots), gaining a new rank every 2 levels up to 9th at 17th. Only the
+ * opening levels ramp: L1 has a single 1st-rank slot, and a newly-unlocked rank starts
+ * at 1 slot ONLY for the very first two ranks (L1→2 for 1st, L3→4 for 2nd); from 3rd rank
+ * onward (L5+) a new top rank arrives with 2 slots immediately. (Transcribed verbatim from
+ * the Archives of Nethys magus & summoner "Spells per Day" tables, which are identical —
+ * the table's footnoted `*` cells are the magus's Studious Spells, added separately by
+ * magusStudiousSpells(), NOT base slots, and are excluded here.)
  */
 export function twoRankCasterSlots(level: number): Record<number, number> {
   if (level <= 1) return { 1: 1 };
   if (level === 2) return { 1: 2 };
-  if (level === 3) return { 1: 2, 2: 1 };
+  if (level === 3) return { 1: 2, 2: 1 }; // 2nd rank just unlocked → 1 slot (the last per-rank ramp)
   const maxR = Math.min(9, Math.ceil(level / 2));
-  // A newly-unlocked top rank starts with ONE slot (gained the level it's first accessible), filling
-  // to two at the following even level — the same first-access ramp the full-caster/psychic tables use.
-  // The rank R is first accessible at level 2R-1; at L19+ the 9th rank was already unlocked at L17, so
-  // it must stay at 2 slots (`level % 2` alone would wrongly reset it to 1 every odd level once capped).
-  const justUnlocked = level === 2 * maxR - 1;
-  return { [maxR - 1]: 2, [maxR]: justUnlocked ? 1 : 2 };
+  // L4+: the top two accessible ranks each hold 2 slots. Unlike the full-caster/psychic tables, the
+  // AoN magus/summoner table gives a newly-unlocked top rank its full 2 slots on the level it appears
+  // (5th rank at L9, …, 9th at L17), so there is no odd-level "1 slot" ramp beyond L3.
+  return { [maxR - 1]: 2, [maxR]: 2 };
 }
 
 /**

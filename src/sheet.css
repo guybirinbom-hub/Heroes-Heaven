@@ -935,6 +935,43 @@ body {
   border-color: var(--app-accent);
   color: var(--app-accent-text);
 }
+/* Swashbuckler Panache — dedicated one-tap rail card. */
+.panache-card.on {
+  border-color: var(--app-accent);
+  box-shadow: inset 0 0 0 1px var(--app-accent);
+}
+.panache-toggle {
+  margin-top: 8px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 8px;
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius);
+  background: var(--app-surface-2);
+  color: var(--app-text-dim);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.panache-toggle > .ti {
+  font-size: 22px;
+}
+.panache-toggle.on {
+  background: var(--app-accent);
+  border-color: var(--app-accent);
+  color: var(--app-accent-text);
+}
+.panache-toggle .panache-state {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.panache-toggle .panache-hint {
+  font-size: 10.5px;
+  opacity: 0.85;
+}
 .res-step {
   margin-left: auto;
   display: inline-flex;

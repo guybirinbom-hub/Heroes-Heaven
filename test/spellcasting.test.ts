@@ -29,21 +29,43 @@ describe('full caster slots', () => {
 });
 
 describe('two-rank caster (magus / summoner)', () => {
-  it('keeps 2 slots of the top two ranks, no 10th, with an L1-3 ramp', () => {
-    expect(twoRankCasterSlots(1)).toEqual({ 1: 1 });
-    expect(twoRankCasterSlots(2)).toEqual({ 1: 2 });
-    expect(twoRankCasterSlots(3)).toEqual({ 1: 2, 2: 1 });
-    expect(twoRankCasterSlots(4)).toEqual({ 1: 2, 2: 2 });
-    // A newly-unlocked top rank gets ONE slot at the odd level, two at the next even level.
-    expect(twoRankCasterSlots(5)).toEqual({ 2: 2, 3: 1 });
-    expect(twoRankCasterSlots(6)).toEqual({ 2: 2, 3: 2 });
-    expect(twoRankCasterSlots(17)).toEqual({ 8: 2, 9: 1 });
-    expect(twoRankCasterSlots(18)).toEqual({ 8: 2, 9: 2 });
-    // Rank 9 was unlocked at L17, so by L19 it must be full (2 slots) — it is NOT "just unlocked".
-    // (Regression: the old `level % 2` heuristic wrongly reset the capped top rank to 1 slot at L19.)
-    expect(twoRankCasterSlots(19)).toEqual({ 8: 2, 9: 2 });
-    expect(twoRankCasterSlots(20)).toEqual({ 8: 2, 9: 2 });
-    expect(twoRankCasterSlots(20)[10]).toBeUndefined();
+  // The authoritative AoN "Spells per Day" table for the magus & summoner (identical for both),
+  // transcribed verbatim (the footnoted `*` cells are the magus's separate Studious Spells slots,
+  // not base slots, and are excluded). See src/rules/spellcasting.ts twoRankCasterSlots.
+  const AON: Record<number, Record<number, number>> = {
+    1: { 1: 1 },
+    2: { 1: 2 },
+    3: { 1: 2, 2: 1 },
+    4: { 1: 2, 2: 2 },
+    5: { 2: 2, 3: 2 },
+    6: { 2: 2, 3: 2 },
+    7: { 3: 2, 4: 2 },
+    8: { 3: 2, 4: 2 },
+    9: { 4: 2, 5: 2 },
+    10: { 4: 2, 5: 2 },
+    11: { 5: 2, 6: 2 },
+    12: { 5: 2, 6: 2 },
+    13: { 6: 2, 7: 2 },
+    14: { 6: 2, 7: 2 },
+    15: { 7: 2, 8: 2 },
+    16: { 7: 2, 8: 2 },
+    17: { 8: 2, 9: 2 },
+    18: { 8: 2, 9: 2 },
+    19: { 8: 2, 9: 2 },
+    20: { 8: 2, 9: 2 },
+  };
+  it('matches the AoN magus/summoner Spells per Day table at every level 1-20', () => {
+    for (let level = 1; level <= 20; level++) {
+      expect(twoRankCasterSlots(level)).toEqual(AON[level]);
+    }
+  });
+  it('gives a newly-unlocked top rank its full 2 slots immediately from 3rd rank on (no odd-level ramp)', () => {
+    // Regression: the old heuristic gave 1 slot the level a rank was first accessible (L5,7,9,…,17),
+    // but AoN shows 2 slots there (only the 1st two ranks ramp, during levels 1-3).
+    expect(twoRankCasterSlots(5)).toEqual({ 2: 2, 3: 2 }); // 3rd rank just unlocked → 2, not 1
+    expect(twoRankCasterSlots(9)).toEqual({ 4: 2, 5: 2 }); // 5th rank just unlocked → 2
+    expect(twoRankCasterSlots(17)).toEqual({ 8: 2, 9: 2 }); // 9th rank just unlocked → 2
+    expect(twoRankCasterSlots(20)[10]).toBeUndefined(); // never a 10th-rank slot
   });
 });
 

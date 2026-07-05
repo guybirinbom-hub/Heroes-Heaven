@@ -348,7 +348,7 @@ describe('feature-gap fixes (granted spells/feats, deity, champion devotion)', (
     const bc = build('cleric', 9, { subclassId: 'battle-creed', keyAbility: 'wis' });
     const prep = bc.spellcasting.find((e) => e.type === 'prepared');
     const counts = Object.fromEntries(Object.entries(prep?.prepared ?? {}).map(([r, a]) => [r, a.length]));
-    expect(counts).toEqual({ 4: 2, 5: 1 }); // two-rank table at L9: rank 5 just unlocked → 1 slot (fills to 2 at L10)
+    expect(counts).toEqual({ 4: 2, 5: 2 }); // two-rank table at L9: rank 5 unlocked with its full 2 slots (per AoN)
     // A cloistered cleric at the same level is a full caster (3 slots across many ranks).
     const clo = build('cleric', 9, { subclassId: 'cloistered-cleric', keyAbility: 'wis' });
     const cloPrep = clo.spellcasting.find((e) => e.type === 'prepared');

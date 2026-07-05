@@ -18,6 +18,17 @@ describe('classFeatureDescription — shared-feature contamination guard', () =>
     expect(guardian).toContain('Guardian');
   });
 
+  it('strips an addendum that has LEADING WHITESPACE before the bold class name', () => {
+    // A paragraph led by " **Guardian**" (leading space) or "\n**Guardian**" must still be
+    // recognized as the Guardian addendum: stripped for a bard, kept for a guardian.
+    const desc = 'Base text.\n\n  **Guardian** Even in the heaviest of armors you keep your footing.';
+    const bard = classFeatureDescription(desc, 'bard', c);
+    expect(bard).not.toContain('Guardian'); // leading whitespace no longer hides the addendum
+    expect(bard).toContain('Base text.'); // generic paragraph stays
+    const guardian = classFeatureDescription(desc, 'guardian', c);
+    expect(guardian).toContain('Guardian'); // the owning class keeps its own note
+  });
+
   it('never strips a non-class bold lead (e.g. a degree-of-success row)', () => {
     const desc = 'Base text.\n\n**Critical Success** You do the thing.\n\n**Failure** You do not.';
     expect(classFeatureDescription(desc, 'bard', c)).toBe(desc);

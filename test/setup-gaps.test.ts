@@ -180,11 +180,44 @@ describe('setupMissing', () => {
       classId: 'cleric',
       subclassId: 'cloistered-cleric',
       keyAbility: 'wis',
+      deityId: 'sarenrae',
       ancestryBoosts: ['str', 'con'],
       backgroundBoosts: ['wis', 'int'],
       levelBoosts: ['wis', 'con', 'dex', 'cha'],
     };
     expect(setupMissing(b, c)).toEqual([]);
+  });
+
+  it('flags a missing deity for a class that requires one, and clears it once picked', () => {
+    const cleric: BuildState = {
+      ...emptyBuild(),
+      ancestryId: 'human',
+      heritageId: 'skilled-human',
+      backgroundId: 'acolyte',
+      classId: 'cleric',
+      subclassId: 'cloistered-cleric',
+      keyAbility: 'wis',
+      ancestryBoosts: ['str', 'con'],
+      backgroundBoosts: ['wis', 'int'],
+      levelBoosts: ['wis', 'con', 'dex', 'cha'],
+    };
+    expect(setupMissing(cleric, c)).toContain('Deity'); // deityId still null
+    expect(setupMissing({ ...cleric, deityId: 'sarenrae' }, c)).not.toContain('Deity');
+  });
+
+  it('does NOT flag a deity for a class that never needs one (fighter)', () => {
+    const fighter: BuildState = {
+      ...emptyBuild(),
+      ancestryId: 'human',
+      heritageId: 'skilled-human',
+      backgroundId: 'acolyte',
+      classId: 'fighter',
+      keyAbility: 'str',
+      ancestryBoosts: ['str', 'con'],
+      backgroundBoosts: ['wis', 'int'],
+      levelBoosts: ['str', 'con', 'dex', 'cha'],
+    };
+    expect(setupMissing(fighter, c)).not.toContain('Deity');
   });
 
   it('counts unfilled boost slots and the voluntary-flaw attribute', () => {

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Character, ContentDatabase, Item, ModeDef } from '../rules/types';
 import { addXp, setXp, setTempSpeed, togglePinnedDesc, descId, type PlayUpdater } from '../rules/play';
 import { abilityMod, deriveSpeeds } from '../rules/derive';
@@ -106,6 +106,7 @@ export function CharacterSheet({
   onOpenHomebrew?: () => void;
 }) {
   const [tab, setTab] = useState(initialTab);
+  const bodyRef = useRef<HTMLDivElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const isMobile = useIsMobile();
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -123,6 +124,12 @@ export function CharacterSheet({
     } catch {
       // non-fatal
     }
+  }, [tab]);
+  // Start each tab at the top. Desktop scrolls the window; on mobile the shell is position:fixed and
+  // the inner .body element is the scroller — reset both so the switch always lands at the top.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (bodyRef.current) bodyRef.current.scrollTop = 0;
   }, [tab]);
   const [xpDraft, setXpDraft] = useState(String(character.xp));
   const [xpAdd, setXpAdd] = useState('');
@@ -363,7 +370,7 @@ export function CharacterSheet({
         )}
       </div>
 
-      <div className="body">
+      <div className="body" ref={bodyRef}>
         {(!isMobile || tab === 'Main') && (
           <VitalsRail character={character} content={content} charKey={charKey} onPlay={onPlay} onOpenStat={setStatRef} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} onCreateItem={onCreateItem} />
         )}

@@ -644,6 +644,39 @@ export function VitalsRail({
         </section>
       )}
 
+      {/* Swashbuckler Panache — a dedicated one-tap toggle card, prominent above Conditions.
+          Drives the SAME 'panache' class-resource value as the generic Class-resources row (no
+          double-count): both read character.classResources.panache and write via toggleResource. */}
+      {character.classId === 'swashbuckler' && (() => {
+        const on = !!(resourceVals['panache'] ?? 0);
+        return (
+          <section className={'card panache-card' + (on ? ' on' : '')}>
+            <div className="ct">
+              <i className="ti ti-sparkles" aria-hidden="true" />
+              Panache
+            </div>
+            {onPlay ? (
+              <button
+                type="button"
+                className={'panache-toggle' + (on ? ' on' : '')}
+                aria-pressed={on}
+                title="Gained via bravado actions; spent on finishers; clears at encounter end."
+                onClick={() => onPlay((p) => toggleResource(p, 'panache'))}
+              >
+                <i className={'ti ' + (on ? 'ti-flame-filled' : 'ti-flame')} aria-hidden="true" />
+                <span className="panache-state">{on ? 'Panache' : 'No panache'}</span>
+                <span className="panache-hint">{on ? 'Tap to spend' : 'Tap to gain'}</span>
+              </button>
+            ) : (
+              <div className={'panache-toggle' + (on ? ' on' : '')} aria-disabled="true">
+                <i className={'ti ' + (on ? 'ti-flame-filled' : 'ti-flame')} aria-hidden="true" />
+                <span className="panache-state">{on ? 'Panache' : 'No panache'}</span>
+              </div>
+            )}
+          </section>
+        );
+      })()}
+
       <section className="card">
         <div className="ct">
           <i className="ti ti-urgent" aria-hidden="true" />

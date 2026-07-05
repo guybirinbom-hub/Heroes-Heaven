@@ -27,7 +27,7 @@ export function classFeatureDescription(
   );
   const paras = desc.split(/\n{2,}/);
   const kept = paras.filter((p) => {
-    const lead = p.match(/^\*\*([^*]+)\*\*/);
+    const lead = p.match(/^\s*\*\*([^*]+)\*\*/);
     return !lead || !otherClassNames.has(lead[1].trim().toLowerCase());
   });
   return kept.length === paras.length ? desc : kept.join('\n\n');

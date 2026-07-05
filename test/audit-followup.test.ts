@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { build, firstSubclass, content } from './_content';
+import { buildCharacter, deriveBuildFromCharacter, emptyBuild } from '../src/rules/build';
 import { deriveMaxHp, deriveStrikes, derivePerception, deriveSave } from '../src/rules/derive';
 import { deriveFamiliar } from '../src/rules/companions';
 import { skillActionsFor } from '../src/rules/skillActions';
@@ -157,6 +158,66 @@ describe('Dual Class spellcasting proficiency stays on each class chassis', () =
     const bard = ch.spellcasting.find((e) => e.id === 'bard-casting');
     expect(magus?.proficiency).toBe('master'); // magus tops at master@17
     expect(bard?.proficiency).toBe('legendary'); // bard reaches legendary@19
+  });
+
+  it('a dual-class 2nd-caster entry with a NON-CANONICAL id keeps its 2nd class spells across derive→build', () => {
+    const c = content();
+    // fighter (non-caster primary) + wizard (2nd class caster) with second-class spells stocked.
+    const ch = buildCharacter(
+      {
+        ...emptyBuild(),
+        name: 't',
+        level: 5,
+        classId: 'fighter',
+        ancestryId: Object.keys(c.ancestries)[0],
+        backgroundId: Object.keys(c.backgrounds)[0],
+        keyAbility: 'str',
+        subclassId: firstSubclass('fighter'),
+        variantRules: { dualClass: true },
+        classId2: 'wizard',
+        subclassId2: firstSubclass('wizard'),
+        spells2: { 1: ['grease'], 2: ['acid-arrow'] },
+      },
+      c,
+    );
+    // Simulate an imported / hand-authored character whose 2nd-caster entry uses a non-canonical id
+    // (not `wizard-casting`). The old exact-id lookup would fail to find it and silently drop spells2.
+    const imported = {
+      ...ch,
+      spellcasting: ch.spellcasting.map((e) => (e.id === 'wizard-casting' ? { ...e, id: 'wizard-arcane-imported' } : e)),
+    };
+    const rb = deriveBuildFromCharacter(imported, c);
+    // The structural fallback recovers the second class's spells into spells2…
+    expect(rb.spells2?.[1]).toContain('grease');
+    expect(rb.spells2?.[2]).toContain('acid-arrow');
+    // …and rebuilding reproduces a wizard entry that still carries them.
+    const rebuilt = buildCharacter({ ...rb, classId2: 'wizard' }, c);
+    const wiz = rebuilt.spellcasting.find((e) => e.id === 'wizard-casting');
+    expect(Object.values(wiz?.spellbook ?? {}).flat()).toEqual(expect.arrayContaining(['grease', 'acid-arrow']));
+  });
+
+  it('a native (canonical-id) dual-class round-trip still recovers the 2nd class spells exactly', () => {
+    const c = content();
+    const ch = buildCharacter(
+      {
+        ...emptyBuild(),
+        name: 't',
+        level: 5,
+        classId: 'fighter',
+        ancestryId: Object.keys(c.ancestries)[0],
+        backgroundId: Object.keys(c.backgrounds)[0],
+        keyAbility: 'str',
+        subclassId: firstSubclass('fighter'),
+        variantRules: { dualClass: true },
+        classId2: 'wizard',
+        subclassId2: firstSubclass('wizard'),
+        spells2: { 1: ['grease'], 2: ['acid-arrow'] },
+      },
+      c,
+    );
+    const rb = deriveBuildFromCharacter(ch, c);
+    expect(rb.spells2?.[1]).toContain('grease');
+    expect(rb.spells2?.[2]).toContain('acid-arrow');
   });
 });
 

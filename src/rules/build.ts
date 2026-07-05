@@ -460,6 +460,9 @@ export function setupMissing(build: BuildState, content: ContentDatabase): strin
         : cls.keyAbility;
     if (opts.length > 1 && !(build.keyAbility && opts.includes(build.keyAbility))) out.push('Key attribute');
   }
+  // A deity is a level-0 choice for classes that require one (cleric, champion) or for a subclass that
+  // demands it (e.g. rogue Avenger). Flag it as missing so Setup completeness reflects it.
+  if (buildNeedsDeity(build, content) && !build.deityId) out.push('Deity');
   const heritage = build.heritageId ? content.heritages[build.heritageId] : undefined;
   if (heritage?.grantsGeneralFeat && !build.heritageFeatId) out.push('Heritage general feat');
   {
@@ -636,10 +639,12 @@ export function bonusLanguageSlots(build: BuildState, content: ContentDatabase):
   return Math.max(0, intMod) + (ancestry?.languages.additional ?? 0);
 }
 
-/** Does this class make the character choose a deity? Cleric uses featureId 'deity'; champion uses
- *  'deity-champion'. Both drive the deity picker, the divine-font default, and the favored-weapon override. */
+/** Does this class make the character choose a deity? The class carries a deity feature whose id is
+ *  namespaced per class in the Foundry data — cleric uses 'deity-cleric', champion 'deity-champion'
+ *  (older/hand-authored data may use a bare 'deity'). Any of these drives the deity picker, the
+ *  divine-font default, and the favored-weapon override. */
 export function classChoosesDeity(features?: { featureId: string }[]): boolean {
-  return (features ?? []).some((f) => f.featureId === 'deity' || f.featureId === 'deity-champion');
+  return (features ?? []).some((f) => f.featureId === 'deity' || /^deity-/.test(f.featureId));
 }
 
 /** Does this *build* need a deity? True when the class chooses one, or the picked subclass requires
@@ -2137,6 +2142,37 @@ function findPrimaryCasterEntry(c: Character, cls: ClassDef, cls2?: ClassDef): S
 }
 
 /**
+ * Dual Class mirror of findPrimaryCasterEntry: locate the SECOND class's spellcasting entry,
+ * tolerant of a non-canonical entry id (imported / hand-authored dual-class characters). Prefers the
+ * canonical id `${cls2.id}-casting`; otherwise falls back to a structural match on the second class's
+ * spellcasting type, EXCLUDING the entries that belong to the primary class or an archetype so the two
+ * class pools never claim each other's spells. Without this fallback, a dual-class character imported
+ * with a differently-named second-caster entry would silently lose its whole second class's spells on
+ * the next builder rebuild (the primary already uses findPrimaryCasterEntry for the same reason).
+ */
+function findSecondCasterEntry(c: Character, cls2: ClassDef, cls1?: ClassDef): SpellcastingEntry | undefined {
+  const exact = c.spellcasting.find((e) => e.id === `${cls2.id}-casting`);
+  if (exact) return exact;
+  if (!cls2.spellcasting) return undefined;
+  const wantType = cls2.spellcasting.type; // 'prepared' | 'spontaneous'
+  const primaryId = cls1 ? `${cls1.id}-casting` : undefined;
+  // The primary caster is resolved first (findPrimaryCasterEntry); exclude whatever entry object it
+  // claimed so the second class never re-selects the same pool even when both share a type and neither
+  // uses the canonical id. Also exclude archetype/apparition pools, focus, and the primary's canonical id.
+  const primaryEntry = cls1 ? findPrimaryCasterEntry(c, cls1, cls2) : undefined;
+  const candidates = c.spellcasting.filter(
+    (e) =>
+      e !== primaryEntry &&
+      e.type === wantType &&
+      e.type !== 'focus' &&
+      !e.id.endsWith('-dedication-casting') &&
+      e.id !== 'animist-apparition-casting' &&
+      e.id !== primaryId,
+  );
+  return candidates.find((e) => e.spellbook || e.repertoire || e.prepared) ?? candidates[0];
+}
+
+/**
  * Reverse of buildCharacter — reconstruct an editable BuildState from a finished Character, so
  * ANY character (including hand-authored seeds with no stored build) can be reopened in the
  * builder and leveled up. Rebuilding from the result reproduces an EQUIVALENT character (same
@@ -2668,7 +2704,7 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     }
     // Dual Class: recover the SECOND caster class's own spell surface into cantrips2/spells2/
     // signatures2, so it survives a builder rebuild (buildCharacter re-populates the entry from these).
-    const classEntry2 = cls2dc ? c.spellcasting.find((e) => e.id === `${cls2dc.id}-casting`) : undefined;
+    const classEntry2 = cls2dc ? findSecondCasterEntry(c, cls2dc, cls) : undefined;
     if (classEntry2) {
       b.cantrips2 = [...classEntry2.cantrips];
       const spells2: Record<number, string[]> = {};
