@@ -54,6 +54,20 @@ export function cpToCoins(cp: number): Coins {
   return out;
 }
 
+/** Parse a price STRING ("1,000 gp", "5 sp", "2 gp 5 sp", "—") into Coins, or undefined if it has no
+ *  positive value. Curated companion/vehicle/siege catalog prices are stored as strings; this is the
+ *  single shared parser for them. */
+export function parsePrice(s?: string): Coins | undefined {
+  if (!s) return undefined;
+  const o: Coins = {};
+  for (const m of s.matchAll(/([\d,]+)\s*(pp|gp|sp|cp)/gi)) {
+    const n = parseInt(m[1].replace(/,/g, ''), 10);
+    const k = m[2].toLowerCase() as keyof Coins;
+    if (n) o[k] = (o[k] ?? 0) + n;
+  }
+  return Object.keys(o).length ? o : undefined;
+}
+
 /** Group an integer with thousands separators (deterministic en-US): 90000 → "90,000". */
 export function grp(n: number): string {
   return n.toLocaleString('en-US');

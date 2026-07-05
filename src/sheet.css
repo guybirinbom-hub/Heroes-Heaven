@@ -3868,6 +3868,10 @@ button.strike-name:hover {
 .inv-sec i {
   font-size: 14px;
 }
+/* A non-collapsible section header (Vehicles & Siege Weapons) — not clickable, no chevron. */
+.inv-sec-static {
+  cursor: default;
+}
 .inv-sec-title {
   text-transform: uppercase;
   letter-spacing: 0.05em;

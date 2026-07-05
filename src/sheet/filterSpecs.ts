@@ -79,6 +79,13 @@ export const SPELL_SPEC_BUILDER: FilterSpec<Spell> = {
  *  AddItemsModal so itemCategories can route them to the "Services" chip. */
 export const SERVICE_MARK = '__service';
 
+/** Sentinels pushed onto Vehicle / Siege-Weapon catalog entries (shaped as `equipment` Items) in
+ *  AddItemsModal. These entries live in the COMPANION catalog, not content.items — they're surfaced
+ *  in the Add-Items picker as reference/buyable rows and route to the companion-add path. The marks
+ *  let itemCategories route them to the "Vehicles" / "Siege Weapons" chips. */
+export const VEHICLE_MARK = '__vehicle';
+export const SIEGE_MARK = '__siege';
+
 /** The full AoN "Category" tokens for one item — an item can belong to several (a magic staff is
  *  Staves + Held Items; a precious weapon is Weapons + Materials). Every AoN equipment category is
  *  represented; a few (Blighted Boons, Customizations) have no reliable signal in the Foundry data
@@ -137,6 +144,9 @@ function itemCategories(i: Item): string[] {
   if (/\bprosthe|prosthesis\b/i.test(name)) c.push('assistive');
   // Services (reference-only catalog rows tagged with the sentinel in AddItemsModal).
   if (has(SERVICE_MARK)) c.push('services');
+  // Vehicles / Siege Weapons (companion-catalog rows tagged with a sentinel in AddItemsModal).
+  if (has(VEHICLE_MARK)) c.push('vehicles');
+  if (has(SIEGE_MARK)) c.push('siege-weapons');
 
   // Adventuring Gear: mundane general equipment/consumables not otherwise magical or categorized.
   // (worn/held generic gear, tools, kits, mundane consumables — anything without a magical signal.)
@@ -148,7 +158,9 @@ function itemCategories(i: Item): string[] {
     !has('relic') &&
     !has('cursed') &&
     !has('intelligent') &&
-    !has(SERVICE_MARK)
+    !has(SERVICE_MARK) &&
+    !has(VEHICLE_MARK) &&
+    !has(SIEGE_MARK)
   ) {
     c.push('adventuring-gear');
   }

@@ -12,6 +12,7 @@ import {
   type FamiliarBlock,
 } from '../rules/companions';
 import { toPlainText } from './RichText';
+import { parsePrice } from '../rules/wealth';
 import { confirmDialog } from './confirm';
 import {
   addCompanionCondition,
@@ -49,18 +50,6 @@ function cap(s: string): string {
 }
 
 const KIND_ICON: Record<CompanionKind, string> = { animal: 'ti-paw', familiar: 'ti-feather', eidolon: 'ti-flare', follower: 'ti-user', pet: 'ti-mood-smile', vehicle: 'ti-wheel', siege: 'ti-bow' };
-
-/** Parse a price string ("1,000 gp", "5 sp", "—") into Coins, or undefined if it has no value. */
-function parsePrice(s?: string): Coins | undefined {
-  if (!s) return undefined;
-  const o: Coins = {};
-  for (const m of s.matchAll(/([\d,]+)\s*(pp|gp|sp|cp)/gi)) {
-    const n = parseInt(m[1].replace(/,/g, ''), 10);
-    const k = m[2].toLowerCase() as keyof Coins;
-    if (n) o[k] = (o[k] ?? 0) + n;
-  }
-  return Object.keys(o).length ? o : undefined;
-}
 
 /** Display label + icon for a companion (animals may be constructs; vehicles/siege weapons too). */
 function kindMeta(cfg: CompanionConfig, content: ContentDatabase): { label: string; icon: string } {

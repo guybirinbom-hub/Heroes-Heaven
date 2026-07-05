@@ -1,13 +1,16 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import type { Character, ContentDatabase, InventoryItem, Item } from '../rules/types';
+import type { Character, CompanionConfig, ContentDatabase, InventoryItem, Item, SiegeWeaponStat, VehicleStat } from '../rules/types';
 import { useIsMobile } from './useIsMobile';
 import { deriveBulk, containerLoads, effectiveItemBulk } from '../rules/derive';
 import { isAttachable, planAttach } from '../rules/attachments';
 import {
   addInventoryItem,
+  addPlayCompanion,
   attachItem,
+  buyCompanion,
   buyItem,
   removeInventoryItem,
+  removePlayCompanion,
   setCurrency,
   setItemCounter,
   setItemQuantity,
@@ -15,6 +18,8 @@ import {
   updateInventoryItem,
   type PlayUpdater,
 } from '../rules/play';
+import { parsePrice } from '../rules/wealth';
+import type { CompanionPick } from './AddItemsModal';
 import { chargesFor, itemCounters } from '../rules/itemUses';
 import { formatPrice, grp } from '../rules/wealth';
 import { ItemDetail } from './ItemDetail';
@@ -336,6 +341,88 @@ function UnknownItemCard({ inv, onPlay }: { inv: InventoryItem; onPlay?: PlayUpd
             </button>
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+/** The character's vehicle & siege-weapon companions, shown as a bulk-EXEMPT section of the Inventory
+ *  (they live in the companion system — see the Companions tab — but are surfaced here since players
+ *  think of them as owned gear). Each row is a compact stat line + a Remove control that deletes the
+ *  underlying companion (so it also disappears from the Companions tab). Not carried, so it never
+ *  contributes to the Bulk total. */
+function VehicleSiegeSection({
+  character,
+  content,
+  onPlay,
+}: {
+  character: Character;
+  content: ContentDatabase;
+  onPlay?: PlayUpdater;
+}) {
+  const rows = (character.companions ?? [])
+    .filter((c): c is CompanionConfig & { kind: 'vehicle' | 'siege' } => c.kind === 'vehicle' || c.kind === 'siege')
+    .map((cfg) => {
+      const v: VehicleStat | SiegeWeaponStat | undefined =
+        cfg.typeId ? (cfg.kind === 'vehicle' ? content.vehicles?.[cfg.typeId] : content.siegeWeapons?.[cfg.typeId]) : undefined;
+      return { cfg, v };
+    });
+  if (rows.length === 0) return null;
+  const remove = async (cfg: CompanionConfig, label: string) => {
+    if (!onPlay) return;
+    if (!(await confirmDialog({ title: `Remove ${label}?`, message: "This removes it from your Companions too. This can't be undone.", confirmLabel: 'Remove', danger: true }))) return;
+    onPlay((p) => removePlayCompanion(p, cfg.id));
+  };
+  return (
+    <div className="inv-group">
+      <div className="inv-sec inv-sec-static">
+        <i className="ti ti-wheel" aria-hidden="true" />
+        <span className="inv-sec-title">Vehicles &amp; Siege Weapons</span>
+        <span className="inv-count">
+          {rows.length} item{rows.length === 1 ? '' : 's'}
+        </span>
+        <span className="ignore-chip" title="Vehicles and siege weapons don't count toward your carried Bulk">
+          no Bulk
+        </span>
+      </div>
+      <div className="inv-grid">
+        {rows.map(({ cfg, v }) => {
+          const kindLabel = cfg.kind === 'vehicle' ? 'Vehicle' : 'Siege weapon';
+          const name = cfg.name || v?.name || kindLabel;
+          const st = character.companionHp?.[cfg.id];
+          const max = v?.hp;
+          const cur = max != null ? Math.max(0, max - (st?.damage ?? 0)) : undefined;
+          return (
+            <div className="inv-card" key={cfg.id}>
+              <span className="inv-icon">
+                <i className={'ti ' + (cfg.kind === 'vehicle' ? 'ti-wheel' : 'ti-bow')} aria-hidden="true" />
+              </span>
+              <div className="inv-mid">
+                <div className="inv-name-line">
+                  <span className="inv-name">{name}</span>
+                </div>
+                <div className="inv-sub">
+                  {kindLabel}
+                  {v ? ` · level ${v.level} · AC ${v.ac} · Hardness ${v.hardness}` : ' · pick a type in Companions'}
+                  {v && cur != null ? ` · HP ${cur}/${v.hp}` : ''}
+                </div>
+                {onPlay && (
+                  <div className="inv-actions">
+                    <button className="inv-act danger" aria-label={`Remove ${name}`} onClick={() => remove(cfg, name)}>
+                      <i className="ti ti-trash" aria-hidden="true" /> Remove
+                    </button>
+                  </div>
+                )}
+              </div>
+              {v && (
+                <div className="inv-bulk">
+                  <div className="inv-bval">—</div>
+                  <div className="inv-blbl">bulk</div>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -975,6 +1062,7 @@ export function InventoryTab({
             <Group id="equipped" title="Equipped" items={equipped} dropKind="equipped" />
             <Group id="carried" title="Carried" items={carried} dropKind="carried" />
             {containers.map(containerGroup)}
+            <VehicleSiegeSection character={character} content={content} onPlay={onPlay} />
           </>
         );
       })()}
@@ -997,6 +1085,15 @@ export function InventoryTab({
           currency={coins}
           onBuy={(id) => onPlay((p) => buyItem(p, id, content.items[id]?.price))}
           onGive={(id) => onPlay((p) => addInventoryItem(p, id))}
+          onBuyCompanion={(pick) => {
+            // A vehicle/siege pick routes to the COMPANION system (same path as the Companions-tab
+            // Add picker): append a CompanionConfig to play.companions and deduct the coin price.
+            const price = pick.kind === 'vehicle' ? content.vehicles?.[pick.typeId]?.price : content.siegeWeapons?.[pick.typeId]?.price;
+            onPlay((p) => buyCompanion(p, { kind: pick.kind, name: '', typeId: pick.typeId } as Omit<CompanionConfig, 'id'>, parsePrice(price)));
+          }}
+          onGiveCompanion={(pick: CompanionPick) =>
+            onPlay((p) => addPlayCompanion(p, { kind: pick.kind, name: '', typeId: pick.typeId } as Omit<CompanionConfig, 'id'>))
+          }
           onClose={() => setAddOpen(false)}
         />
       )}
