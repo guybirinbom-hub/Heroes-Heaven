@@ -7,7 +7,7 @@ import { exportWg, exportNative, importCharacter, type ImportReport } from '../d
 import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
 import { sanitizeImportedPortrait } from './imageUtil';
-import { confirmDialog } from './confirm';
+import { confirmDialog, chooseDialog } from './confirm';
 import { HeroesHeavenLogo } from './Logo';
 import { downloadText } from './download';
 
@@ -258,6 +258,20 @@ export function RosterScreen({
                     title="Delete"
                     className="danger"
                     onClick={async () => {
+                      // Only ARCHIVED characters can be deleted — a guard against fat-fingering away
+                      // an in-use character. A non-archived character offers to archive first (not delete).
+                      if (!c.archived) {
+                        const choice = await chooseDialog({
+                          title: `Archive ${ch.name} first`,
+                          message: `Only archived characters can be deleted. Archive “${ch.name}” first, then delete it.`,
+                          buttons: [
+                            { value: 'archive', label: 'Archive now', primary: true },
+                            { value: 'cancel', label: 'Cancel' },
+                          ],
+                        });
+                        if (choice === 'archive') onArchive(c.id, true);
+                        return;
+                      }
                       if (
                         await confirmDialog({
                           title: `Delete ${ch.name}?`,

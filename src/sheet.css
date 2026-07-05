@@ -4576,8 +4576,12 @@ button.strike-name:hover {
 }
 
 /* Settings page — a multi-section modal (left nav + scrollable pane). */
-.settings-modal {
-  width: 640px;
+/* Compound .picker.settings-modal so this beats the later `.picker { width: 420px }` base rule by
+   specificity (both are single-class otherwise, and .picker wins on source order). Desktop width:
+   give the left nav + content pane real room (the old 640px never even applied). Mobile overrides
+   this entirely via .settings-page-m (fixed inset:0, !important) below, untouched. Capped to fit. */
+.picker.settings-modal {
+  width: 980px;
   max-width: calc(94vw / var(--zoom, 1));
   height: calc(70vh / var(--zoom, 1));
 }

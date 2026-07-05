@@ -361,6 +361,7 @@ export function InventoryTab({
   // interrupted. Buffer per denomination, commit on blur/Enter.
   const [coinDraft, setCoinDraft] = useState<Record<string, string>>({});
   const [dragId, setDragId] = useState<string | null>(null);
+  const dragIdRef = useRef<string | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
   const isMobile = useIsMobile();
   // Mobile hold-to-move: press-and-hold an item card to pick it up. `holdRef` tracks the pointer; once
@@ -483,11 +484,35 @@ export function InventoryTab({
     }
     onPlay((p) => updateInventoryItem(p, instanceId, patch));
   };
+  // A SYNCHRONOUS mirror of dragId. setDragId (React state) doesn't apply until the next render, so
+  // during the first `dragover` events right after `dragstart` the handler closure still sees
+  // dragId===null — and a drop target only accepts a drop if `dragover` calls preventDefault(). The
+  // old code gated preventDefault on state, so the FIRST drag was marked "no drop" by the browser and
+  // silently failed (you had to drag twice). onDragOver/onDrop below read this ref instead.
+  const startDrag = (id: string) => {
+    dragIdRef.current = id;
+    setDragId(id);
+  };
   const endDrag = () => {
+    dragIdRef.current = null;
     setDragId(null);
     setOverId(null);
     setAttachOver(null);
   };
+  // Safety net: a card's React onDragEnd is unreliable when the list re-renders mid-drag (setting
+  // dragId re-renders the whole inventory), which left the source container highlighted after a
+  // cancelled move. A window-level `dragend` ALWAYS fires when the drag operation ends (drop or
+  // cancel) and is bound to window (not the re-rendering card), so the drag UI always resets.
+  useEffect(() => {
+    const reset = () => {
+      dragIdRef.current = null;
+      setDragId(null);
+      setOverId(null);
+      setAttachOver(null);
+    };
+    window.addEventListener('dragend', reset);
+    return () => window.removeEventListener('dragend', reset);
+  }, []);
 
   // --- mobile hold-to-move controller (see holdRef comment above) ---
   const dropDestAt = (x: number, y: number): string | null => {
@@ -697,10 +722,24 @@ export function InventoryTab({
         onDragOver={
           droppable
             ? (e) => {
-                if (!validHere) return;
+                // preventDefault (which is what ALLOWS the drop) must fire from the first dragover of
+                // the gesture — gate on the synchronous ref, not the async `validHere` state, or the
+                // first drag fails. moveTo() re-validates the actual drop, so this stays correct.
+                if (!dragIdRef.current) return;
                 e.preventDefault();
                 e.dataTransfer.dropEffect = 'move';
                 if (overId !== id) setOverId(id);
+              }
+            : undefined
+        }
+        onDragLeave={
+          droppable
+            ? (e) => {
+                // Clear this container's highlight only when the cursor truly leaves it (ignore
+                // dragleave events fired while moving between the container's own child cards).
+                if (!(e.relatedTarget instanceof Node) || !e.currentTarget.contains(e.relatedTarget)) {
+                  setOverId((cur) => (cur === id ? null : cur));
+                }
               }
             : undefined
         }
@@ -708,8 +747,10 @@ export function InventoryTab({
           droppable
             ? (e) => {
                 e.preventDefault();
-                const did = e.dataTransfer.getData('text/plain') || dragId;
-                if (did && validHere) moveTo(did, dropKind!);
+                const did = e.dataTransfer.getData('text/plain') || dragIdRef.current;
+                // No `validHere` gate: moveTo() self-validates (equip/invest-cap/self/cycle/capacity)
+                // and no-ops an illegal drop, so we don't depend on the lagging React state here.
+                if (did) moveTo(did, dropKind!);
                 endDrag();
               }
             : undefined
@@ -747,7 +788,7 @@ export function InventoryTab({
                   investedCount={investedCount}
                   rationsDayTracking={rationsDayTracking}
                   isMobile={isMobile}
-                  onDragStartItem={setDragId}
+                  onDragStartItem={startDrag}
                   onDragEndItem={endDrag}
                   onHoldDrag={isMobile ? startHold : undefined}
                   dragging={ghost?.id === inv.instanceId}

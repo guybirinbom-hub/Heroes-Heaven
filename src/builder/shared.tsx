@@ -1170,6 +1170,8 @@ const profTrackName = (key: string) =>
  *  pickers only offer content from the books you allow. Already-chosen content is always kept. */
 export function SourcesCard({ build, actions, catalog }: { build: BuildState; actions: BuilderActions; catalog: ReturnType<typeof sourceCatalog> }) {
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  // Live filter for the (long) book list — a draft filter, not a committed value, so filter-as-you-type.
+  const [search, setSearch] = useState('');
   const toggleCat = (c: string) =>
     setExpanded((s) => {
       const n = new Set(s);
@@ -1191,10 +1193,25 @@ export function SourcesCard({ build, actions, catalog }: { build: BuildState; ac
   const enabledReal = allBooks.filter((b) => enabled.has(b)).length;
   const hbOnCount = hbList.filter((h) => enabled.has(h.name)).length;
   const hbAllOn = hbList.length > 0 && hbOnCount === hbList.length;
-  const hbOpen = expanded.has('__homebrew__');
+  // While searching, force every group open so matches are visible without manual expansion.
   // The niche "Other" shelf (Society scenarios, blogs, specials) stays hidden unless the pref is on.
   // The reveal toggle itself lives in Settings → Customization → Sources (not here in Setup).
-  const groups = prefs.showNicheSources ? catalog.groups : catalog.groups.filter((g) => !NICHE_CATEGORIES.has(g.category));
+  const rawGroups = prefs.showNicheSources ? catalog.groups : catalog.groups.filter((g) => !NICHE_CATEGORIES.has(g.category));
+  // Live name filter: match a category or any of its entry labels; keep only matching entries within.
+  const sq = search.trim().toLowerCase();
+  const groups = sq
+    ? rawGroups
+        .map((g) => {
+          if (g.category.toLowerCase().includes(sq)) return g; // whole category matches → show all entries
+          const entries = g.entries.filter((e) => e.label.toLowerCase().includes(sq));
+          return entries.length ? { ...g, entries } : null;
+        })
+        .filter((g): g is SourceGroup => g != null)
+    : rawGroups;
+  const hbShown = sq ? hbList.filter((h) => h.name.toLowerCase().includes(sq)) : hbList;
+  const noMatches = sq !== '' && groups.length === 0 && hbShown.length === 0;
+  // Searching forces sections open so matches show without manual expansion.
+  const hbOpen = sq !== '' || expanded.has('__homebrew__');
   const write = (next: Set<string>) => actions.patch({ enabledSources: [...next].sort() });
   const setBooks = (books: string[], on: boolean) => {
     const n = new Set(enabled);
@@ -1220,7 +1237,22 @@ export function SourcesCard({ build, actions, catalog }: { build: BuildState; ac
           Disable all
         </button>
       </div>
-      {hbList.length > 0 && (
+      <div className="src-search">
+        <i className="ti ti-search" aria-hidden="true" />
+        <input
+          type="text"
+          placeholder="Search books"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        {search && (
+          <button type="button" className="src-search-x" aria-label="Clear search" onClick={() => setSearch('')}>
+            <i className="ti ti-x" aria-hidden="true" />
+          </button>
+        )}
+      </div>
+      {noMatches && <div className="src-no-match">No books match “{search.trim()}”.</div>}
+      {hbShown.length > 0 && (
         <div className="src-cat">
           <div className="src-cat-head">
             <button type="button" className="src-cat-name" aria-expanded={hbOpen} onClick={() => toggleCat('__homebrew__')}>
@@ -1242,7 +1274,7 @@ export function SourcesCard({ build, actions, catalog }: { build: BuildState; ac
           </div>
           {hbOpen && (
             <div className="src-books">
-              {hbList.map((h) => {
+              {hbShown.map((h) => {
                 const on = enabled.has(h.name);
                 return (
                   <button type="button" key={h.name} className={'src-book' + (on ? ' on' : '')} onClick={() => setBooks([h.name], !on)}>
@@ -1259,7 +1291,7 @@ export function SourcesCard({ build, actions, catalog }: { build: BuildState; ac
       {groups.map((g) => {
         const onCount = g.entries.filter((e) => e.books.every((b) => enabled.has(b))).length;
         const allOn = onCount === g.entries.length;
-        const open = expanded.has(g.category);
+        const open = sq !== '' || expanded.has(g.category);
         return (
           <div className="src-cat" key={g.category}>
             <div className="src-cat-head">

@@ -113,6 +113,20 @@ export default function App() {
   }, []);
   useEffect(() => saveActiveId(activeId), [activeId]);
 
+  // Suppress the browser's default right-click menu (Back/Reload/Inspect) so the app feels native,
+  // NOT like a web page. Editable fields keep the native menu so cut/copy/paste still works, and any
+  // component that already handled the event (e.defaultPrevented) is left alone.
+  useEffect(() => {
+    const onContextMenu = (e: MouseEvent) => {
+      if (e.defaultPrevented) return;
+      const t = e.target as Element | null;
+      if (t && t.closest('input, textarea, [contenteditable]')) return;
+      e.preventDefault();
+    };
+    window.addEventListener('contextmenu', onContextMenu);
+    return () => window.removeEventListener('contextmenu', onContextMenu);
+  }, []);
+
   // App zoom: Ctrl+wheel and Ctrl +/-/0 scale the whole UI (also adjustable in Settings).
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {

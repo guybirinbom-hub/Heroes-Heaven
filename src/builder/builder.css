@@ -1395,6 +1395,50 @@
   border-color: var(--app-accent);
   color: var(--app-accent);
 }
+/* Live name filter for the (long) book list. */
+.src-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0 8px;
+  padding: 5px 8px;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+}
+.src-search i {
+  font-size: 14px;
+  color: var(--app-text-dim);
+  flex: none;
+}
+.src-search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  color: var(--app-text);
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+}
+.src-search-x {
+  display: flex;
+  align-items: center;
+  border: none;
+  background: none;
+  color: var(--app-text-dim);
+  cursor: pointer;
+  padding: 0;
+  flex: none;
+}
+.src-search-x:hover {
+  color: var(--app-text);
+}
+.src-no-match {
+  font-size: 12.5px;
+  color: var(--app-text-dim);
+  padding: 4px 2px 8px;
+}
 .src-cat {
   border-top: var(--app-bw) solid var(--app-border);
 }
