@@ -1059,19 +1059,6 @@ export interface InventoryItem {
   counters?: Record<string, { current: number; max: number; resetsOnRest?: boolean }>;
   /** For a generic scroll/wand (item.spellSlot): the spell id the player chose to store in it. */
   heldSpell?: string;
-  /** Battlezoo Monster Parts: this instance has been refined and/or imbued. Mutually exclusive with
-   *  `runes` (an item uses either runes or monster parts, never both). `refinedLevel` is the item level
-   *  the item is refined to (drives the fundamental-rune-equivalent bonuses); `imbuements` are the
-   *  imbued properties on it (each with its chosen path, for weapon properties, and its property level). */
-  monsterPart?: {
-    refinedLevel?: number;
-    imbuements?: { propertyId: string; path?: string; level: number; choice?: string }[];
-    /** For items that aren't auto-classified by itemType (weapon/armor/shield), the refinement track
-     *  the player chose: a Perception item or a skill item. */
-    kind?: 'perception' | 'skill';
-    /** For a refined skill item, which skill the item bonus applies to (a SkillId or 'lore:<subject>'). */
-    skillKey?: string;
-  };
 }
 
 export type SpellcastingType = 'prepared' | 'spontaneous' | 'focus' | 'innate' | 'ritual' | 'items';
@@ -1337,8 +1324,6 @@ export interface Character {
   // --- gear ---
   inventory: InventoryItem[];
   currency: Coins;
-  /** Banked monster parts (Battlezoo Monster Parts subsystem), tracked by total gp-value. */
-  monsterParts?: number;
   /** Ancestry/feat-granted natural unarmed attacks (Iruxi Fangs, claws, jaws, tail, …) beyond the
    *  baseline Fist. Each becomes its own Strike that uses your unarmed proficiency and is buffed by
    *  Handwraps of Mighty Blows (the die-size rule scales the dice to this attack's own die). */

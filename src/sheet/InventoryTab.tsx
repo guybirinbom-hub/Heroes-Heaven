@@ -9,7 +9,6 @@ import {
   buyItem,
   removeInventoryItem,
   setCurrency,
-  setMonsterParts,
   setItemCounter,
   setItemQuantity,
   toggleItemFlag,
@@ -17,9 +16,7 @@ import {
   type PlayUpdater,
 } from '../rules/play';
 import { chargesFor, itemCounters } from '../rules/itemUses';
-import { monsterPartsEnabled } from '../rules/sources';
 import { formatPrice, grp } from '../rules/wealth';
-import { loadHomebrewSources } from '../data/storage';
 import { ItemDetail } from './ItemDetail';
 import { confirmDialog } from './confirm';
 import { ActionGlyph, isActionCost } from './widgets';
@@ -388,9 +385,6 @@ export function InventoryTab({
   const bulk = deriveBulk(character, content);
   const coins = character.currency;
   const loads = containerLoads(character, content);
-  // The Monster Parts subsystem (refine/imbue) is unlocked by a homebrew Source the character enabled.
-  const mpOn = monsterPartsEnabled(character, loadHomebrewSources());
-  const bankedParts = character.monsterParts ?? 0;
 
   const resolve = (inv: InventoryItem) => content.items[inv.itemId];
   const q = query.trim().toLowerCase();
@@ -918,25 +912,6 @@ export function InventoryTab({
             </span>
           ))}
         </span>
-        {mpOn && (
-          <span className="bulk-badge mp-badge" title="Banked monster parts (gp-value) for refining & imbuing gear">
-            <i className="ti ti-bone" aria-hidden="true" /> Parts{' '}
-            {onPlay ? (
-              <input
-                className="coin-input mp-parts-input"
-                type="text"
-                inputMode="numeric"
-                value={bankedParts || ''}
-                placeholder="0"
-                aria-label="Banked monster parts"
-                onChange={(e) => onPlay((p) => setMonsterParts(p, parseInt(e.target.value.replace(/[^0-9]/g, ''), 10) || 0), 'monster-parts')}
-              />
-            ) : (
-              <strong>{grp(bankedParts)}</strong>
-            )}{' '}
-            gp
-          </span>
-        )}
       </div>
 
       {(() => {
@@ -1005,8 +980,6 @@ export function InventoryTab({
           onPlay={onPlay}
           inventory={character.inventory}
           rationsDayTracking={rationsDayTracking}
-          monsterPartsOn={mpOn}
-          charLevel={character.level}
           onEdit={onCreateItem ? (it, iv) => setEditTarget({ item: it, inv: iv }) : undefined}
         />
       )}

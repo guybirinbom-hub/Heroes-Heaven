@@ -19,7 +19,6 @@ import {
   type HBForm,
   type HBSchema,
 } from './homebrewSchemas';
-import { MONSTER_PARTS_CAPABILITY } from '../rules/sources';
 import { ItemEditorModal } from './ItemEditorModal';
 import { confirmDialog } from './confirm';
 import { RichEditor } from './RichEditor';
@@ -349,23 +348,6 @@ export function HomebrewPage({
                     <i className="ti ti-trash" aria-hidden="true" /> Delete source
                   </button>
                 </div>
-
-                <label className="hb-unlock">
-                  <input
-                    type="checkbox"
-                    checked={selected.unlocks?.includes(MONSTER_PARTS_CAPABILITY) ?? false}
-                    onChange={(e) => {
-                      const set = new Set(selected.unlocks ?? []);
-                      if (e.target.checked) set.add(MONSTER_PARTS_CAPABILITY);
-                      else set.delete(MONSTER_PARTS_CAPABILITY);
-                      persistSource({ ...selected, unlocks: set.size ? [...set] : undefined });
-                    }}
-                  />
-                  <span>
-                    <strong>Unlocks the Monster Parts subsystem.</strong> A character who enables this source (Setup → Sources) can
-                    refine &amp; imbue gear from monster parts in the Inventory tab.
-                  </span>
-                </label>
 
                 {/* Items — reuse the full item editor */}
                 <div className="hb-type">

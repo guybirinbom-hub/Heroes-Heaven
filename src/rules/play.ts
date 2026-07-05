@@ -14,7 +14,6 @@
  */
 import type { AbilityId, ActiveCondition, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ModeDef, NotePage, PinnedDesc, PreparedSlot } from './types';
 import { deriveMaxHp, deriveBulk } from './derive';
-import { monsterPartApex } from './monsterParts';
 import { dyingDeathThreshold } from './conditions';
 import { coinsToCp, cpToCoins } from './wealth';
 
@@ -54,8 +53,6 @@ export interface PlayState {
   inventory?: InventoryItem[];
   /** In-play wallet; when set, it overrides the build's starting currency. */
   currency?: Coins;
-  /** Banked monster parts (gp-value) for the Monster Parts subsystem; in-play progress (kept on rebuild). */
-  monsterParts?: number;
   /** Pinned/favorited activity keys (Main-tab favorites). */
   pinned: string[];
   /** Favorited description popups (starred from any description page). */
@@ -150,7 +147,6 @@ export function initialPlay(ch: Character, content: ContentDatabase): PlayState 
     conditions: (ch.conditions ?? []).map((c) => ({ ...c })),
     inventory: (ch.inventory ?? []).map((i) => ({ ...i })),
     currency: { ...ch.currency },
-    monsterParts: ch.monsterParts ?? 0,
     pinned: ch.pinned ?? [],
     pinnedDescs: ch.pinnedDescs ? ch.pinnedDescs.map((d) => ({ ...d })) : [],
     resources: { ...(ch.classResources ?? {}) },
@@ -174,14 +170,14 @@ export function itemApex(inventory: InventoryItem[] | undefined, content: Conten
 /** Overlay the in-play runtime values onto a freshly-built (snapshot) character. */
 export function applyPlayState(ch: Character, play: PlayState | undefined, content: ContentDatabase): Character {
   if (!play) return ch;
-  // Apex items — regular (an invested item with an apexAttribute, e.g. Belt of Giant Strength) or
-  // Monster Parts (an invested/worn item imbued with an apex property at level 17+) — raise one
-  // attribute (to 18, or +2 if already 18+). Bump it on the overlaid character so it ripples through
-  // every derived stat (HP, saves, skills…). Only one apex item works at a time — the first wins.
-  // Under Automatic Bonus Progression, apex items grant NO attribute benefit (build.ts already applies
-  // the ABP attribute apex at level 17), so this overlay must do nothing — otherwise it double-boosts.
+  // A regular apex item (an invested item with an apexAttribute, e.g. Belt of Giant Strength) raises
+  // one attribute (to 18, or +2 if already 18+). Bump it on the overlaid character so it ripples
+  // through every derived stat (HP, saves, skills…). Only one apex item works at a time — the first
+  // wins. Under Automatic Bonus Progression, apex items grant NO attribute benefit (build.ts already
+  // applies the ABP attribute apex at level 17), so this overlay must do nothing — otherwise it
+  // double-boosts.
   const abpOn = !!ch.variantRules?.abp;
-  const apexAbility = abpOn ? null : monsterPartApex(play.inventory ?? ch.inventory) ?? itemApex(play.inventory ?? ch.inventory, content);
+  const apexAbility = abpOn ? null : itemApex(play.inventory ?? ch.inventory, content);
   if (apexAbility) {
     const score = ch.abilities[apexAbility];
     ch = { ...ch, abilities: { ...ch.abilities, [apexAbility]: score >= 18 ? score + 2 : 18 } };
@@ -262,7 +258,6 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     conditions,
     inventory: play.inventory ?? ch.inventory,
     currency: play.currency ?? ch.currency,
-    monsterParts: play.monsterParts ?? ch.monsterParts,
     pinned: play.pinned ?? ch.pinned ?? [],
     pinnedDescs: play.pinnedDescs ?? ch.pinnedDescs ?? [],
     classResources: play.resources ?? ch.classResources ?? {},
@@ -823,32 +818,6 @@ export function setCurrency(play: PlayState, currency: Coins): PlayState {
   return { ...play, currency };
 }
 
-/** Set the banked monster-parts value (gp), clamped to ≥ 0. */
-export function setMonsterParts(play: PlayState, value: number): PlayState {
-  return { ...play, monsterParts: Math.max(0, Math.round(value)) };
-}
-
-/** Write the per-item Monster Parts blob (refinement / imbuements) onto one inventory instance.
- *  Passing `undefined` clears it (reverting the item to a normal, rune-capable item). */
-export function setItemMonsterPart(
-  play: PlayState,
-  instanceId: string,
-  monsterPart: InventoryItem['monsterPart'] | undefined,
-): PlayState {
-  const inv = play.inventory ?? [];
-  return {
-    ...play,
-    inventory: inv.map((i) => {
-      if (i.instanceId !== instanceId) return i;
-      const next = { ...i, monsterPart };
-      // An item uses either monster parts or runes — never both. Clear runes when refining.
-      if (monsterPart) delete next.runes;
-      if (!monsterPart) delete next.monsterPart;
-      return next;
-    }),
-  };
-}
-
 /** Prepare/unprepare a Commander tactic for the day (capped at preparedMax; over-cap toggles no-op). */
 export function toggleTactic(play: PlayState, tacticId: string, preparedMax: number): PlayState {
   const cur = play.preparedTactics ?? [];
@@ -961,8 +930,6 @@ export function playForRebuild(play: PlayState): PlayState {
     heroPoints: play.heroPoints,
     mythicPoints: play.mythicPoints,
     xp: play.xp,
-    // Banked monster parts are harvested in play (not regenerated by the build), so keep them like XP.
-    monsterParts: play.monsterParts,
     conditions: play.conditions ?? [],
     pinned: play.pinned ?? [],
     pinnedDescs: play.pinnedDescs,

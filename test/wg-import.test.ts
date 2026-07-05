@@ -226,7 +226,6 @@ function wgKitchenSink() {
       },
       inventory: {
         coins: { cp: 3, sp: 2, gp: 41, pp: 1 },
-        monster_parts: { value: 12 },
         items: [
           { id: 'a', item: { name: 'Breastplate' }, is_formula: false, is_equipped: true, is_invested: false, is_implanted: false, container_contents: [] },
           { id: 'b', item: { name: 'Dagger' }, is_formula: false, is_equipped: true, is_invested: false, is_implanted: false, container_contents: [] },
@@ -361,10 +360,6 @@ describe('Wanderer’s Guide import — kitchen sink (overhaul mappings)', () =>
     expect(warns).toMatch(/crafting formula/i);
   });
 
-  it('imports banked monster parts', () => {
-    expect(ch.monsterParts).toBe(12);
-  });
-
   it('fills prepared slots by rank and keeps the cast (exhausted) state', () => {
     const heal = Object.values(db.spells).find((s) => s.name === 'Heal')!.id;
     const bless = Object.values(db.spells).find((s) => s.name === 'Bless')!.id;
@@ -448,11 +443,10 @@ describe('Wanderer’s Guide import — kitchen sink (overhaul mappings)', () =>
     const out = JSON.parse(exportWg(saved, db));
     const conds = out.character.details.conditions;
     expect(conds).toEqual(expect.arrayContaining([expect.objectContaining({ name: 'Frightened', value: 2 })]));
-    expect(out.character.inventory.monster_parts?.value).toBe(12);
   });
 });
 
-describe('Wanderer’s Guide import — data-loss fixes (implanted / monster-parts gate / normalize)', () => {
+describe('Wanderer’s Guide import — data-loss fixes (implanted / normalize)', () => {
   const db = content();
 
   it('treats is_implanted like is_invested (an implanted item is not silently dropped)', () => {
@@ -508,47 +502,24 @@ describe('Wanderer’s Guide import — data-loss fixes (implanted / monster-par
     expect(typeof saved.character.xp).toBe('number');
   });
 
-  it('re-enables the Monster Parts capability when banked parts survive (homebrew unlock source)', () => {
-    // Seed a homebrew Source that unlocks monsterParts, so the importer can union its name back into
-    // enabledSources (which a WG round-trip otherwise replaces wholesale, closing the gate).
-    const store: Record<string, string> = {
-      'wanderers-codex:homebrew-sources:v1': JSON.stringify({
-        'hb-mp': { id: 'hb-mp', name: 'My Monster Parts', unlocks: ['monsterParts'] },
-      }),
-    };
-    (globalThis as unknown as { localStorage: Storage }).localStorage = {
-      get length() { return Object.keys(store).length; },
-      getItem: (k: string) => (k in store ? store[k] : null),
-      setItem: (k: string, v: string) => { store[k] = String(v); },
-      removeItem: (k: string) => { delete store[k]; },
-      clear: () => { for (const k of Object.keys(store)) delete store[k]; },
-      key: (i: number) => Object.keys(store)[i] ?? null,
-    } as unknown as Storage;
-
-    try {
-      const file = JSON.stringify({
-        version: 4,
-        character: {
-          name: 'Parts Hoarder', level: 5,
-          details: { ancestry: { name: 'Human' }, background: { name: 'Acolyte' }, class: { name: 'Fighter' } },
-          inventory: { coins: {}, monster_parts: { value: 30 }, items: [] },
-          content_sources: { enabled: [1] },
-        },
-        content: {
-          all_sources: [{ id: 1, name: 'Player Core' }],
-          attributes: { ATTRIBUTE_STR: { value: 4 } },
-          feats_features: { classFeats: [], ancestryFeats: [], generalAndSkillFeats: [], otherFeats: [] },
-          spells: { cantrips: [], normal: [] },
-          languages: [],
-        },
-      });
-      const { saved } = importCharacter(file, db);
-      expect(saved.character.monsterParts).toBe(30);
-      // The unlock Source's NAME must be present in enabledSources so monsterPartsEnabled() reopens.
-      expect(saved.character.enabledSources).toContain('My Monster Parts');
-    } finally {
-      delete (globalThis as unknown as { localStorage?: Storage }).localStorage;
-    }
+  it('silently drops legacy Battlezoo Monster Parts data on import (no crash, no lingering fields)', () => {
+    const file = JSON.stringify({
+      version: 4,
+      character: {
+        name: 'Legacy Parts', level: 5,
+        details: { ancestry: { name: 'Human' }, background: { name: 'Acolyte' }, class: { name: 'Fighter' } },
+        // A WG file that still carries a banked monster-parts total — must be ignored, not surfaced.
+        inventory: { coins: {}, monster_parts: { value: 30 }, items: [] },
+      },
+      content: {
+        attributes: { ATTRIBUTE_STR: { value: 4 } },
+        feats_features: { classFeats: [], ancestryFeats: [], generalAndSkillFeats: [], otherFeats: [] },
+        spells: { cantrips: [], normal: [] },
+        languages: [],
+      },
+    });
+    const { saved } = importCharacter(file, db);
+    expect((saved.character as Record<string, unknown>).monsterParts).toBeUndefined();
   });
 });
 

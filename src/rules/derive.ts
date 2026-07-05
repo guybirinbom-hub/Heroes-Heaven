@@ -31,7 +31,6 @@ import { PROFICIENCY_RANKS } from './types';
 import { conditionPenalty, drainedHpLoss } from './conditions';
 import { modeNumberBonus } from './modes';
 import { abpOn, abpAttack, abpDefense, abpSave, abpPerception, abpStrikingDice, abpSkillBonus } from './abp';
-import { weaponRefinement, armorRefinement, shieldRefinement, senseSkillRefinement, getMpProperty, resolvePath } from './monsterParts';
 
 export const RANK_VALUE: Record<ProficiencyRank, number> = {
   untrained: 0,
@@ -124,14 +123,12 @@ export function abilityModifiers(c: Character): Record<AbilityId, number> {
 
 const RESILIENT_BONUS: Record<string, number> = { resilient: 1, greater: 2, major: 3 };
 
-/** Item bonus to saves from a worn armor's resilient rune (or refinement, Monster Parts). */
+/** Item bonus to saves from a worn armor's resilient rune. */
 export function resilientSaveBonus(c: Character, db: ContentDatabase): number {
   const worn = c.inventory.find((i) => i.worn && db.items[i.itemId]?.itemType === 'armor');
   if (!worn) return 0;
   const r = (worn.runes as ArmorRunes | undefined)?.resilient;
-  const runeBonus = r ? RESILIENT_BONUS[r] ?? 0 : 0;
-  const refBonus = worn.monsterPart?.refinedLevel ? armorRefinement(worn.monsterPart.refinedLevel).saves : 0;
-  return Math.max(runeBonus, refBonus);
+  return r ? RESILIENT_BONUS[r] ?? 0 : 0;
 }
 
 export function deriveSave(c: Character, save: SaveId, db?: ContentDatabase): StatLine {
@@ -147,26 +144,12 @@ export function deriveSave(c: Character, save: SaveId, db?: ContentDatabase): St
   return { rank, modifier };
 }
 
-/** Item bonus from a refined Monster Parts Perception/skill item (Tables 4D/4E, +1/+2/+3). An item
- *  bonus, so it takes the higher of it and any other item bonus to the same statistic (e.g. ABP). */
-export function mpSenseSkillBonus(c: Character, kind: 'perception' | 'skill', skillKey?: string): number {
-  let best = 0;
-  for (const inv of c.inventory) {
-    const mp = inv.monsterPart;
-    if (!mp?.refinedLevel || mp.kind !== kind) continue;
-    if (!(inv.worn || inv.invested || inv.equipped)) continue;
-    if (kind === 'skill' && mp.skillKey !== skillKey) continue;
-    best = Math.max(best, senseSkillRefinement(mp.refinedLevel).bonus);
-  }
-  return best;
-}
-
 export function derivePerception(c: Character): StatLine {
   const rank = c.proficiencies.perception;
   const modifier =
     abilityMod(c.abilities.wis) +
     profBonus(rank, c.level, pwl(c)) +
-    Math.max(abpOn(c) ? abpPerception(c.level) : 0, mpSenseSkillBonus(c, 'perception')) +
+    (abpOn(c) ? abpPerception(c.level) : 0) +
     conditionPenalty(c.conditions, 'wis', 'perception') +
     modeNumberBonus(c.activeModes, { kind: 'perception' });
   return { rank, modifier };
@@ -178,7 +161,7 @@ export function deriveSkill(c: Character, key: ProficiencyKey, db?: ContentDatab
   let modifier =
     abilityMod(c.abilities[ability]) +
     profBonus(rank, c.level, pwl(c)) +
-    Math.max(abpSkillBonus(c, key), mpSenseSkillBonus(c, 'skill', key)) +
+    abpSkillBonus(c, key) +
     conditionPenalty(c.conditions, ability, 'skill') +
     modeNumberBonus(c.activeModes, { kind: 'skill', detail: key });
   // The worn armor's check penalty hits Strength- and Dexterity-based skills.
@@ -283,10 +266,8 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
   if (worn) {
     category = worn.armor.category;
     dexCap = worn.armor.dexCap ?? null;
-    // ABP defense potency replaces the armor potency rune's numeric bonus. A refined armor (Monster
-    // Parts) gives an AC item bonus of the same class — take the higher of it and the potency rune.
-    const refAc = worn.inv.monsterPart?.refinedLevel ? armorRefinement(worn.inv.monsterPart.refinedLevel).ac : 0;
-    const potency = abpOn(c) ? 0 : Math.max((worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0, refAc);
+    // ABP defense potency replaces the armor potency rune's numeric bonus.
+    const potency = abpOn(c) ? 0 : (worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0;
     // Guard against a data-incomplete armor (missing acBonus) corrupting AC into NaN.
     itemBonus = (worn.armor.acBonus ?? 0) + potency;
   }
@@ -334,15 +315,14 @@ export function deriveShield(c: Character, db: ContentDatabase): ShieldInfo | nu
     .find((x) => (x.inv.equipped || x.inv.worn) && x.item?.itemType === 'shield');
   if (!held || held.item?.itemType !== 'shield') return null;
   const s = held.item;
-  // A reinforcing rune (or Monster Parts refinement) raises the shield's Hardness/HP/Broken Threshold.
+  // A reinforcing rune raises the shield's Hardness/HP/Broken Threshold.
   const rein = (held.inv.runes as ArmorRunes | undefined)?.reinforcing;
   const r = rein ? REINFORCING[rein] : undefined;
-  const ref = held.inv.monsterPart?.refinedLevel ? shieldRefinement(held.inv.monsterPart.refinedLevel) : null;
   // Guard every shield stat against a data-incomplete item (missing hardness/hp/BT/acBonus) so the
   // shield block — and the AC breakdown that reads it — can never compute NaN.
-  const hardness = Math.max(s.hardness ?? 0, r?.hardness ?? 0, ref?.hardness ?? 0);
-  const hp = Math.max(s.hp ?? 0, r?.hp ?? 0, ref?.hp ?? 0);
-  const brokenThreshold = Math.max(s.brokenThreshold ?? 0, r?.bt ?? 0, ref?.bt ?? 0);
+  const hardness = Math.max(s.hardness ?? 0, r?.hardness ?? 0);
+  const hp = Math.max(s.hp ?? 0, r?.hp ?? 0);
+  const brokenThreshold = Math.max(s.brokenThreshold ?? 0, r?.bt ?? 0);
   const current = Math.max(0, hp - Math.max(0, c.shieldDamage ?? 0));
   return { name: s.name, ac: s.acBonus ?? 0, hardness, hp, brokenThreshold, current, broken: current <= brokenThreshold };
 }
@@ -432,20 +412,6 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     for (const t of src.immunities ?? []) imm.add(t);
   }
 
-  // Monster Parts: worn/invested/wielded items can grant resistances (Energy Resistant, value = the
-  // property's level) and senses (Sensory). Same-type resistances don't stack — the highest wins.
-  for (const inv of c.inventory) {
-    if (!(inv.worn || inv.invested || inv.equipped)) continue;
-    for (const im of inv.monsterPart?.imbuements ?? []) {
-      const prop = getMpProperty(im.propertyId);
-      if (!prop) continue;
-      if (prop.resistance && im.choice && im.level > 0) {
-        res.set(im.choice, Math.max(res.get(im.choice) ?? 0, im.level));
-      }
-      for (const s of prop.senses ?? []) if (im.level >= s.level) addSense({ name: s.sense });
-    }
-  }
-
   const sortByType = (a: { type: string }, b: { type: string }) => a.type.localeCompare(b.type);
   return {
     senses: [...senses.values()],
@@ -510,39 +476,6 @@ function deitySimpleFavoredWeaponIds(c: Character, db: ContentDatabase): Set<str
 function deityFavorsUnarmed(c: Character, db: ContentDatabase): boolean {
   const deity = c.details.deityId ? db.deities[c.details.deityId] : undefined;
   return (deity?.favoredWeapons ?? []).some((w) => !db.items[w]);
-}
-
-/** Per-hit extra-damage strings from an item's Monster Parts imbuements (folds in like property-rune
- *  damage). Per-hit only — situational crit riders are reference text on the item, not computed. */
-function mpImbuedStrikeDamage(mp: InventoryItem['monsterPart'], baseType: string): string[] {
-  // Collect structured terms, resolving the 'untyped' placeholder (Bane/Wild deal the WEAPON's base
-  // damage type) to the weapon's own type, then merge like terms so two identical imbuements (e.g. two
-  // 1d6 fire on different paths) read as one "2d6 fire" instead of "1d6 fire plus 1d6 fire".
-  type Term = { dice?: number; die?: string; flat?: number; type: string; persistent?: boolean };
-  const terms: Term[] = [];
-  for (const im of mp?.imbuements ?? []) {
-    const prop = getMpProperty(im.propertyId);
-    if (!prop) continue;
-    const path = prop.paths.find((pa) => pa.id === im.path) ?? prop.paths[0];
-    if (!path) continue;
-    const r = resolvePath(path, im.level);
-    for (const dd of [r.addDamage, r.persistentDamage]) {
-      if (!dd) continue;
-      terms.push({ ...dd, type: dd.type === 'untyped' ? baseType : dd.type });
-    }
-  }
-  const merged = new Map<string, Term>();
-  for (const t of terms) {
-    const key = `${t.persistent ? 'p' : ''}|${t.type}|${t.dice && t.die ? t.die : 'flat'}`;
-    const prev = merged.get(key);
-    if (!prev) merged.set(key, { ...t });
-    else if (t.dice && t.die) prev.dice = (prev.dice ?? 0) + t.dice;
-    else prev.flat = (prev.flat ?? 0) + (t.flat ?? 0);
-  }
-  return [...merged.values()].map((t) => {
-    const body = t.dice && t.die ? `${t.dice}${t.die}` : `${t.flat ?? 0}`;
-    return `${body}${t.persistent ? ' persistent' : ''} ${DAMAGE_ABBR[t.type] ?? t.type}`;
-  });
 }
 
 export interface Strike {
@@ -752,12 +685,8 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     betterRank(c.proficiencies.attacks[w.category], c.proficiencies.weaponOverrides?.[w.id]),
     w.group ? c.proficiencies.weaponGroups?.[w.group] : undefined,
   );
-  // ABP attack potency / devastating-attacks dice replace the weapon's potency / striking runes.
-  // A refined weapon (Monster Parts) supplies an item bonus of the same class — take the higher
-  // (a refined item carries no runes, so this is really refinement-vs-ABP).
-  const mp = inv.monsterPart;
-  const mpRef = mp?.refinedLevel ? weaponRefinement(mp.refinedLevel) : null;
-  const potencyBonus = Math.max(abpOn(c) ? abpAttack(c.level) : runes?.potency ?? 0, mpRef?.attack ?? 0);
+  // ABP attack potency replaces the weapon's potency rune.
+  const potencyBonus = abpOn(c) ? abpAttack(c.level) : runes?.potency ?? 0;
   // Clumsy penalizes EVERY ranged attack roll, including thrown weapons that use Str to hit. Status
   // penalties don't stack and both calls carry the same Frightened/Prone, so taking the worst (min) of
   // the attack-ability and Dex penalties folds in Clumsy for a thrown strike without double-counting.
@@ -770,10 +699,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   const step = w.traits.includes('agile') ? 4 : 5;
   const attack = [base, base - step, base - step * 2];
 
-  const strikingExtra = Math.max(
-    abpOn(c) ? abpStrikingDice(c.level) : runes?.striking ? STRIKING_DICE[runes.striking] : 0,
-    mpRef?.extraDice ?? 0,
-  );
+  const strikingExtra = abpOn(c) ? abpStrikingDice(c.level) : runes?.striking ? STRIKING_DICE[runes.striking] : 0;
   const dice = w.damage.dice + strikingExtra;
   // Deadly Simplicity steps the damage die of the deity's favored SIMPLE weapon up one size while
   // it's wielded (Player Core). Only real simple weapon items qualify here; unarmed favored weapons
@@ -807,8 +733,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   const critPersistent = runeDamage
     .filter((d) => d.critPersistent)
     .map((d) => `${d.critPersistent!.dice}${d.critPersistent!.die} persistent ${DAMAGE_ABBR[d.type] ?? d.type}`);
-  // Monster Parts imbued damage folds in alongside property-rune damage as per-hit "plus" terms.
-  const extraDmg = [...runeDmg, ...mpImbuedStrikeDamage(mp, w.damage.type)];
+  const extraDmg = [...runeDmg];
   // Deadly dN adds bonus weapon dice on a crit (1 die; 2 with greater striking, 3 with major); Fatal dN
   // upgrades the crit dice to dN and adds one; Two-Hand dN uses a larger die when wielded two-handed.
   const traitDie = (re: RegExp) => w.traits.map((t) => re.exec(t)?.[1]).find(Boolean);

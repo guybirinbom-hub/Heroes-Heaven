@@ -43,11 +43,32 @@ function migrateInventoryIds(inventory: unknown): unknown {
   });
 }
 
+/**
+ * Drop legacy Battlezoo Monster Parts data. The refine/imbue subsystem was removed, so a character or
+ * play state saved while it was in use may still carry a per-item `monsterPart` blob and a banked
+ * `monsterParts` gp total. These fields are no longer read; strip them so the loaded character is clean
+ * (any former refinement/imbuement bonuses simply no longer apply). Returns the input unchanged when
+ * there's nothing legacy to strip, so this is a no-op for the common case.
+ */
+function stripLegacyMonsterParts(inventory: unknown): unknown {
+  if (!Array.isArray(inventory)) return inventory;
+  let changed = false;
+  const out = inventory.map((entry) => {
+    if (entry && typeof entry === 'object' && 'monsterPart' in (entry as object)) {
+      changed = true;
+      const { monsterPart: _drop, ...rest } = entry as Record<string, unknown>;
+      return rest;
+    }
+    return entry;
+  });
+  return changed ? out : inventory;
+}
+
 /** Apply migrateInventoryIds to each companion's inventory (companions carry their own gear). */
 function migrateCompanionInventories<T>(companions: T[]): T[] {
   return companions.map((c) => {
     if (!c || typeof c !== 'object' || !Array.isArray((c as { inventory?: unknown }).inventory)) return c;
-    return { ...c, inventory: migrateInventoryIds((c as unknown as { inventory: unknown }).inventory) };
+    return { ...c, inventory: migrateInventoryIds(stripLegacyMonsterParts((c as unknown as { inventory: unknown }).inventory)) };
   });
 }
 
@@ -100,8 +121,10 @@ function num(v: unknown, fallback: number): number {
 export function normalizeCharacter(input: unknown): Character {
   const c = (input && typeof input === 'object' ? input : {}) as Partial<Character>;
   const hp = obj<Partial<Character['hitPoints']>>(c.hitPoints, {});
+  // Drop the removed Battlezoo Monster Parts banked-gp total (legacy characters may still carry it).
+  const { monsterParts: _dropMp, ...rest } = c as Partial<Character> & { monsterParts?: unknown };
   return {
-    ...(c as Character),
+    ...(rest as Character),
     schemaVersion: typeof c.schemaVersion === 'number' ? c.schemaVersion : CHARACTER_SCHEMA_VERSION,
     id: typeof c.id === 'string' && c.id ? c.id : `char-${(c.name ?? 'unnamed').toString().toLowerCase().replace(/\s+/g, '-')}`,
     name: typeof c.name === 'string' ? c.name : 'Unnamed',
@@ -122,7 +145,7 @@ export function normalizeCharacter(input: unknown): Character {
     conditions: arr(c.conditions),
     languages: arr(c.languages),
     feats: arr(c.feats),
-    inventory: migrateInventoryIds(arr(c.inventory)) as Character['inventory'],
+    inventory: migrateInventoryIds(stripLegacyMonsterParts(arr(c.inventory))) as Character['inventory'],
     currency: obj<Coins>(c.currency, {}),
     spellcasting: arr(c.spellcasting),
     details: obj<Character['details']>(c.details, {}),
@@ -149,8 +172,10 @@ export function normalizeCharacter(input: unknown): Character {
  */
 export function normalizePlay(input: unknown): PlayState {
   const p = (input && typeof input === 'object' ? input : {}) as Partial<PlayState>;
+  // Drop the removed Battlezoo Monster Parts banked-gp total (legacy play states may still carry it).
+  const { monsterParts: _dropMp, ...rest } = p as Partial<PlayState> & { monsterParts?: unknown };
   return {
-    ...(p as PlayState),
+    ...(rest as PlayState),
     damage: num(p.damage, 0),
     tempHp: num(p.tempHp, 0),
     heroPoints: num(p.heroPoints, 0),
@@ -162,7 +187,7 @@ export function normalizePlay(input: unknown): PlayState {
     ...(p.pinnedDescs !== undefined ? { pinnedDescs: arr(p.pinnedDescs) } : {}),
     ...(p.notes !== undefined ? { notes: arr(p.notes) } : {}),
     ...(p.companions !== undefined ? { companions: migrateCompanionInventories(arr(p.companions)) } : {}),
-    ...(p.inventory !== undefined ? { inventory: migrateInventoryIds(arr(p.inventory)) as PlayState['inventory'] } : {}),
+    ...(p.inventory !== undefined ? { inventory: migrateInventoryIds(stripLegacyMonsterParts(arr(p.inventory))) as PlayState['inventory'] } : {}),
     ...(p.activeModes !== undefined ? { activeModes: arr(p.activeModes) } : {}),
     ...(p.preparedTactics !== undefined ? { preparedTactics: arr(p.preparedTactics) } : {}),
     // Objects the overlay reads by key / spreads.

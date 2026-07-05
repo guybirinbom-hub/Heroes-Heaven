@@ -19,7 +19,6 @@ import {
   type PlayUpdater,
 } from '../rules/play';
 import { itemCounters, chargesFor, chargeCounterId, chargeCostToCast, canCastFromItem } from '../rules/itemUses';
-import { getMpProperty, imbuementGrantedSpells } from '../rules/monsterParts';
 import { ActionGlyph } from './widgets';
 import { ItemDetail } from './ItemDetail';
 import { useEscapeClose } from './useEscapeClose';
@@ -1110,57 +1109,7 @@ export function SpellsTab({
     );
   })();
 
-  // Monster Parts: spells granted by imbued items (read-only; cast using your spell DC). Names are
-  // matched to the spell database from the imbued-property text, so only confirmed spells appear.
-  const monsterPartsNode: ReactNode = (() => {
-    const imbued = character.inventory.filter((iv) => (iv.monsterPart?.imbuements?.length ?? 0) > 0);
-    if (!imbued.length) return null;
-    const mpNorm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
-    const byName = new Map<string, string>();
-    for (const sp of Object.values(content.spells)) byName.set(mpNorm(sp.name), sp.id);
-    const freqLabel: Record<string, string> = { cantrip: 'at will', day: '1/day', hour: '1/hour', minute: '1/minute' };
-    const rows: { spellId: string; freq: string; source: string }[] = [];
-    const seen = new Set<string>();
-    for (const iv of imbued) {
-      const item = content.items[iv.itemId];
-      if (!item) continue;
-      for (const im of iv.monsterPart!.imbuements!) {
-        const prop = getMpProperty(im.propertyId);
-        if (!prop) continue;
-        const path = prop.paths.find((p) => p.id === im.path) ?? prop.paths[0];
-        if (!path) continue;
-        for (const g of imbuementGrantedSpells(path, im.level)) {
-          const id = byName.get(mpNorm(g.name));
-          if (!id) continue;
-          const key = `${id}:${iv.instanceId}`;
-          if (seen.has(key)) continue;
-          seen.add(key);
-          rows.push({ spellId: id, freq: freqLabel[g.freq] ?? '1/day', source: `${item.name} · ${prop.name}` });
-        }
-      }
-    }
-    const shown = query ? rows.filter((r) => (content.spells[r.spellId]?.name ?? '').toLowerCase().includes(query)) : rows;
-    if (!shown.length) return null;
-    return (
-      <section className="card">
-        <div className="ct" style={{ margin: secOpen('monster-parts') ? '0 0 10px' : 0 }}>
-          <SecChevron id="monster-parts" />
-          <i className="ti ti-bone" aria-hidden="true" /> Monster Parts spells
-          <span style={{ fontSize: 11.5, color: 'var(--app-text-dim)', marginLeft: 6 }}>· granted by imbued items</span>
-        </div>
-        {secOpen('monster-parts') && (
-          <div className="spell-grid">
-            {shown.map((r) => {
-              const sp = content.spells[r.spellId];
-              return <SpellCard key={`mp:${r.spellId}:${r.source}`} name={sp?.name ?? r.spellId} cost={sp?.cast} meta={`${r.freq} · ${r.source}`} onClick={sp ? () => setDetail(sp) : undefined} />;
-            })}
-          </div>
-        )}
-      </section>
-    );
-  })();
-
-  // Unified mobile tab list: every pool's rank sections, then focus, items, spellbook, rituals, parts.
+  // Unified mobile tab list: every pool's rank sections, then focus, items, spellbook, rituals.
   // Order matches the desktop stacked layout. Only consumed on mobile, but computing always is fine.
   const spellTabs: { key: string; label: string; node: ReactNode; badge?: string }[] = [];
   for (const main of mains) {
@@ -1178,7 +1127,6 @@ export function SpellsTab({
   for (const it of itemNodes) spellTabs.push({ key: it.id, label: it.name, node: it.node });
   if (spellbookNode) spellTabs.push({ key: 'spellbook', label: 'Book', node: spellbookNode });
   if (ritualsNode) spellTabs.push({ key: 'rituals', label: 'Rituals', node: ritualsNode });
-  if (monsterPartsNode) spellTabs.push({ key: 'mp', label: 'Parts', node: monsterPartsNode });
   const spellTabActiveKey = spellTabs.some((t) => t.key === spellTab) ? spellTab : spellTabs[0]?.key;
 
   return (
@@ -1322,7 +1270,7 @@ export function SpellsTab({
           </section>
         ))}
 
-      {/* DESKTOP: the spellbook / focus / item & innate / rituals / monster-parts sections
+      {/* DESKTOP: the spellbook / focus / item & innate / rituals sections
           stacked exactly as before. On mobile these all live inside the page-level tab row above. */}
       {!isMobile && (
         <>
@@ -1330,7 +1278,6 @@ export function SpellsTab({
           {focusNode}
           {itemNodes.map((it) => it.node)}
           {ritualsNode}
-          {monsterPartsNode}
         </>
       )}
 

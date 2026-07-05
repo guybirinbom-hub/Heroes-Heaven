@@ -215,29 +215,3 @@ export function sourceCatalog(content: ContentDatabase): {
 export function enabledBookSet(enabledSources: string[] | undefined): Set<string> {
   return new Set(enabledSources ?? CORE_BOOKS);
 }
-
-/** Capability id for the Monster Parts (refine/imbue) subsystem, unlocked by a homebrew Source. */
-export const MONSTER_PARTS_CAPABILITY = 'monsterParts';
-
-/** Is a homebrew Source that unlocks `capability` enabled on this character? Resolves the Source by
- *  its current name (looked up from the live Sources map, so renames don't break the gate) and checks
- *  it against the character's enabled sources. Absent enabledSources → Core-only → off. */
-export function capabilityEnabled(
-  enabledSources: string[] | undefined,
-  hbSources: Record<string, { name: string; unlocks?: string[] }>,
-  capability: string,
-): boolean {
-  const enabled = enabledBookSet(enabledSources);
-  for (const s of Object.values(hbSources)) {
-    if (s.unlocks?.includes(capability) && enabled.has(s.name)) return true;
-  }
-  return false;
-}
-
-/** Convenience: is the Monster Parts subsystem unlocked for this character? */
-export function monsterPartsEnabled(
-  character: { enabledSources?: string[] },
-  hbSources: Record<string, { name: string; unlocks?: string[] }>,
-): boolean {
-  return capabilityEnabled(character.enabledSources, hbSources, MONSTER_PARTS_CAPABILITY);
-}

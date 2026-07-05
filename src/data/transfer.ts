@@ -43,9 +43,9 @@ import type {
   WeaponCategory,
 } from '../rules/types';
 import { ABILITIES, SKILLS } from '../rules/types';
-import { loadHomebrewSources, newRosterId, type SavedChar } from './storage';
+import { newRosterId, type SavedChar } from './storage';
 import { buildCharacter, classChoosesDeity, CUSTOM_BACKGROUND_ID, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
-import { CORE_BOOKS, MONSTER_PARTS_CAPABILITY, sourceCatalog } from '../rules/sources';
+import { CORE_BOOKS, sourceCatalog } from '../rules/sources';
 import { applyPlayState } from '../rules/play';
 import { normalizeCharacter, normalizePlay } from '../rules/normalize';
 import { sanitize } from '../sheet/sanitizeHtml';
@@ -303,7 +303,6 @@ export function exportWg(saved: SavedChar, content: ContentDatabase): string {
       // WG inventory items must be full WG item rows (its own ids/operations), which we
       // can't author — so we leave items empty here; the readable list lives in `content`.
       items: [] as unknown[],
-      ...(ch.monsterParts ? { monster_parts: { value: ch.monsterParts } } : {}),
     },
     notes: wgNotes(ch.notes),
     roll_history: null,
@@ -1029,7 +1028,6 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
   const builtInv: BuildState['inventory'] = [];
   const naturals: NaturalAttack[] = [];
   let formulaCount = 0;
-  let battlezooItems = 0;
   // Per-instance state WG stores on the item row: limited-use charges and the spell a generic
   // scroll/wand holds.
   const wgItemExtras = (row: any): { charges?: { current: number; max: number }; heldSpell?: string } => {
@@ -1055,7 +1053,6 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
       formulaCount++;
       continue;
     }
-    if (row?.item?.meta_data?.battlezoo?.enabled) battlezooItems++;
     // Match by name; if a descriptor variant like "Rope (50 ft.)" / "Rations (1 week)" misses, retry
     // without the trailing parenthetical — but NOT for tier parentheticals (a missing "Healing Potion
     // (Greater)" must not silently become a base "Healing Potion").
@@ -1105,10 +1102,6 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
     });
   }
   if (formulaCount) warnings.push(`${formulaCount} crafting formula${formulaCount === 1 ? '' : 's'} skipped (the app has no formula book).`);
-  if (battlezooItems)
-    warnings.push(
-      `${battlezooItems} item${battlezooItems === 1 ? ' uses' : 's use'} Wanderer’s Guide Monster Parts refinement — refine ${battlezooItems === 1 ? 'it' : 'them'} again from the Inventory tab (the two apps track refinement differently).`,
-    );
   if (builtInv.length) {
     build.inventory = builtInv;
     resolved.push(`${builtInv.length} item${builtInv.length === 1 ? '' : 's'} matched.`);
@@ -1301,23 +1294,6 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
   character.xp = c.experience ?? 0;
   character.heroPoints = clamp(c.hero_points ?? 1, 0, 3);
   if (build.enabledSources) character.enabledSources = build.enabledSources;
-  const bankedParts = Number(c.inventory?.monster_parts?.value);
-  if (Number.isFinite(bankedParts) && bankedParts > 0) {
-    character.monsterParts = bankedParts;
-    resolved.push(`${bankedParts} gp of banked monster parts imported.`);
-    // The Monster Parts subsystem is gated by a homebrew Source that `unlocks: ['monsterParts']`,
-    // enabled by its NAME in enabledSources. But enabledSources was just replaced wholesale from the
-    // matched WG books (which never include a private homebrew source), so the gate would close and
-    // this banked value become dead data. Re-enable the capability: union in the name of every local
-    // homebrew Source that unlocks it, keeping the character's other enabled books.
-    const unlockNames = Object.values(loadHomebrewSources())
-      .filter((s) => s.unlocks?.includes(MONSTER_PARTS_CAPABILITY))
-      .map((s) => s.name);
-    if (unlockNames.length) {
-      const base = character.enabledSources ?? [...CORE_BOOKS];
-      character.enabledSources = [...new Set([...base, ...unlockNames])];
-    }
-  }
   const maxHp = deriveMaxHp(character, content);
   character.hitPoints = {
     ...character.hitPoints,

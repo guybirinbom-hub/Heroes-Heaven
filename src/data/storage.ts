@@ -132,9 +132,6 @@ export interface HomebrewSource {
   name: string;
   abbreviation?: string;
   description?: string;
-  /** Capability ids this Source turns on when enabled on a character (e.g. ['monsterParts']).
-   *  Lets a Source unlock a built-in subsystem, resolved by Source id so it survives renames. */
-  unlocks?: string[];
 }
 
 /** The content-type buckets the Homebrew manager can author. */

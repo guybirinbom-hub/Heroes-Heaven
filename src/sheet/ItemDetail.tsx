@@ -14,7 +14,6 @@ import { PinStar } from './PinStar';
 import { ActionGlyph } from './widgets';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { SPELL_SPEC_BUILDER } from './filterSpecs';
-import { MonsterPartsSection } from './MonsterPartsEditor';
 
 const ordinalRank = (n: number): string => (n === 1 ? '1st' : n === 2 ? '2nd' : n === 3 ? '3rd' : `${n}th`);
 
@@ -134,8 +133,6 @@ export function ItemDetail({
   onPlay,
   inventory = [],
   rationsDayTracking = false,
-  monsterPartsOn = false,
-  charLevel = 1,
   onEdit,
 }: {
   inv: InventoryItem;
@@ -147,10 +144,6 @@ export function ItemDetail({
   inventory?: InventoryItem[];
   /** "Individual day tracking of rations" option — suppress the Rations days counter. */
   rationsDayTracking?: boolean;
-  /** Whether the Monster Parts subsystem is unlocked for this character (shows refine/imbue controls). */
-  monsterPartsOn?: boolean;
-  /** Character level — caps refinement / imbued-property levels. */
-  charLevel?: number;
   /** Opens the item editor for this item + instance (runes/attachments live there). */
   onEdit?: (item: Item, inv: InventoryItem) => void;
 }) {
@@ -325,7 +318,6 @@ export function ItemDetail({
               <span className="sd-uses-hint">Applies on a critical hit if you have critical specialization with this weapon group.</span>
             </div>
           )}
-          {onPlay && monsterPartsOn && <MonsterPartsSection inv={inv} item={item} charLevel={charLevel} onPlay={onPlay} />}
           <DescBody description={item.description} descRefs={item.descRefs} onExit={onClose} />
           {onPlay && (
             <div className="sd-remove">
