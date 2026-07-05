@@ -832,7 +832,15 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
     if (!id) continue; // not necessarily a feat (could be a class feature label) — skip silently
     const ft = content.feats[id];
     if (matchedFeats.some((m) => m.featId === id)) continue; // de-dupe (parenthetical variants)
-    matchedFeats.push({ featId: id, level: ft.level || f.level || 1, category: ft.category });
+    // Prefer the WG feature's SELECTION level (f.level) over the feat's minimum level (ft.level) so
+    // several feats sharing a minimum level don't all collide onto that one level. WG's own v4 export
+    // carries the feat's minimum level here (its `feats_features` entries are raw ability blocks), so
+    // for real WG files this degenerates to the minimum level — the robust reverse-build slotter
+    // (deriveBuildFromCharacter) then redistributes any colliding feats across the class's real slots.
+    // Clamp to a legal window: at least the feat's minimum level (min 1), at most the character level.
+    const minLvl = Math.max(1, ft.level || 1);
+    const level = Math.min(Math.max(f.level ?? minLvl, minLvl), clampLevel(c.level));
+    matchedFeats.push({ featId: id, level, category: ft.category });
   }
   if (matchedFeats.length) {
     ch = { ...ch, feats: matchedFeats };
@@ -880,6 +888,32 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
     const sk = ch.proficiencies.skills as Record<string, string>;
     for (const s of trained) if (!sk[s] || sk[s] === 'untrained') sk[s] = 'trained';
     resolved.push(`${trained.size} trained skill${trained.size === 1 ? '' : 's'} (ranks above trained are approximate).`);
+  }
+
+  // Apply the FULL WG proficiency rank (expert/master/legendary — from profValue 4/6/8) to the
+  // character's skills + lore BEFORE reverse-deriving, so deriveBuildFromCharacter can synthesize the
+  // skill INCREASES those above-trained ranks imply. Without this the character would only carry
+  // 'trained' at derive time, the increase reconstruction would find nothing to do, and the expert
+  // ranks would live only on the final sheet (dropped on the next builder rebuild — data loss). The
+  // final-sheet bump further down (near line 1324) still runs as a safety net for anything the build
+  // can't legally reproduce. Only RAISE ranks — never lower a class/background grant already present.
+  if (snap.proficiencies && typeof snap.proficiencies === 'object') {
+    const wgRankOf = (key: string): ProficiencyRank | undefined => {
+      const e = snap.proficiencies[key];
+      const pv = e && typeof e === 'object' && e.parts ? e.parts.profValue : undefined;
+      return typeof pv === 'number' ? WG_PROF_RANK[pv] : undefined;
+    };
+    const sk = ch.proficiencies.skills as Record<string, ProficiencyRank>;
+    for (const s of SKILLS) {
+      const r = wgRankOf(`SKILL_${s.toUpperCase()}`) ?? wgRankOf(s.toUpperCase());
+      if (r && r !== 'untrained' && RANK_ORDER.indexOf(r) > RANK_ORDER.indexOf(sk[s] ?? 'untrained')) sk[s] = r;
+    }
+    for (const key of Object.keys(snap.proficiencies)) {
+      const lk = loreKeyFromWgVar(key);
+      if (!lk) continue;
+      const r = wgRankOf(key);
+      if (r && r !== 'untrained' && RANK_ORDER.indexOf(r) > RANK_ORDER.indexOf(sk[lk] ?? 'untrained')) sk[lk] = r;
+    }
   }
 
   // Reverse-derive a clean, editable build from the assembled character.

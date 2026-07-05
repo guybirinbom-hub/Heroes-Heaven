@@ -2184,6 +2184,10 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     ...(it.charges ? { charges: it.charges } : {}),
     ...(it.heldSpell ? { heldSpell: it.heldSpell } : {}),
   }));
+  // Native/lossless path: the character carries its own skillIncreases — trust them verbatim so a
+  // native round-trip stays exact. When they're absent or under-count the final ranks (imported /
+  // hand-authored characters that only recorded final ranks), the Skills block below SYNTHESIZES the
+  // missing increases so the builder's skill-increase slots are populated and ranks survive a rebuild.
   for (const si of c.skillIncreases ?? []) b.skillIncreases[si.level] = si.skill;
 
   const ancestry = c.ancestryId ? content.ancestries[c.ancestryId] : undefined;
@@ -2405,8 +2409,44 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   // dedicationSkillFeats so it doesn't consume a real skill-feat slot on reopen.
   const bonusSkillDedications = c.feats.filter((f) => FEAT_GRANTS[f.featId]?.bonusSkillFeat);
   const claimedBonusSkill = new Set<string>();
+  // AUTO-GRANTED feats buildCharacter re-injects with NO player slot — a subclass/muse bonus feat
+  // (Maestro muse → Lingering Composition), an option's choice-gated feat (Dominion Epithet →
+  // Energized Spark), the druid Voice-of-Nature pick, and kineticist Expand-the-Portal impulse feats.
+  // WG import matches these onto character.feats too, so they'd otherwise consume a real player feat
+  // slot (pushing genuine picks into overflow chips) and look "granted-but-missing". Subtract exactly
+  // what buildCharacter re-adds (mirroring its guards) so each shows on the sheet but is NOT an
+  // editable builder slot NOR a chip. Background/heritage/UMT/dedication grants are handled below.
+  const autoGrantedFeatIds = new Set<string>();
+  {
+    const favorsSimpleOrUnarmed = deityFavorsSimpleOrUnarmed(b.deityId, content);
+    for (const o of grantOptions) {
+      for (const fid of o.grantedFeats ?? []) {
+        const f = content.feats[fid];
+        // Mirror buildCharacter: a plain grantedFeat with no embedded sub-choice is auto-granted; a
+        // choice-gated one is left for a manual slot there, so DON'T subtract it here.
+        if (!f || f.choice) continue;
+        if (fid === 'deadly-simplicity' && !favorsSimpleOrUnarmed) continue;
+        autoGrantedFeatIds.add(fid);
+      }
+      // Choice-gated option feats (grantedChoiceFeats) are always injected by buildCharacter (default =
+      // first allowed trait), and the derive already recovers their trait separately — so subtract them.
+      for (const gcf of o.grantedChoiceFeats ?? []) if (content.feats[gcf.featId]?.choice) autoGrantedFeatIds.add(gcf.featId);
+    }
+    // Druid Voice of Nature: buildCharacter injects the animal/plant-empathy feat (recovered into
+    // b.voiceOfNature separately). Subtract whichever the character actually carries.
+    if ((cls?.features ?? []).some((f) => f.featureId === 'voice-of-nature')) {
+      for (const fid of ['animal-empathy', 'plant-empathy']) if (c.feats.some((f) => f.featId === fid)) autoGrantedFeatIds.add(fid);
+    }
+    // Kineticist Expand the Portal: bonus impulse feats gained at reached Gate's Thresholds (recovered
+    // into b.gateExpands via extraChoices reconstruction elsewhere). Subtract the chosen impulse ids.
+    for (const fid of Object.values(b.gateExpands ?? {})) if (fid) autoGrantedFeatIds.add(fid);
+  }
   const featsByLevel = new Map<number, FeatChoice[]>();
   for (const f of c.feats) {
+    // A feat buildCharacter re-injects automatically (subclass/muse grant, option choice-feat, Voice of
+    // Nature, Expand-the-Portal impulse): skip it entirely — no slot, no chip. It reappears on the sheet
+    // via buildCharacter, so it's not lost, just not an editable builder slot.
+    if (autoGrantedFeatIds.has(f.featId)) continue;
     if (!bgFeatDropped && bgFeat && f.featId === bgFeat && f.level === 1 && f.category === 'skill') {
       bgFeatDropped = true;
       continue;
@@ -2439,18 +2479,85 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     arr.push(f);
     featsByLevel.set(f.level, arr);
   }
-  let synthIdx = 90;
-  for (const [lvl, fs] of featsByLevel) {
-    const slotCats = c.classId ? levelGrants(lvl, c.classId, content, c.subclassId, c.variantRules, c.classId2, c.subclassId2, c.mythicEnabled).featSlots : [];
-    const usedSlot = new Set<number>();
-    for (const f of fs) {
-      let i = slotCats.findIndex((cat, idx) => cat === f.category && !usedSlot.has(idx));
-      if (i === -1) i = synthIdx++;
-      usedSlot.add(i);
-      const key = `${lvl}:${f.category}:${i}`;
+
+  // Robust, NEVER-INVISIBLE feat slotting. Every reconstructed feat must land in a slot the builder
+  // actually RENDERS (`${lvl}:${category}:${idx}` with idx < that level's featSlots.length) — a
+  // synthetic index the builder never draws would leave the feat invisible in the builder yet still in
+  // featPicks (blocking re-pick) and re-added by buildCharacter (shown on the sheet). That is exactly
+  // the WG-import bug. If no real slot can hold a feat, we surface it as a VISIBLE granted-feat chip
+  // (overrides.addedFeats) rather than hide it.
+  //
+  // Enumerate every real slot across all levels up front so a feat filed under a colliding level (e.g.
+  // several skill feats sharing a minimum level after a lossy import) can be redistributed into the
+  // class's other same-category slots.
+  type RealSlot = { level: number; idx: number; category: FeatCategory };
+  const realSlots: RealSlot[] = [];
+  if (c.classId) {
+    for (let lvl = 1; lvl <= c.level; lvl++) {
+      const cats = levelGrants(lvl, c.classId, content, c.subclassId, c.variantRules, c.classId2, c.subclassId2, c.mythicEnabled).featSlots;
+      cats.forEach((category, idx) => realSlots.push({ level: lvl, idx, category }));
+    }
+  }
+  const usedSlots = new Set<string>(); // `${level}:${idx}` of already-consumed real slots
+  // Which real slot categories can hold a feat of the given category — mirrors eligibleFeatsForSlot:
+  // an exact match, a 'general' slot taking a skill feat, an 'archetype' slot taking an archetype-trait
+  // feat, a 'class' slot taking an archetype-trait feat (multiclass/dedication feats are class-category),
+  // and a fighter 'bonus' slot taking a fighter feat. We stay conservative (only widenings the builder's
+  // picker already renders) so we never place a feat in a slot the UI would reject.
+  const slotAccepts = (slotCat: FeatCategory, f: FeatChoice): boolean => {
+    if (slotCat === f.category) return true;
+    const feat = content.feats[f.featId];
+    const traits = feat?.traits ?? [];
+    if (slotCat === 'general' && f.category === 'skill') return true;
+    if (slotCat === 'archetype' && traits.includes('archetype')) return true;
+    if (slotCat === 'class' && traits.includes('archetype')) return true;
+    if (slotCat === 'mythic' && traits.includes('mythic')) return true;
+    if (slotCat === 'bonus' && traits.includes('fighter')) return true;
+    return false;
+  };
+  const featMinLevel = (f: FeatChoice): number => Math.max(1, content.feats[f.featId]?.level ?? 1);
+
+  // Place lowest-assigned-level feats first so they claim their natural slots before higher ones
+  // borrow across levels. Prefer an EXACT-category free slot at the feat's own level, then any
+  // compatible free slot at its level, then compatible free slots at other levels within the feat's
+  // legal window [minLevel, characterLevel] (nearest level first, exact category before widened).
+  const orderedFeats = [...featsByLevel.entries()]
+    .sort((a, b2) => a[0] - b2[0])
+    .flatMap(([, fs]) => fs);
+  const granted: { featId: string; level: number; category: FeatCategory }[] = [];
+  for (const f of orderedFeats) {
+    const free = realSlots.filter((s) => !usedSlots.has(`${s.level}:${s.idx}`));
+    const minLvl = featMinLevel(f);
+    const candidates = free
+      .filter((s) => s.level >= minLvl && s.level <= c.level && slotAccepts(s.category, f))
+      .sort((s1, s2) => {
+        // Exact-category slots beat widened ones; then the slot nearest the feat's assigned level;
+        // then lower level — a stable, deterministic ordering.
+        const exact1 = s1.category === f.category ? 0 : 1;
+        const exact2 = s2.category === f.category ? 0 : 1;
+        if (exact1 !== exact2) return exact1 - exact2;
+        const d1 = Math.abs(s1.level - f.level);
+        const d2 = Math.abs(s2.level - f.level);
+        if (d1 !== d2) return d1 - d2;
+        return s1.level - s2.level;
+      });
+    const slot = candidates[0];
+    if (slot) {
+      usedSlots.add(`${slot.level}:${slot.idx}`);
+      const key = `${slot.level}:${slot.category}:${slot.idx}`;
       b.featPicks[key] = f.featId;
       if (f.choice) b.featChoices[key] = f.choice.value;
+    } else {
+      // No real slot exists for this feat (over-cap import, unknown class, extra archetype feats a
+      // lossy source dumped in). Surface it as a visible granted-feat chip instead of a hidden slot.
+      granted.push({ featId: f.featId, level: Math.min(f.level, c.level), category: f.category });
     }
+  }
+  if (granted.length) {
+    const existing = b.overrides?.addedFeats ?? [];
+    const merged = [...existing];
+    for (const g of granted) if (!merged.some((a) => a.featId === g.featId)) merged.push(g);
+    b.overrides = { ...(b.overrides ?? {}), addedFeats: merged };
   }
 
   // Skills: classSkills (and the skilled-human heritage skill) by subtracting recomputable grants.
@@ -2480,6 +2587,42 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
       extras = extras.filter((sk) => sk !== hSkill);
     }
     b.classSkills = extras;
+
+    // Reconstruct skill INCREASES when the character didn't carry enough of them to explain its final
+    // ranks (imported / hand-authored characters that recorded only final ranks). buildCharacter raises
+    // a skill one step per increase (capped by skillIncreaseCap), applied ascending. To find the delta
+    // each skill's increases must cover, we take the ranks the reconstructed build ALREADY produces
+    // WITHOUT any skill increases — that automatically folds in every non-increase source (base class
+    // training, background/heritage grants, the skilled-human expert-at-5 bump, subclass grants, dual
+    // class) — and compare to the target ranks. Any positive delta is player skill increases we assign
+    // to the class's real skill-increase levels (≤ character level) so the builder renders populated
+    // slots and a rebuild reproduces the rank. Only levels the native increases left empty are filled,
+    // so a correct native round-trip is untouched.
+    {
+      const rankIdx = (r: ProficiencyRank) => PROFICIENCY_RANKS.indexOf(r);
+      // Baseline ranks from this build with increases stripped (b.classSkills/heritageSkill are set).
+      const baseline = buildCharacter({ ...b, skillIncreases: {} }, content).proficiencies.skills as Record<string, ProficiencyRank>;
+      // Steps the native increases already contribute per skill (don't re-synthesize those).
+      const nativeSteps: Partial<Record<ProficiencyKey, number>> = {};
+      for (const si of c.skillIncreases ?? []) nativeSteps[si.skill] = (nativeSteps[si.skill] ?? 0) + 1;
+      const siLevels = (cls?.skillIncreaseLevels ?? SKILL_INCREASE_LEVELS).filter((lvl) => lvl <= c.level);
+      const freeLevels = siLevels.filter((lvl) => !b.skillIncreases[lvl]).sort((a, b2) => a - b2);
+      for (const [skRaw, rankRaw] of Object.entries(c.proficiencies.skills) as [ProficiencyKey, ProficiencyRank][]) {
+        const baseIdx = rankIdx(baseline[skRaw] ?? 'untrained');
+        const finalIdx = rankIdx(rankRaw);
+        const needed = finalIdx - baseIdx - (nativeSteps[skRaw] ?? 0);
+        for (let n = 0; n < needed; n++) {
+          // The (already+1)-th step above the baseline targets rank index baseIdx + already + 1; place
+          // it at the earliest free level whose cap (expert@3–5, master@7–13, legendary@15+) permits it.
+          const already = (nativeSteps[skRaw] ?? 0) + n;
+          const targetRankIdx = baseIdx + already + 1;
+          const li = freeLevels.findIndex((lvl) => rankIdx(skillIncreaseCap(lvl)) >= targetRankIdx);
+          if (li === -1) break; // no remaining level can legally grant this step — best-effort stops
+          const lvl = freeLevels.splice(li, 1)[0];
+          b.skillIncreases[lvl] = skRaw;
+        }
+      }
+    }
   }
 
   // Languages: drop the ancestry-granted ones; the remainder are the player's bonus picks.
