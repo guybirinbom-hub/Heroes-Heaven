@@ -6,6 +6,7 @@ import { RUNE_SPEC } from './filterSpecs';
 import type {
   ArmorCategory,
   ArmorRunes,
+  Character,
   Coins,
   ConsumableItem,
   ContentDatabase,
@@ -18,6 +19,7 @@ import type {
   WeaponCategory,
   WeaponRunes,
 } from '../rules/types';
+import { MonsterPartsPanel, itemCanUseMonsterParts, characterBankedGp } from './MonsterPartsEditor';
 import { PopupSelect, SearchSelect } from '../builder/shared';
 import { RichEditor } from './RichEditor';
 import { useIsMobile } from './useIsMobile';
@@ -200,6 +202,7 @@ export function ItemEditorModal({
   inv,
   inventory = [],
   content,
+  character,
   maxSpellRank = 10,
   onPlay,
   onSave,
@@ -212,6 +215,8 @@ export function ItemEditorModal({
   /** Full inventory — needed to affix/peel attachments. */
   inventory?: InventoryItem[];
   content: ContentDatabase;
+  /** The owning character — enables the Monster Parts panel (level + variant gate + banked parts). */
+  character?: Character;
   /** Highest spell rank a bound scroll/wand may hold (caps the rank picker). */
   maxSpellRank?: number;
   /** Mutate play state — needed to etch runes / affix attachments on the instance. */
@@ -384,6 +389,13 @@ export function ItemEditorModal({
       onClose();
     }
   };
+
+  // Monster Parts (variant rule): eligible items may switch to Monster-Parts mode, which REPLACES the
+  // rune/material editors. Gate on the character's variant flag + an owned instance to mutate.
+  const mpVariantOn = !!character?.variantRules?.monsterParts;
+  const mpEligible = mpVariantOn && !!onPlay && !!inv && !!item && itemCanUseMonsterParts(item);
+  const mpActiveHere = mpEligible && !!inv?.monsterPart;
+  const bankedGp = characterBankedGp(character?.bankedParts);
 
   let additionalCount = 0;
   if (d.matType) additionalCount++;
@@ -608,14 +620,28 @@ export function ItemEditorModal({
                   )}
 
                   {onPlay && inv && item && (item.itemType === 'weapon' || item.itemType === 'armor' || item.itemType === 'shield') && (
-                    <AccRow id="runes" icon="ti-sparkles" name="Runes &amp; upgrades">
-                      <RuneEditor inv={inv} item={item} content={content} onPlay={onPlay} />
-                      <AttachmentsSection host={inv} hostItem={item} inventory={inventory} content={content} onPlay={onPlay} />
-                      <span className="ie-hint">Runes and attachments apply to this specific item right away.</span>
+                    <AccRow id="runes" icon="ti-sparkles" name={mpActiveHere ? 'Monster Parts' : 'Runes & upgrades'}>
+                      {mpEligible && <MonsterPartsPanel inv={inv} item={item} charLevel={character?.level ?? 1} bankedGp={bankedGp} onPlay={onPlay} />}
+                      {/* A Monster-Parts item ignores runes/attachments (either/or) — hide the rune editor. */}
+                      {!mpActiveHere && (
+                        <>
+                          <RuneEditor inv={inv} item={item} content={content} onPlay={onPlay} />
+                          <AttachmentsSection host={inv} hostItem={item} inventory={inventory} content={content} onPlay={onPlay} />
+                          <span className="ie-hint">Runes and attachments apply to this specific item right away.</span>
+                        </>
+                      )}
                     </AccRow>
                   )}
 
-                  {d.itemType !== 'treasure' && (
+                  {/* Worn equipment (Perception/skill item) has no rune editor, but can still take Monster
+                      Parts — give it its own panel. */}
+                  {mpEligible && item && item.itemType === 'equipment' && inv && onPlay && (
+                    <AccRow id="monster-parts" icon="ti-bone" name="Monster Parts">
+                      <MonsterPartsPanel inv={inv} item={item} charLevel={character?.level ?? 1} bankedGp={bankedGp} onPlay={onPlay} />
+                    </AccRow>
+                  )}
+
+                  {d.itemType !== 'treasure' && !mpActiveHere && (
                     <AccRow id="material" icon="ti-diamond" name="Material" summary={d.matType ? label(d.matType) : 'none'}>
                       <div className="ie-grid2">
                         <div className="ci-field"><span>Precious material</span><PopupSelect title="Precious material" placeholder="None" value={d.matType || ''} options={optList(MATERIALS, d.matType)} clearLabel="Clear" onChange={(v) => upd({ matType: v })} addCustom={{ label: 'Custom material…', placeholder: 'e.g. living steel', onAdd: (t) => upd({ matType: slugify(t) }) }} /></div>

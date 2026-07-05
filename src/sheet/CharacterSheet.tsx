@@ -17,6 +17,7 @@ import { FeatsTab } from './FeatsTab';
 import { DetailsTab } from './DetailsTab';
 import { NotesTab } from './NotesTab';
 import { SettingsPage } from './SettingsPage';
+import { MonsterPartsRules } from './MonsterPartsRules';
 import { WindowControls } from './WindowControls';
 import { useIsMobile } from './useIsMobile';
 import { useBackHandler } from './useEscapeClose';
@@ -112,11 +113,13 @@ export function CharacterSheet({
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [restOpen, setRestOpen] = useState(false);
   const [portraitOpen, setPortraitOpen] = useState(false);
+  const [mpRulesOpen, setMpRulesOpen] = useState(false);
   // Android Back (mobile): unwind one step — close the menu / portrait / rest sheet, else drop back to
   // the home tab — instead of exiting the app. (Popups and the Settings page handle their own Back.)
   useBackHandler(isMobile && menuOpen, () => setMenuOpen(false));
   useBackHandler(isMobile && portraitOpen, () => setPortraitOpen(false));
   useBackHandler(isMobile && restOpen, () => setRestOpen(false));
+  useBackHandler(mpRulesOpen, () => setMpRulesOpen(false));
   useBackHandler(isMobile && tab !== 'Main', () => setTab('Main'));
   useEffect(() => {
     try {
@@ -336,6 +339,18 @@ export function CharacterSheet({
               >
                 <i className="ti ti-flask" aria-hidden="true" /> Homebrew
               </button>
+              {character.variantRules?.monsterParts && (
+                <button
+                  className="topmenu-item"
+                  role="menuitem"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    setMpRulesOpen(true);
+                  }}
+                >
+                  <i className="ti ti-bone" aria-hidden="true" /> Monster Parts (rules)
+                </button>
+              )}
               {onOpenRoster && (
                 <button
                   className="topmenu-item"
@@ -360,6 +375,7 @@ export function CharacterSheet({
             onDeleteMode={onDeleteMode}
           />
         )}
+        {mpRulesOpen && <MonsterPartsRules onClose={() => setMpRulesOpen(false)} />}
         {portraitOpen && portrait && (
           <div className="portrait-lightbox" onClick={() => setPortraitOpen(false)} role="dialog" aria-label="Portrait">
             <img src={portrait} alt={`${character.name} portrait`} className="portrait-lightbox-img" />

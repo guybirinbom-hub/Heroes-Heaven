@@ -4381,6 +4381,669 @@ button.strike-name:hover {
   font-size: 12px;
   padding: 4px 6px;
 }
+
+/* ───────────────── Monster Parts (variant rule): per-item editor + banked-parts tracker ───────────────── */
+.mp-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.mp-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.mp-switch input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--app-accent);
+  cursor: pointer;
+}
+.mp-switch-hint {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--app-text-dim);
+}
+.mp-rules-link {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--app-accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+.mp-rules-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Monster Parts rules-reference page (.mpr-*) ── */
+.mpr-modal .settings-pane {
+  line-height: 1.5;
+}
+.mpr-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 760px;
+}
+.mpr-section p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--app-text);
+}
+.mpr-h {
+  margin: 8px 0 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--app-text);
+  border-bottom: 1px solid var(--app-border);
+  padding-bottom: 4px;
+}
+.mpr-ul {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+.mpr-note {
+  font-size: 13px;
+  color: var(--app-text-dim);
+  background: var(--app-panel-2, rgba(127, 127, 127, 0.08));
+  border-left: 3px solid var(--app-accent);
+  padding: 8px 10px;
+  border-radius: 4px;
+}
+.mpr-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.mpr-card {
+  flex: 1 1 180px;
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+  padding: 10px;
+  background: var(--app-panel-2, rgba(127, 127, 127, 0.05));
+}
+.mpr-card-title {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: var(--app-accent);
+}
+.mpr-card-body {
+  font-size: 13px;
+  color: var(--app-text-dim);
+}
+.mpr-kind {
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+  padding: 10px;
+}
+.mpr-kind-name {
+  font-weight: 700;
+  font-size: 15px;
+}
+.mpr-req {
+  font-size: 13px;
+  color: var(--app-text-dim);
+  margin: 6px 0 !important;
+}
+.mpr-effect {
+  font-style: italic;
+  font-size: 14px;
+}
+.mpr-choice {
+  font-size: 13px;
+}
+.mpr-tablewrap {
+  overflow-x: auto;
+  border: 1px solid var(--app-border);
+  border-radius: 6px;
+}
+.mpr-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+}
+.mpr-table th,
+.mpr-table td {
+  padding: 5px 9px;
+  text-align: left;
+  border-bottom: 1px solid var(--app-border);
+  vertical-align: top;
+}
+.mpr-table th {
+  font-weight: 700;
+  background: var(--app-panel-2, rgba(127, 127, 127, 0.08));
+  position: sticky;
+  top: 0;
+}
+.mpr-table tr:last-child td {
+  border-bottom: none;
+}
+.mpr-modepick {
+  display: flex;
+  gap: 6px;
+}
+.mpr-modebtn {
+  padding: 5px 12px;
+  border: 1px solid var(--app-border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--app-text);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+.mpr-modebtn.active {
+  background: var(--app-accent);
+  color: #fff;
+  border-color: var(--app-accent);
+}
+.mpr-propfilter {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.mpr-search {
+  flex: 1 1 160px;
+  padding: 6px 10px;
+  border: 1px solid var(--app-border);
+  border-radius: 6px;
+  background: var(--app-bg);
+  color: var(--app-text);
+  font-size: 13px;
+}
+.mpr-kindsel {
+  padding: 6px 8px;
+  border: 1px solid var(--app-border);
+  border-radius: 6px;
+  background: var(--app-bg);
+  color: var(--app-text);
+  font-size: 13px;
+}
+.mpr-proplist {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mpr-prop {
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.mpr-prop-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--app-text);
+  text-align: left;
+}
+.mpr-prop-head:hover {
+  background: var(--app-panel-2, rgba(127, 127, 127, 0.06));
+}
+.mpr-prop-name {
+  font-weight: 700;
+  font-size: 14px;
+}
+.mpr-prop-kinds {
+  font-size: 11px;
+  color: var(--app-text-dim);
+  margin-left: auto;
+  text-transform: capitalize;
+}
+.mpr-prop-body {
+  padding: 4px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--app-border);
+}
+.mpr-path {
+  border-left: 3px solid var(--app-accent);
+  padding-left: 10px;
+}
+.mpr-path-name {
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.mpr-path-note {
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--app-text-dim);
+}
+.mpr-levels {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.mpr-levels li {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+}
+.mpr-lvl {
+  flex: 0 0 auto;
+  min-width: 22px;
+  font-weight: 700;
+  color: var(--app-accent);
+}
+.mpr-lvl-text {
+  flex: 1;
+}
+.mpr-feat {
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+  padding: 10px;
+  background: var(--app-panel-2, rgba(127, 127, 127, 0.05));
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mpr-feat-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+}
+.mpr-feat-name {
+  font-weight: 700;
+  font-size: 15px;
+}
+.mpr-feat-type {
+  font-size: 12px;
+  color: var(--app-text-dim);
+}
+.mpr-feat-prereq {
+  font-size: 13px;
+}
+.mp-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+}
+.mp-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--app-text-dim);
+}
+.mp-bank {
+  margin-left: auto;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 600;
+  color: var(--app-accent);
+}
+.mp-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--app-border);
+}
+.mp-block:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+.mp-block-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.mp-row-label {
+  font-size: 12.5px;
+  color: var(--app-text);
+}
+.mp-slots {
+  font-size: 11px;
+  color: var(--app-text-dim);
+}
+.mp-warn {
+  color: #d08b28;
+  font-size: 11px;
+}
+.mp-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.mp-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+  color: var(--app-text);
+  cursor: pointer;
+}
+.mp-step:hover:not(:disabled) {
+  border-color: var(--app-accent);
+}
+.mp-step:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.mp-cost-line {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  color: var(--app-text-dim);
+}
+.mp-cost-need {
+  color: var(--app-accent);
+}
+.mp-cost-need.mp-short {
+  color: #c0392b;
+}
+.mp-effects {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 12px;
+  color: var(--app-text);
+}
+.mp-effects li::before {
+  content: '✦ ';
+  color: var(--app-accent);
+}
+.mp-req {
+  display: flex;
+  gap: 5px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--app-text-dim);
+}
+.mp-req i {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.mp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.mp-select {
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+  color: var(--app-text);
+  font-size: 12px;
+  padding: 5px 7px;
+}
+.mp-add-select {
+  margin-top: 4px;
+}
+.mp-imbue {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+}
+.mp-imbue-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mp-imbue-name {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+}
+.mp-imbue-lvl {
+  font-size: 11px;
+  color: var(--app-text-dim);
+  min-width: 42px;
+  text-align: center;
+}
+.mp-imbue-del {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+  color: var(--app-text-dim);
+  cursor: pointer;
+}
+.mp-imbue-del:hover {
+  border-color: #c0392b;
+  color: #c0392b;
+}
+.mp-imbue-ctrls {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.mp-imbue-eff {
+  font-size: 12px;
+  color: var(--app-text);
+}
+.mp-riders {
+  list-style: none;
+  margin: 2px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--app-text-dim);
+}
+.mp-rider-lvl {
+  display: inline-block;
+  min-width: 20px;
+  padding: 0 5px;
+  margin-right: 4px;
+  border-radius: 8px;
+  background: var(--app-surface-2);
+  color: var(--app-text);
+  font-weight: 600;
+  text-align: center;
+}
+.mp-btn-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.mp-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+  color: var(--app-text);
+  font-size: 12px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.mp-add-btn:hover {
+  border-color: var(--app-accent);
+}
+.mp-salvage {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+  color: var(--app-text-dim);
+  font-size: 12px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.mp-salvage:hover {
+  border-color: var(--app-accent);
+  color: var(--app-text);
+}
+.mp-hint {
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--app-text-dim);
+}
+
+/* Banked-parts tracker (Inventory tab) */
+.mp-bank-panel {
+  margin: 0 0 12px;
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+  overflow: hidden;
+}
+.mp-bank-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 12px;
+  background: var(--app-surface-2);
+  border: none;
+  color: var(--app-text);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.mp-bank-title {
+  font-weight: 700;
+}
+.mp-bank-total {
+  margin-left: auto;
+  color: var(--app-accent);
+  font-weight: 600;
+}
+.mp-bank-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+}
+.mp-bank-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mp-bank-entry,
+.mp-bank-add {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.mp-bank-gp {
+  width: 74px;
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+  color: var(--app-text);
+  font-size: 12px;
+  padding: 5px 7px;
+  text-align: right;
+}
+.mp-bank-gp-unit {
+  font-size: 11px;
+  color: var(--app-text-dim);
+  margin-left: -2px;
+}
+.mp-bank-src {
+  flex: 1;
+  min-width: 120px;
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+  color: var(--app-text);
+  font-size: 12px;
+  padding: 5px 7px;
+}
+.mp-bank-tags {
+  flex: 1;
+  min-width: 100px;
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+  color: var(--app-text);
+  font-size: 12px;
+  padding: 5px 7px;
+}
+.mp-bank-del {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+  color: var(--app-text-dim);
+  cursor: pointer;
+}
+.mp-bank-del:hover {
+  border-color: #c0392b;
+  color: #c0392b;
+}
+.mp-bank-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1.5px solid var(--app-accent);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-accent);
+  color: #fff;
+  font-size: 12px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.mp-bank-add-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
 .inv-affixed {
   font-size: 11px;
   color: var(--app-accent);

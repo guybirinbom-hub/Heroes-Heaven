@@ -1059,6 +1059,9 @@ export interface InventoryItem {
   counters?: Record<string, { current: number; max: number; resetsOnRest?: boolean }>;
   /** For a generic scroll/wand (item.spellSlot): the spell id the player chose to store in it. */
   heldSpell?: string;
+  /** Monster Parts (variant rule): when present, this item is refined/imbued with monster parts and
+   *  ignores its runes/precious material. Absent = a normal runed item. */
+  monsterPart?: ItemMonsterPart;
 }
 
 export type SpellcastingType = 'prepared' | 'spontaneous' | 'focus' | 'innate' | 'ritual' | 'items';
@@ -1172,6 +1175,66 @@ export interface VariantRules {
   abp?: boolean;
   /** Dual Class — gain the proficiencies, HP, features and feats of a second class. */
   dualClass?: boolean;
+  /** Monster Parts (Battlezoo, Remaster conversion) — harvest parts to refine/imbue items in place of
+   *  runes/materials. When on, eligible items may switch to Monster-Parts mode. */
+  monsterParts?: boolean;
+  /** Which Monster Parts GM variant is in play. Mostly informational — the per-item refine/imbue math
+   *  is identical across all three; the mode only drives the treasure-by-level reference guidance. */
+  monsterPartsMode?: MonsterPartsMode;
+}
+
+/** The three GM variants for the Monster Parts subsystem (drives treasure guidance only). */
+export type MonsterPartsMode = 'full' | 'light' | 'hybrid';
+
+/** The per-item Monster-Parts blob. Present on an InventoryItem that has switched to Monster-Parts mode;
+ *  such an item ignores its runes/precious material entirely (an item uses EITHER this system OR runes,
+ *  never both). Values are banked-part gp assigned to refining and to each imbued property; item level
+ *  and property levels are derived from those values via the Table 3/5 thresholds. */
+export interface ItemMonsterPart {
+  /** The refined item type — decides which refinement/imbuing tables and part requirements apply. */
+  kind: MpItemKind;
+  /** Total gp of parts sunk into refining (raises the item's level per Table 3A/3B). */
+  refineValue: number;
+  /** Imbued properties, each with its chosen path and the gp sunk into it. */
+  imbuements: ItemImbuement[];
+  /** For a `skill` item: which skill its refinement item-bonus (Table 4E) applies to (e.g. 'stealth',
+   *  'lore:warfare'). Absent = not yet chosen (no skill bonus applies until set). */
+  skillKey?: ProficiencyKey;
+}
+
+/** One imbued property on a Monster-Parts item. */
+export interface ItemImbuement {
+  /** Catalog property id (fire, cold, charisma, energy-resistant, …). */
+  propertyId: string;
+  /** Chosen path id ('magic' | 'might' | 'technique' | 'main'); properties with one path use 'main'. */
+  path: string;
+  /** gp of matching parts sunk into this property (raises its level per Table 5A/5B). */
+  value: number;
+  /** A free-text choice this property requires (energy type, creature type, spell, tradition…). */
+  choice?: string;
+}
+
+/** Refined item type — decides tables + part requirements (mirrors MpItemKind in rules/monsterParts). */
+export type MpItemKind = 'weapon' | 'armor' | 'shield' | 'perception' | 'skill';
+
+/** Banked monster parts, tracked BY VALUE (gp) plus optional source-creature tags. Matching a part
+ *  requirement is trust-based (the app has no bestiary) — the tags are player-authored reminders. */
+export interface BankedParts {
+  /** Ledger entries; totalGp is the sum of their gp. */
+  entries: BankedPartEntry[];
+}
+
+/** One banked-parts ledger entry, e.g. { gp: 250, source: 'magma scorpion', tags: ['fire'] }. */
+export interface BankedPartEntry {
+  id: string;
+  /** Value of this lot of parts, in gp. */
+  gp: number;
+  /** The source creature (free text), e.g. "magma scorpion". */
+  source?: string;
+  /** Trait/keyword tags for trust-based requirement matching, e.g. ['fire', 'acid']. */
+  tags?: string[];
+  /** Free-form note. */
+  note?: string;
 }
 
 /** Per-character toggles that aren't GMG variant rules — convenience/house options. */
@@ -1324,6 +1387,9 @@ export interface Character {
   // --- gear ---
   inventory: InventoryItem[];
   currency: Coins;
+  /** Banked monster parts (Monster Parts variant rule). Persistent play state; surfaced here by
+   *  applyPlayState so the Inventory tracker + refine/imbue editor can read the current bank. */
+  bankedParts?: BankedParts;
   /** Ancestry/feat-granted natural unarmed attacks (Iruxi Fangs, claws, jaws, tail, …) beyond the
    *  baseline Fist. Each becomes its own Strike that uses your unarmed proficiency and is buffed by
    *  Handwraps of Mighty Blows (the die-size rule scales the dice to this attack's own die). */

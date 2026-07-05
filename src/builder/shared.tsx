@@ -1,5 +1,5 @@
 import { useMemo, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
-import type { AbilityId, BuildOverrides, Character, CharacterOptions, ChoiceGroup, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, ProficiencyKey, ProficiencyRank, SaveId, SkillId, Tradition } from '../rules/types';
+import type { AbilityId, BuildOverrides, Character, CharacterOptions, ChoiceGroup, ClassDef, CompanionConfig, ContentDatabase, CustomBackground, DescRef, MonsterPartsMode, ProficiencyKey, ProficiencyRank, SaveId, SkillId, Tradition } from '../rules/types';
 import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
 import { enabledBookSet, sourceCatalog, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
 import { usePrefs } from '../data/prefs';
@@ -1162,6 +1162,7 @@ export function VariantRulesCard({ build, actions }: EditorProps) {
             ['proficiencyWithoutLevel', 'Proficiency w/o Level', 'Remove your level from proficiency: untrained −2, trained +2, expert +4, master +6, legendary +8.'],
             ['abp', 'Automatic Bonus Progression', 'Gain item-equivalent attack/AC/save/Perception/skill bonuses automatically by level (replaces fundamental runes).'],
             ['dualClass', 'Dual Class', 'Gain the proficiencies, Hit Points, class features and class feats of a second class.'],
+            ['monsterParts', 'Monster Parts', 'Harvest parts from defeated monsters to refine (fundamental-rune-equivalent bonuses) and imbue (special properties) your weapons, armor, shields, and Perception/skill items in place of runes and precious materials. An item uses either Monster Parts or normal runes — never both.'],
           ] as const
         ).map(([flag, label, desc]) => (
           <ToggleWithInfo
@@ -1173,7 +1174,46 @@ export function VariantRulesCard({ build, actions }: EditorProps) {
           />
         ))}
       </div>
+      {build.variantRules?.monsterParts && <MonsterPartsModeSelect build={build} actions={actions} />}
     </SetupCard>
+  );
+}
+
+/** The Full / Light / Hybrid GM-variant selector for Monster Parts (shown when the toggle is on). The
+ *  choice is mostly informational — the per-item refine/imbue math is identical across all three; it
+ *  drives the treasure-by-level reference guidance only. */
+function MonsterPartsModeSelect({ build, actions }: Pick<EditorProps, 'build' | 'actions'>) {
+  const mode = build.variantRules?.monsterPartsMode ?? 'hybrid';
+  const modes: { id: MonsterPartsMode; label: string; desc: string }[] = [
+    { id: 'full', label: 'Full', desc: 'Replaces nearly all wealth with monster parts.' },
+    { id: 'light', label: 'Light', desc: 'Replaces only currency; runes and other magic items still exist.' },
+    { id: 'hybrid', label: 'Hybrid', desc: 'Replaces currency + about half of the permanent items; keeps the rest and all consumables.' },
+  ];
+  return (
+    <div className="mp-mode-select" style={{ marginTop: 8 }}>
+      <div className="spr-sub" style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+        <span>Treasure variant</span>
+        <RuleInfo
+          title="Monster Parts variant"
+          description="Full: replaces nearly all wealth with monster parts. Light: replaces only currency; runes and other magic items still exist (the party builds only a few part-items). Hybrid: replaces currency + about half of the permanent items; keeps the rest and all consumables. This choice only affects the treasure-by-level reference guidance — the refine/imbue math is identical across all three."
+        />
+      </div>
+      <div className="seg" role="radiogroup" aria-label="Monster Parts variant">
+        {modes.map((m) => (
+          <button
+            key={m.id}
+            type="button"
+            role="radio"
+            aria-checked={mode === m.id}
+            className={'seg-btn' + (mode === m.id ? ' on' : '')}
+            title={m.desc}
+            onClick={() => actions.patch({ variantRules: { ...build.variantRules, monsterPartsMode: m.id } })}
+          >
+            {m.label}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }
 

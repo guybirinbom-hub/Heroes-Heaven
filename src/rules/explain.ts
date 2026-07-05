@@ -548,7 +548,11 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       if (!strike) return { title: 'Strike', totalText: '—', parts: [], timeline: [] };
       const parts: CalcPart[] = [profPart(strike.rank, lvl, pwl(c)), abilityPart(c, strike.atkAbility)];
       if (strike.potencyBonus)
-        parts.push({ label: abpOn(c) ? 'ABP attack potency' : 'Weapon potency rune', note: 'item bonus', value: strike.potencyBonus });
+        parts.push({
+          label: strike.mpRefined ? 'Monster Parts refinement' : abpOn(c) ? 'ABP attack potency' : 'Weapon potency rune',
+          note: 'item bonus',
+          value: strike.potencyBonus,
+        });
       const cond = conditionPart(c, strike.atkAbility, 'attack');
       if (cond) parts.push(cond);
       const situational = modeAdjust(c, { kind: 'attack' }, parts);

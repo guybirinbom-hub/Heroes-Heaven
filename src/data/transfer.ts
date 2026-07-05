@@ -1291,6 +1291,16 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
   // Patch in coins, vitals, bio, and portrait the build doesn't carry.
   const coins = c.inventory?.coins;
   if (coins) character.currency = { pp: coins.pp ?? 0, gp: coins.gp ?? 0, sp: coins.sp ?? 0, cp: coins.cp ?? 0 };
+  // Monster Parts banked value: WG stores loose parts under inventory.monster_parts (a scalar or a
+  // {value} object). Map it into a single banked-parts ledger entry so the rebuilt subsystem picks it up.
+  // (Per-item refinements aren't in WG's schema, so only the loose bank round-trips.)
+  {
+    const mpRaw = c.inventory?.monster_parts;
+    const mpGp = typeof mpRaw === 'number' ? mpRaw : typeof mpRaw?.value === 'number' ? mpRaw.value : 0;
+    if (mpGp > 0) {
+      character.bankedParts = { entries: [{ id: 'mp-1', gp: Math.round(mpGp), source: 'Imported from Wanderer’s Guide' }] };
+    }
+  }
   character.xp = c.experience ?? 0;
   character.heroPoints = clamp(c.hero_points ?? 1, 0, 3);
   if (build.enabledSources) character.enabledSources = build.enabledSources;

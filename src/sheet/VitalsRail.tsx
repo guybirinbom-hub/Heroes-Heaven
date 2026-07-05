@@ -158,7 +158,11 @@ export function VitalsRail({
   }, [hasShield]);
   const charDefenses = deriveDefenses(character, content);
 
-  const classResources = (character.classId && CLASS_RESOURCES[character.classId]) || [];
+  // Swashbuckler panache has its own dedicated toggle card below, so drop it from the generic
+  // class-resources row to avoid showing it twice.
+  const classResources = ((character.classId && CLASS_RESOURCES[character.classId]) || []).filter(
+    (r) => !(r.id === 'panache' && character.classId === 'swashbuckler'),
+  );
   const resourceVals = character.classResources ?? {};
   const abilityMods = {
     str: abilityMod(character.abilities.str),
@@ -426,6 +430,7 @@ export function VitalsRail({
                 inv={shieldEntry.inv}
                 inventory={character.inventory}
                 content={content}
+                character={character}
                 onPlay={onPlay}
                 maxSpellRank={Math.min(10, Math.max(1, Math.ceil(character.level / 2)))}
                 onSave={(it) => {

@@ -16,8 +16,12 @@ import {
   setItemQuantity,
   toggleItemFlag,
   updateInventoryItem,
+  addBankedPartEntry,
+  updateBankedPartEntry,
+  removeBankedPartEntry,
   type PlayUpdater,
 } from '../rules/play';
+import { characterBankedGp } from './MonsterPartsEditor';
 import { parsePrice } from '../rules/wealth';
 import type { CompanionPick } from './AddItemsModal';
 import { chargesFor, itemCounters } from '../rules/itemUses';
@@ -1011,6 +1015,10 @@ export function InventoryTab({
         </span>
       </div>
 
+      {character.variantRules?.monsterParts && onPlay && (
+        <BankedPartsPanel character={character} onPlay={onPlay} />
+      )}
+
       {(() => {
         // Per-container section data (contents + Bulk-load chip) — shared by both layouts.
         const containerGroup = (c: InventoryItem) => {
@@ -1118,6 +1126,7 @@ export function InventoryTab({
           inv={character.inventory.find((i) => i.instanceId === editTarget.inv.instanceId) ?? editTarget.inv}
           inventory={character.inventory}
           content={content}
+          character={character}
           maxSpellRank={maxSpellRank}
           onPlay={onPlay}
           onSave={(item) => {
@@ -1135,6 +1144,136 @@ export function InventoryTab({
           }}
           onClose={() => setEditTarget(null)}
         />
+      )}
+    </div>
+  );
+}
+
+/** Banked monster parts tracker (Monster Parts variant rule). Tracks parts BY VALUE (gp) plus optional
+ *  source-creature + trait tags; spending happens in the per-item refine/imbue editor, which draws from
+ *  this pool. Draft-then-commit inputs so a half-typed value never writes a bad number. */
+function BankedPartsPanel({ character, onPlay }: { character: Character; onPlay: PlayUpdater }) {
+  const entries = character.bankedParts?.entries ?? [];
+  const total = characterBankedGp(character.bankedParts);
+  const [open, setOpen] = useState(entries.length > 0);
+  const [gpDraft, setGpDraft] = useState('');
+  const [srcDraft, setSrcDraft] = useState('');
+  const [tagDraft, setTagDraft] = useState('');
+  const gpText = (n: number) => `${n.toLocaleString()} gp`;
+
+  const add = () => {
+    const gp = Math.max(0, Math.round(parseFloat(gpDraft) || 0));
+    if (gp <= 0) return;
+    const tags = tagDraft
+      .split(',')
+      .map((t) => t.trim().toLowerCase())
+      .filter(Boolean);
+    onPlay((p) => addBankedPartEntry(p, { gp, source: srcDraft.trim() || undefined, tags }));
+    setGpDraft('');
+    setSrcDraft('');
+    setTagDraft('');
+  };
+
+  return (
+    <div className="mp-bank-panel">
+      <button className="mp-bank-head" onClick={() => setOpen((o) => !o)} aria-expanded={open}>
+        <i className="ti ti-bone" aria-hidden="true" />
+        <span className="mp-bank-title">Monster Parts</span>
+        <span className="mp-bank-total">{gpText(total)} banked</span>
+        <i className={'ti ' + (open ? 'ti-chevron-up' : 'ti-chevron-down')} aria-hidden="true" />
+      </button>
+      {open && (
+        <div className="mp-bank-body">
+          {entries.length === 0 && (
+            <span className="mp-hint">No banked parts yet. Add a lot below (value in gp + the creature it came from).</span>
+          )}
+          {entries.length > 0 && (
+            <ul className="mp-bank-list">
+              {entries.map((e) => (
+                <li className="mp-bank-entry" key={e.id}>
+                  <input
+                    className="mp-bank-gp"
+                    type="text"
+                    inputMode="numeric"
+                    aria-label="Value (gp)"
+                    defaultValue={String(e.gp)}
+                    onBlur={(ev) => {
+                      const v = Math.max(0, Math.round(parseFloat(ev.target.value) || 0));
+                      if (v !== e.gp) onPlay((p) => updateBankedPartEntry(p, e.id, { gp: v }));
+                    }}
+                    onKeyDown={(ev) => ev.key === 'Enter' && (ev.target as HTMLInputElement).blur()}
+                  />
+                  <span className="mp-bank-gp-unit">gp</span>
+                  <input
+                    className="mp-bank-src"
+                    type="text"
+                    placeholder="source creature"
+                    aria-label="Source creature"
+                    defaultValue={e.source ?? ''}
+                    onBlur={(ev) => {
+                      const v = ev.target.value.trim();
+                      if (v !== (e.source ?? '')) onPlay((p) => updateBankedPartEntry(p, e.id, { source: v }));
+                    }}
+                  />
+                  <input
+                    className="mp-bank-tags"
+                    type="text"
+                    placeholder="tags (fire, acid…)"
+                    aria-label="Trait tags"
+                    defaultValue={(e.tags ?? []).join(', ')}
+                    onBlur={(ev) => {
+                      const tags = ev.target.value
+                        .split(',')
+                        .map((t) => t.trim().toLowerCase())
+                        .filter(Boolean);
+                      if (tags.join(',') !== (e.tags ?? []).join(',')) onPlay((p) => updateBankedPartEntry(p, e.id, { tags }));
+                    }}
+                  />
+                  <button className="mp-bank-del" aria-label="Remove lot" title="Remove" onClick={() => onPlay((p) => removeBankedPartEntry(p, e.id))}>
+                    <i className="ti ti-x" aria-hidden="true" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className="mp-bank-add">
+            <input
+              className="mp-bank-gp"
+              type="text"
+              inputMode="numeric"
+              placeholder="gp"
+              aria-label="New lot value (gp)"
+              value={gpDraft}
+              onChange={(e) => setGpDraft(e.target.value.replace(/[^0-9.]/g, ''))}
+              onKeyDown={(e) => e.key === 'Enter' && add()}
+            />
+            <input
+              className="mp-bank-src"
+              type="text"
+              placeholder="source creature (e.g. magma scorpion)"
+              aria-label="New lot source"
+              value={srcDraft}
+              onChange={(e) => setSrcDraft(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && add()}
+            />
+            <input
+              className="mp-bank-tags"
+              type="text"
+              placeholder="tags (fire, acid…)"
+              aria-label="New lot tags"
+              value={tagDraft}
+              onChange={(e) => setTagDraft(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && add()}
+            />
+            <button className="mp-bank-add-btn" onClick={add} disabled={!(parseFloat(gpDraft) > 0)}>
+              <i className="ti ti-plus" aria-hidden="true" /> Add
+            </button>
+          </div>
+          <span className="mp-hint">
+            Matching a part requirement is trust-based (the app has no bestiary) — the source + tags are your reminders. Parts are
+            bulky; spend them promptly. Salvaging an item returns 50% here.
+          </span>
+        </div>
       )}
     </div>
   );
