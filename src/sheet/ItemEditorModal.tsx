@@ -63,6 +63,9 @@ const TYPE_LABEL: Record<string, string> = {
 /* ---- helpers ---- */
 const cap = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
 const label = (s: string) => cap(s.replace(/-/g, ' '));
+
+/** Sentinel option value for the "Monster Part" entry in the material dropdown (variant rule on). */
+const MONSTER_PART_OPT = '__monster-part__';
 const num = (s: string, dflt = 0) => {
   const n = Number(s);
   return Number.isFinite(n) ? n : dflt;
@@ -615,23 +618,6 @@ export function ItemEditorModal({
             </label>
           </div>
 
-          {/* ---- Monster Part authoring (variant rule on) ---- */}
-          {mpVariantOn && (
-            <div className="ci-field mp-author">
-              <label className="mp-switch">
-                <input type="checkbox" checked={d.isMonsterPart} onChange={(e) => upd({ isMonsterPart: e.target.checked })} />
-                <span>Monster Part</span>
-                <span className="mp-switch-hint">a harvested part — its Price above is its part value</span>
-              </label>
-              {d.isMonsterPart && (
-                <>
-                  <span className="ie-hint">Tag what this part came from (energy/damage types, senses, creature types, skills…). Tags are optional and drive only the informational "matching part" hints when refining/imbuing.</span>
-                  <MonsterPartTagPicker tags={d.mpTags} onChange={(t) => upd({ mpTags: t })} />
-                </>
-              )}
-            </div>
-          )}
-
           {/* ---- Additional fields ---- */}
           <div className="ie-collap">
             <div className="ie-collap-h" onClick={() => toggle('additional')}>
@@ -749,11 +735,19 @@ export function ItemEditorModal({
                     </AccRow>
                   )}
 
-                  {d.itemType !== 'treasure' && !mpActiveHere && (
-                    <AccRow id="material" icon="ti-diamond" name="Material" summary={d.matType ? label(d.matType) : 'none'}>
+                  {!mpActiveHere && (d.itemType !== 'treasure' || mpVariantOn) && (
+                    <AccRow id="material" icon="ti-diamond" name="Material" summary={d.isMonsterPart ? 'Monster Part' : d.matType ? label(d.matType) : 'none'}>
                       <div className="ie-grid2">
-                        <div className="ci-field"><span>Precious material</span><PopupSelect title="Precious material" placeholder="None" value={d.matType || ''} options={optList(MATERIALS, d.matType)} clearLabel="Clear" onChange={(v) => upd({ matType: v })} addCustom={{ label: 'Custom material…', placeholder: 'e.g. living steel', onAdd: (t) => upd({ matType: slugify(t) }) }} /></div>
-                        <label className="ci-field"><span>Grade</span><select value={d.matGrade} onChange={(e) => upd({ matGrade: e.target.value as Draft['matGrade'] })}><option value="">—</option><option value="low">Low</option><option value="standard">Standard</option><option value="high">High</option></select></label>
+                        <div className="ci-field"><span>Precious material</span><PopupSelect title="Precious material" placeholder="None" value={d.isMonsterPart ? MONSTER_PART_OPT : (d.matType || '')} options={mpVariantOn ? [{ value: MONSTER_PART_OPT, label: 'Monster Part' }, ...optList(MATERIALS, d.matType)] : optList(MATERIALS, d.matType)} clearLabel="Clear" onChange={(v) => { if (v === MONSTER_PART_OPT) upd({ isMonsterPart: true, matType: '' }); else upd({ matType: v, isMonsterPart: false }); }} addCustom={{ label: 'Custom material…', placeholder: 'e.g. living steel', onAdd: (t) => upd({ matType: slugify(t), isMonsterPart: false }) }} /></div>
+                        {d.isMonsterPart ? (
+                          <div className="ci-field">
+                            <span>Part tags</span>
+                            <MonsterPartTagPicker tags={d.mpTags} onChange={(t) => upd({ mpTags: t })} />
+                            <span className="ie-hint">Tag what this part came from (energy/damage types, senses, creature types, skills…). Tags are optional and drive only the informational "matching part" hints when refining/imbuing.</span>
+                          </div>
+                        ) : (
+                          <label className="ci-field"><span>Grade</span><select value={d.matGrade} onChange={(e) => upd({ matGrade: e.target.value as Draft['matGrade'] })}><option value="">—</option><option value="low">Low</option><option value="standard">Standard</option><option value="high">High</option></select></label>
+                        )}
                       </div>
                     </AccRow>
                   )}

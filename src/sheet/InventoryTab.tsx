@@ -120,6 +120,7 @@ function ItemCard({
   inv,
   item,
   content,
+  nameSuffix = '',
   onOpen,
   onPlay,
   investedCount = 0,
@@ -139,6 +140,9 @@ function ItemCard({
   inv: InventoryItem;
   item: Item;
   content: ContentDatabase;
+  /** " 2", " 3", … appended to the name when the character holds multiple copies of this item, so
+   *  otherwise-identical instances (e.g. two Longswords, one refined) are distinguishable. */
+  nameSuffix?: string;
   onOpen: () => void;
   onPlay?: PlayUpdater;
   investedCount?: number;
@@ -222,7 +226,7 @@ function ItemCard({
       </span>
       <div className="inv-mid">
         <div className="inv-name-line">
-          <span className="inv-name">{displayName(item, content)}</span>
+          <span className="inv-name">{displayName(item, content)}{nameSuffix}</span>
           {!inlineQty && inv.quantity > 1 && <span className="inv-qty">×{inv.quantity}</span>}
           {(item.traits ?? [])
             .filter((t) => CATEGORY_TAGS.includes(t))
@@ -508,6 +512,23 @@ export function InventoryTab({
   // Only items that are actually investable (carry the `invested` trait) count toward the
   // 10-item cap — not anything that happens to have a stale invested flag.
   const investedCount = character.inventory.filter((inv) => inv.invested && resolve(inv)?.traits?.includes('invested')).length;
+  // When the character holds more than one instance of the same item, number them (" 1", " 2", …)
+  // in inventory order so otherwise-identical copies (e.g. two Longswords, one refined) are
+  // distinguishable. Computed across the whole inventory; recomputes (renumbers) when one is removed.
+  const dupSuffix = ((): Map<string, string> => {
+    const total = new Map<string, number>();
+    for (const iv of character.inventory) total.set(iv.itemId, (total.get(iv.itemId) ?? 0) + 1);
+    const seen = new Map<string, number>();
+    const out = new Map<string, string>();
+    for (const iv of character.inventory) {
+      if ((total.get(iv.itemId) ?? 0) > 1) {
+        const n = (seen.get(iv.itemId) ?? 0) + 1;
+        seen.set(iv.itemId, n);
+        out.set(iv.instanceId, ` ${n}`);
+      }
+    }
+    return out;
+  })();
 
   // --- drag & drop: relocate an item between Equipped / Carried / a container ---
   const draggedInv = dragId ? character.inventory.find((i) => i.instanceId === dragId) : null;
@@ -882,6 +903,7 @@ export function InventoryTab({
                   inv={inv}
                   item={item}
                   content={content}
+                  nameSuffix={dupSuffix.get(inv.instanceId) ?? ''}
                   onOpen={() => open(inv)}
                   onPlay={onPlay}
                   investedCount={investedCount}
