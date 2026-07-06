@@ -19,10 +19,17 @@ import {
   SALVAGE_FRACTION,
   TRANSFER_FRACTION,
   monsterPartApex,
+  MONSTER_PART_TAGS,
+  MONSTER_PART_TAG_SET,
+  propertyRequirementTags,
+  availableMonsterParts,
+  hasMatchingPart,
+  salvageToMonsterPart,
+  mpApplied,
   type MpProperty,
   type MpPath,
 } from '../src/rules/monsterParts';
-import type { MpItemKind } from '../src/rules/types';
+import type { ContentDatabase, InventoryItem, Item, MpItemKind } from '../src/rules/types';
 
 const KINDS: MpItemKind[] = ['weapon', 'armor', 'shield', 'perception', 'skill'];
 
@@ -200,6 +207,132 @@ describe('Monster Parts — salvage / transfer', () => {
   });
 });
 
+describe('Monster Parts — tag vocabulary', () => {
+  it('groups the tag vocabulary and covers the brief-listed tags', () => {
+    // Every group has a name + at least one tag; all tags are lowercase non-empty.
+    for (const g of MONSTER_PART_TAGS) {
+      expect(g.group).toBeTruthy();
+      expect(g.tags.length).toBeGreaterThan(0);
+      for (const t of g.tags) {
+        expect(t).toBe(t.toLowerCase());
+        expect(t.trim()).toBe(t);
+      }
+    }
+    // Energy/damage types.
+    for (const t of ['acid', 'cold', 'electricity', 'fire', 'force', 'mental', 'poison', 'sonic', 'spirit', 'vitality', 'void', 'bludgeoning', 'piercing', 'slashing'])
+      expect(MONSTER_PART_TAG_SET.has(t), t).toBe(true);
+    // Traits, attributes, senses, defenses, a few creature types + skills.
+    for (const t of ['holy', 'unholy', 'strength', 'charisma', 'fly', 'low-light vision', 'darkvision', 'scent', 'greater darkvision', 'truesight', 'hardness', 'precision', 'dragon', 'undead', 'athletics', 'stealth'])
+      expect(MONSTER_PART_TAG_SET.has(t), t).toBe(true);
+  });
+
+  it('the flat set has no duplicates across groups', () => {
+    const flat = MONSTER_PART_TAGS.flatMap((g) => g.tags);
+    expect(new Set(flat).size).toBe(flat.length);
+  });
+});
+
+describe('Monster Parts — requirement tags + match hint', () => {
+  it('maps energy/apex/sense properties to their requirement tag(s)', () => {
+    expect(propertyRequirementTags('fire')).toEqual(['fire']);
+    expect(propertyRequirementTags('charisma')).toEqual(['charisma']);
+    expect(propertyRequirementTags('winged')).toEqual(['fly']);
+    expect(propertyRequirementTags('sturdy')).toEqual(['hardness']);
+    expect(propertyRequirementTags('fortification')).toEqual(['precision']);
+    expect(propertyRequirementTags('vitality')).toEqual(['vitality', 'holy']);
+    // Bane/Spell/Wild have no fixed requirement → empty (always satisfied).
+    expect(propertyRequirementTags('bane')).toEqual([]);
+    expect(propertyRequirementTags('wild')).toEqual([]);
+  });
+
+  it('hasMatchingPart is informational: a fixed requirement needs a matching tag; no-requirement props always match', () => {
+    expect(hasMatchingPart('fire', ['fire', 'cold'])).toBe(true);
+    expect(hasMatchingPart('fire', ['acid'])).toBe(false);
+    expect(hasMatchingPart('fire', new Set(['FIRE'.toLowerCase()]))).toBe(true);
+    // vitality matches on EITHER of its tags.
+    expect(hasMatchingPart('vitality', ['holy'])).toBe(true);
+    // No-requirement properties are always a match, even with an empty bag.
+    expect(hasMatchingPart('bane', [])).toBe(true);
+    expect(hasMatchingPart('wild', [])).toBe(true);
+  });
+});
+
+describe('Monster Parts — available parts from inventory', () => {
+  const partDef = (id: string, gp: number, tags: string[]): Item => ({
+    id,
+    name: id,
+    itemType: 'treasure',
+    value: { gp },
+    level: 0,
+    price: { gp },
+    bulk: 0,
+    traits: [],
+    rarity: 'common',
+    description: '',
+    isMonsterPart: true,
+    monsterPartTags: tags,
+  });
+  const plain = (id: string, gp: number): Item => ({
+    id, name: id, itemType: 'equipment', level: 0, price: { gp }, bulk: 0, traits: [], rarity: 'common', description: '',
+  });
+
+  it('sums gp value (price × qty) and unions tags of isMonsterPart items only', () => {
+    const items: Record<string, Item> = {
+      'fire-scale': partDef('fire-scale', 100, ['fire']),
+      'ice-gland': partDef('ice-gland', 50, ['cold', 'acid']),
+      longsword: plain('longsword', 15),
+    };
+    const inventory: InventoryItem[] = [
+      { instanceId: 'i1', itemId: 'fire-scale', quantity: 2 }, // 200 gp
+      { instanceId: 'i2', itemId: 'ice-gland', quantity: 1 }, // 50 gp
+      { instanceId: 'i3', itemId: 'longsword', quantity: 1 }, // NOT a part
+    ];
+    const content = { items } as unknown as ContentDatabase;
+    const avail = availableMonsterParts(inventory, content);
+    expect(avail.totalGp).toBe(250);
+    expect(new Set(avail.tags)).toEqual(new Set(['fire', 'cold', 'acid']));
+    // The hint composes over the computed tags.
+    expect(hasMatchingPart('fire', avail.tags)).toBe(true);
+    expect(hasMatchingPart('electricity', avail.tags)).toBe(false);
+  });
+
+  it('a tagless monster part still contributes value (and reads as a part)', () => {
+    const items: Record<string, Item> = { salvage: partDef('salvage', 300, []) };
+    const inventory: InventoryItem[] = [{ instanceId: 'i1', itemId: 'salvage', quantity: 1 }];
+    const avail = availableMonsterParts(inventory, { items } as unknown as ContentDatabase);
+    expect(avail.totalGp).toBe(300);
+    expect(avail.tags).toEqual([]);
+  });
+
+  it('accepts a resolver function too, and tolerates an empty/undefined inventory', () => {
+    const def = partDef('p', 40, ['void']);
+    const avail = availableMonsterParts([{ instanceId: 'i1', itemId: 'p', quantity: 1 }], (id) => (id === 'p' ? def : undefined));
+    expect(avail).toEqual({ totalGp: 40, tags: ['void'] });
+    expect(availableMonsterParts(undefined, { items: {} } as unknown as ContentDatabase)).toEqual({ totalGp: 0, tags: [] });
+  });
+});
+
+describe('Monster Parts — salvage to a generic part item', () => {
+  it('returns a generic isMonsterPart item worth 50% of the total, with no tags', () => {
+    const mp = { kind: 'weapon' as MpItemKind, refineValue: 250, imbuements: [{ propertyId: 'fire', path: 'might', value: 250 }] };
+    const item = salvageToMonsterPart(mp, 'longsword');
+    expect(item).not.toBeNull();
+    expect(item!.isMonsterPart).toBe(true);
+    expect(item!.monsterPartTags).toEqual([]);
+    expect(item!.price).toEqual({ gp: 250 }); // floor(500 * 0.5)
+    expect(item!.itemType).toBe('treasure');
+    expect(item!.name).toMatch(/longsword/);
+    // Distinct ids per salvage.
+    const again = salvageToMonsterPart(mp);
+    expect(again!.id).not.toBe(item!.id);
+  });
+
+  it('returns null when there is nothing to recover', () => {
+    expect(salvageToMonsterPart(undefined)).toBeNull();
+    expect(salvageToMonsterPart({ kind: 'weapon', refineValue: 0, imbuements: [] })).toBeNull();
+  });
+});
+
 describe('Monster Parts — apex from inventory', () => {
   // The apex property's EFFECTIVE level is capped by the item's refined level AND the character level,
   // so the item must be refined to 17+ (and the character be level 17+) for the apex to fire.
@@ -240,5 +373,51 @@ describe('Monster Parts — apex from inventory', () => {
       },
     ];
     expect(monsterPartApex(inv, 16)).toBe(null);
+  });
+});
+
+describe('Monster Parts — applied-effect readout (item description)', () => {
+  it('returns null for an un-refined / absent blob', () => {
+    expect(mpApplied(undefined, 'slashing', 20)).toBeNull();
+    const empty = mpApplied({ kind: 'weapon', refineValue: 0, imbuements: [] }, 'slashing', 20);
+    expect(empty?.refineLines).toEqual([]);
+    expect(empty?.imbuements).toEqual([]);
+  });
+
+  it('lists weapon refinement benefits + imbue slots at the refined level', () => {
+    const a = mpApplied({ kind: 'weapon', refineValue: refinementCost(12, 'weapon'), imbuements: [] }, 'slashing', 20)!;
+    expect(a.refinedLevel).toBe(12);
+    // At L12: +2 attack (L10), +2 dice (L12), 2 imbue slots (L10).
+    expect(a.refineLines.some((l) => /\+2 item bonus to attack/.test(l))).toBe(true);
+    expect(a.refineLines.some((l) => /\+2 weapon damage dice/.test(l))).toBe(true);
+    expect(a.refineLines.some((l) => /2 imbuing slots/.test(l))).toBe(true);
+  });
+
+  it('shows an imbued property effect at its effective (capped) level', () => {
+    const a = mpApplied(
+      {
+        kind: 'weapon',
+        refineValue: refinementCost(10, 'weapon'),
+        imbuements: [{ propertyId: 'fire', path: 'magic', value: refinementCost(10, 'weapon') }],
+      },
+      'slashing',
+      20,
+    )!;
+    expect(a.imbuements).toHaveLength(1);
+    expect(a.imbuements[0].name.toLowerCase()).toContain('fire');
+    expect(a.imbuements[0].level).toBeGreaterThan(0);
+    expect(a.imbuements[0].effects.some((e) => /fire/i.test(e))).toBe(true);
+  });
+
+  it('caps an imbued property at the character level', () => {
+    const highValue = refinementCost(12, 'weapon');
+    const a = mpApplied(
+      { kind: 'weapon', refineValue: highValue, imbuements: [{ propertyId: 'fire', path: 'magic', value: highValue }] },
+      'slashing',
+      5,
+    )!;
+    // Refined level itself is capped at the character's level (5).
+    expect(a.refinedLevel).toBe(5);
+    expect(a.imbuements[0].level).toBeLessThanOrEqual(5);
   });
 });

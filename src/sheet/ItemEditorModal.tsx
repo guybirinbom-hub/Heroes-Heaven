@@ -1,5 +1,5 @@
 import { type ReactNode, useId, useMemo, useState } from 'react';
-import { attachItem, detachItem, removeInventoryItem, setItemQuantity, updateInventoryItem, type PlayUpdater } from '../rules/play';
+import { attachItem, detachItem, removeInventoryItem, setItemQuantity, updateInventoryItem, addInventoryItem, setItemMonsterPart, type PlayUpdater } from '../rules/play';
 import { canAttachTo } from '../rules/attachments';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { RUNE_SPEC } from './filterSpecs';
@@ -19,7 +19,8 @@ import type {
   WeaponCategory,
   WeaponRunes,
 } from '../rules/types';
-import { MonsterPartsPanel, itemCanUseMonsterParts, characterBankedGp } from './MonsterPartsEditor';
+import { MonsterPartsPanel, itemCanUseMonsterParts } from './MonsterPartsEditor';
+import { availableMonsterParts, salvageToMonsterPart, MONSTER_PART_TAGS } from '../rules/monsterParts';
 import { PopupSelect, SearchSelect } from '../builder/shared';
 import { RichEditor } from './RichEditor';
 import { useIsMobile } from './useIsMobile';
@@ -123,6 +124,10 @@ interface Draft {
   cType: string; cUsesMax: string; cUsesCur: string; cSpellId: string; cSpellRank: string;
   capBulk: string; ignoredBulk: string;
   tpp: string; tgp: string; tsp: string; tcp: string;
+  /** Monster-part authoring: when on, this item is a harvested monster part (Price = its part value). */
+  isMonsterPart: boolean;
+  /** Chosen vocabulary + free-text tags for the part (energy types, senses, creature types, …). */
+  mpTags: string[];
 }
 
 function defaults(): Draft {
@@ -137,6 +142,7 @@ function defaults(): Draft {
     cType: '', cUsesMax: '', cUsesCur: '', cSpellId: '', cSpellRank: '1',
     capBulk: '', ignoredBulk: '',
     tpp: '', tgp: '', tsp: '', tcp: '',
+    isMonsterPart: false, mpTags: [],
   };
 }
 
@@ -161,6 +167,8 @@ function fromItem(it: Item): Draft {
   d.srcPage = it.source?.page != null ? String(it.source.page) : '';
   d.description = it.description ?? '';
   d.craft = it.craftRequirements ?? '';
+  d.isMonsterPart = !!it.isMonsterPart;
+  d.mpTags = [...(it.monsterPartTags ?? [])];
   switch (it.itemType) {
     case 'weapon':
       d.wCat = it.category; d.wGroup = it.group; d.wDice = String(it.damage.dice); d.wDie = it.damage.die; d.wType = it.damage.type;
@@ -191,6 +199,69 @@ function fromItem(it: Item): Draft {
   return d;
 }
 
+/** Grouped vocabulary chips + a free-text box for a monster part's descriptor tags. Selecting a
+ *  vocabulary chip toggles it; the free-text box adds anything else (comma/Enter separated). Tags are
+ *  stored lowercased; free tags outside the vocabulary render as an extra "chosen" row. */
+function MonsterPartTagPicker({ tags, onChange }: { tags: string[]; onChange: (t: string[]) => void }) {
+  const [text, setText] = useState('');
+  const set = new Set(tags.map((t) => t.toLowerCase()));
+  const toggle = (t: string) => {
+    const lc = t.toLowerCase();
+    onChange(set.has(lc) ? tags.filter((x) => x.toLowerCase() !== lc) : [...tags, lc]);
+  };
+  const commit = () => {
+    const add = text.split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
+    if (add.length) onChange([...tags, ...add.filter((a) => !set.has(a))]);
+    setText('');
+  };
+  // Free-text tags = chosen tags not present in any vocabulary group.
+  const vocab = new Set(MONSTER_PART_TAGS.flatMap((g) => g.tags));
+  const freeTags = tags.filter((t) => !vocab.has(t.toLowerCase()));
+  return (
+    <div className="mp-tagpick">
+      {MONSTER_PART_TAGS.map((g) => (
+        <div className="mp-taggroup" key={g.group}>
+          <span className="mp-taggroup-h">{g.group}</span>
+          <div className="mp-tagchips">
+            {g.tags.map((t) => (
+              <button
+                type="button"
+                key={t}
+                className={'mp-tagchip' + (set.has(t) ? ' on' : '')}
+                onClick={() => toggle(t)}
+                aria-pressed={set.has(t)}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+        </div>
+      ))}
+      <div className="mp-taggroup">
+        <span className="mp-taggroup-h">Other (free text)</span>
+        {freeTags.length > 0 && (
+          <div className="mp-tagchips">
+            {freeTags.map((t) => (
+              <button type="button" key={t} className="mp-tagchip on" onClick={() => toggle(t)} aria-pressed>
+                {t} <i className="ti ti-x" aria-hidden="true" />
+              </button>
+            ))}
+          </div>
+        )}
+        <input
+          className="mp-tagfree"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); commit(); } }}
+          onBlur={commit}
+          placeholder="Add a custom tag…"
+          aria-label="Add a custom monster-part tag"
+        />
+      </div>
+    </div>
+  );
+}
+
 /**
  * Unified create / edit modal for an item definition. In edit mode it is pre-filled from
  * `item` and preserves its id (so the homebrew store updates in place); in create mode it
@@ -205,6 +276,7 @@ export function ItemEditorModal({
   character,
   maxSpellRank = 10,
   onPlay,
+  onCreateItem,
   onSave,
   onClose,
 }: {
@@ -221,6 +293,8 @@ export function ItemEditorModal({
   maxSpellRank?: number;
   /** Mutate play state — needed to etch runes / affix attachments on the instance. */
   onPlay?: PlayUpdater;
+  /** Register a new item definition — needed to salvage a Monster-Parts item into a generic part. */
+  onCreateItem?: (item: Item) => void;
   onSave: (item: Item) => void;
   onClose: () => void;
 }) {
@@ -338,6 +412,9 @@ export function ItemEditorModal({
       ...(d.freqMax.trim() ? { frequency: { max: num(d.freqMax), per: d.freqPer || 'day' } } : {}),
       ...(cleanRich(d.craft) ? { craftRequirements: cleanRich(d.craft) } : {}),
       ...(item?.descRefs ? { descRefs: item.descRefs } : {}),
+      // Monster-part authoring: `isMonsterPart` marks the item a harvested part (Price = its value);
+      // its tags carry the vocabulary/free-text descriptors. An empty tag list is still a valid part.
+      ...(d.isMonsterPart ? { isMonsterPart: true as const, monsterPartTags: d.mpTags.map((t) => t.trim().toLowerCase()).filter(Boolean) } : {}),
       source,
     };
     switch (d.itemType) {
@@ -395,7 +472,21 @@ export function ItemEditorModal({
   const mpVariantOn = !!character?.variantRules?.monsterParts;
   const mpEligible = mpVariantOn && !!onPlay && !!inv && !!item && itemCanUseMonsterParts(item);
   const mpActiveHere = mpEligible && !!inv?.monsterPart;
-  const bankedGp = characterBankedGp(character?.bankedParts);
+  // Reference-only: the character's harvested monster-part inventory items (total gp + union of tags).
+  const availableParts = availableMonsterParts(character?.inventory, content);
+
+  // Salvage: break the item's refine/imbue value into a generic monster-part INVENTORY item (50% of
+  // the value), register it + add it to the bag, then clear this item's Monster-Parts data. Needs the
+  // instance (onPlay) + an item-def registrar (onCreateItem).
+  const canSalvage = mpActiveHere && !!onPlay && !!onCreateItem && !!inv?.monsterPart;
+  const onSalvage = canSalvage
+    ? () => {
+        const part = salvageToMonsterPart(inv!.monsterPart, item!.name);
+        if (!part) return;
+        onCreateItem!(part);
+        onPlay!((p) => addInventoryItem(setItemMonsterPart(p, inv!.instanceId, undefined), part.id));
+      }
+    : undefined;
 
   let additionalCount = 0;
   if (d.matType) additionalCount++;
@@ -491,7 +582,7 @@ export function ItemEditorModal({
 
           <div className="ie-grid3">
             <div className="ci-field">
-              <span>Price</span>
+              <span>{d.isMonsterPart ? 'Part value (price)' : 'Price'}</span>
               {coinRow(['pp', 'gp', 'sp', 'cp'], ['pp', 'gp', 'sp', 'cp'])}
             </div>
             <label className="ci-field">
@@ -523,6 +614,23 @@ export function ItemEditorModal({
               <input value={d.usage} onChange={(e) => upd({ usage: e.target.value })} placeholder="e.g. held in 2 hands" />
             </label>
           </div>
+
+          {/* ---- Monster Part authoring (variant rule on) ---- */}
+          {mpVariantOn && (
+            <div className="ci-field mp-author">
+              <label className="mp-switch">
+                <input type="checkbox" checked={d.isMonsterPart} onChange={(e) => upd({ isMonsterPart: e.target.checked })} />
+                <span>Monster Part</span>
+                <span className="mp-switch-hint">a harvested part — its Price above is its part value</span>
+              </label>
+              {d.isMonsterPart && (
+                <>
+                  <span className="ie-hint">Tag what this part came from (energy/damage types, senses, creature types, skills…). Tags are optional and drive only the informational "matching part" hints when refining/imbuing.</span>
+                  <MonsterPartTagPicker tags={d.mpTags} onChange={(t) => upd({ mpTags: t })} />
+                </>
+              )}
+            </div>
+          )}
 
           {/* ---- Additional fields ---- */}
           <div className="ie-collap">
@@ -621,7 +729,7 @@ export function ItemEditorModal({
 
                   {onPlay && inv && item && (item.itemType === 'weapon' || item.itemType === 'armor' || item.itemType === 'shield') && (
                     <AccRow id="runes" icon="ti-sparkles" name={mpActiveHere ? 'Monster Parts' : 'Runes & upgrades'}>
-                      {mpEligible && <MonsterPartsPanel inv={inv} item={item} charLevel={character?.level ?? 1} bankedGp={bankedGp} onPlay={onPlay} />}
+                      {mpEligible && <MonsterPartsPanel inv={inv} item={item} charLevel={character?.level ?? 1} available={availableParts} onPlay={onPlay} onSalvage={onSalvage} />}
                       {/* A Monster-Parts item ignores runes/attachments (either/or) — hide the rune editor. */}
                       {!mpActiveHere && (
                         <>
@@ -637,7 +745,7 @@ export function ItemEditorModal({
                       Parts — give it its own panel. */}
                   {mpEligible && item && item.itemType === 'equipment' && inv && onPlay && (
                     <AccRow id="monster-parts" icon="ti-bone" name="Monster Parts">
-                      <MonsterPartsPanel inv={inv} item={item} charLevel={character?.level ?? 1} bankedGp={bankedGp} onPlay={onPlay} />
+                      <MonsterPartsPanel inv={inv} item={item} charLevel={character?.level ?? 1} available={availableParts} onPlay={onPlay} onSalvage={onSalvage} />
                     </AccRow>
                   )}
 

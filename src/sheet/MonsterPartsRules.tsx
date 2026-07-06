@@ -51,9 +51,9 @@ function Overview() {
       <p>
         Player characters harvest <strong>monster parts</strong> from defeated foes and spend them to{' '}
         <strong>refine</strong> (improve an item's fundamentals) and <strong>imbue</strong> (add special properties)
-        weapons, armor, shields, Perception items, and skill items. Parts are tracked by <strong>value</strong> (in gp)
-        and by the creature they came from. An item uses <em>either</em> this system <em>or</em> normal
-        runes/precious materials — <strong>never both at once</strong>.
+        weapons, armor, shields, Perception items, and skill items. In this app, parts are tracked as{' '}
+        <strong>inventory items</strong> (value = the item's Price, plus tags for what they offer). An item uses{' '}
+        <em>either</em> this system <em>or</em> normal runes/precious materials — <strong>never both at once</strong>.
       </p>
       <ul className="mpr-ul">
         <li>
@@ -93,11 +93,13 @@ function Overview() {
 
       <h3 className="mpr-h">This app vs. the table</h3>
       <p className="mpr-note">
-        The app tracks the numbers — banked parts by value + source tags, an item's refined level and each imbued
-        property's level, and it applies the mechanical effects (item bonuses, striking dice, extra Strike damage,
-        resistances, senses, apex boosts) to your sheet. It has no bestiary, so matching a part <em>requirement</em>{' '}
-        to a source creature is <strong>trust-based</strong>: the requirement is shown as a reminder when you allocate
-        parts.
+        Harvested parts are tracked as ordinary <strong>inventory items</strong> — create a monster-part item (in the
+        Materials group), tag what it offers, and its <strong>Price</strong> is its value. The refine/imbue editor sets
+        each item's refined level and every imbued property's level <strong>freely</strong> (a reference tool, no parts
+        are consumed) and applies the mechanical effects (item bonuses, striking dice, extra Strike damage, resistances,
+        senses, apex boosts) to your sheet. It has no bestiary, so matching a part <em>requirement</em> to a source
+        creature is <strong>trust-based</strong>: your held parts (total value + their tags) are shown as an
+        informational reminder, never a gate.
       </p>
     </div>
   );
@@ -146,10 +148,10 @@ function Gathering() {
 
       <h3 className="mpr-h">Salvaging &amp; transferring</h3>
       <p>
-        Salvaging an item recovers parts worth up to <strong>50%</strong> of its refinement + imbued value. You can
-        transfer a refinement value or one imbued property to another item of the <strong>same type</strong> (with
-        compatible part requirements) by spending parts equal to <strong>10% of the difference</strong> in values, then
-        swapping the values.
+        Salvaging an item recovers parts worth up to <strong>50%</strong> of its refinement + imbued value — in this
+        app, that becomes a generic monster-part item added to your inventory. You can transfer a refinement value or
+        one imbued property to another item of the <strong>same type</strong> (with compatible part requirements) by
+        spending parts equal to <strong>10% of the difference</strong> in values, then swapping the values.
       </p>
     </div>
   );

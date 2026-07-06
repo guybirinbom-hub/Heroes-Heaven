@@ -4218,6 +4218,40 @@ button.strike-name:hover {
   font-size: 11.5px;
   color: var(--app-text-dim);
 }
+/* Applied Monster-Parts effect readout in the item detail popup. */
+.sd-mp-applied .sd-uses-title {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.sd-mp-list {
+  margin: 4px 0 0;
+  padding-left: 18px;
+  font-size: 12.5px;
+  color: var(--app-text);
+}
+.sd-mp-list li {
+  margin: 1px 0;
+}
+.sd-mp-imbue {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.sd-mp-imbue-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--app-text);
+}
+.sd-mp-imbue-lvl {
+  font-weight: 500;
+  color: var(--app-text-dim);
+}
+.sd-mp-imbue-eff {
+  font-size: 12px;
+  color: var(--app-text-dim);
+}
 .sd-uses-mini {
   width: 18px;
   height: 18px;
@@ -4697,13 +4731,6 @@ button.strike-name:hover {
   text-transform: uppercase;
   color: var(--app-text-dim);
 }
-.mp-bank {
-  margin-left: auto;
-  text-transform: none;
-  letter-spacing: 0;
-  font-weight: 600;
-  color: var(--app-accent);
-}
 .mp-block {
   display: flex;
   flex-direction: column;
@@ -4926,122 +4953,94 @@ button.strike-name:hover {
   color: var(--app-text-dim);
 }
 
-/* Banked-parts tracker (Inventory tab) */
-.mp-bank-panel {
-  margin: 0 0 12px;
-  border: 1.5px solid var(--app-border);
-  border-radius: var(--app-radius-sm);
-  background: var(--app-surface);
-  overflow: hidden;
-}
-.mp-bank-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 9px 12px;
-  background: var(--app-surface-2);
-  border: none;
-  color: var(--app-text);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-.mp-bank-title {
-  font-weight: 700;
-}
-.mp-bank-total {
-  margin-left: auto;
-  color: var(--app-accent);
-  font-weight: 600;
-}
-.mp-bank-body {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 10px 12px;
-}
-.mp-bank-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.mp-bank-entry,
-.mp-bank-add {
+/* Available-parts reference line (item editor) */
+.mp-avail {
+  font-size: 12px;
+  color: var(--app-text-dim);
   display: flex;
   align-items: center;
   gap: 6px;
   flex-wrap: wrap;
 }
-.mp-bank-gp {
-  width: 74px;
-  border: 1.5px solid var(--app-border);
-  border-radius: var(--app-radius-sm);
-  background: var(--app-surface);
-  color: var(--app-text);
-  font-size: 12px;
-  padding: 5px 7px;
-  text-align: right;
+.mp-avail strong {
+  color: var(--app-accent);
 }
-.mp-bank-gp-unit {
-  font-size: 11px;
+.mp-avail-tags {
   color: var(--app-text-dim);
-  margin-left: -2px;
 }
-.mp-bank-src {
-  flex: 1;
-  min-width: 120px;
-  border: 1.5px solid var(--app-border);
-  border-radius: var(--app-radius-sm);
-  background: var(--app-surface);
-  color: var(--app-text);
-  font-size: 12px;
-  padding: 5px 7px;
-}
-.mp-bank-tags {
-  flex: 1;
-  min-width: 100px;
-  border: 1.5px solid var(--app-border);
-  border-radius: var(--app-radius-sm);
-  background: var(--app-surface);
-  color: var(--app-text);
-  font-size: 12px;
-  padding: 5px 7px;
-}
-.mp-bank-del {
-  display: inline-flex;
+/* Matching-part hint under an imbued property (informational only). */
+.mp-match {
+  font-size: 11px;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
+  gap: 5px;
+}
+.mp-match.ok {
+  color: #2e9e5b;
+}
+.mp-match.miss {
+  color: #c0872b;
+}
+
+/* Monster-part authoring: toggle + grouped tag chips (item editor) */
+.mp-author {
+  gap: 8px;
+}
+.mp-tagpick {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
   border: 1.5px solid var(--app-border);
   border-radius: var(--app-radius-sm);
   background: var(--app-surface-2);
+}
+.mp-taggroup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.mp-taggroup-h {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   color: var(--app-text-dim);
-  cursor: pointer;
 }
-.mp-bank-del:hover {
-  border-color: #c0392b;
-  color: #c0392b;
+.mp-tagchips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
 }
-.mp-bank-add-btn {
+.mp-tagchip {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  border: 1.5px solid var(--app-accent);
-  border-radius: var(--app-radius-sm);
-  background: var(--app-accent);
-  color: #fff;
-  font-size: 12px;
-  padding: 6px 12px;
+  gap: 4px;
+  border: 1.5px solid var(--app-border);
+  border-radius: 999px;
+  background: var(--app-surface);
+  color: var(--app-text-dim);
+  font-size: 11px;
+  padding: 3px 10px;
   cursor: pointer;
 }
-.mp-bank-add-btn:disabled {
-  opacity: 0.45;
-  cursor: default;
+.mp-tagchip:hover {
+  border-color: var(--app-accent);
+  color: var(--app-text);
+}
+.mp-tagchip.on {
+  border-color: var(--app-accent);
+  background: var(--app-accent);
+  color: #fff;
+}
+.mp-tagfree {
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface);
+  color: var(--app-text);
+  font-size: 12px;
+  padding: 5px 8px;
+  max-width: 240px;
 }
 
 .inv-affixed {
@@ -5125,6 +5124,16 @@ button.strike-name:hover {
 .inv-badge.worn {
   color: var(--app-text-dim);
   border: 1px solid var(--app-border);
+}
+.inv-badge.mp {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  border: 1px solid var(--app-accent);
+  color: var(--app-accent);
+}
+.inv-mp-tags {
+  color: var(--app-text-dim);
 }
 
 /* ---- Spells ---- */

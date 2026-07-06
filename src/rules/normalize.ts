@@ -98,13 +98,15 @@ function num(v: unknown, fallback: number): number {
  * Returns a new object; the input is never mutated. Optional fields are passed through as-is.
  */
 export function normalizeCharacter(input: unknown): Character {
-  const c = (input && typeof input === 'object' ? input : {}) as Partial<Character>;
+  const c = (input && typeof input === 'object' ? input : {}) as Partial<Character> & { bankedParts?: unknown };
   const hp = obj<Partial<Character['hitPoints']>>(c.hitPoints, {});
   // NOTE: the Monster Parts subsystem is REBUILT (variant rule). Its state now lives in
   // `variantRules.monsterParts`/`monsterPartsMode` and per-item `inventory[].monsterPart` (both carried
-  // through unchanged below), plus PlayState.bankedParts. Do NOT strip those — they must persist.
+  // through unchanged below). Harvested parts are now ordinary inventory items — the old banked-parts
+  // ledger (`bankedParts`) is gone, so drop any legacy value cleanly rather than carry it forward.
+  const { bankedParts: _legacyBank, ...cRest } = c;
   return {
-    ...(c as Character),
+    ...(cRest as Character),
     schemaVersion: typeof c.schemaVersion === 'number' ? c.schemaVersion : CHARACTER_SCHEMA_VERSION,
     id: typeof c.id === 'string' && c.id ? c.id : `char-${(c.name ?? 'unnamed').toString().toLowerCase().replace(/\s+/g, '-')}`,
     name: typeof c.name === 'string' ? c.name : 'Unnamed',
@@ -151,11 +153,12 @@ export function normalizeCharacter(input: unknown): Character {
  * the structural fields here keeps the overlay safe. Optional scalars are passed through as-is.
  */
 export function normalizePlay(input: unknown): PlayState {
-  const p = (input && typeof input === 'object' ? input : {}) as Partial<PlayState>;
-  // Monster Parts banked parts live in the structured `bankedParts` object (carried through unchanged
-  // below via the spread) — the rebuilt subsystem persists it; nothing is stripped here.
+  const p = (input && typeof input === 'object' ? input : {}) as Partial<PlayState> & { bankedParts?: unknown };
+  // Monster Parts: harvested parts are now ordinary inventory items, not a banked-parts ledger. Drop any
+  // legacy `bankedParts` from an older play-state cleanly (it's no longer part of the shape).
+  const { bankedParts: _legacyBank, ...pRest } = p;
   return {
-    ...(p as PlayState),
+    ...(pRest as PlayState),
     damage: num(p.damage, 0),
     tempHp: num(p.tempHp, 0),
     heroPoints: num(p.heroPoints, 0),

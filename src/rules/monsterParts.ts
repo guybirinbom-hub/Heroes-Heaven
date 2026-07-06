@@ -13,8 +13,9 @@
  * The item math (refine cost / benefits / imbue thresholds) is IDENTICAL across the Full / Light / Hybrid
  * GM variants — the variant only changes the treasure-by-level reference guidance (see TREASURE_BY_LEVEL).
  */
-import type { AbilityId, DamageType, DieSize, MpItemKind, ItemMonsterPart, MonsterPartsMode } from './types';
+import type { AbilityId, DamageType, DieSize, MpItemKind, ItemMonsterPart, MonsterPartsMode, ContentDatabase, InventoryItem, Item } from './types';
 import { MONSTER_PART_CATALOG } from './monsterPartsCatalog';
+import { coinsToCp } from './wealth';
 
 export type { MpItemKind } from './types';
 
@@ -525,6 +526,69 @@ export function mpDefenseGrants(
   return { resistances, senses };
 }
 
+// ───────────────────────── Applied-effect summary (item description) ─────────────────────────
+
+/** One imbued property's applied effect at its effective level, for the item-description readout. */
+export interface MpAppliedImbuement {
+  name: string;
+  pathName: string;
+  level: number;
+  /** Per-hit damage / resistance / sense / apex lines the property currently applies. */
+  effects: string[];
+}
+
+/** The full applied Monster-Parts effect readout for an item's stored blob, at the character's level.
+ *  Refinement produces one summary line per benefit (attack/dice/AC/saves/hardness/bonus + imbue slots);
+ *  each imbued property lists its current per-hit damage, resistance, sense, or apex effect. Built from
+ *  the same catalog + tables derive uses, so it always matches what the sheet applies. */
+export interface MpApplied {
+  kind: MpItemKind;
+  refinedLevel: number;
+  refineLines: string[];
+  imbuements: MpAppliedImbuement[];
+}
+export function mpApplied(mp: ItemMonsterPart | undefined, baseType: string | undefined, characterLevel: number): MpApplied | null {
+  if (!mp) return null;
+  const kind = mp.kind;
+  const level = mpRefinedLevel(mp, characterLevel);
+  const refineLines: string[] = [];
+  const slots = imbueSlots(kind, level);
+  if (kind === 'weapon') {
+    const r = weaponRefinement(level);
+    if (r.attack) refineLines.push(`+${r.attack} item bonus to attack rolls`);
+    if (r.extraDice) refineLines.push(`+${r.extraDice} weapon damage ${r.extraDice > 1 ? 'dice' : 'die'} (striking)`);
+  } else if (kind === 'armor') {
+    const r = armorRefinement(level);
+    if (r.ac) refineLines.push(`+${r.ac} item bonus to AC`);
+    if (r.saves) refineLines.push(`+${r.saves} item bonus to saves (resilient)`);
+  } else if (kind === 'shield') {
+    const r = shieldRefinement(level);
+    if (r.hardness) refineLines.push(`Hardness ${r.hardness}, HP ${r.hp}, BT ${r.bt}`);
+  } else {
+    const b = senseSkillRefinement(level).bonus;
+    if (b) refineLines.push(`+${b} item bonus to ${kind === 'perception' ? 'Perception' : 'the chosen skill'}`);
+  }
+  if (slots) refineLines.push(`${slots} imbuing slot${slots === 1 ? '' : 's'}`);
+
+  const imbuements: MpAppliedImbuement[] = [];
+  for (const im of mp.imbuements) {
+    const prop = getMpProperty(im.propertyId);
+    if (!prop) continue;
+    const path = prop.paths.find((pa) => pa.id === im.path) ?? prop.paths[0];
+    const effLvl = mpEffectiveImbueLevel(mp, im, characterLevel);
+    if (effLvl <= 0) continue;
+    const r = path ? resolvePath(path, effLvl) : null;
+    const effects: string[] = [];
+    if (r?.addDamage) effects.push(`+${formatMpDamage(r.addDamage, baseType)} on a hit`);
+    if (r?.persistentDamage) effects.push(formatMpDamage(r.persistentDamage, baseType));
+    if (prop.resistance && im.choice) effects.push(`resistance ${effLvl} to ${im.choice}`);
+    for (const s of prop.senses ?? []) if (effLvl >= s.level) effects.push(s.sense);
+    if (prop.apexAbility && effLvl >= (prop.apexLevel ?? 17)) effects.push(`apex: raises ${prop.apexAbility.toUpperCase()}`);
+    imbuements.push({ name: prop.name, pathName: path?.name ?? '', level: effLvl, effects });
+  }
+  return { kind, refinedLevel: level, refineLines, imbuements };
+}
+
 // ───────────────────────── Apex attribute ─────────────────────────
 
 interface ApexProbeItem {
@@ -548,6 +612,143 @@ export function monsterPartApex(inventory: ApexProbeItem[] | undefined, characte
     }
   }
   return null;
+}
+
+// ───────────────────────── Monster-part items: tag vocabulary + reference helpers ─────────────────────────
+
+/**
+ * The tag VOCABULARY offered when marking a created item as a monster part. Grouped for a picker;
+ * derived from the imbued-property requirements (energy/damage types, traits, attributes, senses,
+ * hardness/precision, bane creature types, skills). Free-text tags outside this list are allowed —
+ * the vocabulary is a convenience, never a constraint.
+ */
+export const MONSTER_PART_TAGS: { group: string; tags: string[] }[] = [
+  {
+    group: 'Energy & damage',
+    tags: ['acid', 'cold', 'electricity', 'fire', 'force', 'mental', 'poison', 'sonic', 'spirit', 'vitality', 'void', 'bludgeoning', 'piercing', 'slashing'],
+  },
+  { group: 'Traits', tags: ['holy', 'unholy'] },
+  { group: 'Attributes', tags: ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'] },
+  { group: 'Movement & senses', tags: ['fly', 'low-light vision', 'darkvision', 'greater darkvision', 'scent', 'truesight'] },
+  { group: 'Defenses', tags: ['hardness', 'precision'] },
+  {
+    // (Note: 'spirit' is also a bane creature type but lives in the Energy & damage group above to keep
+    // the flat vocabulary de-duplicated; a picker can surface it under either heading.)
+    group: 'Creature types (bane)',
+    tags: ['aberration', 'animal', 'astral', 'beast', 'celestial', 'construct', 'dragon', 'dream', 'elemental', 'ethereal', 'fey', 'fiend', 'giant', 'monitor', 'ooze', 'time', 'undead', 'fungus', 'plant'],
+  },
+  {
+    group: 'Skills',
+    tags: ['acrobatics', 'arcana', 'athletics', 'crafting', 'deception', 'diplomacy', 'intimidation', 'medicine', 'nature', 'occultism', 'performance', 'religion', 'society', 'stealth', 'survival', 'thievery'],
+  },
+];
+
+/** The flat set of all vocabulary tags (lowercased). Free text beyond this is still permitted. */
+export const MONSTER_PART_TAG_SET: Set<string> = new Set(MONSTER_PART_TAGS.flatMap((g) => g.tags));
+
+/**
+ * The tag(s) that satisfy an imbued property's part REQUIREMENT — a best-effort, informational mapping
+ * used only for the "you hold a matching part" hint. Energy/damage properties map to their type; apex
+ * skill properties to their attribute; Bane/Spell/Wild have no fixed requirement (they accept anything
+ * or a player choice) and return an empty list (⇒ always considered satisfied by the hint).
+ */
+export function propertyRequirementTags(propertyId: string): string[] {
+  const p = getMpProperty(propertyId);
+  if (!p) return [];
+  switch (p.id) {
+    // Energy / damage weapon properties: the matching damage type.
+    case 'acid': case 'cold': case 'electricity': case 'fire': case 'force': case 'mental':
+    case 'poison': case 'sonic': case 'void':
+      return [p.id];
+    case 'holy': case 'lawful': return ['holy', 'spirit'];
+    case 'unholy': case 'chaotic': return ['unholy', 'spirit'];
+    case 'vitality': return ['vitality', 'holy'];
+    case 'energy-resistant': return p.choiceOptions ?? [];
+    // Apex / skill items: the attribute (skill properties come from a creature with that top attribute).
+    case 'strength': return ['strength'];
+    case 'dexterity': return ['dexterity'];
+    case 'constitution': return ['constitution'];
+    case 'intelligence': return ['intelligence'];
+    case 'wisdom': return ['wisdom'];
+    case 'charisma': return ['charisma'];
+    case 'winged': return ['fly'];
+    case 'sensory': return ['low-light vision', 'darkvision', 'scent', 'greater darkvision', 'truesight'];
+    case 'fortification': return ['precision'];
+    case 'sturdy': return ['hardness'];
+    // Bane's requirement is the chosen creature type; Spell/Wild accept anything → no fixed tag.
+    default: return [];
+  }
+}
+
+/** The parts a character currently holds: total gp value + the union of their tags. Computed from the
+ *  inventory items flagged `isMonsterPart` (value = price × quantity; tags lowercased + de-duped).
+ *  Purely a reference — nothing here blocks refining/imbuing. */
+export interface AvailableParts {
+  totalGp: number;
+  tags: string[];
+}
+
+/** Look up an inventory item's definition (created monster-part items live in content.items). */
+type ItemResolver = Pick<ContentDatabase, 'items'> | ((itemId: string) => Item | undefined);
+function resolveItem(resolver: ItemResolver, itemId: string): Item | undefined {
+  return typeof resolver === 'function' ? resolver(itemId) : resolver.items[itemId];
+}
+
+/** Sum the gp value + union the tags of every `isMonsterPart` inventory item the character holds. */
+export function availableMonsterParts(
+  inventory: InventoryItem[] | undefined,
+  resolver: ItemResolver,
+): AvailableParts {
+  let totalCp = 0;
+  const tags = new Set<string>();
+  for (const inv of inventory ?? []) {
+    const def = resolveItem(resolver, inv.itemId);
+    if (!def?.isMonsterPart) continue;
+    totalCp += coinsToCp(def.price) * Math.max(1, inv.quantity);
+    for (const t of def.monsterPartTags ?? []) if (t.trim()) tags.add(t.trim().toLowerCase());
+  }
+  return { totalGp: Math.floor(totalCp / 100), tags: [...tags] };
+}
+
+/** Whether the character's available part tags satisfy a property's requirement (informational only).
+ *  A property with no fixed requirement (Bane/Spell/Wild) is always considered a match. */
+export function hasMatchingPart(propertyId: string, availableTags: string[] | Set<string>): boolean {
+  const need = propertyRequirementTags(propertyId);
+  if (need.length === 0) return true;
+  const have = availableTags instanceof Set ? availableTags : new Set(availableTags.map((t) => t.toLowerCase()));
+  return need.some((t) => have.has(t.toLowerCase()));
+}
+
+/** A stable id for a generic salvaged monster-part item (unique-ish per salvage, no bestiary source). */
+let salvageSeq = 0;
+export function nextSalvagedPartId(): string {
+  return `mp-salvage-${Date.now().toString(36)}-${(salvageSeq++).toString(36)}`;
+}
+
+/**
+ * Salvage an item's Monster-Parts blob into a GENERIC monster-part ITEM (isMonsterPart, NO tags) worth
+ * 50% of the item's total refine + imbue value. Returns a ready-to-register `Item` definition (the
+ * caller registers it + adds it to the inventory via addInventoryItem). Returns null if there's nothing
+ * to recover. Replaces the old salvage→bank path.
+ */
+export function salvageToMonsterPart(mp: ItemMonsterPart | undefined, sourceName?: string): (Item & { isMonsterPart: true }) | null {
+  const recover = salvageValue(mp);
+  if (recover <= 0) return null;
+  const id = nextSalvagedPartId();
+  return {
+    id,
+    name: sourceName ? `Salvaged parts (${sourceName})` : 'Salvaged monster parts',
+    itemType: 'treasure',
+    value: { gp: recover },
+    level: 0,
+    price: { gp: recover },
+    bulk: 0,
+    traits: [],
+    rarity: 'common',
+    description: `Raw monster parts recovered by salvaging a refined/imbued item — worth ${recover.toLocaleString()} gp (50% of the parts sunk into it).`,
+    isMonsterPart: true,
+    monsterPartTags: [],
+  };
 }
 
 // ───────────────────────── Treasure reference (Tables 1A–1C, 2) ─────────────────────────

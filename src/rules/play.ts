@@ -12,7 +12,7 @@
  * changes — a Con boost, a level-up — the character stays as hurt as they were,
  * rather than the current value silently desyncing from the new max.
  */
-import type { AbilityId, ActiveCondition, BankedParts, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ModeDef, NotePage, PinnedDesc, PreparedSlot } from './types';
+import type { AbilityId, ActiveCondition, Character, CharacterDetails, Coins, CompanionConfig, ContentDatabase, InventoryItem, ItemImbuement, ItemMonsterPart, ModeDef, NotePage, PinnedDesc, PreparedSlot } from './types';
 import { deriveMaxHp, deriveBulk } from './derive';
 import { monsterPartApex } from './monsterParts';
 import { dyingDeathThreshold } from './conditions';
@@ -84,8 +84,6 @@ export interface PlayState {
   signatureSpells?: Record<string, string[]>;
   /** Commander tactics prepared today (subset of the folio, up to preparedMax); reset on rest. */
   preparedTactics?: string[];
-  /** Banked monster parts (Monster Parts variant rule): tracked by value + source-creature tags. */
-  bankedParts?: BankedParts;
 }
 
 /** A toggleable per-item carry state. */
@@ -266,9 +264,6 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     speedOverride: play.tempSpeed,
     conditions,
     inventory: play.inventory ?? ch.inventory,
-    // Surface banked monster parts (play state) onto the overlaid character so the Inventory/editor UI
-    // can read the current bank without threading PlayState down separately.
-    bankedParts: play.bankedParts ?? ch.bankedParts,
     currency: play.currency ?? ch.currency,
     pinned: play.pinned ?? ch.pinned ?? [],
     pinnedDescs: play.pinnedDescs ?? ch.pinnedDescs ?? [],
@@ -782,9 +777,10 @@ export function updateInventoryItem(play: PlayState, instanceId: string, patch: 
 
 // ───────────────────────── Monster Parts (variant rule) ─────────────────────────
 
-/** Set (or clear, with undefined) an item's Monster-Parts blob. An item uses EITHER monster parts OR
- *  runes/materials — never both — so switching to Monster-Parts mode clears its runes, and switching
- *  off drops the blob. Does NOT touch the banked-parts ledger (the editor spends/returns separately). */
+/** Set (or clear, with undefined) an item's Monster-Parts blob (its refined/imbued gear state). An item
+ *  uses EITHER monster parts OR runes/materials — never both — so switching to Monster-Parts mode clears
+ *  its runes, and switching off drops the blob. Refine/imbue values are set FREELY (reference-only, no
+ *  spending): the character's harvested monster-part inventory items are just an informational reference. */
 export function setItemMonsterPart(
   play: PlayState,
   instanceId: string,
@@ -806,79 +802,24 @@ export function setItemMonsterPart(
   };
 }
 
-let bankedPartSeq = 0;
-function nextBankedPartId(entries: { id: string }[]): string {
-  let id: string;
-  do {
-    id = `mp-${Date.now().toString(36)}-${(bankedPartSeq++).toString(36)}`;
-  } while (entries.some((e) => e.id === id));
-  return id;
-}
-
-/** The total banked-parts value (gp) currently on hand. */
-export function bankedPartsTotal(play: PlayState): number {
-  return (play.bankedParts?.entries ?? []).reduce((s, e) => s + Math.max(0, e.gp), 0);
-}
-
-/** Add a banked-parts ledger entry (value in gp + optional source creature + trait tags + note). */
-export function addBankedPartEntry(
+/** Set an item's refine value FREELY (no deduction). Ensures a blob of the given `kind` exists (creating
+ *  one for an auto-kind item that has none yet) and clears the item's runes (either/or). */
+export function setItemRefineValue(
   play: PlayState,
-  entry: { gp: number; source?: string; tags?: string[]; note?: string },
+  instanceId: string,
+  kind: ItemMonsterPart['kind'],
+  refineValue: number,
 ): PlayState {
-  const entries = play.bankedParts?.entries ?? [];
-  const clean = {
-    id: nextBankedPartId(entries),
-    gp: Math.max(0, Math.round(entry.gp)),
-    ...(entry.source?.trim() ? { source: entry.source.trim() } : {}),
-    ...(entry.tags && entry.tags.length ? { tags: entry.tags } : {}),
-    ...(entry.note?.trim() ? { note: entry.note.trim() } : {}),
-  };
-  return { ...play, bankedParts: { entries: [...entries, clean] } };
+  const inv = (play.inventory ?? []).find((i) => i.instanceId === instanceId);
+  const blob: ItemMonsterPart = inv?.monsterPart ?? { kind, refineValue: 0, imbuements: [] };
+  return setItemMonsterPart(play, instanceId, { ...blob, kind, refineValue: Math.max(0, Math.round(refineValue)) });
 }
 
-/** Patch a banked-parts entry by id (gp/source/tags/note). */
-export function updateBankedPartEntry(
-  play: PlayState,
-  id: string,
-  patch: Partial<{ gp: number; source: string; tags: string[]; note: string }>,
-): PlayState {
-  const entries = play.bankedParts?.entries ?? [];
-  return {
-    ...play,
-    bankedParts: {
-      entries: entries.map((e) =>
-        e.id === id ? { ...e, ...patch, ...(patch.gp !== undefined ? { gp: Math.max(0, Math.round(patch.gp)) } : {}) } : e,
-      ),
-    },
-  };
-}
-
-/** Remove a banked-parts ledger entry by id. */
-export function removeBankedPartEntry(play: PlayState, id: string): PlayState {
-  const entries = play.bankedParts?.entries ?? [];
-  return { ...play, bankedParts: { entries: entries.filter((e) => e.id !== id) } };
-}
-
-/** Deduct `gp` of parts from the bank, draining entries oldest-first (partial entries kept). Clamped so
- *  the bank never goes negative. Used when allocating parts into a refine/imbue value. */
-export function spendBankedParts(play: PlayState, gp: number): PlayState {
-  let remaining = Math.max(0, Math.round(gp));
-  if (remaining <= 0) return play;
-  const entries = (play.bankedParts?.entries ?? []).map((e) => ({ ...e }));
-  for (const e of entries) {
-    if (remaining <= 0) break;
-    const take = Math.min(e.gp, remaining);
-    e.gp -= take;
-    remaining -= take;
-  }
-  return { ...play, bankedParts: { entries: entries.filter((e) => e.gp > 0) } };
-}
-
-/** Return `gp` of parts to the bank as a single labelled entry (e.g. salvage or deallocation refund). */
-export function returnBankedParts(play: PlayState, gp: number, source = 'Recovered parts'): PlayState {
-  const value = Math.max(0, Math.round(gp));
-  if (value <= 0) return play;
-  return addBankedPartEntry(play, { gp: value, source });
+/** Replace an item's imbuement list FREELY (no deduction). A no-op if the item has no monster-part blob. */
+export function setItemImbuements(play: PlayState, instanceId: string, imbuements: ItemImbuement[]): PlayState {
+  const inv = (play.inventory ?? []).find((i) => i.instanceId === instanceId);
+  if (!inv?.monsterPart) return play;
+  return setItemMonsterPart(play, instanceId, { ...inv.monsterPart, imbuements });
 }
 
 /** Set (or clear, with undefined) an item's use-tracker — max uses + whether it refills on rest. */

@@ -587,6 +587,15 @@ interface ItemBase extends ContentBase {
   /** Apex item (trait `apex`): the attribute it raises while invested — to 18, or +2 if already 18+.
    *  Only one apex item works at a time. */
   apexAttribute?: AbilityId;
+  /** Monster Parts (variant rule): marks this created item as a harvested MONSTER PART — a raw
+   *  resource, not a refined/imbued gear item. Its VALUE is the item's `price` (gp) and its tags are
+   *  `monsterPartTags`. `true` = it is a monster part; absent = a normal item. (Presence of the flag,
+   *  not the tag array, is the discriminator, so a tagless part still reads as a monster part.) */
+  isMonsterPart?: true;
+  /** Vocabulary + free-text tags describing what this monster part offers (energy/damage types, traits,
+   *  attributes, senses, skills, creature types, …) for the reference-only requirement-match hints.
+   *  Only meaningful alongside `isMonsterPart`; may be empty. */
+  monsterPartTags?: string[];
 }
 
 /** A static descriptor of one trackable pool/ability on an item definition. */
@@ -1217,26 +1226,6 @@ export interface ItemImbuement {
 /** Refined item type — decides tables + part requirements (mirrors MpItemKind in rules/monsterParts). */
 export type MpItemKind = 'weapon' | 'armor' | 'shield' | 'perception' | 'skill';
 
-/** Banked monster parts, tracked BY VALUE (gp) plus optional source-creature tags. Matching a part
- *  requirement is trust-based (the app has no bestiary) — the tags are player-authored reminders. */
-export interface BankedParts {
-  /** Ledger entries; totalGp is the sum of their gp. */
-  entries: BankedPartEntry[];
-}
-
-/** One banked-parts ledger entry, e.g. { gp: 250, source: 'magma scorpion', tags: ['fire'] }. */
-export interface BankedPartEntry {
-  id: string;
-  /** Value of this lot of parts, in gp. */
-  gp: number;
-  /** The source creature (free text), e.g. "magma scorpion". */
-  source?: string;
-  /** Trait/keyword tags for trust-based requirement matching, e.g. ['fire', 'acid']. */
-  tags?: string[];
-  /** Free-form note. */
-  note?: string;
-}
-
 /** Per-character toggles that aren't GMG variant rules — convenience/house options. */
 export interface CharacterOptions {
   /** Replace the ancestry's listed attribute boosts AND flaws with two free attribute boosts. */
@@ -1387,9 +1376,6 @@ export interface Character {
   // --- gear ---
   inventory: InventoryItem[];
   currency: Coins;
-  /** Banked monster parts (Monster Parts variant rule). Persistent play state; surfaced here by
-   *  applyPlayState so the Inventory tracker + refine/imbue editor can read the current bank. */
-  bankedParts?: BankedParts;
   /** Ancestry/feat-granted natural unarmed attacks (Iruxi Fangs, claws, jaws, tail, …) beyond the
    *  baseline Fist. Each becomes its own Strike that uses your unarmed proficiency and is buffed by
    *  Handwraps of Mighty Blows (the die-size rule scales the dice to this attack's own die). */

@@ -12,6 +12,7 @@ import { CritSpecText } from './CritSpecText';
 import { critSpec } from '../rules/critSpec';
 import { PinStar } from './PinStar';
 import { ActionGlyph } from './widgets';
+import { mpApplied } from '../rules/monsterParts';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { SPELL_SPEC_BUILDER } from './filterSpecs';
 
@@ -133,6 +134,7 @@ export function ItemDetail({
   onPlay,
   inventory = [],
   rationsDayTracking = false,
+  charLevel = 1,
   onEdit,
 }: {
   inv: InventoryItem;
@@ -144,6 +146,8 @@ export function ItemDetail({
   inventory?: InventoryItem[];
   /** "Individual day tracking of rations" option — suppress the Rations days counter. */
   rationsDayTracking?: boolean;
+  /** Character level — caps the applied Monster-Parts effect readout. */
+  charLevel?: number;
   /** Opens the item editor for this item + instance (runes/attachments live there). */
   onEdit?: (item: Item, inv: InventoryItem) => void;
 }) {
@@ -165,6 +169,8 @@ export function ItemDetail({
   // Any item can be edited when an editor is wired in. A homebrew item edits in place;
   // a built-in item is copied for this character (copy-on-write). Runes live on the edit page.
   const editable = !!onEdit;
+  // Applied Monster-Parts effects (refinement benefits + imbued property effects) for the readout.
+  const applied = mpApplied(inv.monsterPart, item.itemType === 'weapon' ? item.damage.type : undefined, charLevel);
   const attached = inventory.filter((i) => i.attachedTo === inv.instanceId);
   // If THIS item is affixed to something, name the host so the card can show it.
   const host = inv.attachedTo ? inventory.find((i) => i.instanceId === inv.attachedTo) : undefined;
@@ -206,6 +212,18 @@ export function ItemDetail({
               {runes.map((r) => (
                 <span className="ff-trait rune" key={r}>
                   {r}
+                </span>
+              ))}
+            </div>
+          )}
+          {item.isMonsterPart && (
+            <div className="sd-traits">
+              <span className="ff-trait category">
+                <i className="ti ti-bone" aria-hidden="true" /> Monster Part
+              </span>
+              {(item.monsterPartTags ?? []).map((t) => (
+                <span className="ff-trait" key={t}>
+                  {t}
                 </span>
               ))}
             </div>
@@ -316,6 +334,30 @@ export function ItemDetail({
                 <CritSpecText text={critSpec(item.group)!} content={content} />
               </div>
               <span className="sd-uses-hint">Applies on a critical hit if you have critical specialization with this weapon group.</span>
+            </div>
+          )}
+          {applied && (applied.refineLines.length > 0 || applied.imbuements.length > 0) && (
+            <div className="sd-uses sd-mp-applied">
+              <span className="sd-uses-title">
+                <i className="ti ti-bone" aria-hidden="true" /> Monster Parts — refined item level {applied.refinedLevel || '—'}
+              </span>
+              {applied.refineLines.length > 0 && (
+                <ul className="sd-mp-list">
+                  {applied.refineLines.map((l) => (
+                    <li key={l}>{l}</li>
+                  ))}
+                </ul>
+              )}
+              {applied.imbuements.map((im, i) => (
+                <div className="sd-mp-imbue" key={i}>
+                  <span className="sd-mp-imbue-name">
+                    {im.name}
+                    {im.pathName ? ` · ${im.pathName}` : ''} <span className="sd-mp-imbue-lvl">lvl {im.level}</span>
+                  </span>
+                  {im.effects.length > 0 && <span className="sd-mp-imbue-eff">{im.effects.join(' · ')}</span>}
+                </div>
+              ))}
+              <span className="sd-uses-hint">These effects apply to this item while it's wielded/worn.</span>
             </div>
           )}
           <DescBody description={item.description} descRefs={item.descRefs} onExit={onClose} />
