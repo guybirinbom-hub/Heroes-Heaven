@@ -8,6 +8,7 @@
 import { themes } from './themes';
 import { styles } from './styles';
 import { fonts } from './fonts';
+import { touchSettings } from '../data/syncBus';
 
 const STORAGE_KEY = 'pf2e-codex.appearance';
 
@@ -55,6 +56,7 @@ function saveState(): void {
   } catch {
     /* storage unavailable — non-fatal */
   }
+  touchSettings(); // appearance is a synced setting — stamp + nudge cloud upload
 }
 
 function hexToRgb(hex: string): [number, number, number] {

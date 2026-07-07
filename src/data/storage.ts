@@ -20,6 +20,7 @@ import type {
   Spell,
 } from '../rules/types';
 import { normalizeCharacter, normalizePlay } from '../rules/normalize';
+import { loadSettingsUpdated, markLocalDataChanged, saveSettingsUpdated } from './syncBus';
 
 export interface SavedChar {
   /** Unique roster id (distinct from character.id, which can collide on name). */
@@ -181,6 +182,7 @@ export function saveHomebrewSource(source: HomebrewSource): void {
   } catch {
     /* non-fatal */
   }
+  markLocalDataChanged();
 }
 
 /** Delete a source and every content entry that belonged to it. */
@@ -199,6 +201,7 @@ export function deleteHomebrewSource(id: string): void {
   } catch {
     /* non-fatal */
   }
+  markLocalDataChanged();
 }
 
 /** All homebrew content, folding in any items saved under the legacy items-only key. */
@@ -229,6 +232,7 @@ function saveHomebrewContent(content: HomebrewContent): void {
   } catch {
     /* non-fatal */
   }
+  markLocalDataChanged(); // homebrew is synced — nudge cloud upload
 }
 
 /** Persist (or update) one homebrew entry of the given type. */
@@ -275,6 +279,7 @@ export function saveMode(mode: ModeDef): void {
   } catch {
     // non-fatal
   }
+  markLocalDataChanged(); // modes are synced — nudge cloud upload
 }
 
 /** Delete a user mode by id. */
@@ -286,6 +291,7 @@ export function deleteMode(id: string): void {
   } catch {
     // non-fatal
   }
+  markLocalDataChanged();
 }
 
 /** Permanently erase ALL of this app's locally-stored data: every saved character, homebrew item,
@@ -335,12 +341,27 @@ export function saveCharUpdated(map: Record<string, number>): void {
   }
 }
 
+const PREFS_KEY = 'pf2e-codex.prefs';
+const APPEARANCE_KEY = 'pf2e-codex.appearance';
+
+function loadJsonRaw(key: string): unknown {
+  try {
+    const r = localStorage.getItem(key);
+    return r ? JSON.parse(r) : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 export interface CloudBundle {
   roster: SavedChar[];
   homebrew: HomebrewContent;
   homebrewSources: Record<string, HomebrewSource>;
   modes: Record<string, ModeDef>;
   charUpdated: Record<string, number>;
+  /** Device settings (customization prefs + appearance) — synced last-write-wins via settingsUpdated. */
+  settings?: { prefs?: unknown; appearance?: unknown };
+  settingsUpdated?: number;
 }
 
 /** Snapshot everything cloud sync mirrors, straight from localStorage. */
@@ -351,10 +372,13 @@ export function readCloudBundle(): CloudBundle {
     homebrewSources: loadHomebrewSources(),
     modes: loadModes(),
     charUpdated: loadCharUpdated(),
+    settings: { prefs: loadJsonRaw(PREFS_KEY), appearance: loadJsonRaw(APPEARANCE_KEY) },
+    settingsUpdated: loadSettingsUpdated(),
   };
 }
 
-/** Overwrite localStorage with a (merged) bundle. Used when adopting the cloud's copy on login. */
+/** Overwrite localStorage with a (merged) bundle. Used when adopting the cloud's copy on login.
+ *  The caller re-applies prefs/appearance live (cloudSync) — this only writes the raw keys. */
 export function writeCloudBundle(b: CloudBundle): void {
   saveRoster(b.roster ?? []);
   try {
@@ -373,4 +397,19 @@ export function writeCloudBundle(b: CloudBundle): void {
     /* non-fatal */
   }
   saveCharUpdated(b.charUpdated ?? {});
+  if (b.settings?.prefs !== undefined) {
+    try {
+      localStorage.setItem(PREFS_KEY, JSON.stringify(b.settings.prefs));
+    } catch {
+      /* non-fatal */
+    }
+  }
+  if (b.settings?.appearance !== undefined) {
+    try {
+      localStorage.setItem(APPEARANCE_KEY, JSON.stringify(b.settings.appearance));
+    } catch {
+      /* non-fatal */
+    }
+  }
+  if (b.settingsUpdated) saveSettingsUpdated(b.settingsUpdated);
 }

@@ -1,16 +1,19 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState, type ChangeEvent } from 'react';
 import type { ContentDatabase, Item, ModeDef } from '../rules/types';
 import {
   loadHomebrewSources,
+  loadHomebrewContent,
   saveHomebrewSource,
   deleteHomebrewSource,
   saveHomebrewEntry,
   deleteHomebrewEntry,
   newRosterId,
+  HOMEBREW_TYPES,
   type HomebrewContent,
   type HomebrewSource,
   type HomebrewType,
 } from '../data/storage';
+import { downloadText } from './download';
 import {
   HOMEBREW_SCHEMAS,
   SCHEMA_BY_TYPE,
@@ -228,6 +231,40 @@ export function HomebrewPage({
     setSelectedId(src.id);
     setMobileOpen(true); // on a phone, drill straight into the new source
   };
+
+  // Export / import all homebrew (sources + content) as a shareable JSON file.
+  const fileRef = useRef<HTMLInputElement>(null);
+  const exportHomebrew = () => {
+    const payload = { app: 'heroes-heaven', kind: 'homebrew', version: 1, sources: loadHomebrewSources(), content: loadHomebrewContent() };
+    downloadText(JSON.stringify(payload, null, 2), 'heroes-heaven-homebrew.json');
+  };
+  const importHomebrew = () => fileRef.current?.click();
+  const onImportFile = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = ''; // allow re-importing the same file
+    if (!file) return;
+    try {
+      const data = JSON.parse(await file.text()) as { sources?: Record<string, HomebrewSource>; content?: Partial<HomebrewContent> };
+      if (!data || (!data.sources && !data.content)) throw new Error('not a homebrew file');
+      let n = 0;
+      for (const src of Object.values(data.sources ?? {})) persistSource(src); // merges (keeps existing)
+      for (const type of HOMEBREW_TYPES) {
+        for (const entry of Object.values(data.content?.[type] ?? {})) {
+          saveHomebrewEntry(type, entry as HomebrewContent[typeof type][string]);
+          n++;
+        }
+      }
+      onChanged();
+      setSources(loadHomebrewSources());
+      await confirmDialog({
+        title: 'Homebrew imported',
+        message: `Added ${n} item${n === 1 ? '' : 's'} from the file. Enable their source per character under Setup → Sources.`,
+        confirmLabel: 'Done',
+      });
+    } catch {
+      await confirmDialog({ title: "Couldn't import", message: "That file isn't a Heroes Heaven homebrew export.", confirmLabel: 'OK' });
+    }
+  };
   const removeSource = async (id: string) => {
     if (
       !(await confirmDialog({
@@ -273,13 +310,19 @@ export function HomebrewPage({
         </div>
         <WindowControls />
         <PageMenu
-          items={onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []}
+          items={[
+            ...(onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []),
+            { label: 'Export homebrew', icon: 'ti-download', onClick: exportHomebrew },
+            { label: 'Import homebrew', icon: 'ti-upload', onClick: importHomebrew },
+          ]}
           modes={content.modes}
           characters={characters}
           onSaveMode={onSaveMode}
           onDeleteMode={onDeleteMode}
         />
       </header>
+      <input ref={fileRef} type="file" accept="application/json,.json" style={{ display: 'none' }} onChange={onImportFile} />
+
       {isMobile && !drilledIn ? (
         /* Phone: the 168px sidebar layout doesn't fit — drill in from a full-width sources list instead. */
         <div className="hb-sources-m">

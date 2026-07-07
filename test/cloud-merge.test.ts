@@ -85,6 +85,27 @@ describe('mergeBundles', () => {
     expect(m.charUpdated).toEqual({ a: 50, b: 5 });
   });
 
+  it('takes settings from whichever side changed them more recently (ties → local)', () => {
+    const localNewer = mergeBundles(
+      bundle({ settings: { prefs: { a: 'L' } }, settingsUpdated: 200 }),
+      bundle({ settings: { prefs: { a: 'C' } }, settingsUpdated: 100 }),
+    );
+    expect((localNewer.settings!.prefs as { a: string }).a).toBe('L');
+    expect(localNewer.settingsUpdated).toBe(200);
+
+    const cloudNewer = mergeBundles(
+      bundle({ settings: { prefs: { a: 'L' } }, settingsUpdated: 100 }),
+      bundle({ settings: { prefs: { a: 'C' } }, settingsUpdated: 200 }),
+    );
+    expect((cloudNewer.settings!.prefs as { a: string }).a).toBe('C');
+
+    const tie = mergeBundles(
+      bundle({ settings: { prefs: { a: 'L' } }, settingsUpdated: 5 }),
+      bundle({ settings: { prefs: { a: 'C' } }, settingsUpdated: 5 }),
+    );
+    expect((tie.settings!.prefs as { a: string }).a).toBe('L');
+  });
+
   it('tolerates bundles missing optional maps', () => {
     const local = bundle({ roster: [ch('a')], charUpdated: { a: 1 } });
     const cloud = { roster: [ch('b')], charUpdated: { b: 1 } } as CloudBundle; // no homebrew/sources/modes

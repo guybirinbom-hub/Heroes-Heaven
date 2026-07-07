@@ -19,6 +19,9 @@ import {
   type SavedChar,
 } from './storage';
 import { setOnPersisted } from './persist';
+import { onLocalDataChanged } from './syncBus';
+import { reloadPrefs } from './prefs';
+import { initTheme } from '../theme/theme-manager';
 import { charFingerprint, mergeBundles } from './cloudMerge';
 
 const PUSH_DEBOUNCE_MS = 3000;
@@ -82,6 +85,14 @@ async function initialSync(): Promise<void> {
     );
   const merged = mergeBundles(local, cloud);
   writeCloudBundle(merged);
+  // Apply pulled settings live — writeCloudBundle only wrote the raw keys; these re-read + re-apply
+  // (theme repaints via CSS, prefs notify their subscribers).
+  try {
+    reloadPrefs();
+    initTheme();
+  } catch {
+    /* non-fatal — settings still take effect on next load */
+  }
   fingerprints = new Map(merged.roster.map((c) => [c.id, charFingerprint(c)]));
   applyRoster?.(merged.roster);
   pulledOk = true; // now safe to push
@@ -168,12 +179,15 @@ export async function startCloudSync(onRosterReplaced: (roster: SavedChar[]) => 
   }
 
   setOnPersisted(noteRosterChange);
+  // Non-roster local data (homebrew, modes, settings) nudges an upload through the sync bus.
+  onLocalDataChanged(() => schedulePush());
   document.addEventListener('visibilitychange', onVisibility);
   window.addEventListener('pagehide', onPageHide);
   window.addEventListener('online', onOnline);
 
   return () => {
     setOnPersisted(() => {});
+    onLocalDataChanged(null);
     document.removeEventListener('visibilitychange', onVisibility);
     window.removeEventListener('pagehide', onPageHide);
     window.removeEventListener('online', onOnline);

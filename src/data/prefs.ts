@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { setConsumableColorOverride } from '../theme/theme-manager';
+import { touchSettings } from './syncBus';
 
 /*
  * Device-global UI customization preferences — apply to every character on this device, persisted
@@ -74,7 +75,14 @@ export function setPref<K extends keyof Prefs>(key: K, value: Prefs[K]): void {
   if (prefs[key] === value) return;
   prefs = { ...prefs, [key]: value };
   save();
+  touchSettings(); // prefs are a synced setting — stamp + nudge cloud upload
   applyDomPrefs();
+  for (const l of listeners) l(prefs);
+}
+
+/** Re-read prefs from storage and notify subscribers — used after cloud sync overwrites them. */
+export function reloadPrefs(): void {
+  initPrefs();
   for (const l of listeners) l(prefs);
 }
 

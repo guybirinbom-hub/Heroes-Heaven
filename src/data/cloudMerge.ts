@@ -65,11 +65,16 @@ export function mergeRoster(
 export function mergeBundles(local: CloudBundle, cloud: CloudBundle | null): CloudBundle {
   if (!cloud) return local;
   const { roster, charUpdated } = mergeRoster(local.roster ?? [], local.charUpdated ?? {}, cloud.roster ?? [], cloud.charUpdated ?? {});
+  // Settings (prefs/appearance) aren't union-able — take whichever side changed them more recently.
+  const localTs = local.settingsUpdated ?? 0;
+  const cloudTs = cloud.settingsUpdated ?? 0;
   return {
     roster,
     charUpdated,
     homebrew: mergeHomebrew(cloud.homebrew, local.homebrew),
     homebrewSources: unionRecords(cloud.homebrewSources, local.homebrewSources),
     modes: unionRecords(cloud.modes, local.modes),
+    settings: cloudTs > localTs ? cloud.settings : local.settings, // ties → local
+    settingsUpdated: Math.max(localTs, cloudTs),
   };
 }
