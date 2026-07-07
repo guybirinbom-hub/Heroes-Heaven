@@ -12,7 +12,8 @@ import { pickScreen } from './appScreen';
 import { useAuth } from './data/useAuth';
 import { startCloudSync } from './data/cloudSync';
 import { LoginScreen } from './sheet/LoginScreen';
-import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, ROSTER_KEY, type SavedChar } from './data/storage';
+import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
+import { isTauri } from './platform';
 import { setupPersist, schedulePersist, persistNow, flushPersist, cancelPersist } from './data/persist';
 import { chooseDialog } from './sheet/confirm';
 import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from './rules/build';
@@ -60,6 +61,9 @@ export default function App() {
   // True when the last persist attempt was rejected (e.g. localStorage quota) — surfaced as a banner
   // so the user knows their changes aren't being saved rather than losing them silently.
   const [saveFailed, setSaveFailed] = useState(false);
+  // Proactive "storage almost full" heads-up (before the hard quota failure that sets saveFailed).
+  const [storageWarn, setStorageWarn] = useState(false);
+  const storageDismissed = useRef(false);
   // Set by structural roster changes (create/delete/import/duplicate) so the NEXT persist writes
   // immediately instead of debouncing — a crash inside the debounce window must not drop a whole
   // character. Play mutations leave it false and take the debounced path. See the persist effect.
@@ -94,7 +98,12 @@ export default function App() {
   // every event — the Android input-lag fix. Teardown handlers below flush any pending write so
   // nothing is lost when the app closes or is backgrounded.
   useEffect(() => {
-    setupPersist(saveRoster, (ok) => setSaveFailed(!ok));
+    setupPersist(saveRoster, (ok) => {
+      setSaveFailed(!ok);
+      // Warn well before the browser's hard cap (~5MB web / more on the installed app).
+      const limit = (isTauri ? 9 : 4.5) * 1024 * 1024;
+      if (ok && !storageDismissed.current) setStorageWarn(localStorageBytes() > limit);
+    });
   }, []);
   // Web build: once signed in, mirror the roster to/from the cloud — pull+merge on login, push on
   // change/background. `disabled` (desktop) never starts it. Applying the merged roster replaces
@@ -509,6 +518,25 @@ export default function App() {
             <i className="ti ti-alert-triangle" aria-hidden="true" />
             <span>Changes can’t be saved — browser storage is full or unavailable. Export your characters so you don’t lose work.</span>
             <button className="save-warning-x" onClick={() => setSaveFailed(false)} aria-label="Dismiss">
+              <i className="ti ti-x" aria-hidden="true" />
+            </button>
+          </div>
+        )}
+        {storageWarn && !saveFailed && (
+          <div className="save-warning storage-warning" role="alert">
+            <i className="ti ti-alert-triangle" aria-hidden="true" />
+            <span>
+              This device’s storage is almost full. Export a backup and remove some characters or portraits so
+              your changes keep saving{isTauri ? '.' : ' — your characters are also saved to the cloud.'}
+            </span>
+            <button
+              className="save-warning-x"
+              onClick={() => {
+                storageDismissed.current = true;
+                setStorageWarn(false);
+              }}
+              aria-label="Dismiss"
+            >
               <i className="ti ti-x" aria-hidden="true" />
             </button>
           </div>

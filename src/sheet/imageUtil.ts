@@ -7,6 +7,13 @@
  * roster. downscaleImage shrinks the longest edge to `maxDim` and re-encodes — typically cutting a
  * multi-MB photo to a few tens of KB — before anything is persisted.
  */
+import { isTauri } from '../platform';
+
+/* Local (installed Tauri desktop/Android) users don't sync to the cloud and have roomier storage, so
+ * keep their portraits sharper. The web build stays tightly compressed — every portrait round-trips
+ * through cloud sync and lives under the ~5MB browser storage cap. */
+const PORTRAIT_MAX_DIM = isTauri ? 768 : 384;
+const PORTRAIT_QUALITY = isTauri ? 0.9 : 0.82;
 
 function readFileAsDataURL(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -37,7 +44,7 @@ function mimeOfDataUrl(url: string): string {
  * URL is smaller, so tiny images never grow. Rejects when the image can't be decoded or no canvas
  * is available — callers decide whether to keep or drop the original.
  */
-export async function downscaleDataUrl(original: string, maxDim = 384, quality = 0.82): Promise<string> {
+export async function downscaleDataUrl(original: string, maxDim = PORTRAIT_MAX_DIM, quality = PORTRAIT_QUALITY): Promise<string> {
   const img = await loadImage(original);
   const longest = Math.max(img.width, img.height) || 1;
   const scale = Math.min(1, maxDim / longest);
@@ -58,7 +65,7 @@ export async function downscaleDataUrl(original: string, maxDim = 384, quality =
  * JPEG (or PNG when the source has transparency) at `quality`. SVG/GIF are passed through unchanged
  * (canvas can't faithfully re-encode them).
  */
-export async function downscaleImage(file: File, maxDim = 384, quality = 0.82): Promise<string> {
+export async function downscaleImage(file: File, maxDim = PORTRAIT_MAX_DIM, quality = PORTRAIT_QUALITY): Promise<string> {
   const original = await readFileAsDataURL(file);
   if (file.type === 'image/svg+xml' || file.type === 'image/gif') return original;
   try {

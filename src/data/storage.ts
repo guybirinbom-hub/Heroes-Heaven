@@ -315,6 +315,22 @@ export function wipeAllData(): number {
   return removed;
 }
 
+/** Rough total size of this app's localStorage, in bytes (stored as UTF-16 ≈ 2 bytes/char). Used to
+ *  warn the user BEFORE they hit the browser's ~5 MB quota and a save actually fails. */
+export function localStorageBytes(): number {
+  let chars = 0;
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key === null) continue;
+      chars += key.length + (localStorage.getItem(key)?.length ?? 0);
+    }
+  } catch {
+    return 0;
+  }
+  return chars * 2;
+}
+
 /* ---- Cloud sync bundle (web build) -----------------------------------------------------------
  * Everything cloud sync mirrors is bundled together so it uploads/downloads as one JSON blob.
  * Per-character last-modified timestamps live in their OWN key (not on SavedChar) so the app's

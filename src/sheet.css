@@ -3003,6 +3003,10 @@ button.strike-name:hover {
   color: #fff;
   font-size: 13px;
 }
+/* Proactive "storage almost full" heads-up — amber, not the red hard-failure color. */
+.save-warning.storage-warning {
+  background: var(--app-warn, #b45309);
+}
 .save-warning .ti-alert-triangle {
   font-size: 16px;
   flex: none;
