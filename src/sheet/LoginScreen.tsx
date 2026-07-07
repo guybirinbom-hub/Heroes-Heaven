@@ -10,7 +10,7 @@ import { WindowControls } from './WindowControls';
  * still contains the link (works fine in a desktop browser); the code path works everywhere.
  * Only invited emails can sign in (shouldCreateUser:false → the Supabase allowlist rejects the rest).
  */
-export function LoginScreen() {
+export function LoginScreen({ onDevSkip }: { onDevSkip?: () => void }) {
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
   const [phase, setPhase] = useState<'email' | 'sending' | 'code' | 'verifying'>('email');
@@ -154,6 +154,11 @@ export function LoginScreen() {
             </>
           )}
         </div>
+        {import.meta.env.DEV && onDevSkip && (
+          <button className="login-devskip" onClick={onDevSkip} title="Local dev only — not shown on the live site">
+            Skip login (dev only)
+          </button>
+        )}
       </div>
     </div>
   );

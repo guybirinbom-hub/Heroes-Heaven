@@ -36,6 +36,10 @@ export default function App() {
   const [content, setContent] = useState<ContentDatabase | null>(null);
   // Web build: gates the whole app behind a magic-link login. 'disabled' on desktop → no login.
   const auth = useAuth();
+  // DEV-ONLY escape hatch: open the app without an account on the local dev server (for testing).
+  // `import.meta.env.DEV` is false in the production build, so this never appears on the deployed
+  // site and the friends-only login stays enforced there. Bypass = local-only (no cloud sync).
+  const [devBypass, setDevBypass] = useState(() => import.meta.env.DEV && sessionStorage.getItem('hh-dev-skip') === '1');
   // Roster lives in an undo/redo timeline: every character-data change (all sheet mutations funnel
   // through setRoster) becomes an undoable step, driving Ctrl+Z / Ctrl+Shift+Z below.
   const { state: roster, set: setRoster, undo, redo } = useUndoableState<SavedChar[]>(initialRoster);
@@ -311,8 +315,14 @@ export default function App() {
         </div>
       </div>
     );
-  } else if (auth.status === 'signed-out') {
-    screen = <LoginScreen />;
+  } else if (auth.status === 'signed-out' && !devBypass) {
+    screen = (
+      <LoginScreen
+        onDevSkip={
+          import.meta.env.DEV ? () => { sessionStorage.setItem('hh-dev-skip', '1'); setDevBypass(true); } : undefined
+        }
+      />
+    );
   } else if (which === 'roster') {
     screen = (
       <RosterScreen
