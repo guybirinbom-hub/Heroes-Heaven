@@ -6998,6 +6998,12 @@ button.strike-name:hover {
   outline: none;
   border-color: var(--app-accent);
 }
+.login-code {
+  font-size: 22px;
+  letter-spacing: 8px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
 .login-send {
   width: 100%;
   background: var(--app-accent);
