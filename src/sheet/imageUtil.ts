@@ -9,11 +9,25 @@
  */
 import { isTauri } from '../platform';
 
-/* Local (installed Tauri desktop/Android) users don't sync to the cloud and have roomier storage, so
- * keep their portraits sharper. The web build stays tightly compressed — every portrait round-trips
- * through cloud sync and lives under the ~5MB browser storage cap. */
-const PORTRAIT_MAX_DIM = isTauri ? 768 : 384;
-const PORTRAIT_QUALITY = isTauri ? 0.9 : 0.82;
+/* Two tiers. The COMPRESSED copy is what lives in the character data — it syncs to the cloud and is
+ * shown on the web, so it stays small (under the ~5MB browser cap, and light to sync). On the INSTALLED
+ * app we ALSO keep a SHARP copy on-device (IndexedDB, never synced — see data/portraitStore.ts) shown
+ * in place of the compressed one. So the synced/online portrait is always the compressed tier on every
+ * platform; the sharp tier never leaves the device it was uploaded on. */
+const COMPRESSED_MAX = 384;
+const COMPRESSED_QUALITY = 0.82;
+const SHARP_MAX = 768;
+const SHARP_QUALITY = 0.9;
+/** Default downscale target = the compressed (synced) tier — used by imports and any generic caller. */
+const PORTRAIT_MAX_DIM = COMPRESSED_MAX;
+const PORTRAIT_QUALITY = COMPRESSED_QUALITY;
+
+export interface PortraitTiers {
+  /** Small copy stored in the (synced) character data + shown on the web. */
+  compressed: string;
+  /** Sharper copy for the installed app's on-device store; absent on the web (or when not worth it). */
+  sharp?: string;
+}
 
 function readFileAsDataURL(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -72,6 +86,34 @@ export async function downscaleImage(file: File, maxDim = PORTRAIT_MAX_DIM, qual
     return await downscaleDataUrl(original, maxDim, quality);
   } catch {
     return original; // can't decode — store as-is rather than failing the upload
+  }
+}
+
+/**
+ * Produce the tiers for an uploaded portrait: always the cloud-safe compressed copy, plus — on the
+ * installed app only — a sharper on-device copy. The sharp copy is dropped when it wouldn't actually
+ * be larger than the compressed one (tiny source image), so we never store a redundant duplicate.
+ */
+export async function processPortrait(file: File): Promise<PortraitTiers> {
+  const compressed = await downscaleImage(file, COMPRESSED_MAX, COMPRESSED_QUALITY);
+  if (!isTauri) return { compressed };
+  try {
+    const sharp = await downscaleImage(file, SHARP_MAX, SHARP_QUALITY);
+    return { compressed, sharp: sharp.length > compressed.length ? sharp : undefined };
+  } catch {
+    return { compressed };
+  }
+}
+
+/** Same two tiers from an existing data URL (portrait migration / import rather than a File pick). */
+export async function processPortraitDataUrl(url: string): Promise<PortraitTiers> {
+  const compressed = await downscaleDataUrl(url, COMPRESSED_MAX, COMPRESSED_QUALITY);
+  if (!isTauri) return { compressed };
+  try {
+    const sharp = await downscaleDataUrl(url, SHARP_MAX, SHARP_QUALITY);
+    return { compressed, sharp: sharp.length > compressed.length ? sharp : undefined };
+  } catch {
+    return { compressed };
   }
 }
 

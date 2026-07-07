@@ -19,6 +19,7 @@ import { NotesTab } from './NotesTab';
 import { SettingsPage } from './SettingsPage';
 import { WindowControls } from './WindowControls';
 import { useIsMobile } from './useIsMobile';
+import { usePortrait } from './usePortrait';
 import { useBackHandler } from './useEscapeClose';
 import { HeroesHeavenLogo } from './Logo';
 
@@ -178,6 +179,8 @@ export function CharacterSheet({
   const cls = character.classId ? content.classes[character.classId] : undefined;
   const initials = character.name.slice(0, 2).toUpperCase();
   const portrait = character.appearance?.portrait;
+  // On-device sharp copy (installed app) when present, else the compressed/synced one.
+  const shownPortrait = usePortrait(character.appearance?.portraitRef, portrait);
 
   // Lets description popups anywhere in the sheet offer a "favorite" star (only in play mode).
   const pinApi: PinDescApi | null = useMemo(() => {
@@ -210,7 +213,7 @@ export function CharacterSheet({
             aria-label="View portrait full size"
             onClick={() => setPortraitOpen(true)}
           >
-            <img src={portrait} alt="" className="portrait-img" />
+            <img src={shownPortrait} alt="" className="portrait-img" />
           </button>
         ) : (
           <div className="portrait">{initials}</div>
@@ -362,7 +365,7 @@ export function CharacterSheet({
         )}
         {portraitOpen && portrait && (
           <div className="portrait-lightbox" onClick={() => setPortraitOpen(false)} role="dialog" aria-label="Portrait">
-            <img src={portrait} alt={`${character.name} portrait`} className="portrait-lightbox-img" />
+            <img src={shownPortrait} alt={`${character.name} portrait`} className="portrait-lightbox-img" />
             <button className="portrait-lightbox-close" onClick={() => setPortraitOpen(false)} aria-label="Close">
               <i className="ti ti-x" aria-hidden="true" />
             </button>

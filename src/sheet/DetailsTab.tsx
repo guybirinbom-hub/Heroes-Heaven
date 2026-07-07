@@ -5,7 +5,9 @@ import { InfoTerm } from './InfoTerm';
 import { deriveDefenses } from '../rules/derive';
 import { setDetail, setPortrait, type PlayUpdater } from '../rules/play';
 import { proficiencyDesc, senseDesc, traitDesc, languageDesc } from '../rules/glossary';
-import { downscaleImage } from './imageUtil';
+import { processPortrait } from './imageUtil';
+import { usePortrait } from './usePortrait';
+import { newPortraitRef, setSharpPortrait, deleteSharpPortrait } from '../data/portraitStore';
 import { useIsMobile } from './useIsMobile';
 
 function cap(s: string): string {
@@ -73,13 +75,24 @@ export function DetailsTab({
   // data URL and stored in the in-play appearance overlay (persists with the character).
   const fileInputRef = useRef<HTMLInputElement>(null);
   const portrait = character.appearance?.portrait;
+  // Show the on-device sharp copy (installed app) when present, else the compressed/synced one.
+  const shownPortrait = usePortrait(character.appearance?.portraitRef, portrait);
   const importPortrait = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files?.[0];
     e.currentTarget.value = ''; // allow re-selecting the same file later
     if (!file || !onPlay) return;
-    // Downscale before storing — uncapped photos blow the localStorage quota.
-    downscaleImage(file)
-      .then((url) => onPlay((p) => setPortrait(p, url)))
+    const oldRef = character.appearance?.portraitRef;
+    // Compressed copy → synced character data; sharp copy (installed app) → on-device store.
+    processPortrait(file)
+      .then(async ({ compressed, sharp }) => {
+        let ref: string | undefined;
+        if (sharp) {
+          ref = newPortraitRef();
+          await setSharpPortrait(ref, sharp);
+        }
+        onPlay((p) => setPortrait(p, compressed, ref));
+        if (oldRef && oldRef !== ref) void deleteSharpPortrait(oldRef); // reclaim the replaced sharp copy
+      })
       .catch(() => {});
   };
 
@@ -138,7 +151,7 @@ export function DetailsTab({
             }
           >
             {portrait ? (
-              <img className="portrait-img" src={portrait} alt="Character portrait" />
+              <img className="portrait-img" src={shownPortrait} alt="Character portrait" />
             ) : (
               <span className="portrait-initials">{character.name.slice(0, 2).toUpperCase() || '—'}</span>
             )}

@@ -7,11 +7,19 @@ import { exportWg, exportNative, importCharacter, type ImportReport } from '../d
 import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
 import { sanitizeImportedPortrait } from './imageUtil';
+import { usePortrait } from './usePortrait';
 import { confirmDialog, chooseDialog } from './confirm';
 import { HeroesHeavenLogo } from './Logo';
 import { downloadText } from './download';
 
 type Filter = 'all' | 'active' | 'archived';
+
+/** A roster card's portrait — shows the on-device sharp copy when present, else the compressed one,
+ *  else the initials. Its own component so it can use the portrait hook inside the roster's map(). */
+function RosterCardPortrait({ portrait, portraitRef, initials }: { portrait?: string; portraitRef?: string; initials: string }) {
+  const shown = usePortrait(portraitRef, portrait);
+  return portrait ? <img src={shown} alt="" /> : <>{initials}</>;
+}
 
 function fileSlug(name: string): string {
   return (name || 'character').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'character';
@@ -202,7 +210,7 @@ export function RosterScreen({
               <div className={'rcard' + (c.id === activeId ? ' active' : '')} key={c.id}>
                 <button className="rcard-open" onClick={() => onOpen(c.id)} title="Open character sheet">
                   <span className="rcard-portrait">
-                    {ch.appearance?.portrait ? <img src={ch.appearance.portrait} alt="" /> : initials}
+                    <RosterCardPortrait portrait={ch.appearance?.portrait} portraitRef={ch.appearance?.portraitRef} initials={initials} />
                   </span>
                   <div className="rcard-info">
                     <div className="rcard-name">

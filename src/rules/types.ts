@@ -881,8 +881,10 @@ export interface CompanionConfig {
   specificFamiliarId?: string;
   /** The companion's own gear (barding, packs, …), tracked separately from the character's. */
   inventory?: InventoryItem[];
-  /** Companion portrait — a data URL the player imported (mirrors the character portrait). */
+  /** Companion portrait — the compressed (synced) data URL the player imported. */
   portrait?: string;
+  /** Key for this companion's on-device sharp portrait copy (installed app only; never synced). */
+  portraitRef?: string;
 }
 
 export interface ContentDatabase {
@@ -1391,8 +1393,9 @@ export interface Character {
   notes: NotePage[];
   /** Animal companions, familiars, and eidolons (rendered as stat blocks). */
   companions?: CompanionConfig[];
-  /** Per-character cosmetics (portrait + accent), mirrors the theme system. */
-  appearance?: { portrait?: string; accentColor?: string };
+  /** Per-character cosmetics (portrait + accent), mirrors the theme system. `portrait` is the compressed
+   *  (synced) copy; `portraitRef` keys the on-device sharp copy (installed app only; never synced). */
+  appearance?: { portrait?: string; accentColor?: string; portraitRef?: string };
 }
 
 /** Current schema version for new characters. */

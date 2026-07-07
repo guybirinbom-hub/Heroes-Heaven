@@ -11,6 +11,7 @@ import { ErrorBoundary } from './sheet/ErrorBoundary';
 import { confirmDialog } from './sheet/confirm';
 import { clearRoster } from './data/storage';
 import { loadContent } from './data';
+import { initPortraitStore } from './data/portraitStore';
 import { isMobilePlatform, isTauri } from './platform';
 
 // Apply the saved (or default) theme + zoom to <html> before React paints, so there's
@@ -34,6 +35,10 @@ if (isMobilePlatform) document.documentElement.classList.add('is-mobile');
 // especially on phones) NOW, before React mounts, so the download/parse overlaps the initial
 // render. App awaits the same shared promise instead of starting a second fetch.
 void loadContent();
+
+// Load on-device sharp portraits (installed app) into memory so display can pick them up. Async +
+// non-blocking; a subscribe in usePortrait re-renders portraits once their local copies land.
+void initPortraitStore();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

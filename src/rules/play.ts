@@ -32,8 +32,9 @@ export interface PlayState {
   /** Temporary land-Speed override in feet; when set, the sheet shows + highlights this
    *  in place of the derived Speed until it's reset to the default. */
   tempSpeed?: number;
-  /** In-play appearance overrides (portrait data URL + accent color), merged over the build's. */
-  appearance?: { portrait?: string; accentColor?: string };
+  /** In-play appearance overrides (portrait + accent color), merged over the build's. `portrait` is the
+   *  compressed (synced) copy; `portraitRef` keys the on-device sharp copy (installed app; never synced). */
+  appearance?: { portrait?: string; accentColor?: string; portraitRef?: string };
   /** Hero points currently held, 0..MAX_HERO_POINTS. */
   heroPoints: number;
   /** Mythic points currently held, 0..MAX_MYTHIC_POINTS (only meaningful when the character is mythic). */
@@ -644,12 +645,19 @@ export function setDetail(play: PlayState, key: keyof CharacterDetails, value: s
   return { ...play, details };
 }
 
-/** Set (or clear, with null) the character's portrait — a data URL produced by FileReader
- *  when the player imports an image. Stored in the in-play appearance overlay. */
-export function setPortrait(play: PlayState, dataUrl: string | null): PlayState {
+/** Set (or clear, with null) the character's portrait. `dataUrl` is the compressed (synced) copy; `ref`
+ *  keys the matching on-device sharp copy (installed app) — pass it so display can find the sharp copy,
+ *  or omit/undefined for the compressed-only case. Stored in the in-play appearance overlay. */
+export function setPortrait(play: PlayState, dataUrl: string | null, ref?: string): PlayState {
   const appearance = { ...(play.appearance ?? {}) };
-  if (dataUrl === null) delete appearance.portrait;
-  else appearance.portrait = dataUrl;
+  if (dataUrl === null) {
+    delete appearance.portrait;
+    delete appearance.portraitRef;
+  } else {
+    appearance.portrait = dataUrl;
+    if (ref) appearance.portraitRef = ref;
+    else delete appearance.portraitRef;
+  }
   return { ...play, appearance };
 }
 

@@ -13,6 +13,7 @@ import { useAuth } from './data/useAuth';
 import { startCloudSync } from './data/cloudSync';
 import { LoginScreen } from './sheet/LoginScreen';
 import { getLoginSkipped, setLoginSkipped } from './data/device';
+import { collectPortraitRefs, deleteSharpPortrait } from './data/portraitStore';
 import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { isTauri } from './platform';
 import { setupPersist, schedulePersist, persistNow, flushPersist, cancelPersist } from './data/persist';
@@ -311,10 +312,13 @@ export default function App() {
 
   const deleteChar = (id: string) => {
     // Deleting the last character is allowed — the roster can go to zero (empty state).
+    const doomed = roster.find((c) => c.id === id);
     const remaining = roster.filter((c) => c.id !== id);
     commitStructural(); // structural change — persist immediately, don't debounce
     setRoster(remaining);
     if (id === activeId) setActiveId(remaining[0]?.id ?? '');
+    // Reclaim any on-device sharp portraits this character (and its companions) owned.
+    if (doomed) collectPortraitRefs(doomed).forEach((ref) => void deleteSharpPortrait(ref));
   };
 
   let screen: ReactNode;

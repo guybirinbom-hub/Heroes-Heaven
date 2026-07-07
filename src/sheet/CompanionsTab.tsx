@@ -43,10 +43,19 @@ import { InfoTerm } from './InfoTerm';
 import { ConditionsModal } from './ConditionsModal';
 import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
 import { AddItemsModal } from './AddItemsModal';
-import { downscaleImage } from './imageUtil';
+import { processPortrait } from './imageUtil';
+import { usePortrait } from './usePortrait';
+import { newPortraitRef, setSharpPortrait, deleteSharpPortrait } from '../data/portraitStore';
 
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+/** A companion's portrait — on-device sharp copy when present, else the compressed one, else the kind
+ *  icon. Its own component so the portrait hook can run inside the companion switcher's map(). */
+function CompanionPortrait({ portrait, portraitRef, className, icon }: { portrait?: string; portraitRef?: string; className: string; icon: string }) {
+  const shown = usePortrait(portraitRef, portrait);
+  return portrait ? <img src={shown} alt="" className={className} /> : <i className={'ti ' + icon} aria-hidden="true" />;
 }
 
 const KIND_ICON: Record<CompanionKind, string> = { animal: 'ti-paw', familiar: 'ti-feather', eidolon: 'ti-flare', follower: 'ti-user', pet: 'ti-mood-smile', vehicle: 'ti-wheel', siege: 'ti-bow' };
@@ -1057,9 +1066,18 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
     const file = e.currentTarget.files?.[0];
     e.currentTarget.value = '';
     if (!file || !onPlay) return;
-    // Downscale before storing — uncapped photos blow the localStorage quota.
-    downscaleImage(file)
-      .then((url) => onPlay((p) => updatePlayCompanion(p, cfgId, { portrait: url })))
+    const oldRef = companions.find((c) => c.id === cfgId)?.portraitRef;
+    // Compressed copy → synced companion data; sharp copy (installed app) → on-device store.
+    processPortrait(file)
+      .then(async ({ compressed, sharp }) => {
+        let ref: string | undefined;
+        if (sharp) {
+          ref = newPortraitRef();
+          await setSharpPortrait(ref, sharp);
+        }
+        onPlay((p) => updatePlayCompanion(p, cfgId, { portrait: compressed, portraitRef: ref }));
+        if (oldRef && oldRef !== ref) void deleteSharpPortrait(oldRef);
+      })
       .catch(() => {});
   };
   const addCompanion = (r: AddRow, buy: boolean) => {
@@ -1206,7 +1224,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           const on = cfg.id === current.id;
           return (
             <button key={cfg.id} className={'cmp-pill' + (on ? ' active' : '')} onClick={() => select(cfg.id)}>
-              <span className="av">{cfg.portrait ? <img src={cfg.portrait} alt="" className="cmp-av-img" /> : <i className={'ti ' + meta.icon} aria-hidden="true" />}</span>
+              <span className="av"><CompanionPortrait portrait={cfg.portrait} portraitRef={cfg.portraitRef} className="cmp-av-img" icon={meta.icon} /></span>
               {cfg.name || meta.label}
               <span className="lv">Lv {companionLevel(cfg)}</span>
             </button>
@@ -1219,12 +1237,12 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
         <div className="cmp-head">
           {canEdit ? (
             <button className="cmp-port cmp-port-edit" type="button" title="Set portrait" onClick={() => { if (isAuto(current)) materializeAuto(current); portraitInputRef.current?.click(); }}>
-              {current.portrait ? <img src={current.portrait} alt="" className="cmp-port-img" /> : <i className={'ti ' + kindMeta(current, content).icon} aria-hidden="true" />}
+              <CompanionPortrait portrait={current.portrait} portraitRef={current.portraitRef} className="cmp-port-img" icon={kindMeta(current, content).icon} />
               <span className="cmp-port-badge"><i className="ti ti-camera" aria-hidden="true" /></span>
             </button>
           ) : (
             <span className="cmp-port">
-              {current.portrait ? <img src={current.portrait} alt="" className="cmp-port-img" /> : <i className={'ti ' + kindMeta(current, content).icon} aria-hidden="true" />}
+              <CompanionPortrait portrait={current.portrait} portraitRef={current.portraitRef} className="cmp-port-img" icon={kindMeta(current, content).icon} />
             </span>
           )}
           <input ref={portraitInputRef} type="file" accept="image/*" className="cmp-port-file" onChange={(e) => importPortrait(current.id, e)} aria-hidden="true" tabIndex={-1} />
