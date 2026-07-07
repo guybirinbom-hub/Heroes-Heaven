@@ -544,24 +544,32 @@ export function MonsterPartsRules({ onClose, embedded = false }: { onClose?: () 
   return (
     <div className={'picker-overlay' + (embedded ? ' mpr-embedded' : '')} onClick={embedded ? undefined : onClose}>
       <div
-        className={'picker settings-modal mpr-modal' + (isMobile ? ' settings-page-m' : '') + (embedded ? ' mpr-embedded-modal' : '')}
+        // Embedded in the Homebrew pane: must NOT take the full-screen `settings-page-m` treatment —
+        // its mobile `position:fixed;inset:0` (defined later in the CSS, so it wins the !important tie)
+        // would lay the panel over the Homebrew top bar. Stay static and flow inside the host pane.
+        className={'picker settings-modal mpr-modal' + (isMobile && !embedded ? ' settings-page-m' : '') + (embedded ? ' mpr-embedded-modal' : '')}
         role="dialog"
         aria-label="Monster Parts rules"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="picker-head">
-          {isMobile && mobileSection && !searching && (
-            <button className="icon-btn settings-back" aria-label="Back" onClick={() => setMobileSection(null)}>
-              <i className="ti ti-arrow-left" aria-hidden="true" />
-            </button>
-          )}
-          {headTitle}
-          {!embedded && (
-            <button className="picker-close" onClick={onClose} aria-label="Close">
-              <i className="ti ti-x" aria-hidden="true" />
-            </button>
-          )}
-        </div>
+        {/* When embedded on a phone's card grid, the Homebrew top bar already titles this ("Monster Parts
+            Rules"), so skip the panel's own redundant title row — but keep it when drilled into a section
+            (for the section name + Back) and everywhere else (desktop pane header / standalone page). */}
+        {(!embedded || !isMobile || mobileSection) && (
+          <div className="picker-head">
+            {isMobile && mobileSection && !searching && (
+              <button className="icon-btn settings-back" aria-label="Back" onClick={() => setMobileSection(null)}>
+                <i className="ti ti-arrow-left" aria-hidden="true" />
+              </button>
+            )}
+            {headTitle}
+            {!embedded && (
+              <button className="picker-close" onClick={onClose} aria-label="Close">
+                <i className="ti ti-x" aria-hidden="true" />
+              </button>
+            )}
+          </div>
+        )}
         {isMobile ? (
           <>
             <div className="mpr-search-wrap">{search}</div>
