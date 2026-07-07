@@ -57,6 +57,11 @@ body {
 .hb-page .settings-body {
   flex: 1;
   min-height: 0;
+  /* Full page (unlike the Settings modal), so cap + center the nav+pane instead of letting them
+     sprawl edge-to-edge on a wide screen — same centered-column treatment as the roster. */
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
 }
 .hb-back {
   color: var(--app-text-dim);

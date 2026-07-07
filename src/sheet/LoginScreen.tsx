@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '../data/supabase';
+import { isTauri } from '../platform';
 import { HeroesHeavenLogo } from './Logo';
 import { WindowControls } from './WindowControls';
 
@@ -23,7 +24,13 @@ export function LoginScreen({ onSkip, onDevSkip }: { onSkip?: () => void; onDevS
     setError('');
     const { error } = await supabase.auth.signInWithOtp({
       email: addr,
-      options: { shouldCreateUser: false, emailRedirectTo: window.location.origin },
+      // Installed app: omit emailRedirectTo — its origin is a `tauri://`/`.localhost` URL that isn't in
+      // Supabase's redirect allowlist (would be rejected), and it's unused anyway since the installed
+      // app signs in with the emailed CODE, not the link. The web build keeps its real origin for the
+      // magic-link fallback.
+      options: isTauri
+        ? { shouldCreateUser: false }
+        : { shouldCreateUser: false, emailRedirectTo: window.location.origin },
     });
     if (error) {
       setPhase('email');

@@ -266,9 +266,10 @@ export default function App() {
   );
 
   // With an EMPTY roster (fresh install, or the user deleted their last character) there's no active
-  // character. The sheet/homebrew screens can't render without one, so force a character-less mode:
-  // the roster (its empty state) unless the user is mid-create in the builder.
-  const effectiveMode = active ? mode : mode === 'builder' ? 'builder' : 'roster';
+  // character. The SHEET can't render without one, so fall back to the roster's empty state — EXCEPT
+  // for the builder (mid-create) and Homebrew, which are character-less and reachable from the roster
+  // menu (a fresh phone opening Homebrew must not snap back to the roster).
+  const effectiveMode = active ? mode : mode === 'builder' || mode === 'homebrew' ? mode : 'roster';
 
   // Update the active character's in-play runtime state (seeding from its built
   // starting values the first time it's touched), then persist via the roster.
@@ -530,7 +531,9 @@ export default function App() {
           shell is position:fixed;inset:0 and would paint over them, so .app-banners floats fixed at
           the top (with safe-area padding) — see the mobile block in sheet.css. */}
       <div className="app-banners">
-        <UpdateNotice />
+        {/* The manual "new version — download it" banner is for the INSTALLED apps only. The web build
+            auto-updates through its service worker, so nudging web users to download a release is wrong. */}
+        {isTauri && <UpdateNotice />}
         {saveFailed && (
           <div className="save-warning" role="alert">
             <i className="ti ti-alert-triangle" aria-hidden="true" />

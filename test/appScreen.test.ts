@@ -24,11 +24,14 @@ describe('pickScreen', () => {
     expect(pickScreen({ effectiveMode: 'builder', hasContent: true, hasCharacter: true })).toBe('builder');
   });
 
-  it('holds the sheet/homebrew behind loading until a character exists', () => {
-    // These modes are only reachable with an active character in App (effectiveMode coercion),
-    // but pickScreen must still refuse to render them character-less.
+  it('holds the SHEET behind loading until a character exists', () => {
     expect(pickScreen({ effectiveMode: 'sheet', hasContent: true, hasCharacter: false })).toBe('loading');
-    expect(pickScreen({ effectiveMode: 'homebrew', hasContent: true, hasCharacter: false })).toBe('loading');
+  });
+
+  // Homebrew is reachable from the roster's menu on a fresh phone with no characters yet — it needs
+  // content but NOT a character, so it must open rather than hang on the loading shell.
+  it('opens homebrew even with no active character (fresh-phone / roster-menu path)', () => {
+    expect(pickScreen({ effectiveMode: 'homebrew', hasContent: true, hasCharacter: false })).toBe('homebrew');
   });
 
   it('renders sheet and homebrew once content and character are both present', () => {

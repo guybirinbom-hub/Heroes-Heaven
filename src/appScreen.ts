@@ -16,10 +16,11 @@ export interface ScreenInputs {
 
 export function pickScreen({ effectiveMode, hasContent, hasCharacter }: ScreenInputs): Screen {
   if (effectiveMode === 'roster') return 'roster';
-  // Content-dependent screens wait behind a lightweight shell until core.json is ready. The
-  // BUILDER needs ONLY content — a brand-new character has no `character` yet — so it must not be
-  // gated on `hasCharacter`; every other content screen also needs a character.
-  if (!hasContent || (effectiveMode !== 'builder' && !hasCharacter)) return 'loading';
+  // Content-dependent screens wait behind a lightweight shell until core.json is ready. The BUILDER
+  // and HOMEBREW manager need ONLY content — neither requires an active character (you reach Homebrew
+  // from the roster's menu on a fresh phone that has no characters yet, and a brand-new character has
+  // no `character` in the builder) — so they must not be gated on `hasCharacter`. Only the SHEET does.
+  if (!hasContent || (effectiveMode !== 'builder' && effectiveMode !== 'homebrew' && !hasCharacter)) return 'loading';
   if (effectiveMode === 'builder') return 'builder';
   if (effectiveMode === 'homebrew') return 'homebrew';
   return 'sheet';
