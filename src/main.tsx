@@ -11,13 +11,21 @@ import { ErrorBoundary } from './sheet/ErrorBoundary';
 import { confirmDialog } from './sheet/confirm';
 import { clearRoster } from './data/storage';
 import { loadContent } from './data';
-import { isMobilePlatform } from './platform';
+import { isMobilePlatform, isTauri } from './platform';
 
 // Apply the saved (or default) theme + zoom to <html> before React paints, so there's
 // no flash of an unthemed/unscaled screen.
 initTheme();
 initZoom();
 initPrefs();
+
+// PWA service worker: register it in the production WEB build ONLY. The Tauri desktop/mobile shells
+// serve from their own protocol and manage their own lifecycle, so they must not run the SW.
+if (!isTauri && import.meta.env.PROD) {
+  void import('virtual:pwa-register')
+    .then(({ registerSW }) => registerSW({ immediate: true }))
+    .catch(() => {});
+}
 // Tag the root on phone/tablet WebViews so CSS can apply mobile-only tweaks (safe-area insets, etc.);
 // width-based layout is driven by @media queries so it also works in a narrow browser window.
 if (isMobilePlatform) document.documentElement.classList.add('is-mobile');

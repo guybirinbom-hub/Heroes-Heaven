@@ -6,6 +6,12 @@ dist
 dist-ssr
 *.local
 
+# Local env (Supabase URL + publishable key). The publishable key is public-safe, but keep env
+# out of git; production values live in the Cloudflare Pages dashboard. .env.example is committed.
+.env
+.env.*
+!.env.example
+
 # editor / os
 .DS_Store
 .vscode/*

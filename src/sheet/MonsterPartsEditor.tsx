@@ -26,6 +26,8 @@ import {
 } from '../rules/monsterParts';
 import { confirmDialog } from './confirm';
 import { MonsterPartsRules } from './MonsterPartsRules';
+import { MpProse } from './MpProse';
+import { MpPathTerm, MpPropertyTerm } from './MpTermLinks';
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 const gp = (n: number) => `${n.toLocaleString()} gp`;
@@ -325,7 +327,9 @@ export function MonsterPartsSection({
             return (
               <div className="mp-imbue" key={i}>
                 <div className="mp-imbue-top">
-                  <span className="mp-imbue-name">{prop?.name ?? im.propertyId}</span>
+                  <span className="mp-imbue-name">
+                    {prop ? <MpPropertyTerm prop={prop} /> : im.propertyId}
+                  </span>
                   <span className="mp-stepper">
                     <button className="mp-step" onClick={() => lowerImb(i)} disabled={rawLvl <= 0} aria-label="Lower property level">
                       <i className="ti ti-minus" aria-hidden="true" />
@@ -354,13 +358,18 @@ export function MonsterPartsSection({
                 </div>
                 <div className="mp-imbue-ctrls">
                   {prop && prop.paths.length > 1 && (
-                    <select className="mp-select" value={im.path} onChange={(e) => patchImb(i, { path: e.target.value })} aria-label="Path">
-                      {prop.paths.map((p) => (
-                        <option key={p.id} value={p.id}>
-                          {p.name}
-                        </option>
-                      ))}
-                    </select>
+                    <>
+                      <span className="mp-path-label">
+                        Path: <MpPathTerm pathId={path?.id ?? im.path}>{path?.name ?? im.path}</MpPathTerm>
+                      </span>
+                      <select className="mp-select" value={im.path} onChange={(e) => patchImb(i, { path: e.target.value })} aria-label="Path">
+                        {prop.paths.map((p) => (
+                          <option key={p.id} value={p.id}>
+                            {p.name}
+                          </option>
+                        ))}
+                      </select>
+                    </>
                   )}
                   {prop?.choiceOptions && prop.choiceOptions.length > 0 && (
                     <select
@@ -377,8 +386,16 @@ export function MonsterPartsSection({
                     </select>
                   )}
                 </div>
-                {effects.length > 0 && <div className="mp-imbue-eff">Applies each hit: {effects.join(' · ')}</div>}
-                {prop && <div className="mp-req"><i className="ti ti-info-circle" aria-hidden="true" /> {prop.requirement}</div>}
+                {effects.length > 0 && (
+                  <div className="mp-imbue-eff">
+                    Applies each hit: <MpProse text={effects.join(' · ')} />
+                  </div>
+                )}
+                {prop && (
+                  <div className="mp-req">
+                    <i className="ti ti-info-circle" aria-hidden="true" /> <MpProse text={prop.requirement} />
+                  </div>
+                )}
                 {reqTags.length > 0 && (
                   <div className={'mp-match' + (matched ? ' ok' : ' miss')}>
                     <i className={'ti ' + (matched ? 'ti-check' : 'ti-alert-triangle')} aria-hidden="true" />{' '}
@@ -389,7 +406,7 @@ export function MonsterPartsSection({
                   <ul className="mp-riders">
                     {r.riders.map((rd) => (
                       <li key={rd.level}>
-                        <span className="mp-rider-lvl">{rd.level}</span> {rd.text}
+                        <span className="mp-rider-lvl">{rd.level}</span> <MpProse text={rd.text} />
                       </li>
                     ))}
                   </ul>

@@ -10,6 +10,8 @@ import { cancelPersist, flushPersist } from '../data/persist';
 import { downloadText } from './download';
 import { chooseDialog, confirmDialog } from './confirm';
 import { isMobilePlatform, isTauri } from '../platform';
+import { isCloudSyncEnabled } from '../data/supabase';
+import { useAuth, signOut } from '../data/useAuth';
 import { setPref, usePrefs } from '../data/prefs';
 import type { ModeDef } from '../rules/types';
 import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
@@ -22,18 +24,21 @@ const ACCENTS = [
   '#f59e0b', '#f97316', '#ef4444', '#f43f5e', '#ec4899', '#a855f7',
 ];
 
-type SectionId = 'appearance' | 'customization' | 'modes' | 'backup' | 'about' | 'uninstall';
+type SectionId = 'appearance' | 'customization' | 'modes' | 'backup' | 'account' | 'about' | 'uninstall';
 const ALL_SECTIONS: { id: SectionId; label: string; icon: string }[] = [
   { id: 'appearance', label: 'Appearance', icon: 'ti-palette' },
   { id: 'customization', label: 'Customization', icon: 'ti-adjustments' },
   { id: 'modes', label: 'Modes', icon: 'ti-toggle-left' },
   { id: 'backup', label: 'Backup', icon: 'ti-database-export' },
+  { id: 'account', label: 'Account', icon: 'ti-user' },
   { id: 'about', label: 'About', icon: 'ti-info-circle' },
   { id: 'uninstall', label: 'Uninstall', icon: 'ti-trash' },
 ];
 // Uninstall only where there's an installed app to remove: the Tauri shells (Windows desktop,
-// Android). In a plain browser tab there's nothing to uninstall, so the section is hidden.
-const SECTIONS = ALL_SECTIONS.filter((s) => s.id !== 'uninstall' || isTauri);
+// Android). Account only in the web build with cloud sync on (nothing to sign in/out of otherwise).
+const SECTIONS = ALL_SECTIONS.filter(
+  (s) => (s.id !== 'uninstall' || isTauri) && (s.id !== 'account' || isCloudSyncEnabled),
+);
 
 /** Per-device tweaks to how the sheet behaves. */
 function CustomizationSection() {
@@ -397,6 +402,30 @@ function BackupSection() {
   );
 }
 
+/** Web build: the signed-in email + a sign-out button. Cloud sync keeps the roster safe, so signing
+ *  out is non-destructive (the local copy stays too). */
+function AccountSection() {
+  const auth = useAuth();
+  const [busy, setBusy] = useState(false);
+  return (
+    <div className="settings-section">
+      <h3 className="settings-h">Account</h3>
+      <p className="settings-desc">
+        Signed in — your characters are backed up to the cloud and load on any device you sign in on.
+      </p>
+      <div className="menu-label">Signed in as</div>
+      <p className="settings-desc">
+        <strong>{auth.email ?? '—'}</strong>
+      </p>
+      <div className="menu-row">
+        <button className="btn" disabled={busy} onClick={() => { setBusy(true); void signOut(); }}>
+          <i className="ti ti-logout" aria-hidden="true" /> Sign out
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function AboutSection() {
   return (
     <div className="settings-section">
@@ -669,6 +698,7 @@ export function SettingsPage({
       {id === 'customization' && <CustomizationSection />}
       {id === 'modes' && <ModesSection modes={modes} characters={characters} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} />}
       {id === 'backup' && <BackupSection />}
+      {id === 'account' && <AccountSection />}
       {id === 'about' && <AboutSection />}
       {id === 'uninstall' && <UninstallSection />}
     </>

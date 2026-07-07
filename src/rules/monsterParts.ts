@@ -530,6 +530,9 @@ export function mpDefenseGrants(
 
 /** One imbued property's applied effect at its effective level, for the item-description readout. */
 export interface MpAppliedImbuement {
+  /** The catalog property id + chosen path id, so the readout can linkify the name / path to a popup. */
+  propertyId: string;
+  pathId: string;
   name: string;
   pathName: string;
   level: number;
@@ -584,7 +587,7 @@ export function mpApplied(mp: ItemMonsterPart | undefined, baseType: string | un
     if (prop.resistance && im.choice) effects.push(`resistance ${effLvl} to ${im.choice}`);
     for (const s of prop.senses ?? []) if (effLvl >= s.level) effects.push(s.sense);
     if (prop.apexAbility && effLvl >= (prop.apexLevel ?? 17)) effects.push(`apex: raises ${prop.apexAbility.toUpperCase()}`);
-    imbuements.push({ name: prop.name, pathName: path?.name ?? '', level: effLvl, effects });
+    imbuements.push({ propertyId: prop.id, pathId: path?.id ?? im.path, name: prop.name, pathName: path?.name ?? '', level: effLvl, effects });
   }
   return { kind, refinedLevel: level, refineLines, imbuements };
 }

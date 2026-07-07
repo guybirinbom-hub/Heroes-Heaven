@@ -13,6 +13,8 @@ import { critSpec } from '../rules/critSpec';
 import { PinStar } from './PinStar';
 import { ActionGlyph } from './widgets';
 import { mpApplied } from '../rules/monsterParts';
+import { MpProse } from './MpProse';
+import { MpPathTerm, MpPropertyTerm } from './MpTermLinks';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
 import { SPELL_SPEC_BUILDER } from './filterSpecs';
 
@@ -351,10 +353,22 @@ export function ItemDetail({
               {applied.imbuements.map((im, i) => (
                 <div className="sd-mp-imbue" key={i}>
                   <span className="sd-mp-imbue-name">
-                    {im.name}
-                    {im.pathName ? ` · ${im.pathName}` : ''} <span className="sd-mp-imbue-lvl">lvl {im.level}</span>
+                    <MpPropertyTerm propertyId={im.propertyId}>{im.name}</MpPropertyTerm>
+                    {im.pathName ? (
+                      <>
+                        {' · '}
+                        <MpPathTerm pathId={im.pathId}>{im.pathName}</MpPathTerm>
+                      </>
+                    ) : (
+                      ''
+                    )}{' '}
+                    <span className="sd-mp-imbue-lvl">lvl {im.level}</span>
                   </span>
-                  {im.effects.length > 0 && <span className="sd-mp-imbue-eff">{im.effects.join(' · ')}</span>}
+                  {im.effects.length > 0 && (
+                    <span className="sd-mp-imbue-eff">
+                      <MpProse text={im.effects.join(' · ')} />
+                    </span>
+                  )}
                 </div>
               ))}
               <span className="sd-uses-hint">These effects apply to this item while it's wielded/worn.</span>

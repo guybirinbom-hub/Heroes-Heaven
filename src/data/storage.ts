@@ -308,3 +308,69 @@ export function wipeAllData(): number {
   }
   return removed;
 }
+
+/* ---- Cloud sync bundle (web build) -----------------------------------------------------------
+ * Everything cloud sync mirrors is bundled together so it uploads/downloads as one JSON blob.
+ * Per-character last-modified timestamps live in their OWN key (not on SavedChar) so the app's
+ * normal roster writes — which don't know about sync — can never strip them. */
+
+const CHAR_UPDATED_KEY = 'wanderers-codex:char-updated:v1';
+
+/** Per-roster-id last-modified time (epoch ms). Used only to resolve cloud-sync conflicts. */
+export function loadCharUpdated(): Record<string, number> {
+  try {
+    const raw = localStorage.getItem(CHAR_UPDATED_KEY);
+    const p = raw ? JSON.parse(raw) : null;
+    return p && typeof p === 'object' ? (p as Record<string, number>) : {};
+  } catch {
+    return {};
+  }
+}
+
+export function saveCharUpdated(map: Record<string, number>): void {
+  try {
+    localStorage.setItem(CHAR_UPDATED_KEY, JSON.stringify(map));
+  } catch {
+    /* non-fatal */
+  }
+}
+
+export interface CloudBundle {
+  roster: SavedChar[];
+  homebrew: HomebrewContent;
+  homebrewSources: Record<string, HomebrewSource>;
+  modes: Record<string, ModeDef>;
+  charUpdated: Record<string, number>;
+}
+
+/** Snapshot everything cloud sync mirrors, straight from localStorage. */
+export function readCloudBundle(): CloudBundle {
+  return {
+    roster: loadRoster(),
+    homebrew: loadHomebrewContent(),
+    homebrewSources: loadHomebrewSources(),
+    modes: loadModes(),
+    charUpdated: loadCharUpdated(),
+  };
+}
+
+/** Overwrite localStorage with a (merged) bundle. Used when adopting the cloud's copy on login. */
+export function writeCloudBundle(b: CloudBundle): void {
+  saveRoster(b.roster ?? []);
+  try {
+    localStorage.setItem(HOMEBREW_CONTENT_KEY, JSON.stringify(b.homebrew ?? emptyHomebrewContent()));
+  } catch {
+    /* non-fatal */
+  }
+  try {
+    localStorage.setItem(HOMEBREW_SOURCES_KEY, JSON.stringify(b.homebrewSources ?? {}));
+  } catch {
+    /* non-fatal */
+  }
+  try {
+    localStorage.setItem(MODES_KEY, JSON.stringify(b.modes ?? {}));
+  } catch {
+    /* non-fatal */
+  }
+  saveCharUpdated(b.charUpdated ?? {});
+}

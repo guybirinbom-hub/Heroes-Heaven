@@ -31,6 +31,7 @@ type OnResult = (ok: boolean) => void;
 
 let writer: Writer = () => true;
 let onResult: OnResult = () => {};
+let afterPersist: (roster: any) => void = () => {};
 let timer: ReturnType<typeof setTimeout> | null = null;
 let pending: { roster: Roster } | null = null;
 
@@ -38,6 +39,12 @@ let pending: { roster: Roster } | null = null;
 export function setupPersist(w: Writer, r: OnResult): void {
   writer = w;
   onResult = r;
+}
+
+/** Register a callback invoked after every local persist, with the roster just written. Cloud sync
+ *  uses this to mirror local changes upward (debounced). Pass a no-op to unregister. */
+export function setOnPersisted(cb: (roster: any) => void): void {
+  afterPersist = cb;
 }
 
 function writePending(): void {
@@ -49,6 +56,7 @@ function writePending(): void {
     timer = null;
   }
   onResult(writer(roster));
+  afterPersist(roster);
 }
 
 /** Queue a debounced write of `roster`. The latest roster wins; the write fires after an idle gap. */

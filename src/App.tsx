@@ -8,6 +8,10 @@ import { UpdateNotice } from './sheet/UpdateNotice';
 import { WindowControls } from './sheet/WindowControls';
 import { HeroesHeavenLogo } from './sheet/Logo';
 import { loadContent, rebuildContent } from './data';
+import { pickScreen } from './appScreen';
+import { useAuth } from './data/useAuth';
+import { startCloudSync } from './data/cloudSync';
+import { LoginScreen } from './sheet/LoginScreen';
 import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, ROSTER_KEY, type SavedChar } from './data/storage';
 import { setupPersist, schedulePersist, persistNow, flushPersist, cancelPersist } from './data/persist';
 import { chooseDialog } from './sheet/confirm';
@@ -30,6 +34,8 @@ function initialRoster(): SavedChar[] {
 
 export default function App() {
   const [content, setContent] = useState<ContentDatabase | null>(null);
+  // Web build: gates the whole app behind a magic-link login. 'disabled' on desktop → no login.
+  const auth = useAuth();
   // Roster lives in an undo/redo timeline: every character-data change (all sheet mutations funnel
   // through setRoster) becomes an undoable step, driving Ctrl+Z / Ctrl+Shift+Z below.
   const { state: roster, set: setRoster, undo, redo } = useUndoableState<SavedChar[]>(initialRoster);
@@ -86,6 +92,24 @@ export default function App() {
   useEffect(() => {
     setupPersist(saveRoster, (ok) => setSaveFailed(!ok));
   }, []);
+  // Web build: once signed in, mirror the roster to/from the cloud — pull+merge on login, push on
+  // change/background. `disabled` (desktop) never starts it. Applying the merged roster replaces
+  // React state so the just-pulled cloud characters appear immediately.
+  useEffect(() => {
+    if (auth.status !== 'signed-in') return;
+    let cleanup = () => {};
+    let cancelled = false;
+    void startCloudSync((merged) => {
+      if (!cancelled) setRoster(merged);
+    }).then((c) => {
+      if (cancelled) c();
+      else cleanup = c;
+    });
+    return () => {
+      cancelled = true;
+      cleanup();
+    };
+  }, [auth.status, setRoster]);
   useEffect(() => {
     if (persistImmediately.current) {
       persistImmediately.current = false;
@@ -267,7 +291,29 @@ export default function App() {
   };
 
   let screen: ReactNode;
-  if (effectiveMode === 'roster') {
+  const which = pickScreen({ effectiveMode, hasContent: !!content, hasCharacter: !!character });
+  // Every branch below 'roster'/'loading' is only reached once pickScreen has confirmed content is
+  // loaded, so `content` is non-null there — but TS can't infer that through `which`. Assert once.
+  const readyContent = content!;
+  if (auth.status === 'loading') {
+    // Web build only: checking for an existing session (and completing any magic-link redirect).
+    screen = (
+      <div className="login-screen">
+        <header className="chrome" data-tauri-drag-region>
+          <div className="chrome-brand" data-tauri-drag-region>
+            <HeroesHeavenLogo className="chrome-logo" /> Heroes Heaven
+          </div>
+          <WindowControls />
+        </header>
+        <div className="app-loading content-loading">
+          <span className="app-loading-spin" aria-hidden="true" />
+          <span>Signing in…</span>
+        </div>
+      </div>
+    );
+  } else if (auth.status === 'signed-out') {
+    screen = <LoginScreen />;
+  } else if (which === 'roster') {
     screen = (
       <RosterScreen
         roster={roster}
@@ -332,9 +378,10 @@ export default function App() {
         onDeleteMode={removeModeDef}
       />
     );
-  } else if (!content || !character) {
+  } else if (which === 'loading') {
     // A content-dependent screen (sheet/builder/homebrew) was opened before core.json finished
     // loading — hold just that screen behind a lightweight shell; the roster stays a tap away.
+    // (The builder is deliberately NOT gated on having a character — see pickScreen.)
     screen = (
       <div className="roster-screen">
         <header className="chrome" data-tauri-drag-region>
@@ -352,17 +399,17 @@ export default function App() {
         </div>
       </div>
     );
-  } else if (effectiveMode === 'builder') {
+  } else if (which === 'builder') {
     screen = (
       <Builder
-        content={content}
+        content={readyContent}
         initial={editing?.build}
         onCancel={() => {
           setEditing(null);
           setMode('sheet');
         }}
         onCreate={(build) => {
-          const built = buildCharacter(build, applyOverrides(content, build.overrides));
+          const built = buildCharacter(build, applyOverrides(readyContent, build.overrides));
           commitStructural(); // create/rebuild a character — persist immediately
           if (editing) {
             const id = editing.id;
@@ -382,10 +429,10 @@ export default function App() {
         }}
       />
     );
-  } else if (effectiveMode === 'homebrew') {
+  } else if (which === 'homebrew') {
     screen = (
       <HomebrewPage
-        content={content}
+        content={readyContent}
         onChanged={onHomebrewChanged}
         onClose={() => setMode('sheet')}
         onOpenRoster={() => setMode('roster')}
@@ -397,8 +444,10 @@ export default function App() {
   } else {
     screen = (
       <CharacterSheet
-        character={character}
-        content={sheetContent ?? content}
+        // This else is reached only when pickScreen returned 'sheet', which requires content AND a
+        // character — so `character` is non-null here; TS just can't infer it through `which`.
+        character={character!}
+        content={sheetContent ?? readyContent}
         build={active.build}
         charKey={active.id}
         characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
@@ -423,7 +472,7 @@ export default function App() {
           // on an unusual imported/legacy character, so fall back to a blank build instead of crashing.
           let editBuild: BuildState;
           try {
-            editBuild = active.build ?? deriveBuildFromCharacter(active.character, content);
+            editBuild = active.build ?? deriveBuildFromCharacter(active.character, readyContent);
           } catch (err) {
             console.error('Could not reconstruct build from character; starting from a blank build:', err);
             editBuild = emptyBuild();

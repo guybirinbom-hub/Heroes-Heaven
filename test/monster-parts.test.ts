@@ -134,6 +134,133 @@ describe('Monster Parts — spot-checks transcribed from the ruleset', () => {
   });
 });
 
+// Locks the machine-readable damage/latch/apex values re-verified in the 2026-07 effect-correctness
+// audit against Monster Parts - Remaster Conversion v2.md. Each covers a different subtlety the resolver
+// depends on (die-skip progressions, persistent vs per-hit, ignore-resistance latch levels, apex level,
+// Chaotic/Lawful path reuse).
+describe('Monster Parts — audit spot-checks (effect correctness vs ruleset)', () => {
+  const path = (id: string, pathId: string) => getMpProperty(id)!.paths.find((p) => p.id === pathId)!;
+
+  it('Acid Might: +1 (L4) → 1d4 (L6) → 1d6 (L8) holds through L14, then 1d8 (L18); ignores resistance from L12', () => {
+    const might = path('acid', 'might');
+    expect(dmgAt(might, 4).addDamage).toMatchObject({ flat: 1, type: 'acid' });
+    expect(dmgAt(might, 8).addDamage).toMatchObject({ dice: 1, die: 'd6', type: 'acid' });
+    // L14 has a crit-armor rider but does NOT change the per-hit die (still 1d6).
+    expect(dmgAt(might, 14).addDamage).toMatchObject({ dice: 1, die: 'd6', type: 'acid' });
+    expect(dmgAt(might, 18).addDamage).toMatchObject({ dice: 1, die: 'd8', type: 'acid' });
+    expect(dmgAt(might, 11).ignoreResistance).toBe(false);
+    expect(dmgAt(might, 12).ignoreResistance).toBe(true);
+  });
+
+  it('Acid Technique: persistent 1 (L4) → 1d6 (L8) → 1d8 (L14) → 1d10 (L18)', () => {
+    const tech = path('acid', 'technique');
+    expect(dmgAt(tech, 4).persistentDamage).toMatchObject({ flat: 1, type: 'acid', persistent: true });
+    expect(dmgAt(tech, 8).persistentDamage).toMatchObject({ dice: 1, die: 'd6', type: 'acid', persistent: true });
+    expect(dmgAt(tech, 14).persistentDamage).toMatchObject({ dice: 1, die: 'd8', type: 'acid', persistent: true });
+    expect(dmgAt(tech, 18).persistentDamage).toMatchObject({ dice: 1, die: 'd10', type: 'acid', persistent: true });
+  });
+
+  it('Bane Technique deals persistent BLEED (not the base type) and skips 1d4', () => {
+    const tech = path('bane', 'technique');
+    expect(dmgAt(tech, 2).persistentDamage).toMatchObject({ flat: 1, type: 'bleed', persistent: true });
+    // L6 jumps straight to 1d6 (no 1d4 step), then 1d8 (L12), 1d10 (L16).
+    expect(dmgAt(tech, 6).persistentDamage).toMatchObject({ dice: 1, die: 'd6', type: 'bleed', persistent: true });
+    expect(dmgAt(tech, 12).persistentDamage).toMatchObject({ dice: 1, die: 'd8', type: 'bleed', persistent: true });
+    expect(dmgAt(tech, 16).persistentDamage).toMatchObject({ dice: 1, die: 'd10', type: 'bleed', persistent: true });
+    // The separate per-hit base-type bump appears at L4 (untyped → the weapon's type).
+    expect(dmgAt(tech, 4).addDamage).toMatchObject({ flat: 1, type: 'untyped' });
+  });
+
+  it('Cold Technique persistent tops out at 1d4 (L18) — the weakest persistent track', () => {
+    const tech = path('cold', 'technique');
+    expect(dmgAt(tech, 4).persistentDamage).toMatchObject({ flat: 1, type: 'cold', persistent: true });
+    expect(dmgAt(tech, 18).persistentDamage).toMatchObject({ dice: 1, die: 'd4', type: 'cold', persistent: true });
+    // No addDamage on this path (all riders are Speed penalties / freeze).
+    expect(dmgAt(tech, 20).addDamage).toBeUndefined();
+  });
+
+  it('Holy Might: spirit +1 (L6) → 1d4 (L8) → 1d6 (L10) → 1d8 (L18); ignore-resistance latch at L14', () => {
+    const might = path('holy', 'might');
+    expect(dmgAt(might, 6).addDamage).toMatchObject({ flat: 1, type: 'spirit' });
+    expect(dmgAt(might, 10).addDamage).toMatchObject({ dice: 1, die: 'd6', type: 'spirit' });
+    expect(dmgAt(might, 18).addDamage).toMatchObject({ dice: 1, die: 'd8', type: 'spirit' });
+    expect(dmgAt(might, 13).ignoreResistance).toBe(false);
+    expect(dmgAt(might, 14).ignoreResistance).toBe(true);
+  });
+
+  it('Holy Technique persistent goes 1 (L8) → 1d6 (L10) → 1d10 (L18), skipping 1d8', () => {
+    const tech = path('holy', 'technique');
+    expect(dmgAt(tech, 8).persistentDamage).toMatchObject({ flat: 1, type: 'spirit', persistent: true });
+    expect(dmgAt(tech, 10).persistentDamage).toMatchObject({ dice: 1, die: 'd6', type: 'spirit', persistent: true });
+    expect(dmgAt(tech, 18).persistentDamage).toMatchObject({ dice: 1, die: 'd10', type: 'spirit', persistent: true });
+  });
+
+  it('Chaotic/Lawful reuse Unholy/Holy paths and resolve the same spirit damage', () => {
+    const chaoticMight = getMpProperty('chaotic')!.paths.find((p) => p.id === 'might')!;
+    const unholyMight = path('unholy', 'might');
+    expect(dmgAt(chaoticMight, 18).addDamage).toEqual(dmgAt(unholyMight, 18).addDamage);
+    expect(dmgAt(chaoticMight, 18).addDamage).toMatchObject({ dice: 1, die: 'd8', type: 'spirit' });
+    const lawfulTech = getMpProperty('lawful')!.paths.find((p) => p.id === 'technique')!;
+    const holyTech = path('holy', 'technique');
+    expect(dmgAt(lawfulTech, 18).persistentDamage).toEqual(dmgAt(holyTech, 18).persistentDamage);
+  });
+
+  it('Vitality (holy/vitality weapon) scales from L2 on Might and carries persistent from L2 on Technique', () => {
+    const might = path('vitality', 'might');
+    expect(dmgAt(might, 2).addDamage).toMatchObject({ flat: 1, type: 'vitality' });
+    expect(dmgAt(might, 6).addDamage).toMatchObject({ dice: 1, die: 'd6', type: 'vitality' });
+    expect(dmgAt(might, 9).ignoreResistance).toBe(false);
+    expect(dmgAt(might, 10).ignoreResistance).toBe(true); // Vitality latches at L10, earlier than the L12 norm.
+    const tech = path('vitality', 'technique');
+    expect(dmgAt(tech, 2).persistentDamage).toMatchObject({ flat: 1, type: 'vitality', persistent: true });
+    expect(dmgAt(tech, 12).persistentDamage).toMatchObject({ dice: 1, die: 'd8', type: 'vitality', persistent: true });
+  });
+
+  it('Wild Might deals untyped (rolled type) damage and skips 1d4→1d8 correctly', () => {
+    const might = path('wild', 'might');
+    expect(dmgAt(might, 4).addDamage).toMatchObject({ flat: 1, type: 'untyped' });
+    expect(dmgAt(might, 8).addDamage).toMatchObject({ dice: 1, die: 'd6', type: 'untyped' });
+    // No 1d?? between L8 and L18 — stays 1d6 at L12/L14 (only the ignore-resistance latch changes).
+    expect(dmgAt(might, 14).addDamage).toMatchObject({ dice: 1, die: 'd6', type: 'untyped' });
+    expect(dmgAt(might, 12).ignoreResistance).toBe(true);
+    expect(dmgAt(might, 18).addDamage).toMatchObject({ dice: 1, die: 'd8', type: 'untyped' });
+  });
+
+  it('Sonic has no Magic path (only Might + Technique)', () => {
+    const sonic = getMpProperty('sonic')!;
+    expect(sonic.paths.map((p) => p.id).sort()).toEqual(['might', 'technique']);
+  });
+
+  it('Force/Mental/Void Might latch ignore-resistance at L12 (with a mid non-scaling crit rider level)', () => {
+    for (const id of ['force', 'mental', 'void']) {
+      const might = path(id, 'might');
+      expect(dmgAt(might, 11).ignoreResistance, id).toBe(false);
+      expect(dmgAt(might, 12).ignoreResistance, id).toBe(true);
+      // L10 carries a crit rider but keeps the 1d6 per-hit die from L8.
+      expect(dmgAt(might, 10).addDamage, id).toMatchObject({ dice: 1, die: 'd6' });
+    }
+  });
+
+  it('Every apex skill/perception property applies its boost exactly at L17, not L16', () => {
+    for (const id of ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma']) {
+      const main = getMpProperty(id)!.paths[0];
+      expect(dmgAt(main, 16).riders.some((r) => /apex/i.test(r.text)), id).toBe(false);
+      expect(dmgAt(main, 17).riders.some((r) => /apex/i.test(r.text)), id).toBe(true);
+    }
+  });
+
+  it('Sensory grants its passive senses at the ruleset levels (L6/L12/L16/L18/L20)', () => {
+    const sensory = getMpProperty('sensory')!;
+    expect(sensory.senses).toEqual([
+      { level: 6, sense: 'low-light vision' },
+      { level: 12, sense: 'darkvision' },
+      { level: 16, sense: '30-foot imprecise scent' },
+      { level: 18, sense: 'greater darkvision' },
+      { level: 20, sense: '6th-rank truesight (constant)' },
+    ]);
+  });
+});
+
 describe('Monster Parts — refinement tables', () => {
   it('weapon refinement: L4 = 2 dice/striking, L12 = greater striking, L19 = major', () => {
     expect(weaponRefinement(4)).toMatchObject({ attack: 1, extraDice: 1, imbueSlots: 1 });

@@ -618,6 +618,13 @@ export function ItemEditorModal({
             </label>
           </div>
 
+          <div className="ci-field">
+            <span>Description <span className="ie-req">✦</span></span>
+            <div className="ie-rich">
+              <RichEditor key={`desc-${editorKey}`} initialHtml={d.description} onChange={(html) => upd({ description: html })} enableRefLink hideToolbarUntilFocus placeholder="What the item does…" />
+            </div>
+          </div>
+
           {/* ---- Additional fields ---- */}
           <div className="ie-collap">
             <div className="ie-collap-h" onClick={() => toggle('additional')}>
@@ -629,7 +636,14 @@ export function ItemEditorModal({
               <div className="ie-collap-b">
                 <div className="ci-field">
                   <span>Base item</span>
-                  <SearchSelect bare label="Base item" value={baseId} options={itemOpts} placeholder="Start from an existing item…" onChange={(id) => { setBaseId(id); applyBase(content.items[id]); }} />
+                  <div className="ie-base-row">
+                    <SearchSelect bare label="Base item" value={baseId} options={itemOpts} placeholder="Start from an existing item…" onChange={(id) => { setBaseId(id); applyBase(content.items[id]); }} />
+                    {baseId && (
+                      <button type="button" className="ie-base-clear" title="Remove base item" onClick={() => setBaseId(null)}>
+                        <i className="ti ti-x" aria-hidden="true" /> Clear
+                      </button>
+                    )}
+                  </div>
                 </div>
 
                 <div className="ie-acc">
@@ -737,7 +751,7 @@ export function ItemEditorModal({
 
                   {!mpActiveHere && (d.itemType !== 'treasure' || mpVariantOn) && (
                     <AccRow id="material" icon="ti-diamond" name="Material" summary={d.isMonsterPart ? 'Monster Part' : d.matType ? label(d.matType) : 'none'}>
-                      <div className="ie-grid2">
+                      <div className={d.isMonsterPart ? 'ie-mp-mat' : 'ie-grid2'}>
                         <div className="ci-field"><span>Precious material</span><PopupSelect title="Precious material" placeholder="None" value={d.isMonsterPart ? MONSTER_PART_OPT : (d.matType || '')} options={mpVariantOn ? [{ value: MONSTER_PART_OPT, label: 'Monster Part' }, ...optList(MATERIALS, d.matType)] : optList(MATERIALS, d.matType)} clearLabel="Clear" onChange={(v) => { if (v === MONSTER_PART_OPT) upd({ isMonsterPart: true, matType: '' }); else upd({ matType: v, isMonsterPart: false }); }} addCustom={{ label: 'Custom material…', placeholder: 'e.g. living steel', onAdd: (t) => upd({ matType: slugify(t), isMonsterPart: false }) }} /></div>
                         {d.isMonsterPart ? (
                           <div className="ci-field">
@@ -765,12 +779,6 @@ export function ItemEditorModal({
                   </AccRow>
                 </div>
 
-                <div className="ci-field">
-                  <span>Description <span className="ie-req">✦</span></span>
-                  <div className="ie-rich">
-                    <RichEditor key={`desc-${editorKey}`} initialHtml={d.description} onChange={(html) => upd({ description: html })} enableRefLink hideToolbarUntilFocus placeholder="What the item does…" />
-                  </div>
-                </div>
                 <div className="ci-field">
                   <span>Craft requirements</span>
                   <div className="ie-rich ie-rich-sm">

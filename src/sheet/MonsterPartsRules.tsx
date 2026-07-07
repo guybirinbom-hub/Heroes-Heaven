@@ -27,6 +27,9 @@ import {
 import type { MonsterPartsMode } from '../rules/types';
 import { useIsMobile } from './useIsMobile';
 import { useBackHandler } from './useEscapeClose';
+import { MpProse } from './MpProse';
+import { MpPathTerm, MpPropertyTerm } from './MpTermLinks';
+import { propertyMatchesQuery } from '../rules/monsterPartsGlossary';
 
 type SectionId = 'overview' | 'gathering' | 'refining' | 'imbuing' | 'tables' | 'properties';
 const SECTIONS: { id: SectionId; label: string; icon: string }[] = [
@@ -234,11 +237,12 @@ function Imbuing() {
         based on its item level; its spell attack modifier is DC − 10.
       </p>
       <p className="mpr-note">
-        <strong>Paths.</strong> Weapon properties often have three paths — <strong>Magic</strong> (thematic spells),{' '}
-        <strong>Might</strong> (direct damage), and <strong>Technique</strong> (special effects / damage over time). If
-        a weapon can hold multiple imbued properties, you can apply the <em>same</em> property more than once as long as
-        each use takes a different path; their effects stack. To use an activated ability of a held item, you must be
-        wielding it.
+        <strong>Paths.</strong> Weapon properties often have three paths —{' '}
+        <MpPathTerm pathId="magic">Magic</MpPathTerm> (thematic spells),{' '}
+        <MpPathTerm pathId="might">Might</MpPathTerm> (direct damage), and{' '}
+        <MpPathTerm pathId="technique">Technique</MpPathTerm> (special effects / damage over time). If a weapon can hold
+        multiple imbued properties, you can apply the <em>same</em> property more than once as long as each use takes a
+        different path; their effects stack. To use an activated ability of a held item, you must be wielding it.
       </p>
       <p>
         See the <strong>Property catalog</strong> tab for all {MONSTER_PART_PROPERTIES.length} imbued properties, each
@@ -341,21 +345,32 @@ function Tables() {
 
 // ───────────────────────── Property catalog ─────────────────────────
 
-function PropertyCard({ prop }: { prop: MpProperty }) {
-  const [open, setOpen] = useState(false);
+function PropertyCard({ prop, defaultOpen }: { prop: MpProperty; defaultOpen?: boolean }) {
+  const [open, setOpen] = useState(!!defaultOpen);
   return (
     <div className="mpr-prop">
-      <button className="mpr-prop-head" onClick={() => setOpen((o) => !o)} aria-expanded={open}>
-        <span className="mpr-prop-name">{prop.name}</span>
-        <span className="mpr-prop-kinds">{prop.appliesTo.join(', ')}</span>
-        <i className={'ti ' + (open ? 'ti-chevron-up' : 'ti-chevron-down')} aria-hidden="true" />
-      </button>
+      <div className="mpr-prop-head">
+        <span className="mpr-prop-name">
+          <MpPropertyTerm prop={prop} />
+        </span>
+        <button
+          className="mpr-prop-toggle"
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          aria-label={open ? `Collapse ${prop.name}` : `Expand ${prop.name}`}
+        >
+          <span className="mpr-prop-kinds">{prop.appliesTo.join(', ')}</span>
+          <i className={'ti ' + (open ? 'ti-chevron-up' : 'ti-chevron-down')} aria-hidden="true" />
+        </button>
+      </div>
       {open && (
         <div className="mpr-prop-body">
           <p className="mpr-req">
-            <strong>Parts:</strong> {prop.requirement}
+            <strong>Parts:</strong> <MpProse text={prop.requirement} />
           </p>
-          <p className="mpr-effect">{prop.effect}</p>
+          <p className="mpr-effect">
+            <MpProse text={prop.effect} />
+          </p>
           {prop.choicePrompt && (
             <p className="mpr-choice">
               <strong>Choose:</strong> {prop.choicePrompt}
@@ -373,14 +388,16 @@ function PropertyCard({ prop }: { prop: MpProperty }) {
             return (
               <div key={path.id} className="mpr-path">
                 <div className="mpr-path-name">
-                  {path.name || 'Effect'}
+                  <MpPathTerm pathId={path.id}>{path.name || 'Effect'}</MpPathTerm>
                   {path.note ? <span className="mpr-path-note"> ({path.note})</span> : null}
                 </div>
                 <ul className="mpr-levels">
                   {riders.map((r, i) => (
                     <li key={i}>
                       <span className="mpr-lvl">{r.level}</span>
-                      <span className="mpr-lvl-text">{r.text}</span>
+                      <span className="mpr-lvl-text">
+                        <MpProse text={r.text} />
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -393,29 +410,29 @@ function PropertyCard({ prop }: { prop: MpProperty }) {
   );
 }
 
-function Properties() {
-  const [q, setQ] = useState('');
-  const [kind, setKind] = useState<MpItemKind | 'all'>('all');
+function Properties({ query = '', kindFilter: kindProp }: { query?: string; kindFilter?: MpItemKind | 'all' }) {
+  const [kindState, setKind] = useState<MpItemKind | 'all'>('all');
+  const kind = kindProp ?? kindState;
+  const q = query.trim();
   const filtered = MONSTER_PART_PROPERTIES.filter((p) => {
     if (kind !== 'all' && !p.appliesTo.includes(kind)) return false;
-    if (q && !p.name.toLowerCase().includes(q.toLowerCase())) return false;
+    if (q && !propertyMatchesQuery(p, q)) return false;
     return true;
   });
   return (
     <div className="mpr-section">
       <h3 className="mpr-h">Imbued property catalog</h3>
       <p>
-        All {MONSTER_PART_PROPERTIES.length} imbued properties, rendered from the app's own data. Tap a property to
-        expand its part requirement, effect, and per-path level entries.
+        All {MONSTER_PART_PROPERTIES.length} imbued properties, rendered from the app's own data. Tap a property name to
+        read its description, or expand a row for its part requirement, effect, and per-path level entries.
       </p>
       <div className="mpr-propfilter">
-        <input
-          className="mpr-search"
-          placeholder="Search properties…"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-        />
-        <select className="mpr-kindsel" value={kind} onChange={(e) => setKind(e.target.value as MpItemKind | 'all')}>
+        <select
+          className="mpr-kindsel"
+          value={kind}
+          onChange={(e) => setKind(e.target.value as MpItemKind | 'all')}
+          aria-label="Filter by item type"
+        >
           <option value="all">All item types</option>
           {MP_ITEM_KINDS.map((k) => (
             <option key={k.id} value={k.id}>
@@ -426,9 +443,11 @@ function Properties() {
       </div>
       <div className="mpr-proplist">
         {filtered.map((p) => (
-          <PropertyCard key={p.id} prop={p} />
+          <PropertyCard key={p.id} prop={p} defaultOpen={!!q} />
         ))}
-        {filtered.length === 0 && <p className="mpr-note">No properties match your filter.</p>}
+        {filtered.length === 0 && (
+          <p className="mpr-note">No properties match {q ? `“${q}”` : 'your filter'}.</p>
+        )}
       </div>
     </div>
   );
@@ -436,12 +455,45 @@ function Properties() {
 
 // ───────────────────────── Shell ─────────────────────────
 
+/** Keywords describing each prose section, so the page search can highlight / jump to matching sections
+ *  (in addition to filtering the property catalog). */
+const SECTION_KEYWORDS: Record<SectionId, string> = {
+  overview: 'overview system in brief refine imbue variant light hybrid full identify invest name',
+  gathering: 'gathering ingredients scavenge scavenger earn income lore survival salvage transfer bulk hazard',
+  refining: 'refining refine item level potency striking resilient reinforcing fundamental rune shield armor weapon perception skill',
+  imbuing: 'imbuing imbue property paths magic might technique spell command interact dc slots',
+  tables: 'tables treasure by level cost thresholds parts per monster budget',
+  properties: 'property catalog imbued properties fire acid cold sonic force poison mental void spirit vitality charisma bane apex',
+};
+
+/** How many catalog properties match the query — used to badge the Properties section during search. */
+function propertyMatchCount(query: string): number {
+  const q = query.trim();
+  if (!q) return MONSTER_PART_PROPERTIES.length;
+  return MONSTER_PART_PROPERTIES.filter((p) => propertyMatchesQuery(p, q)).length;
+}
+
+/** Which sections match a free-text query (by keywords + property matches for the catalog). */
+function matchingSections(query: string): Set<SectionId> {
+  const q = query.trim().toLowerCase();
+  if (!q) return new Set(SECTIONS.map((s) => s.id));
+  const hits = new Set<SectionId>();
+  for (const s of SECTIONS) if (SECTION_KEYWORDS[s.id].includes(q) || s.label.toLowerCase().includes(q)) hits.add(s.id);
+  if (propertyMatchCount(q) > 0) hits.add('properties');
+  return hits;
+}
+
 export function MonsterPartsRules({ onClose }: { onClose: () => void }) {
   const isMobile = useIsMobile();
   const [section, setSection] = useState<SectionId>('overview');
   const [mobileSection, setMobileSection] = useState<SectionId | null>(null);
+  const [query, setQuery] = useState('');
   useBackHandler(true, onClose);
   useBackHandler(isMobile && mobileSection !== null, () => setMobileSection(null));
+
+  const searching = query.trim().length > 0;
+  const matched = matchingSections(query);
+  const propMatches = propertyMatchCount(query);
 
   const render = (id: SectionId) => (
     <>
@@ -450,12 +502,43 @@ export function MonsterPartsRules({ onClose }: { onClose: () => void }) {
       {id === 'refining' && <Refining />}
       {id === 'imbuing' && <Imbuing />}
       {id === 'tables' && <Tables />}
-      {id === 'properties' && <Properties />}
+      {id === 'properties' && <Properties query={query} />}
     </>
+  );
+
+  // While searching, jump the pane to whichever matching section is active; if the current section no
+  // longer matches, fall back to the first matching one (Properties leads when it has hits).
+  const orderedMatches = SECTIONS.filter((s) => matched.has(s.id)).map((s) => s.id);
+  const activeSection: SectionId = searching
+    ? matched.has(section)
+      ? section
+      : orderedMatches.includes('properties')
+        ? 'properties'
+        : orderedMatches[0] ?? 'properties'
+    : section;
+
+  const search = (
+    <div className="src-search mpr-page-search">
+      <i className="ti ti-search" aria-hidden="true" />
+      <input
+        type="text"
+        placeholder="Search Monster Parts…"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        aria-label="Search Monster Parts rules"
+      />
+      {query && (
+        <button type="button" className="src-search-x" aria-label="Clear search" onClick={() => setQuery('')}>
+          <i className="ti ti-x" aria-hidden="true" />
+        </button>
+      )}
+    </div>
   );
 
   const headTitle =
     isMobile && mobileSection ? SECTIONS.find((s) => s.id === mobileSection)?.label ?? 'Monster Parts' : 'Monster Parts';
+
+  const noMatches = searching && orderedMatches.length === 0;
 
   return (
     <div className="picker-overlay" onClick={onClose}>
@@ -466,7 +549,7 @@ export function MonsterPartsRules({ onClose }: { onClose: () => void }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="picker-head">
-          {isMobile && mobileSection && (
+          {isMobile && mobileSection && !searching && (
             <button className="icon-btn settings-back" aria-label="Back" onClick={() => setMobileSection(null)}>
               <i className="ti ti-arrow-left" aria-hidden="true" />
             </button>
@@ -477,32 +560,74 @@ export function MonsterPartsRules({ onClose }: { onClose: () => void }) {
           </button>
         </div>
         {isMobile ? (
-          mobileSection === null ? (
-            <div className="settings-cards">
-              {SECTIONS.map((s) => (
-                <button key={s.id} className="settings-card" onClick={() => setMobileSection(s.id)}>
-                  <i className={'ti ' + s.icon} aria-hidden="true" />
-                  <span>{s.label}</span>
-                </button>
-              ))}
-            </div>
-          ) : (
-            <div className="settings-pane">{render(mobileSection)}</div>
-          )
+          <>
+            <div className="mpr-search-wrap">{search}</div>
+            {searching ? (
+              noMatches ? (
+                <div className="settings-pane">
+                  <p className="mpr-note">Nothing matches “{query.trim()}”.</p>
+                </div>
+              ) : (
+                <div className="settings-pane">
+                  <nav className="mpr-jump" aria-label="Matching sections">
+                    {orderedMatches.map((id) => {
+                      const s = SECTIONS.find((x) => x.id === id)!;
+                      return (
+                        <button
+                          key={id}
+                          className={'mpr-jump-btn' + (activeSection === id ? ' active' : '')}
+                          onClick={() => setSection(id)}
+                        >
+                          <i className={'ti ' + s.icon} aria-hidden="true" /> {s.label}
+                          {id === 'properties' && <span className="mpr-jump-count">{propMatches}</span>}
+                        </button>
+                      );
+                    })}
+                  </nav>
+                  {render(activeSection)}
+                </div>
+              )
+            ) : mobileSection === null ? (
+              <div className="settings-cards">
+                {SECTIONS.map((s) => (
+                  <button key={s.id} className="settings-card" onClick={() => setMobileSection(s.id)}>
+                    <i className={'ti ' + s.icon} aria-hidden="true" />
+                    <span>{s.label}</span>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="settings-pane">{render(mobileSection)}</div>
+            )}
+          </>
         ) : (
           <div className="settings-body">
             <nav className="settings-nav" aria-label="Monster Parts sections">
-              {SECTIONS.map((s) => (
-                <button
-                  key={s.id}
-                  className={'settings-navitem' + (section === s.id ? ' active' : '')}
-                  onClick={() => setSection(s.id)}
-                >
-                  <i className={'ti ' + s.icon} aria-hidden="true" /> {s.label}
-                </button>
-              ))}
+              {search}
+              {SECTIONS.map((s) => {
+                const dim = searching && !matched.has(s.id);
+                return (
+                  <button
+                    key={s.id}
+                    className={
+                      'settings-navitem' + (activeSection === s.id ? ' active' : '') + (dim ? ' mpr-nav-dim' : '')
+                    }
+                    onClick={() => setSection(s.id)}
+                    disabled={dim}
+                  >
+                    <i className={'ti ' + s.icon} aria-hidden="true" /> {s.label}
+                    {searching && s.id === 'properties' && <span className="mpr-jump-count">{propMatches}</span>}
+                  </button>
+                );
+              })}
             </nav>
-            <div className="settings-pane">{render(section)}</div>
+            <div className="settings-pane">
+              {noMatches ? (
+                <p className="mpr-note">Nothing matches “{query.trim()}”.</p>
+              ) : (
+                render(activeSection)
+              )}
+            </div>
           </div>
         )}
       </div>
