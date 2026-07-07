@@ -4463,6 +4463,47 @@ button.strike-name:hover {
 .mpr-modal .settings-pane {
   line-height: 1.5;
 }
+/* Monster Parts rules rendered inline inside the Homebrew content pane (embedded prop): strip the
+   full-screen modal chrome so it flows as ordinary page content; the host Homebrew pane scrolls. */
+.picker-overlay.mpr-embedded {
+  position: static;
+  inset: auto;
+  background: none;
+  padding: 0;
+  display: block;
+}
+.mpr-embedded-modal {
+  position: static !important;
+  inset: auto !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: none !important;
+}
+.mpr-embedded-modal > .picker-head {
+  position: static;
+}
+.mpr-embedded-modal .settings-body {
+  height: auto;
+  min-height: 0;
+}
+.mpr-embedded-modal .settings-pane {
+  overflow: visible;
+}
+/* The read-only Monster Parts rules entry in the Homebrew source list — accent-tinted so it reads
+   as a special reference, not a user-created source. */
+.settings-navitem.hb-special,
+.hb-source-row.hb-special {
+  color: var(--app-accent);
+}
+.settings-navitem.hb-special.active {
+  color: var(--app-accent-text);
+}
 .mpr-section {
   display: flex;
   flex-direction: column;

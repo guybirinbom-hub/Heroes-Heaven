@@ -30,6 +30,11 @@ import { useIsMobile } from './useIsMobile';
 import { WindowControls } from './WindowControls';
 import { HeroesHeavenLogo } from './Logo';
 import { PageMenu } from './PageMenu';
+import { MonsterPartsRules } from './MonsterPartsRules';
+
+/** Sentinel "source" id for the read-only Monster Parts rules reference (not a real homebrew source,
+ *  so it's never editable, exported, or imported). */
+const MP_RULES_ID = '__mp-rules__';
 
 type EntryRec = Record<string, unknown> & { id: string; name: string; homebrewSourceId?: string };
 
@@ -216,8 +221,9 @@ export function HomebrewPage({
   const [selectedId, setSelectedId] = useState<string | null>(() => sourceList[0]?.id ?? null);
   const [editing, setEditing] = useState<{ type: HomebrewType; entry?: EntryRec } | null>(null);
 
-  const selected = selectedId ? sources[selectedId] : null;
-  const drilledIn = isMobile && mobileOpen && !!selected;
+  const isMpRules = selectedId === MP_RULES_ID;
+  const selected = selectedId && !isMpRules ? sources[selectedId] : null;
+  const drilledIn = isMobile && mobileOpen && (!!selected || isMpRules);
   // Android Back / Escape from a drilled-in source returns to the sources list.
   useBackHandler(drilledIn, () => setMobileOpen(false));
 
@@ -306,7 +312,8 @@ export function HomebrewPage({
           >
             <i className="ti ti-arrow-left" aria-hidden="true" />
           </button>
-          <HeroesHeavenLogo className="chrome-logo" /> {drilledIn ? selected!.name || 'Homebrew' : 'Homebrew'}
+          <HeroesHeavenLogo className="chrome-logo" />{' '}
+          {drilledIn ? (isMpRules ? 'Monster Parts Rules' : selected?.name || 'Homebrew') : 'Homebrew'}
         </div>
         <WindowControls />
         <PageMenu
@@ -330,6 +337,17 @@ export function HomebrewPage({
             A <strong>source</strong> holds your custom content — items, feats, spells, ancestries, heritages,
             backgrounds, and actions. Tap one to open it; enable it per character under Setup → Sources.
           </p>
+          <button
+            className="hb-source-row hb-special"
+            onClick={() => {
+              setSelectedId(MP_RULES_ID);
+              setMobileOpen(true);
+            }}
+          >
+            <i className="ti ti-bone" aria-hidden="true" />
+            <span className="hb-row-name">Monster Parts Rules</span>
+            <i className="ti ti-chevron-right hb-row-chev" aria-hidden="true" />
+          </button>
           {sourceList.map((src) => (
             <button
               key={src.id}
@@ -352,6 +370,12 @@ export function HomebrewPage({
       ) : (
       <div className="settings-body">
           <nav className="settings-nav" aria-label="Homebrew sources">
+            <button
+              className={'settings-navitem hb-special' + (isMpRules ? ' active' : '')}
+              onClick={() => setSelectedId(MP_RULES_ID)}
+            >
+              <i className="ti ti-bone" aria-hidden="true" /> Monster Parts Rules
+            </button>
             {sourceList.map((src) => (
               <button
                 key={src.id}
@@ -366,7 +390,9 @@ export function HomebrewPage({
             </button>
           </nav>
           <div className="settings-pane">
-            {!selected ? (
+            {isMpRules ? (
+              <MonsterPartsRules embedded />
+            ) : !selected ? (
               <div className="settings-section">
                 <h3 className="settings-h">Homebrew</h3>
                 <p className="settings-desc">

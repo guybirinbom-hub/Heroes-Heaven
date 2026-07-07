@@ -483,12 +483,13 @@ function matchingSections(query: string): Set<SectionId> {
   return hits;
 }
 
-export function MonsterPartsRules({ onClose }: { onClose: () => void }) {
+export function MonsterPartsRules({ onClose, embedded = false }: { onClose?: () => void; embedded?: boolean }) {
   const isMobile = useIsMobile();
   const [section, setSection] = useState<SectionId>('overview');
   const [mobileSection, setMobileSection] = useState<SectionId | null>(null);
   const [query, setQuery] = useState('');
-  useBackHandler(true, onClose);
+  // Embedded (inside the Homebrew pane) has no modal to close, so Back is handled by its host.
+  useBackHandler(!embedded, () => onClose?.());
   useBackHandler(isMobile && mobileSection !== null, () => setMobileSection(null));
 
   const searching = query.trim().length > 0;
@@ -541,9 +542,9 @@ export function MonsterPartsRules({ onClose }: { onClose: () => void }) {
   const noMatches = searching && orderedMatches.length === 0;
 
   return (
-    <div className="picker-overlay" onClick={onClose}>
+    <div className={'picker-overlay' + (embedded ? ' mpr-embedded' : '')} onClick={embedded ? undefined : onClose}>
       <div
-        className={'picker settings-modal mpr-modal' + (isMobile ? ' settings-page-m' : '')}
+        className={'picker settings-modal mpr-modal' + (isMobile ? ' settings-page-m' : '') + (embedded ? ' mpr-embedded-modal' : '')}
         role="dialog"
         aria-label="Monster Parts rules"
         onClick={(e) => e.stopPropagation()}
@@ -555,9 +556,11 @@ export function MonsterPartsRules({ onClose }: { onClose: () => void }) {
             </button>
           )}
           {headTitle}
-          <button className="picker-close" onClick={onClose} aria-label="Close">
-            <i className="ti ti-x" aria-hidden="true" />
-          </button>
+          {!embedded && (
+            <button className="picker-close" onClick={onClose} aria-label="Close">
+              <i className="ti ti-x" aria-hidden="true" />
+            </button>
+          )}
         </div>
         {isMobile ? (
           <>
