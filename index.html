@@ -2,14 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <!-- No viewport-fit=cover: let the browser/OS reserve space for the status + home bars so the
+         bottom nav is never hidden behind them (Android Chrome tabs don't report safe-area insets). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <!-- PWA / installable web app (web build only; ignored by the Tauri shells). -->
     <meta name="theme-color" content="#14161f" />
     <link rel="apple-touch-icon" href="/pwa-512.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- Opaque (not translucent) so iOS keeps content below the status bar now that we don't draw
+         behind it — a dark bar that matches the app instead of overlapping the top row. -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="Heroes Heaven" />
     <title>Heroes Heaven</title>
   </head>
