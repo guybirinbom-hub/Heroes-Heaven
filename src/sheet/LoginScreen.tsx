@@ -74,7 +74,7 @@ export function LoginScreen() {
             <>
               <h1 className="login-title">Enter your code</h1>
               <p className="login-sub">
-                We emailed a 6-digit code to <b>{email.trim()}</b>. Type it here to sign in.
+                We emailed a code to <b>{email.trim()}</b>. Type it here to sign in.
               </p>
               <input
                 className="login-input login-code"
@@ -82,8 +82,8 @@ export function LoginScreen() {
                 inputMode="numeric"
                 autoComplete="one-time-code"
                 autoFocus
-                maxLength={6}
-                placeholder="123456"
+                maxLength={10}
+                placeholder="Code"
                 value={code}
                 onChange={(e) => {
                   setCode(e.target.value.replace(/\D/g, ''));
@@ -101,7 +101,7 @@ export function LoginScreen() {
               <button
                 className="btn login-send"
                 onClick={() => void verify()}
-                disabled={phase === 'verifying' || code.trim().length < 6}
+                disabled={phase === 'verifying' || code.trim().length < 4}
               >
                 {phase === 'verifying' ? 'Signing in…' : 'Sign in'}
               </button>
@@ -119,7 +119,7 @@ export function LoginScreen() {
           ) : (
             <>
               <h1 className="login-title">Sign in</h1>
-              <p className="login-sub">No password — we'll email you a 6-digit sign-in code.</p>
+              <p className="login-sub">No password — we'll email you a sign-in code.</p>
               <input
                 className="login-input"
                 type="email"
