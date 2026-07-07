@@ -304,24 +304,25 @@ export function HomebrewPage({
     <div className="hb-page">
       <header className="chrome" data-tauri-drag-region>
         <div className="chrome-brand" data-tauri-drag-region>
-          <button
-            className="icon-btn hb-back"
-            onClick={drilledIn ? () => setMobileOpen(false) : onClose}
-            title="Back"
-            aria-label={drilledIn ? 'Back to sources' : 'Back to character'}
-          >
-            <i className="ti ti-arrow-left" aria-hidden="true" />
-          </button>
+          {/* Homebrew is its own top-level page (reached via the hamburger) — no back arrow at the top
+              level. Keep it only to step back OUT of a drilled-in source (mobile), and on desktop
+              (which has no hamburger) so there's still a way to leave. */}
+          {(drilledIn || !isMobile) && (
+            <button
+              className="icon-btn hb-back"
+              onClick={drilledIn ? () => setMobileOpen(false) : onClose}
+              title="Back"
+              aria-label={drilledIn ? 'Back to sources' : 'Back to character'}
+            >
+              <i className="ti ti-arrow-left" aria-hidden="true" />
+            </button>
+          )}
           <HeroesHeavenLogo className="chrome-logo" />{' '}
           {drilledIn ? (isMpRules ? 'Monster Parts Rules' : selected?.name || 'Homebrew') : 'Homebrew'}
         </div>
         <WindowControls />
         <PageMenu
-          items={[
-            ...(onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []),
-            { label: 'Export homebrew', icon: 'ti-download', onClick: exportHomebrew },
-            { label: 'Import homebrew', icon: 'ti-upload', onClick: importHomebrew },
-          ]}
+          items={onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []}
           modes={content.modes}
           characters={characters}
           onSaveMode={onSaveMode}
@@ -366,6 +367,14 @@ export function HomebrewPage({
             <i className="ti ti-plus" aria-hidden="true" />
             <span className="hb-row-name">New source</span>
           </button>
+          <div className="hb-io-row">
+            <button className="chip" onClick={exportHomebrew}>
+              <i className="ti ti-download" aria-hidden="true" /> Export homebrew
+            </button>
+            <button className="chip" onClick={importHomebrew}>
+              <i className="ti ti-upload" aria-hidden="true" /> Import homebrew
+            </button>
+          </div>
         </div>
       ) : (
       <div className="settings-body">
@@ -388,6 +397,14 @@ export function HomebrewPage({
             <button className="settings-navitem hb-new-source" onClick={createSource}>
               <i className="ti ti-plus" aria-hidden="true" /> New source
             </button>
+            <div className="hb-io-row">
+              <button className="chip" onClick={exportHomebrew}>
+                <i className="ti ti-download" aria-hidden="true" /> Export
+              </button>
+              <button className="chip" onClick={importHomebrew}>
+                <i className="ti ti-upload" aria-hidden="true" /> Import
+              </button>
+            </div>
           </nav>
           <div className="settings-pane">
             {isMpRules ? (

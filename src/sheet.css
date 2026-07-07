@@ -4508,6 +4508,21 @@ button.strike-name:hover {
 .settings-navitem.hb-special.active {
   color: var(--app-accent-text);
 }
+/* Export / Import homebrew action buttons, on the page (not the hamburger). Sit under the source
+   list, separated by a rule. */
+.hb-io-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: var(--app-bw) solid var(--app-border);
+}
+.hb-io-row .chip {
+  flex: 1;
+  justify-content: center;
+  white-space: nowrap;
+}
 .mpr-section {
   display: flex;
   flex-direction: column;
