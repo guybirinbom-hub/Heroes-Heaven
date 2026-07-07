@@ -10,7 +10,7 @@ import { WindowControls } from './WindowControls';
  * still contains the link (works fine in a desktop browser); the code path works everywhere.
  * Only invited emails can sign in (shouldCreateUser:false → the Supabase allowlist rejects the rest).
  */
-export function LoginScreen({ onDevSkip }: { onDevSkip?: () => void }) {
+export function LoginScreen({ onSkip, onDevSkip }: { onSkip?: () => void; onDevSkip?: () => void }) {
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
   const [phase, setPhase] = useState<'email' | 'sending' | 'code' | 'verifying'>('email');
@@ -151,6 +151,18 @@ export function LoginScreen({ onDevSkip }: { onDevSkip?: () => void }) {
               <p className="login-note">
                 Only invited emails can sign in. Ask whoever set this up to add yours if it doesn't work.
               </p>
+              {onSkip && (
+                <>
+                  <div className="login-or">or</div>
+                  <button className="btn login-skip" onClick={onSkip}>
+                    Continue without an account
+                  </button>
+                  <p className="login-note">
+                    Your characters stay on this device. Sign in later from Settings → Account to back them up and sync
+                    across your devices.
+                  </p>
+                </>
+              )}
             </>
           )}
         </div>

@@ -12,6 +12,7 @@ import { pickScreen } from './appScreen';
 import { useAuth } from './data/useAuth';
 import { startCloudSync } from './data/cloudSync';
 import { LoginScreen } from './sheet/LoginScreen';
+import { getLoginSkipped, setLoginSkipped } from './data/device';
 import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { isTauri } from './platform';
 import { setupPersist, schedulePersist, persistNow, flushPersist, cancelPersist } from './data/persist';
@@ -41,6 +42,11 @@ export default function App() {
   // `import.meta.env.DEV` is false in the production build, so this never appears on the deployed
   // site and the friends-only login stays enforced there. Bypass = local-only (no cloud sync).
   const [devBypass, setDevBypass] = useState(() => import.meta.env.DEV && sessionStorage.getItem('hh-dev-skip') === '1');
+  // Installed app: login is optional. If the user chose "continue without an account", remember it so
+  // we don't show the login wall on every launch. The web build has no persistent skip (login there
+  // is friends-only + mandatory); its only bypass is the DEV one above.
+  const [localSkip, setLocalSkip] = useState(() => isTauri && getLoginSkipped());
+  const bypassLogin = devBypass || localSkip;
   // Roster lives in an undo/redo timeline: every character-data change (all sheet mutations funnel
   // through setRoster) becomes an undoable step, driving Ctrl+Z / Ctrl+Shift+Z below.
   const { state: roster, set: setRoster, undo, redo } = useUndoableState<SavedChar[]>(initialRoster);
@@ -123,6 +129,13 @@ export default function App() {
       cleanup();
     };
   }, [auth.status, setRoster]);
+  // Signing in supersedes any earlier "use offline" choice on the installed app.
+  useEffect(() => {
+    if (auth.status === 'signed-in' && localSkip) {
+      setLoginSkipped(false);
+      setLocalSkip(false);
+    }
+  }, [auth.status, localSkip]);
   useEffect(() => {
     if (persistImmediately.current) {
       persistImmediately.current = false;
@@ -308,8 +321,8 @@ export default function App() {
   // Every branch below 'roster'/'loading' is only reached once pickScreen has confirmed content is
   // loaded, so `content` is non-null there — but TS can't infer that through `which`. Assert once.
   const readyContent = content!;
-  if (auth.status === 'loading') {
-    // Web build only: checking for an existing session (and completing any magic-link redirect).
+  if (auth.status === 'loading' && !bypassLogin) {
+    // Checking for an existing session (and completing any magic-link redirect on the web).
     screen = (
       <div className="login-screen">
         <header className="chrome" data-tauri-drag-region>
@@ -324,11 +337,16 @@ export default function App() {
         </div>
       </div>
     );
-  } else if (auth.status === 'signed-out' && !devBypass) {
+  } else if (auth.status === 'signed-out' && !bypassLogin) {
     screen = (
       <LoginScreen
+        // Installed app: a real, persistent "use offline" skip. Web: no skip (friends-only login),
+        // except the DEV-server escape hatch for local testing.
+        onSkip={isTauri ? () => { setLoginSkipped(true); setLocalSkip(true); } : undefined}
         onDevSkip={
-          import.meta.env.DEV ? () => { sessionStorage.setItem('hh-dev-skip', '1'); setDevBypass(true); } : undefined
+          !isTauri && import.meta.env.DEV
+            ? () => { sessionStorage.setItem('hh-dev-skip', '1'); setDevBypass(true); }
+            : undefined
         }
       />
     );

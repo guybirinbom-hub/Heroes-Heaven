@@ -369,6 +369,27 @@ function loadJsonRaw(key: string): unknown {
   }
 }
 
+const SYNC_META_KEY = 'pf2e-codex.syncMeta';
+
+/** Who last wrote the cloud, and when — surfaced in Settings as "Last synced from ⟨device⟩". */
+export interface SyncMeta {
+  lastDevice?: { id: string; label: string };
+  lastEditedAt?: number;
+}
+
+export function loadSyncMeta(): SyncMeta {
+  const raw = loadJsonRaw(SYNC_META_KEY);
+  return raw && typeof raw === 'object' ? (raw as SyncMeta) : {};
+}
+
+export function saveSyncMeta(m: SyncMeta): void {
+  try {
+    localStorage.setItem(SYNC_META_KEY, JSON.stringify(m));
+  } catch {
+    /* non-fatal */
+  }
+}
+
 export interface CloudBundle {
   roster: SavedChar[];
   homebrew: HomebrewContent;
@@ -378,10 +399,14 @@ export interface CloudBundle {
   /** Device settings (customization prefs + appearance) — synced last-write-wins via settingsUpdated. */
   settings?: { prefs?: unknown; appearance?: unknown };
   settingsUpdated?: number;
+  /** Last device to write the cloud (for the "Last synced from …" line). Set only on push. */
+  lastDevice?: { id: string; label: string };
+  lastEditedAt?: number;
 }
 
 /** Snapshot everything cloud sync mirrors, straight from localStorage. */
 export function readCloudBundle(): CloudBundle {
+  const meta = loadSyncMeta();
   return {
     roster: loadRoster(),
     homebrew: loadHomebrewContent(),
@@ -390,6 +415,8 @@ export function readCloudBundle(): CloudBundle {
     charUpdated: loadCharUpdated(),
     settings: { prefs: loadJsonRaw(PREFS_KEY), appearance: loadJsonRaw(APPEARANCE_KEY) },
     settingsUpdated: loadSettingsUpdated(),
+    lastDevice: meta.lastDevice,
+    lastEditedAt: meta.lastEditedAt,
   };
 }
 
@@ -428,4 +455,5 @@ export function writeCloudBundle(b: CloudBundle): void {
     }
   }
   if (b.settingsUpdated) saveSettingsUpdated(b.settingsUpdated);
+  if (b.lastDevice || b.lastEditedAt) saveSyncMeta({ lastDevice: b.lastDevice, lastEditedAt: b.lastEditedAt });
 }

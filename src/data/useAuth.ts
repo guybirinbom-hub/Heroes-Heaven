@@ -12,9 +12,9 @@ export interface AuthState {
 }
 
 /**
- * Tracks the Supabase auth session for the web build. When cloud sync is disabled (desktop app, or
- * no Supabase config) this immediately reports 'disabled' and never touches Supabase, so the
- * installed apps behave exactly as before.
+ * Tracks the Supabase auth session. Runs on both the web and installed builds whenever cloud sync is
+ * configured. When it isn't configured this immediately reports 'disabled' and never touches Supabase,
+ * so an unconfigured build runs purely local with no login.
  */
 export function useAuth(): AuthState {
   const [session, setSession] = useState<Session | null>(null);

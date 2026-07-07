@@ -1,12 +1,11 @@
-// Supabase client for the WEB build's cloud sync (accounts + character backup).
+// Supabase client for cloud sync (accounts + character backup).
 //
-// Scope for v1: cloud sync activates ONLY in the browser build, and ONLY when the project URL +
-// publishable key are configured. The desktop/Android (Tauri) apps deliberately stay local-only
-// with no login — so we gate on `!isTauri` even if the keys are present in the bundle. This keeps
-// the installed apps behaving exactly as they do today; the hosted web version is the one that
-// logs friends in and mirrors their roster to the cloud.
+// Cloud sync activates whenever the project URL + publishable key are configured at build time. It
+// runs on BOTH the hosted web build and the installed desktop/Android (Tauri) apps, so a player can
+// sign in on their laptop's browser and their PC's installed app and have the same characters follow
+// them. The difference is the login *policy*, enforced in App.tsx: the web build requires a login
+// (friends-only), while the installed app offers an optional login with a "use offline" skip.
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import { isTauri } from '../platform';
 
 const url = import.meta.env.VITE_SUPABASE_URL?.trim();
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY?.trim();
@@ -14,10 +13,10 @@ const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY?.trim();
 /** Both the Supabase URL and publishable key were provided at build time. */
 export const isCloudConfigured = !!(url && anonKey);
 
-/** Cloud sync is live: configured AND running as the web build (not the Tauri desktop/mobile shell). */
-export const isCloudSyncEnabled = isCloudConfigured && !isTauri;
+/** Cloud sync is available (configured). Whether login is *required* is a per-platform policy in App. */
+export const isCloudSyncEnabled = isCloudConfigured;
 
-/** The shared Supabase client, or `null` when cloud sync isn't active (desktop, or unconfigured).
+/** The shared Supabase client, or `null` when cloud sync isn't configured.
  *  Callers must handle null — treat it as "local-only, no accounts". */
 export const supabase: SupabaseClient | null = isCloudSyncEnabled
   ? createClient(url!, anonKey!, {

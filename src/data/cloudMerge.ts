@@ -68,6 +68,9 @@ export function mergeBundles(local: CloudBundle, cloud: CloudBundle | null): Clo
   // Settings (prefs/appearance) aren't union-able — take whichever side changed them more recently.
   const localTs = local.settingsUpdated ?? 0;
   const cloudTs = cloud.settingsUpdated ?? 0;
+  // "Last synced from …" metadata: keep whichever side wrote the cloud more recently.
+  const localEdited = local.lastEditedAt ?? 0;
+  const cloudEdited = cloud.lastEditedAt ?? 0;
   return {
     roster,
     charUpdated,
@@ -76,5 +79,7 @@ export function mergeBundles(local: CloudBundle, cloud: CloudBundle | null): Clo
     modes: unionRecords(cloud.modes, local.modes),
     settings: cloudTs > localTs ? cloud.settings : local.settings, // ties → local
     settingsUpdated: Math.max(localTs, cloudTs),
+    lastDevice: cloudEdited > localEdited ? cloud.lastDevice : local.lastDevice,
+    lastEditedAt: Math.max(localEdited, cloudEdited) || undefined,
   };
 }

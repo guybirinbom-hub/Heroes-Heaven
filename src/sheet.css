@@ -5564,6 +5564,12 @@ button.strike-name:hover {
   color: var(--app-text-dim);
   line-height: 1.5;
 }
+/* Secondary status line (e.g. "Last synced …") — tighter + fainter than a full description. */
+.settings-sub {
+  margin: -6px 0 12px;
+  font-size: 11.5px;
+  color: var(--app-text-faint);
+}
 
 /* Modal chrome — defined here so sheet overlays (spell detail, conditions) are
    styled without depending on builder.css being loaded. */
@@ -7079,6 +7085,27 @@ button.strike-name:hover {
 }
 .login-alt {
   margin-top: 2px;
+}
+/* Installed-app "or / Continue without an account" skip — full-width, neutral (secondary to sign-in). */
+.login-or {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  color: var(--app-text-faint);
+  font-size: 11.5px;
+  margin: 2px 0;
+}
+.login-or::before,
+.login-or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--app-border);
+}
+.login-skip {
+  width: 100%;
+  justify-content: center;
 }
 .login-error {
   color: var(--app-danger);

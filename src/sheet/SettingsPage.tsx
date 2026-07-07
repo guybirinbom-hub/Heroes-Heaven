@@ -4,7 +4,7 @@ import { styleList } from '../theme/styles';
 import { fontList } from '../theme/fonts';
 import { getAppearance, setAccent, setFont, setStyle, setTheme, themeConsumableColor } from '../theme/theme-manager';
 import { bumpZoom, getZoom, resetZoom, subscribeZoom, ZOOM_MAX, ZOOM_MIN, ZOOM_STEP } from '../theme/zoom';
-import { loadRoster, wipeAllData } from '../data/storage';
+import { loadRoster, loadSyncMeta, wipeAllData } from '../data/storage';
 import { backupCharCount, backupFilename, createBackup, parseBackup, restoreBackup } from '../data/backup';
 import { cancelPersist, flushPersist } from '../data/persist';
 import { downloadText } from './download';
@@ -12,6 +12,7 @@ import { chooseDialog, confirmDialog } from './confirm';
 import { isMobilePlatform, isTauri } from '../platform';
 import { isCloudSyncEnabled } from '../data/supabase';
 import { useAuth, signOut } from '../data/useAuth';
+import { getDeviceInfo, setLoginSkipped } from '../data/device';
 import { setPref, usePrefs } from '../data/prefs';
 import type { ModeDef } from '../rules/types';
 import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
@@ -35,7 +36,8 @@ const ALL_SECTIONS: { id: SectionId; label: string; icon: string }[] = [
   { id: 'uninstall', label: 'Uninstall', icon: 'ti-trash' },
 ];
 // Uninstall only where there's an installed app to remove: the Tauri shells (Windows desktop,
-// Android). Account only in the web build with cloud sync on (nothing to sign in/out of otherwise).
+// Android). Account wherever cloud sync is configured (web + installed app); hidden when there's
+// no account system at all.
 const SECTIONS = ALL_SECTIONS.filter(
   (s) => (s.id !== 'uninstall' || isTauri) && (s.id !== 'account' || isCloudSyncEnabled),
 );
@@ -402,24 +404,87 @@ function BackupSection() {
   );
 }
 
-/** Web build: the signed-in email + a sign-out button. Cloud sync keeps the roster safe, so signing
- *  out is non-destructive (the local copy stays too). */
+/** Relative "x ago" for the last-synced line — coarse on purpose (no live ticking needed). */
+function timeAgo(ts: number): string {
+  const s = Math.max(0, Math.round((Date.now() - ts) / 1000));
+  if (s < 45) return 'just now';
+  const m = Math.round(s / 60);
+  if (m < 60) return `${m} minute${m === 1 ? '' : 's'} ago`;
+  const h = Math.round(m / 60);
+  if (h < 24) return `${h} hour${h === 1 ? '' : 's'} ago`;
+  const d = Math.round(h / 24);
+  return `${d} day${d === 1 ? '' : 's'} ago`;
+}
+
+/** The "Last synced from ⟨device⟩ · ⟨time⟩" line. Reads the cached sync metadata and refreshes when a
+ *  sync completes (cloudSync dispatches 'hh-synced'). */
+function LastSyncedLine() {
+  const [, bump] = useState(0);
+  useEffect(() => {
+    const on = () => bump((n) => n + 1);
+    window.addEventListener('hh-synced', on);
+    return () => window.removeEventListener('hh-synced', on);
+  }, []);
+  const meta = loadSyncMeta();
+  if (!meta.lastEditedAt || !meta.lastDevice) return null;
+  const thisDevice = meta.lastDevice.id === getDeviceInfo().id;
+  return (
+    <p className="settings-desc settings-sub">
+      Last synced {timeAgo(meta.lastEditedAt)}
+      {thisDevice ? ' from this device' : ` from ${meta.lastDevice.label}`}.
+    </p>
+  );
+}
+
+/** Sign in / out. Cloud sync keeps the roster safe, so signing out is non-destructive (the local copy
+ *  stays too). On the installed app a user may be signed out by choice ("use offline") — offer a way
+ *  back in. */
 function AccountSection() {
   const auth = useAuth();
   const [busy, setBusy] = useState(false);
+
+  if (auth.status === 'signed-in') {
+    return (
+      <div className="settings-section">
+        <h3 className="settings-h">Account</h3>
+        <p className="settings-desc">
+          Signed in — your characters are backed up to the cloud and load on any device you sign in on.
+        </p>
+        <div className="menu-label">Signed in as</div>
+        <p className="settings-desc">
+          <strong>{auth.email ?? '—'}</strong>
+        </p>
+        <LastSyncedLine />
+        <div className="menu-row">
+          <button className="btn" disabled={busy} onClick={() => { setBusy(true); void signOut(); }}>
+            <i className="ti ti-logout" aria-hidden="true" /> Sign out
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Signed out (installed app, "use offline"): local-only, with a way to sign in. Signing in clears
+  // the skip and reloads so the login screen shows; the pending roster is flushed first.
   return (
     <div className="settings-section">
       <h3 className="settings-h">Account</h3>
       <p className="settings-desc">
-        Signed in — your characters are backed up to the cloud and load on any device you sign in on.
-      </p>
-      <div className="menu-label">Signed in as</div>
-      <p className="settings-desc">
-        <strong>{auth.email ?? '—'}</strong>
+        Not signed in — your characters live on this device only. Sign in to back them up to your account and sync
+        across your devices.
       </p>
       <div className="menu-row">
-        <button className="btn" disabled={busy} onClick={() => { setBusy(true); void signOut(); }}>
-          <i className="ti ti-logout" aria-hidden="true" /> Sign out
+        <button
+          className="btn"
+          disabled={busy}
+          onClick={() => {
+            setBusy(true);
+            setLoginSkipped(false);
+            flushPersist();
+            window.location.reload();
+          }}
+        >
+          <i className="ti ti-login" aria-hidden="true" /> Sign in
         </button>
       </div>
     </div>
@@ -431,8 +496,8 @@ function AboutSection() {
     <div className="settings-section">
       <h3 className="settings-h">Heroes Heaven</h3>
       <p className="settings-desc">
-        A local Pathfinder Second Edition character builder and play sheet. Your characters live on this device — nothing
-        is uploaded anywhere.
+        A Pathfinder Second Edition character builder and play sheet. Your characters live on this device and work fully
+        offline; if you sign in, they&rsquo;re also backed up to your account and sync across your devices.
       </p>
       <div className="menu-label">Game data</div>
       <p className="settings-desc">
