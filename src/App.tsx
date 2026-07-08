@@ -192,7 +192,11 @@ export default function App() {
       await initPortraitStore();
       if (cancelled) return;
       const roster = rosterRef.current;
-      const authoritative = auth.status === 'signed-out' || (auth.status === 'signed-in' && hasSyncedOnce());
+      // 'disabled' (cloud sync not configured) and 'signed-out' are local-only → authoritative at once;
+      // a signed-in device must wait for its first cloud pull. (Omitting 'disabled' would leave local-only
+      // installed builds — where sharp copies actually live — never GC'ing, leaking orphans forever.)
+      const authoritative =
+        auth.status === 'disabled' || auth.status === 'signed-out' || (auth.status === 'signed-in' && hasSyncedOnce());
       if ((!authoritative || roster.length === 0) && tries < 20) {
         timer = setTimeout(() => void attempt(tries + 1), 1500);
         return;
