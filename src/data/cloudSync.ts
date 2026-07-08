@@ -27,7 +27,7 @@ import {
   type CloudBundle,
   type SavedChar,
 } from './storage';
-import { setOnPersisted } from './persist';
+import { setOnPersisted, cancelPersist } from './persist';
 import { onLocalDataChanged } from './syncBus';
 import { reloadPrefs } from './prefs';
 import { initTheme } from '../theme/theme-manager';
@@ -45,8 +45,31 @@ let syncing = false; // a pull or push is in flight (serializes network work)
 let pulledOk = false; // a successful pull has happened this session (gate before any push)
 let started = false;
 let lastPullAt = 0;
+let pushTimer: ReturnType<typeof setTimeout> | null = null; // debounced mid-session upload
+let liveUnsub: (() => void) | null = null; // Realtime subscription teardown
 let applyRoster: ((r: SavedChar[]) => void) | null = null;
 let fingerprints = new Map<string, string>(); // last-applied content per roster id (edit detection)
+
+/** Debounce for the mid-session upload: push this long after the last local edit settles, so a change
+ *  reaches the cloud (and, via Realtime, the user's other open devices) within seconds instead of only
+ *  on close. Fire-and-forget, so it never blocks editing. */
+const LIVE_PUSH_DEBOUNCE_MS = 3000;
+/** Schedule a debounced upload after a local change. push() self-guards on pulledOk / syncing. */
+function schedulePush(): void {
+  if (!supabase) return;
+  if (pushTimer) clearTimeout(pushTimer);
+  pushTimer = setTimeout(() => {
+    pushTimer = null;
+    if (dirty) void push().catch(() => {});
+  }, LIVE_PUSH_DEBOUNCE_MS);
+}
+/** A Realtime change to our cloud row landed — another of this account's devices wrote it, so pull it in
+ *  live. The echo of our OWN push just re-pulls identical data (the merge finds no change and adopt is a
+ *  no-op), so it's harmless — and pulling unconditionally means a genuine near-simultaneous change from
+ *  another device is never skipped. pull()'s `syncing` guard coalesces a burst of events. */
+function onRemoteChange(): void {
+  void pull().catch(() => {});
+}
 
 async function currentUserId(): Promise<string | null> {
   if (!supabase) return null;
@@ -199,6 +222,7 @@ function noteRosterChange(roster: SavedChar[]): void {
   if (changed) {
     saveCharUpdated(ts);
     dirty = true;
+    schedulePush(); // upload mid-session (debounced) so other open devices see it live
   }
   // Tombstone deleted characters so the union merge doesn't resurrect them from another device's copy.
   if (removed.length) recordTombstoneKeys(removed.map((id) => `char:${id}`));
@@ -236,6 +260,7 @@ export async function startCloudSync(onRosterReplaced: (roster: SavedChar[]) => 
   if (uid && prevOwner && prevOwner !== uid) {
     wipeSyncedLocalData();
     applyRoster([]); // reflect the wipe immediately; the pull below fills in this account's characters
+    cancelPersist(); // drop any pending debounced write so the stale empty roster can't flush post-pull
   }
   if (uid) saveSyncOwner(uid);
   // Seed fingerprints from local so a failed first sync (offline) still detects later edits and the
@@ -251,15 +276,29 @@ export async function startCloudSync(onRosterReplaced: (roster: SavedChar[]) => 
   }
 
   setOnPersisted(noteRosterChange);
-  // Non-roster local data (homebrew, modes, settings) just marks dirty; it uploads on the next leave.
+  // Non-roster local data (homebrew, modes, settings) marks dirty and uploads (debounced) live too.
   onLocalDataChanged(() => {
     dirty = true;
+    schedulePush();
   });
   document.addEventListener('visibilitychange', onVisibility);
   window.addEventListener('focus', onFocus);
   window.addEventListener('blur', onBlur);
   window.addEventListener('pagehide', onPageHide);
   window.addEventListener('online', onOnline);
+  // Realtime: pull the moment ANOTHER of this account's devices writes the cloud, so an edit on one
+  // device shows up live on the others (not just on the next focus/open). Needs `user_data` in the
+  // supabase_realtime publication (supabase-user-data-realtime.sql); if it isn't, this simply never
+  // fires and the focus/open pull remains the fallback.
+  if (uid && supabase) {
+    const client = supabase;
+    const channel = client
+      .channel(`user-data:${uid}`)
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'user_data', filter: `user_id=eq.${uid}` }, () => onRemoteChange())
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'user_data', filter: `user_id=eq.${uid}` }, () => onRemoteChange())
+      .subscribe();
+    liveUnsub = () => void client.removeChannel(channel);
+  }
 
   return () => {
     setOnPersisted(() => {});
@@ -269,6 +308,12 @@ export async function startCloudSync(onRosterReplaced: (roster: SavedChar[]) => 
     window.removeEventListener('blur', onBlur);
     window.removeEventListener('pagehide', onPageHide);
     window.removeEventListener('online', onOnline);
+    if (pushTimer) {
+      clearTimeout(pushTimer);
+      pushTimer = null;
+    }
+    liveUnsub?.();
+    liveUnsub = null;
     flushPush();
     started = false;
     pulledOk = false;
