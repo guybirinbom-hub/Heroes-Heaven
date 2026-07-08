@@ -1264,7 +1264,15 @@ export function CampaignAttachCard({ build, actions }: EditorProps) {
     actions.patch({ campaignIds: [...new Set([...(build.campaignIds ?? []), c.id])] });
     setCode('');
     const d = c.defaults;
-    const hasDefaults = !!d && (!!d.variantRules || !!d.enabledSources || !!d.mythicEnabled || !!d.kingmakerEnabled);
+    // Only prompt when the GM actually configured something. An empty variantRules object is truthy but
+    // meaningless — treating it as "has defaults" would nag on every join and (if accepted) wipe the
+    // player's own pre-join variant-rule toggles with an empty set.
+    const hasDefaults =
+      !!d &&
+      ((!!d.variantRules && Object.keys(d.variantRules).length > 0) ||
+        (!!d.enabledSources && d.enabledSources.length > 0) ||
+        !!d.mythicEnabled ||
+        !!d.kingmakerEnabled);
     if (hasDefaults) {
       const use = await confirmDialog({
         title: `Use ${c.name}’s default rules?`,
