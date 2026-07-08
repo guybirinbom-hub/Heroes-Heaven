@@ -27,7 +27,7 @@ import { activeCasterArchetype, archetypeSlots } from '../rules/casterArchetypes
 import { FEAT_GRANTS } from '../rules/featGrants';
 import type { ContentDatabase, Feat, FeatCategory, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SetupUnlockedChoices, SourcesCard, START, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
+import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SetupUnlockedChoices, SourcesCard, START, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
 import { ActionGlyph, isActionCost } from '../sheet/widgets';
 import { SPELL_SPEC_BUILDER, FEAT_SPEC } from '../sheet/filterSpecs';
@@ -623,6 +623,7 @@ export function Builder({
               <div className="bsec-title">Setup</div>
               <div className="setup-note">Campaign options — optional variant rules for this character.</div>
               <div className="lvl-cards">
+                <CampaignAttachCard build={build} actions={actions} content={content} />
                 <OptionsCard build={build} actions={actions} content={content} />
                 <VariantRulesCard build={build} actions={actions} content={content} />
                 <CampaignOptionsCard build={build} actions={actions} content={content} />

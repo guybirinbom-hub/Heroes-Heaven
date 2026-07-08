@@ -261,6 +261,180 @@ body {
   line-height: 1.4;
 }
 
+/* ---- Party page (reuses the .hb-page shell; cards mirror the approved mockup) ---- */
+.party-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 14px 14px calc(36px + env(safe-area-inset-bottom, 0px) / var(--zoom, 1));
+}
+.party-campaign-sel {
+  margin-bottom: 12px;
+}
+.party-campaign-sel .seg {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  background: var(--app-surface-2);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius);
+  padding: 3px;
+  max-width: 100%;
+}
+.party-campaign-sel .seg span {
+  font-size: 12.5px;
+  padding: 5px 11px;
+  border-radius: var(--app-radius-sm);
+  color: var(--app-text-dim);
+  cursor: pointer;
+}
+.party-campaign-sel .seg span.on {
+  background: var(--app-surface);
+  color: var(--app-text);
+}
+.party-loading,
+.party-empty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  color: var(--app-text-dim);
+  font-size: 13px;
+  padding: 24px 16px;
+  text-align: center;
+}
+.party-empty {
+  line-height: 1.5;
+}
+.party-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 8px;
+}
+.party-card {
+  text-align: left;
+  background: var(--app-surface);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius);
+  padding: 11px 12px;
+  color: var(--app-text);
+  font: inherit;
+  cursor: pointer;
+}
+.party-card:hover {
+  border-color: var(--app-accent);
+}
+.party-card-h {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.party-av {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 15px;
+  background: var(--app-surface-2);
+  color: var(--app-text-dim);
+  overflow: hidden;
+}
+.party-av img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.party-card-id {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.party-card-name {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.party-you {
+  color: var(--app-text-faint);
+  font-weight: 400;
+  font-size: 12px;
+}
+.party-card-sub {
+  font-size: 11.5px;
+  color: var(--app-text-dim);
+}
+.party-chev {
+  color: var(--app-text-dim);
+  flex: none;
+}
+.party-stats {
+  display: flex;
+  gap: 14px;
+  align-items: flex-end;
+}
+.party-stat {
+  display: flex;
+  flex-direction: column;
+}
+.party-hp {
+  flex: 1;
+  min-width: 0;
+}
+.party-stat-l {
+  font-size: 11px;
+  color: var(--app-text-dim);
+}
+.party-stat-v {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+.party-temp {
+  color: var(--app-good, #22c55e);
+  font-weight: 400;
+}
+.party-hpbar {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--app-surface-2);
+  overflow: hidden;
+  margin-top: 4px;
+}
+.party-hpbar > span {
+  display: block;
+  height: 100%;
+}
+.party-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+.party-cond,
+.party-mode {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.party-cond {
+  background: color-mix(in srgb, var(--app-danger, #ef4444) 16%, transparent);
+  color: color-mix(in srgb, var(--app-danger, #ef4444) 70%, var(--app-text));
+}
+.party-mode {
+  background: color-mix(in srgb, var(--app-accent) 18%, transparent);
+  color: color-mix(in srgb, var(--app-accent) 70%, var(--app-text));
+}
+
 /* ---- roster screen ---- */
 .roster-body {
   flex: 1;

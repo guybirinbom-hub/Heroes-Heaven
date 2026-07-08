@@ -1313,6 +1313,8 @@ export interface Character {
   overrides?: BuildOverrides;
   /** Enabled source books (absent = the four Core books); other books are hidden from the builder. */
   enabledSources?: string[];
+  /** Campaigns this character is attached to (their ids) — drives the sheet Party button + publishing. */
+  campaignIds?: string[];
   /** Campaign content toggles. Mythic (War of Immortals): off → all `mythic`-trait content is hidden
    *  from the player and the mythic subsystem is inactive. Kingmaker: on → its actions/conditions show. */
   mythicEnabled?: boolean;

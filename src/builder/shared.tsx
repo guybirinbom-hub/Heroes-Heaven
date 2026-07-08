@@ -3,7 +3,7 @@ import type { AbilityId, BuildOverrides, Character, CharacterOptions, ChoiceGrou
 import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
 import { enabledBookSet, sourceCatalog, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
 import { usePrefs } from '../data/prefs';
-import { loadHomebrewSources } from '../data/storage';
+import { loadHomebrewSources, loadCampaigns } from '../data/storage';
 import {
   type BuildState,
   CUSTOM_BACKGROUND_ID,
@@ -1214,6 +1214,39 @@ function MonsterPartsModeSelect({ build, actions }: Pick<EditorProps, 'build' | 
         ))}
       </div>
     </div>
+  );
+}
+
+/** Attach this character to your campaigns — so it shows up in that campaign's party and publishes to
+ *  teammates. Lists the campaigns you're a member of (from your synced memberships); hidden when you
+ *  aren't in any (local / not-signed-in users never see it). */
+export function CampaignAttachCard({ build, actions }: EditorProps) {
+  const memberships = loadCampaigns();
+  if (!memberships.length) return null;
+  const attached = new Set(build.campaignIds ?? []);
+  const toggle = (id: string) => {
+    const next = new Set(attached);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    actions.patch({ campaignIds: [...next] });
+  };
+  return (
+    <SetupCard icon="ti-users" label="Campaigns">
+      <div className="spr-sub" style={{ marginBottom: 6 }}>
+        Attach this character to a campaign so it appears in that party and your group can see it.
+      </div>
+      <div className="spr-chips">
+        {memberships.map((m) => (
+          <ToggleWithInfo
+            key={m.id}
+            label={m.name}
+            description={m.role === 'gm' ? 'You run this campaign — your character joins its party.' : 'You play in this campaign — your character joins its party.'}
+            on={attached.has(m.id)}
+            onToggle={() => toggle(m.id)}
+          />
+        ))}
+      </div>
+    </SetupCard>
   );
 }
 

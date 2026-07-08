@@ -20,6 +20,8 @@ import { SettingsPage } from './SettingsPage';
 import { WindowControls } from './WindowControls';
 import { useIsMobile } from './useIsMobile';
 import { usePortrait } from './usePortrait';
+import { PartyPage } from './PartyPage';
+import { loadCampaigns } from '../data/storage';
 import { useBackHandler } from './useEscapeClose';
 import { HeroesHeavenLogo } from './Logo';
 
@@ -86,6 +88,9 @@ export function CharacterSheet({
   onDeleteMode,
   onOpenHomebrew,
   onOpenCampaigns,
+  partyEnabled,
+  readOnly,
+  onBack,
   charKey,
   characters,
   build,
@@ -108,11 +113,28 @@ export function CharacterSheet({
   onOpenHomebrew?: () => void;
   /** Navigate to the Campaigns page. Provided ONLY when signed in — absent hides the menu item. */
   onOpenCampaigns?: () => void;
+  /** Signed in → the Party button may show (still only when the character is attached to a campaign). */
+  partyEnabled?: boolean;
+  /** Render as a look-but-don't-touch view of someone else's character (party page): no menu, no
+   *  mutations, and a Back button instead. */
+  readOnly?: boolean;
+  onBack?: () => void;
 }) {
   const [tab, setTab] = useState(initialTab);
   const bodyRef = useRef<HTMLDivElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [partyOpen, setPartyOpen] = useState(false);
   const isMobile = useIsMobile();
+  // Campaigns this character is attached to (for the Party button + view). Falls back to a placeholder
+  // name if the membership isn't cached on this device.
+  const attachedCampaigns = useMemo(() => {
+    const ids = character.campaignIds ?? [];
+    if (!ids.length) return [];
+    const byId = new Map(loadCampaigns().map((m) => [m.id, m]));
+    return ids.map((id) => byId.get(id) ?? { id, code: '', role: 'player' as const, name: 'Campaign' });
+  }, [character.campaignIds]);
+  const showParty = !readOnly && !!partyEnabled && (character.campaignIds?.length ?? 0) > 0;
+  useBackHandler(partyOpen, () => setPartyOpen(false));
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [restOpen, setRestOpen] = useState(false);
   const [portraitOpen, setPortraitOpen] = useState(false);
@@ -197,6 +219,10 @@ export function CharacterSheet({
     };
   }, [onPlay, character.pinnedDescs]);
 
+  if (partyOpen) {
+    return <PartyPage content={content} campaigns={attachedCampaigns} onClose={() => setPartyOpen(false)} />;
+  }
+
   return (
     <PinContext.Provider value={pinApi}>
     <div className="ws-app">
@@ -243,6 +269,13 @@ export function CharacterSheet({
               {t}
             </button>
           ))}
+          {/* Party — a tab-styled action (opens the party overlay), only when this character is in a
+              campaign. Desktop only (this .tabs strip is hidden on mobile; phones use the top-bar icon). */}
+          {showParty && (
+            <button type="button" className="tab party-tab" onClick={() => setPartyOpen(true)}>
+              <i className="ti ti-users" aria-hidden="true" /> Party
+            </button>
+          )}
         </nav>
         <div className="level-stack">
           {onPlay ? (
@@ -293,19 +326,32 @@ export function CharacterSheet({
             <span className="xp">{character.xp.toLocaleString()} xp</span>
           )}
         </div>
-        {onRest && (
+        {/* Phone: Party lives in the top bar beside Rest (this .icon-btn row is hidden-ish on desktop's
+            wide bar; the desktop entry is the .tabs Party button above). */}
+        {showParty && isMobile && (
+          <button className="icon-btn" title="Party" aria-label="Party" onClick={() => setPartyOpen(true)}>
+            <i className="ti ti-users" aria-hidden="true" />
+          </button>
+        )}
+        {!readOnly && onRest && (
           <button className="icon-btn" title="Daily preparations" onClick={() => setRestOpen(true)}>
             <i className="ti ti-bed" aria-hidden="true" />
           </button>
         )}
-        {!diceOff && (
+        {!readOnly && !diceOff && (
           <button className="icon-btn" title="Dice roller" onClick={() => setDiceOpen(true)}>
             <i className="ti ti-dice" aria-hidden="true" />
           </button>
         )}
-        <button className="icon-btn" title="Menu" onClick={() => setMenuOpen((o) => !o)}>
-          <i className="ti ti-menu-2" aria-hidden="true" />
-        </button>
+        {readOnly ? (
+          <button className="icon-btn" title="Back to party" aria-label="Back to party" onClick={onBack}>
+            <i className="ti ti-arrow-left" aria-hidden="true" />
+          </button>
+        ) : (
+          <button className="icon-btn" title="Menu" onClick={() => setMenuOpen((o) => !o)}>
+            <i className="ti ti-menu-2" aria-hidden="true" />
+          </button>
+        )}
         {menuOpen && (
           <>
             <div className="menu-backdrop" onClick={() => setMenuOpen(false)} />

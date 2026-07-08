@@ -81,6 +81,9 @@ export interface BuildState {
   /** Enabled source books — content from other books is hidden from the builder pickers. Absent =
    *  the four Core books only (the default for a new character). */
   enabledSources?: string[];
+  /** Campaigns this character is attached to (their ids). Drives the sheet's Party button and the
+   *  publish-to-party sync. Set on the builder's Setup → Campaign card. */
+  campaignIds?: string[];
   /** Campaign content toggles (off by default). Mythic → enables the mythic subsystem + shows
    *  `mythic`-trait content; Kingmaker → shows its actions/conditions. */
   mythicEnabled?: boolean;
@@ -2038,6 +2041,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(build.pinnedDescs && build.pinnedDescs.length ? { pinnedDescs: build.pinnedDescs } : {}),
     ...(build.overrides ? { overrides: build.overrides } : {}),
     ...(build.enabledSources ? { enabledSources: build.enabledSources } : {}),
+    ...(build.campaignIds && build.campaignIds.length ? { campaignIds: build.campaignIds } : {}),
     ...(build.mythicEnabled ? { mythicEnabled: true } : {}),
     ...(build.kingmakerEnabled ? { kingmakerEnabled: true } : {}),
     ...(build.mythicEnabled && build.mythicCalling ? { mythicCalling: build.mythicCalling } : {}),
@@ -2195,6 +2199,7 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   if (c.options) b.options = { ...c.options };
   if (c.overrides) b.overrides = JSON.parse(JSON.stringify(c.overrides)) as BuildOverrides;
   if (c.enabledSources) b.enabledSources = [...c.enabledSources];
+  if (c.campaignIds?.length) b.campaignIds = [...c.campaignIds];
   if (c.mythicEnabled) b.mythicEnabled = true;
   if (c.mythicCalling) b.mythicCalling = c.mythicCalling;
   if (c.kingmakerEnabled) b.kingmakerEnabled = true;

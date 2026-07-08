@@ -15,6 +15,8 @@ import { startCloudSync } from './data/cloudSync';
 import { LoginScreen } from './sheet/LoginScreen';
 import { getLoginSkipped, setLoginSkipped } from './data/device';
 import { collectPortraitRefs, deleteSharpPortrait } from './data/portraitStore';
+import { computeSummary } from './sheet/partySummary';
+import { publishCharacter, unpublishCharacter } from './data/party';
 import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { isTauri } from './platform';
 import { setupPersist, schedulePersist, persistNow, flushPersist, cancelPersist } from './data/persist';
@@ -138,6 +140,38 @@ export default function App() {
       setLocalSkip(false);
     }
   }, [auth.status, localSkip]);
+  // Publish characters attached to a campaign so teammates see them in the party. Debounced on roster
+  // change; unpublishes any (campaign, character) pair that's no longer attached (detach / delete).
+  const publishedRef = useRef<Set<string>>(new Set());
+  useEffect(() => {
+    if (auth.status !== 'signed-in' || !content) return;
+    const readyContent = content;
+    const timer = setTimeout(() => {
+      const desired = new Set<string>();
+      for (const sc of roster) {
+        const ids = sc.character.campaignIds ?? [];
+        if (!ids.length) continue;
+        try {
+          const live = applyPlayState(sc.character, sc.play, readyContent);
+          const summary = computeSummary(live, readyContent);
+          for (const cid of ids) {
+            desired.add(cid + '|' + sc.id);
+            void publishCharacter(cid, sc.id, live.name, summary, live);
+          }
+        } catch {
+          /* skip a character that won't compute */
+        }
+      }
+      for (const key of publishedRef.current) {
+        if (!desired.has(key)) {
+          const [cid, charId] = key.split('|');
+          void unpublishCharacter(cid, charId);
+        }
+      }
+      publishedRef.current = desired;
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [roster, auth.status, content]);
   useEffect(() => {
     if (persistImmediately.current) {
       persistImmediately.current = false;
@@ -521,6 +555,7 @@ export default function App() {
         onDeleteMode={removeModeDef}
         onOpenHomebrew={() => setMode('homebrew')}
         onOpenCampaigns={onOpenCampaigns}
+        partyEnabled={!!onOpenCampaigns}
         onRest={() =>
           updatePlay((p) =>
             rest(p, {
