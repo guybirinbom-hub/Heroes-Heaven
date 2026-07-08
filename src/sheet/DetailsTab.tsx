@@ -7,7 +7,7 @@ import { setDetail, setPortrait, type PlayUpdater } from '../rules/play';
 import { proficiencyDesc, senseDesc, traitDesc, languageDesc } from '../rules/glossary';
 import { processPortrait } from './imageUtil';
 import { usePortrait } from './usePortrait';
-import { newPortraitRef, setSharpPortrait, deleteSharpPortrait } from '../data/portraitStore';
+import { newPortraitRef, setSharpPortrait } from '../data/portraitStore';
 import { useIsMobile } from './useIsMobile';
 
 function cap(s: string): string {
@@ -81,7 +81,6 @@ export function DetailsTab({
     const file = e.currentTarget.files?.[0];
     e.currentTarget.value = ''; // allow re-selecting the same file later
     if (!file || !onPlay) return;
-    const oldRef = character.appearance?.portraitRef;
     // Compressed copy → synced character data; sharp copy (installed app) → on-device store.
     processPortrait(file)
       .then(async ({ compressed, sharp }) => {
@@ -91,7 +90,9 @@ export function DetailsTab({
           await setSharpPortrait(ref, sharp);
         }
         onPlay((p) => setPortrait(p, compressed, ref));
-        if (oldRef && oldRef !== ref) void deleteSharpPortrait(oldRef); // reclaim the replaced sharp copy
+        // The replaced sharp copy (oldRef) is NOT deleted here — an eager delete would break undo (Ctrl+Z
+        // reverts to oldRef but the sharp image would be gone). Orphaned sharp copies are reclaimed by the
+        // startup GC (gcSharpPortraits) once no character references them.
       })
       .catch(() => {});
   };

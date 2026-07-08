@@ -14,7 +14,7 @@ import { useAuth } from './data/useAuth';
 import { startCloudSync } from './data/cloudSync';
 import { LoginScreen } from './sheet/LoginScreen';
 import { getLoginSkipped, setLoginSkipped } from './data/device';
-import { collectPortraitRefs, deleteSharpPortrait } from './data/portraitStore';
+import { collectPortraitRefs, gcSharpPortraits, initPortraitStore } from './data/portraitStore';
 import { computeSummary } from './sheet/partySummary';
 import { publishCharacter, unpublishCharacter, fetchGmEdits, deleteGmEdit, currentUserId, subscribeGmEdits } from './data/party';
 import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
@@ -179,6 +179,19 @@ export default function App() {
   // to re-subscribe on every roster change. (Canonical "latest value" ref — safe to write in render.)
   const rosterRef = useRef(roster);
   rosterRef.current = roster;
+  // Startup GC: once the on-device sharp portraits have finished loading, reclaim any not referenced by
+  // a live character (replaced/deleted in a previous session). Deferred to here — instead of eagerly
+  // deleting on replace/delete — so in-session undo can still restore a replaced/deleted sharp copy.
+  useEffect(() => {
+    let cancelled = false;
+    void initPortraitStore().then(() => {
+      if (cancelled) return;
+      void gcSharpPortraits(new Set(rosterRef.current.flatMap((c) => collectPortraitRefs(c))));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
   // Apply pending GM edits to MY characters — silently. A GM can edit a player's sheet and push it; the
   // player's app swaps in the GM's version. It applies INSTANTLY via a Realtime subscription while the
   // app is open, and the focus/visibility/online/sign-in pull is the fallback for when it was closed or
@@ -417,13 +430,13 @@ export default function App() {
 
   const deleteChar = (id: string) => {
     // Deleting the last character is allowed — the roster can go to zero (empty state).
-    const doomed = roster.find((c) => c.id === id);
     const remaining = roster.filter((c) => c.id !== id);
     commitStructural(); // structural change — persist immediately, don't debounce
     setRoster(remaining);
     if (id === activeId) setActiveId(remaining[0]?.id ?? '');
-    // Reclaim any on-device sharp portraits this character (and its companions) owned.
-    if (doomed) collectPortraitRefs(doomed).forEach((ref) => void deleteSharpPortrait(ref));
+    // NOTE: the deleted character's on-device sharp portraits are NOT reclaimed here — an eager delete
+    // would make an undo of this deletion (Ctrl+Z) bring the character back with its sharp portraits
+    // already gone. Orphaned sharp copies are reclaimed by the startup GC (see the mount effect).
   };
 
   let screen: ReactNode;

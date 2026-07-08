@@ -15,7 +15,7 @@ const DB_VERSION = 1;
 
 const cache = new Map<string, string>();
 const subs = new Set<() => void>();
-let loadStarted = false;
+let loadPromise: Promise<void> | null = null;
 
 /** Open (and migrate) the DB. Resolves null when IndexedDB is unavailable (SSR/tests/locked-down
  *  WebView) so every caller degrades to "no sharp copy" rather than throwing. */
@@ -47,11 +47,7 @@ function notify(): void {
   });
 }
 
-/** Load every stored sharp portrait into the in-memory cache. Idempotent; safe to call on any
- *  platform (on the web it just finds an empty store). Notifies subscribers if anything loaded. */
-export async function initPortraitStore(): Promise<void> {
-  if (loadStarted) return;
-  loadStarted = true;
+async function loadPortraits(): Promise<void> {
   const db = await openDb();
   if (!db) return;
   await new Promise<void>((resolve) => {
@@ -70,6 +66,22 @@ export async function initPortraitStore(): Promise<void> {
     }
   });
   if (cache.size) notify();
+}
+
+/** Load every stored sharp portrait into the in-memory cache. Idempotent; the returned promise resolves
+ *  when the load is COMPLETE (memoized), so callers can await it before a GC pass. Safe on any platform
+ *  (on the web it just finds an empty store). */
+export function initPortraitStore(): Promise<void> {
+  if (!loadPromise) loadPromise = loadPortraits();
+  return loadPromise;
+}
+
+/** Reclaim on-device sharp portraits no longer referenced by any live character. Called once at startup
+ *  (undo history is empty then), instead of eagerly deleting on portrait replace / character delete —
+ *  so an in-session undo can still restore a replaced or deleted character's sharp copy. */
+export async function gcSharpPortraits(liveRefs: Set<string>): Promise<void> {
+  const orphans = [...cache.keys()].filter((ref) => !liveRefs.has(ref));
+  for (const ref of orphans) await deleteSharpPortrait(ref);
 }
 
 /** The on-device sharp copy for `ref`, or undefined when there isn't one on this device. Synchronous

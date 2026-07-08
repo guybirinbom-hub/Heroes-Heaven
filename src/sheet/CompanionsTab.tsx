@@ -45,7 +45,7 @@ import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
 import { AddItemsModal } from './AddItemsModal';
 import { processPortrait } from './imageUtil';
 import { usePortrait } from './usePortrait';
-import { newPortraitRef, setSharpPortrait, deleteSharpPortrait } from '../data/portraitStore';
+import { newPortraitRef, setSharpPortrait } from '../data/portraitStore';
 
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -1066,7 +1066,6 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
     const file = e.currentTarget.files?.[0];
     e.currentTarget.value = '';
     if (!file || !onPlay) return;
-    const oldRef = companions.find((c) => c.id === cfgId)?.portraitRef;
     // Compressed copy → synced companion data; sharp copy (installed app) → on-device store.
     processPortrait(file)
       .then(async ({ compressed, sharp }) => {
@@ -1076,7 +1075,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           await setSharpPortrait(ref, sharp);
         }
         onPlay((p) => updatePlayCompanion(p, cfgId, { portrait: compressed, portraitRef: ref }));
-        if (oldRef && oldRef !== ref) void deleteSharpPortrait(oldRef);
+        // The replaced sharp copy is NOT eagerly deleted (would break undo); the startup GC reclaims it.
       })
       .catch(() => {});
   };

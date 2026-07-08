@@ -11,7 +11,8 @@
  * The maturity ranks + HP formula are sourced from the published Animal Companion
  * rules (Archives of Nethys), authored into COMPANION_FORMULA below.
  */
-import { deriveAc, deriveMaxHp, derivePerception, deriveSave, profBonus, pwl, bestHandwrapsRunes } from './derive';
+import { deriveAc, deriveMaxHp, derivePerception, deriveSave, profBonus, pwl, bestHandwrapsRunes, bestMpHandwraps } from './derive';
+import { mpWeaponRefine, mpImbuedDamageTerms, type MpDamage } from './monsterParts';
 import { abpOn, abpAttack, abpStrikingDice } from './abp';
 import { conditionPenalty } from './conditions';
 import { modeNumberBonus } from './modes';
@@ -477,9 +478,17 @@ export function deriveEidolon(
   // striking adds damage dice OF THE ATTACK'S OWN DIE (die-size rule); potency raises the attack roll.
   // ABP (Automatic Bonus Progression), when on, supplies these instead. (eidolon.json rune-sharing.)
   const hwRunes = bestHandwrapsRunes(character, content);
+  // The summoner's Handwraps of Mighty Blows may be REFINED via the Monster Parts variant instead of
+  // runes (bestHandwrapsRunes excludes MP-mode handwraps). Fold the refinement's attack/striking in the
+  // same way the PC's own unarmed Strike does (deriveUnarmedStrike), else the eidolon silently loses all
+  // potency, striking dice, and imbued damage from MP-refined handwraps.
+  const mpHw = bestMpHandwraps(character, content);
+  const mpRef = mpHw ? mpWeaponRefine(mpHw, level) : null;
+  const mpTerm = (t: MpDamage): string =>
+    `${t.dice && t.die ? `${t.dice}${t.die}` : `${t.flat ?? 0}`}${t.persistent ? ' persistent' : ''} ${t.type}`;
   const strikingTier = hwRunes?.striking === 'major' ? 3 : hwRunes?.striking === 'greater' ? 2 : hwRunes?.striking === 'striking' ? 1 : 0;
-  const strikingDice = abpOn(character) ? abpStrikingDice(level) : strikingTier;
-  const potencyBonus = abpOn(character) ? abpAttack(level) : hwRunes?.potency ?? 0;
+  const strikingDice = Math.max(abpOn(character) ? abpStrikingDice(level) : strikingTier, mpRef?.extraDice ?? 0);
+  const potencyBonus = Math.max(abpOn(character) ? abpAttack(level) : hwRunes?.potency ?? 0, mpRef?.attack ?? 0);
   // Property runes on the shared Handwraps of Mighty Blows also ride on the eidolon's unarmed Strikes
   // (eidolon.json rune-sharing) — flaming → +1d6 fire, greater flaming → +2d10 persistent fire on a
   // crit, etc. Mirror the PC's own unarmed-strike rider math (deriveUnarmedStrike). ABP grants no
@@ -497,9 +506,13 @@ export function deriveEidolon(
     const flat = ab.str + specDamage + conditionPenalty(conditions, atkAbility, 'damage') + modeNumberBonus(modes, { kind: 'damage' });
     const dmgFlat = flat > 0 ? `+${flat}` : flat < 0 ? `${flat}` : '';
     const dice = 1 + strikingDice;
+    // Monster-Parts imbued damage on the shared handwraps folds into each Strike as per-hit "plus"
+    // terms (like the PC's unarmed Strike), resolved against this Strike's own damage type.
+    const mpDmg = mpHw ? mpImbuedDamageTerms(mpHw, dmgType ?? 'slashing', level).map(mpTerm) : [];
+    const plusTerms = [...runeDmg, ...mpDmg];
     const damage =
       `${dice}d${die}${dmgFlat} ${dmgType ?? 'slashing'}` +
-      (runeDmg.length ? ` plus ${runeDmg.join(' plus ')}` : '') +
+      (plusTerms.length ? ` plus ${plusTerms.join(' plus ')}` : '') +
       (runeCritPersistent.length ? ` (plus ${runeCritPersistent.join(', ')} on a crit)` : '');
     return {
       name: rawName?.trim() || fallback,

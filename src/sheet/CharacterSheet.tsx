@@ -156,6 +156,12 @@ export function CharacterSheet({
       // non-fatal
     }
   }, [tab]);
+  // The tab key is device-global, but the desktop tab strip only renders TABS (no mobile-only "Actions").
+  // If a mobile-selected "Actions" is restored at desktop width, no desktop tab would be highlighted — so
+  // fold it back to Main on desktop (the desktop Actions content is already identical to Main).
+  useEffect(() => {
+    if (!isMobile && !TABS.includes(tab)) setTab('Main');
+  }, [isMobile, tab]);
   // Start each tab at the top. Desktop scrolls the window; on mobile the shell is position:fixed and
   // the inner .body element is the scroller — reset both so the switch always lands at the top.
   useEffect(() => {

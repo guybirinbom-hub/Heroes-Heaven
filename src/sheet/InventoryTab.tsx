@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import type { Character, CompanionConfig, ContentDatabase, InventoryItem, Item, SiegeWeaponStat, VehicleStat } from '../rules/types';
 import { useIsMobile } from './useIsMobile';
-import { deriveBulk, containerLoads, effectiveItemBulk } from '../rules/derive';
+import { deriveBulk, containerLoads, effectiveItemBulk, mpActive } from '../rules/derive';
 import { isAttachable, planAttach } from '../rules/attachments';
 import {
   addInventoryItem,
@@ -895,7 +895,10 @@ export function InventoryTab({
               // While dragging a rune/attachment, weapon/armor/shield cards become attach targets;
               // run the planner so only valid hosts light up and the drop knows the exact reason.
               const isHostType = item.itemType === 'weapon' || item.itemType === 'armor' || item.itemType === 'shield';
-              const attachHost = !!onPlay && draggingAttachable && isHostType && inv.instanceId !== dragId;
+              // A Monster-Parts-mode item ignores runes/attachments entirely, so it must NOT be an attach
+              // target — dropping a rune on it would consume the rune for zero effect (the editor already
+              // hides its rune section for the same reason).
+              const attachHost = !!onPlay && draggingAttachable && isHostType && inv.instanceId !== dragId && !mpActive(character, inv);
               const plan = attachHost && draggedItem && draggedInv ? planAttach(draggedItem, draggedInv, item, inv, character.inventory, content) : null;
               return (
                 <ItemCard
