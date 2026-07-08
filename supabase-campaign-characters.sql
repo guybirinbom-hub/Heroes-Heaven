@@ -73,9 +73,10 @@ create policy gce_owner_read on public.gm_character_edits for select to authenti
 drop policy if exists gce_owner_delete on public.gm_character_edits;
 create policy gce_owner_delete on public.gm_character_edits for delete to authenticated using (owner_id = auth.uid());
 
--- Realtime: publish this table's changes so a GM's edit reaches an OPEN player app instantly (not just
--- on their next open/focus). RLS still gates the stream — a player only receives their own rows.
--- Idempotent: only add the table to the realtime publication if it isn't already a member.
+-- Realtime: publish these tables' changes so (a) a GM's edit reaches an OPEN player app instantly, and
+-- (b) party cards refresh live when any member publishes/updates/leaves a character. RLS still gates the
+-- streams — gm_character_edits by owner, campaign_characters by the authenticated-read policy (cc_read).
+-- Idempotent: only add each table to the realtime publication if it isn't already a member.
 do $$
 begin
   if not exists (
@@ -84,13 +85,18 @@ begin
   ) then
     alter publication supabase_realtime add table public.gm_character_edits;
   end if;
+  if not exists (
+    select 1 from pg_publication_tables
+    where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'campaign_characters'
+  ) then
+    alter publication supabase_realtime add table public.campaign_characters;
+  end if;
 end $$;
 
 notify pgrst, 'reload schema';
 
 select 'campaign_characters + gm_character_edits ready (realtime on)' as status,
        (select count(*) from pg_policies where tablename in ('campaign_characters', 'gm_character_edits')) as policy_count,
-       exists (
-         select 1 from pg_publication_tables
-         where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'gm_character_edits'
-       ) as realtime_enabled;
+       (select count(*) from pg_publication_tables
+         where pubname = 'supabase_realtime' and schemaname = 'public'
+           and tablename in ('campaign_characters', 'gm_character_edits')) as realtime_tables;

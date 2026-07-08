@@ -179,3 +179,23 @@ export function subscribeGmEdits(playerId: string, onEdit: () => void): () => vo
     void client.removeChannel(channel);
   };
 }
+
+/** Subscribe (Supabase Realtime) to a campaign's party changes — any member publishing/updating/
+ *  unpublishing a character, or a kick. `onChange` fires so the caller can refetch the party live.
+ *  Needs `campaign_characters` in the supabase_realtime publication (supabase-campaign-characters.sql).
+ *  No-op when signed out / cloud not configured; returns an unsubscribe fn. */
+export function subscribeParty(campaignId: string, onChange: () => void): () => void {
+  if (!supabase || !campaignId) return () => {};
+  const client = supabase;
+  const channel = client
+    .channel(`party:${campaignId}`)
+    .on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: 'campaign_characters', filter: `campaign_id=eq.${campaignId}` },
+      () => onChange(),
+    )
+    .subscribe();
+  return () => {
+    void client.removeChannel(channel);
+  };
+}

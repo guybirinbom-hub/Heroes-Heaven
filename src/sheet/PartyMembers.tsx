@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import type { ContentDatabase } from '../rules/types';
 import type { SavedChar } from '../data/storage';
 import { applyPlayState } from '../rules/play';
-import { fetchParty, fetchMemberSheet, currentUserId, kickFromParty, type PartyMember } from '../data/party';
+import { fetchParty, fetchMemberSheet, currentUserId, kickFromParty, subscribeParty, type PartyMember } from '../data/party';
 import type { PartySummary } from './partySummary';
 import { CharacterSheet } from './CharacterSheet';
 import { GmEditSheet } from './GmEditSheet';
@@ -93,17 +93,24 @@ export function PartyMembers({
   useEffect(() => {
     if (!campaignId) return;
     let cancelled = false;
-    setMembers(null);
-    setError('');
-    fetchParty(campaignId)
-      .then((list) => {
-        if (!cancelled) setMembers(list);
-      })
-      .catch(() => {
-        if (!cancelled) setError("Couldn't load the party. Check your connection, or that the campaign SQL has been run.");
-      });
+    // `showLoading` only on the first load — a live Realtime refresh shouldn't flash the spinner.
+    const refresh = (showLoading: boolean) => {
+      if (showLoading) setMembers(null);
+      setError('');
+      fetchParty(campaignId)
+        .then((list) => {
+          if (!cancelled) setMembers(list);
+        })
+        .catch(() => {
+          if (!cancelled) setError("Couldn't load the party. Check your connection, or that the campaign SQL has been run.");
+        });
+    };
+    refresh(true);
+    // Live: refresh the cards the moment any member publishes/updates/leaves a character.
+    const unsub = subscribeParty(campaignId, () => refresh(false));
     return () => {
       cancelled = true;
+      unsub();
     };
   }, [campaignId, reload]);
 
