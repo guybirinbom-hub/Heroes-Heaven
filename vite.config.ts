@@ -24,7 +24,10 @@ export default defineConfig({
         theme_color: '#14161f',
         background_color: '#14161f',
         display: 'standalone',
-        orientation: 'any',
+        // Portrait, matching the mobile-first UI and the installed APK (AndroidManifest is portrait too).
+        // 'any' made an installed PWA call screen.orientation.lock('any') on launch, which overrode the
+        // phone's own rotation-lock setting and let the app rotate freely — surprising the user.
+        orientation: 'portrait',
         start_url: '/',
         icons: [
           { src: 'logo.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
