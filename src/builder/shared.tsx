@@ -3,7 +3,10 @@ import type { AbilityId, BuildOverrides, Character, CharacterOptions, ChoiceGrou
 import { ABILITIES, SKILLS, PROFICIENCY_RANKS } from '../rules/types';
 import { enabledBookSet, sourceCatalog, NICHE_CATEGORIES, type SourceGroup } from '../rules/sources';
 import { usePrefs } from '../data/prefs';
-import { loadHomebrewSources, loadCampaigns } from '../data/storage';
+import { loadHomebrewSources, loadCampaigns, saveCampaigns } from '../data/storage';
+import { useAuth } from '../data/useAuth';
+import { fetchCampaignByCode, type CampaignMembership } from '../data/campaigns';
+import { confirmDialog } from '../sheet/confirm';
 import {
   type BuildState,
   CUSTOM_BACKGROUND_ID,
@@ -1217,12 +1220,20 @@ function MonsterPartsModeSelect({ build, actions }: Pick<EditorProps, 'build' | 
   );
 }
 
-/** Attach this character to your campaigns — so it shows up in that campaign's party and publishes to
- *  teammates. Lists the campaigns you're a member of (from your synced memberships); hidden when you
- *  aren't in any (local / not-signed-in users never see it). */
+/** Campaigns, in a character's Setup. This is where PLAYERS join a campaign — enter the code your GM
+ *  shared — and where any character is attached to campaigns it's in (so it shows in that party and
+ *  publishes to teammates). Joining offers to start the character from the campaign's default rules.
+ *  Hidden for local / not-signed-in users (no campaigns for them). */
 export function CampaignAttachCard({ build, actions }: EditorProps) {
-  const memberships = loadCampaigns();
-  if (!memberships.length) return null;
+  const auth = useAuth();
+  const [memberships, setMemberships] = useState<CampaignMembership[]>(() => loadCampaigns());
+  const [code, setCode] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+
+  // Local / not signed in and not already in any campaign → nothing to show.
+  if (auth.status !== 'signed-in' && memberships.length === 0) return null;
+
   const attached = new Set(build.campaignIds ?? []);
   const toggle = (id: string) => {
     const next = new Set(attached);
@@ -1230,21 +1241,87 @@ export function CampaignAttachCard({ build, actions }: EditorProps) {
     else next.add(id);
     actions.patch({ campaignIds: [...next] });
   };
+
+  const join = async () => {
+    if (busy) return;
+    setBusy(true);
+    setError('');
+    const res = await fetchCampaignByCode(code);
+    setBusy(false);
+    if (!res.ok) {
+      setError(res.error);
+      return;
+    }
+    const c = res.value;
+    if (!memberships.some((m) => m.id === c.id)) {
+      const next: CampaignMembership[] = [
+        ...memberships,
+        { id: c.id, code: c.code, role: 'player', name: c.name, description: c.description },
+      ];
+      setMemberships(next);
+      saveCampaigns(next);
+    }
+    actions.patch({ campaignIds: [...new Set([...(build.campaignIds ?? []), c.id])] });
+    setCode('');
+    const d = c.defaults;
+    const hasDefaults = !!d && (!!d.variantRules || !!d.enabledSources || !!d.mythicEnabled || !!d.kingmakerEnabled);
+    if (hasDefaults) {
+      const use = await confirmDialog({
+        title: `Use ${c.name}’s default rules?`,
+        message: 'Start this character from the campaign’s default variant rules and source books. You can still change anything afterwards.',
+        confirmLabel: 'Use defaults',
+      });
+      if (use) {
+        actions.patch({
+          variantRules: { ...(d!.variantRules ?? {}) },
+          enabledSources: d!.enabledSources,
+          mythicEnabled: !!d!.mythicEnabled,
+          kingmakerEnabled: !!d!.kingmakerEnabled,
+        });
+      }
+    }
+  };
+
   return (
     <SetupCard icon="ti-users" label="Campaigns">
-      <div className="spr-sub" style={{ marginBottom: 6 }}>
-        Attach this character to a campaign so it appears in that party and your group can see it.
-      </div>
-      <div className="spr-chips">
-        {memberships.map((m) => (
-          <ToggleWithInfo
-            key={m.id}
-            label={m.name}
-            description={m.role === 'gm' ? 'You run this campaign — your character joins its party.' : 'You play in this campaign — your character joins its party.'}
-            on={attached.has(m.id)}
-            onToggle={() => toggle(m.id)}
+      {memberships.length > 0 && (
+        <>
+          <div className="spr-sub" style={{ marginBottom: 6 }}>Attach this character to a campaign so it appears in that party.</div>
+          <div className="spr-chips">
+            {memberships.map((m) => (
+              <ToggleWithInfo
+                key={m.id}
+                label={m.name}
+                description={m.role === 'gm' ? 'You run this campaign — your character joins its party.' : 'You play in this campaign — your character joins its party.'}
+                on={attached.has(m.id)}
+                onToggle={() => toggle(m.id)}
+              />
+            ))}
+          </div>
+        </>
+      )}
+      <div className="cmp-join-row">
+        <span className="spr-sub">Join a campaign — enter the code from your GM:</span>
+        <div className="cmp-join-input">
+          <input
+            className="hb-input"
+            value={code}
+            placeholder="ABC234"
+            maxLength={12}
+            aria-label="Campaign code"
+            onChange={(e) => {
+              setCode(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''));
+              if (error) setError('');
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') void join();
+            }}
           />
-        ))}
+          <button className="btn" disabled={busy || !code.trim()} onClick={() => void join()}>
+            {busy ? 'Joining…' : 'Join'}
+          </button>
+        </div>
+        {error && <p className="login-error" role="alert" style={{ marginTop: 6 }}>{error}</p>}
       </div>
     </SetupCard>
   );

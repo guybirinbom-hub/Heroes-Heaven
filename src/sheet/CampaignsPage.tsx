@@ -9,12 +9,12 @@ import {
   updateCampaign,
   deleteCampaign,
   fetchCampaignByCode,
-  normalizeCode,
   type Campaign,
   type CampaignDefaults,
   type CampaignMembership,
 } from '../data/campaigns';
 import { loadCampaigns, saveCampaigns } from '../data/storage';
+import { PartyMembers, useMemberViewer } from './PartyMembers';
 import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
 import { HeroesHeavenLogo } from './Logo';
@@ -22,7 +22,12 @@ import { confirmDialog } from './confirm';
 import { useBackHandler } from './useEscapeClose';
 import { useIsMobile } from './useIsMobile';
 
-type View = { kind: 'list' } | { kind: 'create' } | { kind: 'edit'; m: CampaignMembership } | { kind: 'created'; c: Campaign } | { kind: 'join' };
+type View =
+  | { kind: 'list' }
+  | { kind: 'create' }
+  | { kind: 'edit'; m: CampaignMembership }
+  | { kind: 'created'; c: Campaign }
+  | { kind: 'detail'; m: CampaignMembership };
 
 /** Build a BuildState carrying just the campaign-default fields, so the Setup cards can edit them. */
 function buildFromDefaults(d?: CampaignDefaults): BuildState {
@@ -50,7 +55,7 @@ function DefaultsEditor({ content, build, setBuild }: { content: ContentDatabase
   return (
     <div className="cmp-defaults">
       <div className="setup-note" style={{ marginBottom: 10 }}>
-        Defaults new characters in this campaign can start from — the same options as a character&rsquo;s Setup page.
+        Default rules new characters in this campaign can start from — the same options as a character&rsquo;s Setup page.
       </div>
       <VariantRulesCard build={build} actions={actions} content={content} />
       <CampaignOptionsCard build={build} actions={actions} content={content} />
@@ -70,11 +75,19 @@ interface CampaignsPageProps {
   onDeleteMode: (id: string) => void;
 }
 
+/** Campaigns page — GM-only management. Lists the campaigns you RUN; open one to edit its settings and
+ *  see the players in it (and view their sheets / kick). Players don't manage campaigns here — they
+ *  JOIN by entering a code in a character's Setup, and reach the party from that character. */
 export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, characters, modes, onSaveMode, onDeleteMode }: CampaignsPageProps) {
   const [memberships, setMemberships] = useState<CampaignMembership[]>(() => loadCampaigns());
   const [view, setView] = useState<View>({ kind: 'list' });
   const isMobile = useIsMobile();
+  const { sheetEl, open } = useMemberViewer(content);
   useBackHandler(view.kind !== 'list', () => setView({ kind: 'list' }));
+
+  if (sheetEl) return sheetEl; // a player's read-only sheet takes over the screen
+
+  const gmCampaigns = memberships.filter((m) => m.role === 'gm');
 
   const persist = (next: CampaignMembership[]) => {
     setMemberships(next);
@@ -82,25 +95,38 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
   };
   const upsertMembership = (m: CampaignMembership) => persist([...memberships.filter((x) => x.id !== m.id), m]);
 
-  const menu = (
-    <PageMenu
-      items={[
-        { label: 'Characters', icon: 'ti-users', onClick: onOpenRoster },
-        { label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew },
-      ]}
-      modes={modes}
-      characters={characters}
-      onSaveMode={onSaveMode}
-      onDeleteMode={onDeleteMode}
-    />
-  );
+  const deleteFrom = async (m: CampaignMembership, after: () => void) => {
+    const ok = await confirmDialog({
+      title: `Delete “${m.name}”?`,
+      message: 'This permanently deletes the campaign for everyone — the party disappears and players can no longer open it. This cannot be undone.',
+      confirmLabel: 'Delete',
+      danger: true,
+    });
+    if (!ok) return;
+    const res = await deleteCampaign(m.id);
+    if (!res.ok) {
+      await confirmDialog({ title: "Couldn't delete", message: res.error, confirmLabel: 'OK' });
+      return;
+    }
+    persist(memberships.filter((x) => x.id !== m.id));
+    after();
+  };
+
+  const title =
+    view.kind === 'list'
+      ? 'Campaigns'
+      : view.kind === 'created'
+        ? 'Campaign created'
+        : view.kind === 'edit'
+          ? 'Edit campaign'
+          : view.kind === 'detail'
+            ? view.m.name || 'Campaign'
+            : 'New campaign';
 
   return (
     <div className="hb-page cmp-page">
       <header className="chrome" data-tauri-drag-region>
         <div className="chrome-brand" data-tauri-drag-region>
-          {/* Sub-views step back to the list; on the list, a back arrow leaves the page (desktop / where
-              there's no hamburger to lean on). On a phone's list view you leave via the hamburger. */}
           {(view.kind !== 'list' || !isMobile) && (
             <button
               className="icon-btn hb-back"
@@ -111,31 +137,32 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
               <i className="ti ti-arrow-left" aria-hidden="true" />
             </button>
           )}
-          <HeroesHeavenLogo className="chrome-logo" />{' '}
-          {view.kind === 'list' ? 'Campaigns' : view.kind === 'join' ? 'Join a campaign' : view.kind === 'created' ? 'Campaign created' : view.kind === 'edit' ? 'Edit campaign' : 'New campaign'}
+          <HeroesHeavenLogo className="chrome-logo" /> {title}
         </div>
         <WindowControls />
-        {menu}
+        <PageMenu
+          items={[
+            { label: 'Characters', icon: 'ti-users', onClick: onOpenRoster },
+            { label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew },
+          ]}
+          modes={modes}
+          characters={characters}
+          onSaveMode={onSaveMode}
+          onDeleteMode={onDeleteMode}
+        />
       </header>
 
       <div className="cmp-body">
         {view.kind === 'list' && (
-          <CampaignList
-            memberships={memberships}
-            onCreate={() => setView({ kind: 'create' })}
-            onJoin={() => setView({ kind: 'join' })}
-            onEdit={(m) => setView({ kind: 'edit', m })}
-            onLeave={async (m) => {
-              const ok = await confirmDialog({ title: `Leave “${m.name}”?`, message: 'It stays on the list until you rejoin with the code.', confirmLabel: 'Leave' });
-              if (ok) persist(memberships.filter((x) => x.id !== m.id));
-            }}
-            onDelete={async (m) => {
-              const ok = await confirmDialog({ title: `Delete “${m.name}”?`, message: 'This permanently deletes the campaign for everyone — players will no longer be able to open it. This cannot be undone.', confirmLabel: 'Delete', danger: true });
-              if (!ok) return;
-              const res = await deleteCampaign(m.id);
-              if (res.ok) persist(memberships.filter((x) => x.id !== m.id));
-              else await confirmDialog({ title: "Couldn't delete", message: res.error, confirmLabel: 'OK' });
-            }}
+          <GmList campaigns={gmCampaigns} onCreate={() => setView({ kind: 'create' })} onOpen={(m) => setView({ kind: 'detail', m })} />
+        )}
+
+        {view.kind === 'detail' && (
+          <CampaignDetail
+            m={view.m}
+            onEdit={() => setView({ kind: 'edit', m: view.m })}
+            onDelete={() => void deleteFrom(view.m, () => setView({ kind: 'list' }))}
+            onViewMember={(charId) => void open(view.m.id, charId)}
           />
         )}
 
@@ -143,28 +170,23 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
           <CampaignForm
             content={content}
             editing={view.kind === 'edit' ? view.m : undefined}
-            onCancel={() => setView({ kind: 'list' })}
+            onCancel={() => setView(view.kind === 'edit' ? { kind: 'detail', m: view.m } : { kind: 'list' })}
             onCreated={(c) => {
               upsertMembership({ id: c.id, code: c.code, role: 'gm', name: c.name, description: c.description });
               setView({ kind: 'created', c });
             }}
             onSaved={(c) => {
-              upsertMembership({ id: c.id, code: c.code, role: 'gm', name: c.name, description: c.description });
-              setView({ kind: 'list' });
+              const m: CampaignMembership = { id: c.id, code: c.code, role: 'gm', name: c.name, description: c.description };
+              upsertMembership(m);
+              setView({ kind: 'detail', m });
             }}
           />
         )}
 
-        {view.kind === 'created' && <CreatedView c={view.c} onDone={() => setView({ kind: 'list' })} />}
-
-        {view.kind === 'join' && (
-          <JoinForm
-            already={new Set(memberships.map((m) => m.id))}
-            onCancel={() => setView({ kind: 'list' })}
-            onJoined={(c, useDefaults) => {
-              upsertMembership({ id: c.id, code: c.code, role: 'player', name: c.name, description: c.description, useDefaults });
-              setView({ kind: 'list' });
-            }}
+        {view.kind === 'created' && (
+          <CreatedView
+            c={view.c}
+            onDone={() => setView({ kind: 'detail', m: { id: view.c.id, code: view.c.code, role: 'gm', name: view.c.name, description: view.c.description } })}
           />
         )}
       </div>
@@ -172,49 +194,68 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
   );
 }
 
-function CampaignList({ memberships, onCreate, onJoin, onEdit, onLeave, onDelete }: {
-  memberships: CampaignMembership[];
-  onCreate: () => void;
-  onJoin: () => void;
-  onEdit: (m: CampaignMembership) => void;
-  onLeave: (m: CampaignMembership) => void;
-  onDelete: (m: CampaignMembership) => void;
-}) {
+function GmList({ campaigns, onCreate, onOpen }: { campaigns: CampaignMembership[]; onCreate: () => void; onOpen: (m: CampaignMembership) => void }) {
   return (
     <div className="cmp-list">
       <p className="cmp-intro">
-        A <strong>campaign</strong> ties your group together. A GM creates one, sets its default rules, and shares the
-        code; players join with that code. You can be in as many as you like.
+        Campaigns you <strong>run</strong>. Create one, set its default rules, and share the code — players join by
+        entering it in a character&rsquo;s <strong>Setup → Campaigns</strong>. Open a campaign to manage it and see the party.
       </p>
-      {memberships.length === 0 ? (
-        <div className="cmp-empty">No campaigns yet.</div>
+      {campaigns.length === 0 ? (
+        <div className="cmp-empty">You don&rsquo;t run any campaigns yet.</div>
       ) : (
-        memberships.map((m) => (
-          <div className="cmp-card" key={m.id}>
+        campaigns.map((m) => (
+          <div
+            className="cmp-card cmp-card-btn"
+            key={m.id}
+            role="button"
+            tabIndex={0}
+            onClick={() => onOpen(m)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onOpen(m);
+              }
+            }}
+          >
             <div className="cmp-card-main">
-              <div className="cmp-card-name">
-                {m.name}
-                <span className={'cmp-role ' + m.role}>{m.role === 'gm' ? 'GM' : 'Player'}</span>
-              </div>
+              <div className="cmp-card-name">{m.name}<span className="cmp-role gm">GM</span></div>
               {m.description && <div className="cmp-card-desc">{m.description}</div>}
               <CodeChip code={m.code} />
             </div>
-            <div className="cmp-card-actions">
-              {m.role === 'gm' ? (
-                <>
-                  <button className="chip" onClick={() => onEdit(m)}><i className="ti ti-pencil" aria-hidden="true" /> Edit</button>
-                  <button className="chip danger" onClick={() => onDelete(m)}><i className="ti ti-trash" aria-hidden="true" /> Delete</button>
-                </>
-              ) : (
-                <button className="chip" onClick={() => onLeave(m)}><i className="ti ti-logout" aria-hidden="true" /> Leave</button>
-              )}
-            </div>
+            <i className="ti ti-chevron-right party-chev" aria-hidden="true" />
           </div>
         ))
       )}
       <div className="cmp-add-row">
         <button className="btn-primary" onClick={onCreate}><i className="ti ti-plus" aria-hidden="true" /> Create a campaign</button>
-        <button className="btn" onClick={onJoin}><i className="ti ti-login" aria-hidden="true" /> Join with a code</button>
+      </div>
+    </div>
+  );
+}
+
+function CampaignDetail({ m, onEdit, onDelete, onViewMember }: {
+  m: CampaignMembership;
+  onEdit: () => void;
+  onDelete: () => void;
+  onViewMember: (charId: string) => void;
+}) {
+  return (
+    <div className="cmp-detail">
+      <div className="cmp-detail-head">
+        {m.description && <p className="cmp-card-desc">{m.description}</p>}
+        <div className="cmp-detail-share">
+          <span className="cmp-label">Share code</span>
+          <CodeChip code={m.code} />
+        </div>
+        <div className="cmp-detail-actions">
+          <button className="chip" onClick={onEdit}><i className="ti ti-settings" aria-hidden="true" /> Settings &amp; defaults</button>
+          <button className="chip danger" onClick={onDelete}><i className="ti ti-trash" aria-hidden="true" /> Delete campaign</button>
+        </div>
+      </div>
+      <div className="cmp-detail-players">
+        <div className="cmp-section-h"><i className="ti ti-users" aria-hidden="true" /> Party</div>
+        <PartyMembers campaignId={m.id} isGm onView={(mem) => onViewMember(mem.charId)} />
       </div>
     </div>
   );
@@ -226,7 +267,8 @@ function CodeChip({ code }: { code: string }) {
     <button
       className="cmp-code"
       title="Copy code"
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         try {
           void navigator.clipboard?.writeText(code);
           setCopied(true);
@@ -255,7 +297,6 @@ function CampaignForm({ content, editing, onCancel, onCreated, onSaved }: {
   const [build, setBuild] = useState<BuildState>(() => buildFromDefaults());
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
-  // When editing, pull the campaign's current defaults so the cards reflect them.
   const [loadedDefaults, setLoadedDefaults] = useState(!editing);
   if (editing && !loadedDefaults) {
     void fetchCampaignByCode(editing.code).then((res) => {
@@ -314,77 +355,8 @@ function CreatedView({ c, onDone }: { c: Campaign; onDone: () => void }) {
       <h2 className="cmp-created-title">“{c.name}” is ready</h2>
       <p className="cmp-created-sub">Share this code with your players so they can join:</p>
       <CodeChip code={c.code} />
-      <p className="cmp-created-hint">Players open <strong>Campaigns → Join with a code</strong> and enter it.</p>
-      <button className="btn-primary" onClick={onDone}>Done</button>
-    </div>
-  );
-}
-
-function JoinForm({ already, onCancel, onJoined }: {
-  already: Set<string>;
-  onCancel: () => void;
-  onJoined: (c: Campaign, useDefaults: boolean) => void;
-}) {
-  const [code, setCode] = useState('');
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState('');
-  const [found, setFound] = useState<Campaign | null>(null);
-
-  const find = async () => {
-    if (busy) return;
-    setBusy(true);
-    setError('');
-    const res = await fetchCampaignByCode(code);
-    setBusy(false);
-    if (!res.ok) {
-      setError(res.error);
-      return;
-    }
-    if (already.has(res.value.id)) {
-      setError("You're already in this campaign.");
-      return;
-    }
-    setFound(res.value);
-  };
-
-  if (found) {
-    return (
-      <div className="cmp-join">
-        <div className="cmp-found">
-          <div className="cmp-card-name">{found.name}</div>
-          {found.description && <div className="cmp-card-desc">{found.description}</div>}
-        </div>
-        <div className="cmp-defaults-ask">
-          <div className="cmp-ask-title">Use this campaign&rsquo;s default setup?</div>
-          <p className="cmp-ask-sub">The GM picked default rules for this campaign. Start your characters from them, or set your own.</p>
-          <div className="cmp-ask-actions">
-            <button className="btn-primary" onClick={() => onJoined(found, true)}>Yes, use the defaults</button>
-            <button className="btn" onClick={() => onJoined(found, false)}>No, I&rsquo;ll set up my own</button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="cmp-join">
-      <label className="cmp-field">
-        <span className="cmp-label">Campaign code</span>
-        <input
-          className="hb-input cmp-code-input"
-          value={code}
-          autoFocus
-          placeholder="ABC234"
-          maxLength={12}
-          onChange={(e) => { setCode(normalizeCode(e.target.value)); if (error) setError(''); }}
-          onKeyDown={(e) => { if (e.key === 'Enter') void find(); }}
-        />
-      </label>
-      {error && <p className="login-error" role="alert">{error}</p>}
-      <div className="cmp-form-actions">
-        <button className="btn-primary" disabled={busy || !code.trim()} onClick={() => void find()}>{busy ? 'Finding…' : 'Find campaign'}</button>
-        <button className="btn" onClick={onCancel} disabled={busy}>Cancel</button>
-      </div>
+      <p className="cmp-created-hint">Players enter it in a character&rsquo;s <strong>Setup → Campaigns</strong>.</p>
+      <button className="btn-primary" onClick={onDone}>Manage campaign</button>
     </div>
   );
 }

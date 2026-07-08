@@ -171,6 +171,69 @@ body {
   padding-top: 16px;
   border-top: var(--app-bw) solid var(--app-border);
 }
+/* GM list: each campaign is a full-width button that opens its detail. */
+.cmp-card-btn {
+  align-items: center;
+  width: 100%;
+  font: inherit;
+  color: var(--app-text);
+  text-align: left;
+  cursor: pointer;
+}
+.cmp-card-btn:hover {
+  border-color: var(--app-accent);
+}
+/* GM campaign detail: settings + share code + the party. */
+.cmp-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.cmp-detail-head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cmp-detail-share {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.cmp-detail-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.cmp-detail-players {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cmp-section-h {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--app-text-dim);
+  padding-top: 8px;
+  border-top: var(--app-bw) solid var(--app-border);
+}
+/* Join-by-code row in a character's Setup → Campaigns card. */
+.cmp-join-row {
+  margin-top: 8px;
+}
+.cmp-join-input {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+.cmp-join-input .hb-input {
+  flex: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
 .cmp-form,
 .cmp-join {
   display: flex;
