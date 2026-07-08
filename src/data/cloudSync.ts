@@ -54,6 +54,13 @@ async function currentUserId(): Promise<string | null> {
   return data.user?.id ?? null;
 }
 
+/** True once a cloud pull has succeeded this session — i.e. the local roster is now authoritative
+ *  (cloud data merged in). Consumers that must not act on a pre-pull roster (e.g. the portrait GC) gate
+ *  on this so they never treat a stale/empty pre-sync roster as the source of truth. */
+export function hasSyncedOnce(): boolean {
+  return pulledOk;
+}
+
 /** Fetch the cloud bundle. Returns null only when the row genuinely doesn't exist yet; THROWS on a
  *  real error so the caller never mistakes a failed fetch for "cloud is empty". */
 async function pullBundle(): Promise<CloudBundle | null> {

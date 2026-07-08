@@ -21,8 +21,9 @@ function mergeCampaigns<T extends { id: string }>(cloud: T[] | undefined, local:
   return [...byId.values()];
 }
 
-/** Union two tombstone maps (newest deleted-at per key), pruning entries past the retention window. */
-function mergeDeleted(a: Record<string, number> | undefined, b: Record<string, number> | undefined, now: number): Record<string, number> {
+/** Union two stamp maps (newest per key), pruning entries past the retention window. Used for both the
+ *  deletion tombstones and the keyed-record revive stamps. */
+function mergeStamps(a: Record<string, number> | undefined, b: Record<string, number> | undefined, now: number): Record<string, number> {
   const out: Record<string, number> = {};
   const cutoff = now - TOMBSTONE_TTL_MS;
   for (const src of [a, b]) {
@@ -34,13 +35,19 @@ function mergeDeleted(a: Record<string, number> | undefined, b: Record<string, n
   return out;
 }
 
-/** Drop keyed records (homebrew/sources/modes) that carry a live tombstone. Keyed records have no
- *  per-item timestamp, so a tombstone always wins — re-creating the id clears the tombstone (storage.ts),
- *  so a genuinely re-created record has none and survives. */
-function dropTombstoned<T>(rec: Record<string, T>, deleted: Record<string, number>, prefix: string): Record<string, T> {
+/** Drop keyed records (homebrew/sources/modes/campaigns) killed by a tombstone. Keyed records have no
+ *  timestamp of their own, so we compare the tombstone against the record's REVIVE stamp: a re-create
+ *  (revived after the delete) survives even when another device still carries the stale tombstone. */
+function dropTombstoned<T>(
+  rec: Record<string, T>,
+  deleted: Record<string, number>,
+  revived: Record<string, number>,
+  prefix: string,
+): Record<string, T> {
   const out: Record<string, T> = {};
   for (const [id, v] of Object.entries(rec)) {
-    if (deleted[prefix + id] === undefined) out[id] = v;
+    const del = deleted[prefix + id];
+    if (del === undefined || del < (revived[prefix + id] ?? 0)) out[id] = v;
   }
   return out;
 }
@@ -107,9 +114,11 @@ export function mergeRoster(
  */
 export function mergeBundles(local: CloudBundle, cloud: CloudBundle | null, now: number = Date.now()): CloudBundle {
   if (!cloud) return local;
-  // Merge (and prune) deletion tombstones first; every union below then drops records a tombstone kills,
-  // so a delete on one device propagates instead of being resurrected from the other's copy.
-  const deleted = mergeDeleted(cloud.deleted, local.deleted, now);
+  // Merge (and prune) deletion tombstones + keyed-record revive stamps first; every union below then
+  // drops records a tombstone kills (unless revived after it), so a delete on one device propagates
+  // instead of being resurrected from the other's copy — and a re-create beats a stale tombstone.
+  const deleted = mergeStamps(cloud.deleted, local.deleted, now);
+  const revived = mergeStamps(cloud.revived, local.revived, now);
   const { roster, charUpdated } = mergeRoster(
     local.roster ?? [],
     local.charUpdated ?? {},
@@ -125,16 +134,19 @@ export function mergeBundles(local: CloudBundle, cloud: CloudBundle | null, now:
   const cloudEdited = cloud.lastEditedAt ?? 0;
   const homebrew = mergeHomebrew(cloud.homebrew, local.homebrew);
   for (const type of HOMEBREW_TYPES) {
-    (homebrew[type] as Record<string, unknown>) = dropTombstoned(homebrew[type] as Record<string, unknown>, deleted, `hb:${type}:`);
+    (homebrew[type] as Record<string, unknown>) = dropTombstoned(homebrew[type] as Record<string, unknown>, deleted, revived, `hb:${type}:`);
   }
   return {
     roster,
     charUpdated,
     deleted,
+    revived,
     homebrew,
-    homebrewSources: dropTombstoned(unionRecords(cloud.homebrewSources, local.homebrewSources), deleted, 'hbsrc:'),
-    modes: dropTombstoned(unionRecords(cloud.modes, local.modes), deleted, 'mode:'),
-    campaigns: mergeCampaigns(cloud.campaigns, local.campaigns).filter((m) => deleted[`camp:${m.id}`] === undefined),
+    homebrewSources: dropTombstoned(unionRecords(cloud.homebrewSources, local.homebrewSources), deleted, revived, 'hbsrc:'),
+    modes: dropTombstoned(unionRecords(cloud.modes, local.modes), deleted, revived, 'mode:'),
+    campaigns: mergeCampaigns(cloud.campaigns, local.campaigns).filter(
+      (m) => deleted[`camp:${m.id}`] === undefined || deleted[`camp:${m.id}`] < (revived[`camp:${m.id}`] ?? 0),
+    ),
     settings: cloudTs > localTs ? cloud.settings : local.settings, // ties → local
     settingsUpdated: Math.max(localTs, cloudTs),
     lastDevice: cloudEdited > localEdited ? cloud.lastDevice : local.lastDevice,

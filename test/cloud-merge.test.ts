@@ -171,19 +171,29 @@ describe('deletion tombstones', () => {
     expect(m.roster.map((c) => c.id)).toEqual(['old']); // no longer suppressed
   });
 
-  it('a re-created record (no tombstone) survives the merge', () => {
-    // The user deleted then re-created the same id; storage clears the tombstone on re-create, so the
-    // merged `deleted` has no key for it → it is kept.
-    const local = bundle({
-      homebrew: { ...emptyHomebrew(), items: { redo: { name: 'redo-local' } } } as CloudBundle['homebrew'],
-      deleted: {},
-    });
+  it('a re-created keyed record beats a stale tombstone another device still holds', () => {
+    const now = 1_000_000_000_000;
+    // Device2 STILL holds the old tombstone locally (deleted at T1); the record was re-created on the
+    // other device (cloud has the item + a revive stamp at T2 > T1, cloud.deleted cleared). It must
+    // survive — a bare local tombstone-clear would not propagate, so the revive stamp is what saves it.
+    const local = bundle({ deleted: { 'mode:m1': now - 1000 }, revived: {} }); // T1 = now-1000
     const cloud = bundle({
-      homebrew: { ...emptyHomebrew(), items: { redo: { name: 'redo-cloud' } } } as CloudBundle['homebrew'],
-      deleted: {},
+      modes: { m1: { id: 'm1' } } as CloudBundle['modes'],
+      revived: { 'mode:m1': now - 500 }, // T2 = now-500 (re-created after the delete)
     });
-    const m = mergeBundles(local, cloud);
-    expect(Object.keys(m.homebrew.items)).toEqual(['redo']);
+    const m = mergeBundles(local, cloud, now);
+    expect(Object.keys(m.modes)).toEqual(['m1']); // revived after the delete → kept
+  });
+
+  it('a tombstone newer than the revive still wins (delete after re-create)', () => {
+    const now = 1_000_000_000_000;
+    const local = bundle({ deleted: { 'mode:m1': now - 100 } }); // deleted at now-100
+    const cloud = bundle({
+      modes: { m1: { id: 'm1' } } as CloudBundle['modes'],
+      revived: { 'mode:m1': now - 900 }, // created earlier at now-900
+    });
+    const m = mergeBundles(local, cloud, now);
+    expect(m.modes).toEqual({}); // delete is newer than the create → dropped
   });
 });
 

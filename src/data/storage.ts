@@ -183,7 +183,7 @@ export function saveHomebrewSource(source: HomebrewSource): void {
   } catch {
     /* non-fatal */
   }
-  clearTombstoneKeys([`hbsrc:${source.id}`]);
+  recordReviveKeys([`hbsrc:${source.id}`]);
   markLocalDataChanged();
 }
 
@@ -247,7 +247,7 @@ export function saveHomebrewEntry<T extends HomebrewType>(type: T, entry: Homebr
   const content = loadHomebrewContent();
   const id = (entry as { id: string }).id;
   content[type][id] = entry;
-  clearTombstoneKeys([`hb:${type}:${id}`]); // (re-)created → survive the merge again
+  recordReviveKeys([`hb:${type}:${id}`]); // (re-)created → beat any older tombstone through the merge
   saveHomebrewContent(content);
 }
 
@@ -289,7 +289,7 @@ export function saveMode(mode: ModeDef): void {
   } catch {
     // non-fatal
   }
-  clearTombstoneKeys([`mode:${mode.id}`]);
+  recordReviveKeys([`mode:${mode.id}`]);
   markLocalDataChanged(); // modes are synced — nudge cloud upload
 }
 
@@ -334,7 +334,7 @@ export function saveCampaigns(list: CampaignMembership[]): void {
     // non-fatal
   }
   if (removed.length) recordTombstoneKeys(removed);
-  clearTombstoneKeys(list.map((m) => `camp:${m.id}`));
+  recordReviveKeys(list.map((m) => `camp:${m.id}`));
   markLocalDataChanged(); // campaign memberships are synced — nudge cloud upload
 }
 
@@ -441,6 +441,7 @@ export function saveSyncMeta(m: SyncMeta): void {
  * the bundle and pruned after a long TTL, by when every device has converged. Keys are namespaced:
  *   char:<id> · hb:<type>:<id> · hbsrc:<id> · mode:<id> · camp:<id> */
 const TOMBSTONES_KEY = 'pf2e-codex.deleted';
+const REVIVED_KEY = 'pf2e-codex.revived';
 const SYNC_OWNER_KEY = 'pf2e-codex.syncOwner';
 /** Retention for a deletion tombstone. Long enough that a device offline for months won't resurrect
  *  deleted data; after this every device has converged so the tombstone is pruned to bound growth. */
@@ -457,6 +458,21 @@ function saveTombstones(map: Record<string, number>): void {
     /* non-fatal */
   }
 }
+/** Per-key "last (re-)created/updated at" for KEYED records (homebrew/sources/modes/campaigns), which
+ *  have no timestamp of their own. It plays the role charUpdated plays for characters: the merge keeps a
+ *  keyed record when its revive time is newer than any tombstone. Synced so a re-create on one device
+ *  beats a stale tombstone another device still holds (a bare local tombstone-clear would NOT propagate). */
+export function loadRevived(): Record<string, number> {
+  const raw = loadJsonRaw(REVIVED_KEY);
+  return raw && typeof raw === 'object' ? (raw as Record<string, number>) : {};
+}
+function saveRevived(map: Record<string, number>): void {
+  try {
+    localStorage.setItem(REVIVED_KEY, JSON.stringify(map));
+  } catch {
+    /* non-fatal */
+  }
+}
 /** Mark synced records as deleted so the cloud merge won't resurrect them from another device. */
 export function recordTombstoneKeys(keys: string[]): void {
   if (!keys.length) return;
@@ -466,19 +482,14 @@ export function recordTombstoneKeys(keys: string[]): void {
   saveTombstones(m);
   markLocalDataChanged();
 }
-/** Clear tombstones when the same id is (re-)created, so the record survives the merge again. */
-export function clearTombstoneKeys(keys: string[]): void {
+/** Stamp keyed records as (re-)created NOW so they beat any older tombstone through the union merge. */
+export function recordReviveKeys(keys: string[]): void {
   if (!keys.length) return;
-  const m = loadTombstones();
-  let changed = false;
-  for (const k of keys) if (k in m) {
-    delete m[k];
-    changed = true;
-  }
-  if (changed) {
-    saveTombstones(m);
-    markLocalDataChanged();
-  }
+  const m = loadRevived();
+  const now = Date.now();
+  for (const k of keys) m[k] = now;
+  saveRevived(m);
+  markLocalDataChanged();
 }
 
 /** The account (auth uid) this device's synced data currently belongs to. Used to keep one account
@@ -510,6 +521,7 @@ export function wipeSyncedLocalData(): void {
     MODES_KEY,
     CAMPAIGNS_KEY,
     TOMBSTONES_KEY,
+    REVIVED_KEY,
     SYNC_META_KEY,
   ]) {
     try {
@@ -530,6 +542,9 @@ export interface CloudBundle {
   charUpdated: Record<string, number>;
   /** Deletion tombstones (id → deleted-at ms) so the union merge doesn't resurrect deleted records. */
   deleted?: Record<string, number>;
+  /** Revive stamps (id → last-created/updated ms) for keyed records, so a re-create beats a stale
+   *  tombstone. Characters use `charUpdated` for this; keyed records (homebrew/modes/campaigns) use this. */
+  revived?: Record<string, number>;
   /** Device settings (customization prefs + appearance) — synced last-write-wins via settingsUpdated. */
   settings?: { prefs?: unknown; appearance?: unknown };
   settingsUpdated?: number;
@@ -549,6 +564,7 @@ export function readCloudBundle(): CloudBundle {
     campaigns: loadCampaigns(),
     charUpdated: loadCharUpdated(),
     deleted: loadTombstones(),
+    revived: loadRevived(),
     settings: { prefs: loadJsonRaw(PREFS_KEY), appearance: loadJsonRaw(APPEARANCE_KEY) },
     settingsUpdated: loadSettingsUpdated(),
     lastDevice: meta.lastDevice,
@@ -584,6 +600,7 @@ export function writeCloudBundle(b: CloudBundle): void {
   }
   saveCharUpdated(b.charUpdated ?? {});
   if (b.deleted) saveTombstones(b.deleted);
+  if (b.revived) saveRevived(b.revived);
   if (b.settings?.prefs !== undefined) {
     try {
       localStorage.setItem(PREFS_KEY, JSON.stringify(b.settings.prefs));

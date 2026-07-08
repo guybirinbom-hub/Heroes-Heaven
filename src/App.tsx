@@ -11,7 +11,7 @@ import { HeroesHeavenLogo } from './sheet/Logo';
 import { loadContent, rebuildContent } from './data';
 import { pickScreen } from './appScreen';
 import { useAuth } from './data/useAuth';
-import { startCloudSync } from './data/cloudSync';
+import { startCloudSync, hasSyncedOnce } from './data/cloudSync';
 import { LoginScreen } from './sheet/LoginScreen';
 import { getLoginSkipped, setLoginSkipped } from './data/device';
 import { collectPortraitRefs, gcSharpPortraits, initPortraitStore } from './data/portraitStore';
@@ -179,19 +179,33 @@ export default function App() {
   // to re-subscribe on every roster change. (Canonical "latest value" ref — safe to write in render.)
   const rosterRef = useRef(roster);
   rosterRef.current = roster;
-  // Startup GC: once the on-device sharp portraits have finished loading, reclaim any not referenced by
-  // a live character (replaced/deleted in a previous session). Deferred to here — instead of eagerly
-  // deleting on replace/delete — so in-session undo can still restore a replaced/deleted sharp copy.
+  // Startup GC: reclaim on-device sharp portraits not referenced by a live character (replaced/deleted
+  // in a previous session). Deferred here — instead of eagerly deleting on replace/delete — so in-session
+  // undo can still restore a sharp copy. CRUCIAL: only run against an AUTHORITATIVE roster. A signed-in
+  // device must wait for its first cloud pull (else a pre-pull / empty / corrupt local roster would nuke
+  // sharp copies the pull is about to restore); a signed-out/local device is authoritative immediately.
+  // We also never GC an empty roster (nothing safe to key off). Poll up to ~30s for that state, else skip.
   useEffect(() => {
     let cancelled = false;
-    void initPortraitStore().then(() => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const attempt = async (tries: number) => {
+      await initPortraitStore();
       if (cancelled) return;
-      void gcSharpPortraits(new Set(rosterRef.current.flatMap((c) => collectPortraitRefs(c))));
-    });
+      const roster = rosterRef.current;
+      const authoritative = auth.status === 'signed-out' || (auth.status === 'signed-in' && hasSyncedOnce());
+      if ((!authoritative || roster.length === 0) && tries < 20) {
+        timer = setTimeout(() => void attempt(tries + 1), 1500);
+        return;
+      }
+      if (!authoritative || roster.length === 0) return; // gave up waiting → don't risk deleting
+      void gcSharpPortraits(new Set(roster.flatMap((c) => collectPortraitRefs(c))));
+    };
+    void attempt(0);
     return () => {
       cancelled = true;
+      if (timer) clearTimeout(timer);
     };
-  }, []);
+  }, [auth.status]);
   // Apply pending GM edits to MY characters — silently. A GM can edit a player's sheet and push it; the
   // player's app swaps in the GM's version. It applies INSTANTLY via a Realtime subscription while the
   // app is open, and the focus/visibility/online/sign-in pull is the fallback for when it was closed or

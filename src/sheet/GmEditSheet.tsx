@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import type { ContentDatabase, Item, ModeDef } from '../rules/types';
 import type { SavedChar } from '../data/storage';
 import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
@@ -39,6 +39,10 @@ export function GmEditSheet({
   const [dirty, setDirty] = useState(false);
   const [editing, setEditing] = useState<BuildState | null>(null);
   const [busy, setBusy] = useState(false);
+  // The published states we already know about — the snapshot we opened, plus whatever we last pushed.
+  // The stale-edit guard warns only when the current published sheet matches NEITHER (i.e. the PLAYER,
+  // not our own earlier push, changed it), so a GM's repeated pushes in one session don't false-alarm.
+  const baselineRef = useRef<SavedChar>(initial);
   // Local content copy so any items/modes the GM authors while editing resolve for this session.
   const [content, setContent] = useState<ContentDatabase>(baseContent);
 
@@ -94,7 +98,11 @@ export function GmEditSheet({
     // opened it, our working copy is based on a stale snapshot. Detect it (re-fetch + compare to the
     // snapshot we opened) and let the GM reopen for the current version instead of overwriting theirs.
     const current = await fetchMemberSheet(campaignId, work.id);
-    if (current && JSON.stringify(current) !== JSON.stringify(initial)) {
+    // Only warn about a PLAYER change: `current` must differ from BOTH the snapshot we opened and our own
+    // last push (our first push re-publishes via the player, so on a later push `current` is our own edit).
+    const cur = current ? JSON.stringify(current) : null;
+    const changedByPlayer = cur !== null && cur !== JSON.stringify(initial) && cur !== JSON.stringify(baselineRef.current);
+    if (changedByPlayer) {
       setBusy(false);
       const overwrite = await confirmDialog({
         title: 'Player changed this character',
@@ -112,6 +120,7 @@ export function GmEditSheet({
       await confirmDialog({ title: 'Couldn’t update', message: res.error, confirmLabel: 'OK' });
       return false;
     }
+    baselineRef.current = work; // our new known-published baseline
     setDirty(false);
     return true;
   };
