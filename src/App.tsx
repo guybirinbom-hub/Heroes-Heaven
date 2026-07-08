@@ -16,7 +16,7 @@ import { LoginScreen } from './sheet/LoginScreen';
 import { getLoginSkipped, setLoginSkipped } from './data/device';
 import { collectPortraitRefs, deleteSharpPortrait } from './data/portraitStore';
 import { computeSummary } from './sheet/partySummary';
-import { publishCharacter, unpublishCharacter, fetchGmEdits, deleteGmEdit } from './data/party';
+import { publishCharacter, unpublishCharacter, fetchGmEdits, deleteGmEdit, currentUserId, subscribeGmEdits } from './data/party';
 import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { isTauri } from './platform';
 import { setupPersist, schedulePersist, persistNow, flushPersist, cancelPersist } from './data/persist';
@@ -175,23 +175,35 @@ export default function App() {
     }, 1500);
     return () => clearTimeout(timer);
   }, [roster, auth.status, content]);
+  // A live ref to the roster so the async GM-edit applier below reads the LATEST roster without having
+  // to re-subscribe on every roster change. (Canonical "latest value" ref — safe to write in render.)
+  const rosterRef = useRef(roster);
+  rosterRef.current = roster;
   // Apply pending GM edits to MY characters — silently. A GM can edit a player's sheet and push it; the
-  // player's app swaps in the GM's version on open / when the window regains focus, then clears the edit.
-  // Runs on sign-in and on focus/visibility (the natural "player returns" boundaries), same as sync.
+  // player's app swaps in the GM's version. It applies INSTANTLY via a Realtime subscription while the
+  // app is open, and the focus/visibility/online/sign-in pull is the fallback for when it was closed or
+  // the socket dropped. Each edit is cleared after applying so it lands exactly once.
   useEffect(() => {
     if (auth.status !== 'signed-in') return;
     let cancelled = false;
     const apply = async () => {
       const edits = await fetchGmEdits();
       if (cancelled || !edits.length) return;
+      // Only edits whose character actually lives in THIS device's roster are applied+cleared here.
+      // Edits for characters this device doesn't have (another of the player's signed-in devices owns
+      // them, or a mid-sync gap) are LEFT in place — deleting them here would rob the owning device of
+      // the edit. Read the latest roster via the ref so this async pull isn't scoped to a stale snapshot.
+      const present = new Set(rosterRef.current.map((c) => c.id));
+      const applicable = edits.filter((e) => present.has(e.charId) && e.sheet && e.sheet.character);
+      if (!applicable.length) return;
       setRoster((r) =>
         r.map((c) => {
-          const edit = edits.find((e) => e.charId === c.id && e.sheet && e.sheet.character);
+          const edit = applicable.find((e) => e.charId === c.id);
           return edit ? { ...edit.sheet, id: c.id, archived: c.archived ?? false } : c;
         }),
       );
-      // Clear every fetched edit (even for characters not on this device) so it applies exactly once.
-      for (const e of edits) void deleteGmEdit(e.campaignId, e.charId);
+      // Clear only what we applied, so each edit lands exactly once on the device that owns the character.
+      for (const e of applicable) void deleteGmEdit(e.campaignId, e.charId);
     };
     void apply();
     const onFocus = () => void apply();
@@ -199,11 +211,21 @@ export default function App() {
       if (document.visibilityState === 'visible') void apply();
     };
     window.addEventListener('focus', onFocus);
+    window.addEventListener('online', onFocus);
     document.addEventListener('visibilitychange', onVisible);
+    // Realtime: apply the moment the GM pushes, without waiting for a focus/open. Subscribes once we
+    // know this user's id; the subscription triggers the same pull-and-apply above (including on each
+    // (re)connect, so nothing pushed during a socket drop is missed).
+    let unsubscribe = () => {};
+    void currentUserId().then((id) => {
+      if (!cancelled && id) unsubscribe = subscribeGmEdits(id, () => void apply());
+    });
     return () => {
       cancelled = true;
       window.removeEventListener('focus', onFocus);
+      window.removeEventListener('online', onFocus);
       document.removeEventListener('visibilitychange', onVisible);
+      unsubscribe();
     };
   }, [auth.status, setRoster]);
   useEffect(() => {

@@ -104,7 +104,7 @@ export function GmEditSheet({
     confirmDialog({
       title: `Update ${work.character.name}?`,
       message:
-        'Push your changes to this player’s character. It applies on their next sync — they won’t be notified.',
+        'Push your changes to this player’s character. If their app is open it updates right away; otherwise the next time they open it. They won’t be notified.',
       confirmLabel: 'Update',
     });
 
@@ -112,7 +112,12 @@ export function GmEditSheet({
     if (busy) return;
     if (await confirmUpdate()) {
       const ok = await pushToPlayer();
-      if (ok) await confirmDialog({ title: 'Updated', message: `${work.character.name} will update on the player’s next sync.`, confirmLabel: 'OK' });
+      if (ok)
+        await confirmDialog({
+          title: 'Sent',
+          message: `Your changes to ${work.character.name} were sent — they apply on the player’s device right away if their app is open, otherwise next time they open it.`,
+          confirmLabel: 'OK',
+        });
     }
   };
 

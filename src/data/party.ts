@@ -154,3 +154,28 @@ export async function deleteGmEdit(campaignId: string, charId: string): Promise<
     /* best-effort */
   }
 }
+
+/** Player: subscribe (Supabase Realtime) to GM edits landing for MY characters, so a GM's change
+ *  applies the INSTANT they push it — as long as this app is open. `onEdit` fires on any insert/update
+ *  of a row this user owns (RLS scopes the stream to their own rows); the caller then pulls + applies.
+ *  DELETE is intentionally not watched, so the player's own post-apply delete doesn't re-trigger.
+ *  Returns an unsubscribe fn; no-op when signed out / cloud not configured. The open/focus pull in the
+ *  app stays as the fallback for when the app was closed while the GM edited. */
+export function subscribeGmEdits(playerId: string, onEdit: () => void): () => void {
+  if (!supabase || !playerId) return () => {};
+  const client = supabase;
+  const filter = `owner_id=eq.${playerId}`;
+  const channel = client
+    .channel(`gm-edits:${playerId}`)
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'gm_character_edits', filter }, () => onEdit())
+    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'gm_character_edits', filter }, () => onEdit())
+    .subscribe((status) => {
+      // Realtime doesn't replay events missed while disconnected, and the initial connect can fail. Fire
+      // a pull on every successful (re)subscribe — the initial connect AND each auto-rejoin after a drop —
+      // so nothing is silently missed while the app stays open and focused. apply() is idempotent.
+      if (status === 'SUBSCRIBED') onEdit();
+    });
+  return () => {
+    void client.removeChannel(channel);
+  };
+}
