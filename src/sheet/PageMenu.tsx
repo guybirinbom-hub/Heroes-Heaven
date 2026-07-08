@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useIsMobile } from './useIsMobile';
 import { useBackHandler } from './useEscapeClose';
 import { SettingsPage } from './SettingsPage';
 import type { ModeDef } from '../rules/types';
@@ -7,10 +6,10 @@ import type { ModeDef } from '../rules/types';
 export type PageMenuItem = { label: string; icon: string; onClick: () => void };
 
 /**
- * Phone-only hamburger menu (top-right) for the standalone pages that aren't the character sheet —
- * the Characters roster and the Homebrew manager. Mirrors the sheet's own menu: a dropdown of nav
- * items plus an always-present Settings entry that opens the full-screen Settings page. Renders
- * nothing on desktop, so the PC chrome is untouched.
+ * Hamburger menu (top-right) for the standalone pages that aren't the character sheet — the Characters
+ * roster, the Homebrew manager, and Campaigns. Mirrors the sheet's own menu: a dropdown of nav items
+ * plus an always-present Settings entry that opens the full-screen Settings page. Shown on every size
+ * (phone + desktop) so navigation is consistent across the app.
  */
 export function PageMenu({
   items,
@@ -25,11 +24,9 @@ export function PageMenu({
   onSaveMode?: (mode: ModeDef) => void;
   onDeleteMode?: (id: string) => void;
 }) {
-  const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
-  useBackHandler(isMobile && open, () => setOpen(false));
-  if (!isMobile) return null;
+  useBackHandler(open, () => setOpen(false));
   return (
     <div className="page-menu">
       <button className="icon-btn" title="Menu" onClick={() => setOpen((o) => !o)}>

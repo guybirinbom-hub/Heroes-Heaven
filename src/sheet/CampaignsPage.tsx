@@ -139,7 +139,6 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
           )}
           <HeroesHeavenLogo className="chrome-logo" /> {title}
         </div>
-        <WindowControls />
         <PageMenu
           items={[
             { label: 'Characters', icon: 'ti-users', onClick: onOpenRoster },
@@ -150,6 +149,7 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
           onSaveMode={onSaveMode}
           onDeleteMode={onDeleteMode}
         />
+        <WindowControls />
       </header>
 
       <div className="cmp-body">

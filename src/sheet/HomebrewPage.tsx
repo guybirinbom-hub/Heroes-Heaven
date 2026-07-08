@@ -323,7 +323,6 @@ export function HomebrewPage({
           <HeroesHeavenLogo className="chrome-logo" />{' '}
           {drilledIn ? (isMpRules ? 'Monster Parts Rules' : selected?.name || 'Homebrew') : 'Homebrew'}
         </div>
-        <WindowControls />
         <PageMenu
           items={[
             ...(onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []),
@@ -334,6 +333,7 @@ export function HomebrewPage({
           onSaveMode={onSaveMode}
           onDeleteMode={onDeleteMode}
         />
+        <WindowControls />
       </header>
       <input ref={fileRef} type="file" accept="application/json,.json" style={{ display: 'none' }} onChange={onImportFile} />
 

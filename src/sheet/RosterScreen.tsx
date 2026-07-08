@@ -142,7 +142,6 @@ export function RosterScreen({
         <div className="chrome-brand" data-tauri-drag-region>
           <HeroesHeavenLogo className="chrome-logo" /> Heroes Heaven
         </div>
-        <WindowControls />
         <PageMenu
           items={[
             ...(onOpenHomebrew ? [{ label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew }] : []),
@@ -153,6 +152,7 @@ export function RosterScreen({
           onSaveMode={onSaveMode}
           onDeleteMode={onDeleteMode}
         />
+        <WindowControls />
       </header>
 
       <div className="roster-body">
