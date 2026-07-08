@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { mergeRoster, mergeBundles, charFingerprint } from '../src/data/cloudMerge';
-import type { CloudBundle, SavedChar } from '../src/data/storage';
+import { TOMBSTONE_TTL_MS, type CloudBundle, type SavedChar } from '../src/data/storage';
 
 // Minimal SavedChar-shaped objects — the merge logic only touches `id` and overall content.
 const ch = (id: string, extra: Record<string, unknown> = {}): SavedChar =>
@@ -113,6 +113,77 @@ describe('mergeBundles', () => {
     expect(m.roster.map((c) => c.id).sort()).toEqual(['a', 'b']);
     expect(m.homebrew.items).toEqual({});
     expect(m.modes).toEqual({});
+  });
+});
+
+describe('deletion tombstones', () => {
+  it('mergeRoster drops a cloud-only character whose deletion is newer than its timestamp', () => {
+    // Cloud still has 'b' (ts 10); this device deleted it at 50 → it must not be resurrected.
+    const { roster } = mergeRoster([ch('a')], { a: 1 }, [ch('a'), ch('b')], { a: 1, b: 10 }, { 'char:b': 50 });
+    expect(roster.map((c) => c.id)).toEqual(['a']);
+  });
+
+  it('mergeRoster keeps a character edited AFTER it was deleted (edit-after-delete wins)', () => {
+    // Another device re-edited 'b' at ts 80, newer than the delete at 50 → survives.
+    const { roster } = mergeRoster([], {}, [ch('b')], { b: 80 }, { 'char:b': 50 });
+    expect(roster.map((c) => c.id)).toEqual(['b']);
+  });
+
+  it('mergeBundles drops deleted homebrew items, sources, modes, and campaigns from the union', () => {
+    const now = 1_000_000_000_000;
+    const t = now - 1000; // recent → within the retention window
+    const local = bundle({
+      homebrew: { ...emptyHomebrew(), items: { keep: { name: 'keep' } } } as CloudBundle['homebrew'],
+      homebrewSources: {},
+      modes: {},
+      campaigns: [{ id: 'c-keep', code: 'K', role: 'gm', name: 'Keep' }] as CloudBundle['campaigns'],
+      // Everything below was deleted on THIS device; the cloud copy must not bring it back.
+      deleted: { 'hb:items:gone': t, 'hbsrc:s-gone': t, 'mode:m-gone': t, 'camp:c-gone': t },
+    });
+    const cloud = bundle({
+      homebrew: { ...emptyHomebrew(), items: { gone: { name: 'gone' } } } as CloudBundle['homebrew'],
+      homebrewSources: { 's-gone': { id: 's-gone', name: 'S' } },
+      modes: { 'm-gone': { id: 'm-gone' } } as CloudBundle['modes'],
+      campaigns: [{ id: 'c-gone', code: 'G', role: 'player', name: 'Gone' }] as CloudBundle['campaigns'],
+    });
+    const m = mergeBundles(local, cloud, now);
+    expect(Object.keys(m.homebrew.items)).toEqual(['keep']);
+    expect(m.homebrewSources).toEqual({});
+    expect(m.modes).toEqual({});
+    expect(m.campaigns!.map((c) => c.id)).toEqual(['c-keep']);
+    expect(m.deleted).toMatchObject({ 'hb:items:gone': t, 'camp:c-gone': t });
+  });
+
+  it('mergeBundles unions tombstones across sides (newest wins) and carries them forward', () => {
+    const now = 1_000_000_000_000;
+    const local = bundle({ deleted: { k: now - 200, only_local: now - 500 } });
+    const cloud = bundle({ deleted: { k: now - 100, only_cloud: now - 700 } });
+    const m = mergeBundles(local, cloud, now);
+    expect(m.deleted).toEqual({ k: now - 100, only_local: now - 500, only_cloud: now - 700 });
+  });
+
+  it('mergeBundles prunes tombstones past the retention window (and stops dropping)', () => {
+    const now = 1_000_000_000_000;
+    const local = bundle({ deleted: { 'char:old': now - TOMBSTONE_TTL_MS - 1 } });
+    const cloud = bundle({ roster: [ch('old')], charUpdated: { old: 1 } });
+    const m = mergeBundles(local, cloud, now);
+    expect(m.deleted).toEqual({}); // expired → pruned
+    expect(m.roster.map((c) => c.id)).toEqual(['old']); // no longer suppressed
+  });
+
+  it('a re-created record (no tombstone) survives the merge', () => {
+    // The user deleted then re-created the same id; storage clears the tombstone on re-create, so the
+    // merged `deleted` has no key for it → it is kept.
+    const local = bundle({
+      homebrew: { ...emptyHomebrew(), items: { redo: { name: 'redo-local' } } } as CloudBundle['homebrew'],
+      deleted: {},
+    });
+    const cloud = bundle({
+      homebrew: { ...emptyHomebrew(), items: { redo: { name: 'redo-cloud' } } } as CloudBundle['homebrew'],
+      deleted: {},
+    });
+    const m = mergeBundles(local, cloud);
+    expect(Object.keys(m.homebrew.items)).toEqual(['redo']);
   });
 });
 

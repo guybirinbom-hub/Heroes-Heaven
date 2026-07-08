@@ -183,11 +183,13 @@ export function saveHomebrewSource(source: HomebrewSource): void {
   } catch {
     /* non-fatal */
   }
+  clearTombstoneKeys([`hbsrc:${source.id}`]);
   markLocalDataChanged();
 }
 
 /** Delete a source and every content entry that belonged to it. */
 export function deleteHomebrewSource(id: string): void {
+  const tombstones: string[] = [`hbsrc:${id}`];
   try {
     const sources = loadHomebrewSources();
     delete sources[id];
@@ -195,13 +197,17 @@ export function deleteHomebrewSource(id: string): void {
     const content = loadHomebrewContent();
     for (const type of HOMEBREW_TYPES) {
       for (const [eid, entry] of Object.entries(content[type])) {
-        if ((entry as { homebrewSourceId?: string }).homebrewSourceId === id) delete content[type][eid];
+        if ((entry as { homebrewSourceId?: string }).homebrewSourceId === id) {
+          delete content[type][eid];
+          tombstones.push(`hb:${type}:${eid}`);
+        }
       }
     }
     localStorage.setItem(HOMEBREW_CONTENT_KEY, JSON.stringify(content));
   } catch {
     /* non-fatal */
   }
+  recordTombstoneKeys(tombstones);
   markLocalDataChanged();
 }
 
@@ -239,7 +245,9 @@ function saveHomebrewContent(content: HomebrewContent): void {
 /** Persist (or update) one homebrew entry of the given type. */
 export function saveHomebrewEntry<T extends HomebrewType>(type: T, entry: HomebrewContent[T][string]): void {
   const content = loadHomebrewContent();
-  content[type][(entry as { id: string }).id] = entry;
+  const id = (entry as { id: string }).id;
+  content[type][id] = entry;
+  clearTombstoneKeys([`hb:${type}:${id}`]); // (re-)created → survive the merge again
   saveHomebrewContent(content);
 }
 
@@ -247,6 +255,7 @@ export function saveHomebrewEntry<T extends HomebrewType>(type: T, entry: Homebr
 export function deleteHomebrewEntry(type: HomebrewType, id: string): void {
   const content = loadHomebrewContent();
   delete content[type][id];
+  recordTombstoneKeys([`hb:${type}:${id}`]); // so the union merge won't resurrect it
   saveHomebrewContent(content);
 }
 
@@ -280,6 +289,7 @@ export function saveMode(mode: ModeDef): void {
   } catch {
     // non-fatal
   }
+  clearTombstoneKeys([`mode:${mode.id}`]);
   markLocalDataChanged(); // modes are synced — nudge cloud upload
 }
 
@@ -292,6 +302,7 @@ export function deleteMode(id: string): void {
   } catch {
     // non-fatal
   }
+  recordTombstoneKeys([`mode:${id}`]);
   markLocalDataChanged();
 }
 
@@ -311,11 +322,19 @@ export function loadCampaigns(): CampaignMembership[] {
 
 /** Replace the whole membership list (add/remove/update happen in the page, then save the result). */
 export function saveCampaigns(list: CampaignMembership[]): void {
+  // Diff against the previous list so a REMOVED membership gets a tombstone (else the union merge would
+  // resurrect it from another device), and a re-added one clears its tombstone.
+  const nextIds = new Set(list.map((m) => m.id));
+  const removed = loadCampaigns()
+    .filter((m) => !nextIds.has(m.id))
+    .map((m) => `camp:${m.id}`);
   try {
     localStorage.setItem(CAMPAIGNS_KEY, JSON.stringify(list));
   } catch {
     // non-fatal
   }
+  if (removed.length) recordTombstoneKeys(removed);
+  clearTombstoneKeys(list.map((m) => `camp:${m.id}`));
   markLocalDataChanged(); // campaign memberships are synced — nudge cloud upload
 }
 
@@ -415,6 +434,92 @@ export function saveSyncMeta(m: SyncMeta): void {
   }
 }
 
+/* ---- Deletion tombstones + account owner --------------------------------------------------------
+ * The cloud merge is a conservative UNION (never drops a record present on only one side), so a plain
+ * delete would be resurrected from the other device's copy. A tombstone records "id X was deleted at
+ * time T"; the merge then drops X unless it was (re-)created/edited after T. Tombstones are synced in
+ * the bundle and pruned after a long TTL, by when every device has converged. Keys are namespaced:
+ *   char:<id> · hb:<type>:<id> · hbsrc:<id> · mode:<id> · camp:<id> */
+const TOMBSTONES_KEY = 'pf2e-codex.deleted';
+const SYNC_OWNER_KEY = 'pf2e-codex.syncOwner';
+/** Retention for a deletion tombstone. Long enough that a device offline for months won't resurrect
+ *  deleted data; after this every device has converged so the tombstone is pruned to bound growth. */
+export const TOMBSTONE_TTL_MS = 180 * 24 * 60 * 60 * 1000;
+
+export function loadTombstones(): Record<string, number> {
+  const raw = loadJsonRaw(TOMBSTONES_KEY);
+  return raw && typeof raw === 'object' ? (raw as Record<string, number>) : {};
+}
+function saveTombstones(map: Record<string, number>): void {
+  try {
+    localStorage.setItem(TOMBSTONES_KEY, JSON.stringify(map));
+  } catch {
+    /* non-fatal */
+  }
+}
+/** Mark synced records as deleted so the cloud merge won't resurrect them from another device. */
+export function recordTombstoneKeys(keys: string[]): void {
+  if (!keys.length) return;
+  const m = loadTombstones();
+  const now = Date.now();
+  for (const k of keys) m[k] = now;
+  saveTombstones(m);
+  markLocalDataChanged();
+}
+/** Clear tombstones when the same id is (re-)created, so the record survives the merge again. */
+export function clearTombstoneKeys(keys: string[]): void {
+  if (!keys.length) return;
+  const m = loadTombstones();
+  let changed = false;
+  for (const k of keys) if (k in m) {
+    delete m[k];
+    changed = true;
+  }
+  if (changed) {
+    saveTombstones(m);
+    markLocalDataChanged();
+  }
+}
+
+/** The account (auth uid) this device's synced data currently belongs to. Used to keep one account
+ *  from inheriting/re-uploading another's data when they sign in on the same browser. */
+export function loadSyncOwner(): string | null {
+  try {
+    return localStorage.getItem(SYNC_OWNER_KEY);
+  } catch {
+    return null;
+  }
+}
+export function saveSyncOwner(uid: string): void {
+  try {
+    localStorage.setItem(SYNC_OWNER_KEY, uid);
+  } catch {
+    /* non-fatal */
+  }
+}
+/** Wipe only the ACCOUNT-scoped synced data (roster, homebrew, modes, campaigns, sync meta, tombstones)
+ *  — NOT device-global prefs/appearance. Used when a different account signs in on this browser. */
+export function wipeSyncedLocalData(): void {
+  for (const k of [
+    ROSTER_KEY,
+    ACTIVE_KEY,
+    CHAR_UPDATED_KEY,
+    HOMEBREW_CONTENT_KEY,
+    HOMEBREW_SOURCES_KEY,
+    LEGACY_HOMEBREW_ITEMS_KEY,
+    MODES_KEY,
+    CAMPAIGNS_KEY,
+    TOMBSTONES_KEY,
+    SYNC_META_KEY,
+  ]) {
+    try {
+      localStorage.removeItem(k);
+    } catch {
+      /* non-fatal */
+    }
+  }
+}
+
 export interface CloudBundle {
   roster: SavedChar[];
   homebrew: HomebrewContent;
@@ -423,6 +528,8 @@ export interface CloudBundle {
   /** Campaign memberships (GM-owned + joined). The campaigns themselves live in the shared table. */
   campaigns?: CampaignMembership[];
   charUpdated: Record<string, number>;
+  /** Deletion tombstones (id → deleted-at ms) so the union merge doesn't resurrect deleted records. */
+  deleted?: Record<string, number>;
   /** Device settings (customization prefs + appearance) — synced last-write-wins via settingsUpdated. */
   settings?: { prefs?: unknown; appearance?: unknown };
   settingsUpdated?: number;
@@ -441,6 +548,7 @@ export function readCloudBundle(): CloudBundle {
     modes: loadModes(),
     campaigns: loadCampaigns(),
     charUpdated: loadCharUpdated(),
+    deleted: loadTombstones(),
     settings: { prefs: loadJsonRaw(PREFS_KEY), appearance: loadJsonRaw(APPEARANCE_KEY) },
     settingsUpdated: loadSettingsUpdated(),
     lastDevice: meta.lastDevice,
@@ -475,6 +583,7 @@ export function writeCloudBundle(b: CloudBundle): void {
     }
   }
   saveCharUpdated(b.charUpdated ?? {});
+  if (b.deleted) saveTombstones(b.deleted);
   if (b.settings?.prefs !== undefined) {
     try {
       localStorage.setItem(PREFS_KEY, JSON.stringify(b.settings.prefs));

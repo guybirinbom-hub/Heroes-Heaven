@@ -17,8 +17,12 @@
 import { supabase } from './supabase';
 import {
   loadCharUpdated,
+  loadSyncOwner,
   readCloudBundle,
+  recordTombstoneKeys,
   saveCharUpdated,
+  saveSyncOwner,
+  wipeSyncedLocalData,
   writeCloudBundle,
   type CloudBundle,
   type SavedChar,
@@ -173,8 +177,10 @@ function noteRosterChange(roster: SavedChar[]): void {
       changed = true;
     }
   }
+  const removed: string[] = [];
   for (const id of Object.keys(ts)) {
     if (!present.has(id)) {
+      removed.push(id);
       delete ts[id];
       changed = true;
     }
@@ -187,6 +193,8 @@ function noteRosterChange(roster: SavedChar[]): void {
     saveCharUpdated(ts);
     dirty = true;
   }
+  // Tombstone deleted characters so the union merge doesn't resurrect them from another device's copy.
+  if (removed.length) recordTombstoneKeys(removed.map((id) => `char:${id}`));
 }
 
 const onVisibility = () => {
@@ -212,6 +220,17 @@ export async function startCloudSync(onRosterReplaced: (roster: SavedChar[]) => 
   pulledOk = false;
   syncing = false;
   dirty = true; // ensure the first pull is followed by a push (uploads local / establishes the row)
+  // Account isolation: if this device's synced data belongs to a DIFFERENT account, do NOT merge/upload
+  // it into the account signing in now — wipe the account-scoped local data and start clean from their
+  // cloud. (The previous account's data stays safe in ITS cloud.) An absent owner = first sign-in on
+  // pre-existing local data, which legitimately belongs to this user, so keep + merge it.
+  const uid = await currentUserId();
+  const prevOwner = loadSyncOwner();
+  if (uid && prevOwner && prevOwner !== uid) {
+    wipeSyncedLocalData();
+    applyRoster([]); // reflect the wipe immediately; the pull below fills in this account's characters
+  }
+  if (uid) saveSyncOwner(uid);
   // Seed fingerprints from local so a failed first sync (offline) still detects later edits and the
   // first successful pull doesn't spuriously look "changed".
   fingerprints = new Map(readCloudBundle().roster.map((c) => [c.id, charFingerprint(c)]));

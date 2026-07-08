@@ -2,7 +2,7 @@
 // tested exhaustively. This is the one piece where a bug could actually lose a character, so it's
 // deliberately conservative: it UNIONs everything and only ever drops a character when the *same*
 // roster id exists on both sides (a real conflict), never when it exists on only one.
-import { HOMEBREW_TYPES, type CloudBundle, type HomebrewContent, type SavedChar } from './storage';
+import { HOMEBREW_TYPES, TOMBSTONE_TTL_MS, type CloudBundle, type HomebrewContent, type SavedChar } from './storage';
 
 /** Content fingerprint of a saved character — used to detect real edits (portrait, play state, etc.). */
 export function charFingerprint(c: SavedChar): string {
@@ -19,6 +19,30 @@ function mergeCampaigns<T extends { id: string }>(cloud: T[] | undefined, local:
   for (const c of cloud ?? []) byId.set(c.id, c);
   for (const c of local ?? []) byId.set(c.id, c);
   return [...byId.values()];
+}
+
+/** Union two tombstone maps (newest deleted-at per key), pruning entries past the retention window. */
+function mergeDeleted(a: Record<string, number> | undefined, b: Record<string, number> | undefined, now: number): Record<string, number> {
+  const out: Record<string, number> = {};
+  const cutoff = now - TOMBSTONE_TTL_MS;
+  for (const src of [a, b]) {
+    if (!src) continue;
+    for (const [k, t] of Object.entries(src)) {
+      if (typeof t === 'number' && t >= cutoff && (out[k] === undefined || t > out[k])) out[k] = t;
+    }
+  }
+  return out;
+}
+
+/** Drop keyed records (homebrew/sources/modes) that carry a live tombstone. Keyed records have no
+ *  per-item timestamp, so a tombstone always wins — re-creating the id clears the tombstone (storage.ts),
+ *  so a genuinely re-created record has none and survives. */
+function dropTombstoned<T>(rec: Record<string, T>, deleted: Record<string, number>, prefix: string): Record<string, T> {
+  const out: Record<string, T> = {};
+  for (const [id, v] of Object.entries(rec)) {
+    if (deleted[prefix + id] === undefined) out[id] = v;
+  }
+  return out;
 }
 
 function mergeHomebrew(cloud: HomebrewContent | undefined, local: HomebrewContent | undefined): HomebrewContent {
@@ -40,6 +64,7 @@ export function mergeRoster(
   localTs: Record<string, number>,
   cloud: SavedChar[],
   cloudTs: Record<string, number>,
+  deleted: Record<string, number> = {},
 ): { roster: SavedChar[]; charUpdated: Record<string, number> } {
   const byId = new Map<string, SavedChar>();
   const ts: Record<string, number> = {};
@@ -61,6 +86,16 @@ export function mergeRoster(
     ts[c.id] = Math.max(lt, ct);
   }
 
+  // Honor deletion tombstones: drop a character whose deletion is at least as new as its surviving
+  // timestamp. A character edited/re-created AFTER it was deleted (newer ts) survives — last write wins.
+  for (const id of [...byId.keys()]) {
+    const del = deleted['char:' + id];
+    if (del !== undefined && del >= (ts[id] ?? 0)) {
+      byId.delete(id);
+      delete ts[id];
+    }
+  }
+
   return { roster: [...byId.values()], charUpdated: ts };
 }
 
@@ -70,22 +105,36 @@ export function mergeRoster(
  * result is a superset — nothing that exists on either side is dropped except a genuinely-older
  * same-id character.
  */
-export function mergeBundles(local: CloudBundle, cloud: CloudBundle | null): CloudBundle {
+export function mergeBundles(local: CloudBundle, cloud: CloudBundle | null, now: number = Date.now()): CloudBundle {
   if (!cloud) return local;
-  const { roster, charUpdated } = mergeRoster(local.roster ?? [], local.charUpdated ?? {}, cloud.roster ?? [], cloud.charUpdated ?? {});
+  // Merge (and prune) deletion tombstones first; every union below then drops records a tombstone kills,
+  // so a delete on one device propagates instead of being resurrected from the other's copy.
+  const deleted = mergeDeleted(cloud.deleted, local.deleted, now);
+  const { roster, charUpdated } = mergeRoster(
+    local.roster ?? [],
+    local.charUpdated ?? {},
+    cloud.roster ?? [],
+    cloud.charUpdated ?? {},
+    deleted,
+  );
   // Settings (prefs/appearance) aren't union-able — take whichever side changed them more recently.
   const localTs = local.settingsUpdated ?? 0;
   const cloudTs = cloud.settingsUpdated ?? 0;
   // "Last synced from …" metadata: keep whichever side wrote the cloud more recently.
   const localEdited = local.lastEditedAt ?? 0;
   const cloudEdited = cloud.lastEditedAt ?? 0;
+  const homebrew = mergeHomebrew(cloud.homebrew, local.homebrew);
+  for (const type of HOMEBREW_TYPES) {
+    (homebrew[type] as Record<string, unknown>) = dropTombstoned(homebrew[type] as Record<string, unknown>, deleted, `hb:${type}:`);
+  }
   return {
     roster,
     charUpdated,
-    homebrew: mergeHomebrew(cloud.homebrew, local.homebrew),
-    homebrewSources: unionRecords(cloud.homebrewSources, local.homebrewSources),
-    modes: unionRecords(cloud.modes, local.modes),
-    campaigns: mergeCampaigns(cloud.campaigns, local.campaigns),
+    deleted,
+    homebrew,
+    homebrewSources: dropTombstoned(unionRecords(cloud.homebrewSources, local.homebrewSources), deleted, 'hbsrc:'),
+    modes: dropTombstoned(unionRecords(cloud.modes, local.modes), deleted, 'mode:'),
+    campaigns: mergeCampaigns(cloud.campaigns, local.campaigns).filter((m) => deleted[`camp:${m.id}`] === undefined),
     settings: cloudTs > localTs ? cloud.settings : local.settings, // ties → local
     settingsUpdated: Math.max(localTs, cloudTs),
     lastDevice: cloudEdited > localEdited ? cloud.lastDevice : local.lastDevice,
