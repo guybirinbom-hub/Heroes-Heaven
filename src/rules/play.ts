@@ -61,6 +61,9 @@ export interface PlayState {
   pinnedDescs?: PinnedDesc[];
   /** Class signature resource values by id (Rage 0/1, Infused Reagents count, …). */
   resources?: Record<string, number>;
+  /** Alchemist: infused alchemical items on hand (itemId → quantity) — Advanced Alchemy daily prep +
+   *  Quick Alchemy. Rendered as a usable list; using one decrements its quantity. */
+  alchemyPrep?: Record<string, number>;
   /** Notes pages; when set, overrides the build's notes (so the sheet can edit them). */
   notes?: NotePage[];
   /** Conditions on each companion, keyed by companion id. */
@@ -271,6 +274,7 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     pinned: play.pinned ?? ch.pinned ?? [],
     pinnedDescs: play.pinnedDescs ?? ch.pinnedDescs ?? [],
     classResources: play.resources ?? ch.classResources ?? {},
+    alchemyPrep: play.alchemyPrep ?? ch.alchemyPrep,
     notes: play.notes ?? ch.notes,
     companionConditions: play.companionConditions ?? ch.companionConditions ?? {},
     companionHp: play.companionHp ?? ch.companionHp ?? {},
@@ -938,6 +942,25 @@ export function toggleMode(play: PlayState, id: string, modeDefs?: Record<string
 export function setActiveStance(play: PlayState, slug: string | null): PlayState {
   if (!slug || play.activeStance === slug) return { ...play, activeStance: undefined };
   return { ...play, activeStance: slug };
+}
+
+/** Alchemist: set the on-hand quantity of an infused item (0 removes it). Used by the Advanced Alchemy
+ *  prep list (+/−, use) and Quick Alchemy. */
+export function setAlchemyItem(play: PlayState, itemId: string, qty: number): PlayState {
+  const prep = { ...(play.alchemyPrep ?? {}) };
+  if (qty <= 0) delete prep[itemId];
+  else prep[itemId] = Math.round(qty);
+  return { ...play, alchemyPrep: prep };
+}
+
+/** Alchemist Quick Alchemy: spend one Versatile Vial to make an infused item on the fly. No-op at 0
+ *  vials. (The daily loadout is set via Advanced Alchemy without spending vials.) */
+export function quickAlchemy(play: PlayState, itemId: string, currentVials: number, maxVials: number): PlayState {
+  if (currentVials < 1) return play;
+  const spent = setResource(play, 'versatile-vials', currentVials - 1, maxVials);
+  const prep = { ...(spent.alchemyPrep ?? {}) };
+  prep[itemId] = (prep[itemId] ?? 0) + 1;
+  return { ...spent, alchemyPrep: prep };
 }
 
 /** Set a class-resource counter to a value, clamped to [0, max]. */

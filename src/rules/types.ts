@@ -1394,6 +1394,8 @@ export interface Character {
   /** The slug of the single active stance (exclusive — one at a time); overlaid from play-state. Its
    *  StanceDef (ContentDatabase.stances) injects a Strike + AC/dex-cap/speed changes in derive. */
   activeStance?: string;
+  /** Alchemist: infused items made today (itemId → qty on hand); overlaid from play-state. */
+  alchemyPrep?: Record<string, number>;
 
   // --- choices ---
   languages: string[];

@@ -2122,6 +2122,113 @@ body {
   opacity: 0.8;
   line-height: 1.4;
 }
+/* Alchemist play panel: daily infused items ("made today") + Quick Alchemy. */
+.alchemy-panel {
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--app-border, #2a2e3d);
+  border-radius: 10px;
+  background: var(--app-panel-2, rgba(255, 255, 255, 0.03));
+}
+.alchemy-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.alchemy-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+.alchemy-meta {
+  font-size: 12px;
+  opacity: 0.8;
+}
+.alchemy-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.alchemy-list {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.alchemy-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+.alchemy-item-name {
+  flex: 1;
+}
+.alchemy-qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.alchemy-qty button {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1px solid var(--app-border, #2a2e3d);
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+.alchemy-use {
+  border: 1px solid var(--app-accent);
+  color: var(--app-accent);
+  background: none;
+  border-radius: 8px;
+  padding: 2px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.alchemy-picker {
+  max-width: 460px;
+  width: 92vw;
+}
+.alchemy-cap-note {
+  font-size: 12px;
+  color: var(--app-warn, #e0a63a);
+  margin: 4px 0;
+}
+.alchemy-pick-list {
+  margin-top: 8px;
+  max-height: 50vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.alchemy-pick {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border: 1px solid var(--app-border, #2a2e3d);
+  border-radius: 8px;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.alchemy-pick:hover {
+  border-color: var(--app-accent);
+}
+.alchemy-pick-lvl {
+  font-size: 11px;
+  opacity: 0.65;
+  flex: none;
+}
 .strikes {
   display: flex;
   flex-direction: column;

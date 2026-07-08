@@ -13,6 +13,7 @@ import {
   type Strike,
 } from '../rules/derive';
 import { togglePin, togglePinnedDesc, toggleTactic, setActiveStance, descId, type PlayUpdater } from '../rules/play';
+import { AlchemyPanel } from './AlchemyPanel';
 import { critSpec } from '../rules/critSpec';
 import { ACTIVITIES, type ActivityDef } from '../rules/actions';
 import { traitDesc } from '../rules/glossary';
@@ -672,6 +673,8 @@ export function MainTab({
                 )}
               </div>
             )}
+
+            {character.classId === 'alchemist' && <AlchemyPanel character={character} content={content} onPlay={onPlay} />}
 
             {subEff === 'strikes' ? (
               <div className="strikes">
