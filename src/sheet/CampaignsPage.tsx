@@ -19,8 +19,7 @@ import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
 import { HeroesHeavenLogo } from './Logo';
 import { confirmDialog } from './confirm';
-import { useBackHandler } from './useEscapeClose';
-import { useIsMobile } from './useIsMobile';
+import { useBackHandler, useEscapeClose } from './useEscapeClose';
 
 type View =
   | { kind: 'list' }
@@ -81,8 +80,10 @@ interface CampaignsPageProps {
 export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, characters, modes, onSaveMode, onDeleteMode }: CampaignsPageProps) {
   const [memberships, setMemberships] = useState<CampaignMembership[]>(() => loadCampaigns());
   const [view, setView] = useState<View>({ kind: 'list' });
-  const isMobile = useIsMobile();
   const { sheetEl, open } = useMemberViewer(content);
+  // The hamburger is the navigation — no top-level back arrow. Escape / Android-back close the page
+  // (list view) or step back to the list (sub-views), via the shared dismiss stack.
+  useEscapeClose(onClose);
   useBackHandler(view.kind !== 'list', () => setView({ kind: 'list' }));
 
   if (sheetEl) return sheetEl; // a player's read-only sheet takes over the screen
@@ -127,12 +128,14 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
     <div className="hb-page cmp-page">
       <header className="chrome" data-tauri-drag-region>
         <div className="chrome-brand" data-tauri-drag-region>
-          {(view.kind !== 'list' || !isMobile) && (
+          {/* Back only inside a sub-view (→ campaigns list). The list itself has no back arrow — leave via
+              the hamburger (Escape / Android-back also close it). */}
+          {view.kind !== 'list' && (
             <button
               className="icon-btn hb-back"
-              onClick={view.kind !== 'list' ? () => setView({ kind: 'list' }) : onClose}
+              onClick={() => setView({ kind: 'list' })}
               title="Back"
-              aria-label={view.kind !== 'list' ? 'Back to campaigns' : 'Back'}
+              aria-label="Back to campaigns"
             >
               <i className="ti ti-arrow-left" aria-hidden="true" />
             </button>

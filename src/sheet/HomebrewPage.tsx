@@ -307,15 +307,15 @@ export function HomebrewPage({
     <div className="hb-page">
       <header className="chrome" data-tauri-drag-region>
         <div className="chrome-brand" data-tauri-drag-region>
-          {/* Homebrew is its own top-level page (reached via the hamburger) — no back arrow at the top
-              level. Keep it only to step back OUT of a drilled-in source (mobile), and on desktop
-              (which has no hamburger) so there's still a way to leave. */}
-          {(drilledIn || !isMobile) && (
+          {/* No top-level back arrow — the hamburger is the navigation (Escape / Android-back also close
+              the page via useEscapeClose). The arrow only appears to step back OUT of a drilled-in
+              source on a phone. */}
+          {drilledIn && (
             <button
               className="icon-btn hb-back"
-              onClick={drilledIn ? () => setMobileOpen(false) : onClose}
+              onClick={() => setMobileOpen(false)}
               title="Back"
-              aria-label={drilledIn ? 'Back to sources' : 'Back to character'}
+              aria-label="Back to sources"
             >
               <i className="ti ti-arrow-left" aria-hidden="true" />
             </button>
