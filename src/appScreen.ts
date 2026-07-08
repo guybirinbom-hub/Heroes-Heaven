@@ -3,7 +3,7 @@
 // creating the FIRST character on an empty roster (a fresh phone install) hung on "Loading game
 // content…" forever, because the loading gate required a `character` the builder never has yet.
 
-export type Screen = 'roster' | 'loading' | 'builder' | 'homebrew' | 'sheet';
+export type Screen = 'roster' | 'loading' | 'builder' | 'homebrew' | 'campaigns' | 'sheet';
 
 export interface ScreenInputs {
   /** 'roster' | 'builder' | 'homebrew' | 'sheet' — the mode after empty-roster coercion. */
@@ -16,12 +16,15 @@ export interface ScreenInputs {
 
 export function pickScreen({ effectiveMode, hasContent, hasCharacter }: ScreenInputs): Screen {
   if (effectiveMode === 'roster') return 'roster';
-  // Content-dependent screens wait behind a lightweight shell until core.json is ready. The BUILDER
-  // and HOMEBREW manager need ONLY content — neither requires an active character (you reach Homebrew
-  // from the roster's menu on a fresh phone that has no characters yet, and a brand-new character has
-  // no `character` in the builder) — so they must not be gated on `hasCharacter`. Only the SHEET does.
-  if (!hasContent || (effectiveMode !== 'builder' && effectiveMode !== 'homebrew' && !hasCharacter)) return 'loading';
+  // Content-dependent screens wait behind a lightweight shell until core.json is ready. The BUILDER,
+  // HOMEBREW manager, and CAMPAIGNS page need ONLY content — none requires an active character (you
+  // reach them from the roster's menu on a fresh phone that has no characters yet, and a brand-new
+  // character has no `character` in the builder) — so they must not be gated on `hasCharacter`. Only
+  // the SHEET does.
+  const characterless = effectiveMode === 'builder' || effectiveMode === 'homebrew' || effectiveMode === 'campaigns';
+  if (!hasContent || (!characterless && !hasCharacter)) return 'loading';
   if (effectiveMode === 'builder') return 'builder';
   if (effectiveMode === 'homebrew') return 'homebrew';
+  if (effectiveMode === 'campaigns') return 'campaigns';
   return 'sheet';
 }

@@ -189,6 +189,7 @@ export function HomebrewPage({
   onChanged,
   onClose,
   onOpenRoster,
+  onOpenCampaigns,
   onSaveMode,
   onDeleteMode,
   characters,
@@ -198,6 +199,8 @@ export function HomebrewPage({
   onChanged: () => void;
   onClose: () => void;
   onOpenRoster?: () => void;
+  /** Provided ONLY when signed in — absent hides the Campaigns menu item. */
+  onOpenCampaigns?: () => void;
   onSaveMode?: (mode: ModeDef) => void;
   onDeleteMode?: (id: string) => void;
   characters?: { id: string; name: string }[];
@@ -322,7 +325,10 @@ export function HomebrewPage({
         </div>
         <WindowControls />
         <PageMenu
-          items={onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []}
+          items={[
+            ...(onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []),
+            ...(onOpenCampaigns ? [{ label: 'Campaigns', icon: 'ti-flag', onClick: onOpenCampaigns }] : []),
+          ]}
           modes={content.modes}
           characters={characters}
           onSaveMode={onSaveMode}

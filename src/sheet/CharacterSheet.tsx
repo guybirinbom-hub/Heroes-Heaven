@@ -85,6 +85,7 @@ export function CharacterSheet({
   onSaveMode,
   onDeleteMode,
   onOpenHomebrew,
+  onOpenCampaigns,
   charKey,
   characters,
   build,
@@ -105,6 +106,8 @@ export function CharacterSheet({
   onEdit?: () => void;
   /** Navigate to the full-screen Homebrew page. */
   onOpenHomebrew?: () => void;
+  /** Navigate to the Campaigns page. Provided ONLY when signed in — absent hides the menu item. */
+  onOpenCampaigns?: () => void;
 }) {
   const [tab, setTab] = useState(initialTab);
   const bodyRef = useRef<HTMLDivElement>(null);
@@ -339,6 +342,18 @@ export function CharacterSheet({
               >
                 <i className="ti ti-flask" aria-hidden="true" /> Homebrew
               </button>
+              {onOpenCampaigns && (
+                <button
+                  className="topmenu-item"
+                  role="menuitem"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    onOpenCampaigns();
+                  }}
+                >
+                  <i className="ti ti-flag" aria-hidden="true" /> Campaigns
+                </button>
+              )}
               {onOpenRoster && (
                 <button
                   className="topmenu-item"

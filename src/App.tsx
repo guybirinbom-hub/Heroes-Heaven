@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CharacterSheet } from './sheet/CharacterSheet';
 import { RosterScreen } from './sheet/RosterScreen';
 import { HomebrewPage } from './sheet/HomebrewPage';
+import { CampaignsPage } from './sheet/CampaignsPage';
 import { Builder } from './builder/Builder';
 import { ErrorBoundary } from './sheet/ErrorBoundary';
 import { UpdateNotice } from './sheet/UpdateNotice';
@@ -61,7 +62,7 @@ export default function App() {
   // heavy content database (public/core.json) loads in the background. Once content arrives we
   // continue to the last-active sheet — the app's usual landing screen — unless the user already
   // started interacting with the roster (then yanking them away would be jarring).
-  const [mode, setMode] = useState<'sheet' | 'builder' | 'roster' | 'homebrew'>('roster');
+  const [mode, setMode] = useState<'sheet' | 'builder' | 'roster' | 'homebrew' | 'campaigns'>('roster');
   const autoOpenSheet = useRef(true);
   // The build being edited: a BuildState (edit existing) or null (creating new).
   const [editing, setEditing] = useState<{ id: string; build: BuildState } | null>(null);
@@ -268,9 +269,15 @@ export default function App() {
 
   // With an EMPTY roster (fresh install, or the user deleted their last character) there's no active
   // character. The SHEET can't render without one, so fall back to the roster's empty state — EXCEPT
-  // for the builder (mid-create) and Homebrew, which are character-less and reachable from the roster
-  // menu (a fresh phone opening Homebrew must not snap back to the roster).
-  const effectiveMode = active ? mode : mode === 'builder' || mode === 'homebrew' ? mode : 'roster';
+  // for the builder (mid-create), Homebrew, and Campaigns, which are character-less and reachable from
+  // the roster menu (a fresh phone opening one of them must not snap back to the roster).
+  const effectiveMode =
+    active ? mode : mode === 'builder' || mode === 'homebrew' || mode === 'campaigns' ? mode : 'roster';
+  // Campaigns are a cloud feature — only offered when signed in. Local / not-signed-in users don't see
+  // the menu item at all (a fully-local experience stays available by simply not signing in). The
+  // DEV-only skip-login bypass can reach it too for local testing (`devBypass` is always false in the
+  // production build, so this never loosens the real gate).
+  const onOpenCampaigns = auth.status === 'signed-in' || devBypass ? () => setMode('campaigns') : undefined;
 
   // Update the active character's in-play runtime state (seeding from its built
   // starting values the first time it's touched), then persist via the roster.
@@ -416,6 +423,7 @@ export default function App() {
         onArchive={(id, archived) => setRoster((r) => r.map((c) => (c.id === id ? { ...c, archived } : c)))}
         onDelete={deleteChar}
         onOpenHomebrew={() => setMode('homebrew')}
+        onOpenCampaigns={onOpenCampaigns}
         onSaveMode={saveModeDef}
         onDeleteMode={removeModeDef}
       />
@@ -478,9 +486,23 @@ export default function App() {
         onChanged={onHomebrewChanged}
         onClose={() => setMode('sheet')}
         onOpenRoster={() => setMode('roster')}
+        onOpenCampaigns={onOpenCampaigns}
         onSaveMode={saveModeDef}
         onDeleteMode={removeModeDef}
         characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
+      />
+    );
+  } else if (which === 'campaigns') {
+    screen = (
+      <CampaignsPage
+        content={readyContent}
+        onClose={() => setMode('sheet')}
+        onOpenRoster={() => setMode('roster')}
+        onOpenHomebrew={() => setMode('homebrew')}
+        characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
+        modes={readyContent.modes}
+        onSaveMode={saveModeDef}
+        onDeleteMode={removeModeDef}
       />
     );
   } else {
@@ -498,6 +520,7 @@ export default function App() {
         onSaveMode={saveModeDef}
         onDeleteMode={removeModeDef}
         onOpenHomebrew={() => setMode('homebrew')}
+        onOpenCampaigns={onOpenCampaigns}
         onRest={() =>
           updatePlay((p) =>
             rest(p, {

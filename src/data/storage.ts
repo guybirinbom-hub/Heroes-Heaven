@@ -21,6 +21,7 @@ import type {
 } from '../rules/types';
 import { normalizeCharacter, normalizePlay } from '../rules/normalize';
 import { loadSettingsUpdated, markLocalDataChanged, saveSettingsUpdated } from './syncBus';
+import type { CampaignMembership } from './campaigns';
 
 export interface SavedChar {
   /** Unique roster id (distinct from character.id, which can collide on name). */
@@ -294,6 +295,30 @@ export function deleteMode(id: string): void {
   markLocalDataChanged();
 }
 
+const CAMPAIGNS_KEY = 'pf2e-codex.campaigns';
+
+/** This user's campaign memberships (GM-owned + joined). Synced with the bundle; the campaigns
+ *  themselves live in the shared Supabase table (data/campaigns.ts). */
+export function loadCampaigns(): CampaignMembership[] {
+  try {
+    const raw = localStorage.getItem(CAMPAIGNS_KEY);
+    const parsed = raw ? JSON.parse(raw) : null;
+    return Array.isArray(parsed) ? (parsed as CampaignMembership[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+/** Replace the whole membership list (add/remove/update happen in the page, then save the result). */
+export function saveCampaigns(list: CampaignMembership[]): void {
+  try {
+    localStorage.setItem(CAMPAIGNS_KEY, JSON.stringify(list));
+  } catch {
+    // non-fatal
+  }
+  markLocalDataChanged(); // campaign memberships are synced — nudge cloud upload
+}
+
 /** Permanently erase ALL of this app's locally-stored data: every saved character, homebrew item,
  *  custom mode, theme/zoom preference, and any other setting. The app owns its storage origin
  *  (a dedicated Tauri webview, or its own dev-server port), so clearing localStorage wipes only
@@ -395,6 +420,8 @@ export interface CloudBundle {
   homebrew: HomebrewContent;
   homebrewSources: Record<string, HomebrewSource>;
   modes: Record<string, ModeDef>;
+  /** Campaign memberships (GM-owned + joined). The campaigns themselves live in the shared table. */
+  campaigns?: CampaignMembership[];
   charUpdated: Record<string, number>;
   /** Device settings (customization prefs + appearance) — synced last-write-wins via settingsUpdated. */
   settings?: { prefs?: unknown; appearance?: unknown };
@@ -412,6 +439,7 @@ export function readCloudBundle(): CloudBundle {
     homebrew: loadHomebrewContent(),
     homebrewSources: loadHomebrewSources(),
     modes: loadModes(),
+    campaigns: loadCampaigns(),
     charUpdated: loadCharUpdated(),
     settings: { prefs: loadJsonRaw(PREFS_KEY), appearance: loadJsonRaw(APPEARANCE_KEY) },
     settingsUpdated: loadSettingsUpdated(),
@@ -438,6 +466,13 @@ export function writeCloudBundle(b: CloudBundle): void {
     localStorage.setItem(MODES_KEY, JSON.stringify(b.modes ?? {}));
   } catch {
     /* non-fatal */
+  }
+  if (b.campaigns) {
+    try {
+      localStorage.setItem(CAMPAIGNS_KEY, JSON.stringify(b.campaigns));
+    } catch {
+      /* non-fatal */
+    }
   }
   saveCharUpdated(b.charUpdated ?? {});
   if (b.settings?.prefs !== undefined) {

@@ -59,6 +59,7 @@ export function RosterScreen({
   onArchive,
   onDelete,
   onOpenHomebrew,
+  onOpenCampaigns,
   onSaveMode,
   onDeleteMode,
 }: {
@@ -72,6 +73,8 @@ export function RosterScreen({
   onArchive: (id: string, archived: boolean) => void;
   onDelete: (id: string) => void;
   onOpenHomebrew?: () => void;
+  /** Provided ONLY when signed in — absent hides the Campaigns menu item. */
+  onOpenCampaigns?: () => void;
   onSaveMode?: (mode: ModeDef) => void;
   onDeleteMode?: (id: string) => void;
 }) {
@@ -141,7 +144,10 @@ export function RosterScreen({
         </div>
         <WindowControls />
         <PageMenu
-          items={onOpenHomebrew ? [{ label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew }] : []}
+          items={[
+            ...(onOpenHomebrew ? [{ label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew }] : []),
+            ...(onOpenCampaigns ? [{ label: 'Campaigns', icon: 'ti-flag', onClick: onOpenCampaigns }] : []),
+          ]}
           modes={content?.modes}
           characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
           onSaveMode={onSaveMode}

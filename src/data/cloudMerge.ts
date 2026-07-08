@@ -13,6 +13,14 @@ function unionRecords<T>(cloud: Record<string, T> | undefined, local: Record<str
   return { ...(cloud ?? {}), ...(local ?? {}) };
 }
 
+/** Union campaign memberships by id (local wins on conflict — e.g. a just-updated defaults answer). */
+function mergeCampaigns<T extends { id: string }>(cloud: T[] | undefined, local: T[] | undefined): T[] {
+  const byId = new Map<string, T>();
+  for (const c of cloud ?? []) byId.set(c.id, c);
+  for (const c of local ?? []) byId.set(c.id, c);
+  return [...byId.values()];
+}
+
 function mergeHomebrew(cloud: HomebrewContent | undefined, local: HomebrewContent | undefined): HomebrewContent {
   const out = {} as HomebrewContent;
   for (const t of HOMEBREW_TYPES) {
@@ -77,6 +85,7 @@ export function mergeBundles(local: CloudBundle, cloud: CloudBundle | null): Clo
     homebrew: mergeHomebrew(cloud.homebrew, local.homebrew),
     homebrewSources: unionRecords(cloud.homebrewSources, local.homebrewSources),
     modes: unionRecords(cloud.modes, local.modes),
+    campaigns: mergeCampaigns(cloud.campaigns, local.campaigns),
     settings: cloudTs > localTs ? cloud.settings : local.settings, // ties → local
     settingsUpdated: Math.max(localTs, cloudTs),
     lastDevice: cloudEdited > localEdited ? cloud.lastDevice : local.lastDevice,

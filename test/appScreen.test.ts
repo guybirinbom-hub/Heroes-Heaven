@@ -28,10 +28,15 @@ describe('pickScreen', () => {
     expect(pickScreen({ effectiveMode: 'sheet', hasContent: true, hasCharacter: false })).toBe('loading');
   });
 
-  // Homebrew is reachable from the roster's menu on a fresh phone with no characters yet — it needs
-  // content but NOT a character, so it must open rather than hang on the loading shell.
+  // Homebrew and Campaigns are reachable from the roster's menu on a fresh phone with no characters
+  // yet — they need content but NOT a character, so they must open rather than hang on loading.
   it('opens homebrew even with no active character (fresh-phone / roster-menu path)', () => {
     expect(pickScreen({ effectiveMode: 'homebrew', hasContent: true, hasCharacter: false })).toBe('homebrew');
+  });
+
+  it('opens campaigns even with no active character; waits for content', () => {
+    expect(pickScreen({ effectiveMode: 'campaigns', hasContent: true, hasCharacter: false })).toBe('campaigns');
+    expect(pickScreen({ effectiveMode: 'campaigns', hasContent: false, hasCharacter: false })).toBe('loading');
   });
 
   it('renders sheet and homebrew once content and character are both present', () => {
