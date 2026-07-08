@@ -1,0 +1,14 @@
+name = "heroes-heaven-keepalive"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# Daily at 06:00 UTC. Any daily time works — it just needs to run before the ~7-day idle window closes.
+[triggers]
+crons = ["0 6 * * *"]
+
+# Set the two values below as Worker variables (dashboard: Settings → Variables, or `wrangler secret put`).
+# The anon/publishable key is public-safe (it already ships in the web bundle), so a plain [vars] entry is
+# fine; use a secret if you prefer. Do NOT put the service_role key here.
+# [vars]
+# SUPABASE_URL = "https://<your-project>.supabase.co"
+# SUPABASE_ANON_KEY = "<your-anon-publishable-key>"
