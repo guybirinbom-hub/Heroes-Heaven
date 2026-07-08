@@ -225,7 +225,12 @@ export function CharacterSheet({
 
   return (
     <PinContext.Provider value={pinApi}>
-    <div className="ws-app">
+    <div className={'ws-app' + (readOnly ? ' ws-readonly' : '')}>
+      {readOnly && (
+        <div className="ro-frame-tab">
+          <i className="ti ti-eye" aria-hidden="true" /> Viewing {character.name} · read-only
+        </div>
+      )}
       <header className="chrome" data-tauri-drag-region>
         <div className="chrome-brand" data-tauri-drag-region>
           <HeroesHeavenLogo className="chrome-logo" /> Heroes Heaven
