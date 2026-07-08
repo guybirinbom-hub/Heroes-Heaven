@@ -5,6 +5,7 @@
 import { supabase } from './supabase';
 import type { PartySummary } from '../sheet/partySummary';
 import type { Character } from '../rules/types';
+import type { CampaignResult } from './campaigns';
 
 export interface PartyMember {
   ownerId: string;
@@ -47,6 +48,19 @@ export async function unpublishCharacter(campaignId: string, charId: string): Pr
   } catch {
     /* best-effort */
   }
+}
+
+/** GM only: remove a member from the campaign — ban them (so they can't re-publish) and drop their
+ *  published characters. Requires the caller to own the campaign (enforced by RLS). */
+export async function kickFromParty(campaignId: string, memberOwnerId: string): Promise<CampaignResult<null>> {
+  if (!supabase) return { ok: false, error: 'Sign in to manage the party.' };
+  const { data: camp, error: e1 } = await supabase.from('campaigns').select('removed').eq('id', campaignId).maybeSingle();
+  if (e1) return { ok: false, error: e1.message || 'Could not read the campaign.' };
+  const removed = Array.from(new Set([...(((camp?.removed as string[] | null) ?? []) as string[]), memberOwnerId]));
+  const { error: e2 } = await supabase.from('campaigns').update({ removed }).eq('id', campaignId);
+  if (e2) return { ok: false, error: e2.message || 'Could not remove the member.' };
+  await supabase.from('campaign_characters').delete().eq('campaign_id', campaignId).eq('owner_id', memberOwnerId);
+  return { ok: true, value: null };
 }
 
 /** The party for a campaign — small summaries for the cards. Empty on any error. */

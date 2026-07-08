@@ -316,6 +316,7 @@ body {
   gap: 8px;
 }
 .party-card {
+  position: relative;
   text-align: left;
   background: var(--app-surface);
   border: var(--app-bw) solid var(--app-border);
@@ -327,6 +328,43 @@ body {
 }
 .party-card:hover {
   border-color: var(--app-accent);
+}
+.party-kick {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+  border: var(--app-bw) solid var(--app-border);
+  color: var(--app-text-dim);
+  cursor: pointer;
+  font-size: 15px;
+}
+.party-kick:hover {
+  color: var(--app-danger, #ef4444);
+  border-color: color-mix(in srgb, var(--app-danger, #ef4444) 50%, transparent);
+}
+.party-gm {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: var(--app-bw) solid var(--app-border);
+}
+.party-gm-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--app-text-dim);
+  margin-right: auto;
 }
 .party-card-h {
   display: flex;

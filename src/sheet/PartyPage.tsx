@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import type { Character, ContentDatabase } from '../rules/types';
-import type { CampaignMembership } from '../data/campaigns';
-import { fetchParty, fetchMemberSheet, currentUserId, type PartyMember } from '../data/party';
+import { deleteCampaign, type CampaignMembership } from '../data/campaigns';
+import { fetchParty, fetchMemberSheet, currentUserId, kickFromParty, type PartyMember } from '../data/party';
+import { loadCampaigns, saveCampaigns } from '../data/storage';
 import type { PartySummary } from './partySummary';
 import { CharacterSheet } from './CharacterSheet';
 import { WindowControls } from './WindowControls';
 import { HeroesHeavenLogo } from './Logo';
+import { confirmDialog } from './confirm';
 import { useBackHandler } from './useEscapeClose';
 
 interface PartyPageProps {
@@ -24,6 +26,10 @@ export function PartyPage({ content, campaigns, onClose }: PartyPageProps) {
   const [myId, setMyId] = useState<string | null>(null);
   const [viewing, setViewing] = useState<{ charId: string; sheet: Character } | null>(null);
   const [loadingSheet, setLoadingSheet] = useState(false);
+  const [reload, setReload] = useState(0);
+
+  const selectedCampaign = campaigns.find((c) => c.id === selectedId);
+  const isGm = selectedCampaign?.role === 'gm';
 
   useBackHandler(!!viewing, () => setViewing(null));
 
@@ -46,7 +52,38 @@ export function PartyPage({ content, campaigns, onClose }: PartyPageProps) {
     return () => {
       cancelled = true;
     };
-  }, [selectedId]);
+  }, [selectedId, reload]);
+
+  const kick = async (m: PartyMember) => {
+    const ok = await confirmDialog({
+      title: `Remove ${m.name}’s player?`,
+      message: "Their characters leave this party and they can't rejoin unless you re-share the code. This removes every character that player shared with the campaign.",
+      confirmLabel: 'Remove',
+      danger: true,
+    });
+    if (!ok) return;
+    const res = await kickFromParty(selectedId, m.ownerId);
+    if (res.ok) setReload((r) => r + 1);
+    else setError(res.error);
+  };
+
+  const deleteThisCampaign = async () => {
+    const name = selectedCampaign?.name ?? 'this campaign';
+    const ok = await confirmDialog({
+      title: `Delete “${name}”?`,
+      message: 'This permanently deletes the campaign for everyone — the whole party disappears and players can no longer open it. This cannot be undone.',
+      confirmLabel: 'Delete',
+      danger: true,
+    });
+    if (!ok) return;
+    const res = await deleteCampaign(selectedId);
+    if (!res.ok) {
+      setError(res.error);
+      return;
+    }
+    saveCampaigns(loadCampaigns().filter((c) => c.id !== selectedId));
+    onClose();
+  };
 
   const openMember = async (m: PartyMember) => {
     setLoadingSheet(true);
@@ -111,8 +148,26 @@ export function PartyPage({ content, campaigns, onClose }: PartyPageProps) {
         ) : (
           <div className="party-grid">
             {(members ?? []).map((m) => (
-              <PartyCard key={m.charId} member={m} isMine={m.ownerId === myId} onOpen={() => void openMember(m)} />
+              <PartyCard
+                key={m.charId}
+                member={m}
+                isMine={m.ownerId === myId}
+                showKick={isGm && !!myId && m.ownerId !== myId}
+                onOpen={() => void openMember(m)}
+                onKick={() => void kick(m)}
+              />
             ))}
+          </div>
+        )}
+
+        {/* GM management for the selected campaign. Delete also lives on the Campaigns page; it's here
+            too so the GM can manage from the party. */}
+        {isGm && members !== null && (
+          <div className="party-gm">
+            <span className="party-gm-note"><i className="ti ti-shield" aria-hidden="true" /> You run this campaign.</span>
+            <button className="chip danger" onClick={() => void deleteThisCampaign()}>
+              <i className="ti ti-trash" aria-hidden="true" /> Delete campaign
+            </button>
           </div>
         )}
       </div>
@@ -128,14 +183,50 @@ function hpColor(cur: number, max: number): string {
   return 'var(--app-good, #22c55e)';
 }
 
-function PartyCard({ member, isMine, onOpen }: { member: PartyMember; isMine: boolean; onOpen: () => void }) {
+function PartyCard({
+  member,
+  isMine,
+  showKick,
+  onOpen,
+  onKick,
+}: {
+  member: PartyMember;
+  isMine: boolean;
+  showKick: boolean;
+  onOpen: () => void;
+  onKick: () => void;
+}) {
   const s: PartySummary = member.summary ?? ({} as PartySummary);
   const initials = (s.name || member.name || '—').slice(0, 2).toUpperCase();
   const sub = [s.ancestry, s.className && `${s.className} ${s.level ?? ''}`.trim()].filter(Boolean).join(' ');
   const hpMax = s.hpMax ?? 0;
   const pct = hpMax > 0 ? Math.max(0, Math.min(100, Math.round(((s.hpCur ?? hpMax) / hpMax) * 100))) : 0;
   return (
-    <button className="party-card" onClick={onOpen} type="button">
+    <div
+      className="party-card"
+      role="button"
+      tabIndex={0}
+      onClick={onOpen}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onOpen();
+        }
+      }}
+    >
+      {showKick && (
+        <button
+          className="party-kick"
+          title="Remove from party"
+          aria-label="Remove from party"
+          onClick={(e) => {
+            e.stopPropagation();
+            onKick();
+          }}
+        >
+          <i className="ti ti-user-minus" aria-hidden="true" />
+        </button>
+      )}
       <div className="party-card-h">
         <span className="party-av">
           {s.portrait ? <img src={s.portrait} alt="" /> : initials}
@@ -165,6 +256,6 @@ function PartyCard({ member, isMine, onOpen }: { member: PartyMember; isMine: bo
           ))}
         </div>
       )}
-    </button>
+    </div>
   );
 }

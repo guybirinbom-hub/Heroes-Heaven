@@ -18,12 +18,24 @@ create index if not exists campaign_characters_campaign_idx on public.campaign_c
 
 alter table public.campaign_characters enable row level security;
 
--- Owner publishes / updates / removes their own attached characters.
+-- GM "kick": a list of members the campaign owner has removed. Kicked users can't re-publish.
+alter table public.campaigns add column if not exists removed uuid[] not null default '{}'::uuid[];
+
+-- Owner publishes / updates / removes their own attached characters — UNLESS the GM has kicked them.
 drop policy if exists cc_owner_write on public.campaign_characters;
 create policy cc_owner_write on public.campaign_characters
   for all to authenticated
   using (owner_id = auth.uid())
-  with check (owner_id = auth.uid());
+  with check (
+    owner_id = auth.uid()
+    and not (auth.uid() = any (coalesce((select removed from public.campaigns c where c.id = campaign_id), '{}'::uuid[])))
+  );
+
+-- The campaign owner (GM) can DELETE any member's rows for their campaign (the kick action).
+drop policy if exists cc_gm_delete on public.campaign_characters;
+create policy cc_gm_delete on public.campaign_characters
+  for delete to authenticated
+  using (exists (select 1 from public.campaigns c where c.id = campaign_id and c.owner_id = auth.uid()));
 
 -- Any signed-in user can READ (the party view; the campaign id — shared only with members — is the gate,
 -- same model as the campaigns table).
