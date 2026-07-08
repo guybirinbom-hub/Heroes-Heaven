@@ -24,6 +24,7 @@ import {
 } from './homebrewSchemas';
 import { ItemEditorModal } from './ItemEditorModal';
 import { confirmDialog } from './confirm';
+import { sanitize } from './sanitizeHtml';
 import { RichEditor } from './RichEditor';
 import { useEscapeClose, useBackHandler } from './useEscapeClose';
 import { useIsMobile } from './useIsMobile';
@@ -35,6 +36,18 @@ import { MonsterPartsRules } from './MonsterPartsRules';
 /** Sentinel "source" id for the read-only Monster Parts rules reference (not a real homebrew source,
  *  so it's never editable, exported, or imported). */
 const MP_RULES_ID = '__mp-rules__';
+
+/** Rich-HTML fields a homebrew entry may carry; sanitized on import so nothing active persists at rest. */
+const HTML_FIELDS = ['description', 'craft'] as const;
+function sanitizeEntryHtml<T>(entry: T): T {
+  if (!entry || typeof entry !== 'object') return entry;
+  const rec = entry as Record<string, unknown>;
+  const out = { ...rec };
+  for (const k of HTML_FIELDS) {
+    if (typeof out[k] === 'string') out[k] = sanitize(out[k] as string);
+  }
+  return out as T;
+}
 
 type EntryRec = Record<string, unknown> & { id: string; name: string; homebrewSourceId?: string };
 
@@ -259,7 +272,9 @@ export function HomebrewPage({
       for (const src of Object.values(data.sources ?? {})) persistSource(src); // merges (keeps existing)
       for (const type of HOMEBREW_TYPES) {
         for (const entry of Object.values(data.content?.[type] ?? {})) {
-          saveHomebrewEntry(type, entry as HomebrewContent[typeof type][string]);
+          // Sanitize HTML fields at rest so a poisoned imported/shared file never persists an active
+          // payload (the editor + display both sanitize on use too, but clean-at-rest is defense in depth).
+          saveHomebrewEntry(type, sanitizeEntryHtml(entry) as HomebrewContent[typeof type][string]);
           n++;
         }
       }

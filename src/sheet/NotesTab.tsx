@@ -7,6 +7,7 @@ import { DescBody } from './DescBody';
 import { useIsMobile } from './useIsMobile';
 import { useBackHandler } from './useEscapeClose';
 import { decodeEntities } from './RichText';
+import { sanitize } from './sanitizeHtml';
 
 /** Toolbar formatting commands (document.execCommand on the focused contentEditable). */
 const TOOLS: { cmd: string; arg?: string; icon?: string; text?: string; title: string }[] = [
@@ -56,7 +57,9 @@ function NoteEditor({
   const [focused, setFocused] = useState(false);
 
   useEffect(() => {
-    if (ref.current) ref.current.innerHTML = initialHtml;
+    // Sanitize before injecting (see RichEditor): innerHTML executes inline handlers, and note HTML can
+    // carry pasted/imported markup. The display path (DescBody) already sanitizes.
+    if (ref.current) ref.current.innerHTML = sanitize(initialHtml);
     // mount-only: never re-apply from props, or it would reset the caret mid-edit.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

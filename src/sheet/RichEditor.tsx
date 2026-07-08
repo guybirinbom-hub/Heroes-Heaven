@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { sanitize } from './sanitizeHtml';
 import { useContent } from './ContentContext';
 import { useEscapeClose } from './useEscapeClose';
 import { useIsMobile } from './useIsMobile';
@@ -163,7 +164,10 @@ export function RichEditor({
   const kbShow = isMobile && focused && kb.open;
 
   useEffect(() => {
-    if (ref.current) ref.current.innerHTML = initialHtml;
+    // Sanitize before injecting: `initialHtml` can be untrusted homebrew HTML (imported from a shared
+    // file / cloud-synced), and `innerHTML =` executes inline handlers like <img onerror>. Mirrors the
+    // display path (DescBody), which already sanitizes.
+    if (ref.current) ref.current.innerHTML = sanitize(initialHtml);
     // mount-only: re-applying from props would reset the caret mid-edit.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
