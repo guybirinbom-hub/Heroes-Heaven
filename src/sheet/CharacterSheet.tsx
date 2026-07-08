@@ -88,6 +88,7 @@ export function CharacterSheet({
   onDeleteMode,
   onOpenHomebrew,
   onOpenCampaigns,
+  onLeaveCampaign,
   partyEnabled,
   readOnly,
   gmEdit,
@@ -114,6 +115,8 @@ export function CharacterSheet({
   onOpenHomebrew?: () => void;
   /** Navigate to the Campaigns page. Provided ONLY when signed in — absent hides the menu item. */
   onOpenCampaigns?: () => void;
+  /** Player leaves a campaign entirely (drops the membership + detaches all characters). */
+  onLeaveCampaign?: (campaignId: string) => void;
   /** Signed in → the Party button may show (still only when the character is attached to a campaign). */
   partyEnabled?: boolean;
   /** Render as a look-but-don't-touch view of someone else's character (party page): no menu, no
@@ -231,7 +234,21 @@ export function CharacterSheet({
   }, [onPlay, character.pinnedDescs]);
 
   if (partyOpen) {
-    return <PartyPage content={content} campaigns={attachedCampaigns} onClose={() => setPartyOpen(false)} />;
+    return (
+      <PartyPage
+        content={content}
+        campaigns={attachedCampaigns}
+        onClose={() => setPartyOpen(false)}
+        onLeave={
+          onLeaveCampaign
+            ? (id) => {
+                onLeaveCampaign(id);
+                setPartyOpen(false); // this character is no longer attached → close the party view
+              }
+            : undefined
+        }
+      />
+    );
   }
 
   return (

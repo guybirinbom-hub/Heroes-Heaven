@@ -89,12 +89,15 @@ export function Builder({
   initial,
   onCancel,
   onCreate,
+  onLeaveCampaign,
 }: {
   content: ContentDatabase;
   /** An existing build to edit; omitted when creating a new character. */
   initial?: BuildState;
   onCancel: () => void;
   onCreate: (build: BuildState) => void;
+  /** Player leaves a campaign entirely (roster-wide) — threaded to the Campaigns setup card. */
+  onLeaveCampaign?: (campaignId: string) => void;
 }) {
   const [build, setBuild] = useState<BuildState>(initial ?? START);
   // Effective content = the shared DB with this build's Overrides content-edits overlaid (text/field
@@ -623,7 +626,7 @@ export function Builder({
               <div className="bsec-title">Setup</div>
               <div className="setup-note">Campaign options — optional variant rules for this character.</div>
               <div className="lvl-cards">
-                <CampaignAttachCard build={build} actions={actions} content={content} />
+                <CampaignAttachCard build={build} actions={actions} content={content} onLeaveCampaign={onLeaveCampaign} />
                 <OptionsCard build={build} actions={actions} content={content} />
                 <VariantRulesCard build={build} actions={actions} content={content} />
                 <CampaignOptionsCard build={build} actions={actions} content={content} />

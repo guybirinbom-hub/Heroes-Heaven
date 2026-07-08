@@ -1224,12 +1224,25 @@ function MonsterPartsModeSelect({ build, actions }: Pick<EditorProps, 'build' | 
  *  shared — and where any character is attached to campaigns it's in (so it shows in that party and
  *  publishes to teammates). Joining offers to start the character from the campaign's default rules.
  *  Hidden for local / not-signed-in users (no campaigns for them). */
-export function CampaignAttachCard({ build, actions }: EditorProps) {
+export function CampaignAttachCard({ build, actions, onLeaveCampaign }: EditorProps & { onLeaveCampaign?: (campaignId: string) => void }) {
   const auth = useAuth();
   const [memberships, setMemberships] = useState<CampaignMembership[]>(() => loadCampaigns());
   const [code, setCode] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+
+  const leave = async (m: CampaignMembership) => {
+    const ok = await confirmDialog({
+      title: `Leave “${m.name}”?`,
+      message: 'You’ll leave this campaign and all of your characters will be removed from its party. You can rejoin later with the code.',
+      confirmLabel: 'Leave campaign',
+      danger: true,
+    });
+    if (!ok) return;
+    onLeaveCampaign?.(m.id); // App: drop the membership (synced) + detach it from every character
+    setMemberships((ms) => ms.filter((x) => x.id !== m.id)); // reflect in this card immediately
+    actions.patch({ campaignIds: (build.campaignIds ?? []).filter((id) => id !== m.id) }); // and the draft build
+  };
 
   // Local / not signed in and not already in any campaign → nothing to show.
   if (auth.status !== 'signed-in' && memberships.length === 0) return null;
@@ -1306,6 +1319,19 @@ export function CampaignAttachCard({ build, actions }: EditorProps) {
               />
             ))}
           </div>
+          {/* Players can leave a campaign entirely (drops the membership + detaches all their characters).
+              A GM ends theirs by deleting it in the Campaigns page, so no leave button for GM rows. */}
+          {onLeaveCampaign && memberships.some((m) => m.role === 'player') && (
+            <div className="cmp-leave-list">
+              {memberships
+                .filter((m) => m.role === 'player')
+                .map((m) => (
+                  <button key={m.id} type="button" className="cmp-leave-btn" onClick={() => void leave(m)}>
+                    <i className="ti ti-logout" aria-hidden="true" /> Leave “{m.name}”
+                  </button>
+                ))}
+            </div>
+          )}
         </>
       )}
       <div className="cmp-join-row">

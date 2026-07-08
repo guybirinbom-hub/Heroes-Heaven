@@ -17,7 +17,7 @@ import { getLoginSkipped, setLoginSkipped } from './data/device';
 import { collectPortraitRefs, gcSharpPortraits, initPortraitStore } from './data/portraitStore';
 import { computeSummary } from './sheet/partySummary';
 import { publishCharacter, unpublishCharacter, fetchGmEdits, deleteGmEdit, currentUserId, subscribeGmEdits } from './data/party';
-import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
+import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, loadCampaigns, saveCampaigns, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { isTauri } from './platform';
 import { setupPersist, schedulePersist, persistNow, flushPersist, cancelPersist } from './data/persist';
 import { chooseDialog } from './sheet/confirm';
@@ -446,6 +446,24 @@ export default function App() {
   // The Homebrew manager persists to localStorage itself; re-merge it over core so changes show live.
   const onHomebrewChanged = () => setContent(rebuildContent());
 
+  // Player: fully leave a campaign — drop the membership (synced + tombstoned via saveCampaigns) AND
+  // detach it from every character, so nothing keeps publishing to it. Stripping the id from each
+  // character makes the publish effect unpublish those campaign_characters rows. (A GM ends a campaign
+  // by deleting it in the Campaigns page instead.)
+  const leaveCampaign = (campaignId: string) => {
+    saveCampaigns(loadCampaigns().filter((m) => m.id !== campaignId));
+    commitStructural();
+    setRoster((r) =>
+      r.map((c) => {
+        const cids = c.character.campaignIds ?? [];
+        if (!cids.includes(campaignId)) return c;
+        const character = { ...c.character, campaignIds: cids.filter((id) => id !== campaignId) };
+        const build = c.build ? { ...c.build, campaignIds: (c.build.campaignIds ?? []).filter((id) => id !== campaignId) } : c.build;
+        return { ...c, character, build };
+      }),
+    );
+  };
+
   const deleteChar = (id: string) => {
     // Deleting the last character is allowed — the roster can go to zero (empty state).
     const remaining = roster.filter((c) => c.id !== id);
@@ -583,6 +601,7 @@ export default function App() {
       <Builder
         content={readyContent}
         initial={editing?.build}
+        onLeaveCampaign={leaveCampaign}
         onCancel={() => {
           setEditing(null);
           setMode('sheet');
@@ -650,6 +669,7 @@ export default function App() {
         onDeleteMode={removeModeDef}
         onOpenHomebrew={() => setMode('homebrew')}
         onOpenCampaigns={onOpenCampaigns}
+        onLeaveCampaign={leaveCampaign}
         partyEnabled={!!onOpenCampaigns}
         onRest={() =>
           updatePlay((p) =>

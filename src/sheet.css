@@ -224,6 +224,35 @@ body {
 .cmp-join-row {
   margin-top: 8px;
 }
+/* Player "Leave campaign" — subtle danger-tinted links under the attach toggles (builder Setup) and a
+   row under the party list (Party page). */
+.cmp-leave-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.cmp-leave-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: 1px solid var(--app-danger, #ef4444);
+  color: var(--app-danger, #ef4444);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0.85;
+}
+.cmp-leave-btn:hover {
+  opacity: 1;
+}
+.party-leave-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
+}
 .cmp-join-input {
   display: flex;
   gap: 8px;
