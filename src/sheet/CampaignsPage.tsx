@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import '../builder/builder.css';
 import type { ContentDatabase, ModeDef } from '../rules/types';
 import { emptyBuild, type BuildState } from '../rules/build';
@@ -303,21 +303,36 @@ function CampaignForm({ content, editing, onCancel, onCreated, onSaved }: {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [loadedDefaults, setLoadedDefaults] = useState(!editing);
-  if (editing && !loadedDefaults) {
+  const [loadError, setLoadError] = useState('');
+  // Prefetch the campaign's current defaults into the editor. Runs in an effect (not the render body,
+  // which fired on every render and raced). Crucially, only mark defaults "loaded" on SUCCESS — a failed
+  // fetch must NOT let a subsequent save overwrite the real defaults with the empty starting build.
+  useEffect(() => {
+    if (!editing) return;
+    let cancelled = false;
     void fetchCampaignByCode(editing.code).then((res) => {
-      if (res.ok) setBuild(buildFromDefaults(res.value.defaults));
-      setLoadedDefaults(true);
+      if (cancelled) return;
+      if (res.ok) {
+        setBuild(buildFromDefaults(res.value.defaults));
+        setLoadedDefaults(true);
+      } else {
+        setLoadError(res.error);
+      }
     });
-  }
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editing?.code]);
 
   const submit = async () => {
     if (busy) return;
     setBusy(true);
     setError('');
-    const defaults = defaultsFromBuild(build);
-    const res = editing
-      ? await updateCampaign(editing.id, { name, description, defaults })
-      : await createCampaign(name, description, defaults);
+    // Only send defaults when we actually loaded them (create, or a successful edit-prefetch). After a
+    // failed prefetch we save just name/description and leave the campaign's real defaults untouched.
+    const patch = editing && !loadedDefaults ? { name, description } : { name, description, defaults: defaultsFromBuild(build) };
+    const res = editing ? await updateCampaign(editing.id, patch) : await createCampaign(name, description, defaultsFromBuild(build));
     setBusy(false);
     if (!res.ok) {
       setError(res.error);
@@ -338,7 +353,14 @@ function CampaignForm({ content, editing, onCancel, onCreated, onSaved }: {
         <textarea className="hb-input cmp-textarea" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="What&rsquo;s this campaign about? (optional)" rows={3} />
       </label>
       {editing && !loadedDefaults ? (
-        <div className="setup-note">Loading current defaults…</div>
+        loadError ? (
+          <div className="setup-note" style={{ color: 'var(--app-danger, #ef4444)' }}>
+            Couldn’t load this campaign’s current default rules ({loadError}). You can still save the name and
+            description — the defaults won’t be changed. Reopen this editor to try again.
+          </div>
+        ) : (
+          <div className="setup-note">Loading current defaults…</div>
+        )
       ) : (
         <DefaultsEditor content={content} build={build} setBuild={setBuild} />
       )}

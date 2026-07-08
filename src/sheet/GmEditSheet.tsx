@@ -7,7 +7,7 @@ import { Builder } from '../builder/Builder';
 import { CharacterSheet } from './CharacterSheet';
 import { exportNative } from '../data/transfer';
 import { downloadText } from './download';
-import { pushGmEdit } from '../data/party';
+import { pushGmEdit, fetchMemberSheet } from '../data/party';
 import { confirmDialog, chooseDialog } from './confirm';
 
 function fileSlug(name: string): string {
@@ -90,6 +90,22 @@ export function GmEditSheet({
   // Push the working copy to the player. Returns true on success.
   const pushToPlayer = async (): Promise<boolean> => {
     setBusy(true);
+    // Don't silently clobber newer player work: if the player has re-published this character since we
+    // opened it, our working copy is based on a stale snapshot. Detect it (re-fetch + compare to the
+    // snapshot we opened) and let the GM reopen for the current version instead of overwriting theirs.
+    const current = await fetchMemberSheet(campaignId, work.id);
+    if (current && JSON.stringify(current) !== JSON.stringify(initial)) {
+      setBusy(false);
+      const overwrite = await confirmDialog({
+        title: 'Player changed this character',
+        message: `${work.character.name} was updated by the player since you opened it, so your edits are based on an older version and would overwrite their newer changes. Overwrite anyway, or cancel and reopen to edit their current version?`,
+        confirmLabel: 'Overwrite anyway',
+        cancelLabel: 'Cancel',
+        danger: true,
+      });
+      if (!overwrite) return false;
+      setBusy(true);
+    }
     const res = await pushGmEdit(campaignId, work.id, playerOwnerId, work);
     setBusy(false);
     if (!res.ok) {

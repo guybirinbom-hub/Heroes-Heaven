@@ -196,13 +196,21 @@ export default function App() {
       const present = new Set(rosterRef.current.map((c) => c.id));
       const applicable = edits.filter((e) => present.has(e.charId) && e.sheet && e.sheet.character);
       if (!applicable.length) return;
+      // A character attached to two campaigns can have two pending edits (PK is campaign+char). Apply the
+      // NEWEST per character (last-writer-wins); an older one is superseded, never dropped-before-applied.
+      const newestByChar = new Map<string, (typeof applicable)[number]>();
+      for (const e of applicable) {
+        const prev = newestByChar.get(e.charId);
+        if (!prev || (e.updatedAt || '') > (prev.updatedAt || '')) newestByChar.set(e.charId, e);
+      }
       setRoster((r) =>
         r.map((c) => {
-          const edit = applicable.find((e) => e.charId === c.id);
+          const edit = newestByChar.get(c.id);
           return edit ? { ...edit.sheet, id: c.id, archived: c.archived ?? false } : c;
         }),
       );
-      // Clear only what we applied, so each edit lands exactly once on the device that owns the character.
+      // Clear every edit we resolved on THIS device (the applied newest + superseded older). Edits for
+      // characters not on this device are left for the device that owns them.
       for (const e of applicable) void deleteGmEdit(e.campaignId, e.charId);
     };
     void apply();
