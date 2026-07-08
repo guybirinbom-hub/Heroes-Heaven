@@ -13,6 +13,7 @@ import {
   type CampaignDefaults,
   type CampaignMembership,
 } from '../data/campaigns';
+import type { PartyMember } from '../data/party';
 import { loadCampaigns, saveCampaigns } from '../data/storage';
 import { PartyMembers, useMemberViewer } from './PartyMembers';
 import { PageMenu } from './PageMenu';
@@ -80,13 +81,14 @@ interface CampaignsPageProps {
 export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, characters, modes, onSaveMode, onDeleteMode }: CampaignsPageProps) {
   const [memberships, setMemberships] = useState<CampaignMembership[]>(() => loadCampaigns());
   const [view, setView] = useState<View>({ kind: 'list' });
-  const { sheetEl, open } = useMemberViewer(content);
+  // GM detail: the GM edits a player's sheet (fully, silently pushed on Update) — not a read-only view.
+  const { sheetEl, open } = useMemberViewer(content, { gmEdit: true });
   // The hamburger is the navigation — no top-level back arrow. Escape / Android-back close the page
   // (list view) or step back to the list (sub-views), via the shared dismiss stack.
   useEscapeClose(onClose);
   useBackHandler(view.kind !== 'list', () => setView({ kind: 'list' }));
 
-  if (sheetEl) return sheetEl; // a player's read-only sheet takes over the screen
+  if (sheetEl) return sheetEl; // the GM's editable sheet for a player takes over the screen
 
   const gmCampaigns = memberships.filter((m) => m.role === 'gm');
 
@@ -165,7 +167,7 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
             m={view.m}
             onEdit={() => setView({ kind: 'edit', m: view.m })}
             onDelete={() => void deleteFrom(view.m, () => setView({ kind: 'list' }))}
-            onViewMember={(charId) => void open(view.m.id, charId)}
+            onViewMember={(mem) => void open(view.m.id, mem.charId, mem.ownerId)}
           />
         )}
 
@@ -241,7 +243,7 @@ function CampaignDetail({ m, onEdit, onDelete, onViewMember }: {
   m: CampaignMembership;
   onEdit: () => void;
   onDelete: () => void;
-  onViewMember: (charId: string) => void;
+  onViewMember: (m: PartyMember) => void;
 }) {
   return (
     <div className="cmp-detail">
@@ -258,7 +260,7 @@ function CampaignDetail({ m, onEdit, onDelete, onViewMember }: {
       </div>
       <div className="cmp-detail-players">
         <div className="cmp-section-h"><i className="ti ti-users" aria-hidden="true" /> Party</div>
-        <PartyMembers campaignId={m.id} isGm onView={(mem) => onViewMember(mem.charId)} />
+        <PartyMembers campaignId={m.id} isGm onView={onViewMember} />
       </div>
     </div>
   );

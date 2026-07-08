@@ -44,7 +44,36 @@ create policy cc_read on public.campaign_characters
   for select to authenticated
   using (true);
 
+-- GM edits: a GM's edited copy of a member's character, which that player's app applies on its next
+-- sync (silently — no notification). One pending edit per (campaign, character); the player deletes it
+-- after applying. Lets a GM secretly influence a player's character for in-game surprises.
+create table if not exists public.gm_character_edits (
+  campaign_id uuid not null references public.campaigns (id) on delete cascade,
+  char_id     text not null,
+  owner_id    uuid not null references auth.users (id) on delete cascade,  -- the PLAYER
+  editor_id   uuid not null references auth.users (id) on delete cascade,  -- the GM
+  sheet       jsonb not null default '{}'::jsonb,
+  updated_at  timestamptz not null default now(),
+  primary key (campaign_id, char_id)
+);
+create index if not exists gm_character_edits_owner_idx on public.gm_character_edits (owner_id);
+
+alter table public.gm_character_edits enable row level security;
+
+-- The campaign owner (GM) can write edits for their campaign.
+drop policy if exists gce_gm_write on public.gm_character_edits;
+create policy gce_gm_write on public.gm_character_edits
+  for all to authenticated
+  using (exists (select 1 from public.campaigns c where c.id = campaign_id and c.owner_id = auth.uid()))
+  with check (exists (select 1 from public.campaigns c where c.id = campaign_id and c.owner_id = auth.uid()));
+
+-- The player (owner) can read their pending edits and delete them once applied.
+drop policy if exists gce_owner_read on public.gm_character_edits;
+create policy gce_owner_read on public.gm_character_edits for select to authenticated using (owner_id = auth.uid());
+drop policy if exists gce_owner_delete on public.gm_character_edits;
+create policy gce_owner_delete on public.gm_character_edits for delete to authenticated using (owner_id = auth.uid());
+
 notify pgrst, 'reload schema';
 
-select 'campaign_characters table ready' as status,
-       (select count(*) from pg_policies where tablename = 'campaign_characters') as policy_count;
+select 'campaign_characters + gm_character_edits ready' as status,
+       (select count(*) from pg_policies where tablename in ('campaign_characters', 'gm_character_edits')) as policy_count;

@@ -16,7 +16,7 @@ import { LoginScreen } from './sheet/LoginScreen';
 import { getLoginSkipped, setLoginSkipped } from './data/device';
 import { collectPortraitRefs, deleteSharpPortrait } from './data/portraitStore';
 import { computeSummary } from './sheet/partySummary';
-import { publishCharacter, unpublishCharacter } from './data/party';
+import { publishCharacter, unpublishCharacter, fetchGmEdits, deleteGmEdit } from './data/party';
 import { loadRoster, saveRoster, newRosterId, duplicateChar, uniqueName, loadActiveId, saveActiveId, saveHomebrewItem, saveMode, deleteMode, ROSTER_KEY, localStorageBytes, type SavedChar } from './data/storage';
 import { isTauri } from './platform';
 import { setupPersist, schedulePersist, persistNow, flushPersist, cancelPersist } from './data/persist';
@@ -154,9 +154,12 @@ export default function App() {
         try {
           const live = applyPlayState(sc.character, sc.play, readyContent);
           const summary = computeSummary(live, readyContent);
+          // Publish the full SavedChar (character + build + play) so a GM can fully edit it; the party's
+          // read-only view derives the live character from it.
+          const published = { id: sc.id, character: sc.character, build: sc.build, play: sc.play };
           for (const cid of ids) {
             desired.add(cid + '|' + sc.id);
-            void publishCharacter(cid, sc.id, live.name, summary, live);
+            void publishCharacter(cid, sc.id, live.name, summary, published);
           }
         } catch {
           /* skip a character that won't compute */
@@ -172,6 +175,37 @@ export default function App() {
     }, 1500);
     return () => clearTimeout(timer);
   }, [roster, auth.status, content]);
+  // Apply pending GM edits to MY characters — silently. A GM can edit a player's sheet and push it; the
+  // player's app swaps in the GM's version on open / when the window regains focus, then clears the edit.
+  // Runs on sign-in and on focus/visibility (the natural "player returns" boundaries), same as sync.
+  useEffect(() => {
+    if (auth.status !== 'signed-in') return;
+    let cancelled = false;
+    const apply = async () => {
+      const edits = await fetchGmEdits();
+      if (cancelled || !edits.length) return;
+      setRoster((r) =>
+        r.map((c) => {
+          const edit = edits.find((e) => e.charId === c.id && e.sheet && e.sheet.character);
+          return edit ? { ...edit.sheet, id: c.id, archived: c.archived ?? false } : c;
+        }),
+      );
+      // Clear every fetched edit (even for characters not on this device) so it applies exactly once.
+      for (const e of edits) void deleteGmEdit(e.campaignId, e.charId);
+    };
+    void apply();
+    const onFocus = () => void apply();
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') void apply();
+    };
+    window.addEventListener('focus', onFocus);
+    document.addEventListener('visibilitychange', onVisible);
+    return () => {
+      cancelled = true;
+      window.removeEventListener('focus', onFocus);
+      document.removeEventListener('visibilitychange', onVisible);
+    };
+  }, [auth.status, setRoster]);
   useEffect(() => {
     if (persistImmediately.current) {
       persistImmediately.current = false;

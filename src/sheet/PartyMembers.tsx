@@ -1,37 +1,72 @@
 import { useEffect, useState } from 'react';
-import type { Character, ContentDatabase } from '../rules/types';
+import type { ContentDatabase } from '../rules/types';
+import type { SavedChar } from '../data/storage';
+import { applyPlayState } from '../rules/play';
 import { fetchParty, fetchMemberSheet, currentUserId, kickFromParty, type PartyMember } from '../data/party';
 import type { PartySummary } from './partySummary';
 import { CharacterSheet } from './CharacterSheet';
+import { GmEditSheet } from './GmEditSheet';
 import { confirmDialog } from './confirm';
 import { useBackHandler } from './useEscapeClose';
 
-/** Read-only teammate-sheet viewer shared by the party page and the GM campaign detail. Returns the
- *  full-screen sheet element (or null) plus an `open(campaignId, charId)` to load + show it. Render
- *  `sheetEl` with an early return from the host page so the sheet takes over the screen. */
-export function useMemberViewer(content: ContentDatabase) {
-  const [viewing, setViewing] = useState<Character | null>(null);
+interface ViewingState {
+  campaignId: string;
+  ownerId: string;
+  sheet: SavedChar;
+}
+
+/** Teammate-sheet viewer shared by the party page and the GM campaign detail. Returns the full-screen
+ *  sheet element (or null) plus an `open(campaignId, charId, ownerId)` to load + show it. Render
+ *  `sheetEl` with an early return from the host page so the sheet takes over the screen. With
+ *  `{ gmEdit: true }` (GM campaign detail) the sheet is fully editable and can push changes back to the
+ *  player; otherwise it's a read-only view. */
+export function useMemberViewer(content: ContentDatabase, options?: { gmEdit?: boolean }) {
+  const [viewing, setViewing] = useState<ViewingState | null>(null);
   useBackHandler(!!viewing, () => setViewing(null));
-  const open = async (campaignId: string, charId: string): Promise<boolean> => {
+  const open = async (campaignId: string, charId: string, ownerId: string): Promise<boolean> => {
     const sheet = await fetchMemberSheet(campaignId, charId);
-    if (sheet) {
-      setViewing(sheet);
+    if (sheet && sheet.character) {
+      setViewing({ campaignId, ownerId, sheet });
       return true;
     }
     return false;
   };
-  const sheetEl = viewing ? (
-    <div className="party-viewer">
-      <CharacterSheet
-        character={viewing}
-        content={content}
-        charKey="party-member"
-        characters={[]}
-        readOnly
-        onBack={() => setViewing(null)}
-      />
-    </div>
-  ) : null;
+  let sheetEl = null;
+  if (viewing) {
+    if (options?.gmEdit) {
+      sheetEl = (
+        <div className="party-viewer">
+          <GmEditSheet
+            initial={viewing.sheet}
+            content={content}
+            campaignId={viewing.campaignId}
+            playerOwnerId={viewing.ownerId}
+            onExit={() => setViewing(null)}
+          />
+        </div>
+      );
+    } else {
+      // Read-only: derive the live character from the published SavedChar (play overlaid on the build).
+      let live;
+      try {
+        live = applyPlayState(viewing.sheet.character, viewing.sheet.play, content);
+      } catch {
+        live = viewing.sheet.character;
+      }
+      sheetEl = (
+        <div className="party-viewer">
+          <CharacterSheet
+            character={live}
+            content={content}
+            charKey="party-member"
+            characters={[]}
+            readOnly
+            onBack={() => setViewing(null)}
+          />
+        </div>
+      );
+    }
+  }
   return { sheetEl, open };
 }
 

@@ -51,7 +51,7 @@ export function PartyPage({ content, campaigns, onClose }: PartyPageProps) {
             </div>
           </div>
         )}
-        <PartyMembers campaignId={selectedId} isGm={selectedCampaign?.role === 'gm'} onView={(m) => void open(selectedId, m.charId)} />
+        <PartyMembers campaignId={selectedId} isGm={selectedCampaign?.role === 'gm'} onView={(m) => void open(selectedId, m.charId, m.ownerId)} />
       </div>
     </div>
   );

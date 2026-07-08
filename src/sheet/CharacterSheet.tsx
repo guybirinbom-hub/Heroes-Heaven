@@ -90,6 +90,7 @@ export function CharacterSheet({
   onOpenCampaigns,
   partyEnabled,
   readOnly,
+  gmEdit,
   onBack,
   charKey,
   characters,
@@ -118,6 +119,10 @@ export function CharacterSheet({
   /** Render as a look-but-don't-touch view of someone else's character (party page): no menu, no
    *  mutations, and a Back button instead. */
   readOnly?: boolean;
+  /** GM editing a player's character (from the campaign detail): fully editable, no nav hamburger, and
+   *  a top-bar [edit-build · export · Update · Back] set. `onUpdate` pushes to the player (silently);
+   *  `onExport` downloads the file. Mutually exclusive with `readOnly`. */
+  gmEdit?: { onUpdate: () => void; onExport: () => void; busy?: boolean };
   onBack?: () => void;
 }) {
   const [tab, setTab] = useState(initialTab);
@@ -133,7 +138,7 @@ export function CharacterSheet({
     const byId = new Map(loadCampaigns().map((m) => [m.id, m]));
     return ids.map((id) => byId.get(id) ?? { id, code: '', role: 'player' as const, name: 'Campaign' });
   }, [character.campaignIds]);
-  const showParty = !readOnly && !!partyEnabled && (character.campaignIds?.length ?? 0) > 0;
+  const showParty = !readOnly && !gmEdit && !!partyEnabled && (character.campaignIds?.length ?? 0) > 0;
   useBackHandler(partyOpen, () => setPartyOpen(false));
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [restOpen, setRestOpen] = useState(false);
@@ -229,6 +234,11 @@ export function CharacterSheet({
       {readOnly && (
         <div className="ro-frame-tab">
           <i className="ti ti-eye" aria-hidden="true" /> Viewing {character.name} · read-only
+        </div>
+      )}
+      {gmEdit && (
+        <div className={'gm-edit-tab' + (isMobile ? ' is-mobile' : '')}>
+          <i className="ti ti-wand" aria-hidden="true" /> GM editing {character.name} — changes reach the player only when you <strong>Update</strong>
         </div>
       )}
       <header className="chrome" data-tauri-drag-region>
@@ -338,17 +348,36 @@ export function CharacterSheet({
             <i className="ti ti-users" aria-hidden="true" />
           </button>
         )}
-        {!readOnly && onRest && (
+        {!readOnly && !gmEdit && onRest && (
           <button className="icon-btn" title="Daily preparations" onClick={() => setRestOpen(true)}>
             <i className="ti ti-bed" aria-hidden="true" />
           </button>
         )}
-        {!readOnly && !diceOff && (
+        {!readOnly && !gmEdit && !diceOff && (
           <button className="icon-btn" title="Dice roller" onClick={() => setDiceOpen(true)}>
             <i className="ti ti-dice" aria-hidden="true" />
           </button>
         )}
-        {readOnly ? (
+        {gmEdit ? (
+          // GM edit: builder access + export + push-to-player, then Back (→ campaign detail). No nav
+          // hamburger — the GM is editing one player's character, not navigating their own app.
+          <>
+            {onEdit && (
+              <button className="icon-btn" title="Edit in builder" aria-label="Edit in builder" onClick={onEdit}>
+                <i className="ti ti-edit" aria-hidden="true" />
+              </button>
+            )}
+            <button className="icon-btn" title="Export character file" aria-label="Export character file" onClick={gmEdit.onExport}>
+              <i className="ti ti-download" aria-hidden="true" />
+            </button>
+            <button className="btn-primary gm-update-btn" disabled={gmEdit.busy} onClick={gmEdit.onUpdate}>
+              <i className="ti ti-cloud-upload" aria-hidden="true" /> Update
+            </button>
+            <button className="icon-btn" title="Back to campaign" aria-label="Back to campaign" onClick={onBack}>
+              <i className="ti ti-arrow-left" aria-hidden="true" />
+            </button>
+          </>
+        ) : readOnly ? (
           <button className="icon-btn" title="Back to party" aria-label="Back to party" onClick={onBack}>
             <i className="ti ti-arrow-left" aria-hidden="true" />
           </button>

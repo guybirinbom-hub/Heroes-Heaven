@@ -458,6 +458,45 @@ body {
 .is-mobile .ro-frame-tab {
   margin-top: calc(env(safe-area-inset-top, 0px) / var(--zoom, 1));
 }
+/* GM edit: an informational strip (no frame — the GM has full control) reminding them changes only
+   reach the player on Update. Distinct warm tone so it never reads as your own character. */
+.gm-edit-tab {
+  align-self: center;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 96%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 14px;
+  border-radius: 0 0 10px 10px;
+  background: var(--app-warn, #e0a63a);
+  color: #14161f;
+  position: relative;
+  z-index: 6;
+}
+.gm-edit-tab strong {
+  font-weight: 700;
+}
+.gm-edit-tab.is-mobile {
+  margin-top: calc(env(safe-area-inset-top, 0px) / var(--zoom, 1));
+}
+/* The GM's Update button in the sheet top bar — compact so it sits inline with the icon buttons. */
+.gm-update-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.gm-update-btn i {
+  font-size: 15px;
+}
 .party-card-h {
   display: flex;
   align-items: center;
