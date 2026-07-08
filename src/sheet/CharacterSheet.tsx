@@ -492,7 +492,7 @@ export function CharacterSheet({
           ) : tab === 'Details' ? (
             <DetailsTab character={character} content={content} onPlay={onPlay} />
           ) : tab === 'Notes' ? (
-            <NotesTab character={character} onPlay={onPlay} />
+            <NotesTab character={character} onPlay={onPlay} hidePrivate={readOnly} />
           ) : tab === 'Companions' ? (
             <CompanionsTab character={character} content={content} onPlay={onPlay} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} charKey={charKey} />
           ) : (

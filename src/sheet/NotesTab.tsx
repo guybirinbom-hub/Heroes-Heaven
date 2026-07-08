@@ -298,8 +298,9 @@ function IconPickerModal({
   );
 }
 
-export function NotesTab({ character, onPlay }: { character: Character; onPlay?: PlayUpdater }) {
-  const pages = character.notes;
+export function NotesTab({ character, onPlay, hidePrivate }: { character: Character; onPlay?: PlayUpdater; hidePrivate?: boolean }) {
+  // A read-only teammate viewing this sheet doesn't see pages marked private; the owner and the GM do.
+  const pages = hidePrivate ? character.notes.filter((p) => !p.private) : character.notes;
   const [activeId, setActiveId] = useState<string | null>(pages[0]?.id ?? null);
   const [query, setQuery] = useState('');
   const active = pages.find((p) => p.id === activeId) ?? pages[0];
@@ -438,7 +439,7 @@ export function NotesTab({ character, onPlay }: { character: Character; onPlay?:
             <>
               <button
                 className="icon-btn"
-                title={active.private ? 'Make shared' : 'Make private'}
+                title={active.private ? 'Private — hidden from teammates (the GM can still see it). Make shared' : 'Make private — hide from teammates'}
                 onClick={() => onPlay((pl) => updateNotePage(pl, active.id, { private: !active.private }))}
               >
                 <i className={'ti ' + (active.private ? 'ti-lock' : 'ti-lock-open')} aria-hidden="true" />
