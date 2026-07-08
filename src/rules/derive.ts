@@ -25,6 +25,7 @@ import type {
   SkillId,
   Speeds,
   SpellcastingEntry,
+  StanceDef,
   WeaponRunes,
 } from './types';
 import { PROFICIENCY_RANKS } from './types';
@@ -293,6 +294,11 @@ export interface AcResult {
   dexCap: number | null;
 }
 
+/** The mechanical def of the character's currently-active stance, if any (exclusive — one at a time). */
+export function activeStanceDef(c: Character, db: ContentDatabase): StanceDef | undefined {
+  return c.activeStance ? db.stances?.[c.activeStance] : undefined;
+}
+
 export function deriveAc(c: Character, db: ContentDatabase): AcResult {
   const worn = findWornArmor(c, db);
 
@@ -317,10 +323,16 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
   // "light-barding"/"heavy-barding"); fall back to the unarmored rank so AC never computes to NaN.
   const rank = c.proficiencies.defenses[category] ?? c.proficiencies.defenses.unarmored;
   const dex = abilityMod(c.abilities.dex);
-  const dexContribution = dexCap != null ? Math.min(dex, dexCap) : dex;
+  // An active stance may add an AC bonus (e.g. Mountain +4) and/or cap Dex-to-AC (Mountain +0); take the
+  // lower of the armor cap and the stance cap.
+  const stance = activeStanceDef(c, db);
+  const stanceDexCap = stance?.dexCap;
+  const effDexCap = stanceDexCap != null ? (dexCap != null ? Math.min(dexCap, stanceDexCap) : stanceDexCap) : dexCap;
+  const dexContribution = effDexCap != null ? Math.min(dex, effDexCap) : dex;
   const penalty = conditionPenalty(c.conditions, 'dex', 'ac');
   const modeBonus = modeNumberBonus(shieldSwappedModes(c, db), { kind: 'ac' });
-  return { value: 10 + dexContribution + profBonus(rank, c.level, pwl(c)) + itemBonus + penalty + modeBonus, rank, dexCap };
+  const stanceAc = stance?.acBonus?.value ?? 0;
+  return { value: 10 + dexContribution + profBonus(rank, c.level, pwl(c)) + itemBonus + penalty + modeBonus + stanceAc, rank, dexCap: effDexCap };
 }
 
 /** The active modes with Raise a Shield's placeholder AC value swapped for the HELD shield's real
@@ -1069,8 +1081,27 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
   // Deadly Simplicity: when the deity's favored weapon is an unarmed attack (Irori's fist), the Fist
   // Strike's die is raised to d6 (its d4 → d6). Applies only to the baseline Fist, not natural attacks.
   const dsFist = hasDeadlySimplicity(c) && deityFavorsUnarmed(c, db);
+  // The active stance's granted unarmed attack(s) (Tiger claw, Falling Stone, …) — buffed by handwraps
+  // like any unarmed Strike. Listed first so the in-stance attack is prominent.
+  const stanceStrikes = (activeStanceDef(c, db)?.strikes ?? []).map((s, i) =>
+    deriveUnarmedStrike(
+      c,
+      db,
+      {
+        instanceId: `stance:${i}`,
+        name: s.name,
+        die: s.die,
+        damageType: s.damageType,
+        traits: s.traits?.length ? [...new Set([...s.traits, 'unarmed'])] : ['unarmed'],
+        group: s.group ?? 'brawling',
+      },
+      hwRunes,
+      false,
+      mpHw,
+    ),
+  );
   // Always offer the baseline Fist (PF2e gives every character an unarmed Strike), listed after naturals.
-  return [...weapons, ...deriveBlastStrikes(c, db), ...naturals, deriveUnarmedStrike(c, db, fistProfile, hwRunes, dsFist, mpHw)];
+  return [...stanceStrikes, ...weapons, ...deriveBlastStrikes(c, db), ...naturals, deriveUnarmedStrike(c, db, fistProfile, hwRunes, dsFist, mpHw)];
 }
 
 export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
@@ -1100,6 +1131,13 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
     if (meetsArmorStrength(c, worn.armor)) penalty = Math.max(0, penalty - 5);
     for (const k of Object.keys(speeds) as (keyof Speeds)[]) {
       if (speeds[k] != null) speeds[k] = Math.max(0, (speeds[k] as number) - penalty);
+    }
+  }
+  // An active stance may reduce Speed (e.g. Mountain Stance −5 ft to all Speeds).
+  const stanceSpeedPenalty = activeStanceDef(c, db)?.speedPenalty ?? 0;
+  if (stanceSpeedPenalty > 0) {
+    for (const k of Object.keys(speeds) as (keyof Speeds)[]) {
+      if (speeds[k] != null) speeds[k] = Math.max(0, (speeds[k] as number) - stanceSpeedPenalty);
     }
   }
   // Encumbered reduces every Speed by 10 ft.

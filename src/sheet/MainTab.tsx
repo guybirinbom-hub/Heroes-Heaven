@@ -12,7 +12,7 @@ import {
   skillTakesArmorPenalty,
   type Strike,
 } from '../rules/derive';
-import { togglePin, togglePinnedDesc, toggleTactic, descId, type PlayUpdater } from '../rules/play';
+import { togglePin, togglePinnedDesc, toggleTactic, setActiveStance, descId, type PlayUpdater } from '../rules/play';
 import { critSpec } from '../rules/critSpec';
 import { ACTIVITIES, type ActivityDef } from '../rules/actions';
 import { traitDesc } from '../rules/glossary';
@@ -198,6 +198,12 @@ export function MainTab({
     .map((a) => ({ id: a.id, name: a.name, cost: a.actionCost, desc: a.description, descRefs: a.descRefs, traits: a.traits }));
   const preparedTactics = new Set(character.commanderTactics?.prepared ?? []);
   const tacticPreparedMax = character.commanderTactics?.preparedMax ?? 3;
+  // Stance feats the character has → an EXCLUSIVE stance toggle (entering one exits the others). Each
+  // stance's mechanical effects live in content.stances (keyed by the feat slug/id); the active one's
+  // Strike + AC/dex-cap/speed changes are injected in derive.
+  const stanceFeats = character.feats
+    .map((f) => content.feats[f.featId])
+    .filter((f): f is NonNullable<typeof f> => !!f && (f.traits ?? []).includes('stance') && !!content.stances?.[f.id]);
   // Item actions: activatable carried items (consumables, or invested/worn/equipped magic items).
   const itemActions: (Act & { key: string })[] = (character.inventory ?? [])
     .map((inv) => ({ inv, item: content.items[inv.itemId] }))
@@ -643,6 +649,29 @@ export function MainTab({
                 </>
               )}
             </div>
+
+            {stanceFeats.length > 0 && (
+              <div className="stance-bar">
+                <span className="stance-bar-label">Stance</span>
+                <div className="stance-chips">
+                  {stanceFeats.map((f) => (
+                    <button
+                      key={f.id}
+                      type="button"
+                      className={'stance-chip' + (character.activeStance === f.id ? ' on' : '')}
+                      disabled={!onPlay}
+                      title={content.stances[f.id]?.note || f.name}
+                      onClick={onPlay ? () => onPlay((p) => setActiveStance(p, f.id)) : undefined}
+                    >
+                      {f.name}
+                    </button>
+                  ))}
+                </div>
+                {character.activeStance && content.stances[character.activeStance]?.note && (
+                  <div className="stance-note">{content.stances[character.activeStance].note}</div>
+                )}
+              </div>
+            )}
 
             {subEff === 'strikes' ? (
               <div className="strikes">

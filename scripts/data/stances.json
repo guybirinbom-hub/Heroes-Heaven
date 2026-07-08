@@ -1,0 +1,716 @@
+{
+ "air-shroud": {
+  "note": "Your kinetic aura provides breathable air, imposes a -1 circumstance penalty on ranged attacks whose paths pass through it, and is difficult terrain for flying creatures other than you."
+ },
+ "anchor-stance": {
+  "note": "Requires being in or under water; grants a +2 circumstance bonus to Fort/Reflex DC vs Reposition/Shove and to saves vs forced movement, limits forced movement of 10+ ft to 5 ft on a DC 11 flat check, and removes the need to Swim each turn to avoid sinking."
+ },
+ "arcane-cascade": {
+  "note": "Melee Strikes deal +1 force damage (rising to 2 with weapon specialization, 3 with greater) and gain the arcane trait, using instead the damage type of your most recent damaging spell if it dealt damage."
+ },
+ "assume-earths-mantle": {
+  "note": "You become Large (+5 ft reach) with a climb Speed on earthen surfaces, gain a +1 circumstance bonus to Fortitude saves and +2 circumstance to Fort/Reflex DC vs Shove/Trip/knock Prone, and raise Strength to +4 (or +1 item bonus if already +4 or higher)."
+ },
+ "buckler-dance": {
+  "note": "Requires wielding a buckler; you constantly count as having Raised a Shield as long as you meet that action's requirements."
+ },
+ "bullet-dancer-stance": {
+  "note": "Requires being unarmored with a simple firearm/combination weapon; you may only Strike with bayonets, reinforced stocks, and simple firearms/combination weapons, and can use Flurry of Blows and other monk unarmed abilities with them."
+ },
+ "cenotaph-stance": {
+  "note": "Requires wielding a shield; you gain 10 temporary HP each turn, count as always having the shield raised, leave the stance if you move, and can Shield Block for allies within 15 feet plus gain an extra Shield-Block-only reaction each turn."
+ },
+ "channelers-stance": {
+  "note": "Energy-damage apparition/vessel spells you cast or Sustain gain a status bonus to damage equal to their rank, and vitality/void spells that restore HP grant a status bonus to initial healing equal to their rank (not healing over time)."
+ },
+ "claw-stance": {
+  "strikes": [
+   {
+    "name": "frenzied claw",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "finesse",
+     "grapple",
+     "unarmed",
+     "versatile piercing"
+    ]
+   }
+  ],
+  "note": "The only Strikes you can make are frenzied claw attacks."
+ },
+ "cobra-stance": {
+  "strikes": [
+   {
+    "name": "cobra fang",
+    "dice": 1,
+    "die": "d4",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "deadly d10",
+     "finesse",
+     "unarmed",
+     "venomous"
+    ]
+   }
+  ],
+  "note": "You gain a +1 circumstance bonus to Fortitude saves and your Fortitude DC plus poison resistance equal to half your level, and can only make cobra fang Strikes."
+ },
+ "commitment-to-vigilance": {
+  "note": "All spaces within your melee reach are difficult terrain for your enemies."
+ },
+ "covering-stance": {
+  "note": "At the end of each of your turns choose an adjacent ally to gain lesser cover until your next turn, and if you Intercept an Attack protecting that ally they can Step as a free action."
+ },
+ "crane-stance": {
+  "strikes": [
+   {
+    "name": "crane wing",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "bludgeoning",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "finesse",
+     "nonlethal",
+     "unarmed"
+    ]
+   }
+  ],
+  "acBonus": {
+   "value": 1,
+   "type": "circumstance"
+  },
+  "note": "Requires being unarmored, limits you to crane wing Strikes, reduces High/Long Jump DCs by 5, and extends Leaps by 5 feet horizontally or 2 feet vertically."
+ },
+ "crowned-in-tempests-fury": {
+  "note": "Creatures entering or ending their turn in your kinetic aura take 2d12 electricity damage, you gain a 20-foot fly Speed, a +10-foot status bonus to all Speeds, and your air Elemental Blasts deal +1d12 electricity."
+ },
+ "defy-hell": {
+  "note": "Requires not being unholy; grants a +2 status bonus to saves against mental effects and lets you make Hellbreaker Strikes."
+ },
+ "desert-wind": {
+  "note": "Creatures in your kinetic aura are Concealed from those outside and vice versa (except you), and your damaging air impulses hitting an aura creature deal +1 slashing damage (2 if single-target), scaling +1/+2 every 2 levels."
+ },
+ "devrins-cunning-stance": {
+  "note": "Entering requires a Deception check whose degree of success sets your marshal's aura effects: allies gain a +1 status bonus to skill checks and Striking an off-guard enemy stops it using reactions until its next turn (a crit success also enlarges the aura to a 20-foot emanation)."
+ },
+ "disarming-stance": {
+  "note": "Requires wielding a single one-handed melee weapon with nothing else in hand; grants +1 circumstance to Disarm via Athletics, +2 circumstance to your Reflex DC against Disarm attempts, and lets you Disarm creatures up to two sizes larger."
+ },
+ "disruptive-stance": {
+  "note": "Lets you use Reactive Strike against concentrate actions (in addition to manipulate and move) and disrupt a triggering concentrate/manipulate action whenever your Strike hits, not only on a crit."
+ },
+ "divine-presence": {
+  "note": "Grants a 5-foot aura emanation you can act from any space within and Sustain to grow up to 15 feet, and an enemy ending its turn fully inside it is off-guard to your Strikes."
+ },
+ "dragon-stance": {
+  "strikes": [
+   {
+    "name": "Dragon Tail",
+    "dice": 1,
+    "die": "d10",
+    "damageType": "bludgeoning",
+    "group": "brawling",
+    "traits": [
+     "backswing",
+     "nonlethal",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "Requires being unarmored and lets you ignore the first square of difficult terrain while Striding."
+ },
+ "dread-marshal-stance": {
+  "note": "Entering requires an Intimidation check; on a success your marshal's aura grants you and allies a +1 status bonus to damage (or equal to your weapon's damage dice) and makes enemies frightened 1 when critically hit with a Strike."
+ },
+ "drifting-pollen": {
+  "note": "Creatures in or entering your kinetic aura (or ending their turn there) must make a Fortitude save vs your class DC or become sickened (1, or 2 on a crit fail) and dazzled while sickened, at most once per round."
+ },
+ "drowning-mist": {
+  "note": "Your aura is difficult terrain for creatures without a swim Speed and forces air-breathers to hold their breath, with a Fortitude save (vs class DC, max once per round) when they spend air or be sickened; you are immune to your own mist."
+ },
+ "dueling-dance-fighter": {
+  "note": "While in the stance you constantly gain the benefits of Dueling Parry; requires wielding a single one-handed melee weapon with nothing else in your hands."
+ },
+ "dueling-dance-swashbuckler": {
+  "note": "While in the stance you constantly gain the benefits of Extravagant Parry; requires wielding only a single one-handed melee weapon with your other hand(s) free."
+ },
+ "duelists-form": {
+  "note": "You are quickened (extra action only to Step or use a single-action Aldori duelist activity); using your free hand ends the stance, and ending it leaves you fatigued until you rest 10 minutes."
+ },
+ "everstand-stance": {
+  "note": "Wielding your shield two-handed increases the weapon damage die of its boss/spikes by one step and raises its Hardness by 2 when using Shield Block; requires wielding a shield."
+ },
+ "fanes-fourberie": {
+  "note": "Choose to treat playing cards as daggers or darts and wield them as that weapon; lost/thrown cards can be recovered after 1 minute if most of the deck remains, and the deck can be etched with runes as a magic weapon."
+ },
+ "flair-rider-stance": {
+  "note": "While mounted and in the stance your mount always grants you lesser cover and you don't take the -2 circumstance penalty to Reflex saves for being mounted."
+ },
+ "flood-stance": {
+  "strikes": [
+   {
+    "name": "Flooded River",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "bludgeoning",
+    "group": "brawling",
+    "traits": [
+     "nonlethal",
+     "trip",
+     "unarmed",
+     "water"
+    ]
+   }
+  ],
+  "note": "You hold your breath (up to 10 minutes) and can make only flooded river Strikes, which ignore the underwater penalty and gain the forceful trait while underwater; you don't lose air from attacking, being crit hit, or crit-failing a save, but lose all air if you speak or Cast a Spell."
+ },
+ "forests-heart": {
+  "strikes": [
+   {
+    "name": "Roots and Vines",
+    "dice": 4,
+    "die": "d8",
+    "damageType": "bludgeoning",
+    "group": "brawling",
+    "traits": [
+     "finesse",
+     "grapple",
+     "reach",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "These reach-30-feet unarmed attacks gain no damage from striking runes but can benefit from the attack-roll item bonus and property runes of worn Handwraps of Mighty Blows; requires an attuned apparition granting Forest Lore or Herbalism Lore."
+ },
+ "geologic-attunement": {
+  "note": "You gain imprecise tremorsense in your kinetic aura (precise at 13th level) and once per round can Point Out a creature you sense with it as a free action."
+ },
+ "ghosts-in-the-storm": {
+  "note": "You and allies in your kinetic aura gain a +2 status bonus to Reflex saves and Acrobatics checks, and after a move action become concealed with the shock rune on Strikes until the start of the next turn."
+ },
+ "golden-erinys-stance": {
+  "strikes": [
+   {
+    "name": "Fury's Fang",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "backstabber",
+     "finesse",
+     "forceful",
+     "nonlethal",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "On a critical hit with a melee Strike that deals piercing damage, the target becomes Sickened 1 (DC to remove equals your class DC), in addition to any critical specialization effect."
+ },
+ "gorilla-stance": {
+  "strikes": [
+   {
+    "name": "Gorilla Slam",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "bludgeoning",
+    "group": "brawling",
+    "traits": [
+     "backswing",
+     "forceful",
+     "grapple",
+     "nonlethal",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "You may only make gorilla slam Strikes, and you gain a +2 circumstance bonus to Athletics checks to Climb, with a success on a Climb check upgraded to a critical success."
+ },
+ "graceful-poise": {
+  "note": "If your second Double Slice Strike uses an agile weapon, Double Slice counts as one attack for your multiple attack penalty."
+ },
+ "haft-striker-stance": {
+  "strikes": [
+   {
+    "name": "Haft",
+    "dice": 1,
+    "die": "d4",
+    "damageType": "bludgeoning",
+    "group": "club",
+    "traits": [
+     "agile",
+     "finesse",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "Requires wielding a two-handed hammer, spear, or polearm; the haft is a simple weapon that shares the main weapon's fundamental runes and can be treated as a second weapon for two-weapon feats, but you can't use two-handed-weapon abilities."
+ },
+ "hampering-stance": {
+  "note": "Squares in a 5-foot emanation around you are difficult terrain for your enemies."
+ },
+ "immovable-object": {
+  "note": "While on the ground you are immune to forced movement, and an effect that would knock you prone instead fails and lets you Step as a free action."
+ },
+ "impassable-wall-stance": {
+  "note": "When you critically hit with a Reactive Strike triggered by a move action, you disrupt that move action."
+ },
+ "inspiring-marshal-stance": {
+  "note": "Requires a Diplomacy check to enter; on a success your aura grants you and allies a +1 status bonus to attack rolls and saves against mental effects."
+ },
+ "intensified-element-stance": {
+  "note": "Your strikes and damaging spells deal an extra 1d6 (2d6 if the elemental medicine was crafted by a legendary crafter) of a type keyed to the elemental medicine you expended against the corresponding creatures."
+ },
+ "ironblood-stance": {
+  "strikes": [
+   {
+    "name": "Iron Sweep",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "bludgeoning",
+    "group": "brawling",
+    "traits": [
+     "nonlethal",
+     "parry",
+     "sweep",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "You gain resistance 2 to all damage, increasing to 3 at 12th, 4 at 16th, and 5 at 20th level."
+ },
+ "jellyfish-stance": {
+  "strikes": [
+   {
+    "name": "Stinging Lash",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "finesse",
+     "nonlethal",
+     "reach",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "You gain a +2 circumstance bonus to Reflex saves and on checks to Escape and Squeeze."
+ },
+ "jesters-gambol": {
+  "note": "You ignore difficult terrain and gain resistance equal to half your level against damage dealt by animals, beasts, fey, fungi, and plants."
+ },
+ "jotuns-battle-stance": {
+  "note": "A wielded two-handed melee weapon that lacks reach gains a reach of 10 feet."
+ },
+ "kaiju-stance": {
+  "strikes": [
+   {
+    "name": "Shattering Earth",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "bludgeoning",
+    "group": "brawling",
+    "traits": [
+     "backswing",
+     "fatal d12",
+     "reach",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "You become Large and Clumsy 1, ignore difficult terrain, and on a critical hit deal 1 bludgeoning splash damage per weapon die to everything within 10 feet of the target."
+ },
+ "kindle-inner-flames": {
+  "note": "Grants a +1 status bonus to Reflex saves and Acrobatics checks (+2 at 12th) and a free Step once per round to you and allies in your kinetic aura, and affected creatures' Strikes deal an extra 2 fire damage until end of turn after they take a move action."
+ },
+ "lunging-stance": {
+  "note": "You can make a Reactive Strike against a creature outside your reach but within Lunge range, increasing that Strike's range by 5 feet."
+ },
+ "magnetic-field": {
+  "note": "Choose Attract or Repel polarity (switchable as a free action at the start of your turn): metal creatures treat your kinetic aura as difficult terrain when moving away from (Attract) or toward (Repel) you, and you pull or push unattended light-Bulk-or-less metal objects."
+ },
+ "masquerade-of-seasons-stance": {
+  "note": "Choose water, fire, void, or cold to gain resistance 5 (half your level at 12th+) to that damage type, changeable by using an action to reenter the stance."
+ },
+ "mobile-shot-stance": {
+  "note": "Your ranged Strikes don't trigger Reactive Strike or other reactions triggered by ranged attacks, and if you have Reactive Strike you may use it with a loaded ranged weapon against a creature within 5 feet."
+ },
+ "monastic-archer-stance": {
+  "note": "Requires being unarmored and wielding a longbow, shortbow, or monk-trait bow; you may only Strike with such bows, can use Flurry of Blows with them, and can use monk feats/abilities requiring unarmed attacks with them within half the first range increment."
+ },
+ "mountain-stance": {
+  "strikes": [
+   {
+    "name": "Falling Stone",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "bludgeoning",
+    "group": "brawling",
+    "traits": [
+     "forceful",
+     "nonlethal",
+     "unarmed"
+    ]
+   }
+  ],
+  "acBonus": {
+   "value": 4,
+   "type": "item"
+  },
+  "dexCap": 0,
+  "speedPenalty": 5,
+  "note": "Requires being unarmored and touching the ground; grants a +2 circumstance bonus to defenses against Reposition, Shove, Trip, and other forced movement, and its AC bonus is cumulative with potency runes on explorer's clothing, mystic armor, and bands of force."
+ },
+ "multishot-stance": {
+  "note": "Requires wielding a reload-0 ranged weapon; your Double Shot penalty is reduced to -1 (-2 for three Strikes with Triple Shot), and the stance ends if you move from your position."
+ },
+ "orchards-endurance": {
+  "note": "You and allies in your kinetic aura gain resistance 5 (+2 per +4 levels) to bludgeoning and piercing and roll persistent-damage recovery flat checks twice, taking the higher result (fortune)."
+ },
+ "paragons-guard": {
+  "note": "Requires wielding a shield; you constantly have your shield raised as if you'd used Raise a Shield."
+ },
+ "peafowl-stance": {
+  "note": "Requires a one-handed monk sword; you can make only melee Strikes with it, and once per round after a hit with a monk sword Strike you can Step as a free action as your next action."
+ },
+ "point-blank-stance": {
+  "note": "Requires a ranged weapon; ignore the volley trait's attack penalty, or gain a +2 circumstance bonus to damage within the first range increment with non-volley ranged weapons."
+ },
+ "powder-punch-stance": {
+  "note": "On your first melee Strike each round with an unarmed attack, knuckle dusters, or black powder knuckle dusters you deal 1 extra fire damage, and a critical Shove pushes the target 5 additional feet."
+ },
+ "push-back-the-dead": {
+  "note": "Grants an ally a +2 circumstance bonus to saves against undead effects and resistance to undead Strike damage equal to half your Charisma modifier (the +2 is to saves vs. undead, not AC)."
+ },
+ "rain-of-embers-stance": {
+  "strikes": [
+   {
+    "name": "Fire Talon",
+    "dice": 1,
+    "die": "d4",
+    "damageType": "fire",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "finesse",
+     "fire",
+     "nonlethal",
+     "unarmed"
+    ]
+   }
+  ],
+  "acBonus": {
+   "value": 1,
+   "type": "status"
+  },
+  "note": "Requires being unarmored; you can make only fire talon Strikes and gain fire resistance equal to half your level (minimum 1)."
+ },
+ "ravel-of-thorns": {
+  "note": "Thorny hazardous terrain grows in your kinetic aura, giving creatures a -10-foot circumstance Speed penalty and dealing piercing damage (doubled on water/soil) when they move into a square; thorns disappear if you move and regrow at end of turn."
+ },
+ "reflective-ripple-stance": {
+  "strikes": [
+   {
+    "name": "flowing wave",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "bludgeoning",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "disarm",
+     "finesse",
+     "nonlethal",
+     "trip",
+     "unarmed",
+     "water"
+    ]
+   }
+  ],
+  "note": "Grants a +1 circumstance bonus to Athletics for Disarm/Swim/Trip and a +2 circumstance bonus to Reflex DC to avoid being Disarmed or Tripped."
+ },
+ "ricochet-stance-fighter": {
+  "note": "Thrown bludgeoning/slashing weapons return to your hand after a ranged Strike within range increment (needing a free hand), enabling additional Strikes."
+ },
+ "ricochet-stance-rogue": {
+  "note": "Thrown bludgeoning/slashing weapons return to your hand after a ranged Strike within range increment (needing a free hand), enabling additional Strikes."
+ },
+ "rough-terrain-stance": {
+  "note": "Each adjacent square becomes difficult terrain matching your terrain attunement (which you ignore), and the stance ends if you move into a different terrain type."
+ },
+ "rushing-goat-stance": {
+  "strikes": [
+   {
+    "name": "ramming horn",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "bludgeoning",
+    "group": "brawling",
+    "traits": [
+     "forceful",
+     "nonlethal",
+     "shove",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "Ramming horn is your only usable Strike; if your prior action was Climb/Stride/Leap you gain a damage bonus equal to your number of weapon damage dice, and you can make it while Climbing without a free hand."
+ },
+ "sea-glass-guardians": {
+  "acBonus": {
+   "value": 1,
+   "type": "status"
+  },
+  "note": "You and allies in your kinetic aura also gain a +1 status bonus to saving throws, and a creature critically hit or critically failing a save (staying above 0 HP) is healed as the impulse ends (d10s instead of d8s if in water)."
+ },
+ "shattershields": {
+  "acBonus": {
+   "value": 1,
+   "type": "circumstance"
+  },
+  "note": "Four floating plates each reduce physical-attack damage to affected creatures by Hardness 5 (destroyed if damage exceeds it), replenishable with a single concentrate action."
+ },
+ "shooting-stars-stance": {
+  "note": "You can use monk feats or abilities that normally require unarmed attacks with shuriken instead."
+ },
+ "six-pillars-stance": {
+  "acBonus": {
+   "value": 4,
+   "type": "circumstance"
+  },
+  "note": "The +4 AC applies only against reactions triggered by concentrate or manipulate actions, and casting a spell that requires one or more actions grants your unarmed Strikes a +1 circumstance bonus to damage."
+ },
+ "sky-and-heaven-stance": {
+  "strikes": [
+   {
+    "name": "Skyward Slash",
+    "dice": 1,
+    "die": "d10",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "nonlethal",
+     "unarmed",
+     "versatile-p"
+    ]
+   }
+  ],
+  "note": "You can only make skyward slash Strikes and gain resistance 2 to electricity and sonic (increasing to 5 at 12th and 8 at 18th level)."
+ },
+ "spear-of-doom": {
+  "note": "You can Strike the triggering enemy as a reaction whenever they succeed or crit an attack against you, gain an extra reaction each turn usable only for that Strike or Reactive Strikes, and your cursed weakness equals your full level instead of half."
+ },
+ "spell-network": {
+  "note": "Allies within your spellsurge aura can treat any other ally as a spell's point of origin (sharing touch range) and can redirect self-only spells to another ally in the aura."
+ },
+ "spiritual-spellshape-stance": {
+  "note": "Once per turn you can use a 1-action spellshape feat as a free action, but only to affect spells dealing spirit, vitality, or void damage."
+ },
+ "steam-knight": {
+  "note": "You gain a +10-foot status bonus to Speed, can jump up to your Speed when you Leap (dealing fire damage to creatures you pass within 10 feet), and emit basic-Reflex fire damage to creatures in your kinetic aura each turn as a free action."
+ },
+ "stoked-flame-stance": {
+  "strikes": [
+   {
+    "name": "Flashing Spark",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "forceful",
+     "nonlethal",
+     "sweep",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "You gain a +5-foot status bonus to Speed (or an increased incredible movement bonus), and an alternate crit specialization can deal 1d6 persistent fire damage."
+ },
+ "strategist-stance": {
+  "note": "Entering requires a Society or Warfare Lore check (DC = your level); on success your marshal's aura grants you and allies a +1 status bonus to Reflex saves (crit success also enlarges the aura to 20 feet and can make a Recall-Knowledge target off-guard)."
+ },
+ "stretching-reach": {
+  "note": "While wielding a two-handed melee weapon without reach, that weapon gains a reach of 10 feet."
+ },
+ "stumbling-stance": {
+  "strikes": [
+   {
+    "name": "Stumbling Swing",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "bludgeoning",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "backstabber",
+     "finesse",
+     "nonlethal",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "Gain a +1 circumstance bonus to Deception checks to Feint, and an enemy that hits you with a melee Strike becomes off-guard against your next stumbling swing before the end of your next turn."
+ },
+ "stunt-performer-stance": {
+  "note": "Gain a +2 circumstance bonus to Reflex saves and Escape checks and resistance 2 to all physical damage (requires being unarmored)."
+ },
+ "talon-stance": {
+  "strikes": [
+   {
+    "name": "Spinning Talon",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "finesse",
+     "sweep",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "You don't need a free hand to make spinning talon Strikes."
+ },
+ "tangled-forest-stance": {
+  "strikes": [
+   {
+    "name": "Lashing Branch",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "finesse",
+     "nonlethal",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "Each enemy in your reach that tries to move away must succeed at a Reflex save, Acrobatics, or Athletics check vs your class DC or be immobilized for that action (requires being unarmored)."
+ },
+ "tenacious-stance": {
+  "note": "Gain temporary Hit Points equal to half your level (min 1) and a +2 circumstance bonus to DCs against Shove and Trip, but you no longer negate the armor check penalty or Speed penalty from high Strength (requires wearing armor)."
+ },
+ "thermal-nimbus": {
+  "note": "Choose cold or fire; you and allies in your kinetic aura gain resistance equal to your level to that type, and creatures starting or moving into the aura take half-your-level damage of the chosen type."
+ },
+ "tiger-stance": {
+  "strikes": [
+   {
+    "name": "Tiger Claw",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "finesse",
+     "nonlethal",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "On a critical hit dealing damage the target takes 1d4 persistent bleed, and while your Speed is at least 20 feet you can Step 10 feet (requires being unarmored)."
+ },
+ "twinned-defense-fighter": {
+  "acBonus": {
+   "value": 1,
+   "type": "circumstance"
+  },
+  "note": "You constantly gain the benefits of the Twin Parry action while wielding two melee weapons, one in each hand."
+ },
+ "twinned-defense-swashbuckler": {
+  "acBonus": {
+   "value": 1,
+   "type": "circumstance"
+  },
+  "note": "You constantly gain the benefits of the Twin Parry action while wielding two melee weapons, one in each hand."
+ },
+ "twisting-petal-stance": {
+  "strikes": [
+   {
+    "name": "Gale Blossom",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "finesse",
+     "nonlethal",
+     "shove",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "You gain +1 circumstance bonuses to Athletics to Shove and Deception to Feint, plus +2 circumstance bonuses to your Fortitude DC against being Shoved and Perception DC against Feints; requires being unarmored."
+ },
+ "unified-stance": {
+  "note": "Your united companion (within 15 feet on entry) gains the Quickened condition and can use its extra action to Stride or Strike when Commanded."
+ },
+ "vitality-manipulating-stance": {
+  "strikes": [
+   {
+    "name": "Vitality Blast",
+    "dice": 1,
+    "die": "d4",
+    "damageType": "void",
+    "traits": [
+     "unarmed",
+     "versatile vitality"
+    ]
+   }
+  ],
+  "note": "Vitality blast is a ranged unarmed Strike with a 30-foot range, and Stunning Fist can instead force a Fortitude save that leaves the target enfeebled 2 with disrupted manipulate actions (worsening on failure, adding a -10-foot Speed penalty on a critical failure)."
+ },
+ "war-rider-stance": {
+  "note": "Your dragon companion gains a 5-foot emanation aura that deals its support-benefit damage (basic Reflex vs. the mount's Athletics DC) to creatures starting their turn inside it."
+ },
+ "waterfowl-stance": {
+  "note": "The dandpatta, scimitar, talwar, and zulfikar gain the monk trait for you, and Tumbling Through or Leaping over a creature while wielding one deals 1d6 slashing (2d6 with greater striking, 3d6 with major striking)."
+ },
+ "whirling-blade-stance": {
+  "note": "All finesse melee monk weapons you wield gain thrown 10 feet, letting you make additional ranged Strikes measured from the prior target before the weapon flies back to you at end of turn."
+ },
+ "whirlwind-stance": {
+  "acBonus": {
+   "value": 2,
+   "type": "circumstance"
+  },
+  "note": "Requires wielding your staff (which must have the parry trait) to enter and maintain the stance."
+ },
+ "winter-sleet": {
+  "note": "Ice in your kinetic aura makes creatures that move on it fall unless they succeed at an Acrobatics check or Reflex save (Stepping or Crawling is exempt, and you're immune), and a creature crit hit or crit failing a save against your water impulses becomes slowed 1."
+ },
+ "wolf-stance": {
+  "strikes": [
+   {
+    "name": "Wolf Jaw",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "backstabber",
+     "finesse",
+     "nonlethal",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "Requires being unarmored, and while flanking a target your wolf jaw attacks also gain the trip trait."
+ }
+}

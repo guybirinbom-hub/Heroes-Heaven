@@ -2069,6 +2069,59 @@ body {
 }
 
 /* ---- strikes ---- */
+/* Stance toggle bar (combat view): exclusive stance chips + the active stance's effect note. */
+.stance-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--app-border, #2a2e3d);
+  border-radius: 10px;
+  background: var(--app-panel-2, rgba(255, 255, 255, 0.03));
+}
+.stance-bar-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+  flex: none;
+}
+.stance-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.stance-chip {
+  border: 1px solid var(--app-border, #2a2e3d);
+  background: none;
+  color: inherit;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.stance-chip:hover:not(:disabled) {
+  border-color: var(--app-accent);
+}
+.stance-chip.on {
+  background: var(--app-accent);
+  color: var(--app-accent-text, #14161f);
+  border-color: var(--app-accent);
+  font-weight: 600;
+}
+.stance-chip:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.stance-note {
+  flex-basis: 100%;
+  font-size: 12px;
+  opacity: 0.8;
+  line-height: 1.4;
+}
 .strikes {
   display: flex;
   flex-direction: column;

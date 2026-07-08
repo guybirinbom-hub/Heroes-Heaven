@@ -1882,6 +1882,16 @@ if (existsSync('scripts/data/vehicles.json')) {
 if (existsSync('scripts/data/siege-weapons.json')) {
   db.siegeWeapons = JSON.parse(readFileSync('scripts/data/siege-weapons.json', 'utf8'));
 }
+// Stance mechanical effects (strike/AC/dexcap/speed), keyed by stance feat/action slug — extracted +
+// verified from the Foundry stance descriptions (see scripts/data/stances.json). Stamp each with its
+// id (slug) + name (from the source feat/action) so it's a self-describing content record.
+db.stances = existsSync('scripts/data/stances.json')
+  ? JSON.parse(readFileSync('scripts/data/stances.json', 'utf8'))
+  : {};
+for (const [slug, s] of Object.entries(db.stances)) {
+  s.id = slug;
+  s.name = db.feats[slug]?.name || db.actions[slug]?.name || slug.replace(/-/g, ' ');
+}
 
 // Additive content from `scripts/data/<category>-additions.json` (missing AoN entries mapped to the
 // app's shape). Each file is an array; entries are merged into db[category] only when their id isn't

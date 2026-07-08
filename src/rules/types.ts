@@ -845,6 +845,32 @@ export interface ModeDef {
   charId?: string;
 }
 
+/** An unarmed Strike a stance grants while active (e.g. Tiger Stance's claw). */
+export interface StanceStrike {
+  name: string;
+  dice: number;
+  die: string;
+  damageType: string;
+  group?: string;
+  traits: string[];
+}
+/** The mechanical effects of a stance (extracted from its rules text; keyed by feat/action slug in
+ *  ContentDatabase.stances). Only one stance is active at a time (Character.activeStance). */
+export interface StanceDef {
+  /** Slug (= the stance feat/action id) and display name — stamped by the importer. */
+  id?: string;
+  name?: string;
+  strikes?: StanceStrike[];
+  /** AC bonus granted while in the stance (e.g. Mountain Stance +4 item). */
+  acBonus?: { value: number; type: string };
+  /** Dexterity-to-AC cap the stance imposes (e.g. Mountain Stance 0); undefined = no cap. */
+  dexCap?: number;
+  /** Feet subtracted from all Speeds while in the stance. */
+  speedPenalty?: number;
+  /** Concise reminder of the stance's other/conditional effects. */
+  note?: string;
+}
+
 export type CompanionKind = 'animal' | 'familiar' | 'eidolon' | 'follower' | 'pet' | 'vehicle' | 'siege';
 
 /** A companion the player has chosen, stored on the character (derived into a stat block). */
@@ -914,6 +940,8 @@ export interface ContentDatabase {
   actions: Record<string, Action>;
   /** Toggleable modifier sets — built-in catalog merged with the user's saved modes. */
   modes: Record<string, ModeDef>;
+  /** Stance mechanical effects (strike/AC/dexcap/speed), keyed by the stance feat/action slug. */
+  stances: Record<string, StanceDef>;
   /** Etchable runes (potency/striking/resilient/reinforcing + property runes), keyed by id. */
   runes: Record<string, RuneDef>;
 }
@@ -1363,6 +1391,9 @@ export interface Character {
   companionModes?: Record<string, ModeDef[]>;
   /** Active modes (resolved defs) whose modifiers adjust stats; overlaid from play-state. */
   activeModes?: ModeDef[];
+  /** The slug of the single active stance (exclusive — one at a time); overlaid from play-state. Its
+   *  StanceDef (ContentDatabase.stances) injects a Strike + AC/dex-cap/speed changes in derive. */
+  activeStance?: string;
 
   // --- choices ---
   languages: string[];

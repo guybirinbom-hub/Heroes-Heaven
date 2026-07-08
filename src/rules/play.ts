@@ -75,6 +75,8 @@ export interface PlayState {
   details?: Partial<CharacterDetails>;
   /** Ids of active modes (toggleable modifier sets); resolved against content.modes. */
   activeModes?: string[];
+  /** Slug of the single active stance (exclusive by construction); resolved against content.stances. */
+  activeStance?: string;
   /** In-play preparation overrides for prepared casters, keyed `${entryId}:${rank}:${slotIndex}`.
    *  A spell id replaces the build's prepared spell; null = a deliberately emptied slot;
    *  an absent key keeps the build's preparation. */
@@ -276,6 +278,7 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     details: play.details ? { ...ch.details, ...play.details } : ch.details,
     appearance: play.appearance ? { ...ch.appearance, ...play.appearance } : ch.appearance,
     activeModes: (play.activeModes ?? []).map((id) => content.modes[id]).filter(Boolean),
+    activeStance: play.activeStance && content.stances?.[play.activeStance] ? play.activeStance : undefined,
     companionModes: Object.fromEntries(
       Object.entries(play.companionModes ?? {}).map(([cid, ids]) => [cid, ids.map((id) => content.modes[id]).filter(Boolean)]),
     ),
@@ -928,6 +931,13 @@ export function toggleMode(play: PlayState, id: string, modeDefs?: Record<string
     next = next.filter((mid) => mid === id || modeDefs?.[mid]?.exclusiveGroup !== group);
   }
   return { ...play, activeModes: next };
+}
+
+/** Enter a stance by slug, or exit it (pass the same slug again, or null). Exclusive by construction —
+ *  storing a single slug means entering one stance always replaces the previous. */
+export function setActiveStance(play: PlayState, slug: string | null): PlayState {
+  if (!slug || play.activeStance === slug) return { ...play, activeStance: undefined };
+  return { ...play, activeStance: slug };
 }
 
 /** Set a class-resource counter to a value, clamped to [0, max]. */

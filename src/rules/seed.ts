@@ -182,6 +182,7 @@ export const seedContent: ContentDatabase = {
   conditions: {},
   actions: {},
   modes: {},
+  stances: {},
   runes: {},
 };
 

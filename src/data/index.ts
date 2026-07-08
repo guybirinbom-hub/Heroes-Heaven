@@ -53,6 +53,7 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
     actions: merge(merge(seedContent.actions, c.actions ?? {}), hb.actions),
     // Built-in mode catalog, then the user's saved modes on top.
     modes: merge(CATALOG_MODE_MAP, loadModes()),
+    stances: merge(seedContent.stances ?? {}, c.stances ?? {}),
     runes: c.runes ?? {},
   };
 }
