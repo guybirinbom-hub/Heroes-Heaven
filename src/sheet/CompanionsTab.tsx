@@ -416,6 +416,29 @@ function TraitParen({ traits }: { traits: string[] }) {
     </>
   );
 }
+/** A companion Strike is Melee unless a trait marks it ranged/thrown (rare — a wielded ranged/thrown
+ *  weapon). Returns the range string when present (e.g. "20 ft"), '' for ranged-with-no-number, or null
+ *  for melee. */
+function attackRange(traits: string[]): string | null {
+  for (const t of traits) {
+    const m = /^(?:thrown|range(?:-increment)?)[- ]?(\d+)/i.exec(t);
+    if (m) return `${m[1]} ft`;
+    if (/^(?:thrown|ranged)$/i.test(t)) return '';
+  }
+  return null;
+}
+/** One companion attack line (animal companion + eidolon share this): Melee/Ranged label + 1-action
+ *  Strike glyph + name, to-hit, traits, damage. */
+function AttackLine({ a }: { a: { name: string; attack: number; damage: string; traits: string[] } }) {
+  const range = attackRange(a.traits);
+  return (
+    <div className="sb-line">
+      <b>{range === null ? 'Melee' : 'Ranged'}</b> <ActionGlyph cost={{ type: 'actions', value: 1 }} /> {a.name} {formatMod(a.attack)}
+      {range ? `, range ${range}` : ''}
+      <TraitParen traits={a.traits} />, <b>Damage</b> {a.damage}
+    </div>
+  );
+}
 function SenseList({ senses }: { senses: string[] }) {
   if (!senses.length) return null;
   return (
@@ -468,10 +491,7 @@ function AnimalBlock({ b, cond, hp }: { b: AnimalCompanionBlock; cond?: ReactNod
         </div>
       )}
       {b.attacks.map((a, i) => (
-        <div className="sb-line" key={i}>
-          <b>Melee</b> <ActionGlyph cost={{ type: 'actions', value: 1 }} /> {a.name} {formatMod(a.attack)}
-          <TraitParen traits={a.traits} />, <b>Damage</b> {a.damage}
-        </div>
+        <AttackLine a={a} key={i} />
       ))}
       {b.gearNote && (
         <div className="sb-line sb-muted">
@@ -590,10 +610,7 @@ function EidolonBlockView({ b, cond }: { b: EidolonBlock; cond?: ReactNode }) {
         ))}
       </div>
       {b.attacks.map((a, i) => (
-        <div className="sb-line" key={i}>
-          <b>Melee</b> <ActionGlyph cost={{ type: 'actions', value: 1 }} /> {a.name} {formatMod(a.attack)}
-          <TraitParen traits={a.traits} />, <b>Damage</b> {a.damage}
-        </div>
+        <AttackLine a={a} key={i} />
       ))}
       <div className="sb-line sb-muted">Shares your Hit Points; uses your AC, saves &amp; Perception.</div>
       <div className="sb-line">
