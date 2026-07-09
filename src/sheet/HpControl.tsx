@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { usePrefs } from '../data/prefs';
+import { useCustomization } from '../data/customization';
 import { useIsMobile } from './useIsMobile';
 import { HpNumpadModal } from './HpNumpadModal';
 
@@ -28,7 +28,7 @@ export function HpControl({
   onDamage?: (n: number) => void;
   onHeal?: (n: number) => void;
 }) {
-  const { hpCommandEntry } = usePrefs();
+  const { hpCommandEntry } = useCustomization();
   const isMobile = useIsMobile();
   const [numpadOpen, setNumpadOpen] = useState(false);
   const live = editable && !!onSetCurrent;

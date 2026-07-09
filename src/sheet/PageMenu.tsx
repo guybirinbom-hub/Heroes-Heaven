@@ -1,31 +1,27 @@
 import { useState } from 'react';
 import { useBackHandler } from './useEscapeClose';
-import { SettingsPage } from './SettingsPage';
 import type { ModeDef } from '../rules/types';
 
 export type PageMenuItem = { label: string; icon: string; onClick: () => void };
 
 /**
  * Hamburger menu (top-right) for the standalone pages that aren't the character sheet — the Characters
- * roster, the Homebrew manager, and Campaigns. Mirrors the sheet's own menu: a dropdown of nav items
- * plus an always-present Settings entry that opens the full-screen Settings page. Shown on every size
- * (phone + desktop) so navigation is consistent across the app.
+ * roster, the Homebrew manager, and Campaigns. A dropdown of nav items plus an always-present Settings
+ * entry. Settings is now a full page (routed by App via onOpenSettings), not an embedded modal.
  */
 export function PageMenu({
   items,
-  modes,
-  characters,
-  onSaveMode,
-  onDeleteMode,
+  onOpenSettings,
 }: {
   items: PageMenuItem[];
+  onOpenSettings?: () => void;
+  // Legacy props — Settings is now a route handled by App, but callers still pass these; accepted + ignored.
   modes?: Record<string, ModeDef>;
   characters?: { id: string; name: string }[];
   onSaveMode?: (mode: ModeDef) => void;
   onDeleteMode?: (id: string) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const [settingsOpen, setSettingsOpen] = useState(false);
   useBackHandler(open, () => setOpen(false));
   return (
     <div className="page-menu">
@@ -48,26 +44,19 @@ export function PageMenu({
                 <i className={'ti ' + it.icon} aria-hidden="true" /> {it.label}
               </button>
             ))}
-            <button
-              className="topmenu-item"
-              onClick={() => {
-                setOpen(false);
-                setSettingsOpen(true);
-              }}
-            >
-              <i className="ti ti-settings" aria-hidden="true" /> Settings
-            </button>
+            {onOpenSettings && (
+              <button
+                className="topmenu-item"
+                onClick={() => {
+                  setOpen(false);
+                  onOpenSettings();
+                }}
+              >
+                <i className="ti ti-settings" aria-hidden="true" /> Settings
+              </button>
+            )}
           </div>
         </>
-      )}
-      {settingsOpen && (
-        <SettingsPage
-          onClose={() => setSettingsOpen(false)}
-          modes={modes}
-          characters={characters}
-          onSaveMode={onSaveMode}
-          onDeleteMode={onDeleteMode}
-        />
       )}
     </div>
   );

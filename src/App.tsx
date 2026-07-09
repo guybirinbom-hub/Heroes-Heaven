@@ -29,8 +29,10 @@ import { ContentContext } from './sheet/ContentContext';
 import { PopupSizeController } from './sheet/PopupSizeController';
 import { OverlayDismissGuard } from './sheet/OverlayDismissGuard';
 import { PopupSizeLock } from './sheet/PopupSizeLock';
+import { SettingsPage } from './sheet/SettingsPage';
+import { CustomizationContext, useGlobalCustomization, effectiveCustomization } from './data/customization';
 import { bumpZoom, resetZoom, ZOOM_STEP } from './theme/zoom';
-import type { ContentDatabase, Item, ModeDef } from './rules/types';
+import type { Character, ContentDatabase, Item, ModeDef } from './rules/types';
 
 function initialRoster(): SavedChar[] {
   // A fresh install starts with an EMPTY roster — no demo character is injected. The RosterScreen
@@ -64,7 +66,9 @@ export default function App() {
   // heavy content database (public/core.json) loads in the background. Once content arrives we
   // continue to the last-active sheet — the app's usual landing screen — unless the user already
   // started interacting with the roster (then yanking them away would be jarring).
-  const [mode, setMode] = useState<'sheet' | 'builder' | 'roster' | 'homebrew' | 'campaigns'>('roster');
+  const [mode, setMode] = useState<'sheet' | 'builder' | 'roster' | 'homebrew' | 'campaigns' | 'settings'>('roster');
+  // Which screen the Settings / Customize pages should return to when closed (the one they opened from).
+  const [uiReturn, setUiReturn] = useState<'sheet' | 'roster' | 'homebrew' | 'campaigns'>('roster');
   const autoOpenSheet = useRef(true);
   // The build being edited: a BuildState (edit existing) or null (creating new).
   const [editing, setEditing] = useState<{ id: string; build: BuildState } | null>(null);
@@ -179,6 +183,9 @@ export default function App() {
   // to re-subscribe on every roster change. (Canonical "latest value" ref — safe to write in render.)
   const rosterRef = useRef(roster);
   rosterRef.current = roster;
+  // Live target for the Ctrl+zoom shortcuts: when the open character has a per-sheet zoom OVERRIDE, the
+  // shortcuts must adjust THAT (not the device zoom, which the overlay would otherwise snap back over).
+  const zoomTargetRef = useRef<{ id: string; zoom?: number } | null>(null);
   // Startup GC: reclaim on-device sharp portraits not referenced by a live character (replaced/deleted
   // in a previous session). Deferred here — instead of eagerly deleting on replace/delete — so in-session
   // undo can still restore a sharp copy. CRUCIAL: only run against an AUTHORITATIVE roster. A signed-in
@@ -308,12 +315,27 @@ export default function App() {
     return () => window.removeEventListener('contextmenu', onContextMenu);
   }, []);
 
-  // App zoom: Ctrl+wheel and Ctrl +/-/0 scale the whole UI (also adjustable in Settings).
+  // App zoom: Ctrl+wheel and Ctrl +/-/0 scale the whole UI (also adjustable in Settings). When the open
+  // character has a per-sheet zoom OVERRIDE, adjust that override instead of the device zoom (else the
+  // shortcut fights the overlay: it would jump to the device zoom and then snap back).
   useEffect(() => {
+    const zoomStep = (delta: number | 'reset') => {
+      const t = zoomTargetRef.current;
+      if (t && t.zoom != null) {
+        const next = delta === 'reset' ? 1 : Math.min(2, Math.max(0.6, Math.round((t.zoom + delta) * 20) / 20));
+        setRoster((r) =>
+          r.map((c) => (c.id === t.id ? { ...c, character: { ...c.character, customization: { ...c.character.customization, zoom: next } } } : c)),
+        );
+      } else if (delta === 'reset') {
+        resetZoom();
+      } else {
+        bumpZoom(delta);
+      }
+    };
     const onWheel = (e: WheelEvent) => {
       if (!e.ctrlKey) return;
       e.preventDefault();
-      bumpZoom(e.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP);
+      zoomStep(e.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP);
     };
     const onKey = (e: KeyboardEvent) => {
       if (!e.ctrlKey && !e.metaKey) return;
@@ -332,13 +354,13 @@ export default function App() {
       }
       if (e.key === '=' || e.key === '+') {
         e.preventDefault();
-        bumpZoom(ZOOM_STEP);
+        zoomStep(ZOOM_STEP);
       } else if (e.key === '-') {
         e.preventDefault();
-        bumpZoom(-ZOOM_STEP);
+        zoomStep(-ZOOM_STEP);
       } else if (e.key === '0') {
         e.preventDefault();
-        resetZoom();
+        zoomStep('reset');
       }
     };
     window.addEventListener('wheel', onWheel, { passive: false });
@@ -347,7 +369,7 @@ export default function App() {
       window.removeEventListener('wheel', onWheel);
       window.removeEventListener('keydown', onKey);
     };
-  }, [undo, redo]);
+  }, [undo, redo, setRoster]);
 
   // Cross-tab guard: the whole roster is one localStorage key written on every change, so a SECOND
   // context (another browser tab, or a dev tab open alongside the Tauri webview) would silently
@@ -371,6 +393,7 @@ export default function App() {
   }, [roster, setRoster]);
 
   const active = roster.find((c) => c.id === activeId) ?? roster[0];
+  zoomTargetRef.current = active ? { id: active.id, zoom: active.character.customization?.zoom } : null;
   // Derive the in-play character ONCE per (character, play, content) change. Inlining this in JSX
   // produced a fresh Character every App render, defeating all downstream memoization on the tabs.
   const character = useMemo(() => {
@@ -401,7 +424,27 @@ export default function App() {
   // for the builder (mid-create), Homebrew, and Campaigns, which are character-less and reachable from
   // the roster menu (a fresh phone opening one of them must not snap back to the roster).
   const effectiveMode =
-    active ? mode : mode === 'builder' || mode === 'homebrew' || mode === 'campaigns' ? mode : 'roster';
+    active ? mode : mode === 'builder' || mode === 'homebrew' || mode === 'campaigns' || mode === 'settings' ? mode : 'roster';
+  // Settings navigation (a full page). Remember where we came from so closing returns there. (Per-character
+  // Customize is NOT a page — it's a drawer inside the sheet, so live changes are visible.)
+  const openSettings = () => {
+    if (mode === 'sheet' || mode === 'roster' || mode === 'homebrew' || mode === 'campaigns') setUiReturn(mode);
+    setMode('settings');
+  };
+  const closeSubpage = () => setMode(uiReturn);
+  // Reactive device-global customization default + this character's effective customization (default +
+  // its overrides), provided to the sheet subtree so every consumer resolves the same values.
+  const globalCustom = useGlobalCustomization();
+  const effectiveCustom = useMemo(
+    () => effectiveCustomization(globalCustom, active?.character.customization),
+    [globalCustom, active?.character.customization],
+  );
+  // Edit the ACTIVE character's stored data (not play-state) — used for per-character customization.
+  const updateCharacter = (fn: (c: Character) => Character) => {
+    if (!active) return;
+    const id = active.id;
+    setRoster((r) => r.map((c) => (c.id === id ? { ...c, character: fn(c.character) } : c)));
+  };
   // Campaigns are a cloud feature — only offered when signed in. Local / not-signed-in users don't see
   // the menu item at all (a fully-local experience stays available by simply not signing in). The
   // DEV-only skip-login bypass can reach it too for local testing (`devBypass` is always false in the
@@ -571,6 +614,7 @@ export default function App() {
         onDelete={deleteChar}
         onOpenHomebrew={() => setMode('homebrew')}
         onOpenCampaigns={onOpenCampaigns}
+        onOpenSettings={openSettings}
         onSaveMode={saveModeDef}
         onDeleteMode={removeModeDef}
       />
@@ -635,6 +679,7 @@ export default function App() {
         onClose={() => setMode('sheet')}
         onOpenRoster={() => setMode('roster')}
         onOpenCampaigns={onOpenCampaigns}
+        onOpenSettings={openSettings}
         onSaveMode={saveModeDef}
         onDeleteMode={removeModeDef}
         characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
@@ -647,8 +692,22 @@ export default function App() {
         onClose={() => setMode('sheet')}
         onOpenRoster={() => setMode('roster')}
         onOpenHomebrew={() => setMode('homebrew')}
+        onOpenSettings={openSettings}
         characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
         modes={readyContent.modes}
+        onSaveMode={saveModeDef}
+        onDeleteMode={removeModeDef}
+      />
+    );
+  } else if (which === 'settings') {
+    screen = (
+      <SettingsPage
+        onClose={closeSubpage}
+        onOpenRoster={() => setMode('roster')}
+        onOpenHomebrew={() => setMode('homebrew')}
+        onOpenCampaigns={onOpenCampaigns}
+        modes={content?.modes}
+        characters={roster.map((c) => ({ id: c.id, name: c.character.name }))}
         onSaveMode={saveModeDef}
         onDeleteMode={removeModeDef}
       />
@@ -669,6 +728,9 @@ export default function App() {
         onDeleteMode={removeModeDef}
         onOpenHomebrew={() => setMode('homebrew')}
         onOpenCampaigns={onOpenCampaigns}
+        onOpenSettings={openSettings}
+        onCustomize={updateCharacter}
+        globalCustomization={globalCustom}
         onLeaveCampaign={leaveCampaign}
         partyEnabled={!!onOpenCampaigns}
         onRest={() =>
@@ -740,6 +802,7 @@ export default function App() {
           </div>
         )}
       </div>
+      <CustomizationContext.Provider value={effectiveCustom}>
       <ErrorBoundary
         resetKeys={[activeId, mode, roster.length]}
         title="This screen ran into a problem"
@@ -758,6 +821,7 @@ export default function App() {
       >
         {screen}
       </ErrorBoundary>
+      </CustomizationContext.Provider>
     </ContentContext.Provider>
   );
 }

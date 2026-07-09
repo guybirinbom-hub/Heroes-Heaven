@@ -26,6 +26,9 @@ export interface ClassResource {
   maxAtLevels?: [number, number][];
   /** A "meter" starts at 0 and fills UP to max (Cursebound); otherwise a pool starts full and depletes. */
   meter?: boolean;
+  /** Also grant this resource to a character who owns this dedication feat (archetype parity), not just
+   *  the base class. Only set for resources an archetype dedication actually grants with the same shape. */
+  feat?: string;
 }
 
 export const CLASS_RESOURCES: Record<string, ClassResource[]> = {
@@ -42,7 +45,7 @@ export const CLASS_RESOURCES: Record<string, ClassResource[]> = {
     },
   ],
   barbarian: [
-    { id: 'rage', name: 'Rage', kind: 'toggle', refresh: 'encounter', note: 'Raging: lasts 1 min / until the encounter ends.' },
+    { id: 'rage', name: 'Rage', kind: 'toggle', refresh: 'encounter', feat: 'barbarian-dedication', note: 'Raging: lasts 1 min / until the encounter ends.' },
   ],
   magus: [
     {
@@ -54,13 +57,32 @@ export const CLASS_RESOURCES: Record<string, ClassResource[]> = {
     },
   ],
   swashbuckler: [
-    { id: 'panache', name: 'Panache', kind: 'toggle', refresh: 'encounter', note: 'Gained via bravado actions; spent on finishers; clears at encounter end.' },
+    { id: 'panache', name: 'Panache', kind: 'toggle', refresh: 'encounter', feat: 'swashbuckler-dedication', note: 'Gained via bravado actions; spent on finishers; clears at encounter end.' },
   ],
   psychic: [
     { id: 'unleash-psyche', name: 'Unleash Psyche', kind: 'toggle', refresh: 'encounter', note: 'Amped spellcasting for 2 rounds, then a 2-round cooldown.' },
   ],
   commander: [
     { id: 'commanders-banner', name: "Commander's Banner", kind: 'toggle', refresh: 'manual', note: '+1 status to allies’ Will & DCs vs fear within 30 ft.' },
+  ],
+  ranger: [
+    {
+      id: 'hunt-prey',
+      name: 'Hunt Prey',
+      kind: 'toggle',
+      refresh: 'encounter',
+      feat: 'ranger-dedication',
+      note: 'Designate one target as your prey: +2 circumstance to Seek/Track it and to Recall Knowledge about it, ignore its cover/concealment when you Seek, and apply your hunter’s edge (Flurry / Precision / Outwit) against it. Re-Hunt to change targets.',
+    },
+  ],
+  investigator: [
+    {
+      id: 'devise-stratagem',
+      name: 'Devise a Stratagem',
+      kind: 'toggle',
+      refresh: 'encounter',
+      note: 'Roll a d20 now (before you Strike) against a chosen creature; use that roll plus your Intelligence for your next Strike against it this turn, and add your Strategic Strike precision damage on a hit.',
+    },
   ],
   oracle: [
     {
@@ -96,13 +118,31 @@ export function resourceInitial(r: ClassResource, level: number, abilityMods: Re
   return resourceMax(r, level, abilityMods);
 }
 
-/** The initial resource map for a class (id -> value), or {} if the class has none. */
+/** The resources a character actually has: their base class's, PLUS any granted by an archetype
+ *  dedication they own (e.g. Barbarian Dedication → Rage, Swashbuckler Dedication → Panache). */
+export function resourcesForCharacter(classId: string | null, featIds: Set<string> = new Set()): ClassResource[] {
+  const out: ClassResource[] = [];
+  const seen = new Set<string>();
+  for (const [clsId, list] of Object.entries(CLASS_RESOURCES)) {
+    const isBaseClass = classId === clsId;
+    for (const r of list) {
+      if ((isBaseClass || (r.feat && featIds.has(r.feat))) && !seen.has(r.id)) {
+        out.push(r);
+        seen.add(r.id);
+      }
+    }
+  }
+  return out;
+}
+
+/** The initial resource map for a character (id -> value), or {} if it has none. */
 export function initialClassResources(
   classId: string | null,
   level: number,
   abilityMods: Record<AbilityId, number>,
+  featIds: Set<string> = new Set(),
 ): Record<string, number> {
   const out: Record<string, number> = {};
-  for (const r of (classId && CLASS_RESOURCES[classId]) || []) out[r.id] = resourceInitial(r, level, abilityMods);
+  for (const r of resourcesForCharacter(classId, featIds)) out[r.id] = resourceInitial(r, level, abilityMods);
   return out;
 }

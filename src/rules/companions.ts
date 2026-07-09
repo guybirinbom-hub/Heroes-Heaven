@@ -36,7 +36,7 @@ import type {
 /** A save's defining ability → the save name a mode targets (modes match saves by name, not ability). */
 const SAVE_NAME: Partial<Record<AbilityId, string>> = { con: 'fortitude', dex: 'reflex', wis: 'will' };
 
-export type Maturity = 'young' | 'mature' | 'nimble' | 'savage' | 'specialized';
+export type Maturity = 'young' | 'mature' | 'nimble' | 'savage' | 'specialized' | 'specialized-savage';
 
 interface MaturityRow {
   ranks: {
@@ -89,14 +89,21 @@ export const COMPANION_FORMULA: {
       ranks: { ac: 'trained', saves: 'expert', perception: 'expert', attack: 'trained', signatureSkills: 'expert', otherSkills: 'trained' },
       speedBonus: 0, abilityBoosts: { str: 3, dex: 2, con: 2, wis: 2 }, damageDice: 2, flatDamage: 3,
     },
+    // Specialized on the NIMBLE path (cumulative: mature +1 all, nimble Dex+2, specialized Dex+1/Int+2).
     specialized: {
       ranks: { ac: 'trained', saves: 'master', perception: 'master', attack: 'expert', signatureSkills: 'master', otherSkills: 'trained' },
       speedBonus: 0, abilityBoosts: { str: 2, dex: 4, con: 2, wis: 2, int: 2 }, damageDice: 3, flatDamage: 4,
     },
+    // Specialized on the SAVAGE path (savage Str+2 & +3 dmg, specialized Dex+1/Int+2 & dmg 3→6). Str is one
+    // higher / Dex one lower than the nimble path, and flat unarmed damage is +6 rather than +4.
+    'specialized-savage': {
+      ranks: { ac: 'trained', saves: 'master', perception: 'master', attack: 'expert', signatureSkills: 'master', otherSkills: 'trained' },
+      speedBonus: 0, abilityBoosts: { str: 3, dex: 3, con: 2, wis: 2, int: 2 }, damageDice: 3, flatDamage: 6,
+    },
   },
 };
 
-export const MATURITIES: Maturity[] = ['young', 'mature', 'nimble', 'savage', 'specialized'];
+export const MATURITIES: Maturity[] = ['young', 'mature', 'nimble', 'savage', 'specialized', 'specialized-savage'];
 
 /** Skills every animal companion is trained in, beyond its type's signature skills. */
 const UNIVERSAL_SKILLS: SkillId[] = ['acrobatics', 'athletics'];
@@ -372,6 +379,10 @@ export function deriveFamiliar(
     speed: land,
     extraSpeeds,
     ...masterDefenses(character, content, conditions, modes),
+    // Spellslime's Ooze Defense: its AC is 10 + your level, NOT equal to yours (immune to crits/precision).
+    ...(sf?.id === 'spellslime'
+      ? { ac: 10 + character.level + conditionPenalty(conditions, 'dex', 'ac') + modeNumberBonus(modes, { kind: 'ac' }) }
+      : {}),
     abilities,
     specific: sf
       ? {
@@ -458,13 +469,16 @@ export function deriveEidolon(
   const level = character.level;
   const withoutLevel = pwl(character);
 
-  // An eidolon is always UNARMORED, but uses ITS OWN Dexterity (capped by its array's Dex cap) and
-  // the summoner's unarmored-defense proficiency. The array's item bonus to AC is added on top.
+  // An eidolon is always UNARMORED, uses ITS OWN Dexterity (capped by its array's Dex cap) and its OWN
+  // unarmored-defense proficiency, which advances on the eidolon's schedule (NOT the summoner's): trained,
+  // expert at 11 (Eidolon Defensive Expertise), master at 19 (Eidolon Defensive Mastery). The array's item
+  // bonus to AC is added on top.
   const cappedDex = ec.dexCap != null ? Math.min(ab.dex, ec.dexCap) : ab.dex;
+  const eidolonUnarmoredRank = level >= 19 ? 'master' : level >= 11 ? 'expert' : 'trained';
   const eidolonAc =
     10 +
     cappedDex +
-    profBonus(character.proficiencies.defenses.unarmored, level, withoutLevel) +
+    profBonus(eidolonUnarmoredRank, level, withoutLevel) +
     (ec.acItemBonus ?? 0) +
     conditionPenalty(conditions, 'dex', 'ac') +
     modeNumberBonus(modes, { kind: 'ac' });

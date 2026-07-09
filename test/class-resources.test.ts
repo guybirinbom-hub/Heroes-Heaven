@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { content, build } from './_content';
-import { CLASS_RESOURCES, resourceMax, resourceInitial, initialClassResources } from '../src/rules/classResources';
+import { CLASS_RESOURCES, resourceMax, resourceInitial, initialClassResources, resourcesForCharacter } from '../src/rules/classResources';
 import { emptyPlay, setResource, toggleResource, rest } from '../src/rules/play';
 import { abilityMod } from '../src/rules/derive';
 import type { AbilityId } from '../src/rules/types';
@@ -52,6 +52,32 @@ describe('buildCharacter populates classResources', () => {
   it('a class with no signature resource gets an empty map', () => {
     const ch = build('fighter', 3, { keyAbility: 'str' });
     expect(ch.classResources).toEqual({});
+  });
+});
+
+describe('class resources — archetype dedication parity', () => {
+  it('a base barbarian has Rage; a fighter with Barbarian Dedication also gets it', () => {
+    expect(resourcesForCharacter('barbarian', new Set()).map((r) => r.id)).toContain('rage');
+    expect(resourcesForCharacter('fighter', new Set(['barbarian-dedication'])).map((r) => r.id)).toContain('rage');
+  });
+
+  it('a fighter with Swashbuckler Dedication gets Panache', () => {
+    expect(resourcesForCharacter('fighter', new Set(['swashbuckler-dedication'])).map((r) => r.id)).toContain('panache');
+  });
+
+  it('a fighter with no relevant dedication has no class resources', () => {
+    expect(resourcesForCharacter('fighter', new Set())).toEqual([]);
+  });
+
+  it('magus / psychic / alchemist / oracle dedications do NOT auto-grant their resource (not a clean RAW grant)', () => {
+    const ids = resourcesForCharacter(
+      'fighter',
+      new Set(['magus-dedication', 'psychic-dedication', 'alchemist-dedication', 'oracle-dedication']),
+    ).map((r) => r.id);
+    expect(ids).not.toContain('arcane-cascade');
+    expect(ids).not.toContain('unleash-psyche');
+    expect(ids).not.toContain('versatile-vials');
+    expect(ids).not.toContain('cursebound');
   });
 });
 

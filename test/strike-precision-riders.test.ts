@@ -81,8 +81,10 @@ describe('Sneak Attack conditional precision (sneak-attack.json: 1d6 @1, +1 die 
 });
 
 describe('Ranger Precision hunters-edge (precision.json: 1d8 @1, 2d8 @11, 3d8 @19)', () => {
+  // The precision rider only applies while Hunt Prey is toggled on (you've declared a prey).
+  const hunting = (ch: Character): Character => ({ ...ch, classResources: { ...ch.classResources, 'hunt-prey': 1 } });
   const dice = (ch: Character) =>
-    strikeOf(ch, 'longsword').conditionalDamage?.find((r) => r.note.includes('hunted prey'))?.text;
+    strikeOf(hunting(ch), 'longsword').conditionalDamage?.find((r) => r.note.includes('hunted prey'))?.text;
 
   it('a Precision ranger deals 1d8 precision on the first hit vs hunted prey (any weapon), scaling at 11/19', () => {
     expect(dice(build('ranger', 1, { subclassId: 'precision' }))).toBe('1d8 precision');
@@ -90,8 +92,13 @@ describe('Ranger Precision hunters-edge (precision.json: 1d8 @1, 2d8 @11, 3d8 @1
     expect(dice(build('ranger', 19, { subclassId: 'precision' }))).toBe('3d8 precision');
   });
 
+  it('the precision rider is hidden until Hunt Prey is toggled on', () => {
+    const notHunting = build('ranger', 5, { subclassId: 'precision' }); // hunt-prey resource defaults to 0
+    expect(strikeOf(notHunting, 'longsword').conditionalDamage?.find((r) => r.note.includes('hunted prey'))).toBeUndefined();
+  });
+
   it('a Flurry ranger (no Precision edge) gets no precision rider', () => {
-    expect(strikeOf(build('ranger', 5, { subclassId: 'flurry' }), 'longsword').conditionalDamage).toBeUndefined();
+    expect(strikeOf(hunting(build('ranger', 5, { subclassId: 'flurry' })), 'longsword').conditionalDamage).toBeUndefined();
   });
 });
 

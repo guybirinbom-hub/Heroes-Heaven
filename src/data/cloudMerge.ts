@@ -129,6 +129,10 @@ export function mergeBundles(local: CloudBundle, cloud: CloudBundle | null, now:
   // Settings (prefs/appearance) aren't union-able — take whichever side changed them more recently.
   const localTs = local.settingsUpdated ?? 0;
   const cloudTs = cloud.settingsUpdated ?? 0;
+  // Sheet-customization default is merged INDEPENDENTLY (its own timestamp), so a customization edit on one
+  // device isn't discarded by a more-recent theme/prefs edit on another.
+  const localCustTs = local.customizationUpdated ?? 0;
+  const cloudCustTs = cloud.customizationUpdated ?? 0;
   // "Last synced from …" metadata: keep whichever side wrote the cloud more recently.
   const localEdited = local.lastEditedAt ?? 0;
   const cloudEdited = cloud.lastEditedAt ?? 0;
@@ -149,6 +153,8 @@ export function mergeBundles(local: CloudBundle, cloud: CloudBundle | null, now:
     ),
     settings: cloudTs > localTs ? cloud.settings : local.settings, // ties → local
     settingsUpdated: Math.max(localTs, cloudTs),
+    customization: cloudCustTs > localCustTs ? cloud.customization : local.customization, // ties → local
+    customizationUpdated: Math.max(localCustTs, cloudCustTs),
     lastDevice: cloudEdited > localEdited ? cloud.lastDevice : local.lastDevice,
     lastEditedAt: Math.max(localEdited, cloudEdited) || undefined,
   };

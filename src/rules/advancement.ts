@@ -140,7 +140,13 @@ export const CLASS_ADVANCEMENT: Record<string, AdvancementEntry[]> = {
     { level: 17, track: 'light', rank: 'master', source: 'armor-mastery' },
     { level: 17, track: 'medium', rank: 'master', source: 'armor-mastery' },
     { level: 17, track: 'heavy', rank: 'master', source: 'armor-mastery' },
+    // Versatile Legend (L19): all simple/martial/unarmed → legendary, all advanced → master (general clause;
+    // the chosen group is already legendary from Weapon Legend). This is category-wide, so it belongs here.
     { level: 19, track: 'classDc', rank: 'master', source: 'versatile-legend' },
+    { level: 19, track: 'unarmed', rank: 'legendary', source: 'versatile-legend' },
+    { level: 19, track: 'simple', rank: 'legendary', source: 'versatile-legend' },
+    { level: 19, track: 'martial', rank: 'legendary', source: 'versatile-legend' },
+    { level: 19, track: 'advanced', rank: 'master', source: 'versatile-legend' },
   ],
   ranger: [
     { level: 3, track: 'will', rank: 'expert', source: 'will-expertise' },
@@ -150,6 +156,10 @@ export const CLASS_ADVANCEMENT: Record<string, AdvancementEntry[]> = {
     { level: 7, track: 'reflex', rank: 'master', source: 'natural-reflexes' },
     { level: 7, track: 'perception', rank: 'master', source: 'perception-mastery' },
     { level: 9, track: 'classDc', rank: 'expert', source: 'ranger-expertise' },
+    // Warden-spell proficiency: Ranger Expertise (9) → expert, Masterful Hunter (17) → master. No-op for a
+    // ranger without warden spells (no ranger-focus entry to raise).
+    { level: 9, track: 'spellcasting', rank: 'expert', source: 'ranger-expertise' },
+    { level: 17, track: 'spellcasting', rank: 'master', source: 'masterful-hunter' },
     { level: 11, track: 'fortitude', rank: 'master', source: 'wardens-endurance' },
     { level: 11, track: 'unarmored', rank: 'expert', source: 'medium-armor-expertise' },
     { level: 11, track: 'light', rank: 'expert', source: 'medium-armor-expertise' },
@@ -202,7 +212,9 @@ export const CLASS_ADVANCEMENT: Record<string, AdvancementEntry[]> = {
     { level: 9, track: 'fortitude', rank: 'expert', source: 'magical-fortitude' },
     { level: 11, track: 'perception', rank: 'expert', source: 'perception-expertise' },
     { level: 11, track: 'unarmed', rank: 'expert', source: 'weapon-expertise' },
-    { level: 11, track: 'simple', rank: 'expert', source: 'weapon-expertise' },
+    // Wizard Weapon Expertise (L11) grants expert in unarmed + the FIVE wizard weapons only (club, crossbow,
+    // dagger, heavy crossbow, staff) — NOT all simple weapons. The per-weapon grant is applied in build.ts
+    // (weaponOverrides), since a category track would over-grant every other simple weapon.
     { level: 13, track: 'unarmored', rank: 'expert', source: 'defensive-robes' },
     { level: 15, track: 'spellcasting', rank: 'master', source: 'master-spellcaster' },
     { level: 17, track: 'will', rank: 'master', source: 'prodigious-will' },
@@ -362,17 +374,13 @@ export const CLASS_ADVANCEMENT: Record<string, AdvancementEntry[]> = {
   ],
   gunslinger: [
     { level: 3, track: 'will', rank: 'expert', source: 'stubborn' },
-    { level: 5, track: 'unarmed', rank: 'expert', source: 'gunslinger-weapon-mastery' },
-    { level: 5, track: 'simple', rank: 'master', source: 'gunslinger-weapon-mastery' },
-    { level: 5, track: 'martial', rank: 'master', source: 'gunslinger-weapon-mastery' },
-    { level: 5, track: 'advanced', rank: 'expert', source: 'gunslinger-weapon-mastery' },
+    // NOTE: the gunslinger's weapon advancement is FIREARMS & CROSSBOWS ONLY (Gunslinger Weapon Mastery /
+    // Gunslinging Legend) — the generic simple/martial/advanced/unarmed categories never advance (they stay
+    // at the L1 class ranks). That firearms/crossbows-by-category progression is handled by proficiencies.
+    // firearmProf in build.ts (a single weapon-GROUP rank can't express it), NOT by rows here.
     { level: 7, track: 'perception', rank: 'master', source: 'perception-mastery' },
     { level: 9, track: 'classDc', rank: 'expert', source: 'gunslinger-expertise' },
     { level: 11, track: 'reflex', rank: 'master', source: 'blast-dodger' },
-    { level: 13, track: 'unarmed', rank: 'master', source: 'gunslinging-legend' },
-    { level: 13, track: 'simple', rank: 'legendary', source: 'gunslinging-legend' },
-    { level: 13, track: 'martial', rank: 'legendary', source: 'gunslinging-legend' },
-    { level: 13, track: 'advanced', rank: 'master', source: 'gunslinging-legend' },
     { level: 13, track: 'unarmored', rank: 'expert', source: 'medium-armor-expertise' },
     { level: 13, track: 'light', rank: 'expert', source: 'medium-armor-expertise' },
     { level: 13, track: 'medium', rank: 'expert', source: 'medium-armor-expertise' },
@@ -464,10 +472,14 @@ export const CLASS_ADVANCEMENT: Record<string, AdvancementEntry[]> = {
     { level: 5, track: 'unarmed', rank: 'expert', source: 'expert-strikes' },
     { level: 5, track: 'simple', rank: 'expert', source: 'expert-strikes' },
     { level: 9, track: 'classDc', rank: 'expert', source: 'monk-expertise' },
+    // Ki-spell proficiency: Monk Expertise (9) → expert, Graceful Legend (17) → master. No-op for a monk
+    // without ki spells (no monk-focus entry to raise).
+    { level: 9, track: 'spellcasting', rank: 'expert', source: 'monk-expertise' },
     { level: 13, track: 'unarmed', rank: 'master', source: 'master-strikes' },
     { level: 13, track: 'simple', rank: 'master', source: 'master-strikes' },
     { level: 13, track: 'unarmored', rank: 'master', source: 'graceful-mastery' },
     { level: 17, track: 'classDc', rank: 'master', source: 'graceful-legend' },
+    { level: 17, track: 'spellcasting', rank: 'master', source: 'graceful-legend' },
     { level: 17, track: 'unarmored', rank: 'legendary', source: 'graceful-legend' },
   ],
   oracle: [

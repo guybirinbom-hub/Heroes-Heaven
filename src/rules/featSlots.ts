@@ -60,7 +60,11 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
     // Fork the Path): an impulse feat is only available if it carries one of your elements.
     if ((build.classId === 'kineticist' || (build.variantRules?.dualClass && build.classId2 === 'kineticist')) && f.traits.includes('impulse')) {
       const elements = kineticistElements(build, build.level).map((id) => id.replace(/-gate$/, ''));
-      if (elements.length && !f.traits.some((t) => elements.includes(t))) return false;
+      // Gate only impulses that carry an ELEMENT trait to a matching element. Elementless impulses
+      // (Command Elemental, Counter Element, …) work with any of your elements, so never hide them.
+      const KINETIC_ELEMENTS = ['air', 'earth', 'fire', 'metal', 'water', 'wood'];
+      const featElements = f.traits.filter((t) => KINETIC_ELEMENTS.includes(t));
+      if (elements.length && featElements.length && !featElements.some((t) => elements.includes(t))) return false;
     }
     // Fighter Combat/Improved Flexibility bonus slots take a fighter feat of level ≤8 (L9 slot) / ≤14 (L15).
     if (p.category === 'bonus' && build.classId === 'fighter' && (!f.traits.includes('fighter') || f.level > p.level - 1))

@@ -106,6 +106,18 @@ describe('mergeBundles', () => {
     expect((tie.settings!.prefs as { a: string }).a).toBe('L');
   });
 
+  it('merges the customization default on its OWN timestamp, independent of settings', () => {
+    // A theme/prefs change on the cloud side is NEWER, but the LOCAL side has the newer customization edit.
+    // The whole-blob settings LWW must NOT drag the stale cloud customization over the fresh local one.
+    const m = mergeBundles(
+      bundle({ settings: { appearance: { t: 'L' } }, settingsUpdated: 100, customization: { c: 'L' }, customizationUpdated: 200 }),
+      bundle({ settings: { appearance: { t: 'C' } }, settingsUpdated: 300, customization: { c: 'C' }, customizationUpdated: 50 }),
+    );
+    expect((m.settings!.appearance as { t: string }).t).toBe('C'); // cloud settings won (300 > 100)
+    expect((m.customization as { c: string }).c).toBe('L'); // but local customization won (200 > 50)
+    expect(m.customizationUpdated).toBe(200);
+  });
+
   it('tolerates bundles missing optional maps', () => {
     const local = bundle({ roster: [ch('a')], charUpdated: { a: 1 } });
     const cloud = { roster: [ch('b')], charUpdated: { b: 1 } } as CloudBundle; // no homebrew/sources/modes

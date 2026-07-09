@@ -46,8 +46,13 @@ describe('audit fixes — advancement & proficiency', () => {
     expect(deriveStrikes(ch, content()).some((s) => /acid flask/i.test(s.name))).toBe(true);
   });
 
-  it('Gunslinger firearms are expert (group proficiency) from level 1', () => {
-    expect(build('gunslinger', 1, { keyAbility: 'dex' }).proficiencies.weaponGroups?.firearm).toBe('expert');
+  it('Gunslinger firearms & crossbows proficiency is by category from level 1 (simple/martial expert, advanced trained)', () => {
+    // Modeled via firearmProf (category-aware), not a single weaponGroups.firearm rank — so advanced firearms
+    // stay trained@1 while simple/martial firearms are expert. See test/gunslinger-proficiency.test.ts.
+    const fp = build('gunslinger', 1, { keyAbility: 'dex' }).proficiencies.firearmProf;
+    expect(fp?.simple).toBe('expert');
+    expect(fp?.martial).toBe('expert');
+    expect(fp?.advanced).toBe('trained');
   });
 });
 

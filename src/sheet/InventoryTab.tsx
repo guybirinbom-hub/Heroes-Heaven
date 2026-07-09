@@ -27,7 +27,7 @@ import { confirmDialog } from './confirm';
 import { ActionGlyph, isActionCost } from './widgets';
 import { AddItemsModal } from './AddItemsModal';
 import { ItemEditorModal } from './ItemEditorModal';
-import { usePrefs } from '../data/prefs';
+import { useCustomization } from '../data/customization';
 
 const TYPE_ICON: Record<string, string> = {
   weapon: 'ti-sword',
@@ -165,7 +165,7 @@ function ItemCard({
   onAttachLeave?: () => void;
   onAttachDrop?: (srcId: string, hostId: string) => void;
 }) {
-  const { consumableHighlight } = usePrefs();
+  const { consumableHighlight } = useCustomization();
   const badge = stateBadge(inv);
   const equip = equipControl(item);
   const counters = rationsDayTracking && item.id === 'rations' ? [] : itemCounters(item, inv);

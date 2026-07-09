@@ -99,31 +99,38 @@ function setVars(vars: Record<string, string>): void {
   for (const [k, v] of Object.entries(vars)) root.style.setProperty(k, v);
 }
 
-/** Write the current appearance state onto <html>. */
-export function applyAppearance(): void {
-  const theme = themes[state.themeId] ?? themes[DEFAULT.themeId];
-  const style = styles[state.styleId] ?? styles[DEFAULT.styleId];
-  const font = fonts[state.fontId] ?? fonts[DEFAULT.fontId];
+/** Resolve a palette + style + font + accent + consumable colour onto <html>. The single place that
+ *  writes the theme CSS variables — used both for the device-global appearance and for a per-character
+ *  overlay (which passes overrides, falling back to the global state for anything unset). */
+function applyResolved(themeId: string, styleId: string, fontId: string, accent: string | null, consumable: string | null): void {
+  const theme = themes[themeId] ?? themes[DEFAULT.themeId];
+  const style = styles[styleId] ?? styles[DEFAULT.styleId];
+  const font = fonts[fontId] ?? fonts[DEFAULT.fontId];
 
   setVars(theme.tokens);
   setVars(style.tokens);
   setVars({ '--app-font': font.stack });
 
-  const accent = state.accent ?? theme.tokens['--app-accent'];
+  const acc = accent ?? theme.tokens['--app-accent'];
   setVars({
-    '--app-accent': accent,
-    '--app-accent-text': textOn(accent),
-    '--app-accent-hover': shift(accent, theme.polarity === 'light' ? -0.12 : 0.14),
-    '--app-focus': accent,
+    '--app-accent': acc,
+    '--app-accent-text': textOn(acc),
+    '--app-accent-hover': shift(acc, theme.polarity === 'light' ? -0.12 : 0.14),
+    '--app-focus': acc,
   });
 
-  // Consumable-card highlight: device override wins, else the theme's recommended colour.
-  setVars({ '--app-consumable': consumableOverride ?? theme.consumableColor });
+  // Consumable-card highlight: override wins, else the theme's recommended colour.
+  setVars({ '--app-consumable': consumable ?? theme.consumableColor });
 
   const root = document.documentElement;
   root.dataset.theme = theme.id;
   root.dataset.polarity = theme.polarity;
   root.style.colorScheme = theme.polarity;
+}
+
+/** Write the current (device-global) appearance state onto <html>. */
+export function applyAppearance(): void {
+  applyResolved(state.themeId, state.styleId, state.fontId, state.accent, consumableOverride);
 }
 
 /** The active theme's recommended consumable-highlight colour (ignores any user override). */
@@ -177,4 +184,30 @@ export function setAccent(accent: string | null): void {
   state = { ...state, accent };
   saveState();
   applyAppearance();
+}
+
+/**
+ * Overlay a specific character's customization onto <html> while their sheet is open, WITHOUT touching
+ * the persisted global appearance state. Each field is applied only when set (a null/absent field
+ * leaves the global value in place). To revert, the sheet calls applyGlobalCustomizationDom() (which
+ * re-runs applyAppearance and resets every token to the global default). Values here come from
+ * effectiveCustomization for the viewed character.
+ */
+export function applySheetOverlay(o: {
+  themeId?: string | null;
+  styleId?: string | null;
+  fontId?: string | null;
+  accent?: string | null;
+  consumable?: string | null;
+}): void {
+  applyResolved(
+    o.themeId ?? state.themeId,
+    o.styleId ?? state.styleId,
+    o.fontId ?? state.fontId,
+    // Accent fallback: the DEVICE accent belongs to the device theme, so only inherit it when the theme
+    // ISN'T overridden. When the character overrides the palette but leaves accent on inherit, pass null
+    // so applyResolved uses that theme's OWN accent (no cross-theme accent bleed).
+    o.accent ?? (o.themeId ? null : state.accent),
+    o.consumable ?? consumableOverride,
+  );
 }

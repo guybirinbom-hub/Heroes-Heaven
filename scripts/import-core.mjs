@@ -450,12 +450,12 @@ const db = {
 const langSet = new Set(['common']);
 
 /** Strike-damage property runes (Foundry has no structured damage on the rune item; this is the
- *  well-known elemental set). Greater variants deal the SAME 1d6 per hit; only Greater Flaming adds
- *  persistent damage on a crit (2d10 fire). The other greater elementals' crit effects (Frost → slowed,
- *  Shock → arcs to a second creature, Corrosive → damages armor, Thundering → deafened) aren't per-hit
- *  damage, so they're not modelled as a damage rider. */
+ *  well-known elemental set). Greater variants deal the SAME 1d6 per hit. BOTH Flaming runes add
+ *  persistent fire on a crit — base 1d10, Greater 2d10. The other greater elementals' crit effects
+ *  (Frost → slowed, Shock → arcs to a second creature, Corrosive → damages armor, Thundering → deafened)
+ *  aren't per-hit damage, so they're not modelled as a damage rider. */
 const RUNE_DAMAGE = {
-  flaming: { dice: 1, die: 'd6', type: 'fire' },
+  flaming: { dice: 1, die: 'd6', type: 'fire', critPersistent: { dice: 1, die: 'd10' } },
   'flaming-greater': { dice: 1, die: 'd6', type: 'fire', critPersistent: { dice: 2, die: 'd10' } },
   frost: { dice: 1, die: 'd6', type: 'cold' },
   'frost-greater': { dice: 1, die: 'd6', type: 'cold' },
@@ -825,6 +825,12 @@ function parseDefenses(rules) {
       const sel = r.selector.replace(/-speed$/, '');
       if (!['fly', 'swim', 'climb', 'burrow'].includes(sel)) continue;
       speeds[sel] = Math.max(speeds[sel] ?? 0, r.value);
+    } else if (r.key === 'FlatModifier' && typeof r.selector === 'string' && typeof r.value === 'number') {
+      // Unconditional speed increases (Fleet, Nimble Elf, Monk Moves, …) are FlatModifier rules on a
+      // "<type>-speed" selector — including "land-speed", which BaseSpeed never covers. Emit them as a
+      // speed grant (deriveSpeeds adds feat.speeds.<sel> to the base). Predicated ones are skipped above.
+      const m = r.selector.match(/^(land|fly|swim|climb|burrow)-speed$/);
+      if (m) speeds[m[1]] = Math.max(speeds[m[1]] ?? 0, r.value);
     } else if (r.key === 'Sense') {
       if (typeof r.selector !== 'string' || r.selector.includes('{')) continue;
       const sense = { name: r.selector };
@@ -875,6 +881,10 @@ function parseHpGrant(rules) {
         const c = m[1] === '' ? 1 : m[1] === '-' ? -1 : Number(m[1]);
         if (Number.isFinite(c)) return { maxHpBonus: { perLevel: c } };
       }
+      // The Resiliency feats: "3 * @actor.flags.system.<class>DedicationCount" = +3 HP per archetype feat
+      // of that class you have. Emit the multiplier + the archetype slug; derive.ts counts the feats.
+      const dc = s.match(/^(\d+)\*?@actor\.flags\.system\.(\w+?)DedicationCount$/);
+      if (dc) return { maxHpBonus: { perArchetypeFeat: Number(dc[1]), archetype: dc[2].toLowerCase() } };
       if (/^-?\d+$/.test(s)) return { maxHpBonus: { flat: Number(s) } };
     }
   }
@@ -941,8 +951,7 @@ function parseGrantedStrikes(rules, fallbackName) {
     const base = r.damage?.base;
     if (!base || typeof base.die !== 'string' || !base.die || base.die.includes('{')) continue;
     const rng = r.range;
-    const ranged = typeof rng === 'number' ? rng > 0 : !!(rng && (rng.increment ?? rng.max));
-    if (ranged) continue;
+    const rangeIncrement = typeof rng === 'number' ? (rng > 0 ? rng : undefined) : rng?.increment ?? rng?.max ?? undefined;
     let choiceValue;
     if (ro) {
       const toks = (JSON.stringify(r.predicate || []).match(/"([^"]+)"/g) || []).map((t) => t.slice(1, -1));
@@ -964,6 +973,8 @@ function parseGrantedStrikes(rules, fallbackName) {
       traits: Array.isArray(r.traits) && r.traits.length ? r.traits : ['unarmed'],
       group: r.group || 'brawling',
     };
+    // A ranged natural/unarmed attack (Spined Azarketi's spine: 1d4 poison, dart group, range 10).
+    if (rangeIncrement) g.range = rangeIncrement;
     if (choiceValue) g.choiceValue = choiceValue;
     out.push(g);
   }
@@ -972,6 +983,38 @@ function parseGrantedStrikes(rules, fallbackName) {
 function grantedStrikesField(rules, name) {
   const gs = parseGrantedStrikes(rules, name);
   return gs ? { grantedStrikes: gs } : {};
+}
+
+/** Heritage-specific grants that plain parseDefenses skips (predicated / choice-based):
+ *  - a `Sense darkvision` gated on `self:low-light-vision:from-ancestry` → darkvisionIfAncestryLowLight
+ *    (nephilim-type heritages: low-light, upgraded to darkvision if your ancestry already gives low-light);
+ *  - `hp.negativeHealing = true` (dhampir);
+ *  - a ChoiceSet + a Resistance of the chosen type valued `floor(level/2)` → choiceResistance (Deep Fetchling,
+ *    Elementheart Kobold: pick a damage type, gain resistance = half your level). */
+function parseHeritageGrants(rules) {
+  const list = rules || [];
+  const out = {};
+  const darkFromLL = list.some(
+    (r) =>
+      r?.key === 'Sense' &&
+      r.selector === 'darkvision' &&
+      JSON.stringify(r.predicate || []).includes('low-light-vision:from-ancestry'),
+  );
+  if (darkFromLL) out.darkvisionIfAncestryLowLight = true;
+  if (list.some((r) => r?.key === 'ActiveEffectLike' && String(r.path || '').includes('negativeHealing') && r.value === true)) {
+    out.negativeHealing = true;
+  }
+  const cs = list.find((r) => r?.key === 'ChoiceSet' && Array.isArray(r.choices) && r.flag);
+  const res = list.find((r) => r?.key === 'Resistance' && typeof r.type === 'string' && /flags\.system\.rulesSelections/.test(r.type));
+  if (cs && res && /floor\(@actor\.level\/2\)/.test(String(res.value))) {
+    out.choiceResistance = {
+      options: cs.choices
+        .filter((ch) => ch && typeof ch.value === 'string')
+        .map((ch) => ({ value: ch.value, label: titleCase(String(ch.label || ch.value).split('.').pop().replace(/^Trait/, '')) })),
+      halfLevel: true,
+    };
+  }
+  return out;
 }
 
 for (const e of readPack('heritages')) {
@@ -993,6 +1036,7 @@ for (const e of readPack('heritages')) {
     source: sourceOf(e),
     ...parseDefenses(s.rules),
     ...grantedStrikesField(s.rules, e.name),
+    ...parseHeritageGrants(s.rules),
     ...((() => {
       const innate = parseInnateSpells(s.rules, s.description?.value);
       return innate ? { innateSpells: innate } : {};
@@ -1518,6 +1562,10 @@ for (const e of readPack('spells')) {
     targets: s.target?.value || undefined,
     duration: s.duration?.value || undefined,
     save: s.defense?.save ? { type: s.defense.save.statistic, basic: !!s.defense.save.basic } : undefined,
+    // A spell whose defense is a passive AC check requires a SPELL ATTACK ROLL vs the target's AC (may
+    // coexist with a save — attack to hit, then the save). Populate the existing `defense: 'ac'` field so
+    // the sheet shows the attack (the importer previously dropped this, leaving spell-attack spells blank).
+    defense: s.defense?.passive?.statistic === 'ac' ? 'ac' : undefined,
     // Rituals: a tradition-less spell anyone can cast if they meet the primary-check proficiency.
     ...(s.ritual ? { ritual: true, ...(s.ritual.primary?.check ? { ritualPrimary: s.ritual.primary.check } : {}) } : {}),
     // Upcast scaling: structured base damage/area + the heightening increments (used to show "→ X" inline).
@@ -1619,8 +1667,11 @@ for (const e of EQUIP_PACK) {
       category: pick(s.category, bs?.category),
       group: pick(s.group, bs?.group) || '',
       damage: {
-        dice: pick(s.damage?.dice, bs?.damage?.dice) || 1,
-        die: pick(s.damage?.die, bs?.damage?.die) || 'd4',
+        // A weapon with an empty Foundry die (die:"") deals FLAT damage (blowgun, most bombs) — keep it
+        // empty rather than fabricating a d4. dice can be 0 (persistent-only bombs). derive.ts renders
+        // `${dice}${die}`, so an empty die yields a flat "N" (e.g. "1 piercing").
+        dice: pick(s.damage?.dice, bs?.damage?.dice) ?? 1,
+        die: pick(s.damage?.die, bs?.damage?.die) ?? '',
         type: pick(s.damage?.damageType, bs?.damage?.damageType) || 'untyped',
       },
       range: explicitRange ?? (thrownTrait ? Number(thrownTrait.split('-')[1]) : undefined) ?? (typeof bs?.range === 'number' ? bs.range : bs?.range?.value || undefined),

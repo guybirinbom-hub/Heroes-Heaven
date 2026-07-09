@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { themeList } from '../theme/themes';
-import { styleList } from '../theme/styles';
-import { fontList } from '../theme/fonts';
-import { getAppearance, setAccent, setFont, setStyle, setTheme, themeConsumableColor } from '../theme/theme-manager';
-import { bumpZoom, getZoom, resetZoom, subscribeZoom, ZOOM_MAX, ZOOM_MIN, ZOOM_STEP } from '../theme/zoom';
+import { getAppearance, setAccent, setFont, setStyle, setTheme } from '../theme/theme-manager';
+import { getZoom, setZoom, subscribeZoom } from '../theme/zoom';
 import { loadRoster, loadSyncMeta, wipeAllData } from '../data/storage';
 import { backupCharCount, backupFilename, createBackup, parseBackup, restoreBackup } from '../data/backup';
 import { cancelPersist, flushPersist } from '../data/persist';
@@ -14,21 +11,20 @@ import { isCloudSyncEnabled } from '../data/supabase';
 import { useAuth, signOut } from '../data/useAuth';
 import { getDeviceInfo, setLoginSkipped } from '../data/device';
 import { setPref, usePrefs } from '../data/prefs';
-import type { ModeDef } from '../rules/types';
+import { CustomizationEditor } from './CustomizationEditor';
+import { useGlobalCustomization, setGlobalCustomizationField, DEFAULT_CUSTOMIZATION } from '../data/customization';
+import { PageMenu } from './PageMenu';
+import { WindowControls } from './WindowControls';
+import { HeroesHeavenLogo } from './Logo';
+import type { Customization, ModeDef } from '../rules/types';
 import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
 import { ModeEditor, summarizeMod } from './ModesPanel';
 import { useIsMobile } from './useIsMobile';
 import { useBackHandler } from './useEscapeClose';
 
-const ACCENTS = [
-  '#6366f1', '#818cf8', '#0ea5e9', '#22d3ee', '#14b8a6', '#10b981', '#84cc16', '#c9a227',
-  '#f59e0b', '#f97316', '#ef4444', '#f43f5e', '#ec4899', '#a855f7',
-];
-
-type SectionId = 'appearance' | 'customization' | 'modes' | 'backup' | 'account' | 'about' | 'uninstall';
+type SectionId = 'appearance' | 'modes' | 'backup' | 'account' | 'about' | 'uninstall';
 const ALL_SECTIONS: { id: SectionId; label: string; icon: string }[] = [
   { id: 'appearance', label: 'Appearance', icon: 'ti-palette' },
-  { id: 'customization', label: 'Customization', icon: 'ti-adjustments' },
   { id: 'modes', label: 'Modes', icon: 'ti-toggle-left' },
   { id: 'backup', label: 'Backup', icon: 'ti-database-export' },
   { id: 'account', label: 'Account', icon: 'ti-user' },
@@ -42,91 +38,70 @@ const SECTIONS = ALL_SECTIONS.filter(
   (s) => (s.id !== 'uninstall' || isTauri) && (s.id !== 'account' || isCloudSyncEnabled),
 );
 
-/** Per-device tweaks to how the sheet behaves. */
-function CustomizationSection() {
+/** Appearance = the device-global default look + behaviour for the app and every character sheet: the full
+ *  appearance axes (palette / style / font / accent / zoom) AND the sheet-customization options, in one
+ *  place. Each character can override any of it from its own Customize drawer; this is what they start
+ *  from. A couple of device-only options that can't sensibly differ per character (popup-size memory,
+ *  builder sources) live here too. */
+function AppearanceSection() {
+  const [, force] = useState(0);
+  const tick = () => force((n) => n + 1);
+  useEffect(() => subscribeZoom(tick), []);
+  const globalCustom = useGlobalCustomization();
   const prefs = usePrefs();
   const isMobile = useIsMobile();
+  const app = getAppearance();
+  // The device appearance axes live in theme-manager/zoom; the rest is the global customization default.
+  const value: Customization = {
+    ...globalCustom,
+    themeId: app.themeId,
+    styleId: app.styleId,
+    fontId: app.fontId,
+    accentColor: app.accent ?? undefined,
+    zoom: getZoom(),
+  };
+  // Route the appearance-axis keys to the device setters (and force a re-render, since those don't
+  // notify); everything else is the global customization default.
+  const onChange = <K extends keyof Customization>(key: K, val: Customization[K] | undefined) => {
+    switch (key) {
+      case 'themeId':
+        setTheme(val as string);
+        tick();
+        break;
+      case 'styleId':
+        setStyle(val as string);
+        tick();
+        break;
+      case 'fontId':
+        setFont(val as string);
+        tick();
+        break;
+      case 'accentColor':
+        setAccent((val as string | undefined) ?? null);
+        tick();
+        break;
+      case 'zoom':
+        setZoom((val as number | undefined) ?? 1);
+        tick();
+        break;
+      default:
+        setGlobalCustomizationField(key, val);
+    }
+  };
+
   return (
     <div className="settings-section">
-      <h3 className="settings-h">Customization</h3>
-      <p className="settings-desc">Tweak how parts of the character sheet behave. Saved on this device.</p>
-
-      {!isMobile && (
-        <>
-          <div className="menu-label">Hit points</div>
-          <div className="menu-row">
-            <button
-              className={'chip' + (prefs.hpCommandEntry ? ' active' : '')}
-              onClick={() => setPref('hpCommandEntry', !prefs.hpCommandEntry)}
-            >
-              Quick HP entry — {prefs.hpCommandEntry ? 'on' : 'off'}
-            </button>
-          </div>
-          <p className="settings-desc">
-            When on, the Damage and Heal buttons and the temporary-HP box are replaced by a single field: type a number
-            for <strong>damage</strong>, <strong>-N</strong> to <strong>heal</strong>, <strong>tN</strong> for{' '}
-            <strong>temporary HP</strong>, then Enter. You can still set current HP directly by typing into the HP value.
-          </p>
-        </>
-      )}
-
-      <div className="menu-label">Actions list</div>
-      <div className="menu-row">
-        <button
-          className={'chip' + (prefs.compactActions ? ' active' : '')}
-          onClick={() => setPref('compactActions', !prefs.compactActions)}
-        >
-          Compact actions — {prefs.compactActions ? 'on' : 'off'}
-        </button>
-      </div>
+      <h3 className="settings-h">Appearance</h3>
       <p className="settings-desc">
-        When on, the Actions tab shows each action as a compact chip — just its name and action cost — so many fit on
-        a row. Click a chip to open a popup with its full description, where you can also favorite it.
+        The default look and behaviour of the app and every character sheet. Each character can override any of this from
+        its own Customize drawer (its menu → Customize); this is what they start from.
       </p>
 
-      {isMobile && (
-        <>
-          <div className="menu-label">Spells</div>
-          <div className="menu-row">
-            <button
-              className={'chip' + (prefs.showSlotBadges ? ' active' : '')}
-              onClick={() => setPref('showSlotBadges', !prefs.showSlotBadges)}
-            >
-              Slot count on rank tabs — {prefs.showSlotBadges ? 'on' : 'off'}
-            </button>
-          </div>
-          <p className="settings-desc">
-            Shows a small <strong>available / total</strong> badge on each spell rank tab (and Focus), so you can see how
-            many slots you have left without opening each rank.
-          </p>
-        </>
-      )}
-
-      {!isMobile && (
-        <>
-          <div className="menu-label">Popups</div>
-          <div className="menu-row">
-            <button
-              className={'chip' + (prefs.popupSizeSync ? ' active' : '')}
-              onClick={() => setPref('popupSizeSync', !prefs.popupSizeSync)}
-            >
-              Apply popup size to all — {prefs.popupSizeSync ? 'on' : 'off'}
-            </button>
-          </div>
-          <p className="settings-desc">
-            Popups can be resized by dragging the grip in their bottom-right corner. By default each popup resets to its
-            normal size. When this is on, resizing any popup makes <strong>every</strong> popup open at that size until you
-            change it again (saved on this device).
-          </p>
-        </>
-      )}
+      <CustomizationEditor value={value} base={DEFAULT_CUSTOMIZATION} scope="global" onChange={onChange} />
 
       <div className="menu-label">Sources</div>
       <div className="menu-row">
-        <button
-          className={'chip' + (prefs.showNicheSources ? ' active' : '')}
-          onClick={() => setPref('showNicheSources', !prefs.showNicheSources)}
-        >
+        <button className={'chip' + (prefs.showNicheSources ? ' active' : '')} onClick={() => setPref('showNicheSources', !prefs.showNicheSources)}>
           Show niche sources — {prefs.showNicheSources ? 'on' : 'off'}
         </button>
       </div>
@@ -137,170 +112,19 @@ function CustomizationSection() {
 
       {!isMobile && (
         <>
-          <div className="menu-label">Scrollbars</div>
+          <div className="menu-label">Popups</div>
           <div className="menu-row">
-            <button
-              className={'chip' + (prefs.scrollbarAccent ? ' active' : '')}
-              onClick={() => setPref('scrollbarAccent', !prefs.scrollbarAccent)}
-            >
-              Accent scrollbars — {prefs.scrollbarAccent ? 'on' : 'off'}
+            <button className={'chip' + (prefs.popupSizeSync ? ' active' : '')} onClick={() => setPref('popupSizeSync', !prefs.popupSizeSync)}>
+              Apply popup size to all — {prefs.popupSizeSync ? 'on' : 'off'}
             </button>
           </div>
           <p className="settings-desc">
-            Scrollbars are a thin neutral grey by default. Turn this on to tint them with your <strong>accent</strong> colour
-            instead.
+            Popups can be resized by dragging the grip in their bottom-right corner. By default each popup resets to its
+            normal size. When this is on, resizing any popup makes <strong>every</strong> popup open at that size until you
+            change it again (saved on this device).
           </p>
         </>
       )}
-    </div>
-  );
-}
-
-/** Appearance controls — palette, style, accent — driving the theme system live. */
-function AppearanceSection() {
-  const [appearance, setLocal] = useState(getAppearance());
-  const sync = () => setLocal(getAppearance());
-  const [zoom, setZoomLocal] = useState(getZoom());
-  useEffect(() => subscribeZoom(setZoomLocal), []);
-  const isMobile = useIsMobile();
-  const prefs = usePrefs();
-  // Effective consumable-highlight colour: the user override if set, else the active theme's
-  // recommended default (which changes when the palette above changes).
-  const consumableColor = prefs.consumableColor ?? themeConsumableColor();
-
-  return (
-    <div className="settings-section">
-      <h3 className="settings-h">Appearance</h3>
-      <p className="settings-desc">
-        Pick a colour palette, interface style, and accent. Changes apply instantly and are saved on this device.
-      </p>
-
-      <div className="menu-label">Palette</div>
-      <div className="menu-row">
-        {themeList.map((t) => (
-          <button
-            key={t.id}
-            className={'chip' + (appearance.themeId === t.id ? ' active' : '')}
-            onClick={() => {
-              setTheme(t.id);
-              sync();
-            }}
-          >
-            <span className="chip-swatch" style={{ background: t.tokens['--app-accent'] }} />
-            {t.name}
-          </button>
-        ))}
-      </div>
-
-      <div className="menu-label">Style</div>
-      <div className="menu-row">
-        {styleList.map((s) => (
-          <button
-            key={s.id}
-            className={'chip' + (appearance.styleId === s.id ? ' active' : '')}
-            onClick={() => {
-              setStyle(s.id);
-              sync();
-            }}
-          >
-            {s.name}
-          </button>
-        ))}
-      </div>
-
-      <div className="menu-label">Font</div>
-      <div className="menu-row">
-        {fontList.map((f) => (
-          <button
-            key={f.id}
-            className={'chip' + (appearance.fontId === f.id ? ' active' : '')}
-            style={{ fontFamily: f.stack }}
-            onClick={() => {
-              setFont(f.id);
-              sync();
-            }}
-          >
-            {f.name}
-          </button>
-        ))}
-      </div>
-
-      <div className="menu-label">Accent</div>
-      <div className="menu-row">
-        <button
-          className={'chip' + (appearance.accent === null ? ' active' : '')}
-          onClick={() => {
-            setAccent(null);
-            sync();
-          }}
-        >
-          Theme default
-        </button>
-        {ACCENTS.map((c) => (
-          <button
-            key={c}
-            className={'accent-swatch' + (appearance.accent === c ? ' active' : '')}
-            style={{ background: c }}
-            aria-label={'accent ' + c}
-            onClick={() => {
-              setAccent(c);
-              sync();
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="menu-label">Consumables</div>
-      <div className="menu-row">
-        <button
-          className={'chip' + (prefs.consumableHighlight ? ' active' : '')}
-          onClick={() => setPref('consumableHighlight', !prefs.consumableHighlight)}
-        >
-          Colour-code consumables — {prefs.consumableHighlight ? 'on' : 'off'}
-        </button>
-      </div>
-      {prefs.consumableHighlight && (
-        <div className="menu-row consumable-row">
-          <label className="color-field" title="Highlight colour for consumable inventory cards">
-            <input
-              type="color"
-              value={consumableColor}
-              aria-label="Consumable highlight colour"
-              onChange={(e) => setPref('consumableColor', e.target.value)}
-            />
-            <span>{prefs.consumableColor ? 'Custom colour' : 'Theme default'}</span>
-          </label>
-          <button
-            className={'chip' + (prefs.consumableColor === undefined ? ' active' : '')}
-            onClick={() => setPref('consumableColor', undefined)}
-            disabled={prefs.consumableColor === undefined}
-          >
-            Use theme default
-          </button>
-        </div>
-      )}
-      <p className="settings-desc">
-        Consumables (potions, scrolls, elixirs, ammunition, and other expendables) are marked in your inventory with a
-        coloured left edge and a faint tint. Turn this off to render them like ordinary items; while it&rsquo;s on, each
-        palette recommends a colour that suits it — pick your own here to override it, or reset to the theme default.
-      </p>
-
-      <div className="menu-label">Zoom</div>
-      <div className="menu-row zoom-row">
-        <button className="chip" aria-label="Zoom out" onClick={() => bumpZoom(isMobile ? -0.05 : -ZOOM_STEP)} disabled={zoom <= ZOOM_MIN}>
-          <i className="ti ti-minus" aria-hidden="true" />
-        </button>
-        <span className="zoom-val">{Math.round(zoom * 100)}%</span>
-        <button className="chip" aria-label="Zoom in" onClick={() => bumpZoom(isMobile ? 0.05 : ZOOM_STEP)} disabled={zoom >= (isMobile ? 1 : ZOOM_MAX)}>
-          <i className="ti ti-plus" aria-hidden="true" />
-        </button>
-        <button className="chip" onClick={() => resetZoom()} disabled={zoom === 1}>
-          Reset
-        </button>
-      </div>
-      <p className="settings-desc">
-        {isMobile ? 'Zoom out to fit more on screen.' : 'Also: hold Ctrl and scroll the wheel, or press Ctrl with + / − / 0.'}
-      </p>
     </div>
   );
 }
@@ -738,12 +562,18 @@ function ModesSection({
 /** Multi-section Settings page. Appearance is the first section; more can be added to SECTIONS. */
 export function SettingsPage({
   onClose,
+  onOpenRoster,
+  onOpenHomebrew,
+  onOpenCampaigns,
   modes,
   characters,
   onSaveMode,
   onDeleteMode,
 }: {
   onClose: () => void;
+  onOpenRoster?: () => void;
+  onOpenHomebrew?: () => void;
+  onOpenCampaigns?: () => void;
   modes?: Record<string, ModeDef>;
   characters?: { id: string; name: string }[];
   onSaveMode?: (mode: ModeDef) => void;
@@ -753,14 +583,14 @@ export function SettingsPage({
   const isMobile = useIsMobile();
   // Mobile: a full-screen page that opens to a Cards grid; null = show the cards, else drill into a section.
   const [mobileSection, setMobileSection] = useState<SectionId | null>(null);
-  // Android Back / Escape (mobile only): a drilled-in section steps back to the cards; the cards view closes the page.
-  useBackHandler(isMobile, onClose);
+  // Android Back / Escape: a drilled-in mobile section steps back to the cards; otherwise the page closes
+  // (returns to wherever it was opened from). Conditions are mutually exclusive so only one fires.
+  useBackHandler(!isMobile || mobileSection === null, onClose);
   useBackHandler(isMobile && mobileSection !== null, () => setMobileSection(null));
 
   const renderSection = (id: SectionId) => (
     <>
       {id === 'appearance' && <AppearanceSection />}
-      {id === 'customization' && <CustomizationSection />}
       {id === 'modes' && <ModesSection modes={modes} characters={characters} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} />}
       {id === 'backup' && <BackupSection />}
       {id === 'account' && <AccountSection />}
@@ -772,24 +602,31 @@ export function SettingsPage({
   const headTitle = isMobile && mobileSection ? SECTIONS.find((s) => s.id === mobileSection)?.label ?? 'Settings' : 'Settings';
 
   return (
-    <div className="picker-overlay" onClick={onClose}>
-      <div
-        className={'picker settings-modal' + (isMobile ? ' settings-page-m' : '')}
-        role="dialog"
-        aria-label="Settings"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="picker-head">
-          {isMobile && mobileSection && (
-            <button className="icon-btn settings-back" aria-label="Back to settings" onClick={() => setMobileSection(null)}>
-              <i className="ti ti-arrow-left" aria-hidden="true" />
-            </button>
-          )}
-          {headTitle}
-          <button className="picker-close" onClick={onClose} aria-label="Close">
-            <i className="ti ti-x" aria-hidden="true" />
-          </button>
+    <div className="ws-app subpage settings-subpage">
+      <header className="chrome" data-tauri-drag-region>
+        <div className="chrome-brand" data-tauri-drag-region>
+          <HeroesHeavenLogo className="chrome-logo" /> Heroes Heaven
         </div>
+        <PageMenu
+          items={[
+            ...(onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []),
+            ...(onOpenHomebrew ? [{ label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew }] : []),
+            ...(onOpenCampaigns ? [{ label: 'Campaigns', icon: 'ti-flag', onClick: onOpenCampaigns }] : []),
+          ]}
+        />
+        <WindowControls />
+      </header>
+      <div className="subpage-bar">
+        {isMobile && mobileSection && (
+          <button className="icon-btn" aria-label="Back to settings" onClick={() => setMobileSection(null)}>
+            <i className="ti ti-arrow-left" aria-hidden="true" />
+          </button>
+        )}
+        <h2 className="subpage-title">
+          <i className="ti ti-settings" aria-hidden="true" /> {headTitle}
+        </h2>
+      </div>
+      <div className="subpage-body settings-subpage-body">
         {isMobile ? (
           mobileSection === null ? (
             <div className="settings-cards">

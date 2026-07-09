@@ -116,10 +116,12 @@ describe('weapon Deadly / Fatal / Two-Hand traits surface in strike damage', () 
 describe('condition fixes', () => {
   const stupefied = (v: number): ActiveCondition => ({ id: 'stupefied', value: v }) as ActiveCondition;
 
-  it('Stupefied does NOT penalize Perception but DOES penalize Will saves', () => {
+  it('Stupefied penalizes Perception (a Wisdom-based roll) and Will saves', () => {
+    // Per RAW, Stupefied applies to Wisdom-based rolls and DCs; Perception uses Wisdom (Foundry's Perception
+    // check carries the `wis-based` domain that Stupefied targets), so it takes the penalty.
     const ch = build('cleric', 5);
     const stup = { ...ch, conditions: [stupefied(2)] };
-    expect(derivePerception(stup).modifier).toBe(derivePerception(ch).modifier);
+    expect(derivePerception(stup).modifier).toBe(derivePerception(ch).modifier - 2);
     expect(deriveSave(stup, 'will', content()).modifier).toBe(deriveSave(ch, 'will', content()).modifier - 2);
   });
 

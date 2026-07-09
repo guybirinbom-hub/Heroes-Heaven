@@ -3,7 +3,7 @@
 // creating the FIRST character on an empty roster (a fresh phone install) hung on "Loading game
 // content…" forever, because the loading gate required a `character` the builder never has yet.
 
-export type Screen = 'roster' | 'loading' | 'builder' | 'homebrew' | 'campaigns' | 'sheet';
+export type Screen = 'roster' | 'loading' | 'builder' | 'homebrew' | 'campaigns' | 'sheet' | 'settings';
 
 export interface ScreenInputs {
   /** 'roster' | 'builder' | 'homebrew' | 'sheet' — the mode after empty-roster coercion. */
@@ -16,6 +16,10 @@ export interface ScreenInputs {
 
 export function pickScreen({ effectiveMode, hasContent, hasCharacter }: ScreenInputs): Screen {
   if (effectiveMode === 'roster') return 'roster';
+  // Settings doesn't need the content database (it edits theme / prefs / customization), so it opens
+  // instantly — even on the roster before core.json arrives. (Per-character Customize is a drawer inside
+  // the sheet, not a routed screen.)
+  if (effectiveMode === 'settings') return 'settings';
   // Content-dependent screens wait behind a lightweight shell until core.json is ready. The BUILDER,
   // HOMEBREW manager, and CAMPAIGNS page need ONLY content — none requires an active character (you
   // reach them from the roster's menu on a fresh phone that has no characters yet, and a brand-new

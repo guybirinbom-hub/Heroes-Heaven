@@ -64,6 +64,19 @@ export function subscribeZoom(fn: (z: number) => void): () => void {
   };
 }
 
+/** Overlay a specific zoom (a character's per-sheet override) WITHOUT changing the persisted device zoom.
+ *  Revert with applyGlobalZoom(). */
+export function applyZoomOverlay(z: number): void {
+  const v = clamp(z);
+  document.documentElement.style.setProperty('--zoom', String(v));
+  document.documentElement.style.setProperty('zoom', String(v));
+}
+
+/** Re-apply the persisted device zoom (used to revert a per-character overlay). */
+export function applyGlobalZoom(): void {
+  apply();
+}
+
 /** Load the persisted zoom and apply it. Call once before first paint. */
 export function initZoom(): void {
   try {

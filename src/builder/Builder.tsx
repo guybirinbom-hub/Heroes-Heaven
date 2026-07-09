@@ -27,7 +27,7 @@ import { activeCasterArchetype, archetypeSlots } from '../rules/casterArchetypes
 import { FEAT_GRANTS } from '../rules/featGrants';
 import type { ContentDatabase, Feat, FeatCategory, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SetupUnlockedChoices, SourcesCard, START, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
+import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SetupCard, SetupUnlockedChoices, SourcesCard, START, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
 import { ActionGlyph, isActionCost } from '../sheet/widgets';
 import { SPELL_SPEC_BUILDER, FEAT_SPEC } from '../sheet/filterSpecs';
@@ -67,7 +67,8 @@ const RANK_ABBR: Record<ProficiencyRank, string> = {
 type Sel = 'setup' | number;
 type Picker =
   | { kind: 'feat'; level: number; category: FeatCategory; idx: number }
-  | { kind: 'spell'; rank: number; cap?: number }
+  // `caster: 2` targets the Dual-Class SECOND caster (writes cantrips2/spells2/signatures2); absent = primary.
+  | { kind: 'spell'; rank: number; cap?: number; caster?: 2 }
   | { kind: 'familiar-ability'; companionId: string };
 
 const skillLabel = (key: ProficiencyKey) => (key.startsWith('lore:') ? loreLabel(key) : cap(key));
@@ -257,6 +258,31 @@ export function Builder({
   const eligibleSpells = (rank: number) => {
     if (!tradition) return NO_SPELLS;
     return rank === 0 ? spellIndex.cantrips[tradition] ?? NO_SPELLS : spellIndex.upTo[tradition]?.[rank] ?? NO_SPELLS;
+  };
+  // ── Dual Class: the SECOND caster's spell surface (writes cantrips2/spells2/signatures2). Only when
+  //    the dual-class variant is on AND the second class is itself a slot caster. These mirror the
+  //    primary caster derivations above, and feed the consolidated "Second class spells" card + the
+  //    caster:2 branch of the spell picker. The primary path never reads these. ──
+  const cls2 = build.variantRules?.dualClass && build.classId2 ? content.classes[build.classId2] : undefined;
+  const casting2 = cls2?.spellcasting;
+  const subOption2 = cls2?.subclass?.options.find((o) => o.id === build.subclassId2);
+  const showSpells2 = !!casting2;
+  const castProgression2 = subOption2?.slotProgression ?? casting2?.progression;
+  const castType2 = casting2?.type ?? 'prepared';
+  const tradition2 = subOption2?.tradition ?? casting2?.tradition;
+  const isPrepared2 = castType2 === 'prepared';
+  const sigAvailable2 =
+    casting2?.type === 'spontaneous' &&
+    !!cls2?.features?.some((f) => f.featureId === 'signature-spells' && f.level <= build.level);
+  const isWizardBook2 = !!casting2 && isPrepared2 && (cls2?.id === 'wizard' || cls2?.id === 'witch');
+  const isUmtBook2 = cls2?.id === 'wizard' && subOption2?.id === 'school-of-unified-magical-theory';
+  const spellbookSize2 = wizardSpellbookBudget(build.level, isUmtBook2);
+  const slotCounts2 = casting2 ? casterSlots(build.level, castProgression2) : {};
+  const cantripCap2 = casting2 && build.classId2 ? cantripsKnown(build.classId2) : 0;
+  const learnedTotal2 = Object.values(build.spells2 ?? {}).reduce((n, arr) => n + arr.length, 0);
+  const eligibleSpells2 = (rank: number) => {
+    if (!tradition2) return NO_SPELLS;
+    return rank === 0 ? spellIndex.cantrips[tradition2] ?? NO_SPELLS : spellIndex.upTo[tradition2]?.[rank] ?? NO_SPELLS;
   };
   const familiarAbilityList = useMemo(
     () => Object.values(content.familiarAbilities).sort((a, b) => a.name.localeCompare(b.name)),
@@ -490,6 +516,86 @@ export function Builder({
     );
   };
 
+  /** Dual Class: a consolidated card to pick the SECOND caster class's cantrips + spells (by rank, up to
+   *  the current level's slot counts). Flat like the sheet's Manage flow — not per level. Renders only for
+   *  a dual-class character whose second class is a slot caster. Writes cantrips2/spells2/signatures2. */
+  const renderSecondClassSpells = () => {
+    if (!showSpells2 || !cls2) return null;
+    const cantrips2 = build.cantrips2 ?? [];
+    const ranksWithSlots = Object.keys(slotCounts2)
+      .map(Number)
+      .filter((r) => r >= 1 && (slotCounts2[r] ?? 0) > 0)
+      .sort((a, b) => a - b);
+    return (
+      <SetupCard icon="ti-sparkles" label={`${cls2.name} spells — ${cap(tradition2 ?? '')} ${castType2}`}>
+        {cantripCap2 > 0 && (
+          <div className="spell-pick-row">
+            <div className="spr-head">
+              <span>Cantrips</span>
+              <span className="spr-count">
+                {cantrips2.length} / {cantripCap2}
+              </span>
+            </div>
+            <div className="spr-chips">
+              {cantrips2.map((id) => (
+                <span className="spr-chip" key={id}>
+                  {content.spells[id]?.name ?? id}
+                  <button type="button" className="spr-chip-x" aria-label={`Remove ${content.spells[id]?.name ?? id}`} onClick={() => actions.toggleCantrip2(id)}>
+                    <i className="ti ti-x" aria-hidden="true" />
+                  </button>
+                </span>
+              ))}
+              <button className="spr-add" type="button" onClick={() => setPicker({ kind: 'spell', rank: 0, cap: cantripCap2, caster: 2 })}>
+                + add
+              </button>
+            </div>
+          </div>
+        )}
+        {isWizardBook2 && <div className="bsec-sub">Spellbook — {learnedTotal2} / {spellbookSize2} learned</div>}
+        {ranksWithSlots.map((rank) => {
+          const chosen = build.spells2?.[rank] ?? [];
+          const capR = isWizardBook2 ? spellbookSize2 : slotCounts2[rank] ?? 0;
+          const have = isWizardBook2 ? learnedTotal2 : chosen.length;
+          return (
+            <div className="spell-pick-row" key={rank}>
+              <div className="spr-head">
+                <span>{ord(rank)} rank</span>
+                <span className="spr-count">
+                  {isWizardBook2 ? `${chosen.length} learned` : `${chosen.length} / ${capR} ${isPrepared2 ? 'prepared' : 'known'}`}
+                </span>
+              </div>
+              <div className="spr-chips">
+                {chosen.map((id, idx) => (
+                  <span className="spr-chip" key={id + ':' + idx}>
+                    {sigAvailable2 && (
+                      <button
+                        type="button"
+                        className={'spr-chip-sig' + (build.signatures2?.[rank] === id ? ' on' : '')}
+                        aria-label={`Signature ${content.spells[id]?.name ?? id}`}
+                        title="Signature spell (cast at any rank)"
+                        onClick={() => actions.toggleSignature2(rank, id)}
+                      >
+                        <i className="ti ti-star" aria-hidden="true" />
+                      </button>
+                    )}
+                    {content.spells[id]?.name ?? id}
+                    <button type="button" className="spr-chip-x" aria-label={`Remove ${content.spells[id]?.name ?? id}`} onClick={() => actions.removeSpellAt2(rank, idx)}>
+                      <i className="ti ti-x" aria-hidden="true" />
+                    </button>
+                  </span>
+                ))}
+                <button className="spr-add" type="button" disabled={have >= capR} onClick={() => setPicker({ kind: 'spell', rank, cap: capR, caster: 2 })}>
+                  + add
+                </button>
+              </div>
+            </div>
+          );
+        })}
+        <p className="setup-hint">Your second spellcasting class uses its own tradition, pool, and DC. Cast these from the sheet's Spells tab.</p>
+      </SetupCard>
+    );
+  };
+
   // The class feature at `lvl` that anchors the subclass choice (Doctrine / Bloodline / …),
   // if the subclass is granted at this level — shared by the pending count and the render.
   const subclassAnchorId = (lvl: number): string | null => {
@@ -689,6 +795,7 @@ export function Builder({
                     </div>
                     <div className="lvl-cards">
                       <SetupUnlockedChoices build={build} actions={actions} content={content} />
+                      {renderSecondClassSpells()}
                     </div>
                   </div>
                 )}
@@ -1421,19 +1528,29 @@ export function Builder({
       })()}
 
       {picker && picker.kind === 'spell' && (() => {
+        // `caster: 2` targets the Dual-Class second class; every primary-coupled value below is
+        // swapped for its cls2 mirror so the same picker serves both (primary path unchanged).
+        const c2 = picker.caster === 2;
+        const capCantrip = c2 ? cantripCap2 : cantripCap;
+        const capBook = c2 ? spellbookSize2 : spellbookSize;
+        const capSlots = c2 ? slotCounts2 : slotCounts;
+        const wizBook = c2 ? isWizardBook2 : isWizardBook;
+        const prepared = c2 ? isPrepared2 : isPrepared;
+        const cantripList = c2 ? build.cantrips2 ?? [] : build.cantrips;
+        const spellList = c2 ? build.spells2?.[picker.rank] ?? [] : build.spells[picker.rank] ?? [];
+        const learned = c2 ? learnedTotal2 : learnedTotal;
+        const items = c2 ? eligibleSpells2(picker.rank) : eligibleSpells(picker.rank);
         // Wizards cap by the total spellbook budget; others by the rank's slot count.
-        const cap_ =
-          picker.cap ?? (picker.rank === 0 ? cantripCap : isWizardBook ? spellbookSize : slotCounts[picker.rank] ?? 0);
-        const have =
-          picker.rank === 0 ? build.cantrips.length : isWizardBook ? learnedTotal : (build.spells[picker.rank] ?? []).length;
+        const cap_ = picker.cap ?? (picker.rank === 0 ? capCantrip : wizBook ? capBook : capSlots[picker.rank] ?? 0);
+        const have = picker.rank === 0 ? cantripList.length : wizBook ? learned : spellList.length;
         const atCap = have >= cap_;
         const isCantrip = picker.rank === 0;
-        const preparedMode = !isCantrip && isPrepared && !isWizardBook;
+        const preparedMode = !isCantrip && prepared && !wizBook;
         return (
           <FilterableSelect
-            key={'spell-' + picker.rank}
+            key={'spell-' + (c2 ? '2-' : '') + picker.rank}
             title={picker.rank === 0 ? 'Add cantrip' : `Add ${ord(picker.rank)}-rank spell`}
-            items={eligibleSpells(picker.rank)}
+            items={items}
             spec={SPELL_SPEC_BUILDER}
             rowKey={(sp) => sp.id}
             onClose={() => setPicker(null)}
@@ -1443,7 +1560,7 @@ export function Builder({
               </span>
             }
             renderRow={(sp, openDesc) => {
-              const list = isCantrip ? build.cantrips : build.spells[picker.rank] ?? [];
+              const list = isCantrip ? cantripList : spellList;
               const count = list.filter((x) => x === sp.id).length;
               const chosen = count > 0;
               const disabled = preparedMode ? atCap : !chosen && atCap;
@@ -1469,11 +1586,17 @@ export function Builder({
                   selectLabel={preparedMode ? 'Add' : chosen ? 'Added' : 'Add'}
                   selectDisabled={disabled}
                   onSelect={() =>
-                    isCantrip
-                      ? actions.toggleCantrip(sp.id)
-                      : preparedMode
-                        ? actions.addSpell(picker.rank, sp.id)
-                        : actions.toggleSpell(picker.rank, sp.id)
+                    c2
+                      ? isCantrip
+                        ? actions.toggleCantrip2(sp.id)
+                        : preparedMode
+                          ? actions.addSpell2(picker.rank, sp.id)
+                          : actions.toggleSpell2(picker.rank, sp.id)
+                      : isCantrip
+                        ? actions.toggleCantrip(sp.id)
+                        : preparedMode
+                          ? actions.addSpell(picker.rank, sp.id)
+                          : actions.toggleSpell(picker.rank, sp.id)
                   }
                 />
               );

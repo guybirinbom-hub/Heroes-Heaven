@@ -825,7 +825,8 @@ function CompanionInventory({ cfg, content, onPlay, onAdd, bulkMax }: { cfg: Com
 
 /* ============================ Edit · choices panel ============================ */
 
-const MATURITIES = ['young', 'mature', 'nimble', 'savage', 'specialized'];
+const MATURITIES = ['young', 'mature', 'nimble', 'savage', 'specialized', 'specialized-savage'];
+const MATURITY_LABEL: Record<string, string> = { 'specialized': 'Specialized (nimble)', 'specialized-savage': 'Specialized (savage)' };
 /** An eidolon's unarmed attack damage type is its form's physical type (GM may allow others). */
 const EID_DMG_TYPES: DamageType[] = ['bludgeoning', 'piercing', 'slashing'];
 
@@ -863,13 +864,13 @@ function EditChoices({ cfg, content, onPlay, onAbilities, onSpecialization }: { 
             <div className="cmp-seg">
               {MATURITIES.map((mt) => (
                 <button key={mt} type="button" className={cfg.maturity === mt || (!cfg.maturity && mt === 'young') ? 'on' : ''} onClick={() => set({ maturity: mt })}>
-                  {cap(mt)}
+                  {MATURITY_LABEL[mt] ?? cap(mt)}
                 </button>
               ))}
             </div>
           </div>
           <div className="cmp-note">Advance your companion's maturity as you gain the feats that grant it.</div>
-          {cfg.maturity === 'specialized' && (
+          {(cfg.maturity === 'specialized' || cfg.maturity === 'specialized-savage') && (
             <div className="cmp-crow">
               <span className="cmp-lbl">Specialization</span>
               <button className={'cmp-chip' + (spec ? ' filled' : ' empty')} onClick={onSpecialization}>

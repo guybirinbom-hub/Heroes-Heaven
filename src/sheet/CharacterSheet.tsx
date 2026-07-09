@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { Character, ContentDatabase, Item, ModeDef } from '../rules/types';
+import type { Character, ContentDatabase, Customization, Item, ModeDef } from '../rules/types';
 import { addXp, setXp, setTempSpeed, togglePinnedDesc, descId, type PlayUpdater } from '../rules/play';
-import { abilityMod, deriveSpeeds } from '../rules/derive';
+import { abilityMod, deriveSpeeds, setPlusOnMods } from '../rules/derive';
 import type { BuildState } from '../rules/build';
 import { explainStat, type StatRef } from '../rules/explain';
 import { roll as rollDice, rollCheck, type RollResult, type DicePreset } from '../rules/dice';
@@ -16,7 +16,11 @@ import { InventoryTab } from './InventoryTab';
 import { FeatsTab } from './FeatsTab';
 import { DetailsTab } from './DetailsTab';
 import { NotesTab } from './NotesTab';
-import { SettingsPage } from './SettingsPage';
+import { useCustomization, densityStyleId, applyGlobalCustomizationDom, SHEET_TABS } from '../data/customization';
+import { applySheetOverlay } from '../theme/theme-manager';
+import { applyZoomOverlay, applyGlobalZoom } from '../theme/zoom';
+import { CustomizeModal } from './CustomizeModal';
+import { PageMenu } from './PageMenu';
 import { WindowControls } from './WindowControls';
 import { useIsMobile } from './useIsMobile';
 import { usePortrait } from './usePortrait';
@@ -25,9 +29,9 @@ import { loadCampaigns } from '../data/storage';
 import { useBackHandler } from './useEscapeClose';
 import { HeroesHeavenLogo } from './Logo';
 
-const TABS = ['Main', 'Spells', 'Inventory', 'Feats & features', 'Companions', 'Notes', 'Details'];
+const TABS = SHEET_TABS;
 // Mobile gets an extra "Actions" page (actions + activities split off Main); desktop keeps them on Main.
-const MOBILE_TABS = ['Main', 'Actions', 'Spells', 'Inventory', 'Feats & features', 'Companions', 'Notes', 'Details'];
+const MOBILE_TABS = ['Main', 'Actions', ...SHEET_TABS.slice(1)];
 
 /** Icon + short label for each tab in the mobile bottom navigation bar. */
 const TAB_META: Record<string, { icon: string; short: string }> = {
@@ -88,13 +92,15 @@ export function CharacterSheet({
   onDeleteMode,
   onOpenHomebrew,
   onOpenCampaigns,
+  onOpenSettings,
+  onCustomize,
+  globalCustomization,
   onLeaveCampaign,
   partyEnabled,
   readOnly,
   gmEdit,
   onBack,
   charKey,
-  characters,
   build,
 }: {
   character: Character;
@@ -115,6 +121,12 @@ export function CharacterSheet({
   onOpenHomebrew?: () => void;
   /** Navigate to the Campaigns page. Provided ONLY when signed in — absent hides the menu item. */
   onOpenCampaigns?: () => void;
+  /** Navigate to the Settings page (now a full page, not a modal). */
+  onOpenSettings?: () => void;
+  /** Edit this character's stored data (used by the Customize drawer to write its customization override). */
+  onCustomize?: (fn: (c: Character) => Character) => void;
+  /** The device-global customization default — the Customize drawer's inherit base + Make-global-default source. */
+  globalCustomization?: Customization;
   /** Player leaves a campaign entirely (drops the membership + detaches all characters). */
   onLeaveCampaign?: (campaignId: string) => void;
   /** Signed in → the Party button may show (still only when the character is attached to a campaign). */
@@ -128,11 +140,46 @@ export function CharacterSheet({
   gmEdit?: { onUpdate: () => void; onExport: () => void; busy?: boolean };
   onBack?: () => void;
 }) {
-  const [tab, setTab] = useState(initialTab);
+  const custom = useCustomization();
+  // Only the PRIMARY, editable sheet owns the per-character look. Nested read-only / GM-edit sheets
+  // (party viewer, GM edit) render inside the primary sheet's DOM overlay and must NOT re-apply or, on
+  // unmount, revert it — otherwise closing a teammate's sheet clobbers your own sheet's overlay, and the
+  // teammate's sheet would paint with YOUR customization (see review). They just inherit the ambient look.
+  const primarySheet = !readOnly && !gmEdit;
+  // The positive-modifier "+" is a display option. Set the module flag DURING render (before children
+  // render) so every stat reads the right value on this paint — only the primary sheet does this.
+  if (primarySheet) setPlusOnMods(custom.plusOnMods !== false);
+  const [tab, setTab] = useState(() => {
+    const persisted = initialTab();
+    return custom.defaultTab && MOBILE_TABS.includes(custom.defaultTab) ? custom.defaultTab : persisted;
+  });
   const bodyRef = useRef<HTMLDivElement>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [partyOpen, setPartyOpen] = useState(false);
   const isMobile = useIsMobile();
+  // Desktop tab strip: when there are more tabs than fit, show ◂ / ▸ buttons to scroll the row.
+  const tabsRef = useRef<HTMLElement>(null);
+  const [tabScroll, setTabScroll] = useState({ left: false, right: false });
+  const updateTabScroll = () => {
+    const el = tabsRef.current;
+    if (!el) return;
+    setTabScroll({ left: el.scrollLeft > 2, right: el.scrollLeft + el.clientWidth < el.scrollWidth - 2 });
+  };
+  // Instant, not smooth: smooth scrollBy is a no-op in the app's WebView. Re-measure right after (the
+  // instant scroll is synchronous) so the ◂/▸ visibility updates even if the scroll event lags.
+  const scrollTabs = (dir: -1 | 1) => {
+    tabsRef.current?.scrollBy({ left: dir * 220 });
+    updateTabScroll();
+  };
+  // --- customization-driven tab visibility (hide tabs; auto-hide empty Companions/Spells) ---
+  const hiddenTabs = new Set(custom.hiddenTabs ?? []);
+  const isTabEmpty = (t: string) =>
+    !!custom.autoHideEmpty &&
+    ((t === 'Companions' && (character.companions?.length ?? 0) === 0) ||
+      (t === 'Spells' && (character.spellcasting?.length ?? 0) === 0));
+  // Main and (mobile) Actions are always available; everything else can be hidden or auto-hidden.
+  const tabVisible = (t: string) => t === 'Main' || t === 'Actions' || (!hiddenTabs.has(t) && !isTabEmpty(t));
+  const visibleTabs = TABS.filter(tabVisible);
+  const visibleMobileTabs = MOBILE_TABS.filter(tabVisible);
   // Campaigns this character is attached to (for the Party button + view). Falls back to a placeholder
   // name if the membership isn't cached on this device.
   const attachedCampaigns = useMemo(() => {
@@ -143,12 +190,12 @@ export function CharacterSheet({
   }, [character.campaignIds]);
   const showParty = !readOnly && !gmEdit && !!partyEnabled && (character.campaignIds?.length ?? 0) > 0;
   useBackHandler(partyOpen, () => setPartyOpen(false));
-  const [settingsOpen, setSettingsOpen] = useState(false);
   const [restOpen, setRestOpen] = useState(false);
+  const [customizeOpen, setCustomizeOpen] = useState(false);
+  useBackHandler(customizeOpen, () => setCustomizeOpen(false));
   const [portraitOpen, setPortraitOpen] = useState(false);
-  // Android Back (mobile): unwind one step — close the menu / portrait / rest sheet, else drop back to
-  // the home tab — instead of exiting the app. (Popups and the Settings page handle their own Back.)
-  useBackHandler(isMobile && menuOpen, () => setMenuOpen(false));
+  // Android Back (mobile): unwind one step — close the portrait / rest sheet, else drop back to
+  // the home tab — instead of exiting the app. (The menu, popups and Settings handle their own Back.)
   useBackHandler(isMobile && portraitOpen, () => setPortraitOpen(false));
   useBackHandler(isMobile && restOpen, () => setRestOpen(false));
   useBackHandler(isMobile && tab !== 'Main', () => setTab('Main'));
@@ -163,8 +210,55 @@ export function CharacterSheet({
   // If a mobile-selected "Actions" is restored at desktop width, no desktop tab would be highlighted — so
   // fold it back to Main on desktop (the desktop Actions content is already identical to Main).
   useEffect(() => {
-    if (!isMobile && !TABS.includes(tab)) setTab('Main');
-  }, [isMobile, tab]);
+    const list = isMobile ? visibleMobileTabs : visibleTabs;
+    if (!list.includes(tab)) setTab('Main');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile, tab, custom.hiddenTabs, custom.autoHideEmpty, character.companions?.length, character.spellcasting?.length]);
+  // Keep the ◂/▸ tab-scroll buttons in sync with the desktop tab strip's scroll position + width.
+  useEffect(() => {
+    updateTabScroll();
+    const el = tabsRef.current;
+    el?.addEventListener('scroll', updateTabScroll, { passive: true });
+    window.addEventListener('resize', updateTabScroll);
+    return () => {
+      el?.removeEventListener('scroll', updateTabScroll);
+      window.removeEventListener('resize', updateTabScroll);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile, visibleTabs.length, showParty]);
+  // Switching to a different character resets to that character's default tab (only if it set one).
+  const charKeyRef = useRef(charKey);
+  useEffect(() => {
+    if (charKeyRef.current === charKey) return;
+    charKeyRef.current = charKey;
+    if (custom.defaultTab && MOBILE_TABS.includes(custom.defaultTab)) setTab(custom.defaultTab);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [charKey]);
+  // Overlay this character's look (accent, density spacing, consumable colour, accent scrollbars) onto
+  // <html> while the sheet is open; revert to the global default on unmount / character change. Only the
+  // primary sheet does this (a nested read-only/GM sheet must not touch the DOM overlay).
+  useEffect(() => {
+    if (!primarySheet) return;
+    applySheetOverlay({
+      themeId: custom.themeId ?? null,
+      styleId: custom.styleId ?? densityStyleId(custom.density) ?? null,
+      fontId: custom.fontId ?? null,
+      accent: custom.accentColor ?? null,
+      consumable: custom.consumableColor ?? null,
+    });
+    document.documentElement.classList.toggle('sb-accent', !!custom.scrollbarAccent);
+    if (custom.zoom != null) applyZoomOverlay(custom.zoom);
+    else applyGlobalZoom();
+    return () => {
+      applyGlobalCustomizationDom();
+      applyGlobalZoom();
+    };
+  }, [primarySheet, custom.themeId, custom.styleId, custom.density, custom.fontId, custom.accentColor, custom.consumableColor, custom.scrollbarAccent, custom.zoom]);
+  // Reset the positive-modifier "+" display flag to its default when leaving the sheet (primary only).
+  useEffect(() => {
+    if (!primarySheet) return;
+    return () => setPlusOnMods(true);
+  }, [primarySheet]);
   // Start each tab at the top. Desktop scrolls the window; on mobile the shell is position:fixed and
   // the inner .body element is the scroller — reset both so the switch always lands at the top.
   useEffect(() => {
@@ -268,6 +362,16 @@ export function CharacterSheet({
         <div className="chrome-brand" data-tauri-drag-region>
           <HeroesHeavenLogo className="chrome-logo" /> Heroes Heaven
         </div>
+        {!readOnly && !gmEdit && (
+          <PageMenu
+            items={[
+              ...(onOpenHomebrew ? [{ label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew }] : []),
+              ...(onOpenCampaigns ? [{ label: 'Campaigns', icon: 'ti-flag', onClick: onOpenCampaigns }] : []),
+              ...(onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []),
+            ]}
+            onOpenSettings={onOpenSettings}
+          />
+        )}
         <WindowControls />
       </header>
 
@@ -276,6 +380,7 @@ export function CharacterSheet({
           <button
             type="button"
             className="portrait portrait-btn"
+            data-shape={custom.portraitShape ?? 'circle'}
             title="View portrait"
             aria-label="View portrait full size"
             onClick={() => setPortraitOpen(true)}
@@ -283,38 +388,52 @@ export function CharacterSheet({
             <img src={shownPortrait} alt="" className="portrait-img" />
           </button>
         ) : (
-          <div className="portrait">{initials}</div>
+          <div className="portrait" data-shape={custom.portraitShape ?? 'circle'}>{initials}</div>
         )}
         <div className="identity-name">
           <div className="char-name">
             <span className="char-name-text">{character.name}</span>
-            <span className="level-chip">Level {character.level}</span>
+            {custom.showLevelChip !== false && <span className="level-chip">Level {character.level}</span>}
           </div>
-          <div className="char-sub">
-            <span className="lk">{ancestry?.name}</span> · <span className="lk">{cls?.name}</span>
-          </div>
+          {custom.showSubline !== false && (
+            <div className="char-sub">
+              <span className="lk">{ancestry?.name}</span> · <span className="lk">{cls?.name}</span>
+            </div>
+          )}
         </div>
-        <nav className="tabs" role="tablist">
-          {TABS.map((t) => (
-            <button
-              key={t}
-              type="button"
-              role="tab"
-              aria-selected={t === tab}
-              className={'tab' + (t === tab ? ' on' : '')}
-              onClick={() => setTab(t)}
-            >
-              {t}
-            </button>
-          ))}
-          {/* Party — a tab-styled action (opens the party overlay), only when this character is in a
-              campaign. Desktop only (this .tabs strip is hidden on mobile; phones use the top-bar icon). */}
-          {showParty && (
-            <button type="button" className="tab party-tab" onClick={() => setPartyOpen(true)}>
-              <i className="ti ti-users" aria-hidden="true" /> Party
+        <div className="tabs-wrap">
+          {tabScroll.left && (
+            <button type="button" className="tabs-arrow" aria-label="Scroll tabs left" onClick={() => scrollTabs(-1)}>
+              <i className="ti ti-chevron-left" aria-hidden="true" />
             </button>
           )}
-        </nav>
+          <nav className="tabs" role="tablist" ref={tabsRef}>
+            {visibleTabs.map((t) => (
+              <button
+                key={t}
+                type="button"
+                role="tab"
+                aria-selected={t === tab}
+                className={'tab' + (t === tab ? ' on' : '')}
+                onClick={() => setTab(t)}
+              >
+                {t}
+              </button>
+            ))}
+            {/* Party — a tab-styled action (opens the party overlay), only when this character is in a
+                campaign. Desktop only (this .tabs strip is hidden on mobile; phones use the top-bar icon). */}
+            {showParty && (
+              <button type="button" className="tab party-tab" onClick={() => setPartyOpen(true)}>
+                <i className="ti ti-users" aria-hidden="true" /> Party
+              </button>
+            )}
+          </nav>
+          {tabScroll.right && (
+            <button type="button" className="tabs-arrow" aria-label="Scroll tabs right" onClick={() => scrollTabs(1)}>
+              <i className="ti ti-chevron-right" aria-hidden="true" />
+            </button>
+          )}
+        </div>
         <div className="level-stack">
           {onPlay ? (
             <div className="xp-group">
@@ -405,81 +524,19 @@ export function CharacterSheet({
             <i className="ti ti-arrow-left" aria-hidden="true" />
           </button>
         ) : (
-          <button className="icon-btn" title="Menu" onClick={() => setMenuOpen((o) => !o)}>
-            <i className="ti ti-menu-2" aria-hidden="true" />
-          </button>
-        )}
-        {menuOpen && (
+          // Edit + Customize are quick-access buttons here; the nav hamburger lives in the top bar.
           <>
-            <div className="menu-backdrop" onClick={() => setMenuOpen(false)} />
-            <div className="topmenu" role="menu">
-              {onEdit && (
-                <button
-                  className="topmenu-item"
-                  role="menuitem"
-                  onClick={() => {
-                    setMenuOpen(false);
-                    onEdit();
-                  }}
-                >
-                  <i className="ti ti-edit" aria-hidden="true" /> Edit character
-                </button>
-              )}
-              <button
-                className="topmenu-item"
-                role="menuitem"
-                onClick={() => {
-                  setMenuOpen(false);
-                  setSettingsOpen(true);
-                }}
-              >
-                <i className="ti ti-settings" aria-hidden="true" /> Settings
+            {onEdit && (
+              <button className="icon-btn" title="Edit character" aria-label="Edit character" onClick={onEdit}>
+                <i className="ti ti-edit" aria-hidden="true" />
               </button>
-              <button
-                className="topmenu-item"
-                role="menuitem"
-                onClick={() => {
-                  setMenuOpen(false);
-                  onOpenHomebrew?.();
-                }}
-              >
-                <i className="ti ti-flask" aria-hidden="true" /> Homebrew
+            )}
+            {onCustomize && (
+              <button className="icon-btn" title="Customize" aria-label="Customize" onClick={() => setCustomizeOpen(true)}>
+                <i className="ti ti-adjustments" aria-hidden="true" />
               </button>
-              {onOpenCampaigns && (
-                <button
-                  className="topmenu-item"
-                  role="menuitem"
-                  onClick={() => {
-                    setMenuOpen(false);
-                    onOpenCampaigns();
-                  }}
-                >
-                  <i className="ti ti-flag" aria-hidden="true" /> Campaigns
-                </button>
-              )}
-              {onOpenRoster && (
-                <button
-                  className="topmenu-item"
-                  role="menuitem"
-                  onClick={() => {
-                    setMenuOpen(false);
-                    onOpenRoster();
-                  }}
-                >
-                  <i className="ti ti-users" aria-hidden="true" /> Characters
-                </button>
-              )}
-            </div>
+            )}
           </>
-        )}
-        {settingsOpen && (
-          <SettingsPage
-            onClose={() => setSettingsOpen(false)}
-            modes={content.modes}
-            characters={characters}
-            onSaveMode={onSaveMode}
-            onDeleteMode={onDeleteMode}
-          />
         )}
         {portraitOpen && portrait && (
           <div className="portrait-lightbox" onClick={() => setPortraitOpen(false)} role="dialog" aria-label="Portrait">
@@ -521,7 +578,7 @@ export function CharacterSheet({
 
       {isMobile && (
         <nav className="mtabs" role="tablist" aria-label="Sections">
-          {MOBILE_TABS.map((t) => (
+          {visibleMobileTabs.map((t) => (
             <button
               key={t}
               type="button"
@@ -605,6 +662,15 @@ export function CharacterSheet({
             </div>
           </div>
         </div>
+      )}
+
+      {customizeOpen && onCustomize && (
+        <CustomizeModal
+          character={character}
+          globalDefault={globalCustomization ?? {}}
+          onCustomize={onCustomize}
+          onClose={() => setCustomizeOpen(false)}
+        />
       )}
     </div>
     </PinContext.Provider>

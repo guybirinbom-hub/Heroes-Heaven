@@ -75,9 +75,18 @@ export function pwl(c: { variantRules?: { proficiencyWithoutLevel?: boolean } })
   return !!c.variantRules?.proficiencyWithoutLevel;
 }
 
-/** Format a modifier with an explicit sign, e.g. 3 -> "+3", -1 -> "-1". */
+// Whether formatMod prefixes positive modifiers with "+". A DISPLAY customization (Content & behaviour
+// → "Show + on modifiers"); the sheet sets it from the viewed character's effective customization. Only
+// one sheet renders at a time, so a module-level flag is safe (mirrors how the theme is applied to <html>).
+let PLUS_ON_MODS = true;
+export function setPlusOnMods(on: boolean): void {
+  PLUS_ON_MODS = on;
+}
+
+/** Format a modifier with an explicit sign, e.g. 3 -> "+3", -1 -> "-1". Positives drop the "+" when the
+ *  "Show + on modifiers" option is off; negatives always keep their sign. */
 export function formatMod(n: number): string {
-  return n >= 0 ? `+${n}` : `${n}`;
+  return n >= 0 ? (PLUS_ON_MODS ? `+${n}` : `${n}`) : `${n}`;
 }
 
 const SKILL_ABILITY: Record<SkillId, AbilityId> = {
@@ -236,9 +245,15 @@ export function deriveSpellcasting(c: Character, entry: SpellcastingEntry): Spel
 /** Total max-HP bonus from the character's selected feats (Toughness = +level, etc.). */
 export function featHpBonus(c: Character, db: ContentDatabase): number {
   let total = 0;
-  for (const f of c.feats) {
-    const b = db.feats[f.featId]?.maxHpBonus;
-    if (b) total += (b.perLevel ?? 0) * c.level + (b.flat ?? 0);
+  const takenFeats = c.feats.map((f) => db.feats[f.featId]).filter((f): f is NonNullable<typeof f> => !!f);
+  for (const f of takenFeats) {
+    const b = f.maxHpBonus;
+    if (!b) continue;
+    total += (b.perLevel ?? 0) * c.level + (b.flat ?? 0);
+    // Resiliency feats: +N HP for each archetype feat of that class you have (dedication counts).
+    if (b.perArchetypeFeat && b.archetype) {
+      total += b.perArchetypeFeat * takenFeats.filter((x) => x.archetype === b.archetype).length;
+    }
   }
   return total;
 }
@@ -396,6 +411,8 @@ export interface CharacterDefenses {
   resistances: { type: string; value: number }[];
   weaknesses: { type: string; value: number }[];
   immunities: string[];
+  /** Void (negative) healing — healed by void energy, harmed by vitality (dhampir & co.). */
+  negativeHealing?: boolean;
 }
 
 const ACUITY_ORDER: Record<string, number> = { precise: 3, imprecise: 2, vague: 1 };
@@ -474,12 +491,28 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     for (const sense of grants.senses) addSense({ name: sense });
   }
 
+  const heritage = c.heritageId ? db.heritages[c.heritageId] : undefined;
+  // Nephilim-type heritages grant low-light vision, UPGRADED to darkvision if the ancestry already gives
+  // low-light (or darkvision). The plain low-light Sense is imported normally; add darkvision when it upgrades.
+  if (heritage?.darkvisionIfAncestryLowLight) {
+    // The Vision type says 'low-light' but the data uses 'low-light-vision' — accept either, plus darkvision.
+    const ancestryVision = String((c.ancestryId && db.ancestries[c.ancestryId]?.vision) || 'normal');
+    if (/low-light|darkvision/.test(ancestryVision)) addSense({ name: 'darkvision' });
+  }
+  // Choice-resistance heritage (Deep Fetchling: cold/void; Elementheart Kobold: an element's type): the
+  // player's chosen damage type, resistance = half level (min 1). Same-type resistances don't stack.
+  if (heritage?.choiceResistance && c.heritageResistanceChoice) {
+    const v = Math.max(1, Math.floor(c.level / 2));
+    res.set(c.heritageResistanceChoice, Math.max(res.get(c.heritageResistanceChoice) ?? 0, v));
+  }
+
   const sortByType = (a: { type: string }, b: { type: string }) => a.type.localeCompare(b.type);
   return {
     senses: [...senses.values()],
     resistances: [...res].map(([type, value]) => ({ type, value })).sort(sortByType),
     weaknesses: [...weak].map(([type, value]) => ({ type, value })).sort(sortByType),
     immunities: [...imm].sort(),
+    negativeHealing: !!heritage?.negativeHealing,
   };
 }
 
@@ -514,6 +547,7 @@ function stepDie(die: string): string {
  *  raise the die to d6 (not a full step past d6). Returns the adjusted die given the current die,
  *  whether the strike is with the deity's favored weapon, and whether that weapon is unarmed. */
 function deadlySimplicityDie(die: string, isFavored: boolean, isUnarmed: boolean): string {
+  if (!die) return die; // flat-damage weapon (no die) — nothing to step
   if (!isFavored) return die;
   if (isUnarmed) {
     // Only bump sub-d6 unarmed dice, and only up to d6 (a d6+ unarmed favored weapon is unchanged).
@@ -661,27 +695,79 @@ export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> 
  *   • Ranger Precision hunter's edge — 1d8 (→2/3d8 at L11/19) precision on the FIRST hit each round vs
  *     your hunted prey. (class-features/precision.json; requires Hunt Prey.)
  *  Returned as annotations; the caller renders them like crit riders and never adds them to the flat total. */
-function strikePrecisionRiders(c: Character, db: ContentDatabase, strike: { traits: string[]; ranged: boolean }): { text: string; note: string }[] {
+function strikePrecisionRiders(
+  c: Character,
+  db: ContentDatabase,
+  strike: { traits: string[]; ranged: boolean; category?: string; dieFaces?: number; unarmed?: boolean },
+): { text: string; note: string }[] {
   const owned = ownedFeatureIds(c, db);
   const out: { text: string; note: string }[] = [];
   const agileOrFinesse = strike.traits.includes('agile') || strike.traits.includes('finesse');
   const thrown = strike.traits.includes('thrown') || strike.traits.some((t) => t.startsWith('thrown-'));
-  // Sneak Attack qualifies for an agile/finesse melee or unarmed attack, or a ranged attack (a thrown
-  // ranged attack must itself be agile or finesse); off-guard target.
+  // Sneak Attack qualifies for an agile/finesse melee weapon, ANY unarmed attack, or a ranged attack (a
+  // thrown ranged attack must itself be agile/finesse); off-guard target. The Rogue RUFFIAN racket also
+  // qualifies simple weapons (die ≤ d8) and martial/advanced weapons (die ≤ d6), regardless of agile/finesse.
   if (owned.has('sneak-attack')) {
-    const qualifies = strike.ranged ? (!thrown || agileOrFinesse) : agileOrFinesse;
+    const faces = strike.dieFaces ?? 0;
+    const ruffian =
+      c.subclassId === 'ruffian' &&
+      ((strike.category === 'simple' && faces <= 8) ||
+        ((strike.category === 'martial' || strike.category === 'advanced') && faces <= 6));
+    const qualifies = strike.ranged ? !thrown || agileOrFinesse : agileOrFinesse || !!strike.unarmed || ruffian;
     if (qualifies) {
       const dice = 1 + [5, 11, 17].filter((l) => c.level >= l).length;
       out.push({ text: `${dice}d6 precision`, note: 'sneak attack when target is off-guard' });
     }
   }
   // Ranger Precision hunter's edge applies to ANY Strike vs your hunted prey (no weapon restriction),
-  // on the first hit of the round. It's the `precision` Hunter's Edge subclass option + Hunt Prey.
-  if (c.subclassId === 'precision' && owned.has('hunt-prey')) {
+  // on the first hit of the round. It's the `precision` Hunter's Edge subclass option + Hunt Prey, and
+  // only while Hunt Prey is toggled on (you've declared a prey).
+  if (c.subclassId === 'precision' && owned.has('hunt-prey') && c.classResources?.['hunt-prey']) {
     const dice = c.level >= 19 ? 3 : c.level >= 11 ? 2 : 1;
-    out.push({ text: `${dice}d8 precision`, note: 'first hit vs hunted prey' });
+    out.push({ text: `${dice}d8 precision`, note: '* first hit vs hunted prey' });
   }
   return out;
+}
+
+// Barbarian "additional damage from Rage" by instinct. Applies to melee & unarmed Strikes only while
+// raging (never ranged). Values step up at the levels a barbarian gains Weapon Specialization (7) and
+// Greater Weapon Specialization (15). An ARCHETYPE barbarian (Barbarian Dedication) rages for a flat +2:
+// it picks an instinct "but doesn't gain the other abilities it grants", so no instinct/spec increase.
+const RAGE_DAMAGE: Record<string, { tiers: [number, number, number]; type?: string; unarmedOnly?: boolean; largerWeapon?: boolean }> = {
+  'fury-instinct': { tiers: [3, 7, 13] },
+  'spirit-instinct': { tiers: [3, 7, 13], type: 'spirit' },
+  'superstition-instinct': { tiers: [3, 7, 13] },
+  'dragon-instinct': { tiers: [4, 8, 16], type: 'energy' },
+  'giant-instinct': { tiers: [6, 10, 18], largerWeapon: true },
+  'animal-instinct': { tiers: [2, 5, 12], unarmedOnly: true },
+  // War of Immortals / Rage of Elements / Severed at the Root instincts (were falling through to flat +2):
+  'elemental-instinct': { tiers: [4, 6, 12], type: 'energy' }, // chosen element's damage type
+  'decay-instinct': { tiers: [6, 10, 18], type: 'poison' },
+  'ligneous-instinct': { tiers: [6, 10, 18] },
+  'bloodrager': { tiers: [2, 4, 8] },
+};
+
+/** The Rage bonus-damage rider for a Strike, present ONLY while the character is currently raging (the
+ *  Rage class-resource is on). Melee & unarmed only; the leading `*` in the note flags the condition. */
+function rageStrikeRider(c: Character, opts: { ranged: boolean; unarmed: boolean; weaponType: string }): { text: string; note: string } | null {
+  if (!c.classResources?.rage) return null; // not currently raging → no bonus
+  const isBarb = c.classId === 'barbarian';
+  const isArchetype = !isBarb && c.feats.some((f) => f.featId === 'barbarian-dedication');
+  if (!isBarb && !isArchetype) return null;
+  if (opts.ranged) return null; // Rage never applies to ranged Strikes
+  let value = 2;
+  let type = opts.weaponType;
+  let note = '* while raging (melee & unarmed)';
+  if (isBarb) {
+    const inst = RAGE_DAMAGE[c.subclassId ?? ''];
+    if (inst) {
+      if (inst.unarmedOnly && !opts.unarmed) return null; // Animal Instinct: only its animal unarmed attack
+      value = inst.tiers[c.level >= 15 ? 2 : c.level >= 7 ? 1 : 0];
+      if (inst.type) type = inst.type; // spirit / energy / poison override the weapon's own type
+      if (inst.largerWeapon) note = '* while raging with a larger weapon (Clumsy 1)';
+    }
+  }
+  return { text: `${value} ${type}`, note };
 }
 
 /** A source that grants weapon critical specialization: the level it activates and the weapon
@@ -751,16 +837,19 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   const strMod = abilityMod(c.abilities.str);
   const dexMod = abilityMod(c.abilities.dex);
   const finesse = w.traits.includes('finesse');
-  // A weapon with a range increment is "ranged" for the UI, but THROWN weapons (javelin,
-  // dagger via thrown-N) still use Strength like a melee weapon. Only true PROJECTILE
-  // weapons (bows/crossbows/firearms) use Dexterity and add no Strength to damage.
-  const thrown = w.traits.includes('thrown') || w.traits.some((t) => t.startsWith('thrown-'));
+  // A PURE thrown weapon (bare `thrown` trait: javelin/dart/chakram/shuriken/bola) makes a RANGED attack,
+  // so its attack roll uses Dexterity (like any ranged attack) while still adding Strength to DAMAGE. A
+  // melee weapon that can also be thrown carries a `thrown-N` trait (dagger/light hammer/trident/spear);
+  // the app models its single strike as the MELEE attack, so it keeps Str (or Dex if finesse & higher).
+  const bareThrown = w.traits.includes('thrown');
+  const thrown = bareThrown || w.traits.some((t) => t.startsWith('thrown-'));
   const propulsive = w.traits.includes('propulsive');
   const ranged = w.range != null;
   const projectile = ranged && !thrown;
 
-  // Attack ability: projectiles use Dex; melee & thrown use Str (or Dex if finesse and higher).
-  const usesDex = projectile || (finesse && dexMod > strMod);
+  // Attack ability: projectiles AND pure thrown weapons use Dex; a melee (incl. thrown-N) weapon uses Str,
+  // or Dex when it's finesse and Dex is higher. (Damage still adds Str for thrown — see usesStrDamage.)
+  const usesDex = projectile || bareThrown || (finesse && dexMod > strMod);
   const atkAbility: AbilityId = usesDex ? 'dex' : 'str';
   const abMod = usesDex ? dexMod : strMod;
 
@@ -772,8 +861,12 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   // Best of: weapon-category rank, a per-weapon override (deity favored weapon), and a per-GROUP
   // proficiency (alchemist bombs, gunslinger firearms — these beat the bare category rank).
   const rank = betterRank(
-    betterRank(c.proficiencies.attacks[w.category], c.proficiencies.weaponOverrides?.[w.id]),
-    w.group ? c.proficiencies.weaponGroups?.[w.group] : undefined,
+    betterRank(
+      betterRank(c.proficiencies.attacks[w.category], c.proficiencies.weaponOverrides?.[w.id]),
+      w.group ? c.proficiencies.weaponGroups?.[w.group] : undefined,
+    ),
+    // Gunslinger "firearms & crossbows" proficiency — by category, only for a firearm/crossbow weapon.
+    w.group === 'firearm' || w.group === 'crossbow' ? c.proficiencies.firearmProf?.[w.category] : undefined,
   );
   // ABP attack potency replaces the weapon's potency rune; a refined weapon supplies an item bonus of
   // the same class (take the higher — a refined weapon carries no runes, so this is refinement-vs-ABP).
@@ -844,7 +937,14 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
     (critRiders.length ? ` (plus ${critRiders.join(', ')} on a crit)` : '') +
     (fatalDie ? ` (fatal ${fatalDie})` : '') +
     (twoHandDie ? ` (${dice}${twoHandDie}${dmgBonus ? formatMod(dmgBonus) : ''} two-handed)` : '');
-  const conditionalDamage = strikePrecisionRiders(c, db, { traits: w.traits, ranged });
+  const conditionalDamage = strikePrecisionRiders(c, db, {
+    traits: w.traits,
+    ranged,
+    category: w.category,
+    dieFaces: Number(String(w.damage.die).replace('d', '')) || 0,
+  });
+  const rageRider = rageStrikeRider(c, { ranged, unarmed: false, weaponType: w.damage.type });
+  if (rageRider) conditionalDamage.push(rageRider);
 
   return {
     instanceId: inv.instanceId,
@@ -947,6 +1047,8 @@ interface UnarmedProfile {
   damageType: string;
   traits: string[];
   group: string;
+  /** Range increment (ft) for a RANGED natural/unarmed attack (Spined Azarketi spine); undefined = melee. */
+  range?: number;
 }
 
 const FIST_PROFILE: UnarmedProfile = {
@@ -976,7 +1078,9 @@ function deriveUnarmedStrike(
   const die = deadlySimplicityDie(p.die, dsUnarmed, true);
   const strMod = abilityMod(c.abilities.str);
   const dexMod = abilityMod(c.abilities.dex);
-  const usesDex = p.traits.includes('finesse') && dexMod > strMod;
+  // A RANGED natural attack (spine) is a ranged attack → Dexterity to the attack roll and no ability to damage.
+  const isRanged = p.range != null;
+  const usesDex = isRanged || (p.traits.includes('finesse') && dexMod > strMod);
   const atkAbility: AbilityId = usesDex ? 'dex' : 'str';
   const abMod = usesDex ? dexMod : strMod;
   const rank = c.proficiencies.attacks.unarmed;
@@ -990,9 +1094,14 @@ function deriveUnarmedStrike(
   const specDamage = weaponSpecDamage(rank, weaponSpecialization(c, db));
   // Thief racket also applies to a finesse UNARMED attack (thief.json selector melee-strike-damage) —
   // add Dex to damage instead of Str when it helps.
-  const thiefDexDamage = c.subclassId === 'thief' && p.traits.includes('finesse') && dexMod > strMod;
-  const dmgAbMod = thiefDexDamage ? dexMod : strMod;
-  const dmgBonus = dmgAbMod + conditionPenalty(c.conditions, thiefDexDamage ? 'dex' : 'str', 'damage') + specDamage + modeNumberBonus(c.activeModes, { kind: 'damage' });
+  const thiefDexDamage = !isRanged && c.subclassId === 'thief' && p.traits.includes('finesse') && dexMod > strMod;
+  // Ranged natural attacks add no ability modifier to damage (like a projectile); melee add Str (or Dex via Thief).
+  const dmgAbMod = isRanged ? 0 : thiefDexDamage ? dexMod : strMod;
+  const dmgBonus =
+    dmgAbMod +
+    (isRanged ? 0 : conditionPenalty(c.conditions, thiefDexDamage ? 'dex' : 'str', 'damage')) +
+    specDamage +
+    modeNumberBonus(c.activeModes, { kind: 'damage' });
   // ABP devastating attacks OR a handwraps striking rune (or MP refinement) add dice to THIS attack's
   // own die.
   const strikingExtra = Math.max(
@@ -1022,14 +1131,17 @@ function deriveUnarmedStrike(
     (extraDmg.length ? ` plus ${extraDmg.join(' plus ')}` : '') +
     (nCritRiders.length ? ` (plus ${nCritRiders.join(', ')} on a crit)` : '') +
     (nFatal ? ` (fatal ${nFatal})` : '');
-  const conditionalDamage = strikePrecisionRiders(c, db, { traits: p.traits, ranged: false });
+  const conditionalDamage = strikePrecisionRiders(c, db, { traits: p.traits, ranged: isRanged, unarmed: true });
+  const rageRider = rageStrikeRider(c, { ranged: isRanged, unarmed: true, weaponType: p.damageType });
+  if (rageRider) conditionalDamage.push(rageRider);
   return {
     instanceId: p.instanceId,
     name: p.name,
     attack,
     damage: damage + conditionalRiderText(conditionalDamage),
     traits: p.traits,
-    ranged: false,
+    ranged: isRanged,
+    range: p.range,
     group: p.group,
     base: p.instanceId,
     specDamage: specDamage || undefined,
@@ -1067,15 +1179,18 @@ export function deriveStrikes(c: Character, db: ContentDatabase): Strike[] {
         damageType: na.damageType,
         traits: na.traits?.length ? na.traits : ['unarmed'],
         group: na.group ?? 'brawling',
+        range: na.range,
       },
       hwRunes,
       false,
       mpHw,
     ),
   );
-  // Powerful Fist (level-1 monk class feature): the Fist's damage die increases to 1d6 and it loses
-  // the nonlethal trait / lethal-attack penalty. (class-features/powerful-fist.json.)
-  const fistProfile: UnarmedProfile = ownedFeatureIds(c, db).has('powerful-fist')
+  // The Fist's damage die increases to 1d6 (and it loses the nonlethal trait) from Powerful Fist (level-1
+  // monk class feature) OR the Warrior Automaton / Warrior Jotunborn heritages, which grant the same upgrade.
+  const fistDieUpgraded =
+    ownedFeatureIds(c, db).has('powerful-fist') || c.heritageId === 'warrior-automaton' || c.heritageId === 'warrior-jotunborn';
+  const fistProfile: UnarmedProfile = fistDieUpgraded
     ? { ...FIST_PROFILE, die: 'd6', traits: FIST_PROFILE.traits.filter((t) => t !== 'nonlethal') }
     : FIST_PROFILE;
   // Deadly Simplicity: when the deity's favored weapon is an unarmed attack (Irori's fist), the Fist
@@ -1118,7 +1233,11 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   for (const src of grantSources) {
     for (const [k, v] of Object.entries(src.speeds ?? {})) {
       const key = k as keyof Speeds;
-      if (typeof v === 'number') speeds[key] = Math.max(speeds[key] ?? 0, v);
+      if (typeof v !== 'number') continue;
+      // A land-Speed grant (Fleet, Nimble Elf, …) INCREASES your existing land Speed (additive, untyped),
+      // whereas fly/swim/climb/burrow grants confer a SET speed of that type (take the best).
+      if (key === 'land') speeds.land = (speeds.land ?? 0) + v;
+      else speeds[key] = Math.max(speeds[key] ?? 0, v);
     }
   }
 

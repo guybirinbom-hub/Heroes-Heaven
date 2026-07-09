@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState, type ReactNode } from 'react';
 import type { Character, ContentDatabase, Item, ModeDef, SenseEntry } from '../rules/types';
 import { SAVES } from '../rules/types';
 import { dyingDeathThreshold } from '../rules/conditions';
@@ -34,14 +34,15 @@ import {
   MAX_MYTHIC_POINTS,
   type PlayUpdater,
 } from '../rules/play';
-import { usePrefs } from '../data/prefs';
+import { useCustomization, DEFAULT_RAIL_ORDER } from '../data/customization';
 import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
-import { CLASS_RESOURCES, resourceMax } from '../rules/classResources';
+import { resourcesForCharacter, resourceMax } from '../rules/classResources';
 import { statHasConditionalMode, type StatRef } from '../rules/explain';
 import { ConditionsModal } from './ConditionsModal';
 import { ItemDetail } from './ItemDetail';
 import { ItemEditorModal } from './ItemEditorModal';
 import { InfoTerm } from './InfoTerm';
+import { MythicRules, mythicDestinies } from './MythicRules';
 import { senseDesc, languageDesc } from '../rules/glossary';
 import { RankPill } from './widgets';
 import { useIsMobile } from './useIsMobile';
@@ -99,10 +100,11 @@ export function VitalsRail({
   // Shield-HP draft (null = show the live value): a controlled number input that wrote on every keystroke
   // snapped the shield to full HP the moment you cleared it to retype — buffer + commit on blur/Enter.
   const [shDraft, setShDraft] = useState<string | null>(null);
-  const { hpCommandEntry } = usePrefs();
+  const { hpCommandEntry, showSaveDCs, railOrder, railHidden } = useCustomization();
   const [condOpen, setCondOpen] = useState(false);
   const [shieldDetailOpen, setShieldDetailOpen] = useState(false);
   const [shieldEditOpen, setShieldEditOpen] = useState(false);
+  const [mythicRulesOpen, setMythicRulesOpen] = useState(false);
   const hpMax = deriveMaxHp(character, content);
   // Editable current-HP field (click the number to set it directly).
   const isMobile = useIsMobile();
@@ -158,9 +160,10 @@ export function VitalsRail({
   }, [hasShield]);
   const charDefenses = deriveDefenses(character, content);
 
-  // Swashbuckler panache has its own dedicated toggle card below, so drop it from the generic
-  // class-resources row to avoid showing it twice.
-  const classResources = ((character.classId && CLASS_RESOURCES[character.classId]) || []).filter(
+  // Base-class resources PLUS any granted by an owned archetype dedication (Barbarian/Swashbuckler…).
+  // Swashbuckler panache has its own dedicated toggle card below, so drop it from the generic row to
+  // avoid showing it twice (only for a base swashbuckler — a dedication user has no dedicated card).
+  const classResources = resourcesForCharacter(character.classId, new Set(character.feats.map((f) => f.featId))).filter(
     (r) => !(r.id === 'panache' && character.classId === 'swashbuckler'),
   );
   const resourceVals = character.classResources ?? {};
@@ -210,8 +213,10 @@ export function VitalsRail({
     );
   }
 
-  return (
-    <aside className="rail">
+  // Rail cards keyed by id so Customize can reorder / hide them. Conditional cards resolve to null when
+  // they have no content (or don't apply to the class) and are simply skipped.
+  const cards: Record<string, ReactNode> = {};
+  cards.hp = (
       <section className="card">
         <div
           className={'ct' + (onOpenStat ? ' openable' : '')}
@@ -447,7 +452,8 @@ export function VitalsRail({
           </div>
         )}
       </section>
-
+  );
+  cards.saves = (
       <section className="card">
         <div className="ct">
           <i className="ti ti-shield-checkered" aria-hidden="true" />
@@ -466,6 +472,7 @@ export function VitalsRail({
               <RankPill rank={d.rank} />
               <span className="stat-name">{SAVE_LABEL[s]}</span>
               <span className="stat-short">{SAVE_SHORT[s]}</span>
+              {showSaveDCs && <span className="stat-dc" title="Save DC">DC {10 + d.modifier}</span>}
               <span className="stat-mod">{formatMod(d.modifier)}</span>
             </div>
           );
@@ -482,7 +489,8 @@ export function VitalsRail({
         </div>
         </div>
       </section>
-
+  );
+  cards.movement = (
       <section className="card">
         <div className="ct">
           <i className="ti ti-bolt" aria-hidden="true" />
@@ -508,27 +516,6 @@ export function VitalsRail({
             })}
           </span>
         </div>
-        {character.mythicEnabled && (
-          <div className="rail-kv">
-            <span className="kv-label">Mythic points</span>
-            <span className="pips">
-              {Array.from({ length: MAX_MYTHIC_POINTS }, (_, i) => {
-                const on = i < (character.mythicPoints ?? 0);
-                const cls = 'pip mythic' + (on ? ' on' : '') + (onPlay ? ' interactive' : '');
-                return onPlay ? (
-                  <button
-                    key={i}
-                    className={cls}
-                    aria-label={`Set mythic points to ${i + 1 === (character.mythicPoints ?? 0) ? i : i + 1}`}
-                    onClick={() => onPlay((p) => setMythicPoints(p, i + 1 === (character.mythicPoints ?? 0) ? i : i + 1))}
-                  />
-                ) : (
-                  <span key={i} className={cls} />
-                );
-              })}
-            </span>
-          </div>
-        )}
         <div className="kv-cubes">
         <div
           className={'rail-kv' + (onOpenStat ? ' openable' : '') + (hasTempSpeed ? ' has-temp' : '')}
@@ -565,13 +552,27 @@ export function VitalsRail({
         </div>
         </div>
       </section>
-
-      {(charDefenses.resistances.length > 0 || charDefenses.weaknesses.length > 0 || charDefenses.immunities.length > 0) && (
+  );
+  cards.defenses =
+    charDefenses.resistances.length > 0 ||
+    charDefenses.weaknesses.length > 0 ||
+    charDefenses.immunities.length > 0 ||
+    charDefenses.negativeHealing ? (
         <section className="card">
           <div className="ct">
             <i className="ti ti-shield-half" aria-hidden="true" />
             Defenses
           </div>
+          {charDefenses.negativeHealing && (
+            <div className="rail-kv">
+              <span className="kv-label">Void healing</span>
+              <span className="iwr-val">
+                <InfoTerm title="Void healing" description="You are healed by void (negative) energy and harmed by vitality (positive) energy, as if you were undead.">
+                  healed by void, harmed by vitality
+                </InfoTerm>
+              </span>
+            </div>
+          )}
           {charDefenses.resistances.length > 0 && (
             <div className="rail-kv">
               <span className="kv-label">Resistances</span>
@@ -591,9 +592,9 @@ export function VitalsRail({
             </div>
           )}
         </section>
-      )}
-
-      {classResources.length > 0 && (
+    ) : null;
+  cards.resources =
+    classResources.length > 0 ? (
         <section className="card">
           <div className="ct">
             <i className="ti ti-flame-filled" aria-hidden="true" />
@@ -647,12 +648,13 @@ export function VitalsRail({
             );
           })}
         </section>
-      )}
-
-      {/* Swashbuckler Panache — a dedicated one-tap toggle card, prominent above Conditions.
-          Drives the SAME 'panache' class-resource value as the generic Class-resources row (no
-          double-count): both read character.classResources.panache and write via toggleResource. */}
-      {character.classId === 'swashbuckler' && (() => {
+    ) : null;
+  // Swashbuckler Panache — a dedicated one-tap toggle card, prominent above Conditions. Drives the SAME
+  // 'panache' class-resource value as the generic Class-resources row (no double-count): both read
+  // character.classResources.panache and write via toggleResource.
+  cards.panache =
+    character.classId === 'swashbuckler'
+      ? (() => {
         const on = !!(resourceVals['panache'] ?? 0);
         return (
           <section className={'card panache-card' + (on ? ' on' : '')}>
@@ -680,8 +682,91 @@ export function VitalsRail({
             )}
           </section>
         );
-      })()}
-
+        })()
+      : null;
+  // Champion: an at-a-glance card naming the chosen Cause (its tenets + signature reaction + aura live in
+  // the description popup). A reminder only — the reaction's numbers are target-specific, so nothing derives.
+  const cause = character.classId === 'champion' && character.subclassId ? content.classFeatures[character.subclassId] : undefined;
+  cards.champion = cause ? (
+      <section className="card">
+        <div className="ct">
+          <i className="ti ti-shield-half" aria-hidden="true" />
+          Cause
+        </div>
+        <div className="pill-wrap">
+          <InfoTerm className="lang-pill" title={cause.name} description={cause.description} descRefs={cause.descRefs} descKey="classFeatures">
+            {cause.name}
+          </InfoTerm>
+        </div>
+      </section>
+  ) : null;
+  // Mythic (War of Immortals): the mythic-points pool (spend 1 to reroll a d20 — Recall the Teachings)
+  // plus at-a-glance chips for the chosen Calling and Destiny (the L12 dedication the character took),
+  // and a shortcut into the in-app Mythic rules reference. Only shown for mythic characters.
+  const mythicCalling =
+    character.mythicEnabled && character.mythicCalling ? content.classFeatures[character.mythicCalling] : undefined;
+  const mythicDestiny = character.mythicEnabled
+    ? (() => {
+        const taken = new Set(character.feats.map((f) => f.featId));
+        return mythicDestinies(content).find((g) => g.dedication && taken.has(g.dedication.id));
+      })()
+    : undefined;
+  cards.mythic = character.mythicEnabled ? (
+      <section className="card">
+        <div className="ct">
+          <i className="ti ti-flame" aria-hidden="true" />
+          Mythic
+        </div>
+        <div className="rail-kv">
+          <span className="kv-label">Mythic points</span>
+          <span className="pips">
+            {Array.from({ length: MAX_MYTHIC_POINTS }, (_, i) => {
+              const on = i < (character.mythicPoints ?? 0);
+              const cls = 'pip mythic' + (on ? ' on' : '') + (onPlay ? ' interactive' : '');
+              return onPlay ? (
+                <button
+                  key={i}
+                  className={cls}
+                  aria-label={`Set mythic points to ${i + 1 === (character.mythicPoints ?? 0) ? i : i + 1}`}
+                  onClick={() => onPlay((p) => setMythicPoints(p, i + 1 === (character.mythicPoints ?? 0) ? i : i + 1))}
+                />
+              ) : (
+                <span key={i} className={cls} />
+              );
+            })}
+          </span>
+        </div>
+        <div className="pill-wrap">
+          {mythicCalling && (
+            <InfoTerm
+              className="lang-pill"
+              title={mythicCalling.name}
+              description={mythicCalling.description}
+              descRefs={mythicCalling.descRefs}
+              descKey="classFeatures"
+            >
+              {mythicCalling.name}
+            </InfoTerm>
+          )}
+          {mythicDestiny?.dedication && (
+            <InfoTerm
+              className="lang-pill"
+              title={mythicDestiny.dedication.name}
+              description={mythicDestiny.dedication.description}
+              descRefs={mythicDestiny.dedication.descRefs}
+              descKey="feats"
+            >
+              {mythicDestiny.name}
+            </InfoTerm>
+          )}
+          <button type="button" className="lang-pill mythic-rules-pill" onClick={() => setMythicRulesOpen(true)}>
+            <i className="ti ti-book-2" aria-hidden="true" /> Rules
+          </button>
+        </div>
+        <p className="mythic-note">Spend 1 point to reroll a d20 (Recall the Teachings). Refills at daily preparations.</p>
+      </section>
+  ) : null;
+  cards.conditions = (
       <section className="card">
         <div className="ct">
           <i className="ti ti-urgent" aria-hidden="true" />
@@ -743,7 +828,8 @@ export function VitalsRail({
           )}
         </div>
       </section>
-
+  );
+  cards.languages = (
       <section className="card">
         <div className="ct">
           <i className="ti ti-language" aria-hidden="true" />
@@ -757,6 +843,17 @@ export function VitalsRail({
           ))}
         </div>
       </section>
+  );
+
+  const hidden = new Set(railHidden ?? []);
+  const savedOrder = (railOrder && railOrder.length ? railOrder : DEFAULT_RAIL_ORDER).filter((id) => DEFAULT_RAIL_ORDER.includes(id));
+  const cardOrder = [...savedOrder, ...DEFAULT_RAIL_ORDER.filter((id) => !savedOrder.includes(id))];
+
+  return (
+    <aside className="rail">
+      {cardOrder.filter((id) => !hidden.has(id)).map((id) => (cards[id] ? <Fragment key={id}>{cards[id]}</Fragment> : null))}
+
+      {mythicRulesOpen && <MythicRules content={content} onClose={() => setMythicRulesOpen(false)} />}
 
       {numpadOpen && isMobile && onPlay && (
         <HpNumpadModal
@@ -773,11 +870,12 @@ export function VitalsRail({
 
       {condOpen && onPlay && (
         <ConditionsModal
-          conditions={
-            character.kingmakerEnabled
-              ? content.conditions
-              : Object.fromEntries(Object.entries(content.conditions).filter(([, cd]) => !/kingmaker/i.test(cd.source?.book ?? '')))
-          }
+          // The Kingmaker book's conditions (Mired, Routed, Weary, …) are ALL army conditions — they
+          // apply to armies in the Warfare rules, not to a player character — so they never belong in
+          // the PC conditions picker, even with Kingmaker enabled.
+          conditions={Object.fromEntries(
+            Object.entries(content.conditions).filter(([, cd]) => !/kingmaker/i.test(cd.source?.book ?? '')),
+          )}
           active={character.conditions}
           onAdd={(id, valued) => onPlay((p) => addCondition(p, id, valued ? 1 : undefined))}
           onRemove={(id) => onPlay((p) => removeCondition(p, id))}

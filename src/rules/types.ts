@@ -290,6 +290,15 @@ export interface Heritage extends ContentBase, DefenseGrants {
   grantsGeneralFeat?: boolean;
   /** Innate spells this heritage grants (e.g. Seer Elf → detect magic). */
   innateSpells?: InnateSpellGrant[];
+  /** Nephilim-type heritages: grant low-light vision, upgraded to darkvision if the ANCESTRY already
+   *  provides low-light vision. */
+  darkvisionIfAncestryLowLight?: boolean;
+  /** Dhampir & co.: void (negative) healing — healed by void energy, harmed by vitality. */
+  negativeHealing?: boolean;
+  /** A resistance whose damage type the player chooses at level 1, valued at half the character's level
+   *  (Deep Fetchling: cold/void; Elementheart Kobold: an element's damage type). The choice is stored in
+   *  BuildState.heritageResistanceChoice. */
+  choiceResistance?: { options: { value: string; label: string }[]; halfLevel: boolean };
 }
 
 export interface Background extends ContentBase {
@@ -346,8 +355,9 @@ export interface Feat extends ContentBase, DefenseGrants {
   /** Innate spells this feat grants (cast at a fixed tradition; cantrips at-will, else 1/day). */
   innateSpells?: InnateSpellGrant[];
   /** Max-HP modifier (Toughness/Mountain's Stoutness = perLevel 1; Thick Hide Mask = flat 20;
-   *  Ghostly Resistance = perLevel -1). */
-  maxHpBonus?: { perLevel?: number; flat?: number };
+   *  Ghostly Resistance = perLevel -1). The Resiliency feats grant `perArchetypeFeat` HP per feat of the
+   *  named `archetype` (dedication counts) — resolved against the character's feats in featHpBonus. */
+  maxHpBonus?: { perLevel?: number; flat?: number; perArchetypeFeat?: number; archetype?: string };
 }
 
 export interface ClassFeature extends ContentBase, DefenseGrants {
@@ -1011,8 +1021,12 @@ export interface Proficiencies {
   classDc: ProficiencyRank;
   /** Per-weapon overrides (e.g. a deity's favored weapon), keyed by weapon id. Wins if higher than the category rank. */
   weaponOverrides?: Record<string, ProficiencyRank>;
-  /** Per-weapon-GROUP proficiency (alchemist bombs, gunslinger firearms), keyed by weapon group. Wins if higher than the category rank. */
+  /** Per-weapon-GROUP proficiency (alchemist bombs), keyed by weapon group. Wins if higher than the category rank. */
   weaponGroups?: Record<string, ProficiencyRank>;
+  /** "Firearms & crossbows" proficiency by weapon CATEGORY (gunslinger). Consulted only for a weapon in the
+   *  firearm or crossbow group, so a gunslinger can be e.g. master with simple firearms while advanced firearms
+   *  stay trained — which a single group rank can't express. Wins if higher than the plain category rank. */
+  firearmProf?: Partial<Record<WeaponCategory, ProficiencyRank>>;
 }
 
 /** A feat the character has taken, and the slot it filled. */
@@ -1058,6 +1072,8 @@ export interface NaturalAttack {
   traits?: string[];
   /** Weapon group (drives crit specialization); defaults to 'brawling'. */
   group?: string;
+  /** Range increment (ft) for a RANGED natural attack (Spined Azarketi spine); undefined = melee. */
+  range?: number;
 }
 
 /**
@@ -1071,6 +1087,8 @@ export interface GrantedStrike {
   damageType: string;
   traits: string[];
   group: string;
+  /** Range increment in feet for a RANGED natural/unarmed attack (Spined Azarketi's spine); undefined = melee. */
+  range?: number;
   /** Set only when gated by a ChoiceSet pick (e.g. Iruxi 'fangs'/'tail'); undefined = unconditional. */
   choiceValue?: string;
 }
@@ -1325,6 +1343,8 @@ export interface Character {
   // --- build references (content ids) ---
   ancestryId: string | null;
   heritageId: string | null;
+  /** Chosen damage type for a choice-resistance heritage (Deep Fetchling / Elementheart Kobold). */
+  heritageResistanceChoice?: string | null;
   backgroundId: string | null;
   classId: string | null;
   /** Chosen subclass option id (instinct, doctrine, bloodline, ...). */
@@ -1431,6 +1451,74 @@ export interface Character {
   /** Per-character cosmetics (portrait + accent), mirrors the theme system. `portrait` is the compressed
    *  (synced) copy; `portraitRef` keys the on-device sharp copy (installed app only; never synced). */
   appearance?: { portrait?: string; accentColor?: string; portraitRef?: string };
+  /** Per-character sheet customization OVERRIDES. Only the fields the user changed for this character
+   *  are present; everything absent falls back to the device-global default (see data/customization.ts,
+   *  effectiveCustomization). Absent/empty = this character follows the global default entirely. */
+  customization?: Customization;
+}
+
+/** Reorderable / hideable vitals-rail cards (see VitalsRail). */
+export type RailCardId = 'hp' | 'saves' | 'movement' | 'defenses' | 'resources' | 'panache' | 'conditions' | 'languages';
+/** Sheet spacing density — maps to a Style's spacing tokens (see data/customization densityStyleId). */
+export type SheetDensity = 'comfortable' | 'compact' | 'cozy';
+
+/**
+ * The full set of character-sheet customization options. Used two ways: a device-GLOBAL default (the
+ * baseline for every character) and a per-character OVERRIDE (Character.customization, a partial that
+ * layers on top). Every field is optional so an override carries only what changed; the global default
+ * fills the rest via effectiveCustomization (data/customization.ts).
+ */
+export interface Customization {
+  // --- Appearance axes (mirror the device Appearance; per-character override, absent = inherit device) ---
+  /** Colour palette (theme id, e.g. 'midnight'). */
+  themeId?: string;
+  /** Interface style (shape/spacing id, e.g. 'compact'). Supersedes the older `density`. */
+  styleId?: string;
+  /** Typeface id (e.g. 'system'). */
+  fontId?: string;
+  /** UI zoom factor (e.g. 1.1). */
+  zoom?: number;
+  // --- A · per-character look ---
+  /** Hex accent for this sheet; absent = inherit the app's Appearance accent. */
+  accentColor?: string;
+  /** Portrait frame shape. */
+  portraitShape?: 'circle' | 'rounded' | 'square';
+  /** Show the "Level N" chip beside the name. */
+  showLevelChip?: boolean;
+  /** Show the ancestry · class subline under the name. */
+  showSubline?: boolean;
+  // --- B · rail & tabs ---
+  /** Ordered rail-card ids (any omitted card falls to the end in default order). */
+  railOrder?: string[];
+  /** Rail-card ids hidden from the rail. */
+  railHidden?: string[];
+  /** Tab names hidden from the tab strip (Main is never hidden). */
+  hiddenTabs?: string[];
+  /** Tab the sheet opens on for this character; absent = remember the last-used tab. */
+  defaultTab?: string;
+  // --- C · density ---
+  /** Spacing density; absent = follow the app-wide Style. */
+  density?: SheetDensity;
+  // --- D · content & behaviour ---
+  /** Show a leading "+" on positive modifiers (default true). */
+  plusOnMods?: boolean;
+  /** Show the DC beside each saving throw (default false). */
+  showSaveDCs?: boolean;
+  /** Hide tabs that have no content for this character (default false). */
+  autoHideEmpty?: boolean;
+  // --- migrated device options (now per-character, with a global default) ---
+  /** Replace HP Damage/Heal buttons + temp box with one quick-entry command field. */
+  hpCommandEntry?: boolean;
+  /** Render the Actions list as compact chips (default true). */
+  compactActions?: boolean;
+  /** Show an available/total slot badge on each spell rank tab, phone Spells page (default true). */
+  showSlotBadges?: boolean;
+  /** Colour-code consumable inventory cards (default true). */
+  consumableHighlight?: boolean;
+  /** Override hex for the consumable highlight; absent = the theme's recommended colour. */
+  consumableColor?: string;
+  /** Tint the scrollbars with the accent colour instead of neutral grey. */
+  scrollbarAccent?: boolean;
 }
 
 /** Current schema version for new characters. */

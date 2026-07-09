@@ -148,6 +148,8 @@ export interface BuildState {
   backgroundSkillChoice?: SkillId | null;
   /** The general feat granted by a feat-granting heritage (Versatile Human). */
   heritageFeatId?: string | null;
+  /** The chosen damage type for a choice-resistance heritage (Deep Fetchling, Elementheart Kobold). */
+  heritageResistanceChoice?: string | null;
   /** The bonus level-1 wizard class feat granted by the School of Unified Magical Theory (UMT). */
   umtFeatId?: string | null;
   /**
@@ -468,6 +470,7 @@ export function setupMissing(build: BuildState, content: ContentDatabase): strin
   if (buildNeedsDeity(build, content) && !build.deityId) out.push('Deity');
   const heritage = build.heritageId ? content.heritages[build.heritageId] : undefined;
   if (heritage?.grantsGeneralFeat && !build.heritageFeatId) out.push('Heritage general feat');
+  if (heritage?.choiceResistance && !build.heritageResistanceChoice) out.push('Heritage resistance');
   {
     const n = build.levelBoosts.filter((b) => !b).length;
     if (n) out.push(n === 1 ? 'Free attribute boost' : `Free attribute boosts (${n})`);
@@ -524,6 +527,13 @@ function collectBoosts(
     const key = subclassKeyAbility(build, content) ?? build.keyAbility ?? cls.keyAbility[0];
     if (key) boosts.push(key);
   }
+  // Dual Class: "add everything from each class" (GMG) includes the SECOND class's initial key-attribute
+  // boost — a distinct source, so it can stack onto the first even on the same attribute (level-1 boosts
+  // from different sources may share an attribute). Falls back to the class's default key when unset.
+  const cls2b = build.variantRules?.dualClass && build.classId2 ? content.classes[build.classId2] : undefined;
+  // (No separate key-attribute choice is stored for the 2nd class, so a class with a key-attribute CHOICE
+  // uses its first option — the common case is a single fixed key attribute.)
+  if (cls2b?.keyAbility[0]) boosts.push(cls2b.keyAbility[0]);
 
   pushDistinct(build.levelBoosts);
 
@@ -802,7 +812,7 @@ function collectGrantedNaturals(
       const key = g.name.toLowerCase();
       if (seen.has(key)) continue;
       seen.add(key);
-      out.push({ name: g.name, die: g.die, damageType: g.damageType, traits: g.traits, group: g.group });
+      out.push({ name: g.name, die: g.die, damageType: g.damageType, traits: g.traits, group: g.group, range: g.range });
     }
   };
   for (const f of feats) {
@@ -1124,6 +1134,33 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (cls2.attackGroups) for (const [g, r] of Object.entries(cls2.attackGroups)) (proficiencies.weaponGroups ??= {})[g] = maxRank(proficiencies.weaponGroups?.[g], r);
   }
 
+  // Gunslinger "firearms & crossbows" proficiency by CATEGORY. Foundry gives the gunslinger three separate
+  // MartialProficiency tracks (simple/martial/advanced firearms-crossbows) that advance independently of the
+  // generic weapon categories (which stay trained): simple & martial f&c = expert@1 → master@5 (Gunslinger
+  // Weapon Mastery) → legendary@13 (Gunslinging Legend); advanced f&c = trained@1 → expert@5 → master@13.
+  // A single firearm weapon-GROUP rank can't express "simple firearms master but advanced firearms trained",
+  // so use firearmProf and drop the coarse firearm/crossbow group ranks for a gunslinger.
+  if (build.classId === 'gunslinger' || (build.variantRules?.dualClass && build.classId2 === 'gunslinger')) {
+    proficiencies.firearmProf = {
+      simple: level >= 13 ? 'legendary' : level >= 5 ? 'master' : 'expert',
+      martial: level >= 13 ? 'legendary' : level >= 5 ? 'master' : 'expert',
+      advanced: level >= 13 ? 'master' : level >= 5 ? 'expert' : 'trained',
+    };
+    if (proficiencies.weaponGroups) {
+      delete proficiencies.weaponGroups.firearm;
+      delete proficiencies.weaponGroups.crossbow;
+    }
+  }
+
+  // Wizard Weapon Expertise (L11): expert in the five wizard weapons only (club/crossbow/dagger/
+  // heavy-crossbow/staff) — a per-weapon override, NOT a whole-category bump (which would over-grant).
+  if ((build.classId === 'wizard' || (build.variantRules?.dualClass && build.classId2 === 'wizard')) && level >= 11) {
+    proficiencies.weaponOverrides = { ...(proficiencies.weaponOverrides ?? {}) };
+    for (const w of ['club', 'crossbow', 'dagger', 'heavy-crossbow', 'staff']) {
+      if (content.items[w]) proficiencies.weaponOverrides[w] = maxRank(proficiencies.weaponOverrides[w], 'expert');
+    }
+  }
+
   // Subclass weapon/armor keystones (ruffian medium armor, warrior-muse martial).
   for (const o of grantOptions) {
     for (const w of o.grants?.weapons ?? []) proficiencies.attacks[w] = maxRank(proficiencies.attacks[w], 'trained');
@@ -1137,8 +1174,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   if (usesDeity && deity?.favoredWeapons?.length) {
     // Only real weapon items get an override; "fist"/unarmed favored weapons (e.g. Irori)
     // are already covered by the class's unarmed proficiency.
+    // The doctrine advances the favored weapon's proficiency (independent of its weapon category):
+    // Cloistered → expert@11; Warpriest → expert@7, master@19; Battle Creed → expert@5, master@13.
+    // deriveStrike already takes max(category rank, this override), so a martial favored weapon that the
+    // category never raises still reaches the doctrine rank.
+    const doctrine = build.classId === 'cleric' ? build.subclassId : build.classId2 === 'cleric' ? build.subclassId2 : null;
+    const favoredRank: ProficiencyRank =
+      doctrine === 'warpriest'
+        ? level >= 19 ? 'master' : level >= 7 ? 'expert' : 'trained'
+        : doctrine === 'battle-creed'
+          ? level >= 13 ? 'master' : level >= 5 ? 'expert' : 'trained'
+          : level >= 11 ? 'expert' : 'trained'; // cloistered-cleric (default)
     const overrides: Record<string, ProficiencyRank> = {};
-    for (const w of deity.favoredWeapons) if (content.items[w]) overrides[w] = 'trained';
+    for (const w of deity.favoredWeapons) if (content.items[w]) overrides[w] = favoredRank;
     if (Object.keys(overrides).length) proficiencies.weaponOverrides = overrides;
   }
 
@@ -1502,21 +1550,33 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     const focusTradition =
       grantOptions.find((o) => o.tradition)?.tradition ?? focusCls?.spellcasting?.tradition ?? (focusCls && FOCUS_CASTING[focusCls.id]?.tradition) ?? 'occult';
     const focusKey = choiceKeyAbility ?? focusCls?.spellcasting?.keyAbility ?? (focusCls && FOCUS_CASTING[focusCls.id]?.key) ?? focusCls?.keyAbility[0] ?? 'cha';
-    const byRank: Record<number, string[]> = {};
-    for (const id of focusSpells) {
-      const r = content.spells[id]?.rank ?? 1;
-      (byRank[r] ??= []).push(id);
+    const byRankOf = (ids: string[]): Record<number, string[]> => {
+      const b: Record<number, string[]> = {};
+      for (const id of ids) (b[content.spells[id]?.rank ?? 1] ??= []).push(id);
+      return b;
+    };
+    // Dual Class with focus from BOTH classes → one focus entry PER class, each with its own
+    // key/tradition/proficiency so their Focus DCs can differ. The focus POINT pool below stays a
+    // SINGLE shared pool (RAW: one pool of points, but each spell uses its granting class's DC).
+    const cls2FocusIds = cls2?.focusSpells ?? [];
+    if (cls.focusSpells?.length && cls2 && cls2FocusIds.length) {
+      const keyOf = (k: NonNullable<typeof cls>) => k.spellcasting?.keyAbility ?? FOCUS_CASTING[k.id]?.key ?? k.keyAbility[0] ?? 'cha';
+      const tradOf = (k: NonNullable<typeof cls>) => k.spellcasting?.tradition ?? FOCUS_CASTING[k.id]?.tradition ?? 'occult';
+      const primaryIds = focusSpells.filter((id) => !cls2FocusIds.includes(id));
+      spellcasting.push({ id: `${cls.id}-focus`, name: `${cls.name} focus spells`, type: 'focus', tradition: tradOf(cls), keyAbility: keyOf(cls), proficiency: 'trained', cantrips: [], repertoire: byRankOf(primaryIds) });
+      spellcasting.push({ id: `${cls2.id}-focus`, name: `${cls2.name} focus spells`, type: 'focus', tradition: tradOf(cls2), keyAbility: keyOf(cls2), proficiency: 'trained', cantrips: [], repertoire: byRankOf(cls2FocusIds) });
+    } else {
+      spellcasting.push({
+        id: `${cls.id}-focus`,
+        name: 'Focus spells',
+        type: 'focus',
+        tradition: focusTradition,
+        keyAbility: focusKey,
+        proficiency: 'trained',
+        cantrips: [],
+        repertoire: byRankOf(focusSpells),
+      });
     }
-    spellcasting.push({
-      id: `${cls.id}-focus`,
-      name: 'Focus spells',
-      type: 'focus',
-      tradition: focusTradition,
-      keyAbility: focusKey,
-      proficiency: 'trained',
-      cantrips: [],
-      repertoire: byRank,
-    });
     // Focus pool = number of focus-granting SOURCES (capped 3), not focus spells:
     // the class composition feature (1), each subclass/choice that grants focus (1),
     // and each domain-initiate-style feat (1). The animist instead scales with its
@@ -1527,6 +1587,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     } else {
       poolMax =
         (cls.focusSpells?.length ? 1 : 0) +
+        // Dual Class: the second class's own composition/order/bloodline focus is a separate source.
+        (cls2?.focusSpells?.length ? 1 : 0) +
         grantOptions.filter((o) => o.focusSpells?.length).length +
         featFocusSpells.length +
         (devotionSpell ? 1 : 0) +
@@ -2032,6 +2094,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     xp: 0,
     ancestryId: build.ancestryId,
     heritageId: build.heritageId,
+    heritageResistanceChoice: build.heritageResistanceChoice ?? null,
     backgroundId: build.backgroundId,
     classId: build.classId,
     subclassId: build.subclassId,
@@ -2058,14 +2121,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     heroPoints: 1,
     ...(focus ? { focus } : {}),
     conditions: [],
-    classResources: initialClassResources(build.classId, level, {
-      str: abilityMod(abilities.str),
-      dex: abilityMod(abilities.dex),
-      con: abilityMod(abilities.con),
-      int: abilityMod(abilities.int),
-      wis: abilityMod(abilities.wis),
-      cha: abilityMod(abilities.cha),
-    }),
+    classResources: initialClassResources(
+      build.classId,
+      level,
+      {
+        str: abilityMod(abilities.str),
+        dex: abilityMod(abilities.dex),
+        con: abilityMod(abilities.con),
+        int: abilityMod(abilities.int),
+        wis: abilityMod(abilities.wis),
+        cha: abilityMod(abilities.cha),
+      },
+      new Set(feats.map((f) => f.featId)),
+    ),
     languages: (() => {
       const granted = ancestry?.languages.granted ?? [];
       const slots = Math.max(0, abilityMod(abilities.int)) + (ancestry?.languages.additional ?? 0);

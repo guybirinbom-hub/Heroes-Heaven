@@ -30,6 +30,7 @@ import {
 import { setOnPersisted, cancelPersist } from './persist';
 import { onLocalDataChanged } from './syncBus';
 import { reloadPrefs } from './prefs';
+import { reloadCustomization } from './customization';
 import { initTheme } from '../theme/theme-manager';
 import { getDeviceInfo } from './device';
 import { charFingerprint, mergeBundles } from './cloudMerge';
@@ -114,6 +115,7 @@ function adopt(merged: CloudBundle): void {
   // subscribers fire. Non-fatal if it throws (settings still take effect on next load).
   try {
     reloadPrefs();
+    reloadCustomization();
     initTheme();
   } catch {
     /* non-fatal */

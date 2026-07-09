@@ -36,6 +36,7 @@ const ALWAYS_KEYS: Record<string, string> = {
   'wanderers-codex:active:v1': '',
   'pf2e-codex.prefs': '',
   'pf2e-codex.appearance': '',
+  'pf2e-codex.customization': '',
 };
 
 /** Every localStorage key this app owns and a restore must clear before writing, so "replace

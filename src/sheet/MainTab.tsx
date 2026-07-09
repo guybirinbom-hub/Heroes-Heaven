@@ -26,7 +26,7 @@ import { StrikeDetailModal } from './StrikeDetailModal';
 import { CritSpecText } from './CritSpecText';
 import { InfoTerm } from './InfoTerm';
 import { useEscapeClose } from './useEscapeClose';
-import { usePrefs } from '../data/prefs';
+import { useCustomization } from '../data/customization';
 import type { DescNode } from './descref';
 
 const capWord = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -136,7 +136,7 @@ export function MainTab({
   const [openDesc, setOpenDesc] = useState<DescNode | null>(null);
   // The strike whose detail popup is open (clicked from a strike row).
   const [strikeDetail, setStrikeDetail] = useState<Strike | null>(null);
-  const { compactActions } = usePrefs();
+  const { compactActions } = useCustomization();
   // Collapsible action section headers (always on, in-component like InventoryTab's groups).
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
   const toggleSection = (id: string) =>
@@ -233,6 +233,25 @@ export function MainTab({
   const shownSkill = encActivities.filter((a) => a.skill && matchAct(a));
   const shownExplore = exploreActivities.filter((a) => matchText(a.name, a.desc));
   const shownDowntime = downtimeActivities.filter((a) => matchText(a.name, a.desc));
+  // Camping activities (Kingmaker): the camping-trait actions from content, surfaced as their own mode
+  // when the campaign has Kingmaker on. They live only in content.actions (not the curated ACTIVITIES),
+  // so build them here — a short inline summary (strip the "Source … ---" header) + full text in the popup.
+  const campingSummary = (full: string): string => {
+    const body = /-{3,}/.test(full) ? full.split(/-{3,}/).slice(1).join(' ') : full;
+    const plain = toPlainText(body);
+    return plain.length > 170 ? plain.slice(0, 168).replace(/\s+\S*$/, '') + '…' : plain;
+  };
+  const campingActs: Act[] = character.kingmakerEnabled
+    ? Object.values(content.actions)
+        .filter((a) => (a.traits ?? []).includes('camping'))
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((a) => ({ name: a.name, desc: campingSummary(a.description), traits: a.traits, fullDesc: a.description, fullRefs: a.descRefs }))
+    : [];
+  const shownCamping = campingActs.filter((a) => matchText(a.name, a.desc));
+  // Camping is an extra activity mode, only offered while Kingmaker is on. If the mode is left on
+  // 'camp' after Kingmaker is turned off, fall back to Downtime so the list never goes blank.
+  const modes = character.kingmakerEnabled ? [...MODES, { id: 'camp', name: 'Camping' }] : MODES;
+  const effMode = mode === 'camp' && !character.kingmakerEnabled ? 'dt' : mode;
 
   const pinnedStrikes = strikes.filter((s) => pinned.has(strikeKey(s.instanceId)));
   const pinnedActions = [...featActions, ...tacticActions, ...encActivities].filter((a) => pinned.has(actionKey(a.name)));
@@ -589,8 +608,8 @@ export function MainTab({
             </div>
           )}
           <div className="seg">
-            {MODES.map((m) => (
-              <button key={m.id} type="button" role="tab" aria-selected={mode === m.id} className={'seg-btn' + (mode === m.id ? ' on' : '')} onClick={() => { setMode(m.id); if (m.id !== 'enc') setFiltersOpen(false); }}>
+            {modes.map((m) => (
+              <button key={m.id} type="button" role="tab" aria-selected={effMode === m.id} className={'seg-btn' + (effMode === m.id ? ' on' : '')} onClick={() => { setMode(m.id); if (m.id !== 'enc') setFiltersOpen(false); }}>
                 {m.name}
               </button>
             ))}
@@ -753,18 +772,21 @@ export function MainTab({
           </>
         ) : (
           <div className="actions">
-            {(mode === 'exp' ? shownExplore : shownDowntime).length > 0 ? (
-              <Section
-                id={mode === 'exp' ? 'explore' : 'downtime'}
-                label={mode === 'exp' ? 'Exploration activities' : 'Downtime activities'}
-              >
-                {(mode === 'exp' ? shownExplore : shownDowntime).map((a) => (
-                  <ActionRow key={a.name} a={a} pinnable={false} />
-                ))}
-              </Section>
-            ) : (
-              <div className="acts-empty">No activities match.</div>
-            )}
+            {(() => {
+              const list = effMode === 'exp' ? shownExplore : effMode === 'camp' ? shownCamping : shownDowntime;
+              const id = effMode === 'exp' ? 'explore' : effMode === 'camp' ? 'camping' : 'downtime';
+              const label =
+                effMode === 'exp' ? 'Exploration activities' : effMode === 'camp' ? 'Camping activities' : 'Downtime activities';
+              return list.length > 0 ? (
+                <Section id={id} label={label}>
+                  {list.map((a) => (
+                    <ActionRow key={a.name} a={a} pinnable={false} />
+                  ))}
+                </Section>
+              ) : (
+                <div className="acts-empty">No activities match.</div>
+              );
+            })()}
           </div>
         )}
       </section>

@@ -37,15 +37,18 @@ interface ConditionEffect {
   slots?: ConditionSlot[];
   /** Applies to every check and DC (i.e. every slot except raw damage). */
   allChecks?: boolean;
+  /** The attribute match ALSO reaches damage rolls. Only Enfeebled penalizes damage (Str damage) — Clumsy,
+   *  Drained, and Stupefied penalize rolls/DCs, never the damage bonus. */
+  includesDamage?: boolean;
 }
 
 const CONDITION_EFFECTS: Record<string, ConditionEffect[]> = {
   frightened: [{ type: 'status', amount: 'valued', allChecks: true }],
   sickened: [{ type: 'status', amount: 'valued', allChecks: true }],
   clumsy: [{ type: 'status', amount: 'valued', abilities: ['dex'] }],
-  enfeebled: [{ type: 'status', amount: 'valued', abilities: ['str'] }],
+  enfeebled: [{ type: 'status', amount: 'valued', abilities: ['str'], includesDamage: true }], // Str checks + Str damage
   drained: [{ type: 'status', amount: 'valued', abilities: ['con'] }], // HP loss handled by drainedHpLoss
-  stupefied: [{ type: 'status', amount: 'valued', abilities: ['int', 'wis', 'cha'] }],
+  stupefied: [{ type: 'status', amount: 'valued', abilities: ['int', 'wis', 'cha'] }], // mental checks/DCs incl. Perception (Wis)
   fatigued: [{ type: 'status', amount: 1, slots: ['ac', 'save'] }],
   // Encumbered makes you Clumsy 1 (Dex penalty) and reduces Speed by 10 ft (handled in deriveSpeeds).
   encumbered: [{ type: 'status', amount: 1, abilities: ['dex'] }],
@@ -53,17 +56,19 @@ const CONDITION_EFFECTS: Record<string, ConditionEffect[]> = {
   // Prone makes you off-guard (−2 circ AC) AND gives −2 circ to your own attacks. Restrained and
   // Grabbed also make you off-guard (−2 circ AC). (Same circumstance type, so they don't stack with
   // off-guard — conditionPenalty takes the worst.)
-  prone: [{ type: 'circumstance', amount: 2, slots: ['attack', 'ac'] }],
+  prone: [{ type: 'circumstance', amount: 2, slots: ['attack', 'spell-attack', 'ac'] }],
   restrained: [{ type: 'circumstance', amount: 2, slots: ['ac'] }],
   grabbed: [{ type: 'circumstance', amount: 2, slots: ['ac'] }],
 };
 
 function effectMatches(e: ConditionEffect, ability: AbilityId, slot: ConditionSlot): boolean {
   if (e.allChecks && slot !== 'damage') return true;
-  // Perception is its own statistic, NOT a Wis-based check, so attribute-keyed conditions (Stupefied
-  // lists 'wis') must not reach it through the ability match — only allChecks (Frightened/Sickened)
-  // and explicit slots penalize Perception.
-  if (e.abilities?.includes(ability) && slot !== 'perception') return true;
+  // Governing-attribute match. Perception IS a Wisdom-based roll (its attribute is Wis; Foundry's Perception
+  // check carries the `wis-based` domain, exactly like Stealth carries `dex-based`), so a wis-keyed condition
+  // like Stupefied DOES penalize Perception per RAW ("Wisdom-based rolls and DCs, including …" — non-exhaustive).
+  // Only wis-keyed conditions reach it here since derivePerception passes 'wis'. The match reaches DAMAGE only
+  // for conditions that penalize damage (Enfeebled → Str damage), so Clumsy/Drained/Stupefied don't touch damage.
+  if (e.abilities?.includes(ability)) return slot !== 'damage' || !!e.includesDamage;
   if (e.slots?.includes(slot)) return true;
   return false;
 }

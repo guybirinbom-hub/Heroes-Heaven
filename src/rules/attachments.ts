@@ -23,9 +23,9 @@ export function isAttachable(item: Item): boolean {
 export function attachHostTypes(item: Item): HostType[] {
   const u = item.usage ?? '';
   const out = new Set<HostType>();
-  // Weapon-subtype synonyms — a usage like "affixed to a firearm/crossbow/bow" means the weapon host.
-  if (/weapon|instrument|firearm|crossbow|bow|gun/.test(u)) out.add('weapon');
-  if (/armor|clothing|unarmored/.test(u)) out.add('armor');
+  // Weapon-subtype synonyms — a usage like "affixed to a firearm/crossbow/bow/staff" means the weapon host.
+  if (/weapon|instrument|firearm|crossbow|bow|gun|staff/.test(u)) out.add('weapon');
+  if (/armor|clothing|unarmored|headgear/.test(u)) out.add('armor');
   if (/shield/.test(u)) out.add('shield');
   // Banners affix to a weapon or shield.
   if (/banner/i.test(item.name)) {

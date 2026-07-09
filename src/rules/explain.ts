@@ -22,6 +22,7 @@ import { abpOn, abpSave, abpPerception, abpDefense, abpSkillBonus } from './abp'
 import {
   RANK_VALUE,
   abilityMod,
+  activeStanceDef,
   deriveAc,
   deriveArmorCheckPenalty,
   deriveClassDc,
@@ -34,6 +35,7 @@ import {
   deriveSpellcasting,
   deriveStrikes,
   formatMod,
+  mpSenseSkillItemBonus,
   profBonus,
   pwl,
   shieldSwappedModes,
@@ -249,9 +251,12 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       const d = deriveSkill(c, ref.skill, db);
       const ability = skillAbilityOf(ref.skill);
       const parts: CalcPart[] = [profPart(d.rank, lvl, pwl(c)), abilityPart(c, ability)];
-      // Skill item bonus from ABP skill potency.
+      // Skill item bonus — the higher of ABP skill potency and a Monster-Parts refined skill item (they
+      // don't stack; deriveSkill takes the max). List whichever wins so the parts reconcile with the total.
       const abpSp = abpOn(c) ? abpSkillBonus(c, ref.skill) : 0;
-      if (abpSp) parts.push({ label: 'ABP skill potency', note: 'item bonus', value: abpSp });
+      const mpSp = mpSenseSkillItemBonus(c, 'skill', ref.skill);
+      const skillItem = Math.max(abpSp, mpSp);
+      if (skillItem) parts.push({ label: mpSp > abpSp ? 'Monster Parts (refined)' : 'ABP skill potency', note: 'item bonus', value: skillItem });
       if (ability === 'str' || ability === 'dex') {
         const acp = deriveArmorCheckPenalty(c, db);
         if (acp.value) parts.push({ label: 'Armor check penalty', note: acp.source ?? undefined, value: acp.value });
@@ -322,9 +327,12 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       const d = derivePerception(c);
       const cls = c.classId ? db.classes[c.classId] : undefined;
       const parts: CalcPart[] = [profPart(d.rank, lvl, pwl(c)), abilityPart(c, 'wis')];
-      // Perception item bonus from ABP Perception potency.
+      // Perception item bonus — the higher of ABP Perception potency and a Monster-Parts refined-Perception
+      // item (they don't stack; derivePerception takes the max). List whichever wins so the parts reconcile.
       const abpPerc = abpOn(c) ? abpPerception(lvl) : 0;
-      if (abpPerc) parts.push({ label: 'ABP Perception potency', note: 'item bonus', value: abpPerc });
+      const mpPerc = mpSenseSkillItemBonus(c, 'perception');
+      const percItem = Math.max(abpPerc, mpPerc);
+      if (percItem) parts.push({ label: mpPerc > abpPerc ? 'Monster Parts (refined)' : 'ABP Perception potency', note: 'item bonus', value: percItem });
       const cond = conditionPart(c, 'wis', 'perception');
       if (cond) parts.push(cond);
       const situational = modeAdjust(c, { kind: 'perception' }, parts);
@@ -349,9 +357,14 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       const armor = worn && worn.it?.itemType === 'armor' ? worn.it : null;
       const category = armor?.category ?? 'unarmored';
       const cls = c.classId ? db.classes[c.classId] : undefined;
+      const stance = activeStanceDef(c, db);
+      // The Dex cap can come from worn armor OR the active stance (e.g. Mountain Stance +0). Attribute it
+      // to whichever actually imposes it, and only say "by armor" when armor is worn and is the source.
+      const stanceDexCap = stance?.dexCap;
+      const capBy = ac.dexCap != null && dex > ac.dexCap ? (armor && (stanceDexCap == null || armor.dexCap === ac.dexCap) ? `by ${armor.name}` : stance ? `by ${stance.name ?? 'stance'}` : '') : '';
       const parts: CalcPart[] = [
         { label: 'Base', value: 10 },
-        { label: 'Dexterity modifier', note: ac.dexCap != null && dex > ac.dexCap ? `capped at +${ac.dexCap} by armor` : `Dexterity ${c.abilities.dex}`, value: dexContribution },
+        { label: 'Dexterity modifier', note: ac.dexCap != null && dex > ac.dexCap ? `capped at +${ac.dexCap}${capBy ? ' ' + capBy : ''}` : `Dexterity ${c.abilities.dex}`, value: dexContribution },
         profPart(ac.rank, lvl, pwl(c)),
       ];
       if (armor) {
@@ -366,6 +379,10 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       }
       const cond = conditionPart(c, 'dex', 'ac');
       if (cond) parts.push(cond);
+      // An AC-granting stance (Mountain +4, Crane +1, …) is folded into the AC total by deriveAc; list it so
+      // the itemized parts reconcile with the total.
+      const stanceAc = stance?.acBonus?.value ?? 0;
+      if (stanceAc) parts.push({ label: stance!.name ?? 'Stance', note: `${stance!.acBonus!.type} bonus`, value: stanceAc });
       // Use the shield-swapped modes so the "Raise a Shield" line shows the real shield bonus (buckler
       // +1, fortress +3) and the parts reconcile with the AC total (which deriveAc computes the same way).
       const situational = modeAdjust({ ...c, activeModes: shieldSwappedModes(c, db) }, { kind: 'ac' }, parts);

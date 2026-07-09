@@ -32,10 +32,14 @@ import { WindowControls } from './WindowControls';
 import { HeroesHeavenLogo } from './Logo';
 import { PageMenu } from './PageMenu';
 import { MonsterPartsRules } from './MonsterPartsRules';
+import { MythicRules } from './MythicRules';
+import { KingmakerRules } from './KingmakerRules';
 
-/** Sentinel "source" id for the read-only Monster Parts rules reference (not a real homebrew source,
- *  so it's never editable, exported, or imported). */
+/** Sentinel "source" ids for the read-only rules references (not real homebrew sources,
+ *  so they're never editable, exported, or imported). */
 const MP_RULES_ID = '__mp-rules__';
+const MYTHIC_RULES_ID = '__mythic-rules__';
+const KINGMAKER_RULES_ID = '__kingmaker-rules__';
 
 /** Rich-HTML fields a homebrew entry may carry; sanitized on import so nothing active persists at rest. */
 const HTML_FIELDS = ['description', 'craft'] as const;
@@ -203,6 +207,7 @@ export function HomebrewPage({
   onClose,
   onOpenRoster,
   onOpenCampaigns,
+  onOpenSettings,
   onSaveMode,
   onDeleteMode,
   characters,
@@ -214,6 +219,7 @@ export function HomebrewPage({
   onOpenRoster?: () => void;
   /** Provided ONLY when signed in — absent hides the Campaigns menu item. */
   onOpenCampaigns?: () => void;
+  onOpenSettings?: () => void;
   onSaveMode?: (mode: ModeDef) => void;
   onDeleteMode?: (id: string) => void;
   characters?: { id: string; name: string }[];
@@ -238,8 +244,11 @@ export function HomebrewPage({
   const [editing, setEditing] = useState<{ type: HomebrewType; entry?: EntryRec } | null>(null);
 
   const isMpRules = selectedId === MP_RULES_ID;
-  const selected = selectedId && !isMpRules ? sources[selectedId] : null;
-  const drilledIn = isMobile && mobileOpen && (!!selected || isMpRules);
+  const isMythicRules = selectedId === MYTHIC_RULES_ID;
+  const isKingmakerRules = selectedId === KINGMAKER_RULES_ID;
+  const isRulesRef = isMpRules || isMythicRules || isKingmakerRules;
+  const selected = selectedId && !isRulesRef ? sources[selectedId] : null;
+  const drilledIn = isMobile && mobileOpen && (!!selected || isRulesRef);
   // Android Back / Escape from a drilled-in source returns to the sources list.
   useBackHandler(drilledIn, () => setMobileOpen(false));
 
@@ -336,13 +345,22 @@ export function HomebrewPage({
             </button>
           )}
           <HeroesHeavenLogo className="chrome-logo" />{' '}
-          {drilledIn ? (isMpRules ? 'Monster Parts Rules' : selected?.name || 'Homebrew') : 'Homebrew'}
+          {drilledIn
+            ? isMpRules
+              ? 'Monster Parts Rules'
+              : isMythicRules
+                ? 'Mythic Rules'
+                : isKingmakerRules
+                  ? 'Kingmaker Rules'
+                  : selected?.name || 'Homebrew'
+            : 'Homebrew'}
         </div>
         <PageMenu
           items={[
             ...(onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []),
             ...(onOpenCampaigns ? [{ label: 'Campaigns', icon: 'ti-flag', onClick: onOpenCampaigns }] : []),
           ]}
+          onOpenSettings={onOpenSettings}
           modes={content.modes}
           characters={characters}
           onSaveMode={onSaveMode}
@@ -368,6 +386,28 @@ export function HomebrewPage({
           >
             <i className="ti ti-bone" aria-hidden="true" />
             <span className="hb-row-name">Monster Parts Rules</span>
+            <i className="ti ti-chevron-right hb-row-chev" aria-hidden="true" />
+          </button>
+          <button
+            className="hb-source-row hb-special"
+            onClick={() => {
+              setSelectedId(MYTHIC_RULES_ID);
+              setMobileOpen(true);
+            }}
+          >
+            <i className="ti ti-flame" aria-hidden="true" />
+            <span className="hb-row-name">Mythic Rules</span>
+            <i className="ti ti-chevron-right hb-row-chev" aria-hidden="true" />
+          </button>
+          <button
+            className="hb-source-row hb-special"
+            onClick={() => {
+              setSelectedId(KINGMAKER_RULES_ID);
+              setMobileOpen(true);
+            }}
+          >
+            <i className="ti ti-crown" aria-hidden="true" />
+            <span className="hb-row-name">Kingmaker Rules</span>
             <i className="ti ti-chevron-right hb-row-chev" aria-hidden="true" />
           </button>
           {sourceList.map((src) => (
@@ -406,6 +446,18 @@ export function HomebrewPage({
             >
               <i className="ti ti-bone" aria-hidden="true" /> Monster Parts Rules
             </button>
+            <button
+              className={'settings-navitem hb-special' + (isMythicRules ? ' active' : '')}
+              onClick={() => setSelectedId(MYTHIC_RULES_ID)}
+            >
+              <i className="ti ti-flame" aria-hidden="true" /> Mythic Rules
+            </button>
+            <button
+              className={'settings-navitem hb-special' + (isKingmakerRules ? ' active' : '')}
+              onClick={() => setSelectedId(KINGMAKER_RULES_ID)}
+            >
+              <i className="ti ti-crown" aria-hidden="true" /> Kingmaker Rules
+            </button>
             {sourceList.map((src) => (
               <button
                 key={src.id}
@@ -430,6 +482,10 @@ export function HomebrewPage({
           <div className="settings-pane">
             {isMpRules ? (
               <MonsterPartsRules embedded />
+            ) : isMythicRules ? (
+              <MythicRules content={content} embedded />
+            ) : isKingmakerRules ? (
+              <KingmakerRules content={content} embedded />
             ) : !selected ? (
               <div className="settings-section">
                 <h3 className="settings-h">Homebrew</h3>

@@ -23,7 +23,8 @@ describe('campaign content toggles + new content', () => {
 
   it('applied the content fixes', () => {
     expect(Object.values(c.items).find((i) => i.name === 'Adamantine Chunk')?.level).toBe(8);
-    expect(Object.values(c.feats).find((f) => f.name === 'Uplifting Winds')?.level).toBe(16);
+    // Uplifting Winds is a level-12 druid feat (a stale fixes.json override had mis-set it to 16).
+    expect(Object.values(c.feats).find((f) => f.name === 'Uplifting Winds')?.level).toBe(12);
     expect(Object.values(c.languages).find((l) => l.name === 'Aklo')?.rarity).toBe('uncommon');
   });
 

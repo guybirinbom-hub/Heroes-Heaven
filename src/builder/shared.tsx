@@ -52,6 +52,7 @@ import { RankPill } from '../sheet/widgets';
 import { StatDetailModal } from '../sheet/StatDetailModal';
 import { DescBody } from '../sheet/DescBody';
 import { DescriptionModal } from '../sheet/DescriptionModal';
+import { MythicRules } from '../sheet/MythicRules';
 import { PickerRow, descNodeOf } from '../sheet/FilterableSelect';
 import type { DescNode } from '../sheet/descref';
 
@@ -173,6 +174,12 @@ export interface BuilderActions {
   removeSpellAt: (rank: number, index: number) => void;
   /** Toggle a repertoire spell as the rank's signature spell (spontaneous, one per rank). */
   toggleSignature: (rank: number, id: string) => void;
+  /** Dual Class — the same spell writers for the SECOND caster class (cantrips2/spells2/signatures2). */
+  toggleCantrip2: (id: string) => void;
+  toggleSpell2: (rank: number, id: string) => void;
+  addSpell2: (rank: number, id: string) => void;
+  removeSpellAt2: (rank: number, index: number) => void;
+  toggleSignature2: (rank: number, id: string) => void;
   addItem: (itemId: string) => void;
   removeItem: (index: number) => void;
   setItemQty: (index: number, qty: number) => void;
@@ -473,6 +480,40 @@ export function useBuilderActions(
         if (signatures[rank] === id) delete signatures[rank];
         else signatures[rank] = id;
         return { ...b, signatures };
+      });
+    },
+    // ── Dual Class second-caster spell writers (cantrips2/spells2/signatures2) ──
+    toggleCantrip2(id) {
+      setBuild((b) => {
+        const cur = b.cantrips2 ?? [];
+        if (cur.includes(id)) return { ...b, cantrips2: cur.filter((x) => x !== id) };
+        const cap = b.classId2 ? cantripsKnown(b.classId2) : 0;
+        if (cur.length >= cap) return b;
+        return { ...b, cantrips2: [...cur, id] };
+      });
+    },
+    toggleSpell2(rank, id) {
+      setBuild((b) => {
+        const cur = b.spells2?.[rank] ?? [];
+        const next = cur.includes(id) ? cur.filter((x) => x !== id) : [...cur, id];
+        return { ...b, spells2: { ...(b.spells2 ?? {}), [rank]: next } };
+      });
+    },
+    addSpell2(rank, id) {
+      setBuild((b) => ({ ...b, spells2: { ...(b.spells2 ?? {}), [rank]: [...(b.spells2?.[rank] ?? []), id] } }));
+    },
+    removeSpellAt2(rank, index) {
+      setBuild((b) => {
+        const cur = b.spells2?.[rank] ?? [];
+        return { ...b, spells2: { ...(b.spells2 ?? {}), [rank]: cur.filter((_, i) => i !== index) } };
+      });
+    },
+    toggleSignature2(rank, id) {
+      setBuild((b) => {
+        const signatures2 = { ...(b.signatures2 ?? {}) };
+        if (signatures2[rank] === id) delete signatures2[rank];
+        else signatures2[rank] = id;
+        return { ...b, signatures2 };
       });
     },
     addItem(itemId) {
@@ -1042,6 +1083,7 @@ function AbpPotencyEditor({ build, actions }: { build: BuildState; actions: Buil
  *  renders only when at least one such toggle is on. Reads/writes the same build state as before, so a
  *  character configured under the old (Setup-side) UI shows its choice unchanged. */
 export function SetupUnlockedChoices({ build, actions, content }: EditorProps) {
+  const [mythicRulesOpen, setMythicRulesOpen] = useState(false);
   const dualClass = !!build.variantRules?.dualClass;
   const abp = !!build.variantRules?.abp;
   const mythic = !!build.mythicEnabled;
@@ -1097,9 +1139,17 @@ export function SetupUnlockedChoices({ build, actions, content }: EditorProps) {
               .map((f) => ({ value: f.id, label: f.name, description: f.description, descRefs: f.descRefs }))}
           />
           {calling?.description && <ChoiceDetails name={calling.name} flavor={calling.description} descRefs={calling.descRefs} />}
-          <p className="setup-hint">You gain a mythic feat slot at every even level (2–20), fillable with mythic feats.</p>
+          <p className="setup-hint">
+            You gain a mythic feat slot at every even level (2–20), fillable with mythic feats; at level 12 you take a
+            mythic <strong>destiny</strong>. A pool of mythic points powers rerolls (Recall the Teachings) and mythic
+            abilities.
+          </p>
+          <button type="button" className="mp-rules-link setup-rules-link" onClick={() => setMythicRulesOpen(true)}>
+            <i className="ti ti-book-2" aria-hidden="true" /> Read the Mythic rules
+          </button>
         </SetupCard>
       )}
+      {mythicRulesOpen && <MythicRules content={content} onClose={() => setMythicRulesOpen(false)} />}
     </>
   );
 }
@@ -1371,7 +1421,7 @@ export function CampaignOptionsCard({ build, actions }: EditorProps) {
         {(
           [
             ['mythicEnabled', 'Mythic', 'War of Immortals mythic rules: gain a mythic calling + destiny, mythic feats, and mythic points. Off hides all mythic-trait content.'],
-            ['kingmakerEnabled', 'Kingmaker', 'Show the Kingmaker Adventure Path content — its kingdom actions and conditions.'],
+            ['kingmakerEnabled', 'Kingmaker', 'Kingmaker Adventure Path player content: its backgrounds, feats, spells, items, and the camping activities (plus kingdom/army rules content).'],
           ] as const
         ).map(([flag, label, desc]) => (
           <ToggleWithInfo
@@ -2132,6 +2182,24 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           })()}
         </SubCard>
       )}
+      {/* A choice-resistance heritage (Deep Fetchling: cold/void; Elementheart Kobold: an element's damage
+          type): pick the damage type — resistance = half your level. Applied by deriveDefenses. */}
+      {heritage?.choiceResistance && (
+        <SubCard icon="ti-shield-half" label="Heritage resistance">
+          <PopupSelect
+            title="Resistance type"
+            placeholder="Choose a resistance"
+            value={build.heritageResistanceChoice ?? ''}
+            onChange={(v) => actions.patch({ heritageResistanceChoice: v || null })}
+            clearLabel="Clear"
+            options={heritage.choiceResistance.options.map((o) => ({
+              value: o.value,
+              label: o.label.toLowerCase() === o.value ? cap(o.value) : `${o.label} (${o.value})`,
+            }))}
+          />
+          <p className="setup-hint">Resistance to the chosen damage type equal to half your level (minimum 1).</p>
+        </SubCard>
+      )}
       <SetupCard icon="ti-briefcase" label="Background">
         <SearchSelect
           bare
@@ -2495,8 +2563,14 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                         .filter(([k]) => Number(k) <= L)
                         .map(([, v]) => v),
                     ].map((id) => id.replace(/-gate$/, ''));
+                    const KINETIC_ELEMENTS = ['air', 'earth', 'fire', 'metal', 'water', 'wood'];
                     const impulses = Object.values(content.feats)
-                      .filter((f) => f.traits.includes('impulse') && f.level <= L && f.traits.some((t) => elements.includes(t)))
+                      .filter((f) => {
+                        if (!f.traits.includes('impulse') || f.level > L) return false;
+                        // Element-traited impulses need a matching element; elementless ones always qualify.
+                        const featElements = f.traits.filter((t) => KINETIC_ELEMENTS.includes(t));
+                        return !featElements.length || featElements.some((t) => elements.includes(t));
+                      })
                       .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
                     return (
                       <div className="ec-subpick">

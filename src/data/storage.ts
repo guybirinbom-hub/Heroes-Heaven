@@ -20,7 +20,7 @@ import type {
   Spell,
 } from '../rules/types';
 import { normalizeCharacter, normalizePlay } from '../rules/normalize';
-import { loadSettingsUpdated, markLocalDataChanged, saveSettingsUpdated } from './syncBus';
+import { loadSettingsUpdated, markLocalDataChanged, saveSettingsUpdated, loadCustomizationUpdated, saveCustomizationUpdated } from './syncBus';
 import type { CampaignMembership } from './campaigns';
 
 export interface SavedChar {
@@ -403,6 +403,7 @@ export function saveCharUpdated(map: Record<string, number>): void {
 
 const PREFS_KEY = 'pf2e-codex.prefs';
 const APPEARANCE_KEY = 'pf2e-codex.appearance';
+const CUSTOMIZATION_KEY = 'pf2e-codex.customization';
 
 function loadJsonRaw(key: string): unknown {
   try {
@@ -545,9 +546,13 @@ export interface CloudBundle {
   /** Revive stamps (id → last-created/updated ms) for keyed records, so a re-create beats a stale
    *  tombstone. Characters use `charUpdated` for this; keyed records (homebrew/modes/campaigns) use this. */
   revived?: Record<string, number>;
-  /** Device settings (customization prefs + appearance) — synced last-write-wins via settingsUpdated. */
+  /** Device settings (prefs + appearance) — synced last-write-wins via settingsUpdated. */
   settings?: { prefs?: unknown; appearance?: unknown };
   settingsUpdated?: number;
+  /** The device-global sheet-customization default. Synced on its OWN timestamp so a customization edit on
+   *  one device isn't clobbered by a more-recent theme/prefs edit on another. */
+  customization?: unknown;
+  customizationUpdated?: number;
   /** Last device to write the cloud (for the "Last synced from …" line). Set only on push. */
   lastDevice?: { id: string; label: string };
   lastEditedAt?: number;
@@ -567,6 +572,8 @@ export function readCloudBundle(): CloudBundle {
     revived: loadRevived(),
     settings: { prefs: loadJsonRaw(PREFS_KEY), appearance: loadJsonRaw(APPEARANCE_KEY) },
     settingsUpdated: loadSettingsUpdated(),
+    customization: loadJsonRaw(CUSTOMIZATION_KEY),
+    customizationUpdated: loadCustomizationUpdated(),
     lastDevice: meta.lastDevice,
     lastEditedAt: meta.lastEditedAt,
   };
@@ -608,6 +615,13 @@ export function writeCloudBundle(b: CloudBundle): void {
       /* non-fatal */
     }
   }
+  if (b.customization !== undefined) {
+    try {
+      localStorage.setItem(CUSTOMIZATION_KEY, JSON.stringify(b.customization));
+    } catch {
+      /* non-fatal */
+    }
+  }
   if (b.settings?.appearance !== undefined) {
     try {
       localStorage.setItem(APPEARANCE_KEY, JSON.stringify(b.settings.appearance));
@@ -616,5 +630,6 @@ export function writeCloudBundle(b: CloudBundle): void {
     }
   }
   if (b.settingsUpdated) saveSettingsUpdated(b.settingsUpdated);
+  if (b.customizationUpdated) saveCustomizationUpdated(b.customizationUpdated);
   if (b.lastDevice || b.lastEditedAt) saveSyncMeta({ lastDevice: b.lastDevice, lastEditedAt: b.lastEditedAt });
 }

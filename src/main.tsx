@@ -7,6 +7,7 @@ import './sheet.css';
 import { initTheme } from './theme/theme-manager';
 import { initZoom } from './theme/zoom';
 import { initPrefs } from './data/prefs';
+import { initCustomization } from './data/customization';
 import { ErrorBoundary } from './sheet/ErrorBoundary';
 import { confirmDialog } from './sheet/confirm';
 import { clearRoster } from './data/storage';
@@ -19,6 +20,9 @@ import { isMobilePlatform, isTauri } from './platform';
 initTheme();
 initZoom();
 initPrefs();
+// After initTheme (its accent/consumable derivation reads the loaded theme state) — seeds the global
+// customization default, migrating older device prefs on first run, and applies its global CSS bits.
+initCustomization();
 
 // PWA service worker: register it in the production WEB build ONLY. The Tauri desktop/mobile shells
 // serve from their own protocol and manage their own lifecycle, so they must not run the SW.

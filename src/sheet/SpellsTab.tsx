@@ -30,7 +30,7 @@ import { DescBody } from './DescBody';
 import { InfoTerm } from './InfoTerm';
 import { PinStar } from './PinStar';
 import { useContent } from './ContentContext';
-import { usePrefs } from '../data/prefs';
+import { useCustomization } from '../data/customization';
 import { traitDesc } from '../rules/glossary';
 import type { StatRef } from '../rules/explain';
 import { spellCostMatches } from '../rules/spellFilter';
@@ -106,7 +106,16 @@ function SpellDetail({ spell, maxRank, signature, onClose }: { spell: Spell; max
     ['Area', spell.area],
     ['Targets', spell.targets],
     ['Duration', spell.duration],
-    ['Defense', spell.save ? `${spell.save.basic ? 'basic ' : ''}${cap(spell.save.type)}` : undefined],
+    [
+      'Defense',
+      // A spell attack (defense: 'ac') needs a spell attack roll vs AC; it may ALSO have a save.
+      [
+        spell.defense === 'ac' ? 'spell attack vs AC' : undefined,
+        spell.save ? `${spell.save.basic ? 'basic ' : ''}${cap(spell.save.type)} save` : undefined,
+      ]
+        .filter(Boolean)
+        .join(' + ') || undefined,
+    ],
   ];
   return (
     <div className="picker-overlay" onClick={onClose}>
@@ -539,7 +548,7 @@ export function SpellsTab({
   onOpenStat?: (ref: StatRef) => void;
 }) {
   const isMobile = useIsMobile();
-  const prefs = usePrefs();
+  const custom = useCustomization();
   const [filters, setFilters] = useState<Set<string>>(new Set());
   const [filtersOpen, setFiltersOpen] = useState(false); // mobile: filter row toggles open over the results
   const [search, setSearch] = useState('');
@@ -568,7 +577,8 @@ export function SpellsTab({
   );
   const mains = character.spellcasting.filter((e) => e.type === 'prepared' || e.type === 'spontaneous');
   const manageEntry = manageId ? mains.find((m) => m.id === manageId) : null;
-  const focus = character.spellcasting.find((e) => e.type === 'focus');
+  const focusEntries = character.spellcasting.filter((e) => e.type === 'focus');
+  const focus = focusEntries[0]; // first entry — for existence checks + maxCastRank; rendering uses focusEntries
   const itemEntries = character.spellcasting.filter((e) => e.type === 'items' || e.type === 'innate');
   // The character's OWN rituals — added via Overrides → Add spell. Only these show; with none, the
   // Rituals section (and its catalog bar) is hidden entirely.
@@ -645,15 +655,10 @@ export function SpellsTab({
   // animist's prepared "animist" pool and its spontaneous "apparition" pool.
   function buildRanks(main: SpellcastingEntry): { key: string; label: string; node: ReactNode; badge?: string }[] {
     const ranks: { key: string; label: string; node: ReactNode; badge?: string }[] = [];
-    // Cantrips auto-heighten to the highest spell rank this pool can cast.
-    const leveledRanks = [
-      ...Object.keys(main.prepared ?? {}),
-      ...Object.keys(main.repertoire ?? {}),
-      ...Object.keys(main.slots ?? {}),
-    ]
-      .map(Number)
-      .filter((r) => r > 0);
-    const maxRank = leveledRanks.length ? Math.max(...leveledRanks) : 0;
+    // Cantrips auto-heighten to HALF YOUR LEVEL rounded up (ceil(level/2)) — by character level, NOT the
+    // pool's highest slot rank. For a full caster the two coincide, but a spellcasting-archetype / multiclass
+    // caster's slot ranks lag their level, so their cantrips must still heighten to ceil(level/2).
+    const maxRank = Math.min(10, Math.ceil(character.level / 2));
     if (main.cantrips.length) {
       const cards = main.cantrips
         .map((id, i) => {
@@ -869,28 +874,24 @@ export function SpellsTab({
     }
   }
 
-  const focusCards: ReactNode[] = [];
-  if (focus?.repertoire) {
-    // Focus spells auto-heighten to half your level rounded up — show that rank, not the base.
+  // Focus spells auto-heighten to half your level rounded up — show that rank, not the base. Built per
+  // focus entry so each source (dual-class / archetype) can render its own section with its own DC.
+  const buildFocusCards = (entry: (typeof focusEntries)[number]): ReactNode[] => {
+    const out: ReactNode[] = [];
+    if (!entry.repertoire) return out;
     const focusHeighten = Math.min(10, Math.ceil(character.level / 2));
-    for (const rank of Object.keys(focus.repertoire).map(Number).sort((a, b) => a - b)) {
-      for (const id of focus.repertoire[rank]) {
+    for (const rank of Object.keys(entry.repertoire).map(Number).sort((a, b) => a - b)) {
+      for (const id of entry.repertoire[rank]) {
         const sp = content.spells[id];
         if (!visible(sp)) continue;
         const shown = Math.max(rank, focusHeighten);
-        focusCards.push(
-          <SpellCard
-            key={id}
-            name={sp?.name ?? id}
-            cost={sp?.cast}
-            meta={'rank ' + shown}
-            fp
-            onClick={sp ? () => setDetail(sp) : undefined}
-          />,
+        out.push(
+          <SpellCard key={entry.id + '/' + id} name={sp?.name ?? id} cost={sp?.cast} meta={'rank ' + shown} fp onClick={sp ? () => setDetail(sp) : undefined} />,
         );
       }
     }
-  }
+    return out;
+  };
 
   // ── Section nodes lifted out of the return so both the desktop stack AND the mobile
   // page-level tab row can render the SAME JSX. Each builder references in-scope locals
@@ -909,7 +910,10 @@ export function SpellsTab({
       </section>
     ) : null;
 
-  const focusNode: ReactNode = focus ? (
+  // One shared focus-point pool (character.focus), but a section per focus SOURCE. With a single source
+  // the DC sits in the header; with two (dual-class / archetype) each source shows its own DC.
+  const singleFocusSc = focusEntries.length === 1 ? deriveSpellcasting(character, focusEntries[0]) : null;
+  const focusNode: ReactNode = focusEntries.length ? (
     <section className="card">
       <div className="focus-head">
         <div className="ct" style={{ margin: 0 }}>
@@ -917,6 +921,18 @@ export function SpellsTab({
           <i className="ti ti-flame" aria-hidden="true" />
           Focus spells
         </div>
+        {singleFocusSc && (
+          <div className="focus-dc">
+            <span className="tile focus-dc-tile">
+              <span className="tlab">Attack</span>
+              <span className="tval">{formatMod(singleFocusSc.attack)}</span>
+            </span>
+            <span className="tile focus-dc-tile">
+              <span className="tlab">Focus DC</span>
+              <span className="tval">{singleFocusSc.dc}</span>
+            </span>
+          </div>
+        )}
         <div className="focus-pool">
           {Array.from({ length: character.focus?.max ?? 0 }, (_, i) => {
             const cur = character.focus?.current ?? 0;
@@ -954,8 +970,25 @@ export function SpellsTab({
         </div>
       </div>
       {secOpen('focus') &&
-        (focusCards.length ? (
-          <div className="spell-grid">{focusCards}</div>
+        (focusEntries.some((e) => buildFocusCards(e).length) ? (
+          focusEntries.map((entry) => {
+            const cards = buildFocusCards(entry);
+            if (!cards.length) return null;
+            const sc = deriveSpellcasting(character, entry);
+            return (
+              <div key={entry.id} className="focus-source">
+                {focusEntries.length > 1 && (
+                  <div className="focus-source-head">
+                    <span className="focus-source-name">{entry.name}</span>
+                    <span className="focus-source-dc">
+                      Attack {formatMod(sc.attack)} · Focus DC {sc.dc}
+                    </span>
+                  </div>
+                )}
+                <div className="spell-grid">{cards}</div>
+              </div>
+            );
+          })
         ) : (
           <div className="spell-empty">{filtering ? 'No focus spells match.' : 'No focus spells.'}</div>
         ))}
@@ -1256,7 +1289,7 @@ export function SpellsTab({
                   onClick={() => setSpellTab(t.key)}
                 >
                   {t.label}
-                  {t.badge && prefs.showSlotBadges && <span className="stab-badge">{t.badge}</span>}
+                  {t.badge && custom.showSlotBadges && <span className="stab-badge">{t.badge}</span>}
                 </button>
               ))}
             </div>

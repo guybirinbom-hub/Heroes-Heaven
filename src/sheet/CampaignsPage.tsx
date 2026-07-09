@@ -69,6 +69,7 @@ interface CampaignsPageProps {
   onClose: () => void;
   onOpenRoster: () => void;
   onOpenHomebrew: () => void;
+  onOpenSettings?: () => void;
   characters: { id: string; name: string }[];
   modes: Record<string, ModeDef>;
   onSaveMode: (m: ModeDef) => void;
@@ -78,7 +79,7 @@ interface CampaignsPageProps {
 /** Campaigns page — GM-only management. Lists the campaigns you RUN; open one to edit its settings and
  *  see the players in it (and view their sheets / kick). Players don't manage campaigns here — they
  *  JOIN by entering a code in a character's Setup, and reach the party from that character. */
-export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, characters, modes, onSaveMode, onDeleteMode }: CampaignsPageProps) {
+export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, onOpenSettings, characters, modes, onSaveMode, onDeleteMode }: CampaignsPageProps) {
   const [memberships, setMemberships] = useState<CampaignMembership[]>(() => loadCampaigns());
   const [view, setView] = useState<View>({ kind: 'list' });
   // GM detail: the GM edits a player's sheet (fully, silently pushed on Update) — not a read-only view.
@@ -149,6 +150,7 @@ export function CampaignsPage({ content, onClose, onOpenRoster, onOpenHomebrew, 
             { label: 'Characters', icon: 'ti-users', onClick: onOpenRoster },
             { label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew },
           ]}
+          onOpenSettings={onOpenSettings}
           modes={modes}
           characters={characters}
           onSaveMode={onSaveMode}

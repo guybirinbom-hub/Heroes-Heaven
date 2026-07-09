@@ -1,21 +1,15 @@
 import { useEffect, useState } from 'react';
-import { setConsumableColorOverride } from '../theme/theme-manager';
 import { touchSettings } from './syncBus';
 
 /*
- * Device-global UI customization preferences — apply to every character on this device, persisted
- * and reactive via subscribe (mirrors the zoom module). Set from Settings → Customization; read by
- * the components they affect through the usePrefs() hook.
+ * Device-global preferences that are NOT part of the per-character sheet customization system. These
+ * apply device-wide and can't sensibly differ per character: popup-resize memory, the builder's niche
+ * sources shelf, pinned modes, and the dismissed-update marker. Everything that customizes how a
+ * character's SHEET looks/behaves now lives in data/customization.ts (global default + per-character
+ * override). Persisted + reactive via subscribe; set from Settings; read via usePrefs().
  */
 
 export interface Prefs {
-  /** Replace the HP Damage/Heal buttons + the Temp-HP input with a single command field: type a
-   *  number = damage, -N = heal, tN = temp HP, then Enter. The current-HP field stays for manual edits. */
-  hpCommandEntry: boolean;
-  /** Render the Actions list as compact chips (action name + cost glyph) that open a description
-   *  popup on click, instead of one full row (with the description inline) per action — fits far
-   *  more actions per row. The pin star lives inside the popup. */
-  compactActions: boolean;
   /** When on, resizing any popup makes that size apply to ALL popups (saved on this device) until
    *  changed again. Off (default) = each popup resizes on its own and reopens at the default size. */
   popupSizeSync: boolean;
@@ -27,23 +21,12 @@ export interface Prefs {
   /** Mode ids the user pinned to the top of the Modes panel. A pinned mode always shows, even when
    *  it would otherwise be hidden (gated archetype mode with "Show all" off). Device-global. */
   pinnedModes: string[];
-  /** Use the brand-accent scrollbar instead of the default thin neutral one (toggles :root.sb-accent). */
-  scrollbarAccent: boolean;
-  /** Show an available/total slot badge on each spell rank tab (phone Spells page). Default on. */
-  showSlotBadges: boolean;
   /** Release tag (e.g. "v0.1.5") whose update banner the user dismissed — that version never re-nags. */
   dismissedUpdate?: string;
-  /** Colour-code consumable inventory cards (coloured left edge + faint tint). Default on. When off,
-   *  consumables render like ordinary items and the colour picker below is irrelevant (hidden). */
-  consumableHighlight: boolean;
-  /** Override hex for the consumable inventory-card highlight. Absent = use the active theme's
-   *  recommended consumableColor (see src/theme/themes.ts). Drives the --app-consumable CSS variable
-   *  via theme-manager.setConsumableColorOverride. */
-  consumableColor?: string;
 }
 
 const STORAGE_KEY = 'pf2e-codex.prefs';
-const DEFAULTS: Prefs = { hpCommandEntry: false, compactActions: true, popupSizeSync: false, showNicheSources: false, pinnedModes: [], scrollbarAccent: false, showSlotBadges: true, consumableHighlight: true };
+const DEFAULTS: Prefs = { popupSizeSync: false, showNicheSources: false, pinnedModes: [] };
 
 let prefs: Prefs = { ...DEFAULTS };
 const listeners = new Set<(p: Prefs) => void>();
@@ -60,23 +43,11 @@ export function getPrefs(): Prefs {
   return prefs;
 }
 
-/** Apply the prefs that drive global CSS (the accent-scrollbar class on <html>, the consumable-colour
- *  override baked into --app-consumable by the theme manager). */
-function applyDomPrefs(): void {
-  try {
-    document.documentElement.classList.toggle('sb-accent', prefs.scrollbarAccent);
-    setConsumableColorOverride(prefs.consumableColor ?? null);
-  } catch {
-    /* no DOM — non-fatal */
-  }
-}
-
 export function setPref<K extends keyof Prefs>(key: K, value: Prefs[K]): void {
   if (prefs[key] === value) return;
   prefs = { ...prefs, [key]: value };
   save();
   touchSettings(); // prefs are a synced setting — stamp + nudge cloud upload
-  applyDomPrefs();
   for (const l of listeners) l(prefs);
 }
 
@@ -107,7 +78,6 @@ export function initPrefs(): void {
   } catch {
     prefs = { ...DEFAULTS };
   }
-  applyDomPrefs();
 }
 
 /** Reactively read the current prefs in a component. */

@@ -1,16 +1,10 @@
 [
-  {
-    "category": "feats",
-    "name": "Uplifting Winds",
-    "field": "level",
-    "value": 16
-  },
-  {
-    "category": "feats",
-    "name": "Devoted Focus",
-    "field": "level",
-    "value": 12
-  },
+  { "category": "items", "name": "Vambrace of Gorum", "field": "hardness", "value": 20 },
+  { "category": "items", "name": "Vambrace of Gorum", "field": "hp", "value": 160 },
+  { "category": "items", "name": "Vambrace of Gorum", "field": "brokenThreshold", "value": 80 },
+  { "category": "items", "name": "Martyr's Shield (Hellbreakers)", "field": "hardness", "value": 8 },
+  { "category": "items", "name": "Martyr's Shield (Hellbreakers)", "field": "hp", "value": 64 },
+  { "category": "items", "name": "Martyr's Shield (Hellbreakers)", "field": "brokenThreshold", "value": 32 },
   {
     "category": "items",
     "name": "Adamantine Chunk",
@@ -130,12 +124,6 @@
     "name": "Second Chance Champion",
     "field": "trainedSkill",
     "value": "athletics"
-  },
-  {
-    "category": "backgrounds",
-    "name": "Gold Falls Regular",
-    "field": "trainedSkill",
-    "value": "acrobatics"
   },
   {
     "category": "deities",
