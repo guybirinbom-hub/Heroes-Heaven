@@ -524,17 +524,30 @@ export function CharacterSheet({
             <i className="ti ti-arrow-left" aria-hidden="true" />
           </button>
         ) : (
-          // Edit + Customize are quick-access buttons here; the nav hamburger lives in the top bar.
+          // Desktop: Edit + Customize are quick-access icons; the nav hamburger lives in the (hidden-on-
+          // mobile) chrome bar. Mobile: the chrome bar is hidden, so the hamburger is rendered here and
+          // Customize is moved INTO it (still per-character); Edit stays a quick-access icon.
           <>
             {onEdit && (
               <button className="icon-btn" title="Edit character" aria-label="Edit character" onClick={onEdit}>
                 <i className="ti ti-edit" aria-hidden="true" />
               </button>
             )}
-            {onCustomize && (
+            {!isMobile && onCustomize && (
               <button className="icon-btn" title="Customize" aria-label="Customize" onClick={() => setCustomizeOpen(true)}>
                 <i className="ti ti-adjustments" aria-hidden="true" />
               </button>
+            )}
+            {isMobile && (
+              <PageMenu
+                items={[
+                  ...(onOpenHomebrew ? [{ label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew }] : []),
+                  ...(onOpenCampaigns ? [{ label: 'Campaigns', icon: 'ti-flag', onClick: onOpenCampaigns }] : []),
+                  ...(onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []),
+                  ...(onCustomize ? [{ label: 'Customize', icon: 'ti-adjustments', onClick: () => setCustomizeOpen(true) }] : []),
+                ]}
+                onOpenSettings={onOpenSettings}
+              />
             )}
           </>
         )}

@@ -625,6 +625,17 @@ export function SettingsPage({
         <h2 className="subpage-title">
           <i className="ti ti-settings" aria-hidden="true" /> {headTitle}
         </h2>
+        {/* Mobile: the .chrome hamburger is hidden, so the nav menu lives here — the on-screen way out
+            of Settings (to Characters / Homebrew / Campaigns) besides the Android Back button. */}
+        {isMobile && (
+          <PageMenu
+            items={[
+              ...(onOpenRoster ? [{ label: 'Characters', icon: 'ti-users', onClick: onOpenRoster }] : []),
+              ...(onOpenHomebrew ? [{ label: 'Homebrew', icon: 'ti-flask', onClick: onOpenHomebrew }] : []),
+              ...(onOpenCampaigns ? [{ label: 'Campaigns', icon: 'ti-flag', onClick: onOpenCampaigns }] : []),
+            ]}
+          />
+        )}
       </div>
       <div className="subpage-body settings-subpage-body">
         {isMobile ? (

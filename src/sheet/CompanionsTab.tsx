@@ -1250,7 +1250,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
         {addBtn}
       </div>
 
-      <div className="cmp-card">
+      <div className="cmp-statcard">
         <div className="cmp-head">
           {canEdit ? (
             <button className="cmp-port cmp-port-edit" type="button" title="Set portrait" onClick={() => { if (isAuto(current)) materializeAuto(current); portraitInputRef.current?.click(); }}>
