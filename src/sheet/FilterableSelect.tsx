@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, type ReactNode, type UIEvent } from 'react';
 import type { ActionCost, DescRef } from '../rules/types';
 import type { SliderStop } from '../rules/filterValues';
 import { spellCostMatches } from '../rules/spellFilter';
@@ -384,6 +384,16 @@ export function FilterableSelect<T>({
   const inelCount = inelKeys ? filtered.reduce((n, it) => n + (inelKeys.has(rowKey(it)) ? 1 : 0), 0) : 0;
   const results = hideInel && inelKeys ? filtered.filter((it) => !inelKeys.has(rowKey(it))) : filtered;
 
+  // Infinite scroll: render `limit` rows at a time and grow as the user nears the bottom, so EVERY
+  // option is reachable by scrolling (a hard cap used to hide the tail — you could only reveal it by
+  // searching). Reset to the first page whenever the filters/search or the ineligible toggle change.
+  const [visibleCount, setVisibleCount] = useState(limit);
+  useEffect(() => setVisibleCount(limit), [state, hideInel, limit]);
+  const onResultsScroll = (e: UIEvent<HTMLDivElement>) => {
+    const el = e.currentTarget;
+    if (el.scrollHeight - el.scrollTop - el.clientHeight < 300) setVisibleCount((n) => (n < results.length ? n + limit : n));
+  };
+
   // The primary text field is surfaced as an always-visible search box in the results bar (every
   // picker gets a search); the remaining filters live in the collapsible panel.
   const searchField = liveFields.find((f) => f.kind === 'text');
@@ -499,14 +509,14 @@ export function FilterableSelect<T>({
               )}
               <span className="fsel-results-count">{results.length} result{results.length === 1 ? '' : 's'}</span>
             </div>
-            <div className="fsel-list">
-              {results.slice(0, limit).map((it) => (
+            <div className="fsel-list" onScroll={onResultsScroll}>
+              {results.slice(0, visibleCount).map((it) => (
                 <div key={rowKey(it)} className="fsel-rowwrap">
                   {renderRow(it, setDescNode)}
                 </div>
               ))}
-              {results.length > limit && (
-                <div className="picker-more">{results.length - limit} more — refine your filters to narrow the list.</div>
+              {results.length > visibleCount && (
+                <div className="picker-more">Showing {visibleCount} of {results.length} — scroll for more, or refine your filters.</div>
               )}
               {results.length === 0 && <div className="fsel-empty">Nothing matches these filters.</div>}
               {resultsFooter?.((searchField ? ((state[searchField.id] as string) ?? '') : ''), setDescNode)}

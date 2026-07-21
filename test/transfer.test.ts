@@ -89,6 +89,26 @@ describe('Wanderer’s Guide export (spec-shaped v4)', () => {
   });
 });
 
+describe('Wanderer’s Guide round-trip keeps repeatable-feat takes', () => {
+  it('a wizard with Armor Proficiency ×3 survives export → import (all three armors trained)', () => {
+    // Wizard is untrained in every armor, so each of the three cascade takes is observable.
+    const character = { ...build('wizard', 11, {
+      featPicks: { '3:general:0': 'armor-proficiency', '7:general:0': 'armor-proficiency', '11:general:0': 'armor-proficiency' },
+    }), name: 'Armored Wizard' };
+    const wg = JSON.parse(exportWg({ id: 'w1', character, archived: false }, c));
+
+    // The export carries all three takes (not collapsed to one).
+    const apEntries = wg.content.feats_features.filter((f: { name: string }) => f.name === 'Armor Proficiency');
+    expect(apEntries).toHaveLength(3);
+
+    // Re-import: before the fix, the by-id de-dupe dropped takes 2 and 3, so only light was trained.
+    const { saved: back } = importCharacter(JSON.stringify(wg), c);
+    const def = back.character.proficiencies.defenses as Record<string, string>;
+    expect([def.light, def.medium, def.heavy]).toEqual(['trained', 'trained', 'trained']);
+    expect(back.character.feats.filter((f) => f.featId === 'armor-proficiency')).toHaveLength(3);
+  });
+});
+
 describe('Wanderer’s Guide import (best-effort, name-matched)', () => {
   const ancName = c.ancestries['human'].name;
   const clsName = c.classes['cleric'].name;

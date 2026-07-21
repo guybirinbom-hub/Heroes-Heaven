@@ -1,0 +1,58 @@
+/*
+ * Layout for the tracker mounted inside HH's party dashboard. Part of the removable seam
+ * (see ./README.md) — deleting this folder deletes these styles with it.
+ *
+ * These rules are HH-side, so they use HH's --app-* tokens directly.
+ *
+ * NOTE: `.tracker-root` also carries the tracker's variable DICTIONARY (--accent → var(--app-accent)
+ * etc., compiled in from hh-compat.css), which is why the tracker's components inside this wrapper
+ * resolve their colours from HH's active theme.
+ */
+.tracker-mount {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  gap: 0;
+  /* The tracker's stylesheet sets `user-select: none` on its own body rule, which lands on
+     .tracker-root — restore normal text behaviour at the boundary so HH's page isn't affected
+     by what the wrapper inherits. */
+  overflow: hidden;
+}
+
+/* The initiative order — a fixed-width rail, like the tracker's own standalone layout. */
+.tracker-mount-order {
+  flex: 0 0 268px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: var(--app-bw) solid var(--app-border);
+  overflow: hidden;
+}
+
+/* The player dashboard. */
+.tracker-mount-dash {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.tracker-mount-empty {
+  color: var(--app-text-dim);
+  font-size: 13px;
+  padding: 24px;
+  text-align: center;
+}
+
+/* On a phone the rail can't sit beside the dashboard — stack them. */
+@media (max-width: 720px) {
+  .tracker-mount {
+    flex-direction: column;
+  }
+  .tracker-mount-order {
+    flex: 0 0 auto;
+    max-height: 45%;
+    border-right: none;
+    border-bottom: var(--app-bw) solid var(--app-border);
+  }
+}

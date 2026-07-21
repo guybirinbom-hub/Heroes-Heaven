@@ -14,6 +14,10 @@ import { setPref, usePrefs } from '../data/prefs';
 import { CustomizationEditor } from './CustomizationEditor';
 import { useGlobalCustomization, setGlobalCustomizationField, DEFAULT_CUSTOMIZATION } from '../data/customization';
 import { PageMenu } from './PageMenu';
+// Removable integration — deleting src/integration/ plus these two imports and the 'tracker'
+// entries above/below restores the original Settings. See src/integration/README.md.
+import { TRACKER_IN_CAMPAIGN } from '../integration/enabled';
+import { TrackerSettingsSection } from '../integration/TrackerSettingsSection';
 import { WindowControls } from './WindowControls';
 import { HeroesHeavenLogo } from './Logo';
 import type { Customization, ModeDef } from '../rules/types';
@@ -22,10 +26,12 @@ import { ModeEditor, summarizeMod } from './ModesPanel';
 import { useIsMobile } from './useIsMobile';
 import { useBackHandler } from './useEscapeClose';
 
-type SectionId = 'appearance' | 'modes' | 'backup' | 'account' | 'about' | 'uninstall';
+type SectionId = 'appearance' | 'modes' | 'tracker' | 'backup' | 'account' | 'about' | 'uninstall';
 const ALL_SECTIONS: { id: SectionId; label: string; icon: string }[] = [
   { id: 'appearance', label: 'Appearance', icon: 'ti-palette' },
   { id: 'modes', label: 'Modes', icon: 'ti-toggle-left' },
+  // Removable integration — see src/integration/README.md.
+  { id: 'tracker', label: 'Initiative tracker', icon: 'ti-swords' },
   { id: 'backup', label: 'Backup', icon: 'ti-database-export' },
   { id: 'account', label: 'Account', icon: 'ti-user' },
   { id: 'about', label: 'About', icon: 'ti-info-circle' },
@@ -35,7 +41,11 @@ const ALL_SECTIONS: { id: SectionId; label: string; icon: string }[] = [
 // Android). Account wherever cloud sync is configured (web + installed app); hidden when there's
 // no account system at all.
 const SECTIONS = ALL_SECTIONS.filter(
-  (s) => (s.id !== 'uninstall' || isTauri) && (s.id !== 'account' || isCloudSyncEnabled),
+  (s) =>
+    (s.id !== 'uninstall' || isTauri) &&
+    (s.id !== 'account' || isCloudSyncEnabled) &&
+    // The tracker section disappears with the integration — see src/integration/README.md.
+    (s.id !== 'tracker' || TRACKER_IN_CAMPAIGN),
 );
 
 /** Appearance = the device-global default look + behaviour for the app and every character sheet: the full
@@ -592,6 +602,7 @@ export function SettingsPage({
     <>
       {id === 'appearance' && <AppearanceSection />}
       {id === 'modes' && <ModesSection modes={modes} characters={characters} onSaveMode={onSaveMode} onDeleteMode={onDeleteMode} />}
+      {id === 'tracker' && TRACKER_IN_CAMPAIGN && <TrackerSettingsSection />}
       {id === 'backup' && <BackupSection />}
       {id === 'account' && <AccountSection />}
       {id === 'about' && <AboutSection />}

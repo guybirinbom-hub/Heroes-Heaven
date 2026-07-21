@@ -47,6 +47,34 @@ export interface FeatGrant {
    * BuildState.dedicationSkillFeats keyed by featId. Mirrors the Versatile-Human bonus-feat injection.
    */
   bonusSkillFeat?: boolean;
+  /**
+   * Grants selected by the player's pick in the feat's own `choice` dropdown ("expert in your choice
+   * of Fortitude, Reflex, Will, or Perception"), keyed by the choice VALUE exactly as core.json
+   * stores it. The importer leaves some of those values as raw Foundry paths
+   * (`system.saves.will.rank`), so the keys here are matched verbatim rather than prettified — see
+   * CANNY_ACUMEN_TRACKS below.
+   *
+   * The matching entry is applied like a static grant (RAISES only). Nested choiceGrants are ignored.
+   */
+  choiceGrants?: Record<string, FeatGrant>;
+  /**
+   * This feat's granted ranks improve once the character reaches `level` (Canny Acumen grants expert,
+   * then master at 17). Applied to every rank this feat grants, static or choice-driven, and still
+   * only ever RAISES.
+   */
+  rankUpgrade?: { level: number; rank: ProficiencyRank };
+  /**
+   * Armor Proficiency's cascade. The feat's three ChoiceSet options (light/medium/heavy) are gated by
+   * mutually-exclusive predicates so that EXACTLY ONE is ever legal — it is not a real choice but a
+   * deterministic function of current armor training: train the first of light→medium→heavy you are
+   * still untrained in. So instead of a stored pick we DERIVE the target from the live proficiencies
+   * at the moment this take is applied; because the grant loop is sequential and in-place, take 2 sees
+   * take 1's result and moves to the next armor. `null` = nothing left to train (a no-op take). The
+   * rank is trained, or `rankUpgrade.rank` once the character is high enough level (Remaster: expert
+   * at 13). This is the ONLY cascade feat in the game — armor-proficiency's predicates are the only
+   * ones that partition the state space — so it is modeled as a flag, not a general predicate engine.
+   */
+  armorCascade?: boolean;
 }
 
 /**
@@ -65,6 +93,18 @@ export interface FeatGrant {
  *   free-skill choice + a bonus skill feat. (Surprise Attack / rogue class DC are not proficiency grants.)
  * - Bastion Dedication: grants only the Reactive Shield feat — NO proficiency (intentionally absent).
  * - Medic Dedication: "You become an expert in Medicine."
+ * - Canny Acumen: "Choose Fortitude saves, Reflex saves, Will saves, or Perception. You become an
+ *   expert in your choice. At 17th level, you become a master in your choice." Modeled in full via
+ *   choiceGrants + rankUpgrade. The choice VALUES below are the raw Foundry paths the importer left
+ *   in core.json — they must match verbatim.
+ * - Armor Proficiency (Player Core p.252): "You become trained in light armor. If you already were
+ *   trained in light armor, you gain training in medium armor. If you were trained in both, you
+ *   become trained in heavy armor. If you are at least 13th level, you become an expert in this armor
+ *   type." Repeatable up to 3× — modeled as an armorCascade + rankUpgrade (see FeatGrant.armorCascade).
+ * - Weapon Proficiency (Player Core p.265): "You become trained in all martial weapons… If you are at
+ *   least 11th level, you also become an expert in these weapons." Modeled as martial trained +
+ *   rankUpgrade 11/expert. The repeatable advanced-weapon branch ("trained in one advanced weapon of
+ *   your choice") is NOT modeled — Foundry itself omits it, so repeat takes are inert.
  */
 export const FEAT_GRANTS: Record<string, FeatGrant> = {
   'sentinel-dedication': { armor: { light: 'trained', medium: 'trained' } },
@@ -78,4 +118,26 @@ export const FEAT_GRANTS: Record<string, FeatGrant> = {
     bonusSkillFeat: true,
   },
   'medic-dedication': { skills: { medicine: 'expert' } },
+  'canny-acumen': {
+    rankUpgrade: { level: 17, rank: 'master' },
+    choiceGrants: {
+      'system.saves.fortitude.rank': { save: { fortitude: 'expert' } },
+      'system.saves.reflex.rank': { save: { reflex: 'expert' } },
+      'system.saves.will.rank': { save: { will: 'expert' } },
+      'system.perception.rank': { perception: 'expert' },
+    },
+  },
+  'armor-proficiency': { armorCascade: true, rankUpgrade: { level: 13, rank: 'expert' } },
+  'weapon-proficiency': { weapon: { martial: 'trained' }, rankUpgrade: { level: 11, rank: 'expert' } },
 };
+
+/**
+ * How many times a feat may be taken. Mirrors Foundry's `system.maxTakable`: absent → 1, `null` →
+ * unlimited (Infinity), any number → that hard cap. Always read the field through this — a direct
+ * comparison mis-handles the `null`-means-unlimited case.
+ */
+export function maxTakes(feat: { maxTakable?: number | null } | undefined): number {
+  if (!feat) return 1;
+  if (feat.maxTakable === null) return Infinity;
+  return feat.maxTakable ?? 1;
+}

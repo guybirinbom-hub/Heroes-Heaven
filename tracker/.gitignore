@@ -1,0 +1,10 @@
+# The bestiary payload is GENERATED from the Archives of GuyB working copy by `npm run data`.
+# It is large and derived, so it is never committed — regenerate it instead.
+# (Heroes Heaven's own .gitignore already covers node_modules/ and dist/ at any depth.)
+public/data/
+
+# Copied from Heroes Heaven at setup by `npm run data` / setup — not source.
+public/fonts/
+
+# tsc -b incremental state
+*.tsbuildinfo

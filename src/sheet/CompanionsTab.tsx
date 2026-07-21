@@ -1296,7 +1296,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
             </div>
           )}
         </div>
-        <div className="cmp-body" key={mode}>
+        <div className="cmp-cardbody" key={mode}>
           {(!canEdit || mode === 'stats') && block.node}
           {canEdit && mode === 'edit' && onPlay && (
             <EditChoices cfg={current} content={content} onPlay={onPlay} onAbilities={() => setAbilityFor(current.id)} onSpecialization={() => setSpecFor(current.id)} />

@@ -401,9 +401,69 @@ function featCost(s) {
   if (t === 'action' && (n === 1 || n === 2 || n === 3)) return { type: 'actions', value: n };
   return undefined;
 }
-// Foundry localization keys (PF2E.Skill.Arcana) -> a readable label.
-const humanize = (l) =>
-  !l ? '' : String(l).startsWith('PF2E.') ? String(l).split('.').pop().replace(/([a-z])([A-Z])/g, '$1 $2') : String(l);
+/*
+ * Foundry localization keys (PF2E.Skill.Arcana) -> a readable label.
+ *
+ * The pf2e system keeps the real English text in static/lang/en.json, which our sparse clone does NOT
+ * include — so we recover the label from the KEY itself. Taking the last dot-segment and splitting
+ * camelCase (the old behaviour) mangles four shapes, all of which reached the UI:
+ *   PF2E.SpecificRule.Champion.Mercy.Body.Label        -> "Label"           (name destroyed entirely)
+ *   PF2E.TraitCold                                     -> "Trait Cold"
+ *   PF2E.Actor.Character.Proficiency.Defense.LightShort-> "Light Short"
+ *   PF2E.SavesFortitude / PF2E.PerceptionLabel         -> "Saves Fortitude" / "Perception Label"
+ * So: when the final segment is a generic i18n leaf (`.Label`), the meaningful name is the segment
+ * BEFORE it (verified across all 28 such keys in the feat packs — Kobold Breath, Werewolf, Thrune,
+ * Mercy's Body/Grace/Mind, …, with no counterexamples). Then strip the generic head/tail words that
+ * are part of the key namespace rather than the name.
+ */
+const GENERIC_LEAF = /^(?:Label|Short|Title|Name|Text)$/;
+const humanize = (l) => {
+  if (!l) return '';
+  const s = String(l);
+  if (!s.startsWith('PF2E.')) return s;
+  const segs = s.split('.');
+  let last = segs.pop();
+  if (GENERIC_LEAF.test(last) && segs.length > 1) last = segs.pop();
+  const words = last.replace(/([a-z])([A-Z])/g, '$1 $2');
+  // "Perception Label" -> "Perception"; "Light Short" -> "Light"; "Trait Cold" -> "Cold";
+  // "Saves Fortitude" -> "Fortitude". Anchored to a word boundary so "Traitor"/"Shortsword" survive.
+  const cleaned = words.replace(/\s+(?:Label|Short|Title|Name|Text)$/, '').replace(/^(?:Trait|Saves)\s+/, '');
+  return cleaned || words;
+};
+/*
+ * How many times a feat may be taken ("Special: You can select this feat more than once").
+ *
+ * Foundry's `system.maxTakable` is the source of truth: ABSENT means 1, `null` means unlimited (it is
+ * Infinity in the system's runtime model, and JSON.stringify(Infinity) emits null), any other number
+ * is a hard cap — Armor Proficiency 3 (light→medium→heavy), Skill Mastery 5. 130 feats carry it.
+ *
+ * Foundry is wrong about four feats the books plainly call repeatable (Animist's Power, Listener's
+ * Boon, Order Magic, Secret Speech — each verified on Archives of Nethys), so the prose is OR'd in as
+ * a fallback and those default to unlimited. Prose alone is NOT sufficient in the other direction:
+ * PF2e writes repeatability at least eight different ways ("up to three times", "a second time", …)
+ * and, unlike maxTakable, never carries the LIMIT.
+ *
+ * Emits nothing for an ordinary once-only feat; `null` in core.json means unlimited.
+ */
+const REPEATABLE_PROSE =
+  /\b(?:select|take|choose)\s+this\s+(?:\w+\s+){0,2}feat\s+(?:more than once|multiple times|again|a second time|any number of times|up to)/i;
+// "up to three times" -> 3, "a second time" -> 2. The books only ever spell these counts out in words.
+const COUNT_WORD = { twice: 2, two: 2, three: 3, four: 4, five: 5, second: 2, third: 3, fourth: 4, fifth: 5 };
+function proseMaxTakes(text) {
+  if (!REPEATABLE_PROSE.test(text)) return undefined;
+  const upTo = text.match(/\bthis\s+(?:\w+\s+){0,2}feat\s+up to\s+(\w+)\s+times/i);
+  if (upTo && COUNT_WORD[upTo[1].toLowerCase()]) return COUNT_WORD[upTo[1].toLowerCase()];
+  const nth = text.match(/\bthis\s+(?:\w+\s+){0,2}feat\s+a\s+(\w+)\s+time\b/i);
+  if (nth && COUNT_WORD[nth[1].toLowerCase()]) return COUNT_WORD[nth[1].toLowerCase()];
+  return null; // "more than once" / "multiple times" — repeatable with no stated ceiling
+}
+function featMaxTakes(s) {
+  const mt = s.maxTakable;
+  if (mt === null) return null; // explicit unlimited
+  if (typeof mt === 'number') return mt > 1 ? mt : undefined; // a cap, or an explicit 1 (= not repeatable)
+  // maxTakable absent → Foundry says once. Believe the printed text when it plainly disagrees.
+  return proseMaxTakes(String(s.description?.value || '').replace(/<[^>]+>/g, ' '));
+}
 // A feat's embedded sub-choice (ChoiceSet), when we can resolve its options:
 // the deity-domain reference (Domain Initiate) or an inline {value,label} array.
 function featChoice(s) {
@@ -1470,7 +1530,12 @@ for (const fp of walk(join(ROOT, 'feats'))) {
     source: sourceOf(e),
     prerequisites: (s.prerequisites?.value || []).map((p) => p.value).filter(Boolean),
     actionCost: featCost(s),
-    choice: featChoice(s),
+    // Armor Proficiency's ChoiceSet is not a real player choice: its three options (light/medium/
+    // heavy) are gated by predicates that partition the state so exactly one is ever legal. The app
+    // DERIVES that cascade (FEAT_GRANTS.armorCascade), so drop the dropdown — offering a free 3-way
+    // pick would let a player illegally choose heavy first.
+    choice: idOf(e) === 'armor-proficiency' ? undefined : featChoice(s),
+    maxTakable: featMaxTakes(s),
     _focusRefs: spellRefs(s.description?.value),
     focusPoolBonus: parseFocusPoolBonus(s.description?.value),
     ...parseDefenses(s.rules),

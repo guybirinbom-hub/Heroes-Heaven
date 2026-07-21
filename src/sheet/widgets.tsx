@@ -1,5 +1,15 @@
 import type { ActionCost, ProficiencyRank } from '../rules/types';
 
+/** A small `*` flag next to a stat that has a SITUATIONAL bonus (from a feat or a conditional mode).
+ *  Tells the player "you have something conditional here — open the detail to see it." */
+export function SituationalStar() {
+  return (
+    <sup className="sit-star" title="Has a situational bonus — open for details" aria-label="has a situational bonus">
+      *
+    </sup>
+  );
+}
+
 const RANK_LETTER: Record<ProficiencyRank, string> = {
   untrained: 'U',
   trained: 'T',

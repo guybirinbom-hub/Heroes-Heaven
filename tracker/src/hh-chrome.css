@@ -1,0 +1,94 @@
+/*
+ * Heroes Heaven chrome — the styles for the SHARED components imported live from `@hh`
+ * (Logo, PageMenu). Copied verbatim from HH's sheet.css with the origin noted on each block.
+ *
+ * WHY COPIED: HH's sheet.css is ~10k lines of character-sheet layout; importing it wholesale would
+ * drag the entire builder's sheet into the tracker. Only the chrome the tracker actually renders is
+ * vendored here.
+ *
+ * These rules read HH's --app-* tokens DIRECTLY (not the tracker's compat vocabulary) because they
+ * belong to HH's components — that is deliberate, and keeps them pixel-identical to the builder.
+ *
+ * No name collisions with the tracker: it uses `.ico-btn`, HH uses `.icon-btn`.
+ */
+
+/* from HH sheet.css — .page-menu / .menu-backdrop / .topmenu / .topmenu-item */
+.page-menu {
+  position: relative; /* anchors the absolute .topmenu dropdown to the hamburger button */
+  display: inline-flex;
+}
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
+.topmenu {
+  position: absolute;
+  top: calc(100% - 4px);
+  right: 10px;
+  z-index: 50;
+  min-width: 168px;
+  background: var(--app-surface);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius);
+  box-shadow: var(--app-shadow);
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+}
+.topmenu-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  background: none;
+  border: none;
+  border-radius: var(--app-radius-sm);
+  padding: 8px 10px;
+  font-size: 13px;
+  color: var(--app-text);
+  cursor: pointer;
+  text-align: left;
+}
+.topmenu-item:hover {
+  background: var(--app-surface-2);
+}
+.topmenu-item i {
+  font-size: 16px;
+  color: var(--app-text-dim);
+}
+
+/* from HH sheet.css — .icon-btn (the hamburger's own button) */
+.icon-btn {
+  background: var(--app-surface-2);
+  color: var(--app-text);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  padding: 7px 9px;
+  font-size: 14px;
+  cursor: pointer;
+  flex: none;
+}
+.icon-btn:hover {
+  border-color: var(--app-accent);
+}
+
+/* ── tracker-side glue ───────────────────────────────────────────── */
+
+/* The brand mark paints with currentColor; the accent is what the builder's chrome uses. */
+.hh-brand {
+  color: var(--app-accent);
+  display: block;
+}
+
+/* The hamburger sits in the topbar's button row, which is an Electron drag region — the menu must
+   opt out or it can't be clicked. Height matches the text buttons beside it (their taller line box
+   sets the row height), same trick the old gear button used. */
+.hh-menu-slot {
+  display: inline-flex;
+  align-self: stretch;
+}
+.hh-menu-slot .icon-btn {
+  display: inline-flex;
+  align-items: center;
+}

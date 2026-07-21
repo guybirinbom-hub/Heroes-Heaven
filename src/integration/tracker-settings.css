@@ -1,0 +1,38 @@
+/*
+ * The "Initiative tracker" section inside Heroes Heaven's Settings.
+ * Part of the removable seam (src/integration/).
+ */
+
+.tracker-settings {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Group switcher — HH's own .seg/.seg-btn, so it reads as part of Settings, not as the tracker's. */
+.tracker-settings-nav {
+  margin: 0 0 16px;
+  flex: 0 0 auto;
+}
+.tracker-settings-nav .seg-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/*
+ * The tracker's own settings groups render inside .tracker-root, so they're styled by the tracker's
+ * scoped stylesheet (which reads HH's tokens through the compat layer — they'll match the active
+ * palette). It also means Preflight's `* { box-sizing }` etc. apply here and nowhere else.
+ */
+.tracker-settings-body {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Those groups were written to fill a modal that owned the screen. In a Settings pane they should
+   just be content — no second scroll container, no forced height. */
+.tracker-settings-body > * {
+  height: auto;
+  min-height: 0;
+}

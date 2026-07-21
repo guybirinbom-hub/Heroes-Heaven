@@ -40,6 +40,7 @@ import {
   pwl,
   shieldSwappedModes,
 } from './derive';
+import { featSituationalFor, hasFeatSituational } from './situationalBonuses';
 
 export type StatRef =
   | { kind: 'skill'; skill: ProficiencyKey }
@@ -136,6 +137,25 @@ function refToModeTarget(ref: StatRef): ModeTarget | null {
 export function statHasConditionalMode(c: Character, ref: StatRef): boolean {
   const t = refToModeTarget(ref);
   return t ? hasConditionalMode(c.activeModes, t) : false;
+}
+
+/** The feat ids the character has taken (for situational-bonus lookups). */
+function characterFeatIds(c: Character): string[] {
+  return c.feats.map((f) => f.featId);
+}
+
+/** True if a taken feat grants a SITUATIONAL bonus to this stat, or an active conditional mode does —
+ *  either way the sheet flags the stat with a `*` so the player checks its detail. */
+export function statHasSituational(c: Character, ref: StatRef): boolean {
+  return statHasConditionalMode(c, ref) || hasFeatSituational(characterFeatIds(c), ref);
+}
+
+/** Formatted situational-bonus lines from the character's feats for a stat (for the detail panel). */
+function featSituationalStrings(c: Character, db: ContentDatabase, ref: StatRef): string[] {
+  return featSituationalFor(characterFeatIds(c), ref).map((s) => {
+    const name = db.feats[s.id]?.name ?? s.id;
+    return `${s.bonus} from ${name} — ${s.when}`;
+  });
 }
 
 const DESC: Record<string, string> = {
@@ -263,7 +283,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       }
       const cond = conditionPart(c, ability, 'skill');
       if (cond) parts.push(cond);
-      const situational = modeAdjust(c, { kind: 'skill', detail: ref.skill }, parts);
+      const situational = [...modeAdjust(c, { kind: 'skill', detail: ref.skill }, parts), ...featSituationalStrings(c, db, ref)];
       // timeline: trained at L1 + each skill increase for this skill
       const timeline: TimelineEntry[] = [];
       if (d.rank !== 'untrained') {
@@ -310,7 +330,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       }
       const cond = conditionPart(c, ability, 'save');
       if (cond) parts.push(cond);
-      const situational = modeAdjust(c, { kind: 'save', detail: ref.save }, parts);
+      const situational = [...modeAdjust(c, { kind: 'save', detail: ref.save }, parts), ...featSituationalStrings(c, db, ref)];
       return {
         title: cap(ref.save),
         subtitle: 'Saving throw',
@@ -335,7 +355,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       if (percItem) parts.push({ label: mpPerc > abpPerc ? 'Monster Parts (refined)' : 'ABP Perception potency', note: 'item bonus', value: percItem });
       const cond = conditionPart(c, 'wis', 'perception');
       if (cond) parts.push(cond);
-      const situational = modeAdjust(c, { kind: 'perception' }, parts);
+      const situational = [...modeAdjust(c, { kind: 'perception' }, parts), ...featSituationalStrings(c, db, ref)];
       return {
         title: 'Perception',
         subtitle: 'Wisdom',
@@ -385,7 +405,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       if (stanceAc) parts.push({ label: stance!.name ?? 'Stance', note: `${stance!.acBonus!.type} bonus`, value: stanceAc });
       // Use the shield-swapped modes so the "Raise a Shield" line shows the real shield bonus (buckler
       // +1, fortress +3) and the parts reconcile with the AC total (which deriveAc computes the same way).
-      const situational = modeAdjust({ ...c, activeModes: shieldSwappedModes(c, db) }, { kind: 'ac' }, parts);
+      const situational = [...modeAdjust({ ...c, activeModes: shieldSwappedModes(c, db) }, { kind: 'ac' }, parts), ...featSituationalStrings(c, db, ref)];
       return {
         title: 'Armor class',
         subtitle: armor ? `${cap(category)} armor` : 'Unarmored',
@@ -572,7 +592,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         });
       const cond = conditionPart(c, strike.atkAbility, 'attack');
       if (cond) parts.push(cond);
-      const situational = modeAdjust(c, { kind: 'attack' }, parts);
+      const situational = [...modeAdjust(c, { kind: 'attack' }, parts), ...featSituationalStrings(c, db, ref)];
       return {
         title: strike.name,
         subtitle: 'Attack roll',

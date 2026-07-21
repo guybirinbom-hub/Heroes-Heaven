@@ -37,14 +37,14 @@ import {
 import { useCustomization, DEFAULT_RAIL_ORDER } from '../data/customization';
 import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
 import { resourcesForCharacter, resourceMax } from '../rules/classResources';
-import { statHasConditionalMode, type StatRef } from '../rules/explain';
+import { statHasSituational, type StatRef } from '../rules/explain';
 import { ConditionsModal } from './ConditionsModal';
 import { ItemDetail } from './ItemDetail';
 import { ItemEditorModal } from './ItemEditorModal';
 import { InfoTerm } from './InfoTerm';
 import { MythicRules, mythicDestinies } from './MythicRules';
 import { senseDesc, languageDesc } from '../rules/glossary';
-import { RankPill } from './widgets';
+import { RankPill, SituationalStar } from './widgets';
 import { useIsMobile } from './useIsMobile';
 import { HpNumpadModal } from './HpNumpadModal';
 
@@ -341,12 +341,15 @@ export function VitalsRail({
         <div className="defs">
           {defenses.map((d) => (
             <div
-              className={'tile' + (d.title ? ' has-note' : '') + (onOpenStat ? ' openable' : '') + (statHasConditionalMode(character, d.ref) ? ' has-mode' : '')}
+              className={'tile' + (d.title ? ' has-note' : '') + (onOpenStat ? ' openable' : '') + (statHasSituational(character, d.ref) ? ' has-mode' : '')}
               key={d.label}
               title={d.title ?? (onOpenStat ? 'How is this calculated?' : undefined)}
               onClick={onOpenStat ? () => onOpenStat(d.ref) : undefined}
             >
-              <div className="tlab">{d.label}</div>
+              <div className="tlab">
+                {d.label}
+                {statHasSituational(character, d.ref) && <SituationalStar />}
+              </div>
               <div className="tval">{d.value}</div>
             </div>
           ))}
@@ -464,13 +467,16 @@ export function VitalsRail({
           const d = deriveSave(character, s, content);
           return (
             <div
-              className={'stat-row' + (onOpenStat ? ' rollable' : '') + (statHasConditionalMode(character, { kind: 'save', save: s }) ? ' has-mode' : '')}
+              className={'stat-row' + (onOpenStat ? ' rollable' : '') + (statHasSituational(character, { kind: 'save', save: s }) ? ' has-mode' : '')}
               key={s}
               onClick={onOpenStat ? () => onOpenStat({ kind: 'save', save: s }) : undefined}
               title={onOpenStat ? `${SAVE_LABEL[s]} — how is this calculated?` : undefined}
             >
               <RankPill rank={d.rank} />
-              <span className="stat-name">{SAVE_LABEL[s]}</span>
+              <span className="stat-name">
+                {SAVE_LABEL[s]}
+                {statHasSituational(character, { kind: 'save', save: s }) && <SituationalStar />}
+              </span>
               <span className="stat-short">{SAVE_SHORT[s]}</span>
               {showSaveDCs && <span className="stat-dc" title="Save DC">DC {10 + d.modifier}</span>}
               <span className="stat-mod">{formatMod(d.modifier)}</span>
@@ -478,12 +484,15 @@ export function VitalsRail({
           );
         })}
         <div
-          className={'stat-row' + (onOpenStat ? ' rollable' : '') + (statHasConditionalMode(character, { kind: 'perception' }) ? ' has-mode' : '')}
+          className={'stat-row' + (onOpenStat ? ' rollable' : '') + (statHasSituational(character, { kind: 'perception' }) ? ' has-mode' : '')}
           onClick={onOpenStat ? () => onOpenStat({ kind: 'perception' }) : undefined}
           title={onOpenStat ? 'Perception — how is this calculated?' : undefined}
         >
           <RankPill rank={perception.rank} />
-          <span className="stat-name">Perception</span>
+          <span className="stat-name">
+            Perception
+            {statHasSituational(character, { kind: 'perception' }) && <SituationalStar />}
+          </span>
           <span className="stat-short">Perc</span>
           <span className="stat-mod">{formatMod(perception.modifier)}</span>
         </div>

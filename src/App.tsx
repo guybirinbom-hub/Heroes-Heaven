@@ -1,4 +1,8 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+// Removable integration flag — see src/integration/README.md.
+import { TEST_CAMPAIGNS_WITHOUT_LOGIN, TRACKER_IN_CAMPAIGN } from './integration/enabled';
+import { wasOnCampaignsPage, setOnCampaignsPage, getRememberedCampaign } from './integration/lastCampaignView';
+import { combatOwnsUndo } from './integration/combatUndoClaim';
 import { CharacterSheet } from './sheet/CharacterSheet';
 import { RosterScreen } from './sheet/RosterScreen';
 import { HomebrewPage } from './sheet/HomebrewPage';
@@ -47,7 +51,12 @@ export default function App() {
   // DEV-ONLY escape hatch: open the app without an account on the local dev server (for testing).
   // `import.meta.env.DEV` is false in the production build, so this never appears on the deployed
   // site and the friends-only login stays enforced there. Bypass = local-only (no cloud sync).
-  const [devBypass, setDevBypass] = useState(() => import.meta.env.DEV && sessionStorage.getItem('hh-dev-skip') === '1');
+  // TEST_CAMPAIGNS_WITHOUT_LOGIN (src/integration/ — removable) only saves setting the sessionStorage
+  // flag by hand while testing the tracker. The `import.meta.env.DEV &&` guard is UNCHANGED, so this
+  // still cannot appear in a production build and the friends-only login stays enforced there.
+  const [devBypass, setDevBypass] = useState(
+    () => import.meta.env.DEV && (TEST_CAMPAIGNS_WITHOUT_LOGIN || sessionStorage.getItem('hh-dev-skip') === '1'),
+  );
   // Installed app: login is optional. If the user chose "continue without an account", remember it so
   // we don't show the login wall on every launch. The web build has no persistent skip (login there
   // is friends-only + mandatory); its only bypass is the DEV one above.
@@ -67,6 +76,12 @@ export default function App() {
   // continue to the last-active sheet — the app's usual landing screen — unless the user already
   // started interacting with the roster (then yanking them away would be jarring).
   const [mode, setMode] = useState<'sheet' | 'builder' | 'roster' | 'homebrew' | 'campaigns' | 'settings'>('roster');
+  // Was the app closed while on a campaign? Captured ONCE, at mount, because the effect that keeps the
+  // "on campaigns page" marker in sync clears it as soon as we boot on the roster — so we must read it
+  // before that runs. Acted on only after content loads (campaigns needs it). See boot effect below.
+  const [bootToCampaign] = useState(
+    () => TRACKER_IN_CAMPAIGN && wasOnCampaignsPage() && !!getRememberedCampaign(),
+  );
   // Which screen the Settings / Customize pages should return to when closed (the one they opened from).
   const [uiReturn, setUiReturn] = useState<'sheet' | 'roster' | 'homebrew' | 'campaigns'>('roster');
   const autoOpenSheet = useRef(true);
@@ -95,9 +110,17 @@ export default function App() {
     window.addEventListener('keydown', cancel, true);
     loadContent().then((c) => {
       setContent(c);
-      // Auto-jump to the last-active sheet — but only if there's actually a character to show.
-      // An empty roster (fresh install) stays on the roster's empty state.
-      if (autoOpenSheet.current && activeId) setMode((m) => (m === 'roster' ? 'sheet' : m));
+      // Restore the last screen once content is ready (campaigns needs it). If the app was closed while
+      // looking at a campaign, reopen there; otherwise auto-jump to the last-active sheet. Both only
+      // fire if the user hasn't already started interacting with the roster (which cancels the jump),
+      // and only from the roster boot screen — never yanking them off somewhere they navigated to.
+      if (autoOpenSheet.current) {
+        if (bootToCampaign) {
+          setMode((m) => (m === 'roster' ? 'campaigns' : m));
+        } else if (activeId) {
+          setMode((m) => (m === 'roster' ? 'sheet' : m));
+        }
+      }
       window.removeEventListener('pointerdown', cancel, true);
       window.removeEventListener('keydown', cancel, true);
     });
@@ -300,6 +323,11 @@ export default function App() {
     };
   }, []);
   useEffect(() => saveActiveId(activeId), [activeId]);
+  // Remember whether the campaigns page is the current screen, so a fresh launch can reopen a
+  // campaign the app was closed on. (Removable integration; see src/integration/lastCampaignView.ts.)
+  useEffect(() => {
+    if (TRACKER_IN_CAMPAIGN) setOnCampaignsPage(mode === 'campaigns');
+  }, [mode]);
 
   // Suppress the browser's default right-click menu (Back/Reload/Inspect) so the app feels native,
   // NOT like a web page. Editable fields keep the native menu so cut/copy/paste still works, and any
@@ -344,6 +372,11 @@ export default function App() {
       // native text undo handle it (so editing a field char-by-char still works); elsewhere, Ctrl+Z
       // reverts the last sheet action (condition, item, HP, …) and Ctrl+Shift+Z / Ctrl+Y redoes it.
       if (k === 'z' || k === 'y') {
+        // The campaign tracker owns Ctrl+Z while it's on screen: there, undo means "undo the combat
+        // I just did", not "revert a character edit from an hour ago". It runs its own handler, so
+        // this one stands down or they'd both fire. (Removable integration — see
+        // src/integration/combatUndoClaim.ts.)
+        if (TRACKER_IN_CAMPAIGN && combatOwnsUndo()) return;
         const el = document.activeElement as HTMLElement | null;
         const editing = !!el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
         if (editing) return;

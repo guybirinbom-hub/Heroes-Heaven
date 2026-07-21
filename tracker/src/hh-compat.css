@@ -1,0 +1,117 @@
+/*
+ * ═══════════════════════════════════════════════════════════════════════════════════════════════
+ *  THE KEYSTONE OF THE PORT.
+ * ═══════════════════════════════════════════════════════════════════════════════════════════════
+ *
+ * The original tracker and Heroes Heaven independently arrived at the SAME architecture: every
+ * component reads colour/shape from CSS custom properties, and a theme is just a different set of
+ * values written onto <html> (the tracker used `data-theme`; HH's theme-manager does too).
+ *
+ * They only disagree on the NAMES. So instead of rewriting 100+ components to use HH's token
+ * names, this file re-expresses the tracker's whole vocabulary in terms of HH's tokens. The
+ * consequence: every ported component renders in HH's palettes for free, the tracker's own 17
+ * themes are retired in favour of HH's 14 (which is what "matches the character builder" means),
+ * and HH remains the single source of truth — add a palette there and it lands here.
+ *
+ * RULES
+ *  - Nothing here may be a raw hex EXCEPT where a value is genuinely theme-independent
+ *    (pure-white text on a saturated danger fill, opacity-based shadows).
+ *  - This file must be imported AFTER @hh/theme/tokens.css so var() has values to read.
+ *  - Do NOT add tracker-specific layout here; this file is only the dictionary.
+ */
+
+:root {
+  /* ── Surfaces ─────────────────────────────────────────────── */
+  --bg-base: var(--app-bg);
+  --bg-panel: var(--app-surface);
+  --bg-elevated: var(--app-surface-2);
+  --bg-hover: var(--app-surface-3);
+  /* The original painted a vertical gradient behind the topbar/popup headers. HH has no gradient
+     token, so both stops resolve to the same surface — a flat header, consistent with HH's chrome. */
+  --bg-header-top: var(--app-surface);
+  --bg-header-bottom: var(--app-surface);
+
+  /* ── Borders ──────────────────────────────────────────────── */
+  --border: var(--app-border);
+  --border-strong: color-mix(in srgb, var(--app-border) 55%, var(--app-text));
+  --border-focus: var(--app-focus, var(--app-accent));
+
+  /* ── Accent ───────────────────────────────────────────────── */
+  --accent: var(--app-accent);
+  --accent-hover: var(--app-accent-hover, var(--app-accent));
+  --accent-soft: color-mix(in srgb, var(--app-accent) 14%, transparent);
+  --accent-line: color-mix(in srgb, var(--app-accent) 35%, transparent);
+  --text-on-accent: var(--app-accent-text, #fff);
+
+  /* ── "Linked" — the tracker's secondary hue (cooldown dice, temp-HP segment).
+   *    It must stay DISTINCT from --accent or cooldowns stop reading as different,
+   *    so it maps to HH's `good` hue rather than to the accent. ── */
+  --linked: var(--app-good);
+  --linked-soft: color-mix(in srgb, var(--app-good) 14%, transparent);
+
+  /* ── Danger ───────────────────────────────────────────────── */
+  --danger: var(--app-bad);
+  --danger-soft: color-mix(in srgb, var(--app-bad) 14%, transparent);
+  /* Theme-independent on purpose: danger is a saturated red/rose in every HH palette, so white
+     reads on all of them (this matches the original's own comment). */
+  --text-on-danger: #ffffff;
+
+  /* ── HP bar ───────────────────────────────────────────────── */
+  --hp-full: var(--app-good);
+  --hp-mid: var(--app-warn);
+  --hp-low: var(--app-bad);
+  --hp-track: var(--app-surface-2);
+
+  /* ── Text ─────────────────────────────────────────────────── */
+  --text: var(--app-text);
+  --text-muted: var(--app-text-dim);
+  --text-faded: var(--app-text-faint);
+
+  /* The --icon-* gradient stops that drove the tracker's own InitiativeCycleIcon brand mark are
+     gone: the app now renders Heroes Heaven's real <Logo>, which is a single currentColor shape. */
+
+  /* ── Type ─────────────────────────────────────────────────── */
+  /* HH exposes ONE font axis (--app-font). The tracker's display/ui split collapses onto it so the
+     Font picker in the builder governs the tracker too. Mono stays independent — no HH token. */
+  --font-display: var(--app-font);
+  --font-ui: var(--app-font);
+  --font-mono: ui-monospace, 'JetBrains Mono', 'Cascadia Mono', Consolas, monospace;
+
+  /* ── Shape ────────────────────────────────────────────────── */
+  --radius-sm: var(--app-radius-sm);
+  --radius: var(--app-radius);
+  --radius-lg: var(--app-radius-lg);
+  --radius-full: 999px;
+
+  /* ── Elevation ────────────────────────────────────────────────
+   * The tracker had a 3-step depth scale (sm/md/lg). Heroes Heaven has exactly ONE elevation token,
+   * set by the STYLE axis — and it's a real difference, not a shrug: Compact and Crisp set it to
+   * `none`. Collapsing all three onto it is the point of the exercise: the tracker now goes flat
+   * when the builder goes flat, instead of keeping its own drop shadows. Depth hierarchy between a
+   * popup and a modal is deliberately traded away for looking like HH. */
+  --shadow-sm: var(--app-shadow);
+  --shadow-md: var(--app-shadow);
+  --shadow-lg: var(--app-shadow);
+
+  /* ── Scale foundations — not themed; carried over verbatim. ── */
+  --text-xs: 10px;
+  --text-sm: 11.5px;
+  --text-md: 13px;
+  --text-lg: 16px;
+  --text-xl: 20px;
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 24px;
+  --dur-fast: 0.12s;
+  --dur: 0.18s;
+  --ease: ease;
+}
+
+/* NOTE: the original softened its shadows on light themes (a dark smear reads as mud on parchment).
+   That override is deliberately GONE — Heroes Heaven does not vary elevation by polarity, it varies
+   it by STYLE, and --app-shadow above already carries whatever HH chose. Re-adding a polarity rule
+   here would make the tracker diverge from the builder on light palettes, which is the opposite of
+   the goal. If light-theme shadows ever look muddy, fix --app-shadow in HH so both apps benefit. */

@@ -52,7 +52,7 @@ import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
 import { abilityMod } from './derive';
 import { CLASS_ADVANCEMENT } from './advancement';
-import { FEAT_GRANTS } from './featGrants';
+import { FEAT_GRANTS, maxTakes } from './featGrants';
 import { DOMAIN_SPELLS } from './domains';
 import { initialClassResources } from './classResources';
 import { activeCasterArchetype, archetypeProficiency, archetypeSlots } from './casterArchetypes';
@@ -638,6 +638,25 @@ function applyAdvancement(
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
+
+/**
+ * Clean a feat choice-option label for display.
+ *
+ * The importer resolved Foundry's i18n KEYS rather than their translations for some options, leaving
+ * the trailing key segment in the visible text: `PF2E.PerceptionLabel` → "Perception Label",
+ * `PF2E.TraitLightShort` → "Light Short", `PF2E.SavesFortitude` → "Saves Fortitude". Canny Acumen's
+ * dropdown read "Saves Fortitude / Saves Reflex / Saves Will / Perception Label".
+ *
+ * Only the recoverable shapes are repaired. A few dozen options came through as the bare word
+ * "Label" — the actual name is simply absent from the data, so there is nothing to strip; those are
+ * returned untouched rather than blanked to an empty dropdown entry. Fixing them needs real data,
+ * not a regex.
+ */
+export function featChoiceLabel(raw: string): string {
+  const s = raw.replace(/\s+(?:Label|Short)$/, '').replace(/^Saves\s+/, '');
+  return s || raw;
+}
+
 function slug(s: string): string {
   // Strip apostrophes FIRST (matches the importer's slug, so "Cat's Luck" -> "cats-luck", not
   // "cat-s-luck") — otherwise a has-feat prerequisite naming an apostrophe feat never matches its id.
@@ -1211,7 +1230,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (def) {
       const value = build.featChoices?.[slotKey];
       if (value) {
-        const label = def.kind === 'domains' ? cap(value) : def.options?.find((o) => o.value === value)?.label ?? value;
+        const raw = def.options?.find((o) => o.value === value)?.label ?? value;
+        const label = def.kind === 'domains' ? cap(value) : featChoiceLabel(raw);
         featChoiceById[slotKey] = { value, label };
         if (def.kind === 'domains' && DOMAIN_SPELLS[value] && content.spells[DOMAIN_SPELLS[value]]) {
           featFocusSpells.push(DOMAIN_SPELLS[value]);
@@ -1724,7 +1744,8 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const picked = build.grantedChoiceFeatTraits?.[`grant:${o.id}:${gcf.featId}`];
       const value = picked && allowed.includes(picked) ? picked : allowed[0];
       if (value == null) continue;
-      const label = f.choice.options?.find((x) => x.value === value)?.label ?? cap(value);
+      const raw = f.choice.options?.find((x) => x.value === value)?.label;
+      const label = raw ? featChoiceLabel(raw) : cap(value);
       feats.push({ featId: gcf.featId, level: optionUnlockLevel(o.id), category: f.category, choice: { value, label } });
     }
   }
@@ -1750,7 +1771,12 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     }
   }
   for (const [slotKey, featId] of Object.entries(build.featPicks)) {
-    if (!featId || takenFeats.has(featId)) continue;
+    if (!featId) continue;
+    // Repeatable feats (Armor Proficiency ×3, Skill Training, …) may fill several slots; every other
+    // feat dedupes to one. Count prior takes of this id — including any earlier auto-grant of it —
+    // against the cap, instead of the old flat "already taken?" test which silently dropped take 2+.
+    const taken = feats.reduce((n, f) => (f.featId === featId ? n + 1 : n), 0);
+    if (taken >= maxTakes(content.feats[featId])) continue;
     const [lvlStr, cat] = slotKey.split(':');
     const lvl = Number(lvlStr);
     if (!Number.isFinite(lvl) || lvl > level) continue;
@@ -1787,11 +1813,33 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   for (const fc of feats) {
     const g = FEAT_GRANTS[fc.featId];
     if (!g) continue;
-    for (const [c, r] of Object.entries(g.armor ?? {})) if (r) proficiencies.defenses[c as ArmorCategory] = maxRank(proficiencies.defenses[c as ArmorCategory], r);
-    for (const [c, r] of Object.entries(g.weapon ?? {})) if (r) proficiencies.attacks[c as WeaponCategory] = maxRank(proficiencies.attacks[c as WeaponCategory], r);
-    for (const [s, r] of Object.entries(g.save ?? {})) if (r) proficiencies.saves[s as SaveId] = maxRank(proficiencies.saves[s as SaveId], r);
-    if (g.perception) proficiencies.perception = maxRank(proficiencies.perception, g.perception);
-    for (const [k, r] of Object.entries(g.skills ?? {})) if (r) proficiencies.skills[k as ProficiencyKey] = maxRank(proficiencies.skills[k as ProficiencyKey] ?? 'untrained', r);
+    // A feat's grants can improve with level (Canny Acumen: expert, master at 17). The upgrade is a
+    // floor on every rank THIS feat grants — it never lowers a rank the feat would already give.
+    const up = g.rankUpgrade && level >= g.rankUpgrade.level ? g.rankUpgrade.rank : undefined;
+    const at = (r: ProficiencyRank) => (up ? maxRank(r, up) : r);
+    // Static grants, then the one selected by the player's pick in the feat's own choice dropdown.
+    for (const src of [g, fc.choice?.value ? g.choiceGrants?.[fc.choice.value] : undefined]) {
+      if (!src) continue;
+      for (const [c, r] of Object.entries(src.armor ?? {})) if (r) proficiencies.defenses[c as ArmorCategory] = maxRank(proficiencies.defenses[c as ArmorCategory], at(r));
+      for (const [c, r] of Object.entries(src.weapon ?? {})) if (r) proficiencies.attacks[c as WeaponCategory] = maxRank(proficiencies.attacks[c as WeaponCategory], at(r));
+      for (const [s, r] of Object.entries(src.save ?? {})) if (r) proficiencies.saves[s as SaveId] = maxRank(proficiencies.saves[s as SaveId], at(r));
+      if (src.perception) proficiencies.perception = maxRank(proficiencies.perception, at(src.perception));
+      for (const [k, r] of Object.entries(src.skills ?? {})) if (r) proficiencies.skills[k as ProficiencyKey] = maxRank(proficiencies.skills[k as ProficiencyKey] ?? 'untrained', at(r));
+    }
+    // Armor Proficiency cascade: train the first of light→medium→heavy still untrained RIGHT NOW.
+    // Because this loop mutates proficiencies in place and feats are sorted by level, a 2nd/3rd take
+    // sees the previous take's result and advances to the next armor — reproducing Foundry's
+    // state-gated ChoiceSet without a predicate engine. `at('trained')` becomes expert at level 13+.
+    // Record which armor THIS take trained onto its FeatChoice, so three identical "Armor Proficiency"
+    // rows read "Light armor" / "Medium armor" / "Heavy armor" on the builder and sheet. A take that
+    // finds nothing left to train (e.g. a fighter already in all armor) grants nothing and stays bare.
+    if (g.armorCascade) {
+      const next = (['light', 'medium', 'heavy'] as ArmorCategory[]).find((c) => proficiencies.defenses[c] === 'untrained');
+      if (next) {
+        proficiencies.defenses[next] = at('trained');
+        fc.choice = { value: next, label: `${cap(next)} armor` };
+      }
+    }
     // Skill-training CHOICES ("your choice of Acrobatics or Athletics"): resolve each slot to the
     // player's pick, defaulting to the first option (or Acrobatics for an 'any' slot). Trains that
     // skill (RAISES only).
@@ -2671,7 +2719,11 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   if (granted.length) {
     const existing = b.overrides?.addedFeats ?? [];
     const merged = [...existing];
-    for (const g of granted) if (!merged.some((a) => a.featId === g.featId)) merged.push(g);
+    // Overflow feats (no real slot) become granted chips. Keep up to the feat's take-cap so a
+    // repeatable feat that exceeded its slots isn't collapsed to a single chip.
+    for (const g of granted) {
+      if (merged.filter((a) => a.featId === g.featId).length < maxTakes(content.feats[g.featId])) merged.push(g);
+    }
     b.overrides = { ...(b.overrides ?? {}), addedFeats: merged };
   }
 

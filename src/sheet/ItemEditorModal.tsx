@@ -789,19 +789,29 @@ export function ItemEditorModal({
             )}
           </div>
 
-          {/* ---- Operations ---- */}
-          <div className="ie-collap">
-            <div className="ie-collap-h" onClick={() => toggle('ops')}>
-              <i className={'ti ' + (isOpen('ops') ? 'ti-chevron-down' : 'ti-chevron-right')} aria-hidden="true" />
-              <span className="ttl">Operations</span>
-            </div>
-            {isOpen('ops') && (
-              <div className="ie-collap-b">
-                <button className="ci-cancel" style={{ alignSelf: 'flex-start' }} onClick={() => { setD(item ? fromItem(item) : defaults()); setBaseId(null); setEditorKey((k) => k + 1); }}>
-                  <i className="ti ti-refresh" aria-hidden="true" /> Reset {mode === 'edit' ? 'changes' : 'form'}
-                </button>
-              </div>
-            )}
+          {/* Reset — discard every edit made in the editor and reload the item's saved values (or clear
+              a new-item form). Confirms first, since it throws away everything typed here. */}
+          <div className="ie-reset-row">
+            <button
+              className="ci-cancel"
+              onClick={async () => {
+                const ok = await confirmDialog({
+                  title: mode === 'edit' ? 'Reset changes?' : 'Reset form?',
+                  message:
+                    mode === 'edit'
+                      ? 'Discard your edits and reload this item’s saved values? Nothing you’ve typed will be kept.'
+                      : 'Clear the form back to blank? Nothing you’ve typed will be kept.',
+                  confirmLabel: 'Reset',
+                  danger: true,
+                });
+                if (!ok) return;
+                setD(item ? fromItem(item) : defaults());
+                setBaseId(null);
+                setEditorKey((k) => k + 1);
+              }}
+            >
+              <i className="ti ti-refresh" aria-hidden="true" /> Reset {mode === 'edit' ? 'changes' : 'form'}
+            </button>
           </div>
         </div>
 

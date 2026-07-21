@@ -11,6 +11,8 @@ import {
   collectChosenIds,
   canTakeNewDedication,
   checkPrerequisites,
+  emptyBuild,
+  featChoiceLabel,
   levelGrants,
   setupMissing,
 } from '../rules/build';
@@ -27,8 +29,10 @@ import { activeCasterArchetype, archetypeSlots } from '../rules/casterArchetypes
 import { FEAT_GRANTS } from '../rules/featGrants';
 import type { ContentDatabase, Feat, FeatCategory, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SetupCard, SetupUnlockedChoices, SourcesCard, START, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
+import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SetupCard, SetupUnlockedChoices, SourcesCard, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
+import { DescriptionModal } from '../sheet/DescriptionModal';
+import type { DescNode } from '../sheet/descref';
 import { ActionGlyph, isActionCost } from '../sheet/widgets';
 import { SPELL_SPEC_BUILDER, FEAT_SPEC } from '../sheet/filterSpecs';
 import { useIsMobile } from '../sheet/useIsMobile';
@@ -100,7 +104,7 @@ export function Builder({
   /** Player leaves a campaign entirely (roster-wide) — threaded to the Campaigns setup card. */
   onLeaveCampaign?: (campaignId: string) => void;
 }) {
-  const [build, setBuild] = useState<BuildState>(initial ?? START);
+  const [build, setBuild] = useState<BuildState>(() => initial ?? emptyBuild());
   // Effective content = the shared DB with this build's Overrides content-edits overlaid (text/field
   // edits to feats/features). Returns the same ref when there are no edits, so pickers/memos are stable.
   // `ovContent` is the FULL (override-applied) DB used for the live character + grants; `content` is
@@ -123,6 +127,8 @@ export function Builder({
   // creating a new one starts on Level 0 (identity: ancestry/background/class).
   const [sel, setSel] = useState<Sel>(initial ? 'setup' : 0);
   const [picker, setPicker] = useState<Picker | null>(null);
+  // Clicking a filled feat card opens its description as a popup (the Replace button swaps it).
+  const [featDescPopup, setFeatDescPopup] = useState<DescNode | null>(null);
   // The full item catalog, sorted once, for the equipment picker's filter panel.
   // Class-feat picker: reveal archetype feats (multiclass/archetypes). Off by default.
   const [showArch, setShowArch] = useState(false);
@@ -1042,9 +1048,16 @@ export function Builder({
                         <div className="lvl-slot-wrap" key={key}>
                           <div className="lvl-slot">
                             <button
+                              // A FILLED slot: clicking shows the feat's description (toggle); use the
+                              // Replace button to swap it. An EMPTY slot: clicking opens the picker.
                               className={'lvl-card' + (picked ? '' : ' empty')}
                               type="button"
-                              onClick={() => setPicker({ kind: 'feat', level: lvl, category: catg, idx: i })}
+                              title={picked ? 'Show description' : undefined}
+                              onClick={() => {
+                                if (!picked) return setPicker({ kind: 'feat', level: lvl, category: catg, idx: i });
+                                const f = content.feats[picked];
+                                if (f?.description) setFeatDescPopup({ title: f.name, description: f.description, descRefs: f.descRefs, key: 'feats' });
+                              }}
                             >
                               <span className="lvl-card-icon">
                                 <i className={'ti ' + FEAT_ICON[catg]} aria-hidden="true" />
@@ -1064,23 +1077,42 @@ export function Builder({
                               {!picked && <span className="lvl-pending">!</span>}
                             </button>
                             {picked && (
-                              <button
-                                className="lvl-clear-btn"
-                                type="button"
-                                aria-label="Clear feat"
-                                onClick={() => actions.setFeat(key, null)}
-                              >
-                                <i className="ti ti-x" aria-hidden="true" />
-                              </button>
+                              <>
+                                <button
+                                  className="lvl-replace-btn"
+                                  type="button"
+                                  onClick={() => setPicker({ kind: 'feat', level: lvl, category: catg, idx: i })}
+                                >
+                                  <i className="ti ti-repeat" aria-hidden="true" /> Replace
+                                </button>
+                                <button
+                                  className="lvl-clear-btn"
+                                  type="button"
+                                  aria-label="Clear feat"
+                                  onClick={() => actions.setFeat(key, null)}
+                                >
+                                  <i className="ti ti-x" aria-hidden="true" />
+                                </button>
+                              </>
                             )}
                           </div>
-                          {picked && content.feats[picked] && (
-                            <ChoiceDetails
-                              name={content.feats[picked]!.name}
-                              flavor={content.feats[picked]!.description}
-                              descRefs={content.feats[picked]!.descRefs}
-                            />
-                          )}
+                          {/* The feat's full description opens in a popup when the card is clicked
+                              (setFeatDescPopup) — no inline expand. */}
+                          {/* Armor Proficiency (and any derived-cascade feat) has no dropdown — show
+                              which armor THIS take trained, resolved from the built character so three
+                              identical rows read Light / Medium / Heavy. */}
+                          {picked &&
+                            FEAT_GRANTS[picked]?.armorCascade &&
+                            (() => {
+                              const grant = featPrereqChar.feats.find(
+                                (f) => f.featId === picked && f.level === lvl && f.category === catg,
+                              )?.choice?.label;
+                              return grant ? (
+                                <SubCard icon="ti-shield" label="Trains you in">
+                                  <span className="lvl-card-val">{grant}</span>
+                                </SubCard>
+                              ) : null;
+                            })()}
                           {picked &&
                             content.feats[picked]?.choice &&
                             (() => {
@@ -1099,7 +1131,7 @@ export function Builder({
                                     placeholder={`${def.prompt}…`}
                                     value={build.featChoices[key] ?? ''}
                                     onChange={(v) => actions.setFeatChoice(key, v)}
-                                    options={opts.map((o) => ({ value: o.value, label: o.label, description: (o as { description?: string }).description }))}
+                                    options={opts.map((o) => ({ value: o.value, label: featChoiceLabel(o.label), description: (o as { description?: string }).description }))}
                                   />
                                 </SubCard>
                               );
@@ -1321,6 +1353,8 @@ export function Builder({
           {(!isMobile || statsOpen) && <FullStats build={build} content={content} character={featPrereqChar} />}
         </aside>
       </div>
+
+      {featDescPopup && <DescriptionModal root={featDescPopup} onClose={() => setFeatDescPopup(null)} />}
 
       {picker && picker.kind === 'feat' && (() => {
         const isClassSlot = picker.category === 'class';

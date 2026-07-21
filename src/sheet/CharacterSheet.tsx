@@ -162,7 +162,11 @@ export function CharacterSheet({
   const updateTabScroll = () => {
     const el = tabsRef.current;
     if (!el) return;
-    setTabScroll({ left: el.scrollLeft > 2, right: el.scrollLeft + el.clientWidth < el.scrollWidth - 2 });
+    const left = el.scrollLeft > 2;
+    const right = el.scrollLeft + el.clientWidth < el.scrollWidth - 2;
+    // Only update on a real change — the ResizeObserver below can fire on every layout tick, and an
+    // unchanged object would re-render the whole sheet each time.
+    setTabScroll((prev) => (prev.left === left && prev.right === right ? prev : { left, right }));
   };
   // Instant, not smooth: smooth scrollBy is a no-op in the app's WebView. Re-measure right after (the
   // instant scroll is synchronous) so the ◂/▸ visibility updates even if the scroll event lags.
@@ -220,9 +224,27 @@ export function CharacterSheet({
     const el = tabsRef.current;
     el?.addEventListener('scroll', updateTabScroll, { passive: true });
     window.addEventListener('resize', updateTabScroll);
+    // Two failure modes made the ▸ arrow linger after every tab already fit:
+    //  1. the mount measurement runs before the strip's flex layout (and web fonts) have settled, so
+    //     it sees a too-small width and latches "can scroll right" — then nothing re-measures,
+    //     because the user has no reason to scroll or resize the window. Deferred re-measures fix it.
+    //  2. the strip's width changes with NO window resize — the sheet lives in resizable panes (the
+    //     campaign tracker). A ResizeObserver on the strip catches that.
+    const timers = [
+      window.setTimeout(updateTabScroll, 0),
+      window.setTimeout(updateTabScroll, 250),
+    ];
+    void document.fonts?.ready?.then(updateTabScroll).catch(() => {});
+    let ro: ResizeObserver | undefined;
+    if (el && typeof ResizeObserver !== 'undefined') {
+      ro = new ResizeObserver(updateTabScroll);
+      ro.observe(el);
+    }
     return () => {
       el?.removeEventListener('scroll', updateTabScroll);
       window.removeEventListener('resize', updateTabScroll);
+      timers.forEach((t) => window.clearTimeout(t));
+      ro?.disconnect();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile, visibleTabs.length, showParty]);

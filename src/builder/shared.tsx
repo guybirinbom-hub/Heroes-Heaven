@@ -26,8 +26,8 @@ import {
   innovationType,
   inventorModificationOptions,
   INVENTOR_TIER_LEVEL,
-  emptyBuild,
   emptyCustomBackground,
+  featChoiceLabel,
   fixedBoosts,
   resolveBackground,
   subclassKeyAbility,
@@ -47,10 +47,9 @@ import {
   deriveSpellcasting,
   formatMod,
 } from '../rules/derive';
-import { explainStat, type StatRef } from '../rules/explain';
-import { RankPill } from '../sheet/widgets';
+import { explainStat, statHasSituational, type StatRef } from '../rules/explain';
+import { RankPill, SituationalStar } from '../sheet/widgets';
 import { StatDetailModal } from '../sheet/StatDetailModal';
-import { DescBody } from '../sheet/DescBody';
 import { DescriptionModal } from '../sheet/DescriptionModal';
 import { MythicRules } from '../sheet/MythicRules';
 import { PickerRow, descNodeOf } from '../sheet/FilterableSelect';
@@ -60,11 +59,12 @@ import type { DescNode } from '../sheet/descref';
  *  behind a "Details" toggle that expands it inline. Shared by every origin/class card, the picked
  *  feats/subclass/extra-choices, and the per-level feature gains. */
 export function ChoiceDetails({
+  name,
   flavor,
   descRefs,
   grants,
 }: {
-  /** Accepted for call-site convenience (the option's name); not rendered here. */
+  /** The option's name — the popup title. */
   name?: string;
   flavor?: string;
   descRefs?: DescRef[];
@@ -77,14 +77,12 @@ export function ChoiceDetails({
     <>
       {grants}
       {hasFlavor && (
-        <button type="button" className="cc-det" onClick={() => setOpen((o) => !o)}>
-          <i className={'ti ' + (open ? 'ti-chevron-up' : 'ti-chevron-down')} aria-hidden="true" /> Details
+        <button type="button" className="cc-det" onClick={() => setOpen(true)}>
+          <i className="ti ti-info-circle" aria-hidden="true" /> Details
         </button>
       )}
       {open && hasFlavor && (
-        <div className="cc-flavor">
-          <DescBody description={flavor} descRefs={descRefs} />
-        </div>
+        <DescriptionModal root={{ title: name ?? 'Details', description: flavor!, descRefs }} onClose={() => setOpen(false)} />
       )}
     </>
   );
@@ -102,31 +100,6 @@ export const ABILITY_LABEL: Record<AbilityId, string> = {
 export function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
-
-// Starts populated so each variant shows a real in-progress hero.
-export const START: BuildState = {
-  ...emptyBuild(),
-  name: 'New hero',
-  ancestryId: 'human',
-  heritageId: 'skilled-human',
-  backgroundId: 'acolyte',
-  classId: 'cleric',
-  subclassId: 'cloistered-cleric',
-  deityId: 'sarenrae',
-  divineFont: 'heal',
-  keyAbility: 'wis',
-  ancestryBoosts: ['str', 'con'],
-  backgroundBoosts: ['wis', 'int'],
-  levelBoosts: ['wis', 'con', 'dex', 'cha'],
-  classSkills: ['medicine', 'diplomacy', 'nature'],
-  heritageSkill: 'society',
-  cantrips: ['guidance', 'light', 'divine-lance', 'stabilize'],
-  spells: { 1: ['heal', 'bless'] },
-  inventory: [
-    { itemId: 'explorers-clothing', quantity: 1, worn: true },
-    { itemId: 'scimitar', quantity: 1, equipped: true },
-  ],
-};
 
 export interface BuilderActions {
   patch: (p: Partial<BuildState>) => void;
@@ -2408,8 +2381,10 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                   const cur = allowed.includes(build.grantedChoiceFeatTraits?.[key] ?? '')
                     ? build.grantedChoiceFeatTraits![key]
                     : allowed[0];
-                  const lbl = (t: string) =>
-                    feat?.choice?.options?.find((x) => x.value === t)?.label ?? t.charAt(0).toUpperCase() + t.slice(1);
+                  const lbl = (t: string) => {
+                    const raw = feat?.choice?.options?.find((x) => x.value === t)?.label;
+                    return raw ? featChoiceLabel(raw) : t.charAt(0).toUpperCase() + t.slice(1);
+                  };
                   return (
                     <div key={key} className="ec-subpick">
                       <span className="ec-subpick-label">{feat?.name ?? gcf.featId}</span>
@@ -2816,8 +2791,29 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
 export function AttributeEditor({ build, actions }: EditorProps) {
   // Origin/class boosts now nest under their own cards (see OriginPickers). What remains here is
   // the level-1 free boosts, which aren't tied to any one origin.
+  // If the character has ATTRIBUTE OVERRIDES (Overrides section — force raw scores), those PIN the
+  // ability scores: boosts and even a class change won't move them. That silently looks like "my
+  // stats don't update", so surface it right here where boosts are edited, with a one-click clear.
+  const pinned = Object.keys(build.overrides?.attributes ?? {}) as AbilityId[];
+  const clearAttrOverrides = () => {
+    const ov = { ...(build.overrides ?? {}) };
+    delete ov.attributes;
+    actions.patch({ overrides: Object.keys(ov).length ? ov : undefined });
+  };
   return (
     <SetupCard icon="ti-arrow-up" label="Free boosts" count="4">
+      {pinned.length > 0 && (
+        <div className="attr-override-warn">
+          <i className="ti ti-lock" aria-hidden="true" />
+          <span>
+            {pinned.length === 6 ? 'All ability scores are' : `${pinned.map((a) => ABILITY_LABEL[a]).join(', ')} ${pinned.length === 1 ? 'is' : 'are'}`} set by
+            an Override — boosts and class changes won't change {pinned.length === 1 ? 'it' : 'them'}.
+          </span>
+          <button type="button" className="attr-override-clear" onClick={clearAttrOverrides}>
+            Clear override{pinned.length === 1 ? '' : 's'}
+          </button>
+        </div>
+      )}
       {build.levelBoosts.map((v, i) => (
         <AbilitySelect
           key={i}
@@ -2988,23 +2984,30 @@ function StatLine({
   rank,
   refTarget,
   onOpenStat,
+  character,
 }: {
   label: string;
   value: ReactNode;
   rank?: ProficiencyRank;
   refTarget?: StatRef;
   onOpenStat?: (ref: StatRef) => void;
+  /** When supplied, a `*` flags the row if a feat/mode grants a situational bonus to this stat. */
+  character?: Character;
 }) {
   const clickable = !!(refTarget && onOpenStat);
+  const sit = !!(refTarget && character && statHasSituational(character, refTarget));
   return (
     <div
-      className={'brow' + (clickable ? ' brow-open' : '')}
+      className={'brow' + (clickable ? ' brow-open' : '') + (sit ? ' has-mode' : '')}
       onClick={clickable ? () => onOpenStat!(refTarget!) : undefined}
       title={clickable ? `${label} — how is this calculated?` : undefined}
     >
       <span className="bk">
         {rank && <RankPill rank={rank} />}
-        <span className="bk-text">{label}</span>
+        <span className="bk-text">
+          {label}
+          {sit && <SituationalStar />}
+        </span>
       </span>
       <span className="bv">{value}</span>
     </div>
@@ -3036,13 +3039,14 @@ export function LiveStats({
         <span className="bv">Lv {preview.level}</span>
       </div>
       <StatLine label="Hit points" value={deriveMaxHp(preview, content)} refTarget={{ kind: 'hp' }} onOpenStat={onOpenStat} />
-      <StatLine label="Armor class" value={ac.value} rank={ac.rank} refTarget={{ kind: 'ac' }} onOpenStat={onOpenStat} />
+      <StatLine label="Armor class" value={ac.value} rank={ac.rank} refTarget={{ kind: 'ac' }} onOpenStat={onOpenStat} character={preview} />
       <StatLine
         label="Perception"
         value={formatMod(perception.modifier)}
         rank={perception.rank}
         refTarget={{ kind: 'perception' }}
         onOpenStat={onOpenStat}
+        character={preview}
       />
       {(['fortitude', 'reflex', 'will'] as const).map((s) => {
         const d = deriveSave(preview, s, content);
@@ -3054,6 +3058,7 @@ export function LiveStats({
             rank={d.rank}
             refTarget={{ kind: 'save', save: s }}
             onOpenStat={onOpenStat}
+            character={preview}
           />
         );
       })}
@@ -3096,18 +3101,24 @@ export function FullStats({ build, content, character }: { build: BuildState; co
   return (
     <>
       <div className="fs-abil">
-        {ABILITIES.map((ab) => (
-          <div
-            className="fs-ab fs-ab-open"
-            key={ab}
-            onClick={() => setStatRef({ kind: 'ability', ability: ab })}
-            title={`${ABILITY_LABEL[ab]} — how is this calculated?`}
-          >
-            <div className="fs-an">{ABILITY_LABEL[ab]}</div>
-            <div className="fs-av">{abilities[ab]}</div>
-            <div className="fs-am">{formatMod(abilityMod(abilities[ab]))}</div>
-          </div>
-        ))}
+        {ABILITIES.map((ab) => {
+          const pinned = build.overrides?.attributes?.[ab] !== undefined;
+          return (
+            <div
+              className={'fs-ab fs-ab-open' + (pinned ? ' fs-ab-pinned' : '')}
+              key={ab}
+              onClick={() => setStatRef({ kind: 'ability', ability: ab })}
+              title={pinned ? `${ABILITY_LABEL[ab]} is set by an Override — boosts don't change it` : `${ABILITY_LABEL[ab]} — how is this calculated?`}
+            >
+              <div className="fs-an">
+                {ABILITY_LABEL[ab]}
+                {pinned && <i className="ti ti-lock fs-ab-lock" aria-hidden="true" />}
+              </div>
+              <div className="fs-av">{abilities[ab]}</div>
+              <div className="fs-am">{formatMod(abilityMod(abilities[ab]))}</div>
+            </div>
+          );
+        })}
       </div>
       <LiveStats build={build} content={content} onOpenStat={setStatRef} character={preview} />
       <StatLine label="Speed" value={`${speed} ft`} refTarget={{ kind: 'speed' }} onOpenStat={setStatRef} />
@@ -3124,6 +3135,7 @@ export function FullStats({ build, content, character }: { build: BuildState; co
               rank={d.rank}
               refTarget={{ kind: 'skill', skill: k }}
               onOpenStat={setStatRef}
+              character={preview}
             />
           );
         })

@@ -81,6 +81,21 @@ function pushEntry(entry: Entry): () => void {
   };
 }
 
+/**
+ * Fire the topmost dismiss handler — the same thing Escape / Android-Back does. Returns true if a
+ * handler ran. Lets a VISIBLE "back" button share the one dismiss stack instead of hard-wiring a
+ * single destination: a back arrow that peels one layer (close the open sheet) before the next press
+ * takes the layer beneath it (leave the campaign), matching Escape exactly.
+ */
+export function triggerBack(): boolean {
+  const fn = topHandler();
+  if (fn) {
+    fn();
+    return true;
+  }
+  return false;
+}
+
 /** Escape / Android-Back to close a modal. Pass the modal's close handler (or undefined for none). */
 export function useEscapeClose(onClose: (() => void) | undefined): void {
   const ref = useRef(onClose);

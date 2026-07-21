@@ -690,6 +690,28 @@
   color: var(--app-bad);
   border-color: var(--app-bad);
 }
+/* Replace a filled feat slot — opens the picker (the card itself now shows the description). */
+.lvl-replace-btn {
+  flex: none;
+  border: var(--app-bw) solid var(--app-border);
+  background: var(--app-surface-2);
+  color: var(--app-text-dim);
+  border-radius: var(--app-radius-sm);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+.lvl-replace-btn:hover {
+  color: var(--app-accent);
+  border-color: var(--app-accent);
+}
+.lvl-replace-btn .ti {
+  font-size: 13px;
+}
 /* A dependent follow-up choice (a background's boost, a feat's domain, …) shown as a child card
    connected + indented under the card that triggers it. */
 .lvl-slot-wrap {
@@ -1179,6 +1201,53 @@
 }
 .fs-ab-open:hover {
   border-color: var(--app-accent);
+}
+/* An ability score pinned by an Override (boosts don't move it). */
+.fs-ab-pinned {
+  border-color: var(--app-warn);
+}
+.fs-ab-lock {
+  font-size: 10px;
+  margin-left: 3px;
+  color: var(--app-warn);
+  vertical-align: baseline;
+}
+/* Warning shown in the Free-boosts editor when attribute overrides pin the scores. */
+.attr-override-warn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  border: var(--app-bw) solid var(--app-warn);
+  border-radius: var(--app-radius-sm);
+  background: color-mix(in srgb, var(--app-warn) 12%, transparent);
+  font-size: 12px;
+  color: var(--app-text);
+}
+.attr-override-warn .ti-lock {
+  color: var(--app-warn);
+  font-size: 14px;
+  flex: none;
+}
+.attr-override-warn span {
+  flex: 1;
+  min-width: 0;
+}
+.attr-override-clear {
+  flex: none;
+  border: var(--app-bw) solid var(--app-warn);
+  background: var(--app-surface-2);
+  color: var(--app-text);
+  border-radius: var(--app-radius-sm);
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.attr-override-clear:hover {
+  background: var(--app-warn);
+  color: var(--app-warn-text, #1a1205);
 }
 .fs-an {
   font-size: 11px;

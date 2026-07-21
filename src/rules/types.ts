@@ -344,6 +344,13 @@ export interface Feat extends ContentBase, DefenseGrants {
   access?: string;
   /** A sub-choice made when taking the feat (Domain Initiate domain, etc.). */
   choice?: FeatChoiceDef;
+  /**
+   * How many times this feat may be taken ("Special: you can select this feat more than once").
+   * Absent = once (the default). A number is a hard cap (Armor Proficiency = 3, Skill Mastery = 5).
+   * `null` = unlimited. Mirrors Foundry's `system.maxTakable`; read it through `maxTakes()`, never
+   * compare directly (unlimited is `null`, not a big number).
+   */
+  maxTakable?: number | null;
   /** For archetype feats: the slug of the archetype it belongs to (from the import path). */
   archetype?: string;
   /** Focus spell(s) this feat grants (e.g. Blessed One Dedication → Lay on Hands). Only set when the

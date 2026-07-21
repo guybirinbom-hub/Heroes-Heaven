@@ -1,0 +1,819 @@
+/*
+ * Ported verbatim from the original tracker (src/index.css) — component styles only.
+ *
+ * TWO DELIBERATE REMOVALS:
+ *  1. The Google Fonts @import. Heroes Heaven supplies typography via --app-font (see
+ *     hh-compat.css), and an external font request would break offline/PWA use and the CSP.
+ *  2. The original :root + :root[data-theme="..."] token blocks (its 17 themes). Those are
+ *     replaced by src/hh-compat.css, which re-expresses this file's ENTIRE variable
+ *     vocabulary in terms of Heroes Heaven tokens — so every rule below now themes itself
+ *     from the character builder. They had to go rather than be overridden: the two apps
+ *     share theme ids (midnight/ember/arcane), so the old [data-theme] rules would have
+ *     out-specified the compat layer and re-injected hardcoded hexes.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ──────────────────────────────────────────────────────────────────────────
+   PF2 action glyph font (Single ◆ / Double ◆◆ / Triple ◆◆◆ / Free ◇ / Reaction ↺)
+   ────────────────────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: 'PF2Actions';
+  src: url('/fonts/pathfinder-2e-actions.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+.pf2-action-glyph {
+  font-family: 'PF2Actions';
+  font-size: 1.15em;
+  line-height: 1;
+  vertical-align: middle;
+  color: var(--accent);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Design tokens — five swappable themes.
+   The default (no `data-theme` attribute on <html>) is Tavern.
+   Other themes are applied by setting `data-theme="frost"` etc. on <html>;
+   they only override the colour tokens (fonts + radii stay the same).
+   ────────────────────────────────────────────────────────────────────────── */
+@layer base {
+  html, body { background: var(--bg-base); }
+  body {
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    /* No accidental highlights on UI chrome */
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  * { box-sizing: border-box; }
+
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 35%, transparent);
+    color: var(--text);
+  }
+  ::-moz-selection {
+    background: color-mix(in srgb, var(--accent) 35%, transparent);
+    color: var(--text);
+  }
+
+  /* Re-enable text selection on the things you'd want to copy */
+  .stat-block, .stat-block *,
+  .stat-line, .stat-line *,
+  .tooltip-box, .tooltip-box *,
+  [data-win-root], [data-win-root] *,
+  [data-selectable], [data-selectable] *,
+  .editor-preview, .editor-preview *,
+  .editor-textarea,
+  input, textarea, [contenteditable] {
+    user-select: text;
+    -webkit-user-select: text;
+  }
+
+  /* …but UI chrome must NEVER be markable, even though it lives inside the
+     selectable areas above: buttons, icon buttons, drag handles (⠿ / tabs),
+     and the tab strips. !important beats the broad ".stat-block *" rule. */
+  button, button *,
+  .ico-btn, .ico-btn *,
+  [draggable="true"],
+  [data-tab-leaf], [data-tab-leaf] *,
+  [data-tab-win], [data-tab-win] * {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+  }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  /* Scrollbars read from Heroes Heaven's own tokens rather than a local accent tint, so they match
+     the builder — including the per-theme overrides HH ships (some palettes tint the thumb with the
+     accent, others with dimmed text). */
+  ::-webkit-scrollbar-thumb {
+    background: var(--app-sb-thumb);
+    border-radius: 4px;
+    border: 2px solid var(--bg-base);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--app-sb-thumb-hover); }
+
+  /* Party-chip strip — slim, near-invisible scrollbar so the topbar stays clean */
+  .party-chip-strip {
+    scrollbar-width: thin;
+    /* Firefox's standard property — same HH token as the WebKit thumb above. */
+    scrollbar-color: var(--app-sb-thumb) transparent;
+    scroll-behavior: smooth;
+  }
+  .party-chip-strip::-webkit-scrollbar { height: 4px; }
+  .party-chip-strip::-webkit-scrollbar-thumb {
+    background: var(--app-sb-thumb);
+    border: none;
+    border-radius: 2px;
+  }
+  .party-chip-strip:hover::-webkit-scrollbar-thumb { background: var(--app-sb-thumb-hover); }
+
+  #root { width: 100%; min-height: 100vh; }
+}
+
+@layer components {
+  /* ── Section label — small caps, gold, hairline rule ──────────────── */
+  /* Size/weight/case already match Heroes Heaven's own uppercase labels. The one divergence was
+     COLOUR: the tracker painted every section label with the accent, whereas HH keeps labels dim
+     and spends the accent on ICONS and active state. Gold-on-everything is the single loudest
+     "different app" signal left, so labels go dim; `.pf-label.accent` is kept for the rare place
+     that genuinely wants to shout. */
+  .pf-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-family: var(--font-ui);
+  }
+  .pf-label.accent { color: var(--accent); }
+  .pf-label.muted { color: var(--text-faded); }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .section-head .rule {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border-strong), transparent);
+  }
+  .section-head .count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-faded);
+  }
+
+  /* ── Stat-block lines (cleaner monochrome) ───────────────────────── */
+  .stat-block {
+    background: transparent;
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .stat-line {
+    padding: 4px 24px;
+    font-size: 13px;
+    color: var(--text);
+    border-bottom: var(--app-bw) solid var(--border);
+    line-height: 1.45;
+  }
+  .stat-line:last-child { border-bottom: none; }
+  .stat-line .key, .stat-label {
+    font-weight: 700;
+    color: var(--text);
+    margin-right: 6px;
+  }
+  .stat-line .meta { color: var(--text-muted); }
+  .stat-line a, .stat-line .link-style {
+    color: var(--linked);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--linked);
+    cursor: pointer;
+  }
+
+  /* Old red bar -> hairline gold-accented section header */
+  .stat-bar {
+    background: transparent;
+    color: var(--accent);
+    font-family: var(--font-ui);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 8px 0 5px;
+    margin: 7px 24px 3px;
+    border-bottom: var(--app-bw) solid var(--border-strong);
+    flex-shrink: 0;
+  }
+  .stat-block-header {
+    background: transparent;
+    color: var(--text);
+    padding: 22px 36px 14px 22px;
+    flex-shrink: 0;
+    border-bottom: var(--app-bw) solid var(--border);
+  }
+
+  /* Old attack button -> subtle pill */
+  .attack-btn, .attack-btn-sec {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 3px;
+    background: var(--bg-elevated);
+    border: var(--app-bw) solid var(--border);
+    color: var(--text);
+    transition: all 0.15s ease;
+  }
+  .attack-btn:hover, .attack-btn-sec:hover {
+    border-color: var(--accent-line);
+    color: var(--accent);
+  }
+  .attack-btn.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-color: var(--accent-line);
+  }
+
+  /* ── Roll links ──────────────────────────────────────────────────── */
+  .roll-check { cursor: pointer; color: var(--linked); }
+  .roll-check:hover { text-decoration: underline; text-decoration-style: dotted; }
+
+  /* ── Defense strip — AC + saves as one line of big, easy-to-spot boxes ── */
+  .def-strip {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+  }
+  /* A strip holding just one or two stand-alone cubes (Perception / HP shown as
+     cubes) shouldn't stretch a lone box across the full width. */
+  .def-strip-solo { justify-content: flex-start; }
+  .def-strip-solo .def-box { flex: 0 0 auto; min-width: 92px; }
+  /* Fixed-width cubes (Settings → Stat Blocks → "Cube box width"): each box is
+     exactly --cube-width and the strip wraps when it can't fit them all, so a
+     chosen width is honoured on wide screens but collapses gracefully when
+     narrow. Without the chosen width, cubes flex to fill (the default above). */
+  .def-strip.fixed-cubes { flex-wrap: wrap; }
+  .def-strip.fixed-cubes .def-box { flex: 0 0 var(--cube-width, 92px); min-width: 0; }
+
+  /* Settings → Stat Blocks editor: each body item becomes a selectable,
+     draggable target laid over the real rendering. */
+  .sb-edit-item { border-radius: 4px; transition: background .1s ease, box-shadow .1s ease; }
+  .sb-edit-item:hover { background: var(--bg-hover); box-shadow: inset 0 0 0 1px var(--border-strong); }
+  .sb-edit-item.selected { background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+  .def-box {
+    flex: 1;
+    min-width: 0;
+    background: var(--bg-elevated);
+    border: var(--app-bw) solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: 8px 4px 9px;
+    text-align: center;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .def-box-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faded);
+    margin-bottom: 5px;
+  }
+  .def-box-val {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--text);
+  }
+  .def-box-unit {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-faded);
+    margin-left: 2px;
+  }
+  .def-box.clickable { cursor: pointer; }
+  .def-box.clickable:hover {
+    border-color: var(--accent-line);
+    background: var(--accent-soft);
+  }
+  .def-box.clickable:hover .def-box-label { color: var(--accent); }
+
+  /* ── Compact density — tighter stat blocks (Settings → Stat Blocks) ── */
+  .stat-block.compact .stat-line {
+    padding-top: 1.5px;
+    padding-bottom: 1.5px;
+    line-height: 1.32;
+  }
+  .stat-block.compact .stat-bar {
+    padding: 4px 0 2px;
+    margin-top: 3px;
+    margin-bottom: 1px;
+  }
+  .stat-block.compact .def-strip { gap: 5px; }
+  .stat-block.compact .def-box { padding: 4px 3px 5px; }
+  .stat-block.compact .def-box-label { margin-bottom: 2px; }
+  .stat-block.compact .def-box-val { font-size: 18px; }
+
+  /* ── Condition badges ────────────────────────────────────────────── */
+  .condition-badge { @apply inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-bold border; }
+
+  /* ── Tooltip box ─────────────────────────────────────────────────── */
+  .tooltip-wrap { @apply relative inline; }
+  .tooltip-wrap:hover .tooltip-box { @apply block; }
+  .tooltip-box {
+    @apply hidden absolute z-50 bottom-full left-0 mb-1 text-xs p-2 rounded border shadow-lg pointer-events-none;
+    background: var(--bg-panel);
+    color: var(--text);
+    border-color: var(--border-strong);
+    min-width: 200px; max-width: 300px;
+    font-family: var(--font-ui);
+  }
+
+  /* ── Initiative rows ────────────────────────────────────────────── */
+  .init-row {
+    @apply flex items-center gap-2 px-3 py-2 cursor-pointer transition-colors select-none;
+    border-radius: var(--radius);
+    border: var(--app-bw) solid transparent;
+    margin: 0 6px 1px;
+    position: relative;
+    /* Establish a size container so the saves can shorten Fort/Ref/Will → F/R/W
+       when this row gets too narrow (see the @container rule below). */
+    container-type: inline-size;
+  }
+  .init-row:hover  { background: var(--bg-panel); }
+  /* Active = the creature whose turn it is. Bumped to 22 % accent tint so
+     the row reads as obviously selected on light themes too — the previous
+     14 % tint vanished into the parchment background on Verdant Grove. */
+  .init-row.active {
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+    border-color: var(--accent);
+  }
+  .init-row.active::before {
+    content: '';
+    position: absolute; left: -6px; top: 4px; bottom: 4px;
+    width: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  /* "Viewing" state — the creature whose stat block is currently shown
+     (when it isn't ALSO the active turn). Uses the theme's --linked colour
+     for a sage / violet / copper tint that scales per palette. */
+  .init-row.viewing:not(.active) {
+    background: color-mix(in srgb, var(--linked) 14%, transparent);
+    border-color: color-mix(in srgb, var(--linked) 36%, transparent);
+  }
+
+  /* Status markers — NOW (current turn) sits on the name line beside the level;
+     the eye (viewing) stacks beneath the level. */
+  .init-row .now-badge {
+    display: inline-flex; align-items: center;
+    padding: 2px 7px;
+    background: var(--accent);
+    color: var(--text-on-accent);
+    border-radius: 3px;
+    font-family: var(--font-ui);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+  .init-row .eye-icon {
+    color: var(--linked);
+    opacity: 0.85;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Initiative-card saves: shorten Fort/Ref/Will → F/R/W when the row is too
+     narrow to show the full labels (driven by the row's own width). */
+  .init-row .sv-lbl  { color: var(--text-faded); }
+  .init-row .sv-short { display: none; }
+  @container (max-width: 250px) {
+    .init-row .sv-full  { display: none; }
+    .init-row .sv-short { display: inline; }
+  }
+
+  /* ── Icon button ─────────────────────────────────────────────────── */
+  .ico-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--text-faded); padding: 3px 4px;
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.12s ease;
+  }
+  .ico-btn:hover { color: var(--text); background: var(--bg-hover); }
+  .ico-btn.danger:hover { color: var(--danger); background: var(--danger-soft); }
+
+  /* ── HP bars ─────────────────────────────────────────────────────── */
+  .hp-bar      { @apply rounded overflow-hidden; background: var(--hp-track); }
+  .hp-bar-fill { @apply h-full transition-all duration-300 rounded; }
+
+  /* ── Number input (kept name) ────────────────────────────────────── */
+  .num-input {
+    width: 4rem;
+    text-align: center;
+    border: var(--app-bw) solid var(--border-strong);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 4px 6px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-elevated);
+    outline: none;
+  }
+  .num-input:focus { border-color: var(--border-focus); }
+
+  /* ── Panels ──────────────────────────────────────────────────────── */
+  .panel {
+    background: var(--bg-panel);
+    border: var(--app-bw) solid var(--border);
+    border-radius: var(--radius);
+  }
+  .panel-header {
+    background: transparent;
+    color: var(--accent);
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border-bottom: var(--app-bw) solid var(--border);
+    border-radius: var(--radius) var(--radius) 0 0;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  /* ── Trait pills ─────────────────────────────────────────────────── */
+  .trait-pill {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    margin-right: 4px;
+    margin-bottom: 3px;
+    border-radius: 3px;
+    background: var(--bg-elevated);
+    color: var(--text-muted);
+    border: var(--app-bw) solid var(--border);
+  }
+
+  /* ── Stat deltas ─────────────────────────────────────────────────── */
+  .stat-down { color: var(--danger); font-weight: 700; }
+  .stat-up   { color: var(--hp-full); font-weight: 700; }
+
+  /* ── Elite / Weak labels ─────────────────────────────────────────── */
+  /* Elite (green) / Weak (blue) keep the canonical PF2e identity colours.
+     Rendered as a saturated solid tile with white text so they read
+     consistently on every theme — the previous low-alpha tint + pastel
+     text only worked on dark backgrounds. */
+  .label-elite {
+    @apply text-xs font-bold px-1.5 rounded;
+    background: #4a7a30;
+    color: #fff;
+    border: var(--app-bw) solid #3a6024;
+  }
+  .label-weak  {
+    @apply text-xs font-bold px-1.5 rounded;
+    background: #3a6a9a;
+    color: #fff;
+    border: var(--app-bw) solid #2a5278;
+  }
+
+  /* ── Dice result toast ───────────────────────────────────────────── */
+  .dice-result {
+    @apply fixed top-4 right-4 z-50 border p-4 rounded-lg shadow-2xl;
+    background: var(--bg-panel);
+    border-color: var(--border-strong);
+    color: var(--text);
+    font-family: var(--font-mono);
+    animation: slideIn 0.2s ease-out;
+  }
+  @keyframes slideIn {
+    from { transform: translateY(-16px); opacity: 0; }
+    to   { transform: translateY(0);     opacity: 1; }
+  }
+
+  /* ── Modals ──────────────────────────────────────────────────────── */
+  .modal-overlay {
+    @apply fixed inset-0 flex items-center justify-center;
+    z-index: 2000;
+    background:
+      radial-gradient(circle at 18% 20%, color-mix(in srgb, var(--accent) 4%, transparent), transparent 45%),
+      radial-gradient(circle at 80% 80%, color-mix(in srgb, var(--linked) 3%, transparent), transparent 50%),
+      rgba(8, 5, 5, 0.78);
+    backdrop-filter: blur(2px);
+  }
+  .modal-box {
+    @apply border rounded-lg shadow-2xl p-5 mx-4;
+    background: var(--bg-panel);
+    border-color: var(--border-strong);
+    max-width: 520px;
+    width: 100%;
+  }
+
+  /* ── Buttons (unified primary / secondary / ghost) ───────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-family: var(--font-ui);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text);
+    background: transparent;
+    border: var(--app-bw) solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+  .btn:hover { background: var(--bg-hover); border-color: var(--border-focus); }
+  .btn:disabled { opacity: 0.4; cursor: default; }
+  .btn:disabled:hover { background: transparent; border-color: var(--border-strong); }
+
+  .btn-primary {
+    color: var(--text-on-accent);
+    background: var(--accent);
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+  .btn-primary:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+  }
+  .btn-secondary {
+    color: var(--text);
+    background: transparent;
+    border-color: var(--border-strong);
+  }
+  .btn-secondary:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-focus);
+    color: var(--text);
+  }
+  .btn-ghost {
+    color: var(--text-muted);
+    border-color: transparent;
+  }
+  .btn-ghost:hover { color: var(--text); background: var(--bg-hover); }
+
+  /* Destructive actions (delete / remove / uninstall). */
+  .btn-danger {
+    color: var(--text-on-danger);
+    background: var(--danger);
+    border-color: var(--danger);
+    font-weight: 600;
+  }
+  .btn-danger:hover {
+    background: color-mix(in srgb, var(--danger) 85%, #000);
+    border-color: color-mix(in srgb, var(--danger) 85%, #000);
+    color: var(--text-on-danger);
+  }
+
+  .btn-sm { padding: 4px 9px; font-size: 11.5px; }
+
+  /* Keyboard focus ring for all button variants. */
+  .btn:focus-visible {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 1px;
+  }
+  /* Loading state — set aria-busy="true" on the button. */
+  .btn[aria-busy="true"] { opacity: 0.7; cursor: progress; }
+
+  /* ── Inputs ──────────────────────────────────────────────────────── */
+  .input-dark {
+    border: var(--app-bw) solid var(--border-strong);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-elevated);
+    color: var(--text);
+    outline: none;
+  }
+  .input-dark:focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+  .input-dark::placeholder { color: var(--text-faded); }
+  .input-dark option { background: var(--bg-panel); color: var(--text); }
+  /* Validation error variant — add `.input-error` to the field. */
+  .input-dark.input-error { border-color: var(--danger); }
+  .input-dark.input-error:focus {
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--danger) 25%, transparent);
+  }
+
+  /* ── Automatic per-line text direction ───────────────────────────────
+     Detect each line's direction from its first strong character, so a line
+     typed in Hebrew/Arabic renders right-to-left (and right-aligned) while an
+     English line stays left-to-right — and both can coexist in the same notes
+     field. `plaintext` resolves this per paragraph (each newline-separated
+     line); for LTR-first content it's a no-op, so it's safe everywhere. */
+  textarea,
+  input:not([type="number"]):not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="color"]),
+  [contenteditable]:not([contenteditable="false"]) {
+    unicode-bidi: plaintext;
+  }
+
+  /* ── Chip / pill primitive ───────────────────────────────────────────
+     Small status pill used for badges (PC / NPC / Elite / level / AC …) and
+     trait tags. Tone classes recolour via tokens so every theme tracks. */
+  .chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: var(--font-ui); font-weight: 700;
+    letter-spacing: 0.08em; line-height: 1.4;
+    border-radius: 3px; padding: 1px 6px; font-size: 9px;
+    white-space: nowrap; border: var(--app-bw) solid transparent; flex-shrink: 0;
+  }
+  .chip-accent { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-line); }
+  .chip-linked { background: var(--linked-soft); color: var(--linked); border-color: color-mix(in srgb, var(--linked) 35%, transparent); }
+  .chip-muted  { background: var(--bg-elevated); color: var(--text-muted); border-color: var(--border); }
+  .chip-danger { background: var(--danger-soft); color: var(--danger); border-color: color-mix(in srgb, var(--danger) 35%, transparent); }
+  .chip-mono   { font-family: var(--font-mono); letter-spacing: 0; font-weight: 600; }
+
+  /* Keyboard focus ring for the custom switch (ToggleRow). */
+  [role="switch"]:focus-visible {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Any textarea/input that bypasses `.input-dark` for layout reasons can
+     opt into theme-aware placeholder styling with `.themed-placeholder`. */
+  .themed-placeholder::placeholder {
+    color: var(--text-faded);
+    opacity: 1;  /* override browser default 50 % */
+  }
+
+  /* Mono variant for numeric inputs */
+  .input-mono {
+    font-family: var(--font-mono);
+    text-align: center;
+  }
+
+  /* Hide the ugly Chromium up/down spinner arrows on number inputs.
+     Themed up/down arrows are provided by the <NumberInput> component
+     where they're useful. Other places drop the spinner entirely; users
+     can still use the keyboard ↑/↓ keys or scroll wheel. */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  /* ── Themed up/down arrows for <NumberInput> ───────────────────────── */
+  .num-stepper {
+    position: relative;
+    display: inline-flex;
+    align-items: stretch;
+  }
+  .num-stepper > input {
+    /* Make room on the right for the stacked chevron buttons */
+    padding-right: 22px !important;
+    /* Right-align the value so it sits next to the spinner instead of
+       floating in the middle when `.input-mono` (text-align: center) is on. */
+    text-align: right !important;
+    /* Make the input fill the wrapper so callers can size the spinner by
+       setting `style={{ width: N }}` on the wrapper. Without this Chromium's
+       intrinsic type=number min-content (~150-300px) blows past the wrapper
+       and overflows neighbouring panels. */
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  .num-stepper-buttons {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    width: 18px;
+    display: flex;
+    flex-direction: column;
+    border-left: var(--app-bw) solid var(--border);
+    overflow: hidden;
+    border-radius: 0 calc(var(--radius-sm) - 1px) calc(var(--radius-sm) - 1px) 0;
+  }
+  .num-stepper-buttons button {
+    flex: 1;
+    background: var(--bg-elevated);
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    font-size: 8px;
+    line-height: 1;
+    transition: background 0.1s, color 0.1s;
+  }
+  .num-stepper-buttons button:first-child {
+    border-bottom: var(--app-bw) solid var(--border);
+  }
+  .num-stepper-buttons button:hover {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .num-stepper-buttons button:active {
+    background: var(--accent-line);
+    color: var(--text);
+  }
+}
+
+/* Use display font for h1/h2 in stat block view */
+.page-title-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variation-settings: "opsz" 96;
+  color: var(--text);
+}
+
+/* ── Spellcasting display (pip slot tracker) ──────────────────────────────
+   Remaining spell slots / per-spell uses / focus points are shown as clickable
+   pips instead of a numeric stepper. Shape is chosen in Settings (Display →
+   Spellcasting). Layout 'grid' packs as many ranks per line as fit. */
+.spell-ranks.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(186px, 1fr));
+  gap: 4px 22px;
+  margin-top: 2px;
+}
+.spell-ranks.grid .spell-rank { padding: 4px 0; }
+.spell-ranks.rows .spell-rank { padding: 5px 0; border-top: var(--app-bw) solid var(--border); }
+.spell-ranks.rows .spell-rank:first-child { border-top: none; }
+
+/* Spell-rank spacing presets (Settings → Stat Blocks → Spell rank spacing).
+   'normal' keeps the defaults above; tight/loose adjust the grid gap + min
+   column width (so more or fewer ranks share a line) and the row padding. */
+.spell-ranks.gap-tight.grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 3px 10px; }
+.spell-ranks.gap-loose.grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 6px 40px; }
+.spell-ranks.gap-tight.rows .spell-rank { padding: 2px 0; }
+.spell-ranks.gap-loose.rows .spell-rank { padding: 9px 0; }
+
+/* Strikes packed N-per-row (Settings → Stat Blocks → Attacks per line).
+   The grid carries the row's 24px side padding so the first column lines up
+   with every other row; cells drop their own padding + bottom divider. */
+.attacks-grid { display: grid; gap: 4px 22px; padding: 0 24px; }
+.attacks-grid > .stat-line { padding: 4px 0; border-bottom: none; }
+
+.spell-rank-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.spell-rank-label {
+  font-family: var(--font-ui); font-weight: 800; font-size: 10.5px;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--text-faded); white-space: nowrap;
+}
+.spell-rank-label b { color: var(--accent); font-size: 12.5px; }
+
+.spell-list { display: flex; flex-wrap: wrap; gap: 3px 4px; align-items: center; margin-top: 5px; }
+.spell-sep { color: var(--text-faded); margin: 0 0 0 4px; }
+.atwill {
+  font-family: var(--font-ui); font-size: 10px; font-weight: 700;
+  letter-spacing: .04em; text-transform: uppercase; color: var(--hp-full); white-space: nowrap;
+}
+
+/* per-spell rows (prepared / innate — each spell carries its own pips). A
+   2-column grid so every spell's pips line up in a column whose position is set
+   by the rank's LONGEST name — the pips sit just after the name, never pushed to
+   the far edge. The name column is sized to that longest name (max-content) but
+   may shrink and wrap if a narrow packed cell can't fit it. */
+.spell-srows {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) max-content;
+  gap: 3px 10px;
+  align-items: center;
+  margin-top: 3px;
+}
+.spell-srow-name { min-width: 0; }
+
+/* ── pips ── */
+.spell-pips { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; flex: none; vertical-align: middle; }
+.spell-pip { cursor: pointer; transition: transform .12s, background .12s, border-color .12s; flex: none; }
+.spell-pip.lock { cursor: default; }
+
+/* diamonds */
+.ind-diamond .spell-pip { width: 13px; height: 13px; border-radius: 3px; border: 1.5px solid var(--accent); background: var(--accent); transform: rotate(45deg); }
+.ind-diamond .spell-pip.spent { background: transparent; border-color: var(--text-faded); }
+.ind-diamond .spell-pip:not(.lock):hover { transform: rotate(45deg) scale(1.18); }
+/* dots */
+.ind-dot .spell-pip { width: 13px; height: 13px; border-radius: 50%; border: 1.5px solid var(--accent); background: var(--accent); }
+.ind-dot .spell-pip.spent { background: transparent; border-color: var(--text-faded); }
+.ind-dot .spell-pip:not(.lock):hover { transform: scale(1.2); }
+/* battery — segments in a track */
+.spell-pips.ind-battery { gap: 3px; padding: 3px 4px; border: 1.5px solid var(--border-strong); border-radius: 5px; }
+.ind-battery .spell-pip { width: 8px; height: 14px; border-radius: 2px; background: var(--accent); border: none; }
+.ind-battery .spell-pip.spent { background: var(--bg-elevated); box-shadow: inset 0 0 0 1px var(--text-faded); }
+/* checks */
+.ind-box .spell-pip { width: 15px; height: 15px; border-radius: 3px; border: 1.5px solid var(--accent); background: var(--accent); display: grid; place-items: center; }
+.ind-box .spell-pip.spent { background: transparent; border-color: var(--text-faded); }
+.ind-box .spell-pip::after { content: '\2713'; color: var(--text-on-accent); font-size: 10px; font-weight: 900; line-height: 1; }
+.ind-box .spell-pip.spent::after { content: ''; }
+.ind-box .spell-pip:not(.lock):hover { transform: scale(1.1); }
+/* rings — outline only */
+.ind-ring .spell-pip { width: 13px; height: 13px; border-radius: 50%; border: 2.5px solid var(--accent); background: transparent; }
+.ind-ring .spell-pip.spent { border: 1.5px solid var(--text-faded); }
+.ind-ring .spell-pip:not(.lock):hover { transform: scale(1.18); }
+/* hexes */
+.ind-hex .spell-pip { width: 14px; height: 16px; background: var(--accent); clip-path: polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%); }
+.ind-hex .spell-pip.spent { background: color-mix(in srgb, var(--text-faded) 42%, transparent); }
+.ind-hex .spell-pip:not(.lock):hover { transform: scale(1.12); }

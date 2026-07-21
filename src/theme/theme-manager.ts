@@ -5,7 +5,7 @@
  * This is the only module that touches the DOM's CSS variables. Components and
  * the rest of the app just call setTheme / setStyle / setAccent.
  */
-import { themes } from './themes';
+import { themes, type Polarity } from './themes';
 import { styles } from './styles';
 import { fonts } from './fonts';
 import { touchSettings } from '../data/syncBus';
@@ -99,33 +99,51 @@ function setVars(vars: Record<string, string>): void {
   for (const [k, v] of Object.entries(vars)) root.style.setProperty(k, v);
 }
 
-/** Resolve a palette + style + font + accent + consumable colour onto <html>. The single place that
- *  writes the theme CSS variables — used both for the device-global appearance and for a per-character
- *  overlay (which passes overrides, falling back to the global state for anything unset). */
-function applyResolved(themeId: string, styleId: string, fontId: string, accent: string | null, consumable: string | null): void {
+/**
+ * Resolve a palette + style + font + accent + consumable colour into the flat map of CSS variables
+ * that defines that appearance. The single source of truth for what an appearance IS — used to write
+ * <html> (applyResolved) and to apply a scoped appearance to a subtree without touching the document
+ * (the campaign tracker's own theme). Returns `data-theme`/`data-polarity` alongside the vars so a
+ * caller applying this to an element can mirror what applyResolved sets on <html>.
+ */
+export function resolveAppearanceVars(
+  themeId: string,
+  styleId: string,
+  fontId: string,
+  accent: string | null,
+  consumable: string | null,
+): { vars: Record<string, string>; theme: string; polarity: Polarity } {
   const theme = themes[themeId] ?? themes[DEFAULT.themeId];
   const style = styles[styleId] ?? styles[DEFAULT.styleId];
   const font = fonts[fontId] ?? fonts[DEFAULT.fontId];
-
-  setVars(theme.tokens);
-  setVars(style.tokens);
-  setVars({ '--app-font': font.stack });
-
   const acc = accent ?? theme.tokens['--app-accent'];
-  setVars({
-    '--app-accent': acc,
-    '--app-accent-text': textOn(acc),
-    '--app-accent-hover': shift(acc, theme.polarity === 'light' ? -0.12 : 0.14),
-    '--app-focus': acc,
-  });
+  return {
+    vars: {
+      ...theme.tokens,
+      ...style.tokens,
+      '--app-font': font.stack,
+      '--app-accent': acc,
+      '--app-accent-text': textOn(acc),
+      '--app-accent-hover': shift(acc, theme.polarity === 'light' ? -0.12 : 0.14),
+      '--app-focus': acc,
+      // Consumable-card highlight: override wins, else the theme's recommended colour.
+      '--app-consumable': consumable ?? theme.consumableColor,
+    },
+    theme: theme.id,
+    polarity: theme.polarity,
+  };
+}
 
-  // Consumable-card highlight: override wins, else the theme's recommended colour.
-  setVars({ '--app-consumable': consumable ?? theme.consumableColor });
-
+/** Resolve a palette + style + font + accent + consumable colour onto <html>. Used both for the
+ *  device-global appearance and for a per-character overlay (which passes overrides, falling back to
+ *  the global state for anything unset). */
+function applyResolved(themeId: string, styleId: string, fontId: string, accent: string | null, consumable: string | null): void {
+  const { vars, theme, polarity } = resolveAppearanceVars(themeId, styleId, fontId, accent, consumable);
+  setVars(vars);
   const root = document.documentElement;
-  root.dataset.theme = theme.id;
-  root.dataset.polarity = theme.polarity;
-  root.style.colorScheme = theme.polarity;
+  root.dataset.theme = theme;
+  root.dataset.polarity = polarity;
+  root.style.colorScheme = polarity;
 }
 
 /** Write the current (device-global) appearance state onto <html>. */

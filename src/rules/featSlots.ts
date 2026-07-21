@@ -11,6 +11,7 @@
  */
 import type { BuildState } from './build';
 import { kineticistElements, resolveBackground } from './build';
+import { maxTakes } from './featGrants';
 import type { ContentDatabase, Feat, FeatCategory } from './types';
 
 export interface FeatSlotRef {
@@ -23,20 +24,23 @@ export interface FeatSlotRef {
 export const featSlotKey = (p: FeatSlotRef) => `${p.level}:${p.category}:${p.idx}`;
 
 /**
- * Feats eligible for a given slot: right category + level, not already taken in another slot
- * (a feat can only be taken once), and — for ancestry/class feats — gated to the chosen
- * ancestry/class by trait. `content` decides the pool: pass the source-FILTERED db for what the
- * picker offers, or the FULL db to judge slot-validity independently of source books.
+ * Feats eligible for a given slot: right category + level, not already taken as many times as it may
+ * be (once for most feats; up to maxTakes() for a repeatable one like Armor Proficiency), and — for
+ * ancestry/class feats — gated to the chosen ancestry/class by trait. `content` decides the pool:
+ * pass the source-FILTERED db for what the picker offers, or the FULL db to judge slot-validity
+ * independently of source books.
  */
 export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase, p: FeatSlotRef): Feat[] {
   const currentKey = featSlotKey(p);
-  const taken = new Set<string>();
-  for (const [k, v] of Object.entries(build.featPicks)) if (v && k !== currentKey) taken.add(v);
+  // Count takes in OTHER slots; a feat is hidden here once those already reach its cap. A repeatable
+  // feat therefore stays offered until the whole build holds maxTakes() copies of it.
+  const taken = new Map<string, number>();
+  for (const [k, v] of Object.entries(build.featPicks)) if (v && k !== currentKey) taken.set(v, (taken.get(v) ?? 0) + 1);
   const granted = resolveBackground(build, content)?.grantedFeatId;
-  if (granted) taken.add(granted);
+  if (granted) taken.set(granted, (taken.get(granted) ?? 0) + 1);
   return Object.values(content.feats).filter((f) => {
     if (f.level > p.level) return false;
-    if (taken.has(f.id)) return false;
+    if ((taken.get(f.id) ?? 0) >= maxTakes(f)) return false;
     // Free Archetype slot: any archetype feat (these are stored as class-category feats carrying the
     // 'archetype' trait, so match on the trait rather than the category).
     if (p.category === 'archetype') return f.traits.includes('archetype');

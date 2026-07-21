@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { forwardRef, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import type { ContentDatabase, Item, ModeDef } from '../rules/types';
 import type { SavedChar } from '../data/storage';
 import { applyOverrides, buildCharacter, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
@@ -14,6 +14,18 @@ function fileSlug(name: string): string {
   return (name || 'character').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'character';
 }
 
+export interface GmEditHandle {
+  /**
+   * Run the unsaved-changes prompt and report whether this sheet may be closed or replaced.
+   *
+   * Exposed because the sheet is no longer only dismissed by its own Back button: inside a campaign
+   * the initiative order can swap it out when the turn moves on. That must ask the same question,
+   * with the same push/discard/cancel semantics — and it has to be refusable, so it returns a
+   * verdict instead of just closing. `reason` re-words the prompt for the caller's situation.
+   */
+  confirmLeave: (reason?: { title: string; message: string }) => Promise<boolean>;
+}
+
 /**
  * The GM's editable view of a player's character (opened from the campaign detail). It holds a WORKING
  * COPY of the published SavedChar so the GM can freely edit stats, gear, feats, and rebuild in the
@@ -22,19 +34,19 @@ function fileSlug(name: string): string {
  * changes prompts to update first. There's deliberately no read-only frame here — the GM has full
  * control of the sheet.
  */
-export function GmEditSheet({
-  initial,
-  content: baseContent,
-  campaignId,
-  playerOwnerId,
-  onExit,
-}: {
+export const GmEditSheet = forwardRef<GmEditHandle, {
   initial: SavedChar;
   content: ContentDatabase;
   campaignId: string;
   playerOwnerId: string;
   onExit: () => void;
-}) {
+}>(function GmEditSheet({
+  initial,
+  content: baseContent,
+  campaignId,
+  playerOwnerId,
+  onExit,
+}, ref) {
   const [work, setWork] = useState<SavedChar>(initial);
   const [dirty, setDirty] = useState(false);
   const [editing, setEditing] = useState<BuildState | null>(null);
@@ -146,29 +158,35 @@ export function GmEditSheet({
     }
   };
 
-  const doExit = async () => {
-    if (!dirty) {
-      onExit();
-      return;
-    }
+  /*
+   * "May this sheet go away?" — the single gate for losing the working copy, whether the GM pressed
+   * Back or the initiative order moved on to someone else. Returns false to mean "stay put": the
+   * GM cancelled, or the push they asked for failed (in which case dropping the sheet anyway would
+   * throw away the very changes they just chose to keep).
+   */
+  const confirmLeave = async (reason?: { title: string; message: string }): Promise<boolean> => {
+    if (!dirty) return true;
     const choice = await chooseDialog({
-      title: 'Update before leaving?',
-      message: `You’ve changed ${work.character.name}. Push these changes to the player, or leave without updating?`,
+      title: reason?.title ?? 'Update before leaving?',
+      message:
+        reason?.message ??
+        `You’ve changed ${work.character.name}. Push these changes to the player, or leave without updating?`,
       buttons: [
         { value: 'update', label: 'Update player', primary: true },
-        { value: 'leave', label: 'Leave without updating' },
+        { value: 'leave', label: 'Discard changes' },
         { value: 'cancel', label: 'Cancel' },
       ],
     });
-    if (!choice || choice === 'cancel') return;
-    if (choice === 'leave') {
-      onExit();
-      return;
-    }
-    if (await confirmUpdate()) {
-      const ok = await pushToPlayer();
-      if (ok) onExit();
-    }
+    if (!choice || choice === 'cancel') return false;
+    if (choice === 'leave') return true;
+    if (!(await confirmUpdate())) return false;
+    return await pushToPlayer();
+  };
+
+  useImperativeHandle(ref, () => ({ confirmLeave }));
+
+  const doExit = async () => {
+    if (await confirmLeave()) onExit();
   };
 
   const doExport = () => {
@@ -199,4 +217,4 @@ export function GmEditSheet({
       onBack={() => void doExit()}
     />
   );
-}
+});

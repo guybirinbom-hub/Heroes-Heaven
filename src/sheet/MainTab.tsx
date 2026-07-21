@@ -17,8 +17,8 @@ import { AlchemyPanel } from './AlchemyPanel';
 import { critSpec } from '../rules/critSpec';
 import { ACTIVITIES, type ActivityDef } from '../rules/actions';
 import { traitDesc } from '../rules/glossary';
-import { statHasConditionalMode, type StatRef } from '../rules/explain';
-import { ActionGlyph, RankPill } from './widgets';
+import { statHasSituational, type StatRef } from '../rules/explain';
+import { ActionGlyph, RankPill, SituationalStar } from './widgets';
 import { DescriptionModal } from './DescriptionModal';
 import { DescBody } from './DescBody';
 import { toPlainText } from './RichText';
@@ -559,13 +559,16 @@ export function MainTab({
             const note = penalized ? `${formatMod(acp.value)} armor check penalty (${acp.source})` : '';
             return (
               <div
-                className={'skill' + (onOpenStat ? ' rollable' : '') + (statHasConditionalMode(character, { kind: 'skill', skill: key }) ? ' has-mode' : '')}
+                className={'skill' + (onOpenStat ? ' rollable' : '') + (statHasSituational(character, { kind: 'skill', skill: key }) ? ' has-mode' : '')}
                 key={key}
                 onClick={onOpenStat ? () => onOpenStat({ kind: 'skill', skill: key }) : undefined}
                 title={[onOpenStat ? `${skillLabel(key)} — how is this calculated?` : '', note].filter(Boolean).join(' · ') || undefined}
               >
                 <RankPill rank={d.rank} />
-                <span className="skill-name">{skillLabel(key)}</span>
+                <span className="skill-name">
+                  {skillLabel(key)}
+                  {statHasSituational(character, { kind: 'skill', skill: key }) && <SituationalStar />}
+                </span>
                 {penalized && (
                   <span className="acp-badge" title={note}>
                     {formatMod(acp.value)}

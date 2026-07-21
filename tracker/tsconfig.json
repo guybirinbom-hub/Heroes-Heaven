@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Live-import Heroes Heaven's theme engine (see vite.config.ts). Keep this surface narrow —
+       only @hh/theme/* is imported today; do NOT reach into @hh/rules/* or @hh/data/cloudSync. */
+    "baseUrl": ".",
+    "paths": { "@hh/*": ["../src/*"] }
+  },
+  "include": ["src", "../src/theme", "../src/data/syncBus.ts"],
+  // Tests are excluded from tsc exactly as the original app does it (its tsconfig.app.json has the
+  // same three globs) — vitest transpiles them without type-checking, and several carry pre-existing
+  // type looseness that has never been part of the build.
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/test/**"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

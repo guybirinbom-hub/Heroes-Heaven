@@ -76,10 +76,28 @@ export function PartyMembers({
   campaignId,
   isGm,
   onView,
+  localMembers,
+  renderExtra,
 }: {
   campaignId: string;
   isGm: boolean;
   onView: (m: PartyMember) => void;
+  /**
+   * Extra content for each card body — the tracker integration passes the "Stats shown" sections
+   * here (saves, abilities, skills, …) built from the real character. A render prop, not tracker
+   * types, so this component stays pure: the real (non-tracker) party page passes nothing and is
+   * unchanged.
+   */
+  renderExtra?: (m: PartyMember) => React.ReactNode;
+  /**
+   * Render THESE members instead of fetching from the server.
+   *
+   * The party is normally published to Supabase, so it needs an account. The tracker integration
+   * passes locally-derived members while testing without login (src/integration/) — the cards, the
+   * summaries and the open-sheet behaviour are then exactly the real ones, just fed from the local
+   * roster. Omitted → the normal server-backed behaviour, unchanged.
+   */
+  localMembers?: PartyMember[];
 }) {
   const [members, setMembers] = useState<PartyMember[] | null>(null);
   const [error, setError] = useState('');
@@ -91,6 +109,8 @@ export function PartyMembers({
   }, []);
 
   useEffect(() => {
+    // Local members are supplied by the host — never fetch or subscribe.
+    if (localMembers) return;
     if (!campaignId) return;
     let cancelled = false;
     // `showLoading` only on the first load — a live Realtime refresh shouldn't flash the spinner.
@@ -112,7 +132,10 @@ export function PartyMembers({
       cancelled = true;
       unsub();
     };
-  }, [campaignId, reload]);
+  }, [campaignId, reload, localMembers]);
+
+  // What the cards actually render: host-supplied members win over the fetched list.
+  const shown = localMembers ?? members;
 
   const kick = async (m: PartyMember) => {
     const ok = await confirmDialog({
@@ -130,13 +153,13 @@ export function PartyMembers({
   return (
     <>
       {error && <p className="login-error" role="alert">{error}</p>}
-      {members === null && !error ? (
+      {shown === null && !error ? (
         <div className="party-loading"><span className="app-loading-spin" aria-hidden="true" /> Loading party…</div>
-      ) : members && members.length === 0 ? (
+      ) : shown && shown.length === 0 ? (
         <div className="party-empty">No one has shared a character with this campaign yet. Characters appear here once a member attaches one (Builder → Setup → Campaigns) and their app syncs.</div>
       ) : (
         <div className="party-grid">
-          {(members ?? []).map((m) => (
+          {(shown ?? []).map((m) => (
             <PartyCard
               key={m.charId}
               member={m}
@@ -144,6 +167,7 @@ export function PartyMembers({
               showKick={isGm && !!myId && m.ownerId !== myId}
               onOpen={() => onView(m)}
               onKick={() => void kick(m)}
+              extra={renderExtra?.(m)}
             />
           ))}
         </div>
@@ -166,12 +190,14 @@ function PartyCard({
   showKick,
   onOpen,
   onKick,
+  extra,
 }: {
   member: PartyMember;
   isMine: boolean;
   showKick: boolean;
   onOpen: () => void;
   onKick: () => void;
+  extra?: React.ReactNode;
 }) {
   const s: PartySummary = member.summary ?? ({} as PartySummary);
   const initials = (s.name || member.name || '—').slice(0, 2).toUpperCase();
@@ -236,6 +262,13 @@ function PartyCard({
           {(s.modes ?? []).map((m, i) => (
             <span className="party-mode" key={'m' + i}>{m}</span>
           ))}
+        </div>
+      )}
+      {/* The tracker integration's "Stats shown" sections, when present. Wrapped so a click on the
+          extra stats doesn't also open the sheet — the numbers are for reading, not navigation. */}
+      {extra && (
+        <div className="party-extra" onClick={(e) => e.stopPropagation()}>
+          {extra}
         </div>
       )}
     </div>

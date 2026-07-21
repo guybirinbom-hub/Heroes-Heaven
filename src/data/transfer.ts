@@ -45,6 +45,7 @@ import type {
 import { ABILITIES, SKILLS } from '../rules/types';
 import { newRosterId, type SavedChar } from './storage';
 import { buildCharacter, classChoosesDeity, CUSTOM_BACKGROUND_ID, deriveBuildFromCharacter, emptyBuild, type BuildState } from '../rules/build';
+import { maxTakes } from '../rules/featGrants';
 import { CORE_BOOKS, sourceCatalog } from '../rules/sources';
 import { applyPlayState } from '../rules/play';
 import { normalizeCharacter, normalizePlay } from '../rules/normalize';
@@ -830,7 +831,10 @@ function importFromWg(obj: any, content: ContentDatabase): ImportResult {
     const id = matchFeat(f.name);
     if (!id) continue; // not necessarily a feat (could be a class feature label) — skip silently
     const ft = content.feats[id];
-    if (matchedFeats.some((m) => m.featId === id)) continue; // de-dupe (parenthetical variants)
+    // Drop a genuine duplicate (WG lists parenthetical variants like "Skill Mastery (Athletics)" and
+    // plain "Skill Mastery" that both resolve to one id) — but keep legitimate REPEAT takes up to the
+    // feat's cap, so a WG import of Armor Proficiency ×3 doesn't collapse to one.
+    if (matchedFeats.filter((m) => m.featId === id).length >= maxTakes(ft)) continue;
     // Prefer the WG feature's SELECTION level (f.level) over the feat's minimum level (ft.level) so
     // several feats sharing a minimum level don't all collide onto that one level. WG's own v4 export
     // carries the feat's minimum level here (its `feats_features` entries are raw ability blocks), so

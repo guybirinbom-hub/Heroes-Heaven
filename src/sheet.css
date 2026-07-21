@@ -297,6 +297,37 @@ body {
   gap: 10px;
   flex-wrap: wrap;
 }
+
+/*
+ * Delete campaign — reuses .btn's geometry and only re-tints it, rather than .btn-danger's SOLID
+ * red: that's the Uninstall danger-zone treatment, and shouting next to "Save changes" would have it
+ * competing with the primary action instead of just being available. `margin-left: auto` puts real
+ * distance between it and Save, so an over-shot click can't land on something irreversible.
+ */
+.cmp-form-delete {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--app-bad);
+  border-color: color-mix(in srgb, var(--app-bad) 45%, transparent);
+}
+.cmp-form-delete:hover {
+  border-color: var(--app-bad);
+  background: color-mix(in srgb, var(--app-bad) 12%, transparent);
+}
+
+/* Share code — the chip beside the line explaining what it's for. */
+.cmp-share-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.cmp-share-hint {
+  font-size: 12px;
+  color: var(--app-text-dim);
+}
 .cmp-defaults {
   display: flex;
   flex-direction: column;
@@ -631,6 +662,13 @@ body {
 .party-mode {
   background: color-mix(in srgb, var(--app-accent) 18%, transparent);
   color: color-mix(in srgb, var(--app-accent) 70%, var(--app-text));
+}
+
+/* The tracker integration's "Stats shown" sections, appended below a card's core stats. */
+.party-extra {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: var(--app-bw) solid var(--app-border);
 }
 
 /* ---- roster screen ---- */
@@ -3615,12 +3653,20 @@ button.strike-name:hover {
   gap: 5px;
 }
 
-/* ---- stat underline when a conditional mode targets it ---- */
+/* ---- stat underline + * marker when a situational bonus (feat or conditional mode) targets it ---- */
 .stat-row.has-mode .stat-name,
 .skill.has-mode .skill-name,
 .tile.has-mode .tlab {
   text-decoration: underline dotted var(--app-accent);
   text-underline-offset: 2px;
+}
+.sit-star {
+  color: var(--app-accent);
+  font-weight: 700;
+  font-size: 0.85em;
+  margin-left: 1px;
+  cursor: help;
+  line-height: 0;
 }
 
 /* ---- situational notes in the stat-detail panel ---- */
@@ -7523,6 +7569,12 @@ button.strike-name:hover {
   flex-direction: column;
   gap: 10px;
 }
+/* Standalone Reset action at the foot of the editor — left-aligned, set off from the sections above. */
+.ie-reset-row {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 2px;
+}
 .ie-badge {
   background: color-mix(in srgb, var(--app-accent) 22%, transparent);
   color: var(--app-text);
@@ -8408,7 +8460,10 @@ button.strike-name:hover {
 .cmp-modes .cmp-del:hover {
   color: var(--app-bad);
 }
-.cmp-body {
+/* Companion stat-card body. NOTE: distinct class from the Campaigns page's `.cmp-body` (line ~74) —
+   they used to collide, and the campaigns rule's `overflow-y:auto; overscroll-behavior:contain` leaked
+   in and trapped touch-scroll over companion stat blocks on mobile (page wouldn't scroll). */
+.cmp-cardbody {
   padding: 12px 13px;
 }
 .cmp-edit {
@@ -9168,7 +9223,10 @@ button.strike-name:hover {
 }
 .fsel-trait-opt:hover { border-color: var(--app-accent); color: var(--app-accent); }
 
-.fsel-results { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+/* min-height:0 is load-bearing: on mobile .fsel-body flips to a column, making height the main axis,
+   and the default min-height:auto would resolve to the whole list's min-content height — .fsel-list
+   would then be sized to its content and never scroll. */
+.fsel-results { flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
 .fsel.collapsed .fsel-panel { display: none; }
 .fsel-results-bar {
   display: flex;
@@ -9219,7 +9277,9 @@ button.strike-name:hover {
   padding: 6px 9px;
   color: var(--app-text-dim);
 }
-.fsel-results-search input { flex: 1; background: transparent; border: none; color: var(--app-text); font-size: 12.5px; outline: none; }
+/* min-width:0 lets the input shrink with its pill; without it an input's min-width:auto floors at the
+   default size=20 intrinsic width (~175px) and it paints out past the pill onto the next control. */
+.fsel-results-search input { flex: 1; min-width: 0; background: transparent; border: none; color: var(--app-text); font-size: 12.5px; outline: none; }
 .fsel-list { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 6px; }
 .fsel-empty { padding: 24px 16px; text-align: center; color: var(--app-text-dim); font-size: 12.5px; }
 /* "N matching feats are hidden from this picker" — the honest explanation under the results,
@@ -9324,7 +9384,7 @@ button.strike-name:hover {
 .dice-drawer { animation: app-drawer-in 210ms cubic-bezier(0.2, 0.7, 0.3, 1); }
 
 /* Companion Stats / Edit / Inventory body (keyed on mode) fades in on switch instead of hard-cutting. */
-.cmp-body { animation: app-fade-slide 165ms ease-out; }
+.cmp-cardbody { animation: app-fade-slide 165ms ease-out; }
 
 /* A new dice roll flashes in; a crit / fumble total pops. Entries are keyed by id, so only the
    newly-prepended one animates. */
@@ -9334,7 +9394,7 @@ button.strike-name:hover {
 
 @media (prefers-reduced-motion: reduce) {
   .picker-overlay, .drawer-overlay, .portrait-lightbox, .picker, .portrait-lightbox-img,
-  .topmenu, .appearance-menu, .dice-drawer, .cmp-body, .dice-entry,
+  .topmenu, .appearance-menu, .dice-drawer, .cmp-cardbody, .dice-entry,
   .dice-entry.crit .dice-entry-total, .dice-entry.fumble .dice-entry-total,
   .notes-wrap .editor-card, .notes-wrap .notes-list-card { animation: none !important; }
 }
@@ -9934,9 +9994,11 @@ button.strike-name:hover {
 .rsl-stop:first-child { transform: translateX(0); }
 .rsl-stop:last-child { transform: translateX(-100%); }
 
-/* Mobile: the picker results bar gains the "Hide ineligible" chip — let it wrap instead of
-   overflowing the 380px viewport. */
+/* Mobile: the picker results bar gains the "Hide ineligible" chip, which won't fit beside the search
+   at phone widths. Give the search a whole row (flex-basis 100% forces the line break) so the chip,
+   the Filters toggle and the count wrap underneath it, rather than squeezing the search down to a
+   pixel floor and having it collide with them. */
 @media (max-width: 720px) {
   .fsel-results-bar { flex-wrap: wrap; }
-  .fsel-results-search { min-width: 140px; }
+  .fsel-results-search { flex: 1 1 100%; min-width: 0; max-width: none; }
 }
