@@ -22,7 +22,20 @@ if (-not (Test-Path (Join-Path $proj 'signing\keystore.properties'))) {
 }
 
 # --- Toolchain env (fall back to the known install locations if not already set) ---
-if (-not $env:JAVA_HOME)    { $env:JAVA_HOME = 'C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot' }
+# JAVA_HOME must point at a JDK 17 that actually exists — Gradle 8 (Android) rejects a missing dir OR
+# a too-new JDK. Validate any preset value; otherwise search ~/.jdks for a 17.x JDK, then Android
+# Studio's bundled JBR, before the last-ditch Adoptium guess. (Auto-detecting a non-existent Adoptium
+# path is exactly what broke the v0.1.17 build.)
+if (-not $env:JAVA_HOME -or -not (Test-Path (Join-Path $env:JAVA_HOME 'bin\java.exe'))) {
+  $jdkCands = @()
+  $jdkCands += Get-ChildItem (Join-Path $env:USERPROFILE '.jdks') -Directory -ErrorAction SilentlyContinue |
+               Where-Object { $_.Name -match '17' } | Sort-Object Name -Descending | ForEach-Object { $_.FullName }
+  $jdkCands += 'C:\Program Files\Android\Android Studio\jbr'
+  $jdkCands += (Join-Path $env:LOCALAPPDATA 'Programs\Android Studio\jbr')
+  $jdkCands += 'C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot'
+  $env:JAVA_HOME = $jdkCands | Where-Object { $_ -and (Test-Path (Join-Path $_ 'bin\java.exe')) } | Select-Object -First 1
+  if (-not $env:JAVA_HOME) { throw 'No valid JDK 17 found. Set JAVA_HOME to a JDK 17 directory (one that contains bin\java.exe).' }
+}
 if (-not $env:ANDROID_HOME) { $env:ANDROID_HOME = Join-Path $env:LOCALAPPDATA 'Android\Sdk' }
 if (-not $env:NDK_HOME) {
   $env:NDK_HOME = (Get-ChildItem (Join-Path $env:ANDROID_HOME 'ndk') -Directory | Sort-Object Name -Descending | Select-Object -First 1).FullName
