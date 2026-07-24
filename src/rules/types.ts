@@ -164,6 +164,10 @@ export interface Speeds {
   burrow?: number;
 }
 
+/** Speeds a feat/heritage/feature/item GRANTS. Each value is feet, or a formula string resolved
+ *  against the character ("@actor.speed.land"). Derived Speeds themselves are always numbers. */
+export type SpeedGrants = Partial<Record<keyof Speeds, number | string>>;
+
 /* =========================================================================
  * 2. Ability boosts/flaws (used by content; resolved by the builder)
  * ========================================================================= */
@@ -242,8 +246,42 @@ export interface DefenseGrants {
   resistances?: IwrEntry[];
   weaknesses?: IwrEntry[];
   immunities?: string[];
-  /** Unconditional non-land speeds granted (fly/swim/climb/burrow), in feet. */
-  speeds?: Partial<Speeds>;
+  /** Unconditional non-land speeds granted (fly/swim/climb/burrow), in feet — or a FORMULA string
+   *  relative to the character ("@actor.speed.land" for "a fly Speed equal to your land Speed",
+   *  "max(5,floor(@actor.speed.land/2))" for "half your land Speed, minimum 5"). */
+  speeds?: SpeedGrants;
+  /** Speeds granted only when a condition is met: a skill proficiency threshold (Quick Climb / Quick
+   *  Swim — legendary Athletics) OR a specific heritage (Swift Swimmer's wetlander lizardfolk → swim 25).
+   *  All present conditions must hold. */
+  speedsIf?: { skill?: ProficiencyKey; rank?: ProficiencyRank; heritage?: string; speeds: SpeedGrants }[];
+  /** Languages this feat/heritage grants outright (Multilingual picks are separate; this is fixed
+   *  grants like a half-elf lineage's or a regional feat's specific language). */
+  grantsLanguages?: string[];
+  /** Feats this heritage/feat grants outright (Cataphract Fleshwarp → Armor Proficiency,
+   *  Battle-Trained Human → Diehard). Added as bonus feats with their own effects. */
+  grantsFeats?: string[];
+  /** Number of free-text Lore skills a HERITAGE grants the player to choose (Half Moon Sarangay: 2;
+   *  Born of Item: 1). Typed subjects live in BuildState.heritageLore and become trained Lores. */
+  loreChoices?: number;
+  /** Extra damage this feat/feature adds to Strikes (Spirit Striking: +2/3/4 spirit by weapon
+   *  proficiency; Offensive Boost: +1d6 of a chosen type). Folded into each matching Strike's damage. */
+  strikeDamage?: StrikeDamageRider[];
+  /** A multiclass dedication grants a trained class DC in the BORROWED class (Fighter/Ranger/Rogue/
+   *  Alchemist Dedication). The key ability comes from that class; surfaced as a secondary class DC. */
+  classDcGrant?: { classId: string };
+  /** Effects that apply ONLY while a signature resource STATE is active (Raging Resistance: resistance
+   *  while raging; Raging Athlete: climb/swim while raging). Gated on the character's live toggle. */
+  whileActive?: { state: 'rage' | 'panache' | 'hunt-prey' | 'unleash-psyche'; resistances?: IwrEntry[]; senses?: SenseEntry[]; immunities?: string[]; speeds?: SpeedGrants }[];
+  /** This feat/heritage raises the character to at least this SIZE (Jotun's Heart → Large). */
+  sizeOverride?: Size;
+  /** Natural reach in feet this feat/heritage grants (Jotun's Heart: 10). Highest wins. */
+  reach?: number;
+  /** A flat additive bonus to LAND Speed (Hyper Boosters: +10). Distinct from `speeds`, which SETS a
+   *  non-land movement type. */
+  landSpeedBonus?: number;
+  /** Grants void ("negative") healing — harmed by vitality, healed by void (dhampir-style). Surfaced on
+   *  the Defenses card. Some ITEMS grant it too (Emerald Fulcrum Lens) — see ItemBase. */
+  negativeHealing?: boolean;
   /** True when this feature/feat grants weapon critical specialization (a CriticalSpecialization
    *  rule element). Drives whether Strikes show their critical-specialization effect. */
   critSpec?: boolean;
@@ -254,6 +292,145 @@ export interface DefenseGrants {
   critSpecWeapons?: { groups?: string[]; traits?: string[]; bases?: string[]; melee?: boolean };
   /** Melee unarmed Strikes this feat/feature grants (from Foundry `Strike` rule elements). */
   grantedStrikes?: GrantedStrike[];
+  /** "You gain X — or Y instead if you already have X" sense grants (Superior Sight, Ember's Eyes,
+   *  Aquatic Eyes). `ifPresent` is the sense the character must ALREADY have (from ancestry vision or
+   *  any other source) for the grant to upgrade from `base` to `upgraded`. */
+  conditionalSenses?: { ifPresent: string; base: SenseEntry; upgraded: SenseEntry }[];
+  /** "Choose one of N" effects the player picks when they take this feat/feature/heritage/item
+   *  (a dragon tattoo's resistance TYPE, an energy heart's element, one of several skills). Each
+   *  choice's picked option contributes a concrete effect. Stored in BuildState.effectChoices keyed
+   *  `<recordId>:<choiceId>` and resolved by buildCharacter into Character.chosenEffects (always-on
+   *  sources) / resolvedItemPassives (worn items). */
+  effectChoices?: EffectChoice[];
+  /** A sheet-visible warning that this record's effect references content missing from the shipped data
+   *  (usually a legacy spell/feat not yet reprinted). Kept so the intent is visible; buildCharacter
+   *  collects owned records' warnings into Character.effectWarnings. */
+  dataWarning?: string;
+  /** "You become trained in <tradition> spell attack rolls and spell DCs, using <attribute>" — the
+   *  casting PROFILE a feat confers (Minor Magic, Shadow Magic, the esoteric dedications). Applied to
+   *  the character's innate entry (and raises an existing entry's rank rather than duplicating it). */
+  spellcastingGrant?: SpellcastingGrant;
+  /** Extra spell slots a feat grants ("+1 slot of each rank except your highest"). */
+  spellSlotBonus?: SpellSlotBonus;
+  /** A CLASS ARCHETYPE dedication (Runelord, War Magic, Vindicator…). Unlike a normal archetype these
+   *  RESTRUCTURE the class: they remove class features and substitute their own. */
+  classArchetype?: ClassArchetype;
+}
+
+/** A class archetype: taking its dedication suppresses class features and substitutes replacements. */
+export interface ClassArchetype {
+  /** The class this archetype restructures (it only applies to a character of that class). */
+  classId: string;
+  /** Class-feature ids the archetype REMOVES (Wizard's Arcane Bond, a Champion's armor training…). */
+  suppressFeatures?: string[];
+  /** Class features the archetype ADDS in their place, at the given character levels. */
+  addFeatures?: { level: number; featureId: string }[];
+  /** Proficiency ranks the archetype confers directly (War Magic's light/medium armor). */
+  armor?: Partial<Record<ArmorCategory, ProficiencyRank>>;
+  weapon?: Partial<Record<WeaponCategory, ProficiencyRank>>;
+  /** Proficiency CEILINGS the archetype imposes — a class archetype can take training AWAY ("as a
+   *  Warrior of Legend you aren't trained in heavy armor"). armor/weapon above only ever raise a rank,
+   *  so a removal needs its own lane. Applied after all class advancement. */
+  armorCap?: Partial<Record<ArmorCategory, ProficiencyRank>>;
+  weaponCap?: Partial<Record<WeaponCategory, ProficiencyRank>>;
+  /** A short note shown on the sheet describing what the archetype changed. */
+  note?: string;
+}
+
+/** The spell attack/DC profile a feat grants. */
+export interface SpellcastingGrant {
+  tradition: Tradition;
+  keyAbility: AbilityId;
+  proficiency: ProficiencyRank;
+}
+
+/** Extra spell slots granted by a feat, applied to the character's slot-caster entry. */
+export interface SpellSlotBonus {
+  /** Slots added at every rank the character can cast. */
+  perRank?: number;
+  /** Exclude the top N ranks (PF2e's usual "except your two highest ranks"). */
+  exceptHighest?: number;
+  /** Restrict to a specific entry id (defaults to the character's main slot caster). */
+  entryId?: string;
+}
+
+/** A concrete effect an EffectChoice option confers when picked. A subset of the effect lanes the
+ *  engine already applies; `passive` is item-only (worn item bonuses). */
+export interface EffectGrant {
+  resistances?: IwrEntry[];
+  weaknesses?: IwrEntry[];
+  immunities?: string[];
+  senses?: SenseEntry[];
+  /** Feet, or a formula relative to the character ("@actor.speed.land"). */
+  speeds?: SpeedGrants;
+  /** Skill (or `lore:<subject>`) → minimum rank trained. */
+  skills?: Partial<Record<ProficiencyKey, ProficiencyRank>>;
+  innateSpells?: InnateSpellGrant[];
+  /** Focus spells the chosen option grants (each carries its own Focus Point, like Feat.focusSpells) —
+   *  for "choose one of N focus spells" feats (Additional Shadow Magic, Greater Deathly Secrets). */
+  focusSpells?: string[];
+  /** Focus-pool points when the option grants a point WITHOUT a spell. */
+  focusPoolBonus?: number;
+  /** Item-only: worn/invested item bonuses of the chosen kind. */
+  passive?: ItemPassiveEffects;
+}
+
+/** A "choose one of N" the player resolves in the builder. Either an explicit `options` list, or a
+ *  `spellFilter` describing an OPEN set ("any 1st-rank arcane spell") the builder searches. */
+export interface EffectChoice {
+  /** Stable key (unique within the record) so the pick round-trips. */
+  id: string;
+  prompt: string;
+  /** `grant` is optional: some menus mix a mechanical option with play-time ones (a kineticist gate
+   *  junction — only Elemental Resistance changes a stat), and the pick should still be recorded and
+   *  shown. An option with no grant simply applies nothing. */
+  options?: { value: string; label: string; grant?: EffectGrant; note?: string }[];
+  /** Open-ended spell pick. The chosen spell id becomes the value; `grantTemplate` says how it is
+   *  granted (as an innate spell at some cadence, or as a focus spell). */
+  spellFilter?: SpellChoiceFilter;
+}
+
+/** Constrains an open-ended spell choice, and says what taking it grants. */
+export interface SpellChoiceFilter {
+  /** Allowed traditions (any if omitted). */
+  traditions?: Tradition[];
+  /** Rank bounds — `rank` for exactly N, or min/max for a window. Cantrips are rank 0. */
+  rank?: number;
+  minRank?: number;
+  maxRank?: number;
+  /** Spell must carry ALL of these traits (e.g. divination/enchantment restrictions). */
+  traits?: string[];
+  /** Only cantrips / only non-cantrips. */
+  cantripsOnly?: boolean;
+  /** How the picked spell is granted. 'innate' uses the innate lane; 'focus' adds a focus spell. */
+  grantAs: 'innate' | 'focus';
+  /** For 'innate': the cadence/heightening applied to the chosen spell. */
+  innate?: Omit<InnateSpellGrant, 'spellId'>;
+  /** Level at which this pick unlocks (a scaling feat offers more picks as you level). */
+  minLevel?: number;
+}
+
+/** Passive item bonuses applied while worn/invested/held (the generic magic-item lane). */
+export interface ItemPassiveEffects {
+  skills?: Partial<Record<ProficiencyKey, number>>;
+  perception?: number;
+  saves?: number;
+  ac?: number;
+  attack?: number;
+  senses?: SenseEntry[];
+  /** Feet, or a formula relative to the character ("floor(@actor.speed.land/2)"). */
+  speeds?: SpeedGrants;
+  resistances?: IwrEntry[];
+  immunities?: string[];
+  speedPenalty?: number;
+  /** A flat bonus to land Speed while invested/worn (Alacritous Horseshoes: +5 ft). Additive, unlike
+   *  `speeds` which SETS a movement type. Applied to a character's or companion's land Speed. */
+  speedBonus?: number;
+  /** An item bonus to EVERY Lore skill (Brooch of Inspiration: +1 to Recall Knowledge with Lores —
+   *  modeled as a flat Lore bonus since Lores are used almost only for Recall Knowledge). */
+  loreBonus?: number;
+  /** Languages the item lets you speak/read while invested (Stole of Civility → Azlanti). */
+  grantsLanguages?: string[];
 }
 
 export interface Ancestry extends ContentBase {
@@ -279,6 +456,20 @@ export interface InnateSpellGrant {
   spellId: string;
   tradition?: string;
   atWill?: boolean;
+  /** Cast-at rank when it differs from the spell's base rank (Invisible Trickster: 4th-rank
+   *  Invisibility). Cantrip/at-will grants ignore this (they auto-heighten). */
+  rank?: number;
+  /** Daily castings when not 1 (Unfettered Growth: twice per day). Ignored for atWill. */
+  usesPerDay?: number;
+  /** The period `usesPerDay` counts against when it isn't a day (Azaersi's Roads: twice per WEEK).
+   *  Display-only — the sheet shows the cadence; tracking still uses the single cast toggle. */
+  usesPer?: 'day' | 'hour' | 'week';
+  /** Auto-heighten: cast at ceil(level/2), the standard innate-heighten ladder ("heightened to half
+   *  your level"). Overrides `rank`. */
+  heightenHalfLevel?: boolean;
+  /** A CUSTOM heighten ladder — "7th rank, 8th at level 18, 9th at 20". The highest entry whose
+   *  `level` the character has reached wins; below the first entry the base `rank` applies. */
+  heightenAt?: { level: number; rank: number }[];
 }
 
 export interface Heritage extends ContentBase, DefenseGrants {
@@ -310,6 +501,10 @@ export interface Background extends ContentBase {
   trainedSkillChoice?: SkillId[];
   /** Lore subject granted (the `lore:` part). */
   trainedLore?: string;
+  /** A background granting "a Lore subject of your choice" (rather than a fixed one): the player types
+   *  the subject in the builder (Lore is free-text). Stored in BuildState.backgroundLore →
+   *  lore:<typed> trained. */
+  trainedLoreChoice?: boolean;
   /** A skill feat granted by the background. */
   grantedFeatId?: string;
 }
@@ -604,6 +799,21 @@ interface ItemBase extends ContentBase {
   /** Apex item (trait `apex`): the attribute it raises while invested — to 18, or +2 if already 18+.
    *  Only one apex item works at a time. */
   apexAttribute?: AbilityId;
+  /** Extra Strike damage the item confers. On a WEAPON it's intrinsic (only that weapon's Strike —
+   *  Hyldarf's Fang +2d6). On any other invested item it applies to the matching Strikes globally
+   *  (Crimson Fulcrum Lens +2 melee). Same shape as a feat's strikeDamage. */
+  strikeDamage?: StrikeDamageRider[];
+  /** An invested item that grants void ("negative") healing (Emerald Fulcrum Lens). Surfaced on the
+   *  Defenses card while invested. */
+  negativeHealing?: boolean;
+  /** Feats an invested item grants as bonus feats (The Survivor → Diehard). */
+  grantsFeats?: string[];
+  /** An item bonus to the character's DYNAMIC skills — resolved from their sorcerer bloodline (Sanguine
+   *  Pendant → both bloodline skills) or their deity (Helm of Zeal → the deity's skill). */
+  dynamicSkillBonus?: { source: 'bloodline' | 'deity'; value: number };
+  /** Unarmed Strikes an invested item grants (Phantom Shroud → ghostly touch). Same shape as a feat's
+   *  grantedStrikes — surfaced as natural attacks. */
+  grantedStrikes?: GrantedStrike[];
   /** Monster Parts (variant rule): marks this created item as a harvested MONSTER PART — a raw
    *  resource, not a refined/imbued gear item. Its VALUE is the item's `price` (gp) and its tags are
    *  `monsterPartTags`. `true` = it is a monster part; absent = a normal item. (Presence of the flag,
@@ -613,6 +823,23 @@ interface ItemBase extends ContentBase {
    *  attributes, senses, skills, creature types, …) for the reference-only requirement-match hints.
    *  Only meaningful alongside `isMonsterPart`; may be empty. */
   monsterPartTags?: string[];
+  /**
+   * PASSIVE effects the item applies while worn/invested/equipped (the generic magic-item lane the
+   * full player-effect audit added): flat ITEM bonuses to skills (`lore:<subject>` supported) /
+   * Perception / all saves / AC / attack rolls, plus granted senses, non-land speeds, resistances,
+   * immunities, and a flat speed penalty in feet (negative; Monster Suit). Item bonuses never stack —
+   * derive takes the best of ABP / Monster Parts / this. Activated or conditional effects stay in the
+   * description; this field is only for unconditional while-worn effects.
+   */
+  passiveEffects?: ItemPassiveEffects;
+  /** Extra prepared/spontaneous spell slots the item grants while invested (Endless Grimoire,
+   *  Sin Reservoir). Same shape + application as a feat's spellSlotBonus. */
+  spellSlotBonus?: SpellSlotBonus;
+  /** "Choose one of N" passive effects (Energy Robe's resistance type). Same mechanism as
+   *  DefenseGrants.effectChoices, resolved into resolvedItemPassives when worn. */
+  effectChoices?: EffectChoice[];
+  /** Sheet-visible warning that this item's effect references missing (legacy) content. */
+  dataWarning?: string;
 }
 
 /** A static descriptor of one trackable pool/ability on an item definition. */
@@ -884,7 +1111,24 @@ export interface StanceDef {
   dexCap?: number;
   /** Feet subtracted from all Speeds while in the stance. */
   speedPenalty?: number;
-  /** Concise reminder of the stance's other/conditional effects. */
+  /** Typed resistances granted while the stance is active (Rain of Embers: fire = half level).
+   *  `value` may be an `@actor.level` formula string like the IwrEntry it is. */
+  resistances?: IwrEntry[];
+  /** Senses granted while active (an alternate FORM's low-light/scent, a stance's tremorsense).
+   *  Only surface while the stance/form is the active one. */
+  senses?: SenseEntry[];
+  /** Senses a SEPARATE rider feat grants only while this form is active (Ursine Avenger Form's senses
+   *  come from the Senses of the Bear feat). Applied only if the character owns `feat`. */
+  senseIfFeat?: { feat: string; senses: SenseEntry[]; upgradeDarkvisionIfLowLight?: boolean };
+  /** Speeds granted or raised while active — an absolute value, or an `@actor.speed.land`-style formula
+   *  ("fly equal to your land Speed"). Applied over the base Speeds while the stance/form is active. */
+  speeds?: SpeedGrants;
+  /** Save proficiency-independent status bonuses while active (Cobra Stance: +1 Fortitude). */
+  saves?: Partial<Record<SaveId, { value: number; type: string }>>;
+  /** This entry is an alternate FORM (Ursine Avenger, Bat Form), not a footwork stance — it surfaces
+   *  as a toggle even without the `stance` trait, and reads as "Form" in the UI. */
+  form?: boolean;
+  /** Concise reminder of the stance/form's other or conditional effects. */
   note?: string;
 }
 
@@ -922,6 +1166,9 @@ export interface CompanionConfig {
   abilities?: string[];
   /** Familiar: a specific-familiar template id (Pipefox, Imp, …); absent = a generic familiar. */
   specificFamiliarId?: string;
+  /** Set when this companion was materialized from a feat/feature grant (e.g. the Pet feat). Ties the
+   *  real companion back to its granting feat so the synthetic auto-copy stops showing once persisted. */
+  grantSlug?: string;
   /** The companion's own gear (barding, packs, …), tracked separately from the character's. */
   inventory?: InventoryItem[];
   /** Companion portrait — the compressed (synced) data URL the player imported. */
@@ -1045,6 +1292,9 @@ export interface FeatChoice {
   category: FeatCategory;
   /** The resolved embedded sub-choice (e.g. Domain Initiate's domain), for display. */
   choice?: { value: string; label: string };
+  /** Set when this feat was auto-granted by ANOTHER feat (FEAT_FEAT_GRANTS), not chosen in a slot —
+   *  the granting feat's id. Lets the sheet tag it "granted by …". */
+  grantedBy?: string;
 }
 
 /** Build log of skill increases (for the builder to validate progression). */
@@ -1053,15 +1303,32 @@ export interface SkillIncrease {
   skill: ProficiencyKey;
 }
 
+/** A flat/dice damage rider a feat/feature adds to Strikes (Spirit Striking, Offensive Boost). */
+export interface StrikeDamageRider {
+  /** Damage type of the extra damage ("spirit", "fire", …). */
+  type: string;
+  /** Which Strikes it applies to. Default 'all'. */
+  appliesTo?: 'all' | 'unarmed' | 'melee' | 'ranged';
+  /** Flat extra damage (a fixed number). */
+  flat?: number;
+  /** Extra damage dice (Offensive Boost: 1d6). */
+  dice?: { n: number; die: string };
+  /** Flat extra keyed to the STRIKE's weapon-proficiency rank (Spirit Striking: expert 2 / master 3 /
+   *  legendary 4). Only applies at the listed ranks — a strike below the lowest key gets nothing. */
+  byStrikeProficiency?: Partial<Record<'expert' | 'master' | 'legendary', number>>;
+  /** Short label for the source, shown in the strike breakdown. */
+  note?: string;
+}
+
 export interface WeaponRunes {
   potency?: 0 | 1 | 2 | 3 | 4;
-  striking?: 'striking' | 'greater' | 'major';
+  striking?: 'striking' | 'greater' | 'major' | 'mythic';
   property?: string[];
 }
 
 export interface ArmorRunes {
   potency?: 0 | 1 | 2 | 3 | 4;
-  resilient?: 'resilient' | 'greater' | 'major';
+  resilient?: 'resilient' | 'greater' | 'major' | 'mythic';
   property?: string[];
   /** Shield reinforcing-rune tier 1–6 (minor…supreme); raises Hardness/HP/BT. */
   reinforcing?: 1 | 2 | 3 | 4 | 5 | 6;
@@ -1116,6 +1383,9 @@ export interface InventoryItem {
   /** instanceId of the item this is AFFIXED to (talisman/spellheart/banner → weapon/armor/shield). */
   attachedTo?: string | null;
   runes?: WeaponRunes | ArmorRunes;
+  /** Doubling Rings: the instanceId of ANOTHER wielded weapon whose runes are duplicated onto THIS
+   *  weapon while the rings are invested and both are wielded. Set on the lesser-ring (target) weapon. */
+  copyRunesFrom?: string;
   /** Player-tracked limited uses (legacy single counter — kept for back-compat). When
    *  resetsOnRest is set, daily preparations (rest) refill `current` to `max`. */
   charges?: { current: number; max: number; resetsOnRest?: boolean };
@@ -1158,6 +1428,15 @@ export interface SpellcastingEntry {
   slots?: Record<number, { max: number; used: number }>;
   /** Innate entries: spell ids already cast today (1/day each), overlaid from PlayState.innateUsed. */
   innateUsed?: string[];
+  /** Innate entries: per-spell daily-uses override — 0 = at-will (a leveled at-will grant), N = N/day.
+   *  Absent = the default 1/day. Display-driving; use tracking remains the single innateUsed toggle. */
+  innateUses?: Record<string, number>;
+  /** Innate entries: per-spell cadence text when it isn't per-day ("2/week"). Display only. */
+  innateCadence?: Record<string, string>;
+  /** Which feat/heritage/feature GRANTED each spell in this entry, by spell id → source name. Pooled
+   *  entries (innate spells, focus spells) draw from many sources, so the sheet labels each spell with
+   *  where it came from. */
+  spellSources?: Record<string, string>;
   /** Spontaneous: ids that can be cast from any higher slot. */
   signature?: string[];
   /** Wizard: learned spells per rank (the daily preparation is drawn from this). */
@@ -1177,6 +1456,9 @@ export interface SpellcastingEntry {
   /** For `type:'items'` entries: the inventory instance this casting comes from, so the Spells page
    *  can open the item and read/spend its charge counter (kept in sync with the Inventory). */
   itemInstanceId?: string;
+  /** A short reminder rendered under the entry header (Bloodrager: spells gain the rage trait while you
+   *  rage; casting one drains you 1). Purely informational — no automatic slot/condition effect. */
+  note?: string;
 }
 
 /** A user-defined ("deep") background: a name + description and its mechanical grants —
@@ -1374,6 +1656,9 @@ export interface Character {
    *  from the player and the mythic subsystem is inactive. Kingmaker: on → its actions/conditions show. */
   mythicEnabled?: boolean;
   kingmakerEnabled?: boolean;
+  /** "Hide legacy data": mirrors the build flag onto the character so the sheet's Add pickers can filter
+   *  legacy/legacy-era content the same way the builder does. */
+  hideLegacy?: boolean;
   /** The chosen Mythic Calling (a [calling]-trait classFeature id). */
   mythicCalling?: string | null;
   /** Dual Class: the second class id + its subclass (variant rule). */
@@ -1390,6 +1675,37 @@ export interface Character {
   /** Attributes that received a partial (+1, past-18) boost — flagged in the UI. */
   partialBoosts?: AbilityId[];
   proficiencies: Proficiencies;
+  /** Triggered "already trained → a skill of your choice" fallbacks (FeatGrant.redundantFallback): the
+   *  feat whose static skill grant was redundant + which skill. The builder offers a replacement picker
+   *  per entry (stored in BuildState.featSkillChoices `<featId>:fallback:<skill>`). */
+  skillFallbacks?: { featId: string; skill: ProficiencyKey }[];
+  /** Resolved always-on effect-choice grants (feat/heritage/feature "choose one of N"): senses / IWR /
+   *  speeds the sheet applies. deriveDefenses + deriveSpeeds include these as sources. */
+  chosenEffects?: DefenseGrants;
+  /** Resolved item-choice passives, keyed by item id → the chosen passive effects. derive applies them
+   *  (like the item's own passiveEffects) only while that item is worn/invested. */
+  resolvedItemPassives?: Record<string, ItemPassiveEffects>;
+  /** Effects whose referenced content (a legacy spell/feat) isn't in the shipped data. Kept so the
+   *  intent is visible, with a warning surfaced on the sheet. */
+  effectWarnings?: { source: string; message: string }[];
+  /** Every resolved "choose one of N" pick, so the sheet can show WHICH option the character took —
+   *  including options that carry only a note (a kineticist gate junction). Keyed by the owning
+   *  record so a feat/feature row can label itself. */
+  effectPicks?: { recordId: string; choiceId: string; label: string; note?: string }[];
+  /** Secondary class DCs from multiclass dedications (Fighter/Ranger/Rogue/Alchemist Dedication) —
+   *  the borrowed class's trained DC, shown alongside the primary class DC. */
+  secondaryClassDcs?: { classId: string; name: string; keyAbility: AbilityId; dc: number }[];
+  /** Derived body size (ancestry size, raised by a feat/heritage sizeOverride). */
+  size?: Size;
+  /** Natural reach in feet (5 by default; raised by a feat/heritage — Jotun's Heart → 10). */
+  reach?: number;
+  /** Class-feature ids a CLASS ARCHETYPE removed, plus the features it substituted and a note per
+   *  archetype. derive and the builder both honor these so the class reads as the archetype rebuilt it. */
+  classArchetype?: {
+    suppressedFeatures: string[];
+    addedFeatures: { level: number; featureId: string }[];
+    notes: string[];
+  };
 
   // --- current state ---
   hitPoints: HitPoints;

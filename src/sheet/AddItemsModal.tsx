@@ -28,9 +28,12 @@ export function AddItemsModal({
   onBuyCompanion,
   onGiveCompanion,
   onClose,
+  hideLegacy,
 }: {
   content: ContentDatabase;
   currency: Coins;
+  /** When true, legacy/legacy-era items are hidden from the browse list (per-character setting). */
+  hideLegacy?: boolean;
   onBuy: (itemId: string) => void;
   onGive: (itemId: string) => void;
   /** Buy a vehicle/siege as a companion (deduct its price). Omit to hide vehicles/siege entirely. */
@@ -103,10 +106,16 @@ export function AddItemsModal({
           ),
         ]
       : [];
-    return [...Object.values(content.items), ...svcEntries, ...vehicleEntries].sort(
+    const items = Object.values(content.items).filter((i) => {
+      const e = (i as { edition?: string }).edition;
+      if (e === 'superseded') return false; // renamed/outdated half of a remaster change — always hidden
+      if (hideLegacy && (e === 'legacy' || e === 'legacy-era')) return false;
+      return true;
+    });
+    return [...items, ...svcEntries, ...vehicleEntries].sort(
       (a, b) => a.level - b.level || a.name.localeCompare(b.name),
     );
-  }, [content, services, companionCatalog]);
+  }, [content, services, companionCatalog, hideLegacy]);
 
   return (
     <FilterableSelect

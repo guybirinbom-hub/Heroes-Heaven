@@ -8,6 +8,7 @@ import {
   applyOverrides,
   applySources,
   applyContentToggles,
+  applyEditionFilter,
   collectChosenIds,
   canTakeNewDedication,
   checkPrerequisites,
@@ -26,10 +27,15 @@ import {
 } from '../rules/build';
 import { casterSlots, wizardSpellbookBudget, cantripsKnown } from '../rules/spellcasting';
 import { activeCasterArchetype, archetypeSlots } from '../rules/casterArchetypes';
-import { FEAT_GRANTS } from '../rules/featGrants';
+import { FEAT_GRANTS, featUpgradesAtLevel } from '../rules/featGrants';
+import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
+import { FEAT_FEAT_GRANTS } from '../rules/featFeatGrants';
+import { spellsMatching } from '../rules/spellChoice';
+import { FEAT_CANTRIP_GRANTS } from '../rules/featCantripGrants';
 import type { ContentDatabase, Feat, FeatCategory, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
-import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SetupCard, SetupUnlockedChoices, SourcesCard, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
+import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, SourcesCard, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
+import { hasSnareCrafting } from '../rules/snareFormulas';
 import { FilterableSelect, PickerRow, descNodeOf } from '../sheet/FilterableSelect';
 import { DescriptionModal } from '../sheet/DescriptionModal';
 import type { DescNode } from '../sheet/descref';
@@ -117,11 +123,13 @@ export function Builder({
     const enabled = enabledBookSet(build.enabledSources);
     const sourced = sourceCat.allBooks.every((b) => enabled.has(b)) ? ovContent : applySources(ovContent, enabled, keep);
     // Mythic/Kingmaker campaign toggles hide their content from the pickers (off by default).
-    return applyContentToggles(sourced, { mythicEnabled: build.mythicEnabled, kingmakerEnabled: build.kingmakerEnabled }, keep);
+    const toggled = applyContentToggles(sourced, { mythicEnabled: build.mythicEnabled, kingmakerEnabled: build.kingmakerEnabled }, keep);
+    // "Hide legacy data": drop legacy/legacy-era content (superseded is already pruned at import).
+    return applyEditionFilter(toggled, { hideLegacy: build.hideLegacy }, keep);
     // `build` is read for keepIds but intentionally not a dep: re-running only when sources change is
     // enough — a freshly-picked item is always from an enabled book, so it's present regardless.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ovContent, build.enabledSources, build.mythicEnabled, build.kingmakerEnabled, sourceCat]);
+  }, [ovContent, build.enabledSources, build.mythicEnabled, build.kingmakerEnabled, build.hideLegacy, sourceCat]);
   const actions = useBuilderActions(setBuild, ovContent);
   // Editing an existing character opens on the Setup page (options/sources/overrides at a glance);
   // creating a new one starts on Level 0 (identity: ancestry/background/class).
@@ -746,6 +754,9 @@ export function Builder({
                 {build.options?.overridesEnabled && (
                   <OverridesCard build={build} actions={actions} content={ovContent} character={featPrereqChar} />
                 )}
+                {hasSnareCrafting(featPrereqChar.feats.map((f) => f.featId)) && (
+                  <SnareFormulasCard build={build} actions={actions} content={ovContent} character={featPrereqChar} />
+                )}
               </div>
             </div>
           )}
@@ -960,6 +971,20 @@ export function Builder({
                               />
                             </div>
                           ))}
+                        {/* Level-gated proficiency upgrades from feats taken EARLIER (Brilliant Crafter:
+                            master Crafting at 7th) — surfaced on the level where the step lands so the
+                            player sees they gained it rather than a number silently changing. */}
+                        {featUpgradesAtLevel(featPrereqChar.feats.map((f) => f.featId), lvl).map((u) => (
+                          <div className="lvl-gain-block" key={`up-${u.featId}-${lvl}`}>
+                            <div className="lvl-gain">
+                              <i className="ti ti-trending-up lvl-gain-ic" aria-hidden="true" />
+                              <span className="lvl-gain-name">
+                                {content.feats[u.featId]?.name ?? u.featId} — becomes {cap(u.rank)}
+                              </span>
+                              <span className="lvl-gain-tag">upgrade</span>
+                            </div>
+                          </div>
+                        ))}
                         {bgFeatAtThisLevel &&
                           (() => {
                             const ft = content.feats[bg!.grantedFeatId!];
@@ -1115,6 +1140,9 @@ export function Builder({
                             })()}
                           {picked &&
                             content.feats[picked]?.choice &&
+                            // A choice that GRANTS a feat (flag 'feat', e.g. Pitborn) is handled by the
+                            // pick-a-feat picker below — don't also render the inert proficiency-choice dropdown.
+                            !(content.feats[picked]!.choice!.flag === 'feat' && FEAT_PICK_GRANTS[picked]) &&
                             (() => {
                               const def = content.feats[picked]!.choice!;
                               const opts =
@@ -1159,6 +1187,43 @@ export function Builder({
                                 </SubCard>
                               );
                             })}
+                          {/* Redundant-grant fallback ("already trained in X → a skill of your choice"):
+                              the derived character reports each triggered slot; offer the replacement. */}
+                          {picked &&
+                            (featPrereqChar.skillFallbacks ?? [])
+                              .filter((fb) => fb.featId === picked)
+                              .map((fb) => {
+                                const fbKey = `${picked}:fallback:${fb.skill}`;
+                                return (
+                                  <SubCard key={fbKey} icon="ti-bulb" label={`Already trained in ${cap(fb.skill)} — replacement skill`}>
+                                    <PopupSelect
+                                      title="Replacement skill"
+                                      placeholder="Choose a skill…"
+                                      value={build.featSkillChoices?.[fbKey] ?? ''}
+                                      onChange={(v) =>
+                                        actions.patch({
+                                          featSkillChoices: { ...(build.featSkillChoices ?? {}), [fbKey]: v as (typeof SKILLS)[number] },
+                                        })
+                                      }
+                                      options={SKILLS.map((s) => ({ value: s, label: cap(s) }))}
+                                    />
+                                  </SubCard>
+                                );
+                              })}
+                          {picked &&
+                            Array.from({ length: FEAT_GRANTS[picked]?.loreChoices ?? 0 }).map((_, li) => {
+                              const loreKey2 = `${picked}:${li}`;
+                              return (
+                                <SubCard key={`lore-${loreKey2}`} icon="ti-bulb" label="Trained Lore">
+                                  <input
+                                    className="lvl-lore-input"
+                                    placeholder="Lore subject (e.g. Warfare)…"
+                                    value={build.featLoreChoices?.[loreKey2] ?? ''}
+                                    onChange={(e) => actions.patch({ featLoreChoices: { ...(build.featLoreChoices ?? {}), [loreKey2]: e.target.value } })}
+                                  />
+                                </SubCard>
+                              );
+                            })}
                           {picked && FEAT_GRANTS[picked]?.bonusSkillFeat && (
                             <SubCard icon="ti-medal" label="Bonus skill feat">
                               <PopupSelect
@@ -1174,6 +1239,106 @@ export function Builder({
                               />
                             </SubCard>
                           )}
+                          {/* Pick-a-feat grants (General Training, Basic Maneuver, Natural Ambition, …):
+                              the player chooses a bonus feat from the grant's filtered pool. */}
+                          {picked &&
+                            FEAT_PICK_GRANTS[picked] &&
+                            (() => {
+                              const spec = FEAT_PICK_GRANTS[picked];
+                              const opts = pickableFeats(spec, build, content).map((f) => ({ value: f.id, label: f.name, description: f.description }));
+                              return (
+                                <SubCard icon="ti-medal" label={spec.prompt}>
+                                  <PopupSelect
+                                    title={spec.prompt}
+                                    placeholder={`${spec.prompt}…`}
+                                    value={build.pickFeatChoices?.[picked] ?? ''}
+                                    onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [picked]: v } })}
+                                    options={opts}
+                                  />
+                                </SubCard>
+                              );
+                            })()}
+                          {/* A GRANTED feat's own sub-choice (Seeker of Truths grants Domain Initiate →
+                              pick its domain here; the granted feat has no slot of its own). */}
+                          {picked &&
+                            (FEAT_FEAT_GRANTS[picked] ?? [])
+                              .filter((gid) => content.feats[gid]?.choice)
+                              .map((gid) => {
+                                const gdef = content.feats[gid]!.choice!;
+                                const gopts =
+                                  gdef.kind === 'domains'
+                                    ? ((build.deityId ? content.deities[build.deityId]?.domains : undefined) ?? []).map((d) => ({ value: d, label: cap(d) }))
+                                    : gdef.options ?? [];
+                                return (
+                                  <SubCard key={`gfc-${gid}`} icon="ti-adjustments" label={`${content.feats[gid]!.name}: ${gdef.prompt}`}>
+                                    <PopupSelect
+                                      title={gdef.prompt}
+                                      placeholder={`${gdef.prompt}…`}
+                                      value={build.grantedFeatChoices?.[gid] ?? ''}
+                                      onChange={(v) => actions.patch({ grantedFeatChoices: { ...(build.grantedFeatChoices ?? {}), [gid]: v } })}
+                                      options={gopts.map((o) => ({ value: o.value, label: featChoiceLabel(o.label) }))}
+                                    />
+                                  </SubCard>
+                                );
+                              })}
+                          {/* Effect choices ("choose one of N" — a dragon tattoo's resistance type, an
+                              energy heart's element): each picked option confers a concrete effect. */}
+                          {picked &&
+                            (content.feats[picked]?.effectChoices ?? []).map((ch) => {
+                              const ecKey = `${picked}:${ch.id}`;
+                              const set = (v: string) => actions.patch({ effectChoices: { ...(build.effectChoices ?? {}), [ecKey]: v } });
+                              // An OPEN pick ("any 1st-rank arcane spell") gets a searchable spell list;
+                              // a fixed set gets the plain dropdown. Hidden until its unlock level.
+                              if (ch.spellFilter) {
+                                if (build.level < (ch.spellFilter.minLevel ?? 1)) return null;
+                                const opts = spellsMatching(ch.spellFilter, content, build.hideLegacy).map((s) => ({
+                                  id: s.id,
+                                  name: s.name,
+                                  note: (s.rank ?? 0) === 0 ? 'Cantrip' : `${s.rank} rank`,
+                                }));
+                                return (
+                                  <SubCard key={`ec-${ecKey}`} icon="ti-sparkles" label={ch.prompt}>
+                                    <SearchSelect bare label="Spell" placeholder="Search spells…" value={build.effectChoices?.[ecKey] ?? null} onChange={set} options={opts} />
+                                  </SubCard>
+                                );
+                              }
+                              return (
+                                <SubCard key={`ec-${ecKey}`} icon="ti-adjustments" label={ch.prompt}>
+                                  <PopupSelect
+                                    title={ch.prompt}
+                                    placeholder={`${ch.prompt}…`}
+                                    value={build.effectChoices?.[ecKey] ?? ''}
+                                    onChange={set}
+                                    // An option may carry a note instead of a grant (a kineticist gate
+                                    // junction: only Elemental Resistance moves a stat). Show the note as
+                                    // the description so the player can read each option before picking.
+                                    options={(ch.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.note }))}
+                                  />
+                                </SubCard>
+                              );
+                            })}
+                          {/* Pick-a-cantrip grants (Dragon Spit, Hag Magic, …): choose an innate spell. */}
+                          {picked &&
+                            FEAT_CANTRIP_GRANTS[picked] &&
+                            (() => {
+                              const spec = FEAT_CANTRIP_GRANTS[picked];
+                              const opts = spec.options
+                                .map((id) => content.spells[id])
+                                .filter(Boolean)
+                                .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name))
+                                .map((s) => ({ value: s.id, label: s.name, description: s.description }));
+                              return (
+                                <SubCard icon="ti-sparkles" label={spec.prompt}>
+                                  <PopupSelect
+                                    title={spec.prompt}
+                                    placeholder={`${spec.prompt}…`}
+                                    value={build.pickCantripChoices?.[picked] ?? ''}
+                                    onChange={(v) => actions.patch({ pickCantripChoices: { ...(build.pickCantripChoices ?? {}), [picked]: v } })}
+                                    options={opts}
+                                  />
+                                </SubCard>
+                              );
+                            })()}
                         </div>
                       );
                     })}

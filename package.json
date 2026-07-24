@@ -1,12 +1,13 @@
 {
   "name": "heroes-heaven",
   "private": true,
-  "version": "0.1.15",
+  "version": "0.1.16",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "data": "node scripts/import-core.mjs",
-    "build": "node scripts/import-core.mjs && tsc -b && vite build",
+    "data": "node scripts/import-core-v2.mjs",
+    "data:foundry": "node scripts/import-core.mjs",
+    "build": "tsc -b && vite build",
     "build:web": "vite build",
     "preview": "vite preview",
     "tauri": "tauri",

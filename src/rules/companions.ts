@@ -17,6 +17,7 @@ import { abpOn, abpAttack, abpStrikingDice } from './abp';
 import { conditionPenalty } from './conditions';
 import { modeNumberBonus } from './modes';
 import { SPECIFIC_FAMILIARS_BY_ID } from './specificFamiliars';
+import { COMPANION_MODS } from './companionGrants';
 import type {
   AbilityId,
   ActionCost,
@@ -137,6 +138,10 @@ export interface AnimalCompanionBlock {
   senses: string[];
   attacks: { name: string; attack: number; damage: string; traits: string[] }[];
   skills: StatMod[];
+  /** IWR display lines from companion-modifying feats ("weakness 10 unholy"). */
+  iwr?: string[];
+  /** Which companion-mod feats shaped this block (short labels, shown as a banner line). */
+  modNotes?: string[];
   support: string;
   maneuver: string;
   /** Carried Bulk vs. capacity (only over-capacity is a problem). */
@@ -155,17 +160,24 @@ interface CompanionGear {
   speedPenalty: number;
   strikes: { name: string; die: string; dice: number; damageType: string; traits: string[] }[];
   carriedBulk: number;
+  /** Flat land-Speed bonus from the companion's invested gear (Alacritous Horseshoes: +5 ft). */
+  speedBonus: number;
   notes: string[];
 }
 
 /** Resolve a companion's worn/equipped gear into stat effects: barding → AC + Dex cap +
  *  check/Speed penalties; a wielded weapon → an extra Strike; plus carried Bulk. */
 function companionGear(cfg: CompanionConfig, content: ContentDatabase, strMod: number): CompanionGear {
-  const g: CompanionGear = { acBonus: 0, dexCap: null, checkPenalty: 0, speedPenalty: 0, strikes: [], carriedBulk: 0, notes: [] };
+  const g: CompanionGear = { acBonus: 0, dexCap: null, checkPenalty: 0, speedPenalty: 0, strikes: [], carriedBulk: 0, speedBonus: 0, notes: [] };
   for (const it of cfg.inventory ?? []) {
     const def = content.items[it.itemId];
     if (!def) continue;
     g.carriedBulk += (def.bulk || 0) * (it.quantity || 1);
+    // Invested magic gear can buff the companion (Alacritous Horseshoes: +5 ft land Speed).
+    if (it.invested && def.passiveEffects?.speedBonus) {
+      g.speedBonus += def.passiveEffects.speedBonus;
+      g.notes.push(`${def.name} (+${def.passiveEffects.speedBonus} ft Speed)`);
+    }
     if (def.itemType === 'armor' && it.worn) {
       g.acBonus += def.acBonus;
       if (def.dexCap != null) g.dexCap = g.dexCap == null ? def.dexCap : Math.min(g.dexCap, def.dexCap);
@@ -190,6 +202,20 @@ const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 /** Derive the full stat block for an animal companion at the handler's level. */
 const RANK_ORDER: ProficiencyRank[] = ['untrained', 'trained', 'expert', 'master', 'legendary'];
+
+/** Render a CompanionMod.speeds map as display lines. A number is feet; "land" means "equal to its
+ *  land Speed" and "land:N" caps that at N feet ("a swim Speed equal to its Speed, maximum 25"). */
+function speedLines(speeds: Record<string, number | string> | undefined, landSpeed: number): string[] {
+  const out: string[] = [];
+  for (const [kind, v] of Object.entries(speeds ?? {})) {
+    if (typeof v === 'number') { out.push(`${kind} ${v} feet`); continue; }
+    const [base, cap] = String(v).split(':');
+    if (base !== 'land') continue; // unknown formula — never guess a number
+    const feet = cap ? Math.min(landSpeed, Number(cap)) : landSpeed;
+    out.push(`${kind} ${feet} feet${cap ? ` (equal to its Speed, max ${cap})` : ' (equal to its Speed)'}`);
+  }
+  return out;
+}
 /** The higher of two proficiency ranks (b optional). */
 function rankMax(a: ProficiencyRank, b?: ProficiencyRank): ProficiencyRank {
   return b && RANK_ORDER.indexOf(b) > RANK_ORDER.indexOf(a) ? b : a;
@@ -203,12 +229,30 @@ export function deriveAnimalCompanion(
   conditions: ActiveCondition[] = [],
   withoutLevel = false,
   modes: ModeDef[] = [],
+  /** The OWNER's feat ids — companion-modifying feats (COMPANION_MODS: Celestial Mount, …) key off them. */
+  ownerFeatIds?: Set<string>,
 ): AnimalCompanionBlock {
-  const maturity = (cfg.maturity as Maturity) || 'young';
+  // Upgrade feats (Advanced/Incredible/Paragon Companion) raise the maturity FLOOR — in this engine a
+  // "paragon companion" is the specialized rung of the same ladder, so the feat can only improve it.
+  const MATURITY_RANK: Record<Maturity, number> = { young: 0, mature: 1, nimble: 2, savage: 2, specialized: 3, 'specialized-savage': 3 };
+  let maturity = (cfg.maturity as Maturity) || 'young';
+  if (ownerFeatIds) {
+    for (const [slug, mod] of Object.entries(COMPANION_MODS)) {
+      if (!ownerFeatIds.has(slug) || !mod.maturityFloor) continue;
+      if (MATURITY_RANK[mod.maturityFloor] > MATURITY_RANK[maturity as Maturity]) maturity = mod.maturityFloor;
+    }
+  }
   const m = COMPANION_FORMULA.maturities[maturity] ?? COMPANION_FORMULA.maturities.young;
   // Maturity boosts the base (young) ability modifiers.
   const ab = { ...type.abilities };
   for (const k of Object.keys(m.abilityBoosts) as AbilityId[]) ab[k] = (ab[k] ?? 0) + (m.abilityBoosts[k] ?? 0);
+  // Extra boosts from companion-modifying feats, on top of maturity.
+  if (ownerFeatIds) {
+    for (const [slug, mod] of Object.entries(COMPANION_MODS)) {
+      if (!ownerFeatIds.has(slug) || !mod.abilityBoosts) continue;
+      for (const k of Object.keys(mod.abilityBoosts) as AbilityId[]) ab[k] = (ab[k] ?? 0) + (mod.abilityBoosts[k] ?? 0);
+    }
+  }
 
   // Specialization applies only once the companion is specialized: extra ability boosts,
   // skill/AC rank overrides, and a Speed bonus (Racer) layered on the generic benefits.
@@ -218,7 +262,7 @@ export function deriveAnimalCompanion(
   const gear = companionGear(cfg, content, ab.str ?? 0);
 
   const speeds = { ...type.speeds };
-  if (speeds.land) speeds.land += m.speedBonus + (spec?.speedBonus ?? 0);
+  if (speeds.land) speeds.land += m.speedBonus + (spec?.speedBonus ?? 0) + gear.speedBonus;
   // A worn armor/barding Speed penalty applies to every Speed.
   if (gear.speedPenalty) {
     for (const key of Object.keys(speeds) as (keyof typeof speeds)[]) {
@@ -257,13 +301,23 @@ export function deriveAnimalCompanion(
 
   const sig = new Set(type.skills);
   const specSkill = new Map((spec?.skills ?? []).map((s) => [s.skill, s.rank] as const));
+  // Skills trained on the companion by an owner feat (Chorus Companion → Performance, Fell Rider →
+  // Intimidation) via COMPANION_MODS.skillGrants — raises the rank to at least the granted rank.
+  const modSkill = new Map<SkillId, ProficiencyRank>();
+  if (ownerFeatIds) {
+    for (const [slug, mod] of Object.entries(COMPANION_MODS)) {
+      if (!ownerFeatIds.has(slug) || !mod.kinds.includes('animal')) continue;
+      for (const g of mod.skillGrants ?? []) modSkill.set(g.skill, rankMax(modSkill.get(g.skill) ?? 'untrained', g.rank));
+    }
+  }
   const extraSpecSkills = (spec?.skills ?? []).map((s) => s.skill).filter((s) => !sig.has(s) && !UNIVERSAL_SKILLS.includes(s));
-  const skillList = [...new Set<SkillId>([...UNIVERSAL_SKILLS, ...type.skills, ...extraSpecSkills])];
+  const skillList = [...new Set<SkillId>([...UNIVERSAL_SKILLS, ...type.skills, ...extraSpecSkills, ...modSkill.keys()])];
   const skills: StatMod[] = skillList.map((sk) => {
     // Only the companion's SIGNATURE skill advances with maturity; the universal Acrobatics/Athletics
     // (and any other non-signature skill) stay trained (otherSkills rank).
     let rank = sig.has(sk) ? m.ranks.signatureSkills : m.ranks.otherSkills;
     if (specSkill.has(sk)) rank = rankMax(rank, specSkill.get(sk));
+    if (modSkill.has(sk)) rank = rankMax(rank, modSkill.get(sk));
     const ability = SKILL_ABILITY[sk];
     const checkPen = ability === 'str' || ability === 'dex' ? gear.checkPenalty : 0;
     return { name: cap(sk), modifier: (ab[ability] ?? 0) + profBonus(rank, level, withoutLevel) + checkPen + conditionPenalty(conditions, ability, 'skill') + modeNumberBonus(modes, { kind: 'skill', detail: sk }), rank };
@@ -277,6 +331,32 @@ export function deriveAnimalCompanion(
     max: Math.max(1, Math.floor((10 + strMod) * factor)),
   };
 
+  // Companion-MODIFYING feats the owner has (COMPANION_MODS: Celestial/Fiendish Mount, spirit-blessed
+  // strikes, …): extra senses, +max HP, fly = land Speed, IWR lines, per-Strike riders.
+  const senses = [...type.senses];
+  const iwr: string[] = [];
+  const modNotes: string[] = [];
+  let hpBonus = 0;
+  if (ownerFeatIds) {
+    for (const [slug, mod] of Object.entries(COMPANION_MODS)) {
+      if (!ownerFeatIds.has(slug) || !mod.kinds.includes('animal')) continue;
+      for (const s of mod.senses ?? []) if (!senses.some((x) => x.toLowerCase() === s.toLowerCase())) senses.push(s);
+      if (mod.maxHpBonus) hpBonus += mod.maxHpBonus;
+      if (mod.flyEqualsLand && speeds.land) speeds.fly = Math.max(speeds.fly ?? 0, speeds.land);
+      // Numeric/relative extra speeds (Burrowing Form: burrow 5; Airborne Form: fly = its Speed).
+      for (const [kind, v] of Object.entries(mod.speeds ?? {})) {
+        const key = kind as keyof typeof speeds;
+        if (typeof v === 'number') { speeds[key] = Math.max(speeds[key] ?? 0, v); continue; }
+        const [base, cap] = String(v).split(':');
+        if (base !== 'land' || !speeds.land) continue; // unknown formula — never guess a number
+        speeds[key] = Math.max(speeds[key] ?? 0, cap ? Math.min(speeds.land, Number(cap)) : speeds.land);
+      }
+      iwr.push(...(mod.iwr ?? []));
+      if (mod.strikeRider) for (const a of attacks) if (!a.traits.includes(mod.strikeRider)) a.traits.push(mod.strikeRider);
+      if (mod.note) modNotes.push(mod.note);
+    }
+  }
+
   return {
     name: cfg.name || type.name,
     typeName: type.name,
@@ -287,7 +367,7 @@ export function deriveAnimalCompanion(
     specialization: spec ? { id: spec.id, name: spec.name } : undefined,
     abilities: ab,
     ac,
-    hp,
+    hp: hp + hpBonus,
     saves: { fortitude: save('con'), reflex: save('dex'), will: save('wis') },
     perception: {
       name: 'Perception',
@@ -295,13 +375,15 @@ export function deriveAnimalCompanion(
       rank: m.ranks.perception,
     },
     speeds,
-    senses: type.senses,
+    senses,
     attacks,
     skills,
     support: type.support,
     maneuver: type.maneuver,
     bulk,
     gearNote: gear.notes.join('; ') || undefined,
+    ...(iwr.length ? { iwr } : {}),
+    ...(modNotes.length ? { modNotes } : {}),
   };
 }
 
@@ -367,8 +449,13 @@ export function deriveFamiliar(
   // stored in cfg.abilities.
   const hasTough = has('tough') || (sf?.requiredAbilities ?? []).some((a) => a.toLowerCase() === 'tough');
   // Movement abilities: Fast Movement raises the land Speed 25→40; Flier/Climber/Burrower add types.
-  const land = has('fast-movement') ? 40 : 25;
+  // Aquatic familiars (Elver Pet) gain the aquatic trait, breathe water, and swap land Speed for a
+  // swim Speed of the same value.
+  const aquatic = cfg.grantSlug === 'elver-pet';
+  const baseSpeed = has('fast-movement') ? 40 : 25;
+  const land = aquatic ? 0 : baseSpeed;
   const extraSpeeds: string[] = [];
+  if (aquatic) extraSpeeds.push(`swim ${baseSpeed} feet (aquatic — breathes water, not air)`);
   if (has('flier')) extraSpeeds.push('fly 25 feet');
   if (has('climber')) extraSpeeds.push('climb 25 feet');
   if (has('burrower')) extraSpeeds.push('burrow 5 feet');
@@ -410,6 +497,14 @@ export interface EidolonBlock extends Defenses {
   abilities: Record<AbilityId, number>;
   /** Primary + secondary unarmed Strikes (the summoner's proficiency, the eidolon's Str/Dex). */
   attacks: { name: string; attack: number; damage: string; traits: string[] }[];
+  /** Senses from the eidolon type + evolution feats (Expanded Senses). */
+  senses?: string[];
+  /** Non-land speeds from evolution feats ("swim 25 feet (amphibious)"). */
+  extraSpeeds?: string[];
+  /** IWR lines from the type/evolutions ("resistance 5 fire", "immune grabbed…"). */
+  iwr?: string[];
+  /** Evolution reminders shown under the block. */
+  evoNotes?: string[];
 }
 
 /** The eidolon's primary unarmed attack is chosen from these stat blocks (Secrets of Magic). The
@@ -500,7 +595,7 @@ export function deriveEidolon(
   const mpRef = mpHw ? mpWeaponRefine(mpHw, level) : null;
   const mpTerm = (t: MpDamage): string =>
     `${t.dice && t.die ? `${t.dice}${t.die}` : `${t.flat ?? 0}`}${t.persistent ? ' persistent' : ''} ${t.type}`;
-  const strikingTier = hwRunes?.striking === 'major' ? 3 : hwRunes?.striking === 'greater' ? 2 : hwRunes?.striking === 'striking' ? 1 : 0;
+  const strikingTier = hwRunes?.striking === 'mythic' ? 4 : hwRunes?.striking === 'major' ? 3 : hwRunes?.striking === 'greater' ? 2 : hwRunes?.striking === 'striking' ? 1 : 0;
   const strikingDice = Math.max(abpOn(character) ? abpStrikingDice(level) : strikingTier, mpRef?.extraDice ?? 0);
   const potencyBonus = Math.max(abpOn(character) ? abpAttack(level) : hwRunes?.potency ?? 0, mpRef?.attack ?? 0);
   // Property runes on the shared Handwraps of Mighty Blows also ride on the eidolon's unarmed Strikes
@@ -541,6 +636,46 @@ export function deriveEidolon(
     strike(ec.secondary?.name, 'Secondary', 6, ['agile', 'finesse'], ec.secondary?.damageType),
   ];
 
+  // EIDOLON-TYPE senses/immunities (the subclass option's innate package) + EVOLUTION feats the
+  // summoner took (Expanded Senses, Amphibious Form, Dual Energy Heart, …). The audit found the
+  // eidolon block surfaced none of these.
+  const evoSenses: string[] = [];
+  const evoIwr: string[] = [];
+  const extraSpeeds: string[] = [];
+  const evoNotes: string[] = [];
+  const TYPE_PACKAGE: Record<string, { senses?: string[]; iwr?: string[]; notes?: string[] }> = {
+    'undead-eidolon': { senses: ['darkvision'], notes: ['Negative Essence: void healing (harmed by vitality, healed by void).'] },
+    'swarm-eidolon': { senses: ['low-light vision'], iwr: ['immune grabbed, prone, restrained'] },
+  };
+  const pkg = cfg.typeId ? TYPE_PACKAGE[cfg.typeId] : undefined;
+  if (pkg) {
+    evoSenses.push(...(pkg.senses ?? []));
+    evoIwr.push(...(pkg.iwr ?? []));
+    evoNotes.push(...(pkg.notes ?? []));
+  }
+  const featIdSet = new Set(character.feats.map((f) => f.featId));
+  // Eidolon-kind entries in COMPANION_MODS (Vibration Sense, …). Without this pass they'd be inert:
+  // the table is otherwise only read by deriveAnimalCompanion.
+  for (const [slug, mod] of Object.entries(COMPANION_MODS)) {
+    if (!featIdSet.has(slug) || !mod.kinds.includes('eidolon')) continue;
+    for (const s of mod.senses ?? []) if (!evoSenses.includes(s)) evoSenses.push(s);
+    evoIwr.push(...(mod.iwr ?? []));
+    for (const line of speedLines(mod.speeds, 25)) if (!extraSpeeds.includes(line)) extraSpeeds.push(line);
+    if (mod.note) evoNotes.push(mod.note);
+  }
+  if (featIdSet.has('expanded-senses')) {
+    for (const s of ['low-light vision', 'darkvision', 'scent (imprecise 30 ft)']) if (!evoSenses.includes(s)) evoSenses.push(s);
+  }
+  if (featIdSet.has('amphibious-form')) {
+    // Swim Speed equal to its land Speed, max 25 ft (or the inverse for an aquatic eidolon).
+    extraSpeeds.push('swim 25 feet (amphibious)');
+  }
+  if (featIdSet.has('dual-energy-heart')) {
+    const chosen = character.feats.find((f) => f.featId === 'dual-energy-heart')?.choice?.value;
+    evoIwr.push(`resistance ${Math.max(1, Math.floor(level / 2))} ${chosen ?? 'chosen energy type'}`);
+    evoNotes.push('Dual Energy Heart: its energy Strike gains versatile (chosen type).');
+  }
+
   return {
     name: cfg.name || opt?.name || 'Eidolon',
     tradition: opt?.tradition,
@@ -552,5 +687,9 @@ export function deriveEidolon(
     attacks,
     ...masterDefenses(character, content, conditions, modes),
     ac: eidolonAc,
+    ...(evoSenses.length ? { senses: evoSenses } : {}),
+    ...(extraSpeeds.length ? { extraSpeeds } : {}),
+    ...(evoIwr.length ? { iwr: evoIwr } : {}),
+    ...(evoNotes.length ? { evoNotes } : {}),
   };
 }

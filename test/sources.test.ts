@@ -18,9 +18,9 @@ describe('source catalog', () => {
   it('bundles Adventure Path volumes into named-AP toggles (far fewer than the raw book count)', () => {
     const cat = sourceCatalog(db);
     const ap = cat.groups.find((g) => g.category === 'Adventure Paths')!;
-    // ~127 AP books collapse into a couple dozen bundles
+    // ~150 AP books collapse into a few dozen named-AP bundles
     expect(ap.bookCount).toBeGreaterThan(100);
-    expect(ap.entries.length).toBeLessThan(35);
+    expect(ap.entries.length).toBeLessThan(45);
     // Age of Ashes bundles its six volumes (#145–150) + player's guide into one entry
     const aoa = ap.entries.find((e) => e.label === 'Age of Ashes')!;
     expect(aoa).toBeTruthy();
@@ -52,12 +52,22 @@ describe('source catalog', () => {
     expect(categoryOfBook('Pathfinder NPC Core')).toBe('Rulebooks');
     // the Advanced Player's Guide is a rulebook, NOT swept into APs by the "Player's Guide" rule
     expect(categoryOfBook("Pathfinder Advanced Player's Guide")).toBe('Rulebooks');
-    // "Other" is now just the blogs bundle + true specials (Society moved to Adventure Paths)
+    // AoN exports Lost Omens / hardcover titles WITHOUT the "Lost Omens:" prefix or with a
+    // "(Remastered)" suffix — they must still shelve correctly, not fall into "Other".
+    expect(categoryOfBook('Pathfinder Tian Xia Character Guide')).toBe('Lost Omens');
+    expect(categoryOfBook('Pathfinder Ancestry Guide')).toBe('Lost Omens');
+    expect(categoryOfBook('Pathfinder Gods & Magic')).toBe('Lost Omens');
+    expect(categoryOfBook('Pathfinder Guns & Gears (Remastered)')).toBe('Rulebooks');
+    // "Other" holds only genuinely niche material — blogs, specials, standalone one-offs. It's larger
+    // than the pre-migration catalog (fresh records surfaced more books) but must stay a short tail,
+    // with Society/APs/Lost Omens/Rulebooks all shelved elsewhere.
     const cat = sourceCatalog(db);
     const other = cat.groups.find((g) => g.category === 'Other')!;
-    expect(other.entries.length).toBeLessThanOrEqual(3);
+    expect(other.entries.length).toBeLessThanOrEqual(12);
     expect(other.entries.some((e) => /Blog/.test(e.label))).toBe(true);
     expect(other.entries.every((e) => e.label !== 'Pathfinder Society')).toBe(true);
+    // no Lost Omens setting book leaked into the "Other" shelf
+    expect(other.entries.every((e) => !/Tian Xia|Ancestry Guide|Character Guide|Mwangi/.test(e.label))).toBe(true);
   });
 });
 

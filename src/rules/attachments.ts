@@ -52,8 +52,8 @@ export function canAttachTo(attachment: Item, hostType: string): boolean {
  * ========================================================================= */
 
 type HostRunes = WeaponRunes & ArmorRunes;
-const STRIKING_TIER = ['', 'striking', 'greater', 'major'] as const;
-const RESILIENT_TIER = ['', 'resilient', 'greater', 'major'] as const;
+const STRIKING_TIER = ['', 'striking', 'greater', 'major', 'mythic'] as const;
+const RESILIENT_TIER = ['', 'resilient', 'greater', 'major', 'mythic'] as const;
 const aOrAn = (w: string) => (/^[aeiou]/i.test(w) ? `an ${w}` : `a ${w}`);
 
 /** The kind of an affixable item — a host holds at most one of each (RAW: one talisman, etc.). */
@@ -103,13 +103,13 @@ function planRune(rune: RuneDef, attachment: Item, host: Item, hostInv: Inventor
     return etch(runes);
   }
   if (rune.kind === 'striking') {
-    const tier = STRIKING_TIER[Math.min(v, 3)] as WeaponRunes['striking'];
+    const tier = STRIKING_TIER[Math.min(v, 4)] as WeaponRunes['striking'];
     if (runes.striking === tier) return { ok: false, reason: `${host.name} already has a ${tier} striking rune.` };
     runes.striking = tier;
     return etch(runes);
   }
   if (rune.kind === 'resilient') {
-    const tier = RESILIENT_TIER[Math.min(v, 3)] as ArmorRunes['resilient'];
+    const tier = RESILIENT_TIER[Math.min(v, 4)] as ArmorRunes['resilient'];
     if (runes.resilient === tier) return { ok: false, reason: `${host.name} already has a ${tier} resilient rune.` };
     runes.resilient = tier;
     return etch(runes);

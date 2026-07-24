@@ -141,7 +141,10 @@ export function ModesPanel({
         >
           <i className={'ti ' + (on ? 'ti-circle-check' : 'ti-circle')} aria-hidden="true" />
         </button>
-        <div className="mode-info" onClick={() => onToggle(mode.id)}>
+        {/* The body only DISPLAYS the mode (its modifiers + note are shown inline here) — it no longer
+            toggles on click, so reading a mode never accidentally activates it. The circle is the sole
+            activate control. */}
+        <div className="mode-info mode-info-static">
           <div className="mode-name">
             {mode.name}
             {editable && mode.charId && <span className="mode-scope-tag" title="Only this character">★ this character</span>}

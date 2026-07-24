@@ -36,7 +36,8 @@ describe('archetype spell slot table', () => {
       expect(c.feats[ded], ded).toBeTruthy();
       // Magaambyan (innate cantrip) + Halcyon (custom initiate/adept/sage schedule) don't use the
       // standard basic/expert/master spellcasting feats — their gating feats are checked below.
-      if (cfg.innateCantrip || cfg.customUnlocks) continue;
+      // Bloodrager is cantrips-only (no ranked-slot feats ship).
+      if (cfg.innateCantrip || cfg.customUnlocks || cfg.cantripsOnly) continue;
       expect(c.feats[cfg.basicId], cfg.basicId).toBeTruthy();
       expect(c.feats[cfg.expertId], cfg.expertId).toBeTruthy();
       // Summoner archetype caps at Expert — there is no master-summoner-spellcasting feat.

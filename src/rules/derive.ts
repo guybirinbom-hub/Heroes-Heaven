@@ -11,11 +11,13 @@
 import type {
   AbilityId,
   ArmorCategory,
+  ItemPassiveEffects,
   ArmorItem,
   ArmorRunes,
   Character,
   ContentDatabase,
   DefenseGrants,
+  AbilityScores,
   InventoryItem,
   Item,
   SenseEntry,
@@ -24,13 +26,15 @@ import type {
   SaveId,
   SkillId,
   Speeds,
+  SpeedGrants,
   SpellcastingEntry,
   StanceDef,
+  StrikeDamageRider,
   WeaponRunes,
 } from './types';
 import { PROFICIENCY_RANKS } from './types';
-import { conditionPenalty, drainedHpLoss } from './conditions';
-import { modeNumberBonus } from './modes';
+import { conditionPenalty, conditionTypedMods, drainedHpLoss } from './conditions';
+import { modeNumberBonus, modeTypedMods, poolTypedMods, type TypedMod } from './modes';
 import { abpOn, abpAttack, abpDefense, abpSave, abpPerception, abpStrikingDice, abpSkillBonus } from './abp';
 import {
   mpRefinedLevel,
@@ -147,7 +151,7 @@ export function abilityModifiers(c: Character): Record<AbilityId, number> {
   };
 }
 
-const RESILIENT_BONUS: Record<string, number> = { resilient: 1, greater: 2, major: 3 };
+const RESILIENT_BONUS: Record<string, number> = { resilient: 1, greater: 2, major: 3, mythic: 4 };
 
 /** Item bonus to saves from a worn armor's resilient rune, or a Monster-Parts refined armor's
  *  resilient-equivalent bonus (Table 4B) when the armor is in Monster-Parts mode (it ignores runes). */
@@ -162,13 +166,21 @@ export function resilientSaveBonus(c: Character, db: ContentDatabase): number {
 export function deriveSave(c: Character, save: SaveId, db?: ContentDatabase): StatLine {
   const rank = c.proficiencies.saves[save];
   const ability = SAVE_ABILITY[save];
+  // Item bonus to saves: ABP save potency replaces the resilient rune; a passive save item
+  // (mythic resilient, save-bonus wearables) competes as an item bonus — take the best.
+  const itemBonus = Math.max(abpOn(c) ? abpSave(c.level) : db ? resilientSaveBonus(c, db) : 0, passiveItemBonus(c, db, 'saves'));
+  // The active stance/form may grant a save bonus (Cobra Stance: +1 Fortitude), typed so it pools.
+  const stanceSave = db ? activeStanceDef(c, db)?.saves?.[save] : undefined;
   const modifier =
     abilityMod(c.abilities[ability]) +
     profBonus(rank, c.level, pwl(c)) +
-    // ABP save potency replaces the resilient rune's item bonus; otherwise use the worn rune.
-    (abpOn(c) ? abpSave(c.level) : db ? resilientSaveBonus(c, db) : 0) +
-    conditionPenalty(c.conditions, ability, 'save') +
-    modeNumberBonus(c.activeModes, { kind: 'save', detail: save });
+    // All typed modifiers (item / condition penalties / modes / stance) pool by type across sources.
+    poolTypedMods([
+      { type: 'item', value: itemBonus },
+      ...(stanceSave ? [{ type: stanceSave.type as TypedMod['type'], value: stanceSave.value }] : []),
+      ...conditionTypedMods(c.conditions, ability, 'save'),
+      ...modeTypedMods(c.activeModes, { kind: 'save', detail: save }),
+    ]);
   return { rank, modifier };
 }
 
@@ -187,30 +199,86 @@ export function mpSenseSkillItemBonus(c: Character, kind: 'perception' | 'skill'
   return best;
 }
 
-export function derivePerception(c: Character): StatLine {
+/** The best PASSIVE item bonus of a kind from worn/invested/equipped items (the generic magic-item
+ *  lane — Clarity Goggles, Cloak of Social Graces, …). Item bonuses don't stack: callers take the
+ *  max of this, ABP, and Monster Parts. Requires the db to read item definitions. */
+export function passiveItemBonus(
+  c: Character,
+  db: ContentDatabase | undefined,
+  kind: 'perception' | 'skill' | 'saves' | 'ac' | 'attack',
+  skillKey?: ProficiencyKey,
+): number {
+  if (!db) return 0;
+  let best = 0;
+  const read = (pe?: ItemPassiveEffects) => {
+    if (!pe) return;
+    let v = kind === 'skill' ? (skillKey ? pe.skills?.[skillKey] ?? 0 : 0) : pe[kind] ?? 0;
+    // A blanket Lore bonus (Brooch of Inspiration) applies to every Lore skill.
+    if (kind === 'skill' && skillKey?.startsWith('lore:') && pe.loreBonus) v = Math.max(v, pe.loreBonus);
+    best = Math.max(best, v);
+  };
+  for (const inv of c.inventory) {
+    if (!(inv.worn || inv.invested || inv.equipped)) continue;
+    read(db.items[inv.itemId]?.passiveEffects);
+    read(c.resolvedItemPassives?.[inv.itemId]); // a resolved "choose one of N" item passive
+  }
+  return best;
+}
+
+/** An item bonus to a DYNAMIC skill set — the character's sorcerer bloodline skills (Sanguine Pendant)
+ *  or their deity's skill (Helm of Zeal) — from invested items. Item bonuses don't stack (highest). */
+export function dynamicItemSkillBonus(c: Character, db: ContentDatabase | undefined, skillKey: ProficiencyKey): number {
+  if (!db) return 0;
+  let best = 0;
+  const bloodline = () => {
+    const cls = c.classId === 'sorcerer' ? db.classes.sorcerer : c.classId2 === 'sorcerer' ? db.classes.sorcerer : undefined;
+    const sub = cls?.subclass?.options.find((o) => o.id === c.subclassId || o.id === c.subclassId2);
+    return (sub?.grants?.skills ?? []) as string[];
+  };
+  const deitySkill = () => {
+    const s = c.details.deityId ? db.deities[c.details.deityId]?.skill : undefined;
+    return s ? [s] : [];
+  };
+  for (const inv of c.inventory) {
+    if (!inv.invested) continue;
+    const dsb = db.items[inv.itemId]?.dynamicSkillBonus;
+    if (!dsb) continue;
+    const skills = dsb.source === 'bloodline' ? bloodline() : deitySkill();
+    if (skills.includes(skillKey)) best = Math.max(best, dsb.value);
+  }
+  return best;
+}
+
+export function derivePerception(c: Character, db?: ContentDatabase): StatLine {
   const rank = c.proficiencies.perception;
+  // Item bonus: the best of ABP perception, a Monster-Parts refined Perception item, and a passive
+  // Perception item (Clarity Goggles) — all item bonuses, which don't stack.
+  const itemBonus = Math.max(abpOn(c) ? abpPerception(c.level) : 0, mpSenseSkillItemBonus(c, 'perception'), passiveItemBonus(c, db, 'perception'));
   const modifier =
     abilityMod(c.abilities.wis) +
     profBonus(rank, c.level, pwl(c)) +
-    // Item bonus: the higher of ABP perception and a Monster-Parts refined Perception item (both are
-    // item bonuses to Perception, which don't stack).
-    Math.max(abpOn(c) ? abpPerception(c.level) : 0, mpSenseSkillItemBonus(c, 'perception')) +
-    conditionPenalty(c.conditions, 'wis', 'perception') +
-    modeNumberBonus(c.activeModes, { kind: 'perception' });
+    poolTypedMods([
+      { type: 'item', value: itemBonus },
+      ...conditionTypedMods(c.conditions, 'wis', 'perception'),
+      ...modeTypedMods(c.activeModes, { kind: 'perception' }),
+    ]);
   return { rank, modifier };
 }
 
 export function deriveSkill(c: Character, key: ProficiencyKey, db?: ContentDatabase): StatLine {
   const rank = c.proficiencies.skills[key] ?? 'untrained';
   const ability = skillAbility(key);
+  // Item bonus: the best of an ABP skill item, a Monster-Parts refined skill item, a passive skill item
+  // (Cloak of Social Graces), and a dynamic bloodline/deity skill item (Sanguine Pendant). Don't stack.
+  const itemBonus = Math.max(abpSkillBonus(c, key), mpSenseSkillItemBonus(c, 'skill', key), passiveItemBonus(c, db, 'skill', key), dynamicItemSkillBonus(c, db, key));
   let modifier =
     abilityMod(c.abilities[ability]) +
     profBonus(rank, c.level, pwl(c)) +
-    // Item bonus: the higher of an ABP skill item and a Monster-Parts refined skill item keyed to this
-    // skill (Table 4E). Both are item bonuses to the skill, which don't stack.
-    Math.max(abpSkillBonus(c, key), mpSenseSkillItemBonus(c, 'skill', key)) +
-    conditionPenalty(c.conditions, ability, 'skill') +
-    modeNumberBonus(c.activeModes, { kind: 'skill', detail: key });
+    poolTypedMods([
+      { type: 'item', value: itemBonus },
+      ...conditionTypedMods(c.conditions, ability, 'skill'),
+      ...modeTypedMods(c.activeModes, { kind: 'skill', detail: key }),
+    ]);
   // The worn armor's check penalty hits Strength- and Dexterity-based skills.
   if (db && (ability === 'str' || ability === 'dex')) {
     modifier += deriveArmorCheckPenalty(c, db).value;
@@ -224,8 +292,7 @@ export function deriveClassDc(c: Character): StatLine & { dc: number } {
   const modifier =
     abilityMod(c.abilities[key]) +
     profBonus(rank, c.level, pwl(c)) +
-    conditionPenalty(c.conditions, key, 'class-dc') +
-    modeNumberBonus(c.activeModes, { kind: 'class-dc' });
+    poolTypedMods([...conditionTypedMods(c.conditions, key, 'class-dc'), ...modeTypedMods(c.activeModes, { kind: 'class-dc' })]);
   return { rank, modifier, dc: 10 + modifier };
 }
 
@@ -237,8 +304,13 @@ export interface SpellStats {
 
 export function deriveSpellcasting(c: Character, entry: SpellcastingEntry): SpellStats {
   const base = abilityMod(c.abilities[entry.keyAbility]) + profBonus(entry.proficiency, c.level, pwl(c));
-  const attack = base + conditionPenalty(c.conditions, entry.keyAbility, 'spell-attack') + modeNumberBonus(c.activeModes, { kind: 'spell-attack' });
-  const dc = 10 + base + conditionPenalty(c.conditions, entry.keyAbility, 'spell-dc') + modeNumberBonus(c.activeModes, { kind: 'spell-dc' });
+  const attack =
+    base +
+    poolTypedMods([...conditionTypedMods(c.conditions, entry.keyAbility, 'spell-attack'), ...modeTypedMods(c.activeModes, { kind: 'spell-attack' })]);
+  const dc =
+    10 +
+    base +
+    poolTypedMods([...conditionTypedMods(c.conditions, entry.keyAbility, 'spell-dc'), ...modeTypedMods(c.activeModes, { kind: 'spell-dc' })]);
   return { rank: entry.proficiency, attack, dc };
 }
 
@@ -314,12 +386,27 @@ export function activeStanceDef(c: Character, db: ContentDatabase): StanceDef | 
   return c.activeStance ? db.stances?.[c.activeStance] : undefined;
 }
 
+/** The `whileActive` grants from owned feats/features whose resource STATE is currently toggled on
+ *  (Raging Resistance while raging). Shared by deriveDefenses (IWR/senses) and deriveSpeeds (speeds). */
+export function activeStateGrants(c: Character, db: ContentDatabase): NonNullable<DefenseGrants['whileActive']> {
+  const out: NonNullable<DefenseGrants['whileActive']> = [];
+  const on = (state: string) => (c.classResources?.[state] ?? 0) > 0;
+  const scan = (g: DefenseGrants | undefined) => {
+    for (const wa of g?.whileActive ?? []) if (on(wa.state)) out.push(wa);
+  };
+  for (const f of c.feats) scan(db.feats[f.featId]);
+  if (c.heritageId) scan(db.heritages[c.heritageId]);
+  for (const fid of ownedFeatureIds(c, db)) scan(db.classFeatures[fid]);
+  return out;
+}
+
 export function deriveAc(c: Character, db: ContentDatabase): AcResult {
   const worn = findWornArmor(c, db);
 
   let category: ArmorCategory = 'unarmored';
   let dexCap: number | null = null;
-  let itemBonus = 0;
+  let armorBase = 0; // the armor's inherent AC — untyped, always applies
+  let acItem = 0; // item-type bonus (potency rune / Monster-Parts refine) — item bonuses don't stack
 
   if (worn) {
     category = worn.armor.category;
@@ -327,12 +414,13 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
     // ABP defense potency replaces the armor potency rune's numeric bonus. A Monster-Parts refined
     // armor (Table 4B) supplies an AC item bonus in place of the potency rune (which it ignores).
     const refAc = mpActive(c, worn.inv) ? mpArmorRefine(worn.inv.monsterPart, c.level).ac : 0;
-    const potency = abpOn(c) ? 0 : Math.max((worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0, refAc);
     // Guard against a data-incomplete armor (missing acBonus) corrupting AC into NaN.
-    itemBonus = (worn.armor.acBonus ?? 0) + potency;
+    armorBase = worn.armor.acBonus ?? 0;
+    acItem = abpOn(c) ? 0 : Math.max((worn.inv.runes as ArmorRunes | undefined)?.potency ?? 0, refAc);
   }
-  // ABP defense potency is an automatic AC bonus regardless of worn armor.
-  if (abpOn(c)) itemBonus += abpDefense(c.level);
+  // A passive AC item (Bracers of Armor), Monster Parts, and ABP defense potency are all ITEM bonuses to
+  // AC — they don't stack with each other or the armor potency rune, so take the highest.
+  acItem = Math.max(acItem, passiveItemBonus(c, db, 'ac'), abpOn(c) ? abpDefense(c.level) : 0);
 
   // A character can wear an item whose category isn't one of the four PC defense tracks (e.g. animal
   // "light-barding"/"heavy-barding"); fall back to the unarmored rank so AC never computes to NaN.
@@ -344,10 +432,15 @@ export function deriveAc(c: Character, db: ContentDatabase): AcResult {
   const stanceDexCap = stance?.dexCap;
   const effDexCap = stanceDexCap != null ? (dexCap != null ? Math.min(dexCap, stanceDexCap) : stanceDexCap) : dexCap;
   const dexContribution = effDexCap != null ? Math.min(dex, effDexCap) : dex;
-  const penalty = conditionPenalty(c.conditions, 'dex', 'ac');
-  const modeBonus = modeNumberBonus(shieldSwappedModes(c, db), { kind: 'ac' });
-  const stanceAc = stance?.acBonus?.value ?? 0;
-  return { value: 10 + dexContribution + profBonus(rank, c.level, pwl(c)) + itemBonus + penalty + modeBonus + stanceAc, rank, dexCap: effDexCap };
+  // Everything typed pools by type across sources, so Mountain Stance's +4 ITEM bonus doesn't stack with
+  // armor potency, and a shield's circumstance bonus doesn't stack with a circumstance penalty of its own.
+  const pooled = poolTypedMods([
+    { type: 'item', value: acItem },
+    ...(stance?.acBonus ? [{ type: stance.acBonus.type as TypedMod['type'], value: stance.acBonus.value }] : []),
+    ...conditionTypedMods(c.conditions, 'dex', 'ac'),
+    ...modeTypedMods(shieldSwappedModes(c, db), { kind: 'ac' }),
+  ]);
+  return { value: 10 + dexContribution + profBonus(rank, c.level, pwl(c)) + armorBase + pooled, rank, dexCap: effDexCap };
 }
 
 /** The active modes with Raise a Shield's placeholder AC value swapped for the HELD shield's real
@@ -417,23 +510,106 @@ export interface CharacterDefenses {
 
 const ACUITY_ORDER: Record<string, number> = { precise: 3, imprecise: 2, vague: 1 };
 
-/** Resolve a Resistance/Weakness value that may be a level-formula string. CSP-safe
- *  (no eval): handles plain numbers, "@actor.level", and the floor/ceil/max/min level
- *  forms used in the data; unrecognized formulas resolve to 0 (so we never show a wrong
- *  number). */
-export function resolveIwrValue(value: number | string, level: number): number {
-  if (typeof value === 'number') return Math.max(0, Math.round(value));
-  const v = value.trim();
-  if (v === '@actor.level') return level;
-  const m = v.match(/^(?:(max|min)\((\d+),\s*)?(floor|ceil)\(@actor\.level\s*\/\s*(\d+)\)\)?$/);
-  if (m) {
-    const inner = m[3] === 'ceil' ? Math.ceil(level / Number(m[4])) : Math.floor(level / Number(m[4]));
-    if (m[1] === 'max') return Math.max(Number(m[2]), inner);
-    if (m[1] === 'min') return Math.min(Number(m[2]), inner);
-    return Math.max(0, inner);
+/** The values a data formula may reference. `level` is always available; the rest come from the
+ *  character when one is in hand (ability modifiers, the character's own Speeds). */
+export interface FormulaScope {
+  level: number;
+  abilities?: AbilityScores;
+  speeds?: Speeds;
+}
+
+/** Substitute the supported `@actor.…` tokens for their numbers. Unknown tokens are left alone so
+ *  the caller's parse fails and the value resolves to 0 rather than to a wrong number. */
+function substituteTokens(v: string, scope: FormulaScope): string {
+  let out = v.replace(/@actor\.level/g, String(scope.level));
+  if (scope.abilities) {
+    // "@actor.abilities.cha.mod" (Foundry-style) and the shorter "@actor.cha.mod".
+    out = out.replace(/@actor\.(?:abilities\.)?(str|dex|con|int|wis|cha)\.mod/g, (_m, a: keyof AbilityScores) =>
+      String(abilityMod(scope.abilities![a])),
+    );
   }
-  const n = Number(v);
-  return Number.isNaN(n) ? 0 : Math.max(0, n);
+  if (scope.speeds) {
+    out = out.replace(/@actor\.speeds?\.(land|fly|swim|climb|burrow)/g, (_m, k: keyof Speeds) => String(scope.speeds![k] ?? 0));
+  }
+  return out;
+}
+
+/** Resolve a data formula (resistance/weakness value, granted Speed, …) that may be a number or a
+ *  formula string. CSP-safe — no eval: tokens are substituted, then a small arithmetic grammar is
+ *  parsed (floor/ceil/max/min, + - * /). Anything unrecognized resolves to 0 so a wrong number is
+ *  never shown. Formulas may reference @actor.level, ability mods, and the character's own Speeds. */
+export function resolveFormula(value: number | string, scope: FormulaScope): number {
+  if (typeof value === 'number') return Math.max(0, Math.round(value));
+  const substituted = substituteTokens(String(value).trim(), scope);
+  // Any @actor token we don't support survived substitution → refuse rather than guess.
+  if (substituted.includes('@')) return 0;
+
+  // Recursive-descent over: max/min/floor/ceil(...), numbers, + - * /, parentheses.
+  let i = 0;
+  const s = substituted.replace(/\s+/g, '');
+  const fail = Symbol('fail');
+  type R = number | typeof fail;
+  const expr = (): R => {
+    let left = term();
+    if (left === fail) return fail;
+    while (s[i] === '+' || s[i] === '-') {
+      const op = s[i++];
+      const right = term();
+      if (right === fail) return fail;
+      left = op === '+' ? (left as number) + right : (left as number) - right;
+    }
+    return left;
+  };
+  const term = (): R => {
+    let left = factor();
+    if (left === fail) return fail;
+    while (s[i] === '*' || s[i] === '/') {
+      const op = s[i++];
+      const right = factor();
+      if (right === fail) return fail;
+      if (op === '/' && right === 0) return fail;
+      left = op === '*' ? (left as number) * right : (left as number) / right;
+    }
+    return left;
+  };
+  const factor = (): R => {
+    const fn = s.slice(i).match(/^(floor|ceil|max|min)\(/);
+    if (fn) {
+      i += fn[1].length + 1;
+      const args: number[] = [];
+      for (;;) {
+        const a = expr();
+        if (a === fail) return fail;
+        args.push(a);
+        if (s[i] === ',') { i++; continue; }
+        break;
+      }
+      if (s[i] !== ')') return fail;
+      i++;
+      if (fn[1] === 'floor') return Math.floor(args[0]);
+      if (fn[1] === 'ceil') return Math.ceil(args[0]);
+      return fn[1] === 'max' ? Math.max(...args) : Math.min(...args);
+    }
+    if (s[i] === '(') {
+      i++;
+      const v = expr();
+      if (v === fail || s[i] !== ')') return fail;
+      i++;
+      return v;
+    }
+    const num = s.slice(i).match(/^-?\d+(?:\.\d+)?/);
+    if (!num) return fail;
+    i += num[0].length;
+    return Number(num[0]);
+  };
+  const result = expr();
+  if (result === fail || i !== s.length || !Number.isFinite(result)) return 0;
+  return Math.max(0, Math.round(result as number));
+}
+
+/** Back-compat wrapper: resolve an IWR value with only the level in scope. */
+export function resolveIwrValue(value: number | string, level: number): number {
+  return resolveFormula(value, { level });
 }
 
 /** Aggregate the character's innate senses + IWR from ancestry vision, heritage,
@@ -448,11 +624,47 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     if (feat) sources.push(feat);
   }
   const cls = c.classId ? db.classes[c.classId] : undefined;
+  // A class archetype can REMOVE class features and substitute its own — honor both here so the
+  // sheet's defenses match the class as the archetype rebuilt it.
+  const suppressed = new Set(c.classArchetype?.suppressedFeatures ?? []);
   if (cls) {
     for (const cf of cls.features) {
-      if (cf.level <= c.level && db.classFeatures[cf.featureId]) sources.push(db.classFeatures[cf.featureId]);
+      if (cf.level <= c.level && !suppressed.has(cf.featureId) && db.classFeatures[cf.featureId]) sources.push(db.classFeatures[cf.featureId]);
     }
   }
+  for (const af of c.classArchetype?.addedFeatures ?? []) {
+    if (af.level <= c.level && db.classFeatures[af.featureId]) sources.push(db.classFeatures[af.featureId]);
+  }
+  // Worn/invested items with passive senses/resistances/immunities (Goggles of Night pattern) count as
+  // grant sources too — the generic magic-item lane.
+  for (const inv of c.inventory) {
+    if (!(inv.worn || inv.invested || inv.equipped)) continue;
+    for (const pe of [db.items[inv.itemId]?.passiveEffects, c.resolvedItemPassives?.[inv.itemId]]) {
+      if (pe && (pe.senses || pe.resistances || pe.immunities)) {
+        sources.push({ senses: pe.senses, resistances: pe.resistances, immunities: pe.immunities });
+      }
+    }
+  }
+  // The ACTIVE stance / form: its typed resistances (Rain of Embers: fire = half level) and senses (an
+  // ursine form's low-light + scent) apply only while it's the active one.
+  const activeStance = activeStanceDef(c, db);
+  if (activeStance?.resistances?.length) sources.push({ resistances: activeStance.resistances });
+  if (activeStance?.senses?.length) sources.push({ senses: activeStance.senses });
+  // "While raging / while you have panache …" conditional grants (Raging Resistance), gated on the
+  // character's live resource toggle. Owned feats/features contribute only while the state is on.
+  for (const wa of activeStateGrants(c, db)) sources.push({ resistances: wa.resistances, senses: wa.senses, immunities: wa.immunities });
+  // Senses a rider feat grants only in this form (Senses of the Bear → Ursine Avenger Form).
+  const rider = activeStance?.senseIfFeat;
+  if (rider && c.feats.some((f) => f.featId === rider.feat)) {
+    const ancVision = String((c.ancestryId && db.ancestries[c.ancestryId]?.vision) || 'normal');
+    const hasLowLight = /low-light|darkvision/.test(ancVision) || sources.some((s) => (s.senses ?? []).some((x) => /low-light/i.test(x.name)));
+    const senses = rider.upgradeDarkvisionIfLowLight && hasLowLight
+      ? rider.senses.map((s) => (/low-light/i.test(s.name) ? { ...s, name: 'darkvision' } : s))
+      : rider.senses;
+    sources.push({ senses });
+  }
+  // Resolved "choose one of N" effects (dragon-tattoo resistance type, energy-heart element).
+  if (c.chosenEffects) sources.push(c.chosenEffects);
 
   const senses = new Map<string, SenseEntry>();
   const rank = (a?: string) => ACUITY_ORDER[a ?? 'precise'] ?? 3;
@@ -469,14 +681,17 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   const res = new Map<string, number>();
   const weak = new Map<string, number>();
   const imm = new Set<string>();
+  // Formulas may reference the character's level and ability modifiers (Wyrmbane Aura's Cha-mod
+  // resistance). Speed-relative formulas belong to deriveSpeeds, which knows the resolved Speeds.
+  const scope: FormulaScope = { level: c.level, abilities: c.abilities };
   for (const src of sources) {
     for (const s of src.senses ?? []) addSense(s);
     for (const r of src.resistances ?? []) {
-      const v = resolveIwrValue(r.value, c.level);
+      const v = resolveFormula(r.value, scope);
       if (v > 0) res.set(r.type, Math.max(res.get(r.type) ?? 0, v));
     }
     for (const w of src.weaknesses ?? []) {
-      const v = resolveIwrValue(w.value, c.level);
+      const v = resolveFormula(w.value, scope);
       if (v > 0) weak.set(w.type, Math.max(weak.get(w.type) ?? 0, v));
     }
     for (const t of src.immunities ?? []) imm.add(t);
@@ -499,6 +714,20 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     const ancestryVision = String((c.ancestryId && db.ancestries[c.ancestryId]?.vision) || 'normal');
     if (/low-light|darkvision/.test(ancestryVision)) addSense({ name: 'darkvision' });
   }
+  // General "you gain X — or Y if you already have X" sense grants (Superior Sight, Ember's Eyes).
+  // Evaluated against senses gathered so far PLUS the ancestry's own vision, so "already have" means
+  // from any source, not just the ancestry.
+  {
+    const ancestryVision = String((c.ancestryId && db.ancestries[c.ancestryId]?.vision) || 'normal');
+    const norm = (s: string) => s.toLowerCase().replace(/[\s_]+/g, '-').replace(/-vision$/, '');
+    const has = (name: string) => {
+      const n = norm(name);
+      return norm(ancestryVision) === n || [...senses.keys()].some((k) => norm(k) === n);
+    };
+    for (const src of sources) {
+      for (const cs of src.conditionalSenses ?? []) addSense(has(cs.ifPresent) ? cs.upgraded : cs.base);
+    }
+  }
   // Choice-resistance heritage (Deep Fetchling: cold/void; Elementheart Kobold: an element's type): the
   // player's chosen damage type, resistance = half level (min 1). Same-type resistances don't stack.
   if (heritage?.choiceResistance && c.heritageResistanceChoice) {
@@ -512,7 +741,10 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
     resistances: [...res].map(([type, value]) => ({ type, value })).sort(sortByType),
     weaknesses: [...weak].map(([type, value]) => ({ type, value })).sort(sortByType),
     immunities: [...imm].sort(),
-    negativeHealing: !!heritage?.negativeHealing,
+    negativeHealing:
+      !!heritage?.negativeHealing ||
+      c.feats.some((f) => db.feats[f.featId]?.negativeHealing) ||
+      c.inventory.some((inv) => inv.invested && db.items[inv.itemId]?.negativeHealing),
   };
 }
 
@@ -522,7 +754,7 @@ const DAMAGE_ABBR: Record<string, string> = {
   slashing: 'S',
 };
 
-const STRIKING_DICE = { striking: 1, greater: 2, major: 3 } as const;
+const STRIKING_DICE = { striking: 1, greater: 2, major: 3, mythic: 4 } as const;
 
 /** Render one Monster-Parts imbued-damage term as a strike-damage fragment, e.g. "1d6 fire",
  *  "1 persistent fire", "2 acid". Physical types are abbreviated to match rune damage (B/P/S). */
@@ -639,7 +871,7 @@ export function isHandwraps(item: Item | undefined): boolean {
  *  NOT stack across two pairs, so among multiple pairs pick one deterministically: highest potency,
  *  then highest striking tier, then most property runes. */
 export function bestHandwrapsRunes(c: Character, db: ContentDatabase): WeaponRunes | undefined {
-  const tier = (s?: WeaponRunes['striking']) => (s === 'major' ? 3 : s === 'greater' ? 2 : s === 'striking' ? 1 : 0);
+  const tier = (s?: WeaponRunes['striking']) => (s === 'mythic' ? 4 : s === 'major' ? 3 : s === 'greater' ? 2 : s === 'striking' ? 1 : 0);
   const candidates = c.inventory
     // A Monster-Parts-mode handwraps ignores its runes (either/or), so it never contributes rune buffs.
     .filter((inv) => (inv.equipped || inv.worn || inv.invested) && isHandwraps(db.items[inv.itemId]) && !mpActive(c, inv))
@@ -652,6 +884,48 @@ export function bestHandwrapsRunes(c: Character, db: ContentDatabase): WeaponRun
       tier(b.striking) - tier(a.striking) ||
       (b.property?.length ?? 0) - (a.property?.length ?? 0),
   )[0];
+}
+
+const DOUBLING_RINGS = new Set(['doubling-rings', 'doubling-rings-greater']);
+
+/** The invested Doubling Rings a character is wearing, if any (greater removes the same-group rule). */
+function investedDoublingRings(c: Character, db: ContentDatabase): { greater: boolean } | undefined {
+  const worn = c.inventory.find((inv) => inv.invested && DOUBLING_RINGS.has(db.items[inv.itemId]?.id ?? ''));
+  return worn ? { greater: db.items[worn.itemId]?.id === 'doubling-rings-greater' } : undefined;
+}
+
+/** Whether a character can use the Doubling Rings rune-copy right now: rings invested AND at least two
+ *  weapons wielded (so there's a source and a target hand). Drives the inventory picker's visibility. */
+export function doublingRingsAvailable(c: Character, db: ContentDatabase): boolean {
+  if (!investedDoublingRings(c, db)) return false;
+  const wielded = c.inventory.filter((inv) => inv.equipped && db.items[inv.itemId]?.itemType === 'weapon' && !isHandwraps(db.items[inv.itemId]));
+  return wielded.length >= 2;
+}
+
+/** The runes a weapon Strike should actually use — its own, or (with Doubling Rings) the fundamental +
+ *  property runes duplicated from another wielded weapon set as its `copyRunesFrom` source. The source's
+ *  runes win where higher; the base rings require the two weapons to share a group (greater lifts that). */
+export function effectiveWeaponRunes(c: Character, db: ContentDatabase, inv: InventoryItem): WeaponRunes | undefined {
+  const own = inv.runes as WeaponRunes | undefined;
+  if (!inv.copyRunesFrom) return own;
+  const rings = investedDoublingRings(c, db);
+  if (!rings) return own;
+  const source = c.inventory.find((x) => x.instanceId === inv.copyRunesFrom);
+  const srcItem = source && db.items[source.itemId];
+  const tgtItem = db.items[inv.itemId];
+  // Source must still be a wielded weapon; base rings also require the same weapon group.
+  if (!source?.equipped || srcItem?.itemType !== 'weapon' || mpActive(c, source)) return own;
+  const grp = (it: Item | undefined) => (it?.itemType === 'weapon' ? it.group : undefined);
+  if (!rings.greater && grp(srcItem) && grp(tgtItem) && grp(srcItem) !== grp(tgtItem)) return own;
+  const src = source.runes as WeaponRunes | undefined;
+  if (!src) return own;
+  const tier = (s?: WeaponRunes['striking']) => (s === 'mythic' ? 4 : s === 'major' ? 3 : s === 'greater' ? 2 : s === 'striking' ? 1 : 0);
+  const strikingOf = (n: number): WeaponRunes['striking'] | undefined => (n >= 4 ? 'mythic' : n >= 3 ? 'major' : n >= 2 ? 'greater' : n >= 1 ? 'striking' : undefined);
+  return {
+    potency: (Math.max(own?.potency ?? 0, src.potency ?? 0) || undefined) as WeaponRunes['potency'],
+    striking: strikingOf(Math.max(tier(own?.striking), tier(src.striking))),
+    property: [...new Set([...(own?.property ?? []), ...(src.property ?? [])])],
+  };
 }
 
 /** The best Monster-Parts-mode handwraps of mighty blows (equipped/worn/invested), whose refinement +
@@ -826,6 +1100,47 @@ export function weaponSpecDamage(rank: ProficiencyRank, ws: { spec: boolean; gre
   return ws.greater ? tier * 2 + 2 : tier + 1;
 }
 
+/** Extra-damage riders a feat/feature adds to a Strike (Spirit Striking, Offensive Boost). Returns
+ *  display terms ("2 spirit", "1d6 fire") to fold into the Strike's "plus …" damage. Same-type flat
+ *  riders don't stack — highest wins (Greater Spirit Striking replaces Spirit Striking). */
+export function strikeDamageRiders(
+  c: Character,
+  db: ContentDatabase,
+  ctx: { rank: ProficiencyRank; ranged: boolean; unarmed: boolean },
+  extra: StrikeDamageRider[] = [],
+): string[] {
+  const RANK_I = ['untrained', 'trained', 'expert', 'master', 'legendary'];
+  const sources: { strikeDamage?: StrikeDamageRider[] }[] = [];
+  for (const f of c.feats) if (db.feats[f.featId]?.strikeDamage) sources.push(db.feats[f.featId]);
+  for (const fid of ownedFeatureIds(c, db)) if (db.classFeatures[fid]?.strikeDamage) sources.push(db.classFeatures[fid]);
+  // Invested NON-weapon items with a global strike-damage rider (Crimson Fulcrum Lens: +2 melee).
+  for (const inv of c.inventory) {
+    const it = db.items[inv.itemId];
+    if (inv.invested && it?.strikeDamage && it.itemType !== 'weapon') sources.push(it);
+  }
+  // The specific weapon's own intrinsic riders (Hyldarf's Fang +2d6) — only this Strike.
+  if (extra.length) sources.push({ strikeDamage: extra });
+  const flatByType = new Map<string, number>();
+  const diceTerms: string[] = [];
+  for (const src of sources) {
+    for (const r of src.strikeDamage ?? []) {
+      const scope = r.appliesTo ?? 'all';
+      if (scope === 'unarmed' && !ctx.unarmed) continue;
+      if (scope === 'melee' && ctx.ranged) continue;
+      if (scope === 'ranged' && !ctx.ranged) continue;
+      let flat = r.flat ?? 0;
+      if (r.byStrikeProficiency) {
+        // Keyed to the strike's proficiency — only expert+ qualifies; take the value at that rank.
+        const key = ctx.rank as 'expert' | 'master' | 'legendary';
+        flat = Math.max(flat, RANK_I.indexOf(ctx.rank) >= 2 ? r.byStrikeProficiency[key] ?? 0 : 0);
+      }
+      if (flat > 0) flatByType.set(r.type, Math.max(flatByType.get(r.type) ?? 0, flat));
+      if (r.dice) diceTerms.push(`${r.dice.n}${r.dice.die} ${DAMAGE_ABBR[r.type] ?? r.type}`);
+    }
+  }
+  return [...[...flatByType].map(([type, n]) => `${n} ${DAMAGE_ABBR[type] ?? type}`), ...diceTerms];
+}
+
 export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryItem): Strike | null {
   const item = db.items[inv.itemId];
   if (!item || item.itemType !== 'weapon') return null;
@@ -857,7 +1172,7 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   // attack item bonus + striking dice a potency/striking rune would (Table 4A), plus imbued riders.
   const mpMode = mpActive(c, inv);
   const mpRef = mpMode ? mpWeaponRefine(inv.monsterPart, c.level) : null;
-  const runes = mpMode ? undefined : (inv.runes as WeaponRunes | undefined);
+  const runes = mpMode ? undefined : effectiveWeaponRunes(c, db, inv);
   // Best of: weapon-category rank, a per-weapon override (deity favored weapon), and a per-GROUP
   // proficiency (alchemist bombs, gunslinger firearms — these beat the bare category rank).
   const rank = betterRank(
@@ -874,11 +1189,16 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   // Clumsy penalizes EVERY ranged attack roll, including thrown weapons that use Str to hit. Status
   // penalties don't stack and both calls carry the same Frightened/Prone, so taking the worst (min) of
   // the attack-ability and Dex penalties folds in Clumsy for a thrown strike without double-counting.
-  const atkCondPenalty = ranged
-    ? Math.min(conditionPenalty(c.conditions, atkAbility, 'attack'), conditionPenalty(c.conditions, 'dex', 'attack'))
-    : conditionPenalty(c.conditions, atkAbility, 'attack');
+  // A ranged/thrown attack also suffers Clumsy (a Dex penalty); gathering both ability slots and pooling
+  // takes the worst per type, folding Clumsy into a thrown-Str strike without double-counting Frightened.
+  const condMods = ranged
+    ? [...conditionTypedMods(c.conditions, atkAbility, 'attack'), ...conditionTypedMods(c.conditions, 'dex', 'attack')]
+    : conditionTypedMods(c.conditions, atkAbility, 'attack');
   const base =
-    abMod + profBonus(rank, c.level, pwl(c)) + potencyBonus + atkCondPenalty + modeNumberBonus(c.activeModes, { kind: 'attack' });
+    abMod +
+    profBonus(rank, c.level, pwl(c)) +
+    // Weapon potency (item), condition penalties, and mode modifiers pool by type across sources.
+    poolTypedMods([{ type: 'item', value: potencyBonus }, ...condMods, ...modeTypedMods(c.activeModes, { kind: 'attack' })]);
 
   const step = w.traits.includes('agile') ? 4 : 5;
   const attack = [base, base - step, base - step * 2];
@@ -923,7 +1243,10 @@ export function deriveStrike(c: Character, db: ContentDatabase, inv: InventoryIt
   // Monster Parts imbued damage folds in alongside rune damage as per-hit "plus" terms (the situational
   // crit riders stay as reference prose on the item, not computed).
   const mpDmg = mpMode ? mpImbuedDamageTerms(inv.monsterPart, w.damage.type, c.level).map((t) => formatMpDamageTerm(t)) : [];
-  const extraDmg = [...runeDmg, ...mpDmg];
+  // Feat/feature/item strike-damage riders (Spirit Striking; Crimson Fulcrum Lens; Hyldarf's Fang +2d6
+  // intrinsic to this weapon).
+  const riderDmg = strikeDamageRiders(c, db, { rank, ranged, unarmed: false }, w.strikeDamage);
+  const extraDmg = [...runeDmg, ...mpDmg, ...riderDmg];
   // Deadly dN adds bonus weapon dice on a crit (1 die; 2 with greater striking, 3 with major); Fatal dN
   // upgrades the crit dice to dN and adds one; Two-Hand dN uses a larger die when wielded two-handed.
   const traitDie = (re: RegExp) => w.traits.map((t) => re.exec(t)?.[1]).find(Boolean);
@@ -1088,7 +1411,13 @@ function deriveUnarmedStrike(
   const mpRef = mpHandwraps ? mpWeaponRefine(mpHandwraps, c.level) : null;
   const potencyBonus = Math.max(abpOn(c) ? abpAttack(c.level) : hwRunes?.potency ?? 0, mpRef?.attack ?? 0);
   const base =
-    abMod + profBonus(rank, c.level, pwl(c)) + potencyBonus + conditionPenalty(c.conditions, atkAbility, 'attack') + modeNumberBonus(c.activeModes, { kind: 'attack' });
+    abMod +
+    profBonus(rank, c.level, pwl(c)) +
+    poolTypedMods([
+      { type: 'item', value: potencyBonus },
+      ...conditionTypedMods(c.conditions, atkAbility, 'attack'),
+      ...modeTypedMods(c.activeModes, { kind: 'attack' }),
+    ]);
   const step = p.traits.includes('agile') ? 4 : 5;
   const attack = [base, base - step, base - step * 2];
   const specDamage = weaponSpecDamage(rank, weaponSpecialization(c, db));
@@ -1125,7 +1454,10 @@ function deriveUnarmedStrike(
   const nDeadly = nDie(/^deadly-(d\d+)$/);
   const nFatal = nDie(/^fatal-(d\d+)$/);
   const nCritRiders = [...(nDeadly ? [`${Math.max(1, strikingExtra)}${nDeadly}`] : []), ...critPersistent];
-  const extraDmg = [...runeDmg, ...mpDmg];
+  // Feat/feature strike-damage riders apply to unarmed Strikes too (Spirit Striking, an armor
+  // innovation's Offensive Boost). `p.name === 'Fist'` and stance strikes are all unarmed here.
+  const riderDmg = strikeDamageRiders(c, db, { rank, ranged: isRanged, unarmed: true });
+  const extraDmg = [...runeDmg, ...mpDmg, ...riderDmg];
   const damage =
     `${dice}${die}${dmgBonus ? formatMod(dmgBonus) : ''} ${DAMAGE_ABBR[p.damageType] ?? p.damageType}` +
     (extraDmg.length ? ` plus ${extraDmg.join(' plus ')}` : '') +
@@ -1223,22 +1555,79 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
   const ancestry = c.ancestryId ? db.ancestries[c.ancestryId] : undefined;
   const speeds: Speeds = { ...(ancestry?.speeds ?? {}) };
 
-  // Non-land speeds granted (unconditionally) by the heritage or selected feats.
+  // Non-land speeds granted (unconditionally) by the heritage, selected feats, or a worn/invested
+  // item's passive effects (the generic magic-item lane).
   const grantSources: DefenseGrants[] = [];
   if (c.heritageId && db.heritages[c.heritageId]) grantSources.push(db.heritages[c.heritageId]);
   for (const f of c.feats) {
     const feat = db.feats[f.featId];
     if (feat) grantSources.push(feat);
   }
+  if (c.chosenEffects?.speeds) grantSources.push({ speeds: c.chosenEffects.speeds });
+  // "While raging you gain a climb/swim Speed…" (Raging Athlete) — active only while the state is on.
+  for (const wa of activeStateGrants(c, db)) if (wa.speeds) grantSources.push({ speeds: wa.speeds });
+  // Flat additive land-Speed from feats/class features/heritage (Hyper Boosters: +10 ft). After the base.
+  let featLandBonus = 0;
+  for (const f of c.feats) featLandBonus += db.feats[f.featId]?.landSpeedBonus ?? 0;
+  for (const fid of ownedFeatureIds(c, db)) featLandBonus += db.classFeatures[fid]?.landSpeedBonus ?? 0;
+  if (c.heritageId) featLandBonus += db.heritages[c.heritageId]?.landSpeedBonus ?? 0;
+  let passiveSpeedPenalty = 0;
+  let passiveLandBonus = 0;
+  for (const inv of c.inventory) {
+    if (!(inv.worn || inv.invested || inv.equipped)) continue;
+    for (const pe of [db.items[inv.itemId]?.passiveEffects, c.resolvedItemPassives?.[inv.itemId]]) {
+      if (!pe) continue;
+      if (pe.speeds) grantSources.push({ speeds: pe.speeds });
+      // A worn item's flat speed penalty (Monster Suit −10 ft) applies to every movement type.
+      if (pe.speedPenalty) passiveSpeedPenalty += Math.abs(pe.speedPenalty);
+      // A flat land-Speed bonus (boots-of-speed pattern) adds to land Speed.
+      if (pe.speedBonus) passiveLandBonus += pe.speedBonus;
+    }
+  }
+  if (passiveLandBonus || featLandBonus) speeds.land = (speeds.land ?? 0) + passiveLandBonus + featLandBonus;
+  // A proficiency-gated speed (Quick Climb/Swim: climb/swim = land Speed only if legendary Athletics).
+  // Fold each qualifying block's speeds in with the unconditional ones.
+  const gatedSpeeds: SpeedGrants[] = [];
   for (const src of grantSources) {
-    for (const [k, v] of Object.entries(src.speeds ?? {})) {
+    for (const g of src.speedsIf ?? []) {
+      // Skill-proficiency gate (Quick Climb/Swim) — pass if no skill named.
+      const skillOk = !g.skill || !g.rank || PROFICIENCY_RANKS.indexOf(c.proficiencies.skills[g.skill] ?? 'untrained') >= PROFICIENCY_RANKS.indexOf(g.rank);
+      // Heritage gate (Swift Swimmer's wetlander lizardfolk) — pass if no heritage named.
+      const heritageOk = !g.heritage || c.heritageId === g.heritage;
+      if (skillOk && heritageOk) gatedSpeeds.push(g.speeds);
+    }
+  }
+  for (const src of [...grantSources, ...gatedSpeeds.map((speeds) => ({ speeds }))]) {
+    for (const [k, raw] of Object.entries(src.speeds ?? {})) {
       const key = k as keyof Speeds;
-      if (typeof v !== 'number') continue;
+      if (raw == null) continue;
+      // A granted Speed may be a FORMULA relative to the character's own Speeds ("a fly Speed equal to
+      // your land Speed", "climb Speed equal to half your land Speed, minimum 5"). Resolved against the
+      // speeds accumulated so far (ancestry + earlier grants), which is what those rules mean.
+      const v = typeof raw === 'number' ? raw : resolveFormula(raw as unknown as string, { level: c.level, abilities: c.abilities, speeds });
+      if (!v) continue;
       // A land-Speed grant (Fleet, Nimble Elf, …) INCREASES your existing land Speed (additive, untyped),
       // whereas fly/swim/climb/burrow grants confer a SET speed of that type (take the best).
       if (key === 'land') speeds.land = (speeds.land ?? 0) + v;
       else speeds[key] = Math.max(speeds[key] ?? 0, v);
     }
+  }
+  if (passiveSpeedPenalty > 0) {
+    for (const k of Object.keys(speeds) as (keyof Speeds)[]) {
+      if (speeds[k] != null) speeds[k] = Math.max(0, (speeds[k] as number) - passiveSpeedPenalty);
+    }
+  }
+
+  // The active stance / FORM may grant speeds (an ursine form's climb, a form's "fly = your land Speed").
+  // Applied AFTER the base grants so a "@actor.speed.land" formula sees the finished land Speed.
+  const stanceSpeeds = activeStanceDef(c, db)?.speeds;
+  for (const [k, raw] of Object.entries(stanceSpeeds ?? {})) {
+    const key = k as keyof Speeds;
+    if (raw == null) continue;
+    const v = typeof raw === 'number' ? raw : resolveFormula(raw as unknown as string, { level: c.level, abilities: c.abilities, speeds });
+    if (!v) continue;
+    if (key === 'land') speeds.land = (speeds.land ?? 0) + v;
+    else speeds[key] = Math.max(speeds[key] ?? 0, v);
   }
 
   const worn = findWornArmor(c, db);

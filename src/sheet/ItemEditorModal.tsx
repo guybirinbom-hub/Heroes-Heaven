@@ -2,6 +2,8 @@ import { type ReactNode, useId, useMemo, useState } from 'react';
 import { attachItem, detachItem, removeInventoryItem, setItemQuantity, updateInventoryItem, addInventoryItem, setItemMonsterPart, type PlayUpdater } from '../rules/play';
 import { canAttachTo } from '../rules/attachments';
 import { FilterableSelect, PickerRow, descNodeOf } from './FilterableSelect';
+import { DescriptionModal } from './DescriptionModal';
+import type { DescNode } from './descref';
 import { RUNE_SPEC } from './filterSpecs';
 import type {
   ArmorCategory,
@@ -1081,6 +1083,8 @@ function AttachmentsSection({
   content: ContentDatabase;
   onPlay: PlayUpdater;
 }) {
+  const [picking, setPicking] = useState(false);
+  const [descNode, setDescNode] = useState<DescNode | null>(null);
   if (!['weapon', 'armor', 'shield'].includes(hostItem.itemType)) return null;
   const attached = inventory.filter((i) => i.attachedTo === host.instanceId);
   const candidates = inventory.filter((i) => {
@@ -1130,21 +1134,39 @@ function AttachmentsSection({
         </ul>
       )}
       {candidates.length > 0 && (
-        <select
-          className="sd-attach-add"
-          value=""
-          onChange={(e) => {
-            if (e.target.value) onPlay((p) => attachItem(p, e.target.value, host.instanceId));
-          }}
-        >
-          <option value="">Affix an item…</option>
-          {candidates.map((c) => (
-            <option key={c.instanceId} value={c.instanceId}>
-              {content.items[c.itemId]?.name ?? c.itemId}
-            </option>
-          ))}
-        </select>
+        <button type="button" className="sd-attach-add" onClick={() => setPicking(true)}>
+          <i className="ti ti-plus" aria-hidden="true" /> Affix an item…
+        </button>
       )}
+      {picking && (
+        <div className="picker-overlay" onClick={() => setPicking(false)}>
+          <div className="picker" onClick={(e) => e.stopPropagation()}>
+            <div className="picker-head">
+              Affix an item
+              <button className="picker-close" style={{ marginLeft: 'auto' }} onClick={() => setPicking(false)} aria-label="Close">
+                <i className="ti ti-x" aria-hidden="true" />
+              </button>
+            </div>
+            <div className="picker-list">
+              {candidates.map((c) => {
+                const def = content.items[c.itemId];
+                // The row body opens the attachment's description; the Affix button is the only commit.
+                const node = def ? descNodeOf(def, 'items') : null;
+                return (
+                  <PickerRow
+                    key={c.instanceId}
+                    name={def?.name ?? c.itemId}
+                    onOpenDesc={node ? () => setDescNode(node) : undefined}
+                    selectLabel="Affix"
+                    onSelect={() => { onPlay((p) => attachItem(p, c.instanceId, host.instanceId)); setPicking(false); }}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+      {descNode && <DescriptionModal root={descNode} onClose={() => setDescNode(null)} />}
     </div>
   );
 }

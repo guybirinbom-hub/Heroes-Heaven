@@ -39,15 +39,34 @@ const LEGACY_HARDCOVERS = new Set([
   'Pathfinder Bestiary 3',
 ]);
 
+/** Lost Omens setting books, by normalized base title. AoN's data exports these WITHOUT the "Lost
+ *  Omens:" line prefix (just "Tian Xia Character Guide"), so the /Lost Omens/ test alone can't catch
+ *  them — match the bare title too so they shelve as Lost Omens, not "Other". */
+const LOST_OMENS_TITLES = new Set([
+  'world guide', 'character guide', 'gods & magic', 'legends', 'ancestry guide',
+  'the mwangi expanse', 'mwangi expanse', 'grand bazaar', 'absalom city of lost omens',
+  'absalom, city of lost omens', 'monsters of myth', 'impossible lands', 'travel guide',
+  'knights of lastwall', 'highhelm', 'tian xia character guide', 'tian xia world guide',
+  'firebrands', 'rival academies', 'shining kingdoms', 'divine mysteries', 'draconic codex',
+  'pathfinder society guide', 'the grand bazaar',
+]);
+/** Strip the "Pathfinder " / "Lost Omens:" prefixes and a trailing "(Remastered)" so a bare or
+ *  remastered title can be matched against the title sets above / LEGACY_HARDCOVERS. */
+const stripBook = (b: string) =>
+  b.replace(/^Pathfinder /, '').replace(/^Lost Omens:?\s*/i, '').replace(/\s*\((?:Remastered|Remaster)\)$/i, '').trim().toLowerCase();
+/** Legacy-hardcover base titles (remaster-stripped) plus a couple of AoN plural/variant spellings. */
+const RULEBOOK_TITLES = new Set([...[...LEGACY_HARDCOVERS].map(stripBook), 'dark archives', 'guns & gears']);
+
 /** The "shelf" a book belongs to, for grouping the Sources list. Most of the catalog is Adventure
  *  Path material — individual volumes ("Pathfinder #219: …"), compilations, and the free player's
  *  guides — so those are folded into one collapsible "Adventure Paths" group instead of swamping
  *  "Other". Society scenarios/quests/one-shots get their own "Organized Play" shelf. */
 export function categoryOfBook(book: string): SourceCategory {
   if (CORE_BOOKS.includes(book)) return 'Core';
-  if (/Lost Omens/.test(book)) return 'Lost Omens';
+  const base = stripBook(book);
+  if (/Lost Omens/.test(book) || LOST_OMENS_TITLES.has(base)) return 'Lost Omens';
   // Rulebooks first, so the Advanced Player's Guide isn't swept up by the AP "Player's Guide" rule.
-  if (LEGACY_HARDCOVERS.has(book) || /Bestiary|NPC Core|Monster Core 2|Beginner Box/.test(book)) return 'Rulebooks';
+  if (LEGACY_HARDCOVERS.has(book) || RULEBOOK_TITLES.has(base) || /Bestiary|NPC Core|Monster Core 2|Beginner Box/.test(book)) return 'Rulebooks';
   // Blogs and web specials → the niche "Other" shelf.
   if (/Blog|Web Supplement|Article/.test(book)) return 'Other';
   if (

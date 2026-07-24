@@ -17,6 +17,11 @@ function merge<T>(base: Record<string, T>, over: Record<string, T>): Record<stri
   return { ...base, ...over };
 }
 
+/** Feats deliberately excluded from the app (per user decision) — dropped from content AFTER the merge,
+ *  so they never appear in any picker or resolve as a grant. Applied here in the loader rather than in
+ *  the data file, so the exclusion survives every core.json regeneration. */
+export const EXCLUDED_FEATS = new Set(['arcane-tattoos', 'hag-magic']);
+
 function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
   const c = core as ContentDatabase;
   // Seed → Core → user homebrew, so homebrew entries resolve everywhere core content does.
@@ -30,7 +35,7 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
       entry.source = { ...(entry.source ?? {}), license: 'homebrew', ...(name ? { book: name } : {}) };
     }
   }
-  return {
+  const db: ContentDatabase = {
     ancestries: merge(merge(seedContent.ancestries, c.ancestries ?? {}), hb.ancestries),
     heritages: merge(merge(seedContent.heritages, c.heritages ?? {}), hb.heritages),
     backgrounds: merge(merge(seedContent.backgrounds, c.backgrounds ?? {}), hb.backgrounds),
@@ -56,6 +61,14 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
     stances: merge(seedContent.stances ?? {}, c.stances ?? {}),
     runes: c.runes ?? {},
   };
+  for (const id of EXCLUDED_FEATS) delete db.feats[id];
+  // Carry over any EXTRA buckets core ships that aren't in the explicit list above — the glossary/reference
+  // buckets (rules, trait, source, skill, domain, class sub-options, …) whose only job is to let a
+  // description cross-link resolve and open. They have no seed/homebrew layer, so a straight copy is right.
+  const extra = db as unknown as Record<string, unknown>;
+  const coreRec = c as unknown as Record<string, unknown>;
+  for (const k in coreRec) if (!(k in db)) extra[k] = coreRec[k];
+  return db;
 }
 
 let cached: ContentDatabase | null = null;

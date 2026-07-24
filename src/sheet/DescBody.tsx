@@ -5,6 +5,8 @@ import { lookupRef, type DescNode } from './descref';
 import { RichText } from './RichText';
 import { DescriptionModal } from './DescriptionModal';
 import { sanitize } from './sanitizeHtml';
+import { AstRenderer } from './AstRenderer';
+import { useAstNode } from './useAst';
 
 /** A description is treated as rich HTML (user-authored, from the item editor) if it carries any
  *  HTML tag; otherwise it's curated markdown and RichText parses + auto-linkifies it. */
@@ -20,6 +22,8 @@ export function DescBody({
   descRefs,
   className = 'sd-desc',
   onExit,
+  astKey,
+  astId,
 }: {
   description?: string;
   descRefs?: DescRef[];
@@ -29,9 +33,31 @@ export function DescBody({
   onExit?: () => void;
   /** @deprecated RichText now emits block elements, so the container is always a div. */
   as?: 'p' | 'div';
+  /** The record's bucket + slug — when its ast exists, the description renders from the new pipeline
+   *  (prose only; the detail view keeps its own stat block) instead of the legacy markdown. */
+  astKey?: string;
+  astId?: string;
 }) {
   const content = useContent();
   const [node, setNode] = useState<DescNode | null>(null);
+  const { node: ast, bucket: astBucket } = useAstNode(astKey, astId);
+
+  // Ast path — the new-data description prose (meta hidden; links open the recursive ast popup).
+  if (ast && astId) {
+    const openRef = (bucket: string, slug: string) => {
+      const rec = (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }>> | null)?.[bucket]?.[slug];
+      if (rec) setNode({ title: rec.name, description: rec.description ?? '', descRefs: rec.descRefs, key: bucket, slug });
+    };
+    return (
+      <>
+        <div className={className}>
+          <AstRenderer node={ast} bodyOnly hideMeta selfRef={`${astBucket}:${astId}`} onOpenRef={openRef} />
+        </div>
+        {node && <DescriptionModal root={node} onClose={() => setNode(null)} onExit={onExit} backToSource={!!onExit} />}
+      </>
+    );
+  }
+
   if (!description) return null;
 
   // Rich-HTML path: render the authored HTML directly, with .ref-link anchors made clickable

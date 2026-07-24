@@ -35,6 +35,7 @@ import {
 import { cantripsKnown } from '../rules/spellcasting';
 import { abpSkillBudget } from '../rules/abp';
 import { activeCasterArchetype } from '../rules/casterArchetypes';
+import { snareAllowance, snareFormulaOptions, isBaseSnareSlot, SNARE_FORMULA_KEY } from '../rules/snareFormulas';
 import {
   abilityMod,
   deriveAc,
@@ -54,6 +55,7 @@ import { DescriptionModal } from '../sheet/DescriptionModal';
 import { MythicRules } from '../sheet/MythicRules';
 import { PickerRow, descNodeOf } from '../sheet/FilterableSelect';
 import type { DescNode } from '../sheet/descref';
+import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
 
 /** Renders a chosen option's "what you gain" grants summary, with its flavor description tucked
  *  behind a "Details" toggle that expands it inline. Shared by every origin/class card, the picked
@@ -591,42 +593,71 @@ export function SearchSelect({
   onChange,
   placeholder = 'Choose…',
   bare = false,
+  descBucket,
 }: {
   label: string;
   value: string | null | undefined;
-  options: { id: string; name: string; note?: string }[];
+  options: { id: string; name: string; note?: string; description?: string; descRefs?: DescRef[] }[];
   onChange: (id: string) => void;
   placeholder?: string;
   /** Render just the control (no .ocard/label wrapper) — for use inside a SetupCard. */
   bare?: boolean;
+  /** The content bucket these options live in (e.g. 'ancestries', 'classes'). When set, the description
+   *  popup loads that record's FULL ast page (all sections — roleplay, etc.), matching the reference app,
+   *  instead of only the short flavor `description`. */
+  descBucket?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState('');
+  // When options carry descriptions (or a descBucket), the picker rows and the filled control become
+  // read-first: pressing a row (or the filled value) opens its description card; a dedicated Select /
+  // Replace button does the committing — so "press an option" never silently chooses it.
+  const [descNode, setDescNode] = useState<DescNode | null>(null);
+  // Build a description node — the full ast page when descBucket is set (key=bucket, slug=id), else the
+  // plain-text description card.
+  const mkNode = (o: { id: string; name: string; description?: string; descRefs?: DescRef[] }): DescNode | null =>
+    descBucket
+      ? { title: o.name, description: o.description ?? '', descRefs: o.descRefs, key: descBucket, slug: o.id }
+      : descNodeOf({ name: o.name, description: o.description, descRefs: o.descRefs }, 'origin');
   const current = options.find((o) => o.id === value);
   const needle = q.trim().toLowerCase();
   const filtered = needle ? options.filter((o) => o.name.toLowerCase().includes(needle)) : options;
+  const readFirst = !!descBucket || filtered.some((o) => o.description || o.descRefs?.length);
+  const currentNode = current ? mkNode(current) : null;
   const control = (
     <>
-      <button
-        type="button"
-        className={'popsel' + (current ? ' is-picked' : ' is-empty')}
-        onClick={() => {
-          setQ('');
-          setOpen(true);
-        }}
-      >
-        {current ? (
-          <>
+      {current && currentNode ? (
+        // Filled + describable: the value opens its description; a separate Replace button re-opens the picker.
+        <div className="popsel is-picked ss-filled">
+          <button type="button" className="ss-filled-body" title="View description" onClick={() => setDescNode(currentNode)}>
             <span className="popsel-val">{current.name}</span>
-            <i className="ti ti-pencil popsel-change" aria-hidden="true" />
-          </>
-        ) : (
-          <>
-            <i className="ti ti-plus popsel-lead" aria-hidden="true" />
-            <span className="popsel-ph">{placeholder}</span>
-          </>
-        )}
-      </button>
+          </button>
+          <button type="button" className="ss-replace" title={`Replace ${label.toLowerCase()}`} onClick={() => { setQ(''); setOpen(true); }}>
+            <i className="ti ti-pencil" aria-hidden="true" /> Replace
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          className={'popsel' + (current ? ' is-picked' : ' is-empty')}
+          onClick={() => {
+            setQ('');
+            setOpen(true);
+          }}
+        >
+          {current ? (
+            <>
+              <span className="popsel-val">{current.name}</span>
+              <i className="ti ti-pencil popsel-change" aria-hidden="true" />
+            </>
+          ) : (
+            <>
+              <i className="ti ti-plus popsel-lead" aria-hidden="true" />
+              <span className="popsel-ph">{placeholder}</span>
+            </>
+          )}
+        </button>
+      )}
       {open && (
         <div className="picker-overlay" onClick={() => setOpen(false)}>
           <div className="picker" onClick={(e) => e.stopPropagation()}>
@@ -648,22 +679,41 @@ export function SearchSelect({
               />
             </div>
             <div className="picker-list">
-              {filtered.slice(0, 100).map((o) => (
-                <button
-                  type="button"
-                  className={'picker-item' + (o.id === value ? ' chosen' : '')}
-                  key={o.id}
-                  onClick={() => {
-                    onChange(o.id);
-                    setOpen(false);
-                  }}
-                >
-                  <div className="picker-text">
-                    <div className="picker-name">{o.name}</div>
-                    {o.note && <div className="picker-traits">{o.note}</div>}
-                  </div>
-                </button>
-              ))}
+              {readFirst
+                ? // Read-first rows: press the row to read its description; the Select button chooses it.
+                  filtered.slice(0, 100).map((o) => {
+                    const node = mkNode(o);
+                    return (
+                      <PickerRow
+                        key={o.id}
+                        name={o.name}
+                        meta={o.note ? <div className="picker-traits">{o.note}</div> : undefined}
+                        chosen={o.id === value}
+                        onOpenDesc={node ? () => setDescNode(node) : undefined}
+                        selectLabel="Select"
+                        onSelect={() => {
+                          onChange(o.id);
+                          setOpen(false);
+                        }}
+                      />
+                    );
+                  })
+                : filtered.slice(0, 100).map((o) => (
+                    <button
+                      type="button"
+                      className={'picker-item' + (o.id === value ? ' chosen' : '')}
+                      key={o.id}
+                      onClick={() => {
+                        onChange(o.id);
+                        setOpen(false);
+                      }}
+                    >
+                      <div className="picker-text">
+                        <div className="picker-name">{o.name}</div>
+                        {o.note && <div className="picker-traits">{o.note}</div>}
+                      </div>
+                    </button>
+                  ))}
               {filtered.length === 0 && (
                 <div className="setup-note" style={{ padding: 12 }}>
                   No matches.
@@ -678,6 +728,7 @@ export function SearchSelect({
           </div>
         </div>
       )}
+      {descNode && <DescriptionModal root={descNode} onClose={() => setDescNode(null)} />}
     </>
   );
   if (bare) return control;
@@ -749,6 +800,11 @@ export function PopupSelect({
     close();
   };
   const current = options.find((o) => o.value === value && o.value !== '');
+  // A describable current pick (slot variant) gets the read-first filled control: the value opens its
+  // description, a Replace button re-opens the picker — so pressing the value reads it, never re-chooses.
+  const currentNode = current && (current.description || current.descRefs?.length)
+    ? descNodeOf({ name: current.label, description: current.description, descRefs: current.descRefs }, 'origin')
+    : null;
   const useSearch = search ?? options.length > 6;
   const needle = q.trim().toLowerCase();
   const filtered = useSearch && needle ? options.filter((o) => o.label.toLowerCase().includes(needle)) : options;
@@ -775,6 +831,17 @@ export function PopupSelect({
           </div>
           {!current && <span className="lvl-pending">!</span>}
         </button>
+      ) : variant === 'slot' && current && currentNode ? (
+        // Read-first filled slot: press the value to read its description; Replace re-opens the picker.
+        <div className={'popsel is-picked ss-filled' + (className ? ' ' + className : '')}>
+          <button type="button" className="ss-filled-body" title="View description" onClick={() => setDescNode(currentNode)}>
+            {icon && <span className="popsel-tile"><i className={'ti ' + icon} aria-hidden="true" /></span>}
+            <span className="popsel-val">{current.label}</span>
+          </button>
+          <button type="button" className="ss-replace" title="Replace" onClick={openPicker}>
+            <i className="ti ti-pencil" aria-hidden="true" /> Replace
+          </button>
+        </div>
       ) : (
         <button
           type="button"
@@ -918,9 +985,53 @@ export function PopupSelect({
               </>
             )}
           </div>
-          {descNode && <DescriptionModal root={descNode} onClose={() => setDescNode(null)} />}
         </div>
       )}
+      {/* At the fragment level (not inside {open}) so the FILLED slot's body can open a description
+          without the picker being open. */}
+      {descNode && <DescriptionModal root={descNode} onClose={() => setDescNode(null)} />}
+    </>
+  );
+}
+
+/** Read-first rows for a MULTI-pick choice (kineticist elements, animist apparitions, commander tactics…):
+ *  each option's body opens its description card; a dedicated Add/Remove button toggles it — so pressing an
+ *  option READS it instead of silently toggling. Replaces the old bare commit-on-click chips. Owns its
+ *  description popup. */
+export function MultiPickRows({
+  options,
+  selected,
+  max,
+  onToggle,
+  keyName = 'origin',
+}: {
+  options: { id: string; name: string; note?: string; description?: string; descRefs?: DescRef[] }[];
+  selected: string[];
+  max: number;
+  onToggle: (id: string) => void;
+  keyName?: string;
+}) {
+  const [descNode, setDescNode] = useState<DescNode | null>(null);
+  return (
+    <>
+      {options.map((o) => {
+        const on = selected.includes(o.id);
+        const node = descNodeOf({ name: o.name, description: o.description, descRefs: o.descRefs }, keyName);
+        return (
+          <PickerRow
+            key={o.id}
+            name={o.name}
+            meta={o.note ? <div className="picker-traits">{o.note}</div> : undefined}
+            chosen={on}
+            onOpenDesc={node ? () => setDescNode(node) : undefined}
+            selectLabel={on ? 'Remove' : 'Add'}
+            selectDisabled={!on && selected.length >= max}
+            disabledReason={!on && selected.length >= max ? `Choose up to ${max}` : undefined}
+            onSelect={() => onToggle(o.id)}
+          />
+        );
+      })}
+      {descNode && <DescriptionModal root={descNode} onClose={() => setDescNode(null)} />}
     </>
   );
 }
@@ -990,7 +1101,7 @@ function CustomBackgroundForm({ build, actions, content }: EditorProps) {
         label="Skill feat"
         value={cb.skillFeatId}
         onChange={(id) => set({ skillFeatId: id })}
-        options={skillFeats.map((f) => ({ id: f.id, name: f.name }))}
+        options={skillFeats.map((f) => ({ id: f.id, name: f.name, description: f.description, descRefs: f.descRefs }))}
       />
     </div>
   );
@@ -1496,6 +1607,12 @@ export function SourcesCard({ build, actions, catalog }: { build: BuildState; ac
           Choose which books this character can draw from. Disabled books are hidden from every picker — anything you've
           already selected stays available even if its book is off. New characters start with the Core books only.
         </p>
+        <ToggleWithInfo
+          label="Hide legacy data"
+          description="Show only remaster and edition-neutral content. Legacy and legacy-era (pre-remaster) entries are hidden from every picker. Superseded pre-remaster versions are always hidden regardless of this setting. Anything you've already selected stays available."
+          on={!!build.hideLegacy}
+          onToggle={() => actions.patch({ hideLegacy: !build.hideLegacy })}
+        />
         <div className="src-actions">
         <button type="button" className="src-act" onClick={() => write(new Set([...allBooks, ...hbList.map((h) => h.name)]))}>
           Enable everything
@@ -1609,6 +1726,59 @@ export function SourcesCard({ build, actions, catalog }: { build: BuildState; ac
   );
 }
 
+/** Snare Crafting formula book (Snarecrafter Dedication / Snare Crafting): the player picks the snare
+ *  formulas they know — four common 1st-level snares, plus three more each time Crafting reaches
+ *  expert / master / legendary. Rangers may drive this off Survival instead of Crafting. Render only
+ *  when the character actually has Snare Crafting (gated at the call site). */
+export function SnareFormulasCard({ build, actions, content, character }: EditorProps & { character: Character }) {
+  const RANK_ORDER: ProficiencyRank[] = ['untrained', 'trained', 'expert', 'master', 'legendary'];
+  const higher = (a: ProficiencyRank, b: ProficiencyRank) => RANK_ORDER[Math.max(RANK_ORDER.indexOf(a), RANK_ORDER.indexOf(b))];
+  const isRanger = build.classId === 'ranger' || build.classId2 === 'ranger';
+  const craftingRank = character.proficiencies.skills.crafting ?? 'untrained';
+  const survivalRank = character.proficiencies.skills.survival ?? 'untrained';
+  // Rangers "use Survival instead of Crafting for all functions of feats from this archetype" — so their
+  // formula book scales off whichever of the two is higher.
+  const drivingRank = isRanger ? higher(craftingRank, survivalRank) : craftingRank;
+  const { known, prepared } = snareAllowance(drivingRank);
+  const chosen = build.extraChoices?.[SNARE_FORMULA_KEY] ?? [];
+  const setAt = (idx: number, id: string) => {
+    const next = [...chosen];
+    next[idx] = id;
+    actions.patch({ extraChoices: { ...build.extraChoices, [SNARE_FORMULA_KEY]: next.slice(0, known) } });
+  };
+  return (
+    <SetupCard icon="ti-tools" label="Snare formulas">
+      <p className="setup-hint">
+        Your formula book holds {known} snare formula{known === 1 ? '' : 's'}; you can prepare {prepared} of them for free
+        each day. Scales with your {isRanger ? 'Survival or Crafting' : 'Crafting'} proficiency (currently {cap(drivingRank)}).
+        Snares prepared this way cost no resources to Craft.
+      </p>
+      {Array.from({ length: known }).map((_, i) => {
+        const base = isBaseSnareSlot(i);
+        const opts = snareFormulaOptions(content, base ? 1 : character.level, base).map((it) => ({
+          id: it.id,
+          name: it.name,
+          note: `Lvl ${it.level}`,
+          description: it.description,
+          descRefs: it.descRefs,
+        }));
+        return (
+          <SubCard key={i} icon="ti-bulb" label={base ? `Formula ${i + 1} — common, 1st level` : `Formula ${i + 1} — up to level ${character.level}`}>
+            <SearchSelect
+              bare
+              label="Snare formula"
+              placeholder="Choose a snare…"
+              value={chosen[i] ?? null}
+              onChange={(id) => setAt(i, id)}
+              options={opts}
+            />
+          </SubCard>
+        );
+      })}
+    </SetupCard>
+  );
+}
+
 export function OverridesCard({ build, actions, content, character }: EditorProps & { character: Character }) {
   const ov = build.overrides ?? {};
   const featName = (id: string) => content.feats[id]?.name ?? id;
@@ -1654,8 +1824,8 @@ export function OverridesCard({ build, actions, content, character }: EditorProp
   const unremove = (id: string) => writeOv({ removedFeatIds: (ov.removedFeatIds ?? []).filter((x) => x !== id) });
 
   const grantOptions = [
-    ...Object.values(content.feats).filter((f) => f.level <= build.level && !ov.addedFeats?.some((a) => a.featId === f.id)).map((f) => ({ id: `feat:${f.id}`, name: f.name, note: `Feat · ${cap(f.category)} · lvl ${f.level}` })),
-    ...Object.values(content.classFeatures).filter((f) => !ov.addedFeatures?.some((a) => a.featureId === f.id)).map((f) => ({ id: `feature:${f.id}`, name: f.name, note: `Feature · lvl ${f.level}` })),
+    ...Object.values(content.feats).filter((f) => f.level <= build.level && !ov.addedFeats?.some((a) => a.featId === f.id)).map((f) => ({ id: `feat:${f.id}`, name: f.name, note: `Feat · ${cap(f.category)} · lvl ${f.level}`, description: f.description, descRefs: f.descRefs })),
+    ...Object.values(content.classFeatures).filter((f) => !ov.addedFeatures?.some((a) => a.featureId === f.id)).map((f) => ({ id: `feature:${f.id}`, name: f.name, note: `Feature · lvl ${f.level}`, description: f.description, descRefs: f.descRefs })),
   ].sort((a, b) => a.name.localeCompare(b.name));
   const removeOptions = character.feats
     .filter((f, i, arr) => arr.findIndex((x) => x.featId === f.featId) === i && !ov.removedFeatIds?.includes(f.featId))
@@ -1704,7 +1874,7 @@ export function OverridesCard({ build, actions, content, character }: EditorProp
   const spellOptions = Object.values(content.spells)
     .filter((s) => !ov.addedSpells?.some((a) => a.spellId === s.id))
     .sort((a, b) => a.name.localeCompare(b.name))
-    .map((s) => ({ id: s.id, name: s.name, note: (s.ritual ? 'Ritual' : cap(s.traditions[0] ?? 'spell')) + ` · rank ${s.rank}` }));
+    .map((s) => ({ id: s.id, name: s.name, note: (s.ritual ? 'Ritual' : cap(s.traditions[0] ?? 'spell')) + ` · rank ${s.rank}`, description: s.description, descRefs: s.descRefs }));
 
   // --- Change an existing feat/feature (edit its name + description text) ---
   type EditMap = 'feats' | 'classFeatures';
@@ -2026,7 +2196,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
       Object.values(content.feats)
         .filter((f) => f.level <= 1 && (f.category === 'general' || f.category === 'skill'))
         .sort((a, b) => a.name.localeCompare(b.name))
-        .map((f) => ({ id: f.id, name: f.name, note: f.category === 'skill' ? 'skill feat' : undefined })),
+        .map((f) => ({ id: f.id, name: f.name, note: f.category === 'skill' ? 'skill feat' : undefined, description: f.description, descRefs: f.descRefs })),
     [content.feats],
   );
   // Surface non-common rarity (uncommon/rare from adventure-path content) as a note.
@@ -2052,7 +2222,8 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           label="Ancestry"
           value={build.ancestryId}
           onChange={actions.changeAncestry}
-          options={Object.values(content.ancestries).map((a) => ({ id: a.id, name: a.name, note: note(a.rarity) }))}
+          descBucket="ancestries"
+          options={Object.values(content.ancestries).map((a) => ({ id: a.id, name: a.name, note: note(a.rarity), description: a.description, descRefs: a.descRefs }))}
         />
         {ancestry && (
           <ChoiceDetails
@@ -2113,7 +2284,8 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           label="Heritage"
           value={build.heritageId}
           onChange={actions.changeHeritage}
-          options={heritageOpts.map((h) => ({ id: h.id, name: h.name, note: note(h.rarity) }))}
+          descBucket="heritages"
+          options={heritageOpts.map((h) => ({ id: h.id, name: h.name, note: note(h.rarity), description: h.description, descRefs: h.descRefs }))}
         />
         {build.heritageId && content.heritages[build.heritageId] && (
           <ChoiceDetails
@@ -2155,6 +2327,25 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           })()}
         </SubCard>
       )}
+      {/* A "choose N Lores" heritage (Half Moon Sarangay: 2; Born of Item: 1) — free-text Lore subjects. */}
+      {heritage?.loreChoices ? (
+        <SubCard icon="ti-book" label={`Heritage Lore${heritage.loreChoices > 1 ? ` (choose ${heritage.loreChoices})` : ''}`}>
+          {Array.from({ length: heritage.loreChoices }).map((_, i) => (
+            <input
+              key={i}
+              className="lvl-lore-input"
+              placeholder={`Lore subject ${heritage.loreChoices! > 1 ? i + 1 : ''}`.trim()}
+              value={build.heritageLore?.[i] ?? ''}
+              onChange={(e) => {
+                const next = [...(build.heritageLore ?? [])];
+                next[i] = e.target.value;
+                actions.patch({ heritageLore: next });
+              }}
+            />
+          ))}
+          <p className="setup-hint">Type the subject (e.g. "Cooking" or "Sailing"); each becomes a trained Lore skill.</p>
+        </SubCard>
+      ) : null}
       {/* A choice-resistance heritage (Deep Fetchling: cold/void; Elementheart Kobold: an element's damage
           type): pick the damage type — resistance = half your level. Applied by deriveDefenses. */}
       {heritage?.choiceResistance && (
@@ -2173,6 +2364,42 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           <p className="setup-hint">Resistance to the chosen damage type equal to half your level (minimum 1).</p>
         </SubCard>
       )}
+      {/* A heritage that grants a PICKED feat (Ancient Elf → a multiclass dedication of another class,
+          waiving its level prerequisite). Same lane as the feat pick-grants, keyed by heritage id. */}
+      {build.heritageId &&
+        FEAT_PICK_GRANTS[build.heritageId] &&
+        (() => {
+          const spec = FEAT_PICK_GRANTS[build.heritageId!];
+          const opts = pickableFeats(spec, build, content).map((f) => ({ value: f.id, label: f.name, description: f.description }));
+          return (
+            <SubCard icon="ti-medal" label={spec.prompt}>
+              <PopupSelect
+                title={spec.prompt}
+                placeholder={`${spec.prompt}…`}
+                value={build.pickFeatChoices?.[build.heritageId!] ?? ''}
+                onChange={(v) => actions.patch({ pickFeatChoices: { ...(build.pickFeatChoices ?? {}), [build.heritageId!]: v } })}
+                options={opts}
+              />
+            </SubCard>
+          );
+        })()}
+      {/* Heritage "choose one of N" effects (a chosen energy/sense/skill). */}
+      {heritage &&
+        build.heritageId &&
+        (heritage.effectChoices ?? []).map((ch) => {
+          const ecKey = `${build.heritageId}:${ch.id}`;
+          return (
+            <SubCard key={`ec-${ecKey}`} icon="ti-adjustments" label={ch.prompt}>
+              <PopupSelect
+                title={ch.prompt}
+                placeholder={`${ch.prompt}…`}
+                value={build.effectChoices?.[ecKey] ?? ''}
+                onChange={(v) => actions.patch({ effectChoices: { ...(build.effectChoices ?? {}), [ecKey]: v } })}
+                options={(ch.options ?? []).map((o) => ({ value: o.value, label: o.label }))}
+              />
+            </SubCard>
+          );
+        })}
       <SetupCard icon="ti-briefcase" label="Background">
         <SearchSelect
           bare
@@ -2181,7 +2408,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           onChange={actions.changeBackground}
           options={[
             ...(showCustomBg ? [{ id: CUSTOM_BACKGROUND_ID, name: '✎ Custom background…' }] : []),
-            ...Object.values(content.backgrounds).map((b) => ({ id: b.id, name: b.name, note: note(b.rarity) })),
+            ...Object.values(content.backgrounds).map((b) => ({ id: b.id, name: b.name, note: note(b.rarity), description: b.description, descRefs: b.descRefs })),
           ]}
         />
         {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && (
@@ -2243,6 +2470,17 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           />
         </SubCard>
       )}
+      {/* A "choose a Lore" background: Lore is free-text, so let the player type any subject. */}
+      {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && background.trainedLoreChoice && (
+        <SubCard icon="ti-bulb" label="Background Lore">
+          <input
+            className="lvl-lore-input"
+            placeholder="Lore subject (e.g. Warfare)…"
+            value={build.backgroundLore ?? ''}
+            onChange={(e) => actions.patch({ backgroundLore: e.target.value })}
+          />
+        </SubCard>
+      )}
       {showCustomBg && build.backgroundId === CUSTOM_BACKGROUND_ID && (
         <CustomBackgroundForm build={build} actions={actions} content={content} />
       )}
@@ -2252,7 +2490,8 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           label="Class"
           value={build.classId}
           onChange={requestClassChange}
-          options={Object.values(content.classes).map((c) => ({ id: c.id, name: c.name, note: note(c.rarity) }))}
+          descBucket="classes"
+          options={Object.values(content.classes).map((c) => ({ id: c.id, name: c.name, note: note(c.rarity), description: c.description, descRefs: c.descRefs }))}
         />
         {cls && (
           <ChoiceDetails
@@ -2347,27 +2586,13 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                 options={g.options.map((o) => ({ value: o.id, label: o.name, description: o.description, descRefs: o.descRefs }))}
               />
             ) : (
-              g.options.map((o) => {
-                const on = selected.includes(o.id);
-                return (
-                  <button
-                    key={o.id}
-                    type="button"
-                    className={'ec-chip' + (on ? ' on' : '')}
-                    disabled={!on && selected.length >= max}
-                    onClick={() => actions.toggleExtraChoice(g.id, o.id, max)}
-                  >
-                    {o.name}
-                  </button>
-                );
-              })
+              <MultiPickRows
+                options={g.options.map((o) => ({ id: o.id, name: o.name, description: o.description, descRefs: o.descRefs }))}
+                selected={selected}
+                max={max}
+                onToggle={(id) => actions.toggleExtraChoice(g.id, id, max)}
+              />
             )}
-            {selected.map((selId) => {
-              const opt = g.options.find((o) => o.id === selId);
-              return opt?.description ? (
-                <ChoiceDetails key={'desc:' + selId} name={opt.name} flavor={opt.description} descRefs={opt.descRefs} />
-              ) : null;
-            })}
             {/* A selected option may grant a feat with a restricted sub-choice (Dominion Epithet →
                 Energized Spark for one of two energy types): render that trait picker here. */}
             {selected.flatMap((selId) => {
@@ -2417,26 +2642,18 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           };
           return (
             <SubCard icon="ti-chess" label="Tactics folio" count={`${selected.length}/${max}`}>
-              {options.map((o) => {
-                const on = selected.includes(o.id);
-                const tier = o.tacticTier && o.tacticTier !== 'basic' ? ` (${o.tacticTier})` : '';
-                return (
-                  <button
-                    key={o.id}
-                    type="button"
-                    className={'ec-chip' + (on ? ' on' : '')}
-                    disabled={!on && selected.length >= max}
-                    onClick={() => toggle(o.id)}
-                  >
-                    {o.name}
-                    {tier}
-                  </button>
-                );
-              })}
-              {selected.map((id) => {
-                const o = options.find((x) => x.id === id);
-                return o?.description ? <ChoiceDetails key={'d:' + id} name={o.name} flavor={o.description} descRefs={o.descRefs} /> : null;
-              })}
+              <MultiPickRows
+                options={options.map((o) => ({
+                  id: o.id,
+                  name: o.name,
+                  note: o.tacticTier && o.tacticTier !== 'basic' ? o.tacticTier : undefined,
+                  description: o.description,
+                  descRefs: o.descRefs,
+                }))}
+                selected={selected}
+                max={max}
+                onToggle={toggle}
+              />
             </SubCard>
           );
         })()}
@@ -2593,10 +2810,13 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
             label="Deity"
             value={build.deityId}
             onChange={actions.changeDeity}
+            descBucket="deities"
             options={Object.values(content.deities).map((d) => ({
               id: d.id,
               name: d.name,
               note: [note(d.rarity), d.domains?.slice(0, 3).join(', ')].filter(Boolean).join(' · ') || undefined,
+              description: d.description,
+              descRefs: d.descRefs,
             }))}
           />
           {(() => {
@@ -3028,7 +3248,7 @@ export function LiveStats({
 }) {
   const preview = useMemo(() => character ?? buildCharacter(build, content), [character, build, content]);
   const ac = deriveAc(preview, content);
-  const perception = derivePerception(preview);
+  const perception = derivePerception(preview, content);
   const classDc = deriveClassDc(preview);
   const entry = preview.spellcasting[0];
   const spell = entry ? deriveSpellcasting(preview, entry) : null;

@@ -62,6 +62,43 @@ export function modeNumberBonus(modes: ModeDef[] | undefined, target: ModeTarget
   return bonus.status - penalty.status + (bonus.circumstance - penalty.circumstance) + (bonus.item - penalty.item) + untyped;
 }
 
+/** A single typed modifier for the cross-source pool (best-bonus + worst-penalty per type). */
+export interface TypedMod {
+  type: ModeModifier['type'];
+  value: number;
+}
+
+/** The UNCONDITIONAL mode modifiers targeting a stat, as raw typed mods for the cross-source pool
+ *  (so a mode's item bonus can be compared against a gear item bonus rather than blindly added). */
+export function modeTypedMods(modes: ModeDef[] | undefined, target: ModeTarget): TypedMod[] {
+  const out: TypedMod[] = [];
+  for (const m of modes ?? []) {
+    for (const mod of m.modifiers) {
+      if (mod.appliesWhen) continue;
+      if (!modeMatches(mod, target)) continue;
+      out.push({ type: mod.type, value: mod.value });
+    }
+  }
+  return out;
+}
+
+/** Pool typed modifiers with PF2e stacking ACROSS sources: best bonus + worst penalty PER TYPE
+ *  (status / circumstance / item each capped once), untyped sums. This is the one place same-type
+ *  bonuses/penalties from independent sources (gear, ABP, modes, conditions, stances) are reconciled
+ *  so two "+1 item" bonuses don't become +2. */
+export function poolTypedMods(mods: TypedMod[]): number {
+  const bonus: Record<string, number> = { status: 0, circumstance: 0, item: 0 };
+  const penalty: Record<string, number> = { status: 0, circumstance: 0, item: 0 };
+  let untyped = 0;
+  for (const m of mods) {
+    if (!m.value) continue;
+    if (m.type === 'untyped') untyped += m.value;
+    else if (m.value >= 0) bonus[m.type] = Math.max(bonus[m.type], m.value);
+    else penalty[m.type] = Math.max(penalty[m.type], -m.value);
+  }
+  return bonus.status - penalty.status + (bonus.circumstance - penalty.circumstance) + (bonus.item - penalty.item) + untyped;
+}
+
 /** All active-mode modifiers (conditional + unconditional) that target a stat, tagged with
  *  the mode they came from — for the stat-detail breakdown. */
 export function modeModifiersFor(modes: ModeDef[] | undefined, target: ModeTarget): { mode: string; mod: ModeModifier }[] {

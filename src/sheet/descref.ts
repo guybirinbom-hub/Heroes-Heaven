@@ -8,6 +8,8 @@ export interface DescNode {
   /** The content-map name this node resolves against ('feats'/'spells'/…). Carried into the pin
    *  identity to disambiguate cross-map name collisions (a feat + a spell sharing a name). */
   key?: string;
+  /** The record's slug id — lets the popup render its ast (new pipeline) instead of the markdown. */
+  slug?: string;
 }
 
 /** Same slug rule as the importer, so a ref label resolves to its content id. */
@@ -56,6 +58,6 @@ export function lookupRef(content: ContentDatabase, ref: DescRef): DescNode | nu
   return null;
 }
 
-function toNode(e: { name: string; description?: string; descRefs?: DescRef[] }, key?: string): DescNode {
-  return { title: e.name, description: e.description ?? '', descRefs: e.descRefs, key };
+function toNode(e: { id?: string; name: string; description?: string; descRefs?: DescRef[] }, key?: string): DescNode {
+  return { title: e.name, description: e.description ?? '', descRefs: e.descRefs, key, slug: e.id };
 }

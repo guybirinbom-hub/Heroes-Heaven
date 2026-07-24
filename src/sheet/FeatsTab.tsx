@@ -40,18 +40,29 @@ export function FeatsTab({ character, content }: { character: Character; content
   // [character, content] so typing in the search box doesn't re-derive every feat/feature row.
   const entries = useMemo<FeatEntry[]>(() => {
   const entries: FeatEntry[] = [];
+  // "Choose one of N" picks, so a row can say WHICH option this character took (and why it matters).
+  const picksOf = (recordId: string) => (character.effectPicks ?? []).filter((p) => p.recordId === recordId);
+  const pickSuffix = (recordId: string) => {
+    const p = picksOf(recordId);
+    return p.length ? ` (${p.map((x) => x.label).join(', ')})` : '';
+  };
+  const withPicks = (recordId: string, description: string) => {
+    const notes = picksOf(recordId).filter((p) => p.note);
+    return notes.length ? `${description}<p><strong>Your choice:</strong> ${notes.map((p) => `${p.label} — ${p.note}`).join('; ')}</p>` : description;
+  };
   for (const fc of character.feats) {
     const feat = content.feats[fc.featId];
     if (!feat) continue;
     entries.push({
       key: `feat:${fc.featId}:${fc.level}`,
-      name: fc.choice ? `${feat.name} (${fc.choice.label})` : feat.name,
+      name: (fc.choice ? `${feat.name} (${fc.choice.label})` : feat.name) + pickSuffix(fc.featId),
       level: fc.level,
       traits: feat.traits,
       actionCost: feat.actionCost,
-      description: feat.description,
+      description: withPicks(fc.featId, feat.description),
       descRefs: feat.descRefs,
       isFeature: false,
+      grantedBy: fc.grantedBy ? content.feats[fc.grantedBy]?.name ?? fc.grantedBy : undefined,
       bucket: feat.traits.includes('archetype') ? 'Archetype' : featBucket(feat.category),
       rarity: feat.rarity,
       prerequisites: feat.prerequisites,
@@ -74,12 +85,12 @@ export function FeatsTab({ character, content }: { character: Character; content
       if (!feature) continue;
       entries.push({
         key: `feature:${clsId}:${f.featureId}`,
-        name: feature.name,
+        name: feature.name + pickSuffix(f.featureId),
         level: f.level,
         traits: feature.traits,
         actionCost: feature.actionCost,
         // Strip class-specific addenda for OTHER classes (shared features like Reflex Expertise).
-        description: classFeatureDescription(feature.description, clsId, content),
+        description: withPicks(f.featureId, classFeatureDescription(feature.description, clsId, content)),
         descRefs: feature.descRefs,
         isFeature: true,
         bucket: 'Class',
@@ -178,6 +189,39 @@ export function FeatsTab({ character, content }: { character: Character; content
 
   return (
     <div className="maincol">
+      {character.effectWarnings?.length ? (
+        <div className="ff-warnings" role="note">
+          <i className="ti ti-alert-triangle" aria-hidden="true" />
+          <div>
+            <strong>Missing data</strong> — {character.effectWarnings.length} effect{character.effectWarnings.length === 1 ? '' : 's'} reference content not in the current data:
+            <ul>
+              {character.effectWarnings.map((w, i) => (
+                <li key={i}>
+                  <b>{w.source}</b>: {w.message}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ) : null}
+      {character.classArchetype?.notes.length ? (
+        <div className="ff-arch" role="note">
+          <i className="ti ti-replace" aria-hidden="true" />
+          <div>
+            <strong>Class archetype</strong> — your class works differently:
+            <ul>
+              {character.classArchetype.notes.map((n, i) => (
+                <li key={i}>{n}</li>
+              ))}
+              {character.classArchetype.suppressedFeatures.length ? (
+                <li>
+                  <b>Replaced</b>: {character.classArchetype.suppressedFeatures.map((id) => content.classFeatures[id]?.name ?? id).join(', ')}
+                </li>
+              ) : null}
+            </ul>
+          </div>
+        </div>
+      ) : null}
       <div className="ff-bar">
         <div className="search">
           <i className="ti ti-search" aria-hidden="true" />
@@ -227,6 +271,7 @@ export function FeatsTab({ character, content }: { character: Character; content
                       )}
                       <span className="ff-name">{e.name}</span>
                       {e.isFeature && <span className="ff-tag">Feature</span>}
+                      {e.grantedBy && <span className="ff-tag ff-tag-granted" title={`Granted by ${e.grantedBy}`}>Granted</span>}
                       {e.traits.slice(0, 3).map((t) => (
                         <span className="ff-trait" key={t}>
                           {t}

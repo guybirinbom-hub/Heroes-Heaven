@@ -47,12 +47,16 @@ import type {
   WeaponRunes,
   PinnedDesc,
 } from './types';
-import type { SourceInfo } from './types';
+import type { ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, InnateSpellGrant, ItemPassiveEffects, SourceInfo, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
 import { abilityMod } from './derive';
 import { CLASS_ADVANCEMENT } from './advancement';
-import { FEAT_GRANTS, maxTakes } from './featGrants';
+import { FEAT_GRANTS, maxTakes, upgradeRankAt } from './featGrants';
+import { FEAT_FEAT_GRANTS, FEAT_FEAT_GRANTS_LEVELED } from './featFeatGrants';
+import { FEAT_PICK_GRANTS, pickableFeats } from './featPickGrants';
+import { FEAT_CANTRIP_GRANTS } from './featCantripGrants';
+import { grantForSpellPick } from './spellChoice';
 import { DOMAIN_SPELLS } from './domains';
 import { initialClassResources } from './classResources';
 import { activeCasterArchetype, archetypeProficiency, archetypeSlots } from './casterArchetypes';
@@ -88,6 +92,9 @@ export interface BuildState {
    *  `mythic`-trait content; Kingmaker → shows its actions/conditions. */
   mythicEnabled?: boolean;
   kingmakerEnabled?: boolean;
+  /** "Hide legacy data": when true, legacy + legacy-era (pre-remaster-exclusive) content is hidden from
+   *  every picker, for a pure remaster/neutral experience. Superseded content is always hidden regardless. */
+  hideLegacy?: boolean;
   /** The chosen Mythic Calling (a [calling]-trait classFeature id), when Mythic is enabled. */
   mythicCalling?: string | null;
   /** Dual Class variant: the second class + its subclass. */
@@ -158,11 +165,39 @@ export interface BuildState {
    * → chosen SkillId. An unset slot falls back to the first option (buildCharacter default).
    */
   featSkillChoices?: Record<string, SkillId>;
+  /** Lore subjects chosen for a feat's "trained in a Lore of your choice" grant (FeatGrant.loreChoices),
+   *  keyed `<featId>:<slot index>` → the bare subject text (e.g. "Warfare"). Granted as lore:<subject>. */
+  featLoreChoices?: Record<string, string>;
   /**
    * The bonus skill feat a dedication grants via FEAT_GRANTS.bonusSkillFeat (Rogue Dedication),
    * keyed by the dedication's feat id → chosen skill-feat id. Injected as an extra skill-feat slot.
    */
   dedicationSkillFeats?: Record<string, string>;
+  /**
+   * The bonus feat the player picked for a pick-a-feat grant (FEAT_PICK_GRANTS: General Training,
+   * Basic Maneuver, Natural Ambition, …), keyed by the granting feat's id → chosen feat id. Granted
+   * (with its own effects) by buildCharacter, like a static feat grant.
+   */
+  pickFeatChoices?: Record<string, string>;
+  /**
+   * The innate spell/cantrip the player picked for a pick-a-cantrip grant (FEAT_CANTRIP_GRANTS: Dragon
+   * Spit, Arcane Tattoos, Hag Magic, …), keyed by the granting feat's id → chosen spell id. Injected
+   * into the character's innate-spell entry by buildCharacter.
+   */
+  pickCantripChoices?: Record<string, string>;
+  /**
+   * A GRANTED (slotless) feat's embedded sub-choice, keyed by the granted feat's id → value (Seeker of
+   * Truths grants Domain Initiate → its domain lives here, picked under the granting feat in the
+   * builder). Resolved by the focus loop + attached to the granted FeatChoice for display.
+   */
+  grantedFeatChoices?: Record<string, string>;
+  /** "Choose one of N" effect picks (DefenseGrants/Item.effectChoices), keyed `<recordId>:<choiceId>`
+   *  → chosen option value. Resolved by buildCharacter into the concrete effect. */
+  effectChoices?: Record<string, string>;
+  /** A "choose a Lore" background's typed Lore subject (free text) → lore:<subject> trained. */
+  backgroundLore?: string;
+  /** A "choose N Lores" HERITAGE's typed Lore subjects (free text) → lore:<subject> trained each. */
+  heritageLore?: string[];
   /** Chosen bonus languages (Int-based + ancestry extra), beyond the granted ones. */
   languages: string[];
   /** Chosen feats, keyed by slot id `"level:category:idx"` -> feat id. */
@@ -608,6 +643,11 @@ function maxRank(a: ProficiencyRank, b: ProficiencyRank): ProficiencyRank {
   return PROFICIENCY_RANKS.indexOf(b) > PROFICIENCY_RANKS.indexOf(a) ? b : a;
 }
 
+/** Whichever rank is lower — used for CEILINGS (a class archetype that removes training). */
+function minRank(a: ProficiencyRank, b: ProficiencyRank): ProficiencyRank {
+  return PROFICIENCY_RANKS.indexOf(b) < PROFICIENCY_RANKS.indexOf(a) ? b : a;
+}
+
 const SAVE_TRACKS: readonly string[] = ['fortitude', 'reflex', 'will'];
 const WEAPON_TRACKS: readonly string[] = ['unarmed', 'simple', 'martial', 'advanced'];
 const ARMOR_TRACKS: readonly string[] = ['unarmored', 'light', 'medium', 'heavy'];
@@ -718,8 +758,9 @@ export function deityFavorsSimpleOrUnarmed(deityId: string | null | undefined, c
   const deity = deityId ? content.deities[deityId] : undefined;
   return (deity?.favoredWeapons ?? []).some((w) => {
     const item = content.items[w];
-    // A favored weapon that isn't a real weapon ITEM is an unarmed attack (Irori's "fist") → qualifies.
-    return !item || (item.itemType === 'weapon' && item.category === 'simple');
+    // A favored weapon that isn't a real weapon ITEM, or is an unarmed/simple weapon (Irori's "fist"),
+    // qualifies. (The new data ships "Fist" as a real unarmed weapon item, so check the category too.)
+    return !item || (item.itemType === 'weapon' && (item.category === 'simple' || item.category === 'unarmed'));
   });
 }
 
@@ -823,6 +864,7 @@ function collectGrantedNaturals(
   classId: string | null | undefined,
   level: number,
   seen: Set<string> = new Set(),
+  investedItemIds: string[] = [],
 ): NaturalAttack[] {
   const out: NaturalAttack[] = [];
   const push = (gs: GrantedStrike[] | undefined, pick?: string) => {
@@ -846,6 +888,8 @@ function collectGrantedNaturals(
   if (ancestryId) push(content.ancestries[ancestryId]?.grantedStrikes);
   const cls = classId ? content.classes[classId] : undefined;
   for (const cf of cls?.features ?? []) if (cf.level <= level) push(content.classFeatures[cf.featureId]?.grantedStrikes);
+  // Invested items that grant a Strike (Phantom Shroud → ghostly touch).
+  for (const itemId of investedItemIds) push(content.items[itemId]?.grantedStrikes);
   return out;
 }
 
@@ -953,6 +997,41 @@ export function applySources(content: ContentDatabase, enabled: Set<string>, kee
  *  every `mythic`-trait entry; Kingmaker OFF hides Kingmaker-sourced actions/conditions/feats/etc.
  *  Already-chosen ids (`keepIds`) are always kept so a toggle never breaks an existing character.
  *  Returns the same ref when nothing is dropped (memo-safe). */
+/**
+ * The per-character "Hide legacy data" filter. Superseded records (the outdated half of a remaster
+ * change) are already pruned at import, so this only handles the toggle: when on, drop every record whose
+ * edition is `legacy` or `legacy-era` (legacy-exclusive content), keeping a pure remaster/neutral view.
+ * keepIds (the character's already-chosen ids) are never dropped, so enabling it can't invalidate a build.
+ */
+export function applyEditionFilter(
+  content: ContentDatabase,
+  opts: { hideLegacy?: boolean },
+  keepIds: Set<string>,
+): ContentDatabase {
+  const LEGACY = new Set(['legacy', 'legacy-era']);
+  let next: ContentDatabase = content;
+  let changed = false;
+  for (const m of Object.keys(content) as (keyof ContentDatabase)[]) {
+    const map = content[m] as Record<string, { edition?: string }> | undefined;
+    if (!map || typeof map !== 'object') continue;
+    let dropped = false;
+    const filtered: Record<string, unknown> = {};
+    for (const [id, e] of Object.entries(map)) {
+      const ed = e && typeof e === 'object' ? e.edition ?? '' : '';
+      // 'superseded' (the renamed/outdated half of a remaster change) is ALWAYS hidden from pickers;
+      // legacy/legacy-era only when the toggle is on. keepIds (already-chosen) are never dropped.
+      const hide = ed === 'superseded' || (opts.hideLegacy === true && LEGACY.has(ed));
+      if (keepIds.has(id) || !hide) filtered[id] = e;
+      else dropped = true;
+    }
+    if (dropped) {
+      if (!changed) { next = { ...content }; changed = true; }
+      (next as unknown as Record<string, unknown>)[m] = filtered;
+    }
+  }
+  return changed ? next : content;
+}
+
 export function applyContentToggles(
   content: ContentDatabase,
   opts: { mythicEnabled?: boolean; kingmakerEnabled?: boolean },
@@ -1088,6 +1167,19 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const bgTrainedSkill = backgroundTrainedSkill(build, background);
   if (bgTrainedSkill) (skills[bgTrainedSkill] = 'trained'), locked.add(bgTrainedSkill);
   if (background?.trainedLore) skills[`lore:${background.trainedLore}`] = 'trained';
+  // A "choose a Lore" background: the player types the subject (Lore is free-text).
+  if (background?.trainedLoreChoice && build.backgroundLore?.trim()) {
+    const subj = build.backgroundLore.trim().toLowerCase().replace(/\s*lore$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    if (subj) skills[`lore:${subj}` as ProficiencyKey] = 'trained';
+  }
+  // A "choose N Lores" heritage (Half Moon Sarangay: 2; Born of Item: 1) — each typed subject is trained.
+  const heritageLoreN = build.heritageId ? content.heritages[build.heritageId]?.loreChoices ?? 0 : 0;
+  if (heritageLoreN > 0) {
+    for (const raw of (build.heritageLore ?? []).slice(0, heritageLoreN)) {
+      const subj = raw?.trim().toLowerCase().replace(/\s*lore$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+      if (subj) skills[`lore:${subj}` as ProficiencyKey] = 'trained';
+    }
+  }
   if (build.heritageSkill) (skills[build.heritageSkill] = 'trained'), locked.add(build.heritageSkill);
   // Skilled Heritage (human): the chosen skill becomes expert at 5th level.
   if (build.heritageSkill && build.heritageId === 'skilled-human' && level >= 5) {
@@ -1204,8 +1296,10 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         : doctrine === 'battle-creed'
           ? level >= 13 ? 'master' : level >= 5 ? 'expert' : 'trained'
           : level >= 11 ? 'expert' : 'trained'; // cloistered-cleric (default)
-    const overrides: Record<string, ProficiencyRank> = {};
-    for (const w of deity.favoredWeapons) if (content.items[w]) overrides[w] = favoredRank;
+    // MERGE (don't replace): a character can have both a deity favored weapon and an ancestry
+    // weapon-familiarity feat, and each must keep its own override.
+    const overrides: Record<string, ProficiencyRank> = { ...(proficiencies.weaponOverrides ?? {}) };
+    for (const w of deity.favoredWeapons) if (content.items[w]) overrides[w] = maxRank(overrides[w] ?? 'untrained', favoredRank);
     if (Object.keys(overrides).length) proficiencies.weaponOverrides = overrides;
   }
 
@@ -1217,43 +1311,125 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // A domains choice grants that domain's focus spell; the resolved label is recorded
   // on the FeatChoice for display.
   const featChoiceById: Record<string, { value: string; label: string }> = {};
+  const grantedChoiceById: Record<string, { value: string; label: string }> = {};
   const featFocusSpells: string[] = [];
+  /** Which feat/feature granted each focus spell — the focus entry pools many sources, so the Spells
+   *  page labels each spell with its origin. */
+  const focusSource: Record<string, string> = {};
   let featPoolBonus = 0;
+  // Advanced/Greater Bloodline (sorcerer) and Advanced/Greater Revelation (oracle) grant a focus spell
+  // that depends on the chosen subclass, so the feat itself can't name it — resolved from the picked
+  // bloodline/mystery. The pool point is counted via the spell (avoids double count).
+  const ADV_SPELL: Record<string, string | undefined> = {
+    'advanced-bloodline': subOption?.advancedFocusSpell,
+    'greater-bloodline': subOption?.greaterFocusSpell,
+    'advanced-revelation': subOption?.advancedFocusSpell,
+    'greater-revelation': subOption?.greaterFocusSpell,
+  };
+  /** One feat's focus contribution. The domain sub-choice (Domain Initiate) grants that domain's spell,
+   *  AND the feat's own fixed focusSpells / focusPoolBonus still apply — a feat with BOTH a sub-choice
+   *  and a fixed grant contributes both (the old code skipped the fixed grant whenever a choice def
+   *  existed, silently dropping e.g. a choice feat's focusPoolBonus). Returns the resolved choice. */
+  const applyFeatFocus = (featId: string, choiceValue: string | undefined) => {
+    const feat = content.feats[featId];
+    if (!feat) return undefined;
+    let resolved: { value: string; label: string } | undefined;
+    let contributedSpell = false;
+    const def = feat.choice;
+    if (def && choiceValue) {
+      const raw = def.options?.find((o) => o.value === choiceValue)?.label ?? choiceValue;
+      resolved = { value: choiceValue, label: def.kind === 'domains' ? cap(choiceValue) : featChoiceLabel(raw) };
+      if (def.kind === 'domains' && DOMAIN_SPELLS[choiceValue] && content.spells[DOMAIN_SPELLS[choiceValue]]) {
+        featFocusSpells.push(DOMAIN_SPELLS[choiceValue]);
+        focusSource[DOMAIN_SPELLS[choiceValue]] ??= feat.name;
+        contributedSpell = true;
+      }
+    }
+    const advSpell = ADV_SPELL[featId];
+    const ffs = (feat.focusSpells ?? []).filter((id) => content.spells[id]);
+    if (advSpell && content.spells[advSpell]) {
+      featFocusSpells.push(advSpell);
+      focusSource[advSpell] ??= feat.name;
+      contributedSpell = true;
+    } else if (ffs.length) {
+      featFocusSpells.push(...ffs);
+      for (const id of ffs) focusSource[id] ??= feat.name;
+      contributedSpell = true;
+    }
+    // Each granted spell carries its own pool point, so focusPoolBonus only applies to POOL-ONLY feats
+    // (Universal Versatility). A domains-choice feat's focusPoolBonus represents the choice spell's
+    // point — with the choice unresolved there is no spell, so no pool either.
+    if (!contributedSpell && def?.kind !== 'domains' && feat.focusPoolBonus) featPoolBonus += feat.focusPoolBonus;
+    return resolved;
+  };
+  const focusSeen = new Set<string>();
   for (const [slotKey, featId] of Object.entries(build.featPicks)) {
     const lvl = Number(slotKey.split(':')[0]);
     if (!featId || !Number.isFinite(lvl) || lvl > level) continue;
-    const feat = content.feats[featId];
-    if (!feat) continue;
-    // Embedded sub-choice (Domain Initiate's domain → its initial focus spell). A choice feat's focus
-    // is driven by the pick, so the fixed-grant path below is skipped for it (avoids double-counting).
-    const def = feat.choice;
-    if (def) {
-      const value = build.featChoices?.[slotKey];
-      if (value) {
-        const raw = def.options?.find((o) => o.value === value)?.label ?? value;
-        const label = def.kind === 'domains' ? cap(value) : featChoiceLabel(raw);
-        featChoiceById[slotKey] = { value, label };
-        if (def.kind === 'domains' && DOMAIN_SPELLS[value] && content.spells[DOMAIN_SPELLS[value]]) {
-          featFocusSpells.push(DOMAIN_SPELLS[value]);
-        }
+    if (!content.feats[featId]) continue;
+    focusSeen.add(featId);
+    const resolved = applyFeatFocus(featId, build.featChoices?.[slotKey]);
+    if (resolved) featChoiceById[slotKey] = resolved;
+  }
+  // BONUS/GRANTED feats contribute focus too — background/heritage/UMT feats, override-added feats,
+  // pick-a-feat picks, dedication skill feats, and the FEAT_FEAT_GRANTS closure over everything (Seeker
+  // of Truths → Domain Initiate). Slotless feats' sub-choices live in build.grantedFeatChoices (picked
+  // under the granting feat in the builder).
+  const focusBonusIds: string[] = [];
+  const pushFocusBonus = (id?: string | null) => {
+    if (id && content.feats[id] && !focusSeen.has(id)) {
+      focusSeen.add(id);
+      focusBonusIds.push(id);
+    }
+  };
+  pushFocusBonus(resolveBackground(build, content)?.grantedFeatId);
+  pushFocusBonus(build.heritageFeatId);
+  pushFocusBonus(build.umtFeatId);
+  for (const f of build.overrides?.addedFeats ?? []) if ((f.level ?? 1) <= level) pushFocusBonus(f.featId);
+  for (const id of Object.values(build.pickFeatChoices ?? {})) pushFocusBonus(id);
+  for (const id of Object.values(build.dedicationSkillFeats ?? {})) pushFocusBonus(id);
+  {
+    const queue = [...focusSeen];
+    let guard = 0;
+    while (queue.length && guard++ < 500) {
+      const src = queue.shift() as string;
+      const grantIds = [
+        ...(FEAT_FEAT_GRANTS[src] ?? []),
+        ...(FEAT_FEAT_GRANTS_LEVELED[src] ?? []).filter((lg) => level >= lg.minLevel).map((lg) => lg.feat),
+      ];
+      for (const gid of grantIds) {
+        if (focusSeen.has(gid)) continue;
+        pushFocusBonus(gid);
+        queue.push(gid);
       }
-    } else {
-      // Advanced/Greater Bloodline (sorcerer) and Advanced/Greater Revelation (oracle) grant a focus
-      // spell that depends on the chosen subclass, so the feat itself can't name it — resolve it from
-      // the picked bloodline/mystery here. The pool point is counted via the spell (avoids double count).
-      const ADV_SPELL: Record<string, string | undefined> = {
-        'advanced-bloodline': subOption?.advancedFocusSpell,
-        'greater-bloodline': subOption?.greaterFocusSpell,
-        'advanced-revelation': subOption?.advancedFocusSpell,
-        'greater-revelation': subOption?.greaterFocusSpell,
-      };
-      const advSpell = ADV_SPELL[featId];
-      // Feats that grant a fixed focus spell + a focus pool point (Blessed One → Lay on Hands, Cathartic
-      // Focus Spell, …). Each granted spell maps to one pool point; pool-only feats add a bonus.
-      const ffs = (feat.focusSpells ?? []).filter((id) => content.spells[id]);
-      if (advSpell && content.spells[advSpell]) featFocusSpells.push(advSpell);
-      else if (ffs.length) featFocusSpells.push(...ffs);
-      else if (feat.focusPoolBonus) featPoolBonus += feat.focusPoolBonus;
+    }
+  }
+  for (const id of focusBonusIds) {
+    const resolved = applyFeatFocus(id, build.grantedFeatChoices?.[id]);
+    if (resolved) grantedChoiceById[id] = resolved;
+  }
+  // "Choose one of N FOCUS spells" effect-choices (Additional Shadow Magic, Greater Deathly Secrets).
+  // Resolved HERE (not in the later effect-choice pass) so the pick feeds the same focus pool/entry as
+  // a fixed focusSpells grant — the later pass deliberately skips focus keys to avoid double-counting.
+  {
+    const focusChoiceIds = new Set<string>(focusSeen);
+    if (build.heritageId) focusChoiceIds.add(build.heritageId);
+    for (const f of cls?.features ?? []) if (f.level <= level) focusChoiceIds.add(f.featureId);
+    for (const f of cls2?.features ?? []) if (f.level <= level) focusChoiceIds.add(f.featureId);
+    // A chosen subclass / extra-choice option carries picks of its own (the wizard's Runelord school
+    // grants the chosen sin's initial school spell); its record ships under the same slug.
+    for (const o of grantOptions) focusChoiceIds.add(o.id);
+    for (const rid of focusChoiceIds) {
+      const rec = content.feats[rid] ?? content.heritages[rid] ?? content.classFeatures[rid];
+      for (const ch of rec?.effectChoices ?? []) {
+        const opt = (ch.options ?? []).find((o) => o.value === build.effectChoices?.[`${rid}:${ch.id}`]);
+        if (!opt?.grant) continue; // a play-time-only option grants nothing mechanical
+        const ffs = (opt.grant.focusSpells ?? []).filter((sid) => content.spells[sid]);
+        if (ffs.length) {
+          featFocusSpells.push(...ffs);
+          for (const sid of ffs) focusSource[sid] ??= rec?.name ?? rid;
+        } else if (opt.grant.focusPoolBonus) featPoolBonus += opt.grant.focusPoolBonus;
+      }
     }
   }
 
@@ -1595,6 +1771,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         proficiency: 'trained',
         cantrips: [],
         repertoire: byRankOf(focusSpells),
+        ...(Object.keys(focusSource).length ? { spellSources: focusSource } : {}),
       });
     }
     // Focus pool = number of focus-granting SOURCES (capped 3), not focus spells:
@@ -1801,6 +1978,72 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     takenFeats.add(a.featId);
     feats.push({ featId: a.featId, level: a.level, category: a.category });
   }
+  // Pick-a-feat grants: a feat like General Training / Basic Maneuver / Natural Ambition lets the
+  // player CHOOSE a bonus feat from a filtered pool. Add the chosen feat (validated against the pool)
+  // so it's granted with its own effects — then the expansion below carries any further grants.
+  for (const fc of [...feats]) {
+    const spec = FEAT_PICK_GRANTS[fc.featId];
+    if (!spec) continue;
+    const chosen = build.pickFeatChoices?.[fc.featId];
+    if (!chosen || takenFeats.has(chosen) || !content.feats[chosen]) continue;
+    if (!pickableFeats(spec, build, content).some((f) => f.id === chosen)) continue; // ignore an illegal pick
+    takenFeats.add(chosen);
+    feats.push({ featId: chosen, level: fc.level, category: content.feats[chosen].category as FeatCategory, grantedBy: fc.featId, choice: grantedChoiceById[chosen] });
+  }
+  // A HERITAGE can carry the same kind of pick (Ancient Elf: a multiclass dedication at 1st level,
+  // "even though you don't meet its level prerequisite" — the spec's maxLevel encodes that waiver).
+  if (build.heritageId) {
+    const spec = FEAT_PICK_GRANTS[build.heritageId];
+    const chosen = spec ? build.pickFeatChoices?.[build.heritageId] : undefined;
+    if (spec && chosen && !takenFeats.has(chosen) && content.feats[chosen] && pickableFeats(spec, build, content).some((f) => f.id === chosen)) {
+      takenFeats.add(chosen);
+      feats.push({ featId: chosen, level: 1, category: content.feats[chosen].category as FeatCategory, grantedBy: build.heritageId, choice: grantedChoiceById[chosen] });
+    }
+  }
+  // Feats that GRANT another feat (Bastion-style dedications → a bonus feat, e.g. Lastwall Sentry →
+  // Reactive Shield). Runs after ALL feats are placed (picks + class-granted + overrides) so every
+  // source expands. Each granted feat is added as a BONUS (no slot) — it shows in Feats & Features and
+  // its own effects apply (proficiency grants run in the loop below). Transitive with a visited guard,
+  // deduped against feats already taken. Placed before the removal pass so Overrides can strip a
+  // A HERITAGE (or feat/feature) can grant a specific feat outright (Cataphract Fleshwarp → Armor
+  // Proficiency, Battle-Trained Human → Diehard). Add them as bonus feats before the expansion so the
+  // granted feat's own effects (and any onward grants) resolve.
+  {
+    const grantSources: { id: string; grants?: string[] }[] = [];
+    if (build.heritageId) grantSources.push({ id: build.heritageId, grants: content.heritages[build.heritageId]?.grantsFeats });
+    for (const fc of [...feats]) grantSources.push({ id: fc.featId, grants: content.feats[fc.featId]?.grantsFeats });
+    // An invested item can grant a bonus feat too (The Survivor → Diehard).
+    for (const inv of build.inventory) if (inv.invested) grantSources.push({ id: inv.itemId, grants: content.items[inv.itemId]?.grantsFeats });
+    for (const src of grantSources) {
+      for (const gid of src.grants ?? []) {
+        if (takenFeats.has(gid) || !content.feats[gid]) continue;
+        takenFeats.add(gid);
+        feats.push({ featId: gid, level: 1, category: content.feats[gid].category as FeatCategory, grantedBy: src.id, choice: grantedChoiceById[gid] });
+      }
+    }
+  }
+  // granted feat too.
+  {
+    const queue = feats.map((f) => f.featId);
+    let guard = 0;
+    while (queue.length && guard++ < 500) {
+      const srcId = queue.shift() as string;
+      for (const gid of FEAT_FEAT_GRANTS[srcId] ?? []) {
+        if (takenFeats.has(gid) || !content.feats[gid]) continue;
+        takenFeats.add(gid);
+        const srcLevel = feats.find((f) => f.featId === srcId)?.level ?? 1;
+        feats.push({ featId: gid, level: srcLevel, category: content.feats[gid].category as FeatCategory, grantedBy: srcId, choice: grantedChoiceById[gid] });
+        queue.push(gid);
+      }
+      // Level-gated grants (Covet Hoard → Incredible Investiture at 11th) — only once high enough.
+      for (const lg of FEAT_FEAT_GRANTS_LEVELED[srcId] ?? []) {
+        if (level < lg.minLevel || takenFeats.has(lg.feat) || !content.feats[lg.feat]) continue;
+        takenFeats.add(lg.feat);
+        feats.push({ featId: lg.feat, level: lg.minLevel, category: content.feats[lg.feat].category as FeatCategory, grantedBy: srcId, choice: grantedChoiceById[lg.feat] });
+        queue.push(lg.feat);
+      }
+    }
+  }
   if (build.overrides?.removedFeatIds?.length) {
     const removed = new Set(build.overrides.removedFeatIds);
     for (let i = feats.length - 1; i >= 0; i--) if (removed.has(feats[i].featId)) feats.splice(i, 1);
@@ -1810,12 +2053,20 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   // Feat-granted proficiencies (archetype dedications etc.). Applied AFTER class advancement so a
   // dedication can raise a proficiency the class hasn't (Sentinel → light+medium armor, Fighter
   // Dedication → martial weapons, …). Only RAISES a rank (maxRank), never lowers. See featGrants.ts.
+  // Redundant-grant fallbacks ("already trained → a skill of your choice") triggered here are surfaced
+  // on Character.skillFallbacks so the builder can offer the replacement picker.
+  const skillFallbacks: { featId: string; skill: ProficiencyKey }[] = [];
   for (const fc of feats) {
     const g = FEAT_GRANTS[fc.featId];
     if (!g) continue;
+    // Some grants don't start when the feat is taken — Martial Experience only trains you in every
+    // weapon from 11th level. Without this the sheet would over-grant for ten levels.
+    if (g.minLevel && level < g.minLevel) continue;
     // A feat's grants can improve with level (Canny Acumen: expert, master at 17). The upgrade is a
     // floor on every rank THIS feat grants — it never lowers a rank the feat would already give.
-    const up = g.rankUpgrade && level >= g.rankUpgrade.level ? g.rankUpgrade.rank : undefined;
+    // Multi-step progressions ("expert now, master at 7th, legendary at 15th") take the highest
+    // step the character has reached.
+    const up = upgradeRankAt(g, level);
     const at = (r: ProficiencyRank) => (up ? maxRank(r, up) : r);
     // Static grants, then the one selected by the player's pick in the feat's own choice dropdown.
     for (const src of [g, fc.choice?.value ? g.choiceGrants?.[fc.choice.value] : undefined]) {
@@ -1824,7 +2075,29 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       for (const [c, r] of Object.entries(src.weapon ?? {})) if (r) proficiencies.attacks[c as WeaponCategory] = maxRank(proficiencies.attacks[c as WeaponCategory], at(r));
       for (const [s, r] of Object.entries(src.save ?? {})) if (r) proficiencies.saves[s as SaveId] = maxRank(proficiencies.saves[s as SaveId], at(r));
       if (src.perception) proficiencies.perception = maxRank(proficiencies.perception, at(src.perception));
-      for (const [k, r] of Object.entries(src.skills ?? {})) if (r) proficiencies.skills[k as ProficiencyKey] = maxRank(proficiencies.skills[k as ProficiencyKey] ?? 'untrained', at(r));
+      for (const [k, r] of Object.entries(src.skills ?? {})) {
+        if (!r) continue;
+        const key = k as ProficiencyKey;
+        const cur = proficiencies.skills[key] ?? 'untrained';
+        // "If you were already trained, you instead become trained in a skill of your choice" — the
+        // redundant static grant converts into a replacement pick (recorded for the builder; applied
+        // from featSkillChoices `<featId>:fallback:<skill>`). Lore grants stay as-is (they're new).
+        if (g.redundantFallback && src === g && !key.startsWith('lore:') && maxRank(cur, at(r)) === cur) {
+          skillFallbacks.push({ featId: fc.featId, skill: key });
+          const picked = build.featSkillChoices?.[`${fc.featId}:fallback:${key}`];
+          if (picked && SKILLS.includes(picked)) proficiencies.skills[picked] = maxRank(proficiencies.skills[picked] ?? 'untrained', 'trained');
+          continue;
+        }
+        proficiencies.skills[key] = maxRank(cur, at(r));
+      }
+      // Conditional "trained; expert if already trained" — grant upgraded only if the character
+      // already meets `base` from another source (evaluated against the current, pre-this-grant rank).
+      for (const [k, cu] of Object.entries(src.conditionalSkills ?? {})) {
+        if (!cu) continue;
+        const cur = proficiencies.skills[k as ProficiencyKey] ?? 'untrained';
+        const grant = maxRank(cur, cu.base) === cur ? cu.upgraded : cu.base; // cur >= base → upgraded
+        proficiencies.skills[k as ProficiencyKey] = maxRank(cur, at(grant));
+      }
     }
     // Armor Proficiency cascade: train the first of light→medium→heavy still untrained RIGHT NOW.
     // Because this loop mutates proficiencies in place and feats are sorted by level, a 2nd/3rd take
@@ -1847,8 +2120,249 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const opts = slot.options === 'any' ? SKILLS : slot.options;
       const picked = build.featSkillChoices?.[`${fc.featId}:${idx}`];
       const skill = picked && opts.includes(picked) ? picked : opts[0];
-      proficiencies.skills[skill] = maxRank(proficiencies.skills[skill] ?? 'untrained', slot.rank);
+      const cur = proficiencies.skills[skill] ?? 'untrained';
+      // A conditional slot ("trained; expert if already trained" on a CHOSEN skill — Lion Blade)
+      // upgrades when the pick already met `base` before this grant.
+      const grant = slot.conditionalRank
+        ? maxRank(cur, slot.conditionalRank.base) === cur
+          ? slot.conditionalRank.upgraded
+          : slot.conditionalRank.base
+        : slot.rank;
+      proficiencies.skills[skill] = maxRank(cur, grant);
     });
+    // "Trained in a Lore of your choice" — grant lore:<subject> for each filled Lore slot (RAISES only).
+    for (let idx = 0; idx < (g.loreChoices ?? 0); idx++) {
+      const subject = build.featLoreChoices?.[`${fc.featId}:${idx}`]?.trim();
+      if (!subject) continue;
+      const key = `lore:${subject.toLowerCase().replace(/\s*lore$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}` as ProficiencyKey;
+      proficiencies.skills[key] = maxRank(proficiencies.skills[key] ?? 'untrained', 'trained');
+    }
+  }
+
+  // Bloodrager Dedication: you become trained in Arcana (if you chose arcane cantrips) or Religion (if
+  // divine). "If you were already trained, you become trained in a skill of your choice" — modelled via
+  // a free-skill picker (featSkillChoices['bloodrager-dedication:free']) that the builder surfaces only
+  // when the tradition skill is already trained.
+  if (takenFeats.has('bloodrager-dedication')) {
+    // Effective tradition: two-caster classes store it on archetypeSpells; a non-caster (barbarian) on archetypeTradition.
+    const bloodTrad = build.archetypeSpells?.tradition ?? build.archetypeTradition;
+    const traditionSkill = bloodTrad === 'divine' ? 'religion' : bloodTrad === 'arcane' ? 'arcana' : null;
+    if (traditionSkill) {
+      if ((proficiencies.skills[traditionSkill] ?? 'untrained') === 'untrained') {
+        proficiencies.skills[traditionSkill] = 'trained';
+      } else {
+        const picked = build.featSkillChoices?.['bloodrager-dedication:free'];
+        const skill = picked && SKILLS.includes(picked) ? picked : null;
+        if (skill) proficiencies.skills[skill] = maxRank(proficiencies.skills[skill] ?? 'untrained', 'trained');
+      }
+    }
+  }
+
+  // "Choose one of N" effect picks (DefenseGrants/Item.effectChoices — a dragon tattoo's resistance
+  // TYPE, an energy heart's element, one of several skills). Resolve each owned record's picks:
+  //  - feats/heritage/class features → chosenEffects (senses/IWR/speeds, added as a derive source) +
+  //    skills (applied now) + innate spells (collected for the innate entry).
+  //  - items → resolvedItemPassives[itemId] (applied by derive only while the item is worn).
+  const chosenEffects: DefenseGrants = {};
+  const chosenInnateGrants: InnateSpellGrant[] = [];
+  /** Which record's choice produced each chosen innate spell (for the Spells page's source labels). */
+  const chosenInnateSource: Record<string, string> = {};
+  const resolvedItemPassives: Record<string, ItemPassiveEffects> = {};
+  const effectWarnings: { source: string; message: string }[] = [];
+  const effectPicks: NonNullable<Character['effectPicks']> = [];
+  const mergeEffect = (into: DefenseGrants, g: EffectGrant) => {
+    if (g.senses) (into.senses ??= []).push(...g.senses);
+    if (g.resistances) (into.resistances ??= []).push(...g.resistances);
+    if (g.weaknesses) (into.weaknesses ??= []).push(...g.weaknesses);
+    if (g.immunities) (into.immunities ??= []).push(...g.immunities);
+    if (g.speeds) into.speeds = { ...into.speeds, ...g.speeds };
+  };
+  const resolvePick = (recordId: string, choices: EffectChoice[] | undefined, sink: (g: EffectGrant, srcName: string) => void, srcName: string) => {
+    for (const ch of choices ?? []) {
+      const val = build.effectChoices?.[`${recordId}:${ch.id}`];
+      let g: EffectGrant | undefined;
+      if (ch.spellFilter) {
+        // Open-ended pick ("any 1st-rank arcane spell"): the stored value IS the chosen spell id.
+        g = (val ? grantForSpellPick(ch.spellFilter, val, content, level) : null) ?? undefined;
+      } else {
+        const opts = ch.options ?? [];
+        const opt = opts.find((o) => o.value === val) ?? (opts.length === 1 ? opts[0] : undefined);
+        // Record the pick even when the option carries no grant (a kineticist gate junction: only
+        // Elemental Resistance moves a stat) so the sheet still shows which one was taken.
+        if (opt) effectPicks.push({ recordId, choiceId: ch.id, label: opt.label, note: opt.note });
+        g = opt?.grant;
+      }
+      if (!g) continue;
+      // Warn if a chosen innate spell isn't in the shipped data (legacy) but should reach the sheet.
+      for (const s of g.innateSpells ?? []) if (!content.spells[s.spellId]) effectWarnings.push({ source: srcName, message: `references the missing spell “${s.spellId}”` });
+      sink(g, srcName);
+    }
+  };
+  // CLASS ARCHETYPES (Runelord, War Magic, …): unlike a normal archetype these RESTRUCTURE the class —
+  // suppressing class features and substituting their own. Resolved before the owned-feature set so
+  // every downstream consumer (effect choices, focus, derive) sees the archetype's version of the class.
+  const archSuppressed = new Set<string>();
+  const archAddedFeatures: { level: number; featureId: string }[] = [];
+  const archNotes: string[] = [];
+  const archCaps: { armor?: ClassArchetype['armorCap']; weapon?: ClassArchetype['weaponCap'] }[] = [];
+  // An archetype may be carried by the dedication FEAT or by a chosen subclass/extra-choice option
+  // (the wizard's Runelord school is both the school and the archetype), so scan both.
+  const archCarriers: { name: string; ca: ClassArchetype }[] = [];
+  for (const fc of feats) {
+    const ca = content.feats[fc.featId]?.classArchetype;
+    if (ca) archCarriers.push({ name: content.feats[fc.featId].name, ca });
+  }
+  for (const o of grantOptions) {
+    const ca = content.classFeatures[o.id]?.classArchetype;
+    if (ca) archCarriers.push({ name: content.classFeatures[o.id].name, ca });
+  }
+  for (const { name, ca } of archCarriers) {
+    // Only applies to a character OF that class (either class when dual-classed).
+    if (ca.classId !== build.classId && ca.classId !== build.classId2) continue;
+    for (const id of ca.suppressFeatures ?? []) archSuppressed.add(id);
+    for (const af of ca.addFeatures ?? []) if (af.level <= level && content.classFeatures[af.featureId]) archAddedFeatures.push(af);
+    for (const [c, r] of Object.entries(ca.armor ?? {})) if (r) proficiencies.defenses[c as ArmorCategory] = maxRank(proficiencies.defenses[c as ArmorCategory], r);
+    for (const [c, r] of Object.entries(ca.weapon ?? {})) if (r) proficiencies.attacks[c as WeaponCategory] = maxRank(proficiencies.attacks[c as WeaponCategory], r);
+    if (ca.armorCap || ca.weaponCap) archCaps.push({ armor: ca.armorCap, weapon: ca.weaponCap });
+    if (ca.note) archNotes.push(`${name}: ${ca.note}`);
+  }
+
+  const ownedFeatureIds = new Set([
+    ...(cls?.features ?? []).filter((f) => f.level <= level).map((f) => f.featureId),
+    ...(cls2?.features ?? []).filter((f) => f.level <= level).map((f) => f.featureId),
+    ...archAddedFeatures.map((f) => f.featureId),
+  ]);
+  for (const id of archSuppressed) ownedFeatureIds.delete(id);
+  const applyAlwaysOn = (g: EffectGrant, srcName?: string) => {
+    mergeEffect(chosenEffects, g);
+    for (const [k, r] of Object.entries(g.skills ?? {})) if (r) proficiencies.skills[k as ProficiencyKey] = maxRank(proficiencies.skills[k as ProficiencyKey] ?? 'untrained', r);
+    for (const s of g.innateSpells ?? []) {
+      if (!content.spells[s.spellId]) continue;
+      chosenInnateGrants.push(s);
+      if (srcName) chosenInnateSource[s.spellId] ??= srcName;
+    }
+  };
+  for (const fc of feats) resolvePick(fc.featId, content.feats[fc.featId]?.effectChoices, applyAlwaysOn, content.feats[fc.featId]?.name ?? fc.featId);
+  if (build.heritageId) resolvePick(build.heritageId, content.heritages[build.heritageId]?.effectChoices, applyAlwaysOn, content.heritages[build.heritageId]?.name ?? build.heritageId);
+  for (const fid of ownedFeatureIds) resolvePick(fid, content.classFeatures[fid]?.effectChoices, applyAlwaysOn, content.classFeatures[fid]?.name ?? fid);
+  // A chosen subclass / extra-choice option (a kineticist element gate, the wizard's Runelord school)
+  // ships as a classFeature record under the same slug — its picks are the character's too.
+  for (const o of grantOptions) {
+    if (ownedFeatureIds.has(o.id)) continue; // already resolved above
+    resolvePick(o.id, content.classFeatures[o.id]?.effectChoices, applyAlwaysOn, content.classFeatures[o.id]?.name ?? o.name ?? o.id);
+  }
+  // Ancestry Weapon Familiarity / Expertise: proficiency in NAMED weapons. Applied here (after class
+  // advancement) so `mirrorBestCategory` sees the character's final weapon-category ranks — that is
+  // exactly what "whenever a class feature grants you expert or greater proficiency" means.
+  {
+    const wo: Record<string, ProficiencyRank> = { ...(proficiencies.weaponOverrides ?? {}) };
+    let touched = false;
+    const bestCategory = (['simple', 'martial', 'advanced'] as WeaponCategory[])
+      .map((c) => proficiencies.attacks[c])
+      .reduce((a, b) => maxRank(a, b), 'untrained' as ProficiencyRank);
+    for (const fc of feats) {
+      const g = FEAT_GRANTS[fc.featId];
+      // A feat's flat familiarity PLUS the one selected by the player's weapon choice (Viking
+      // Shieldbearer: "trained in your choice of the battle axe or longsword").
+      const chosen = fc.choice?.value ? g?.choiceGrants?.[fc.choice.value]?.weaponFamiliarity : undefined;
+      for (const wf of [g?.weaponFamiliarity, chosen]) {
+        if (!wf) continue;
+        const rank = wf.mirrorBestCategory ? bestCategory : wf.rank;
+        if (!rank || rank === 'untrained') continue;
+        for (const w of wf.weapons) {
+          if (!content.items[w]) continue;
+          wo[w] = maxRank(wo[w] ?? 'untrained', rank);
+          touched = true;
+        }
+      }
+    }
+    if (touched) proficiencies.weaponOverrides = wo;
+  }
+
+  // Class-archetype proficiency CEILINGS, applied last so they clamp the finished ranks (a Warrior of
+  // Legend is never trained in heavy armor, however far the fighter table would otherwise take it).
+  for (const cap of archCaps) {
+    for (const [c, r] of Object.entries(cap.armor ?? {})) if (r) proficiencies.defenses[c as ArmorCategory] = minRank(proficiencies.defenses[c as ArmorCategory], r);
+    for (const [c, r] of Object.entries(cap.weapon ?? {})) if (r) proficiencies.attacks[c as WeaponCategory] = minRank(proficiencies.attacks[c as WeaponCategory], r);
+  }
+
+  // Multiclass dedications that grant a trained class DC in the BORROWED class (Fighter/Ranger/Rogue/
+  // Alchemist Dedication). Key ability = the borrowed class's KAS (the higher mod when it's flexible).
+  const secondaryClassDcs: NonNullable<Character['secondaryClassDcs']> = [];
+  {
+    const seen = new Set<string>();
+    for (const fc of feats) {
+      const grant = content.feats[fc.featId]?.classDcGrant;
+      if (!grant || seen.has(grant.classId) || grant.classId === build.classId || grant.classId === build.classId2) continue;
+      const cls = content.classes[grant.classId];
+      if (!cls) continue;
+      seen.add(grant.classId);
+      const kas = Array.isArray(cls.keyAbility) ? cls.keyAbility : [cls.keyAbility];
+      const key = kas.reduce((best, a) => (abilityMod(abilities[a]) > abilityMod(abilities[best]) ? a : best), kas[0]) as AbilityId;
+      // Trained class DC = 10 + trained proficiency bonus + key ability mod. Trained bonus = level + 2
+      // (or just 2 under the Proficiency Without Level variant).
+      const trainedBonus = (build.variantRules?.proficiencyWithoutLevel ? 0 : level) + 2;
+      const dc = 10 + trainedBonus + abilityMod(abilities[key]);
+      secondaryClassDcs.push({ classId: grant.classId, name: cls.name, keyAbility: key, dc });
+    }
+  }
+
+  // Feat-granted casting PROFILES ("trained in occult spell attacks/DCs using Charisma") and extra
+  // spell slots. Collected here; the profile is applied to the innate entry and the slot bonus to the
+  // character's slot caster, both below.
+  const spellcastingGrants: SpellcastingGrant[] = [];
+  const spellSlotBonuses: SpellSlotBonus[] = [];
+  for (const fc of feats) {
+    const f = content.feats[fc.featId];
+    if (f?.spellcastingGrant) spellcastingGrants.push(f.spellcastingGrant);
+    if (f?.spellSlotBonus) spellSlotBonuses.push(f.spellSlotBonus);
+  }
+  for (const fid of ownedFeatureIds) {
+    const cf = content.classFeatures[fid];
+    if (cf?.spellcastingGrant) spellcastingGrants.push(cf.spellcastingGrant);
+    if (cf?.spellSlotBonus) spellSlotBonuses.push(cf.spellSlotBonus);
+  }
+  // Invested items can grant extra slots too (Endless Grimoire, Sin Reservoir).
+  for (const inv of build.inventory) {
+    if (!inv.invested) continue;
+    const it = content.items[inv.itemId];
+    if (it?.spellSlotBonus) spellSlotBonuses.push(it.spellSlotBonus);
+  }
+  // Best rank per tradition wins (two feats granting the same tradition don't stack).
+  spellcastingGrants.sort((a, b) => PROFICIENCY_RANKS.indexOf(b.proficiency) - PROFICIENCY_RANKS.indexOf(a.proficiency));
+  // Extra spell slots ("+1 slot of each rank except your highest"). Applied to the already-built slot
+  // caster: a spontaneous entry gains slot capacity, a prepared one gains empty prepared slots.
+  for (const bonus of spellSlotBonuses) {
+    const entry = bonus.entryId
+      ? spellcasting.find((e) => e.id === bonus.entryId)
+      : spellcasting.find((e) => e.type === 'spontaneous' || e.type === 'prepared');
+    if (!entry) continue;
+    const perRank = bonus.perRank ?? 1;
+    const ranks = Object.keys(entry.slots ?? entry.prepared ?? {}).map(Number).filter((r) => r > 0).sort((a, b) => a - b);
+    const eligible = bonus.exceptHighest ? ranks.slice(0, Math.max(0, ranks.length - bonus.exceptHighest)) : ranks;
+    for (const r of eligible) {
+      if (entry.slots?.[r]) entry.slots[r].max += perRank;
+      if (entry.prepared?.[r]) entry.prepared[r].push(...Array.from({ length: perRank }, () => ({ spellId: null, expended: false })));
+    }
+  }
+
+  // Static data-warnings: an owned feat/heritage/feature/worn item whose effect references missing
+  // (legacy) content — kept visible per the user's "keep it with a warning" call.
+  for (const fc of feats) if (content.feats[fc.featId]?.dataWarning) effectWarnings.push({ source: content.feats[fc.featId].name, message: content.feats[fc.featId].dataWarning! });
+  if (build.heritageId && content.heritages[build.heritageId]?.dataWarning) effectWarnings.push({ source: content.heritages[build.heritageId].name, message: content.heritages[build.heritageId].dataWarning! });
+  for (const fid of ownedFeatureIds) if (content.classFeatures[fid]?.dataWarning) effectWarnings.push({ source: content.classFeatures[fid].name, message: content.classFeatures[fid].dataWarning! });
+  for (const inv of build.inventory) if (content.items[inv.itemId]?.dataWarning) effectWarnings.push({ source: content.items[inv.itemId].name, message: content.items[inv.itemId].dataWarning! });
+  // Items: the picked option's `passive` (item bonuses) is applied while the item is worn.
+  for (const inv of build.inventory) {
+    resolvePick(inv.itemId, content.items[inv.itemId]?.effectChoices, (g) => {
+      if (!g.passive) return;
+      const cur = (resolvedItemPassives[inv.itemId] ??= {});
+      for (const [k, v] of Object.entries(g.passive)) {
+        if (k === 'skills') cur.skills = { ...cur.skills, ...(v as Record<string, number>) };
+        else if (Array.isArray(v)) (cur as Record<string, unknown[]>)[k] = [...((cur as Record<string, unknown[]>)[k] ?? []), ...v];
+        else (cur as Record<string, unknown>)[k] = v;
+      }
+    }, content.items[inv.itemId]?.name ?? inv.itemId);
   }
 
   // Granted melee strikes from feats/heritage/ancestry/class features (Iruxi Fangs, Razortooth jaws,
@@ -1862,6 +2376,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     build.classId,
     level,
     new Set((build.naturalAttacks ?? []).map((n) => n.name.toLowerCase())),
+    build.inventory.filter((inv) => inv.invested).map((inv) => inv.itemId),
   );
   const naturalAttacks = [...(build.naturalAttacks ?? []), ...grantedNaturals];
 
@@ -1909,6 +2424,9 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         keyAbility: archKey,
         proficiency: archetypeProficiency(arch),
         cantrips: srcCantrips.slice(0, arch.config.cantrips),
+        ...(arch.dedicationId === 'bloodrager-dedication'
+          ? { note: 'Bloodrager: pick 2 cantrips (≥1 needing a spell attack). While you rage they gain the rage trait; casting one makes you drained 1 (reduce only via Harvest Blood).' }
+          : {}),
       };
       if (arch.config.innateCantrip) {
         // Magaambyan Attendant: the chosen cantrip(s) are cast as innate spells — no spell slots.
@@ -1971,18 +2489,66 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
 
     // Innate spells granted by the heritage + taken feats (Seer Elf → detect magic, etc.) — one
     // pooled 'innate' entry (cantrips at-will, leveled spells 1/day), cast at the granted tradition.
-    const innateGrants: { spellId: string; tradition?: string }[] = [];
+    const innateGrants: InnateSpellGrant[] = [];
+    // WHICH source granted each innate spell. The innate entry pools spells from the heritage, many
+    // feats, and resolved choices, so the Spells page labels each one with where it came from.
+    const innateSource: Record<string, string> = {};
+    const noteSrc = (spellId: string, name?: string) => {
+      if (name && !innateSource[spellId]) innateSource[spellId] = name;
+    };
     const heritage = build.heritageId ? content.heritages[build.heritageId] : undefined;
-    for (const g of heritage?.innateSpells ?? []) innateGrants.push(g);
-    for (const f of feats) for (const g of content.feats[f.featId]?.innateSpells ?? []) innateGrants.push(g);
+    for (const g of heritage?.innateSpells ?? []) {
+      innateGrants.push(g);
+      noteSrc(g.spellId, heritage?.name);
+    }
+    for (const f of feats)
+      for (const g of content.feats[f.featId]?.innateSpells ?? []) {
+        innateGrants.push(g);
+        noteSrc(g.spellId, content.feats[f.featId]?.name);
+      }
+    // Innate spells from a resolved effect-choice (e.g. Fey Influence's chosen 1/day spell).
+    for (const g of chosenInnateGrants) {
+      innateGrants.push(g);
+      noteSrc(g.spellId, chosenInnateSource[g.spellId]);
+    }
+    // Pick-a-cantrip grants (Dragon Spit, Hag Magic, …): the player chose an innate spell from a list.
+    for (const f of feats) {
+      const spec = FEAT_CANTRIP_GRANTS[f.featId];
+      const chosen = build.pickCantripChoices?.[f.featId];
+      if (spec && chosen && spec.options.includes(chosen) && content.spells[chosen]) {
+        innateGrants.push({ spellId: chosen });
+        noteSrc(chosen, content.feats[f.featId]?.name);
+      }
+    }
     const seenInnate = new Set<string>();
     const innate = innateGrants.filter((g) => content.spells[g.spellId] && !seenInnate.has(g.spellId) && seenInnate.add(g.spellId));
     if (innate.length) {
-      const innateCantrips = innate.filter((g) => (content.spells[g.spellId]?.rank ?? 0) === 0).map((g) => g.spellId);
+      // A leveled innate is cast at the grant's rank when it names one — a rank override (Invisible
+      // Trickster: 4th-rank Invisibility) or the "heightened to half your level" ladder — never below
+      // the spell's base rank. Cantrips auto-heighten and ignore these.
+      const castRank = (g: InnateSpellGrant): number => {
+        const base = content.spells[g.spellId]?.rank ?? 0;
+        if (base === 0) return 0;
+        if (g.heightenHalfLevel) return Math.max(base, Math.ceil(level / 2));
+        // A custom ladder ("8th at 18th level, 9th at 20th"): the highest step reached wins.
+        const step = (g.heightenAt ?? []).filter((h) => level >= h.level).sort((a, b) => b.rank - a.rank)[0];
+        return Math.max(base, step?.rank ?? g.rank ?? base);
+      };
+      const innateCantrips = innate.filter((g) => castRank(g) === 0).map((g) => g.spellId);
       const innateRep: Record<number, string[]> = {};
+      // Per-spell daily uses for the Spells page: 0 = at-will (leveled at-will grants like Persistent
+      // Creation), N = N/day; absent = the default 1/day.
+      const innateUses: Record<string, number> = {};
+      // Non-daily cadences ("twice per week") — display text per spell.
+      const innateCadence: Record<string, string> = {};
       for (const g of innate) {
-        const r = content.spells[g.spellId]?.rank ?? 0;
-        if (r > 0) (innateRep[r] ??= []).push(g.spellId);
+        const r = castRank(g);
+        if (r > 0) {
+          (innateRep[r] ??= []).push(g.spellId);
+          if (g.atWill) innateUses[g.spellId] = 0;
+          else if ((g.usesPerDay ?? 1) !== 1) innateUses[g.spellId] = g.usesPerDay as number;
+          if (g.usesPer && g.usesPer !== 'day' && !g.atWill) innateCadence[g.spellId] = `${g.usesPerDay ?? 1}/${g.usesPer}`;
+        }
       }
       const tc: Record<string, number> = {};
       for (const g of innate) {
@@ -1990,15 +2556,21 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
         if (t) tc[t] = (tc[t] ?? 0) + 1;
       }
       const tradition = (Object.entries(tc).sort((a, b) => b[1] - a[1])[0]?.[0] as Tradition) ?? caster?.tradition ?? 'arcane';
+      // A feat-granted casting PROFILE (Minor Magic: "trained in spell attacks/DCs using Charisma")
+      // sets the innate entry's key attribute + rank; the class caster still wins if it is better.
+      const profile = spellcastingGrants.find((g) => g.tradition === tradition) ?? spellcastingGrants[0];
       spellcasting.push({
         id: 'innate-casting',
         name: 'Innate spells',
         type: 'innate',
         tradition,
-        keyAbility: caster?.keyAbility ?? 'cha',
-        proficiency: caster?.proficiency ?? 'trained',
+        keyAbility: caster?.keyAbility ?? profile?.keyAbility ?? 'cha',
+        proficiency: maxRank(caster?.proficiency ?? 'untrained', profile?.proficiency ?? 'trained'),
         cantrips: innateCantrips,
         repertoire: innateRep,
+        ...(Object.keys(innateUses).length ? { innateUses } : {}),
+        ...(Object.keys(innateCadence).length ? { innateCadence } : {}),
+        ...(Object.keys(innateSource).length ? { spellSources: innateSource } : {}),
       });
     }
 
@@ -2155,6 +2727,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ...(build.campaignIds && build.campaignIds.length ? { campaignIds: build.campaignIds } : {}),
     ...(build.mythicEnabled ? { mythicEnabled: true } : {}),
     ...(build.kingmakerEnabled ? { kingmakerEnabled: true } : {}),
+    ...(build.hideLegacy ? { hideLegacy: true } : {}),
     ...(build.mythicEnabled && build.mythicCalling ? { mythicCalling: build.mythicCalling } : {}),
     ...(grantedFeatures.length ? { grantedFeatures } : {}),
     ...(naturalAttacks.length ? { naturalAttacks } : {}),
@@ -2186,11 +2759,40 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       const granted = ancestry?.languages.granted ?? [];
       const slots = Math.max(0, abilityMod(abilities.int)) + (ancestry?.languages.additional ?? 0);
       const bonus = build.languages.filter((l) => !granted.includes(l)).slice(0, slots);
-      // Override-added languages bypass the ancestry/Int slot cap; dedup against granted + bonus picks.
-      return [...new Set([...granted, ...bonus, ...(build.overrides?.addedLanguages ?? [])])];
+      // Languages granted outright by feats/heritage (fixed grants) and invested items (Stole of
+      // Civility). These are on top of the Int/ancestry slot budget, like the override-added ones.
+      const featLangs = feats.flatMap((fc) => content.feats[fc.featId]?.grantsLanguages ?? []);
+      const heritageLangs = build.heritageId ? content.heritages[build.heritageId]?.grantsLanguages ?? [] : [];
+      const itemLangs = (build.inventory ?? [])
+        .filter((inv) => inv.invested)
+        .flatMap((inv) => content.items[inv.itemId]?.passiveEffects?.grantsLanguages ?? []);
+      return [...new Set([...granted, ...bonus, ...featLangs, ...heritageLangs, ...itemLangs, ...(build.overrides?.addedLanguages ?? [])])];
     })(),
     feats,
     skillIncreases,
+    ...(skillFallbacks.length ? { skillFallbacks } : {}),
+    ...(archSuppressed.size || archAddedFeatures.length || archNotes.length
+      ? { classArchetype: { suppressedFeatures: [...archSuppressed], addedFeatures: archAddedFeatures, notes: archNotes } }
+      : {}),
+    ...(Object.keys(chosenEffects).length ? { chosenEffects } : {}),
+    ...(Object.keys(resolvedItemPassives).length ? { resolvedItemPassives } : {}),
+    ...(effectWarnings.length ? { effectWarnings } : {}),
+    ...(effectPicks.length ? { effectPicks } : {}),
+    ...(secondaryClassDcs.length ? { secondaryClassDcs } : {}),
+    ...(() => {
+      // Body size (ancestry, raised by any feat/heritage sizeOverride — largest wins) + natural reach.
+      const SIZE_ORDER = ['tiny', 'small', 'medium', 'large', 'huge', 'gargantuan'] as const;
+      const ancSize = (ancestry?.size as (typeof SIZE_ORDER)[number]) ?? 'medium';
+      let size = ancSize;
+      let reach = 5;
+      const consider = (g: { sizeOverride?: (typeof SIZE_ORDER)[number]; reach?: number } | undefined) => {
+        if (g?.sizeOverride && SIZE_ORDER.indexOf(g.sizeOverride) > SIZE_ORDER.indexOf(size)) size = g.sizeOverride;
+        if (g?.reach && g.reach > reach) reach = g.reach;
+      };
+      for (const fc of feats) consider(content.feats[fc.featId]);
+      if (build.heritageId) consider(content.heritages[build.heritageId]);
+      return { ...(size !== 'medium' ? { size } : {}), ...(reach !== 5 ? { reach } : {}) };
+    })(),
     ...(commanderTactics ? { commanderTactics } : {}),
     ...(inventor ? { inventor } : {}),
     ...(kineticist?.elements.length ? { kineticist } : {}),
@@ -2610,6 +3212,13 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
     // Nature, Expand-the-Portal impulse): skip it entirely — no slot, no chip. It reappears on the sheet
     // via buildCharacter, so it's not lost, just not an editable builder slot.
     if (autoGrantedFeatIds.has(f.featId)) continue;
+    // Feats auto-granted by another feat (FEAT_FEAT_GRANTS / FEAT_PICK_GRANTS, tagged grantedBy) are
+    // re-derived by buildCharacter — never reconstruct them as an editable slot or a granted chip. Their
+    // resolved sub-choice (Seeker of Truths' Domain Initiate domain) DOES round-trip, keyed by feat id.
+    if (f.grantedBy) {
+      if (f.choice) (b.grantedFeatChoices ??= {})[f.featId] = f.choice.value;
+      continue;
+    }
     if (!bgFeatDropped && bgFeat && f.featId === bgFeat && f.level === 1 && f.category === 'skill') {
       bgFeatDropped = true;
       continue;

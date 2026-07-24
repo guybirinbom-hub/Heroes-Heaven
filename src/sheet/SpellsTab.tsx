@@ -233,7 +233,11 @@ function ManageSpellsModal({
   // a slot of rank N can hold any spell of rank ≤ N (cast/prepared heightened to the slot's rank).
   const traditionSpellsByRank = useMemo(() => {
     const byRank: Record<number, Spell[]> = {};
+    const hideLegacy = character.hideLegacy;
     for (const s of Object.values(content.spells)) {
+      const e = (s as { edition?: string }).edition;
+      if (e === 'superseded') continue; // renamed/outdated half of a remaster change — always hidden
+      if (hideLegacy && (e === 'legacy' || e === 'legacy-era')) continue; // per-character Hide legacy data
       if (s.traditions.includes(entry.tradition)) (byRank[s.rank] ??= []).push(s);
     }
     const upTo: Record<number, Spell[]> = {};
@@ -243,7 +247,7 @@ function ManageSpellsModal({
       upTo[r] = acc.slice().sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name));
     }
     return { byRank, upTo };
-  }, [content, entry.tradition]);
+  }, [content, entry.tradition, character.hideLegacy]);
 
   // Spells you may add (spontaneous) / prepare (prepared) at a rank — rank ≤ the slot's rank.
   const optionsFor = (rank: number): Spell[] => {
@@ -885,8 +889,17 @@ export function SpellsTab({
         const sp = content.spells[id];
         if (!visible(sp)) continue;
         const shown = Math.max(rank, focusHeighten);
+        // Focus spells pool from many feats/subclasses — name the source so it's clear where each came from.
+        const from = entry.spellSources?.[id];
         out.push(
-          <SpellCard key={entry.id + '/' + id} name={sp?.name ?? id} cost={sp?.cast} meta={'rank ' + shown} fp onClick={sp ? () => setDetail(sp) : undefined} />,
+          <SpellCard
+            key={entry.id + '/' + id}
+            name={sp?.name ?? id}
+            cost={sp?.cast}
+            meta={`rank ${shown}${from ? ` · from ${from}` : ''}`}
+            fp
+            onClick={sp ? () => setDetail(sp) : undefined}
+          />,
         );
       }
     }
@@ -1042,8 +1055,14 @@ export function SpellsTab({
         const sp = content.spells[id];
         if (!visible(sp)) continue;
         const cost = !isInnate && itemDef ? chargeCostToCast(itemDef, rank) : 0;
+        // Innate cadence: per-spell override (0 = at-will, N = N/day), default 1/day.
+        const uses = entry.innateUses?.[id];
+        const cadence = entry.innateCadence?.[id];
+        // Pooled entries (innate / focus) draw from many feats — name the granting source so it's
+        // obvious where each spell came from.
+        const from = entry.spellSources?.[id];
         const meta = isInnate
-          ? `rank ${rank} · 1/day`
+          ? `rank ${rank} · ${uses === 0 ? 'at will' : cadence ?? `${uses ?? 1}/day`}${from ? ` · from ${from}` : ''}`
           : counterId === 'pool'
             ? `rank ${rank} · ${cost} charge${cost === 1 ? '' : 's'}`
             : counterId === 'freq'
@@ -1056,8 +1075,8 @@ export function SpellsTab({
             cost={sp?.cast}
             meta={meta}
             onClick={sp ? () => setDetail(sp) : undefined}
-            pip={isInnate ? (innateUsedSet.has(id) ? 'empty' : 'filled') : undefined}
-            onPip={isInnate && onPlay ? () => onPlay((p) => toggleInnateCast(p, entry.id, id)) : undefined}
+            pip={isInnate && uses !== 0 ? (innateUsedSet.has(id) ? 'empty' : 'filled') : undefined}
+            onPip={isInnate && uses !== 0 && onPlay ? () => onPlay((p) => toggleInnateCast(p, entry.id, id)) : undefined}
             {...castProps(rank)}
           />,
         );
@@ -1237,6 +1256,7 @@ export function SpellsTab({
                     </div>
                   )}
                   {!multi && deityDomains.length > 0 && <div className="sc-sub">Domains: {deityDomains.join(', ')}</div>}
+                  {main.note && <div className="sc-sub">{main.note}</div>}
                 </div>
               </div>
               <div
@@ -1338,6 +1358,7 @@ export function SpellsTab({
                     </div>
                   )}
                   {!multi && deityDomains.length > 0 && <div className="sc-sub">Domains: {deityDomains.join(', ')}</div>}
+                  {m.note && <div className="sc-sub">{m.note}</div>}
                 </div>
               </div>
             </div>

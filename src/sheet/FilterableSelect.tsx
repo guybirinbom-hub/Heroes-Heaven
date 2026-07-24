@@ -3,9 +3,9 @@ import type { ActionCost, DescRef } from '../rules/types';
 import type { SliderStop } from '../rules/filterValues';
 import { spellCostMatches } from '../rules/spellFilter';
 import { RangeSlider } from './RangeSlider';
+import { ActionGlyph } from './widgets';
 import { DescriptionModal } from './DescriptionModal';
 import { useEscapeClose } from './useEscapeClose';
-import { useIsMobile } from './useIsMobile';
 import type { DescNode } from './descref';
 
 /** Build a description node for a content entry, or null when it has nothing to show.
@@ -94,16 +94,20 @@ export function PickerRow({
   );
 }
 
+/** Which filter tab a field lives under (archives-style Traits / Type / Numbers segmentation). Absent =
+ *  derived: range→Numbers, traits→Traits, everything else→Type. */
+export type FilterTab = 'traits' | 'type' | 'numbers';
+
 /** One declarative filter control. */
 export type FilterField<T> =
-  | { id: string; label: string; kind: 'text'; accessor: (t: T) => string; placeholder?: string }
-  | { id: string; label: string; kind: 'chips'; options: { id: string; label: string }[]; accessor: (t: T) => string | string[]; mode?: 'any' | 'all' }
+  | { id: string; label: string; kind: 'text'; accessor: (t: T) => string; placeholder?: string; tab?: FilterTab }
+  | { id: string; label: string; kind: 'chips'; options: { id: string; label: string }[]; accessor: (t: T) => string | string[]; mode?: 'any' | 'all'; tab?: FilterTab }
   /** Multi-select chips with a runtime "match any (OR)" ↔ "match all (AND)" toggle. State is
    *  `{ ids: string[]; all: boolean }`. Used by the damage-type facet. */
-  | { id: string; label: string; kind: 'chipsToggle'; options: { id: string; label: string }[]; accessor: (t: T) => string[] }
-  | { id: string; label: string; kind: 'traits'; accessor: (t: T) => string[] }
-  | { id: string; label: string; kind: 'range'; stops: SliderStop[]; magnitude: (t: T) => number }
-  | { id: string; label: string; kind: 'castTime'; accessor: (t: T) => ActionCost | undefined };
+  | { id: string; label: string; kind: 'chipsToggle'; options: { id: string; label: string }[]; accessor: (t: T) => string[]; tab?: FilterTab }
+  | { id: string; label: string; kind: 'traits'; accessor: (t: T) => string[]; tab?: FilterTab }
+  | { id: string; label: string; kind: 'range'; stops: SliderStop[]; magnitude: (t: T) => number; tab?: FilterTab }
+  | { id: string; label: string; kind: 'castTime'; accessor: (t: T) => ActionCost | undefined; tab?: FilterTab };
 
 export interface FilterSpec<T> {
   fields: FilterField<T>[];
@@ -119,6 +123,27 @@ const COST_CHIPS: { id: string; label: string; cost: ActionCost }[] = [
 
 type FState = Record<string, unknown>;
 type EffStops = Record<string, SliderStop[]>;
+
+/** Tri-state value for chips/traits/castTime facets: values to INCLUDE and values to EXCLUDE. A pill
+ *  taps through off → include → exclude → off. A record is out if it has any excluded value; then the
+ *  include set (if any) must match per the field's mode. */
+type MultiState = { inc: string[]; exc: string[] };
+const emptyMulti = (): MultiState => ({ inc: [], exc: [] });
+const asMulti = (v: unknown): MultiState => {
+  const m = v as Partial<MultiState> | undefined;
+  return m && Array.isArray(m.inc) && Array.isArray(m.exc) ? (m as MultiState) : emptyMulti();
+};
+/** off → include → exclude → off */
+function cyclePill(st: MultiState, id: string): MultiState {
+  if (st.inc.includes(id)) return { inc: st.inc.filter((x) => x !== id), exc: [...st.exc, id] };
+  if (st.exc.includes(id)) return { inc: st.inc, exc: st.exc.filter((x) => x !== id) };
+  return { inc: [...st.inc, id], exc: st.exc };
+}
+const TAB_ORDER: FilterTab[] = ['traits', 'type', 'numbers'];
+const TAB_LABEL: Record<FilterTab, string> = { traits: 'Traits', type: 'Type', numbers: 'Numbers' };
+function tabOfField<T>(f: FilterField<T>): FilterTab {
+  return f.tab ?? (f.kind === 'range' ? 'numbers' : f.kind === 'traits' ? 'traits' : 'type');
+}
 
 /** Trim a slider's stop scale to only the stops bracketing the values actually present in
  *  the list, so the full track maps to reachable results (the slider keeps its size, but its
@@ -148,7 +173,7 @@ function defaultState<T>(spec: FilterSpec<T>, eff: EffStops): FState {
   const s: FState = {};
   for (const f of spec.fields) {
     if (f.kind === 'text') s[f.id] = '';
-    else if (f.kind === 'chips' || f.kind === 'traits' || f.kind === 'castTime') s[f.id] = [];
+    else if (f.kind === 'chips' || f.kind === 'traits' || f.kind === 'castTime') s[f.id] = emptyMulti();
     else if (f.kind === 'chipsToggle') s[f.id] = { ids: [], all: false };
     else if (f.kind === 'range') s[f.id] = [0, stopsOf(f, eff).length - 1];
   }
@@ -210,7 +235,8 @@ function valueLabel<T>(f: FilterField<T>, v: unknown, eff: EffStops): string {
     return lo === hi ? lab(lo) : `${lab(lo)} – ${lab(hi)}`;
   }
   if (f.kind === 'chips' || f.kind === 'traits' || f.kind === 'castTime') {
-    const n = ((v as string[]) ?? []).length;
+    const m = asMulti(v);
+    const n = m.inc.length + m.exc.length;
     return n ? `${n}` : '';
   }
   if (f.kind === 'chipsToggle') {
@@ -230,7 +256,8 @@ function isActive<T>(f: FilterField<T>, v: unknown, eff: EffStops): boolean {
     return lo !== 0 || hi !== stopsOf(f, eff).length - 1;
   }
   if (f.kind === 'chipsToggle') return (((v as ChipsToggleState) ?? { ids: [] }).ids ?? []).length > 0;
-  return Array.isArray(v) && v.length > 0;
+  const m = asMulti(v); // chips / traits / castTime
+  return m.inc.length > 0 || m.exc.length > 0;
 }
 
 function fieldPass<T>(f: FilterField<T>, v: unknown, item: T, eff: EffStops): boolean {
@@ -240,11 +267,12 @@ function fieldPass<T>(f: FilterField<T>, v: unknown, item: T, eff: EffStops): bo
       return !needle || f.accessor(item).toLowerCase().includes(needle);
     }
     case 'chips': {
-      const sel = (v as string[]) ?? [];
-      if (sel.length === 0) return true;
+      const st = asMulti(v);
       const raw = f.accessor(item);
       const vals = Array.isArray(raw) ? raw : [raw];
-      return f.mode === 'all' ? sel.every((s) => vals.includes(s)) : sel.some((s) => vals.includes(s));
+      if (st.exc.some((e) => vals.includes(e))) return false;
+      if (st.inc.length === 0) return true;
+      return f.mode === 'all' ? st.inc.every((s) => vals.includes(s)) : st.inc.some((s) => vals.includes(s));
     }
     case 'chipsToggle': {
       const st = (v as ChipsToggleState) ?? { ids: [], all: false };
@@ -253,10 +281,11 @@ function fieldPass<T>(f: FilterField<T>, v: unknown, item: T, eff: EffStops): bo
       return st.all ? st.ids.every((s) => vals.includes(s)) : st.ids.some((s) => vals.includes(s));
     }
     case 'traits': {
-      const sel = (v as string[]) ?? [];
-      if (sel.length === 0) return true;
+      const st = asMulti(v);
       const traits = f.accessor(item);
-      return sel.every((s) => traits.includes(s));
+      if (st.exc.some((e) => traits.includes(e))) return false;
+      if (st.inc.length === 0) return true;
+      return st.inc.every((s) => traits.includes(s));
     }
     case 'range': {
       const stops = stopsOf(f, eff);
@@ -266,10 +295,11 @@ function fieldPass<T>(f: FilterField<T>, v: unknown, item: T, eff: EffStops): bo
       return m >= stops[lo].value && m <= stops[hi].value;
     }
     case 'castTime': {
-      const sel = (v as string[]) ?? [];
-      if (sel.length === 0) return true;
+      const st = asMulti(v);
       const cost = f.accessor(item);
-      return COST_CHIPS.filter((c) => sel.includes(c.id)).some((c) => spellCostMatches(cost, c.cost));
+      if (COST_CHIPS.filter((c) => st.exc.includes(c.id)).some((c) => spellCostMatches(cost, c.cost))) return false;
+      if (st.inc.length === 0) return true;
+      return COST_CHIPS.filter((c) => st.inc.includes(c.id)).some((c) => spellCostMatches(cost, c.cost));
     }
   }
 }
@@ -319,12 +349,11 @@ export function FilterableSelect<T>({
     return out;
   }, [spec, items]);
 
-  const isMobile = useIsMobile();
   const [state, setState] = useState<FState>(() => defaultState(spec, effStops));
   const [metaQuery, setMetaQuery] = useState('');
-  // Desktop opens with the filter panel beside the results; on a phone start on the results and let
-  // the user tap "Filters" to overlay them (closing the overlay reveals the results again).
-  const [showFilters, setShowFilters] = useState(!isMobile);
+  // Always open on the RESULTS (the selectable list + descriptions). The filter panel takes over the
+  // whole popup when opened via the top-right "Filters" button, and closing it returns to the results.
+  const [showFilters, setShowFilters] = useState(false);
   const [descNode, setDescNode] = useState<DescNode | null>(null);
 
   const set = (id: string, v: unknown) => setState((s) => ({ ...s, [id]: v }));
@@ -402,19 +431,77 @@ export function FilterableSelect<T>({
   const panelOpen = hasPanel && showFilters;
   const panelActiveCount = panelFields.filter((f) => isActive(f, state[f.id], effStops)).length;
   const mq = metaQuery.trim().toLowerCase();
-  const shownFields = mq
+
+  // Archives-style tabs: group facets into Traits / Type / Numbers. Only split into tabs when there's
+  // genuinely too much to scroll comfortably — if it all fits (a little scroll is fine), show everything
+  // at once so the user sees every option without hunting through tabs. Rough rendered-row estimate:
+  // a section is 1 label row + its options (~4 pills/row), a slider is ~2, the scrollable trait grid ~5.
+  const tabsPresent = useMemo(() => TAB_ORDER.filter((t) => panelFields.some((f) => tabOfField(f) === t)), [panelFields]);
+  const panelRows = useMemo(() => {
+    let rows = 0;
+    for (const f of panelFields) {
+      rows += 1;
+      if (f.kind === 'range') rows += 2;
+      else if (f.kind === 'traits') rows += 5;
+      else rows += (f.kind === 'chipsToggle' ? 1 : 0) + Math.ceil(Math.max(1, presence[f.id].opts.size) / 4);
+    }
+    return rows;
+  }, [panelFields, presence]);
+  const showTabs = tabsPresent.length >= 2 && panelRows > 24;
+  const [tabSel, setTabSel] = useState<FilterTab | null>(null);
+  const activeTab: FilterTab | null = showTabs ? (tabSel && tabsPresent.includes(tabSel) ? tabSel : tabsPresent[0]) : null;
+
+  // "Search filters" narrows the visible individual pills AND sections (a section with no matching pill
+  // drops out via optionText). While searching, the tab gate is bypassed so matches across every tab show.
+  const searched = mq
     ? panelFields.filter((f) => f.label.toLowerCase().includes(mq) || (optionText[f.id] ?? []).some((o) => o.includes(mq)))
     : panelFields;
+  const shownFields = activeTab && !mq ? searched.filter((f) => tabOfField(f) === activeTab) : searched;
+
+  // Active-filter chip summary (rendered above the results). Each removes just its own value.
+  const activeChips: { key: string; label: ReactNode; exclude?: boolean; onRemove: () => void }[] = [];
+  for (const f of liveFields) {
+    const v = state[f.id];
+    if (f.kind === 'chips' || f.kind === 'castTime') {
+      const st = asMulti(v);
+      const lbl = (id: string): ReactNode =>
+        f.kind === 'castTime' ? <ActionGlyph cost={COST_CHIPS.find((c) => c.id === id)?.cost} /> : (f.options.find((o) => o.id === id)?.label ?? id);
+      for (const id of st.inc) activeChips.push({ key: `${f.id}:i:${id}`, label: lbl(id), onRemove: () => set(f.id, { ...st, inc: st.inc.filter((x) => x !== id) }) });
+      for (const id of st.exc) activeChips.push({ key: `${f.id}:e:${id}`, label: lbl(id), exclude: true, onRemove: () => set(f.id, { ...st, exc: st.exc.filter((x) => x !== id) }) });
+    } else if (f.kind === 'traits') {
+      const st = asMulti(v);
+      for (const t of st.inc) activeChips.push({ key: `${f.id}:i:${t}`, label: t, onRemove: () => set(f.id, { ...st, inc: st.inc.filter((x) => x !== t) }) });
+      for (const t of st.exc) activeChips.push({ key: `${f.id}:e:${t}`, label: t, exclude: true, onRemove: () => set(f.id, { ...st, exc: st.exc.filter((x) => x !== t) }) });
+    } else if (f.kind === 'chipsToggle') {
+      const st = (v as ChipsToggleState) ?? { ids: [], all: false };
+      for (const id of st.ids) activeChips.push({ key: `${f.id}:${id}`, label: f.options.find((o) => o.id === id)?.label ?? id, onRemove: () => set(f.id, { ...st, ids: st.ids.filter((x) => x !== id) }) });
+    } else if (f.kind === 'range') {
+      if (isActive(f, v, effStops)) activeChips.push({ key: f.id, label: `${f.label} ${valueLabel(f, v, effStops)}`, onRemove: () => resetField(f) });
+    } else if (f.kind === 'text' && f.id !== searchField?.id) {
+      const s = ((v as string) ?? '').trim();
+      if (s) activeChips.push({ key: f.id, label: `${f.label}: “${s}”`, onRemove: () => set(f.id, '') });
+    }
+  }
 
   return (
     <>
     <div className="picker-overlay" onClick={onClose}>
-      <div className={'picker fsel' + (panelOpen ? '' : ' collapsed')} onClick={(e) => e.stopPropagation()}>
+      <div className={'picker fsel' + (panelOpen ? ' filters-open' : ' collapsed')} onClick={(e) => e.stopPropagation()}>
         <div className="fsel-head">
           <i className={'ti ' + icon} aria-hidden="true" />
           <span className="fsel-title">{title}</span>
           {headerExtra}
           <span className="fsel-count">{results.length}</span>
+          {hasPanel && (
+            <button
+              className={'fsel-head-filters' + (panelOpen ? ' on' : '')}
+              onClick={() => setShowFilters((v) => !v)}
+              title={panelOpen ? 'Close filters' : 'Open filters'}
+              aria-pressed={panelOpen}
+            >
+              <i className="ti ti-adjustments" aria-hidden="true" /> Filters{panelActiveCount > 0 ? ` (${panelActiveCount})` : ''}
+            </button>
+          )}
           <button className="picker-close" onClick={onClose} aria-label="Close">
             <i className="ti ti-x" aria-hidden="true" />
           </button>
@@ -427,22 +514,32 @@ export function FilterableSelect<T>({
                 <div className="fsel-metasearch">
                   <i className="ti ti-search" aria-hidden="true" />
                   <input
-                    placeholder="Find a filter — e.g. “rank”, “tradition”…"
+                    placeholder="Search filters — e.g. “fire”, “rank”…"
                     value={metaQuery}
                     onChange={(e) => setMetaQuery(e.target.value)}
                   />
                 </div>
-                {activeCount > 0 && (
-                  <button className="fsel-clear" onClick={reset} title="Clear all filters">
-                    Clear {activeCount}
-                  </button>
-                )}
-                {isMobile && (
-                  <button className="fsel-done" onClick={() => setShowFilters(false)} title="Show results">
-                    <i className="ti ti-check" aria-hidden="true" /> Done
-                  </button>
-                )}
+                <button className="fsel-clear" onClick={reset} disabled={activeCount === 0} title="Clear all filters">
+                  <i className="ti ti-x" aria-hidden="true" /> Clear filters{activeCount > 0 ? ` (${activeCount})` : ''}
+                </button>
               </div>
+
+              {showTabs && !mq && (
+                <div className="fsel-tabs" role="tablist">
+                  {tabsPresent.map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      role="tab"
+                      aria-selected={activeTab === t}
+                      className={'fsel-tab' + (activeTab === t ? ' on' : '')}
+                      onClick={() => setTabSel(t)}
+                    >
+                      {TAB_LABEL[t]}
+                    </button>
+                  ))}
+                </div>
+              )}
 
               <div className="fsel-fields">
                 {shownFields.map((f) => {
@@ -501,14 +598,19 @@ export function FilterableSelect<T>({
                   <i className="ti ti-eye-off" aria-hidden="true" /> Hide ineligible{!hideInel && inelCount > 0 ? ` · ${inelCount}` : ''}
                 </button>
               )}
-              {hasPanel && (
-                <button className="fsel-toggle" onClick={() => setShowFilters((v) => !v)} title="Toggle the filter panel">
-                  <i className={'ti ' + (showFilters ? 'ti-layout-sidebar-left-collapse' : 'ti-adjustments')} aria-hidden="true" />
-                  Filters{panelActiveCount > 0 ? ` · ${panelActiveCount}` : ''}
-                </button>
-              )}
-              <span className="fsel-results-count">{results.length} result{results.length === 1 ? '' : 's'}</span>
             </div>
+            {activeChips.length > 0 && (
+              <div className="fsel-activechips">
+                {activeChips.map((c) => (
+                  <button key={c.key} type="button" className={'fsel-achip' + (c.exclude ? ' exc' : '')} onClick={c.onRemove} title="Remove this filter">
+                    {c.exclude && <span className="fsel-achip-not">not</span>}
+                    {c.label}
+                    <i className="ti ti-x" aria-hidden="true" />
+                  </button>
+                ))}
+                <button type="button" className="fsel-achip clear" onClick={reset}>Clear all</button>
+              </div>
+            )}
             <div className="fsel-list" onScroll={onResultsScroll}>
               {results.slice(0, visibleCount).map((it) => (
                 <div key={rowKey(it)} className="fsel-rowwrap">
@@ -564,16 +666,25 @@ function FieldControl<T>({
   }
 
   if (field.kind === 'chips') {
-    const sel = (value as string[]) ?? [];
-    const toggle = (id: string) => onChange(sel.includes(id) ? sel.filter((x) => x !== id) : [...sel, id]);
-    const opts = present ? field.options.filter((o) => present.has(o.id)) : field.options;
+    const st = asMulti(value);
+    const opts = (present ? field.options.filter((o) => present.has(o.id)) : field.options).filter((o) => !q || chipMatch(o.label, o.id));
     return (
       <div className="fsel-chips">
-        {opts.map((o) => (
-          <button key={o.id} className={'fsel-chip' + (sel.includes(o.id) ? ' on' : '') + (chipMatch(o.label, o.id) ? ' match' : '')} onClick={() => toggle(o.id)}>
-            {o.label}
-          </button>
-        ))}
+        {opts.map((o) => {
+          const on = st.inc.includes(o.id);
+          const exc = st.exc.includes(o.id);
+          return (
+            <button
+              key={o.id}
+              className={'fsel-chip' + (on ? ' on' : exc ? ' exc' : '')}
+              onClick={() => onChange(cyclePill(st, o.id))}
+              title={exc ? 'Excluded — click to clear' : 'Click to include · click again to exclude'}
+            >
+              {exc && <i className="ti ti-x fsel-chip-ex" aria-hidden="true" />}
+              {o.label}
+            </button>
+          );
+        })}
       </div>
     );
   }
@@ -582,7 +693,7 @@ function FieldControl<T>({
     const st = (value as ChipsToggleState) ?? { ids: [], all: false };
     const toggle = (id: string) =>
       onChange({ ...st, ids: st.ids.includes(id) ? st.ids.filter((x) => x !== id) : [...st.ids, id] });
-    const opts = present ? field.options.filter((o) => present.has(o.id)) : field.options;
+    const opts = (present ? field.options.filter((o) => present.has(o.id)) : field.options).filter((o) => !q || chipMatch(o.label, o.id));
     return (
       <div className="fsel-chipstoggle">
         <div className="fsel-anyall" role="group" aria-label="Match mode">
@@ -619,16 +730,26 @@ function FieldControl<T>({
   }
 
   if (field.kind === 'castTime') {
-    const sel = (value as string[]) ?? [];
-    const toggle = (id: string) => onChange(sel.includes(id) ? sel.filter((x) => x !== id) : [...sel, id]);
-    const opts = present ? COST_CHIPS.filter((o) => present.has(o.id)) : COST_CHIPS;
+    const st = asMulti(value);
+    const opts = (present ? COST_CHIPS.filter((o) => present.has(o.id)) : COST_CHIPS).filter((o) => !q || chipMatch(o.label, o.id));
     return (
       <div className="fsel-chips">
-        {opts.map((o) => (
-          <button key={o.id} className={'fsel-chip' + (sel.includes(o.id) ? ' on' : '') + (chipMatch(o.label, o.id) ? ' match' : '')} onClick={() => toggle(o.id)}>
-            {o.label}
-          </button>
-        ))}
+        {opts.map((o) => {
+          const on = st.inc.includes(o.id);
+          const exc = st.exc.includes(o.id);
+          return (
+            <button
+              key={o.id}
+              className={'fsel-chip fsel-chip-cost' + (on ? ' on' : exc ? ' exc' : '')}
+              onClick={() => onChange(cyclePill(st, o.id))}
+              title={o.label + (exc ? ' — excluded' : '')}
+              aria-label={o.label}
+            >
+              {exc && <i className="ti ti-x fsel-chip-ex" aria-hidden="true" />}
+              <ActionGlyph cost={o.cost} />
+            </button>
+          );
+        })}
       </div>
     );
   }
@@ -640,7 +761,7 @@ function FieldControl<T>({
   }
 
   // traits — searchable multi-select over the vocabulary present in the dataset.
-  return <TraitPicker field={field} value={(value as string[]) ?? []} onChange={(v) => onChange(v)} items={items} query={query} />;
+  return <TraitPicker field={field} value={asMulti(value)} onChange={onChange} items={items} query={query} />;
 }
 
 function TraitPicker<T>({
@@ -651,10 +772,10 @@ function TraitPicker<T>({
   query,
 }: {
   field: Extract<FilterField<T>, { kind: 'traits' }>;
-  value: string[];
-  onChange: (v: string[]) => void;
+  value: MultiState;
+  onChange: (v: MultiState) => void;
   items: T[];
-  /** The "find a filter" query — used to surface matching traits before the user types here. */
+  /** The "search filters" query — used to surface matching traits before the user types here. */
   query?: string;
 }) {
   const [q, setQ] = useState('');
@@ -663,33 +784,35 @@ function TraitPicker<T>({
     for (const it of items) for (const t of field.accessor(it)) m.set(t, (m.get(t) ?? 0) + 1);
     return [...m.entries()].sort((a, b) => b[1] - a[1]).map(([t]) => t);
   }, [items, field]);
-  // The trait picker's own search wins; until the user types here, fall back to the meta-query so a
-  // trait searched in "find a filter" (e.g. "fire") is already listed.
+  // Show EVERY trait as a tap-to-cycle pill (the user sees their options — no hunting via search). The
+  // grid scrolls when long; a search narrows the VISIBLE pills (the trait's own box, or the global
+  // "search filters" query), but chosen (include/exclude) traits always stay shown.
   const needle = (q.trim() || (query ?? '').trim()).toLowerCase();
-  const matches = needle ? vocab.filter((t) => t.includes(needle) && !value.includes(t)).slice(0, 12) : [];
-  const add = (t: string) => {
-    onChange([...value, t]);
-    setQ('');
-  };
+  const chosen = new Set([...value.inc, ...value.exc]);
+  const shown = needle ? vocab.filter((t) => t.includes(needle) || chosen.has(t)) : vocab;
   return (
     <div className="fsel-traits">
-      <div className="fsel-trait-chosen">
-        {value.map((t) => (
-          <button key={t} className="fsel-trait-tag" onClick={() => onChange(value.filter((x) => x !== t))}>
-            {t} <i className="ti ti-x" aria-hidden="true" />
-          </button>
-        ))}
-      </div>
-      <input className="fsel-text" placeholder="Add traits the option must have" value={q} onChange={(e) => setQ(e.target.value)} />
-      {matches.length > 0 && (
-        <div className="fsel-trait-opts">
-          {matches.map((t) => (
-            <button key={t} className="fsel-trait-opt" onClick={() => add(t)}>
+      {vocab.length > 10 && (
+        <input className="fsel-text fsel-trait-search" placeholder="Search traits…" value={q} onChange={(e) => setQ(e.target.value)} />
+      )}
+      <div className="fsel-chips fsel-traitgrid">
+        {shown.map((t) => {
+          const on = value.inc.includes(t);
+          const exc = value.exc.includes(t);
+          return (
+            <button
+              key={t}
+              className={'fsel-chip' + (on ? ' on' : exc ? ' exc' : '')}
+              onClick={() => onChange(cyclePill(value, t))}
+              title={exc ? 'Excluded — click to clear' : 'Click to include · click again to exclude'}
+            >
+              {exc && <i className="ti ti-x fsel-chip-ex" aria-hidden="true" />}
               {t}
             </button>
-          ))}
-        </div>
-      )}
+          );
+        })}
+        {shown.length === 0 && <span className="fsel-empty">No trait matches “{q}”.</span>}
+      </div>
     </div>
   );
 }

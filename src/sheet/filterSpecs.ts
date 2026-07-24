@@ -13,8 +13,14 @@ import {
   WEAPON_RANGE_STOPS,
   parseDurationSeconds,
   parseFeet,
+  type SliderStop,
 } from '../rules/filterValues';
 import { coinsToCp } from '../rules/wealth';
+
+/** Integer slider stops from min…max inclusive (handles negatives, e.g. check penalties). */
+const intStops = (min: number, max: number): SliderStop[] =>
+  Array.from({ length: max - min + 1 }, (_, i) => ({ label: String(min + i), value: min + i }));
+const listStops = (vals: number[]): SliderStop[] => vals.map((v) => ({ label: String(v), value: v }));
 
 const RARITY = [
   { id: 'common', label: 'Common' },
@@ -34,7 +40,7 @@ function spellType(s: Spell): string {
 export const SPELL_SPEC: FilterSpec<Spell> = {
   fields: [
     { id: 'desc', label: 'Description', kind: 'text', accessor: (s) => `${s.name}\n${s.description}`, placeholder: 'Any text in the name or description, e.g. “Strike”' },
-    { id: 'rarity', label: 'Rarity', kind: 'chips', options: RARITY, accessor: (s) => s.rarity },
+    { id: 'rarity', label: 'Rarity', kind: 'chips', options: RARITY, accessor: (s) => s.rarity, tab: 'traits' },
     { id: 'type', label: 'Spell type', kind: 'chips', options: [
       { id: 'normal', label: 'Normal' },
       { id: 'focus', label: 'Focus' },
@@ -45,7 +51,7 @@ export const SPELL_SPEC: FilterSpec<Spell> = {
       { id: 'divine', label: 'Divine' },
       { id: 'occult', label: 'Occult' },
       { id: 'primal', label: 'Primal' },
-    ], accessor: (s) => s.traditions },
+    ], accessor: (s) => s.traditions, tab: 'traits' },
     { id: 'cast', label: 'Cast time', kind: 'castTime', accessor: (s) => s.cast },
     { id: 'defense', label: 'Defense', kind: 'chips', options: [
       { id: 'ac', label: 'vs AC' },
@@ -314,7 +320,7 @@ export const ITEM_SPEC: FilterSpec<Item> = {
       { id: 'worn-items', label: 'Worn Items' },
       { id: 'other', label: 'Other' },
     ] },
-    { id: 'rarity', label: 'Rarity', kind: 'chips', options: RARITY, accessor: (i) => i.rarity },
+    { id: 'rarity', label: 'Rarity', kind: 'chips', options: RARITY, accessor: (i) => i.rarity, tab: 'traits' },
     { id: 'consumable', label: 'Consumable type', kind: 'chips', options: [
       { id: 'potion', label: 'Potion' },
       { id: 'scroll', label: 'Scroll' },
@@ -372,6 +378,14 @@ export const ITEM_SPEC: FilterSpec<Item> = {
     { id: 'bulk', label: 'Bulk', kind: 'range', stops: BULK_STOPS, magnitude: (i) => i.bulk },
     { id: 'damageDie', label: 'Damage die', kind: 'range', stops: DAMAGE_DIE_STOPS, magnitude: damageDieFaces },
     { id: 'weaponRange', label: 'Weapon range', kind: 'range', stops: WEAPON_RANGE_STOPS, magnitude: weaponRangeFeet },
+    // --- Armor/shield stat facets (auto-hidden when the list has no armor/shields) — parity with AoN ---
+    { id: 'acBonus', label: 'AC bonus', kind: 'range', stops: intStops(0, 6), magnitude: (i) => (i.itemType === 'armor' || i.itemType === 'shield' ? i.acBonus ?? 0 : 0) },
+    { id: 'dexCap', label: 'Dex cap', kind: 'range', stops: intStops(0, 5), magnitude: (i) => (i.itemType === 'armor' ? i.dexCap ?? 0 : 0) },
+    { id: 'checkPenalty', label: 'Check penalty', kind: 'range', stops: intStops(-4, 0), magnitude: (i) => (i.itemType === 'armor' ? i.checkPenalty ?? 0 : 0) },
+    { id: 'speedPenalty', label: 'Speed penalty', kind: 'range', stops: listStops([-15, -10, -5, 0]), magnitude: (i) => (i.itemType === 'armor' || i.itemType === 'shield' ? i.speedPenalty ?? 0 : 0) },
+    { id: 'strength', label: 'Strength', kind: 'range', stops: intStops(0, 4), magnitude: (i) => (i.itemType === 'armor' ? i.strength ?? 0 : 0) },
+    { id: 'hardness', label: 'Hardness', kind: 'range', stops: listStops([0, 3, 5, 8, 10, 14, 20]), magnitude: (i) => (i.itemType === 'shield' ? i.hardness ?? 0 : 0) },
+    { id: 'shieldHp', label: 'Shield HP', kind: 'range', stops: listStops([0, 8, 16, 32, 48, 64, 100, 160]), magnitude: (i) => (i.itemType === 'shield' ? i.hp ?? 0 : 0) },
   ],
 };
 
@@ -381,7 +395,7 @@ export const ITEM_SPEC: FilterSpec<Item> = {
 export const RUNE_SPEC: FilterSpec<Item> = {
   fields: [
     { id: 'desc', label: 'Description', kind: 'text', accessor: (i) => `${i.name}\n${i.description}`, placeholder: 'Any text in the name or description' },
-    { id: 'rarity', label: 'Rarity', kind: 'chips', options: RARITY, accessor: (i) => i.rarity },
+    { id: 'rarity', label: 'Rarity', kind: 'chips', options: RARITY, accessor: (i) => i.rarity, tab: 'traits' },
     { id: 'traits', label: 'Traits', kind: 'traits', accessor: (i) => i.traits },
     { id: 'level', label: 'Level', kind: 'range', stops: ITEM_LEVEL_STOPS, magnitude: (i) => i.level },
   ],
@@ -391,7 +405,7 @@ export const RUNE_SPEC: FilterSpec<Item> = {
 export const FEAT_SPEC: FilterSpec<Feat> = {
   fields: [
     { id: 'desc', label: 'Description', kind: 'text', accessor: (f) => `${f.name}\n${f.description}`, placeholder: 'Any text in the name or description' },
-    { id: 'rarity', label: 'Rarity', kind: 'chips', options: RARITY, accessor: (f) => f.rarity },
+    { id: 'rarity', label: 'Rarity', kind: 'chips', options: RARITY, accessor: (f) => f.rarity, tab: 'traits' },
     { id: 'cast', label: 'Action cost', kind: 'castTime', accessor: (f) => f.actionCost },
     { id: 'traits', label: 'Traits', kind: 'traits', accessor: (f) => f.traits },
     { id: 'level', label: 'Level', kind: 'range', stops: FEAT_LEVEL_STOPS, magnitude: (f) => f.level },

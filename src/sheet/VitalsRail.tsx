@@ -134,7 +134,7 @@ export function VitalsRail({
     scEntries.filter((x) => x.e.type !== 'focus').sort((a, b) => b.sc.dc - a.sc.dc)[0] ?? scEntries[0];
   const entry = primary?.e;
   const sc = primary?.sc ?? null;
-  const perception = derivePerception(character);
+  const perception = derivePerception(character, content);
   const speeds = deriveSpeeds(character, content);
   // A temporary Speed override (Hasted/Slowed/…) replaces the derived land Speed and is highlighted.
   const speedOverride = character.speedOverride;
@@ -161,11 +161,13 @@ export function VitalsRail({
   const charDefenses = deriveDefenses(character, content);
 
   // Base-class resources PLUS any granted by an owned archetype dedication (Barbarian/Swashbuckler…).
-  // Swashbuckler panache has its own dedicated toggle card below, so drop it from the generic row to
-  // avoid showing it twice (only for a base swashbuckler — a dedication user has no dedicated card).
-  const classResources = resourcesForCharacter(character.classId, new Set(character.feats.map((f) => f.featId))).filter(
-    (r) => !(r.id === 'panache' && character.classId === 'swashbuckler'),
-  );
+  // Rage and Panache are SIGNATURE STATES: they get a prominent one-tap card of their own (below) and
+  // gate actions on the sheet, so drop them from the generic row here — for base class AND archetype
+  // users alike — to avoid showing the same toggle twice.
+  const STATE_RESOURCES = ['rage', 'panache', 'hunt-prey', 'unleash-psyche'];
+  const allResources = resourcesForCharacter(character.classId, new Set(character.feats.map((f) => f.featId)));
+  const classResources = allResources.filter((r) => !STATE_RESOURCES.includes(r.id));
+  const stateResources = allResources.filter((r) => STATE_RESOURCES.includes(r.id));
   const resourceVals = character.classResources ?? {};
   const abilityMods = {
     str: abilityMod(character.abilities.str),
@@ -602,6 +604,23 @@ export function VitalsRail({
           )}
         </section>
     ) : null;
+  // Secondary class DCs from multiclass dedications (Fighter/Ranger/Rogue/Alchemist Dedication).
+  cards.multiclassDc = character.secondaryClassDcs?.length ? (
+    <section className="card">
+      <div className="ct">
+        <i className="ti ti-shield-bolt" aria-hidden="true" />
+        Multiclass DCs
+      </div>
+      {character.secondaryClassDcs.map((d) => (
+        <div className="rail-kv" key={d.classId}>
+          <span className="kv-label">{d.name} DC</span>
+          <span className="iwr-val">
+            {d.dc} <span className="mc-key">({d.keyAbility.toUpperCase()}, trained)</span>
+          </span>
+        </div>
+      ))}
+    </section>
+  ) : null;
   cards.resources =
     classResources.length > 0 ? (
         <section className="card">
@@ -658,41 +677,44 @@ export function VitalsRail({
           })}
         </section>
     ) : null;
-  // Swashbuckler Panache — a dedicated one-tap toggle card, prominent above Conditions. Drives the SAME
-  // 'panache' class-resource value as the generic Class-resources row (no double-count): both read
-  // character.classResources.panache and write via toggleResource.
-  cards.panache =
-    character.classId === 'swashbuckler'
-      ? (() => {
-        const on = !!(resourceVals['panache'] ?? 0);
+  // Signature STATE toggles — Rage and Panache — as prominent one-tap cards, shown for a base-class OR
+  // an archetype-dedication holder. Each drives the SAME class-resource value as the (now-hidden) generic
+  // row and gates the "needs <state>" badges on the Main tab's action list. One card per state the
+  // character has, under the shared 'panache' rail slot (kept for saved rail-order compatibility).
+  const STATE_UI: Record<string, { label: string; on: string; off: string; onHint: string; offHint: string; icon: string; onIcon: string; offIcon: string }> = {
+    rage: { label: 'Rage', on: 'Raging', off: 'Not raging', onHint: 'Tap to end rage', offHint: 'Tap to enter rage', icon: 'ti-flame', onIcon: 'ti-flame-filled', offIcon: 'ti-flame' },
+    panache: { label: 'Panache', on: 'Panache', off: 'No panache', onHint: 'Tap to spend', offHint: 'Tap to gain', icon: 'ti-sparkles', onIcon: 'ti-flame-filled', offIcon: 'ti-flame' },
+    'hunt-prey': { label: 'Hunt Prey', on: 'Prey marked', off: 'No prey', onHint: 'Tap to clear prey', offHint: 'Tap to mark prey', icon: 'ti-crosshair', onIcon: 'ti-crosshair', offIcon: 'ti-crosshair' },
+    'unleash-psyche': { label: 'Unleash Psyche', on: 'Unleashed', off: 'Not unleashed', onHint: 'Tap to end', offHint: 'Tap to unleash', icon: 'ti-brain', onIcon: 'ti-brain', offIcon: 'ti-brain' },
+  };
+  cards.panache = stateResources.length ? (
+    <>
+      {stateResources.map((r) => {
+        const ui = STATE_UI[r.id];
+        const on = !!(resourceVals[r.id] ?? 0);
         return (
-          <section className={'card panache-card' + (on ? ' on' : '')}>
+          <section key={r.id} className={`card state-card state-${r.id}` + (on ? ' on' : '')}>
             <div className="ct">
-              <i className="ti ti-sparkles" aria-hidden="true" />
-              Panache
+              <i className={'ti ' + ui.icon} aria-hidden="true" />
+              {ui.label}
             </div>
             {onPlay ? (
-              <button
-                type="button"
-                className={'panache-toggle' + (on ? ' on' : '')}
-                aria-pressed={on}
-                title="Gained via bravado actions; spent on finishers; clears at encounter end."
-                onClick={() => onPlay((p) => toggleResource(p, 'panache'))}
-              >
-                <i className={'ti ' + (on ? 'ti-flame-filled' : 'ti-flame')} aria-hidden="true" />
-                <span className="panache-state">{on ? 'Panache' : 'No panache'}</span>
-                <span className="panache-hint">{on ? 'Tap to spend' : 'Tap to gain'}</span>
+              <button type="button" className={'state-toggle' + (on ? ' on' : '')} aria-pressed={on} title={r.note} onClick={() => onPlay((p) => toggleResource(p, r.id))}>
+                <i className={'ti ' + (on ? ui.onIcon : ui.offIcon)} aria-hidden="true" />
+                <span className="state-name">{on ? ui.on : ui.off}</span>
+                <span className="state-hint">{on ? ui.onHint : ui.offHint}</span>
               </button>
             ) : (
-              <div className={'panache-toggle' + (on ? ' on' : '')} aria-disabled="true">
-                <i className={'ti ' + (on ? 'ti-flame-filled' : 'ti-flame')} aria-hidden="true" />
-                <span className="panache-state">{on ? 'Panache' : 'No panache'}</span>
+              <div className={'state-toggle' + (on ? ' on' : '')} aria-disabled="true">
+                <i className={'ti ' + (on ? ui.onIcon : ui.offIcon)} aria-hidden="true" />
+                <span className="state-name">{on ? ui.on : ui.off}</span>
               </div>
             )}
           </section>
         );
-        })()
-      : null;
+      })}
+    </>
+  ) : null;
   // Champion: an at-a-glance card naming the chosen Cause (its tenets + signature reaction + aura live in
   // the description popup). A reminder only — the reaction's numbers are target-specific, so nothing derives.
   const cause = character.classId === 'champion' && character.subclassId ? content.classFeatures[character.subclassId] : undefined;

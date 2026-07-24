@@ -9,7 +9,13 @@
   "note": "Melee Strikes deal +1 force damage (rising to 2 with weapon specialization, 3 with greater) and gain the arcane trait, using instead the damage type of your most recent damaging spell if it dealt damage."
  },
  "assume-earths-mantle": {
-  "note": "You become Large (+5 ft reach) with a climb Speed on earthen surfaces, gain a +1 circumstance bonus to Fortitude saves and +2 circumstance to Fort/Reflex DC vs Shove/Trip/knock Prone, and raise Strength to +4 (or +1 item bonus if already +4 or higher)."
+  "note": "You become Large (+5 ft reach) with a climb Speed on earthen surfaces, gain a +1 circumstance bonus to Fortitude saves and +2 circumstance to Fort/Reflex DC vs Shove/Trip/knock Prone, and raise Strength to +4 (or +1 item bonus if already +4 or higher).",
+  "saves": {
+   "fortitude": {
+    "value": 1,
+    "type": "circumstance"
+   }
+  }
  },
  "buckler-dance": {
   "note": "Requires wielding a buckler; you constantly count as having Raised a Shield as long as you meet that action's requirements."
@@ -40,7 +46,8 @@
     ]
    }
   ],
-  "note": "The only Strikes you can make are frenzied claw attacks."
+  "note": "The only Strikes you can make are frenzied claw attacks.",
+  "form": true
  },
  "cobra-stance": {
   "strikes": [
@@ -59,7 +66,19 @@
     ]
    }
   ],
-  "note": "You gain a +1 circumstance bonus to Fortitude saves and your Fortitude DC plus poison resistance equal to half your level, and can only make cobra fang Strikes."
+  "note": "You gain a +1 circumstance bonus to Fortitude saves and your Fortitude DC plus poison resistance equal to half your level, and can only make cobra fang Strikes.",
+  "saves": {
+   "fortitude": {
+    "value": 1,
+    "type": "circumstance"
+   }
+  },
+  "resistances": [
+   {
+    "type": "poison",
+    "value": "floor(@actor.level/2)"
+   }
+  ]
  },
  "commitment-to-vigilance": {
   "note": "All spaces within your melee reach are difficult terrain for your enemies."
@@ -90,7 +109,10 @@
   "note": "Requires being unarmored, limits you to crane wing Strikes, reduces High/Long Jump DCs by 5, and extends Leaps by 5 feet horizontally or 2 feet vertically."
  },
  "crowned-in-tempests-fury": {
-  "note": "Creatures entering or ending their turn in your kinetic aura take 2d12 electricity damage, you gain a 20-foot fly Speed, a +10-foot status bonus to all Speeds, and your air Elemental Blasts deal +1d12 electricity."
+  "note": "Creatures entering or ending their turn in your kinetic aura take 2d12 electricity damage, you gain a 20-foot fly Speed, a +10-foot status bonus to all Speeds, and your air Elemental Blasts deal +1d12 electricity.",
+  "speeds": {
+   "fly": 20
+  }
  },
  "defy-hell": {
   "note": "Requires not being unholy; grants a +2 status bonus to saves against mental effects and lets you make Hellbreaker Strikes."
@@ -191,7 +213,13 @@
   "note": "These reach-30-feet unarmed attacks gain no damage from striking runes but can benefit from the attack-roll item bonus and property runes of worn Handwraps of Mighty Blows; requires an attuned apparition granting Forest Lore or Herbalism Lore."
  },
  "geologic-attunement": {
-  "note": "You gain imprecise tremorsense in your kinetic aura (precise at 13th level) and once per round can Point Out a creature you sense with it as a free action."
+  "note": "You gain imprecise tremorsense in your kinetic aura (precise at 13th level) and once per round can Point Out a creature you sense with it as a free action.",
+  "senses": [
+   {
+    "name": "tremorsense",
+    "acuity": "imprecise"
+   }
+  ]
  },
  "ghosts-in-the-storm": {
   "note": "You and allies in your kinetic aura gain a +2 status bonus to Reflex saves and Acrobatics checks, and after a move action become concealed with the shock rune on Strikes until the start of the next turn."
@@ -286,7 +314,13 @@
     ]
    }
   ],
-  "note": "You gain resistance 2 to all damage, increasing to 3 at 12th, 4 at 16th, and 5 at 20th level."
+  "note": "You gain resistance 2 to all damage, increasing to 3 at 12th, 4 at 16th, and 5 at 20th level.",
+  "resistances": [
+   {
+    "type": "all",
+    "value": "2 + floor((@actor.level - 8) / 4)"
+   }
+  ]
  },
  "jellyfish-stance": {
   "strikes": [
@@ -375,7 +409,17 @@
   "note": "Requires wielding a reload-0 ranged weapon; your Double Shot penalty is reduced to -1 (-2 for three Strikes with Triple Shot), and the stance ends if you move from your position."
  },
  "orchards-endurance": {
-  "note": "You and allies in your kinetic aura gain resistance 5 (+2 per +4 levels) to bludgeoning and piercing and roll persistent-damage recovery flat checks twice, taking the higher result (fortune)."
+  "note": "You and allies in your kinetic aura gain resistance 5 (+2 per +4 levels) to bludgeoning and piercing and roll persistent-damage recovery flat checks twice, taking the higher result (fortune).",
+  "resistances": [
+   {
+    "type": "bludgeoning",
+    "value": "5 + 2 * floor((@actor.level - 14) / 4)"
+   },
+   {
+    "type": "piercing",
+    "value": "5 + 2 * floor((@actor.level - 14) / 4)"
+   }
+  ]
  },
  "paragons-guard": {
   "note": "Requires wielding a shield; you constantly have your shield raised as if you'd used Raise a Shield."
@@ -580,7 +624,8 @@
     ]
    }
   ],
-  "note": "You don't need a free hand to make spinning talon Strikes."
+  "note": "You don't need a free hand to make spinning talon Strikes.",
+  "form": true
  },
  "tangled-forest-stance": {
   "strikes": [
@@ -712,5 +757,263 @@
    }
   ],
   "note": "Requires being unarmored, and while flanking a target your wolf jaw attacks also gain the trip trait."
+ },
+ "ursine-avenger-form": {
+  "form": true,
+  "strikes": [
+   {
+    "name": "Jaws",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "unarmed"
+    ]
+   },
+   {
+    "name": "Claws",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "unarmed"
+    ]
+   }
+  ],
+  "senseIfFeat": {
+   "feat": "senses-of-the-bear",
+   "senses": [
+    {
+     "name": "low-light-vision"
+    },
+    {
+     "name": "scent",
+     "acuity": "imprecise",
+     "range": 30
+    }
+   ],
+   "upgradeDarkvisionIfLowLight": true
+  },
+  "note": "Your ursine form: a jaws and agile claws unarmed Strike. With Senses of the Bear, also low-light vision + scent 30 ft (darkvision if you already had low-light)."
+ },
+ "dragons-rage-wings": {
+  "form": true,
+  "speeds": {
+   "fly": "@actor.speed.land"
+  },
+  "note": "While raging you sprout dragon wings: a fly Speed equal to your land Speed."
+ },
+ "animal-rage": {
+  "form": true,
+  "note": "Transform into your animal, gaining the effects of 3rd-rank Animal Form except you use your own statistics, temporary Hit Points, and unarmed attacks; you retain your gear's constant abilities, a frog's tongue reach increases to 15 feet, and dismissing the transformation has the rage trait."
+ },
+ "pesh-skin": {
+  "note": "While you're polymorphed into a plant, each creature that touches you or hits you with an unarmed attack or an adjacent melee weapon attack takes 1d6 piercing damage (2d6 if the polymorph spell is 8th level or higher, 3d6 if 10th), and any adjacent creature that deals you piercing or slashing damage must succeed at a Fortitude save against your class DC or become stupefied 1 (stupefied 2 on a critical failure) until the end of its next turn."
+ },
+ "devil-in-plain-sight": {
+  "form": true,
+  "note": "Your fiendish traits vanish and you appear as a typical non-tiefling member of your base ancestry (this counts as creating a disguise for Impersonate and automatically defeats Perception DCs to identify you as non-tiefling); while shapeshifted you can't use unarmed attacks, innate spells, or other abilities that require tiefling physical features, and you can remain in this form indefinitely."
+ },
+ "final-form": {
+  "form": true,
+  "note": "Once per day, take on your final form for 1 minute with the effects of Divine Vessel for a deity matching your fiendish lineage's alignment; on activation each creature within 10 feet is deafened and dazzled 1 round unless it saves against your higher class or spell DC, while in the form you can cast Chilling Darkness, Fireball, and Lightning Bolt as 6th-rank divine innate spells (once each), you become Drained 3 when it ends, and while you have this feat you always have weakness 10 to holy."
+ },
+ "wings-of-air": {
+  "speeds": {
+   "fly": "@actor.speed.land"
+  },
+  "note": "Manifest feathered or cloudy wings for 10 minutes, gaining a fly Speed equal to your land Speed while they're manifested.",
+  "form": true
+ },
+ "bone-swarm": {
+  "form": true,
+  "speeds": {
+   "fly": 40
+  },
+  "note": "Once per day, up to 1 minute (spend a single action to revert): you become Huge with the swarm trait; you're immune to grabbed, prone, and restrained; you have weakness 5 to area and splash damage; you can occupy other creatures' spaces and must do so to use your 2-action swarm ability, which deals 10d6 damage to every creature sharing your space (basic save vs your class DC or spell DC, whichever is higher). While in this form you can't speak, Cast Spells, use manipulate actions requiring hands, Activate magic items, or make Strikes with your normal body; you lack swarm mind (so you're still affected normally by mental effects) but retain skeleton feats that don't require communication or hands."
+ },
+ "bat-form": {
+  "form": true,
+  "note": "Once per hour, transform into a bat, gaining the effects of a 4th-rank Pest Form spell. At 14th level you can instead spend 2 actions to gain the effects of a 4th- or 5th-rank Aerial Form spell (bat form only)."
+ },
+ "bodysnatcher": {
+  "form": true,
+  "note": "After you Consume Flesh of a creature your size or smaller, you can assume its exact physical form until you're no longer satiated (once per individual creature). This counts as creating a disguise for the Impersonate use of Deception, automatically defeats Perception DCs to determine your ancestry or creature type, and grants a +4 circumstance bonus to your Deception DC against creatures trying to see through the disguise. You gain only the physical appearance -- not the creature's special abilities, skills, voice, memories, or other traits -- but unlike Change Shape you can take the appearance of a specific individual whose flesh you've consumed."
+ },
+ "rebirth-in-living-stone": {
+  "form": true,
+  "note": "Transform your body into living stone: gain 40 temporary Hit Points (50 at 20th level), immunity to critical hits and precision damage, and you can't be pushed, pulled, or tripped while standing on earth or stone; your earth Elemental Blasts deal an additional 1d10 damage of their normal type. These benefits last until the end of your next turn but can be Sustained up to 1 minute. After you gain the temporary Hit Points, you can't do so again for 10 minutes."
+ },
+ "furnace-form": {
+  "form": true,
+  "note": "Transform into a living flame, gaining the benefits of the Fiery Body spell (except the ability to cast ignition) until the end of your next turn. While you Sustain the impulse (up to 1 minute) you can Fly up to half your fly Speed, and your fire Elemental Blasts deal an additional die of damage. At 16th level the duration is 1 minute, you can't Sustain the impulse, and you can Dismiss it."
+ },
+ "alloy-flesh-and-steel": {
+  "form": true,
+  "note": "You gain the benefits of the Ferrous Form spell (but can't cast needle darts) until the end of your next turn. You can Sustain the impulse up to 1 minute, Raising a metal Shield each time you do, and your metal Elemental Blasts deal an extra die of damage (the form's resistance is 15 at 16th level)."
+ },
+ "worm-form": {
+  "form": true,
+  "senses": [
+   {
+    "name": "darkvision"
+   }
+  ],
+  "note": "You become a Huge worm battle form (animal trait): AC 20 + your level, 40 temporary HP, Athletics +30, and form-specific unarmed Strikes at +25 that are the only Strikes you can make. Purple Worm form: Speed 40 feet, burrow 30 feet, swim 20 feet."
+ },
+ "divine-wings": {
+  "form": true,
+  "speeds": {
+   "fly": "@actor.speed.land"
+  },
+  "note": "You manifest magical wings for 10 minutes (once per day), gaining a fly Speed equal to your land Speed."
+ },
+ "rat-form": {
+  "form": true,
+  "note": "You gain the effects of a 1st-rank Pest Form spell, taking the battle form of a Tiny rat."
+ },
+ "long-nosed-form": {
+  "form": true,
+  "note": "You take on a specific human form until you Dismiss it: you lose your beak unarmed Strike and any other unarmed Strikes from a tengu heritage or ancestry feat, and the transformation counts as a disguise for the Impersonate use of Deception."
+ },
+ "form-of-the-bat": {
+  "form": true,
+  "note": "You gain the effects of a 4th-rank Pest Form spell, except you always transform into a bat. Frequency once per hour."
+ },
+ "animal-skin": {
+  "acBonus": {
+   "value": 2,
+   "type": "item"
+  },
+  "dexCap": 3,
+  "note": "Applies only while you are raging and unarmored. The item bonus to AC is +3 if you have the Greater Juggernaut class feature, and it stacks with Armor Potency runes on your explorer's clothing, Mystic Armor, and Bands of Force. This feat also increases your unarmored defense proficiency to expert."
+ },
+ "dragon-transformation": {
+  "form": true,
+  "note": "You gain the effects of a 6th-rank Dragon Form spell, except you use your own AC and attack modifier, apply your extra Rage damage, and Dragon Breath uses your class DC. Add Dragon Form's temporary Hit Points to any rage temp HP, and the Dismiss action gains the rage trait. At 18th level you gain a +20-foot status bonus to your fly Speed, your damage bonus with dragon Strikes increases to +12, and you gain a +14 status bonus to Dragon Breath damage."
+ },
+ "oni-form": {
+  "form": true,
+  "note": "Your size increases to Large and you become Clumsy 1; your Speed, reach, and other statistics are unchanged except as noted. Worn equipment resizes to fit. Using Oni Form counts as creating a disguise for the Impersonate use of Deception. You can Sustain it for up to 10 minutes, then must spend at least 10 minutes in your natural form before using it again."
+ },
+ "howling-aspect": {
+  "strikes": [
+   {
+    "name": "Tusks",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "finesse",
+     "unarmed"
+    ]
+   },
+   {
+    "name": "Flame-Hair",
+    "dice": 1,
+    "die": "d4",
+    "damageType": "fire",
+    "group": "brawling",
+    "traits": [
+     "agile",
+     "finesse",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "For 1 minute you gain these two unarmed attacks. Frequency once per 10 minutes.",
+  "form": true
+ },
+ "among-humanity": {
+  "form": true,
+  "note": "Once per day, when you Change Shape into humanoid form, gain the effects of 3rd-rank Illusory Disguise for 1 hour or until you shift back — a polymorph effect rather than an illusion."
+ },
+ "towering-presence": {
+  "note": "Increase your size to Large until the start of your next turn (no effect if you were already Large or larger). Your equipment grows with you but returns to natural size if removed. You're Clumsy 1; your reach increases by 5 feet (or 10 feet if you started out Tiny); and you gain a +2 status bonus to melee damage."
+ },
+ "invoke-movement": {
+  "note": "While under the effects of Enter Spirit Trance, choose burrow, climb, fly, or swim; gain that Speed equal to your base Speed (or half your Speed if you chose burrow) for the trance's duration. Using it again lets you swap to a different movement type, but you lose the previous one."
+ },
+ "a-little-bird-told-me": {
+  "form": true,
+  "senses": [
+   {
+    "name": "low-light-vision"
+   },
+   {
+    "name": "scent",
+    "acuity": "imprecise",
+    "range": 30
+   }
+  ],
+  "speeds": {
+   "fly": 25
+  },
+  "note": "You become a Tiny bird (animal trait) and can't make Strikes. AC = 20 + your level; ignore your armor's check penalty and Speed reduction. Weakness 5 to physical damage. Acrobatics and Stealth modifiers are +10 unless your own are higher; Athletics modifier -4. Dismiss to return to normal, or revert automatically if reduced to 0 HP."
+ },
+ "disperse-into-petals": {
+  "form": true,
+  "speeds": {
+   "fly": 10
+  },
+  "resistances": [
+   {
+    "type": "physical",
+    "value": "floor(@actor.level/2)"
+   }
+  ],
+  "note": "You become an amorphous cloud of blossoms. You lose any item bonus to AC and all other effects/bonuses from armor, using your unarmored-defense proficiency instead; you're immune to precision damage. You can't cast spells, activate items, or use actions with the attack or manipulate trait. Lasts up to 1 minute and can be Dismissed. Awakening: can last up to 1 hour. Awakening: you can occupy another creature's space and spend 1 action to spin in a vortex, dealing 1d4 slashing per 5 levels to that creature (basic Reflex save)."
+ },
+ "spirit-guide-form": {
+  "form": true,
+  "strikes": [
+   {
+    "name": "Claws",
+    "dice": 3,
+    "die": "d6",
+    "damageType": "slashing",
+    "group": "brawling",
+    "traits": [
+     "unarmed",
+     "agile",
+     "backstabber",
+     "finesse"
+    ]
+   },
+   {
+    "name": "Jaws",
+    "dice": 3,
+    "die": "d10",
+    "damageType": "piercing",
+    "group": "brawling",
+    "traits": [
+     "unarmed",
+     "forceful"
+    ]
+   }
+  ],
+  "senses": [
+   {
+    "name": "darkvision"
+   }
+  ],
+  "resistances": [
+   {
+    "type": "all",
+    "value": 10
+   }
+  ],
+  "note": "Once per day, fuse with your spirit guide for 1 minute (end early as a free action); you can't use other actions from this archetype while fused. You become incorporeal. The resistance 10 applies to all damage except force, ghost touch, or spirit, and is doubled against non-magical damage. You gain only the one Strike — Claws or Jaws — matching your spirit guide type, and it's the only attack you can make: its damage is 3d6+5 slashing (Claws) or 3d10+5 piercing (Jaws) plus 1d6 force, and its attack modifier is +29 or your normal unarmed attack modifier, whichever is higher."
+ },
+ "vessels-form": {
+  "form": true,
+  "speeds": {
+   "fly": "@actor.speed.land"
+  },
+  "note": "For 1 minute you become Large with 10-foot reach (if you were Medium or smaller), gain a +2 status bonus to attack and damage rolls and a +1 status bonus to saves against spells, and 40 temporary Hit Points. With Entity's Resurgence active the attack and damage bonus rises to +3, and with the Entity's Strike feat that feat's unarmed attack increases its damage die from 1d6 to 1d8."
  }
 }

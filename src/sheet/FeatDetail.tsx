@@ -6,6 +6,7 @@ import { PinStar } from './PinStar';
 import { useContent } from './ContentContext';
 import { useEscapeClose } from './useEscapeClose';
 import { traitDesc } from '../rules/glossary';
+import { astSlug } from './useAst';
 
 export interface FeatEntry {
   key: string;
@@ -19,6 +20,8 @@ export interface FeatEntry {
   bucket: string;
   rarity?: string;
   prerequisites?: string[];
+  /** When set, this feat was auto-granted by another feat — the granting feat's display name. */
+  grantedBy?: string;
 }
 
 function cap(s: string): string {
@@ -69,7 +72,7 @@ export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () =
               </div>
             </div>
           ) : null}
-          <DescBody description={entry.description} descRefs={entry.descRefs} onExit={onClose} />
+          <DescBody description={entry.description} descRefs={entry.descRefs} onExit={onClose} astKey={entry.isFeature ? 'classFeatures' : 'feats'} astId={astSlug(entry.name)} />
         </div>
       </div>
     </div>

@@ -107,28 +107,20 @@ export function ConditionsModal({
           {list.map((c) => {
             const on = activeIds.has(c.id);
             const val = active.find((a) => a.id === c.id)?.value;
+            // The body is display-only (name + the condition's full description, whose own links stay
+            // clickable — no longer wrapped in a button); the Apply/Remove button is the only toggle.
             return (
-              <div
-                key={c.id}
-                className={'cond-row' + (on ? ' on' : '')}
-                role="button"
-                tabIndex={0}
-                onClick={() => (on ? onRemove(c.id) : onAdd(c.id, c.valued))}
-                onKeyDown={(e) =>
-                  (e.key === 'Enter' || e.key === ' ') &&
-                  (e.preventDefault(), on ? onRemove(c.id) : onAdd(c.id, c.valued))
-                }
-              >
-                <span className="cond-row-check">{on && <i className="ti ti-check" aria-hidden="true" />}</span>
+              <div key={c.id} className={'cond-row' + (on ? ' on' : '')}>
                 <div className="cond-row-text">
                   <div className="cond-row-name">
+                    <span className="cond-row-check">{on && <i className="ti ti-check" aria-hidden="true" />}</span>
                     {c.name}
                     {c.valued && <span className="cond-valued-tag">valued</span>}
                   </div>
-                  {c.description && <DescBody description={c.description} descRefs={c.descRefs} className="cond-row-desc" as="div" />}
+                  {c.description && <DescBody description={c.description} descRefs={c.descRefs} className="cond-row-desc" as="div" astKey="conditions" astId={c.id} />}
                 </div>
                 {on && c.valued && (
-                  <span className="cond-stepper" onClick={(e) => e.stopPropagation()}>
+                  <span className="cond-stepper">
                     <button aria-label="Decrease" onClick={() => onSetValue(c.id, (val ?? 1) - 1)}>
                       <i className="ti ti-minus" aria-hidden="true" />
                     </button>
@@ -138,6 +130,9 @@ export function ConditionsModal({
                     </button>
                   </span>
                 )}
+                <button type="button" className={'pick-add' + (on ? ' chosen' : '')} onClick={() => (on ? onRemove(c.id) : onAdd(c.id, c.valued))}>
+                  {on ? 'Remove' : 'Apply'}
+                </button>
               </div>
             );
           })}

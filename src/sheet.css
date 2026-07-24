@@ -1565,12 +1565,20 @@ body {
   border-color: var(--app-accent);
   color: var(--app-accent-text);
 }
-/* Swashbuckler Panache — dedicated one-tap rail card. */
-.panache-card.on {
+/* Signature STATE cards — Rage / Panache — dedicated one-tap rail cards. */
+.state-card.on {
   border-color: var(--app-accent);
   box-shadow: inset 0 0 0 1px var(--app-accent);
 }
-.panache-toggle {
+.state-card + .state-card {
+  margin-top: 10px;
+}
+/* Rage reads as a martial-red state so it's distinct from the accent-tinted Panache. */
+.state-card.state-rage.on {
+  border-color: var(--danger, #c2410c);
+  box-shadow: inset 0 0 0 1px var(--danger, #c2410c);
+}
+.state-toggle {
   margin-top: 8px;
   width: 100%;
   display: flex;
@@ -1585,22 +1593,54 @@ body {
   cursor: pointer;
   transition: background 0.12s, color 0.12s, border-color 0.12s;
 }
-.panache-toggle > .ti {
+.state-toggle > .ti {
   font-size: 22px;
 }
-.panache-toggle.on {
+.state-toggle.on {
   background: var(--app-accent);
   border-color: var(--app-accent);
   color: var(--app-accent-text);
 }
-.panache-toggle .panache-state {
+.state-rage .state-toggle.on {
+  background: var(--danger, #c2410c);
+  border-color: var(--danger, #c2410c);
+  color: #fff;
+}
+.state-toggle .state-name {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.02em;
 }
-.panache-toggle .panache-hint {
+.state-toggle .state-hint {
   font-size: 10.5px;
   opacity: 0.85;
+}
+/* "Needs Rage / Panache" badge on a gated action row (still readable + clickable, just not usable). */
+.needs-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 1px 6px 1px 5px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--danger, #c2410c) 15%, var(--app-surface-2));
+  color: var(--danger, #c2410c);
+  border: 1px solid color-mix(in srgb, var(--danger, #c2410c) 35%, transparent);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.needs-badge > .ti {
+  font-size: 11px;
+}
+.action.gated,
+.action-chip.gated {
+  opacity: 0.72;
+}
+.action.gated .action-name,
+.action-chip.gated .action-chip-name {
+  text-decoration: none;
 }
 .res-step {
   margin-left: auto;
@@ -3431,6 +3471,8 @@ button.strike-name:hover {
   min-width: 0;
   cursor: pointer;
 }
+/* The mode body is display-only (the circle toggles) — don't imply it's clickable. */
+.mode-info-static { cursor: default; }
 .mode-name {
   font-size: 13px;
   font-weight: 500;
@@ -4416,6 +4458,11 @@ button.strike-name:hover {
   border-radius: 999px;
   background: var(--app-surface-2);
   color: var(--app-text-dim);
+}
+/* a feat auto-granted by another feat (e.g. a dedication's bonus feat) */
+.ff-tag-granted {
+  background: color-mix(in srgb, var(--app-accent) 16%, transparent);
+  color: var(--app-accent);
 }
 .ff-trait {
   font-size: 11px;
@@ -7672,7 +7719,14 @@ button.strike-name:hover {
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: 6px;
+  /* Fill the modal's height when it's taller than the list (resized, or full-screen on a phone) so the
+     scroll area — not a dead gap — occupies the extra room. With a content-height modal this is a no-op. */
+  flex: 1 1 auto;
+  min-height: 0;
 }
+/* Inside the Conditions & Modes popup the modes panel is one of two swappable bodies — let it fill the
+   modal height instead of stopping at its own 60vh cap (which left a blank band below on tall/full-screen). */
+.cond-modal .modes-panel { max-height: none; flex: 1 1 auto; min-height: 0; }
 .cond-row {
   display: flex;
   align-items: flex-start;
@@ -8602,6 +8656,25 @@ button.strike-name:hover {
   font-size: 10.5px;
   color: var(--app-text-faint);
 }
+/* feat-granted companion banner (Pet, Friend of the Sea, …) — sits atop the companion card */
+.cmp-grantnote {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 0 0 12px;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--app-text-dim);
+  background: color-mix(in srgb, var(--app-accent) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--app-accent) 24%, transparent);
+  border-radius: 8px;
+}
+.cmp-grantnote i {
+  color: var(--app-accent);
+  margin-top: 1px;
+  flex: none;
+}
 .cmp-bulk {
   display: inline-flex;
   align-items: center;
@@ -9063,7 +9136,9 @@ button.strike-name:hover {
   cursor: pointer;
 }
 .fsel-arch.on { background: var(--app-accent); color: var(--app-accent-text); border-color: transparent; }
-.fsel-head .picker-close { font-style: normal; }
+/* The count already has margin-left:auto to push the right cluster over; the close button must NOT also
+   claim auto or the free space splits and strands the count/Filters in the middle. */
+.fsel-head .picker-close { font-style: normal; margin-left: 0; }
 
 .fsel-body { flex: 1; min-height: 0; display: flex; }
 .fsel-panel {
@@ -9222,6 +9297,69 @@ button.strike-name:hover {
   cursor: pointer;
 }
 .fsel-trait-opt:hover { border-color: var(--app-accent); color: var(--app-accent); }
+
+/* ===== archives-model filter enhancements (tabs · tri-state · active chips · takeover) ===== */
+/* top-right Filters toggle in the header — reuses the .fsel-arch accent-on look */
+.fsel-head-filters {
+  font-style: normal; font-size: 11.5px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 10px; border-radius: 999px;
+  border: var(--app-bw) solid var(--app-border); background: transparent; color: var(--app-text-dim); cursor: pointer;
+}
+.fsel-head-filters:hover { border-color: var(--app-accent); }
+.fsel-head-filters.on { background: var(--app-accent); color: var(--app-accent-text); border-color: transparent; }
+.fsel-clear:disabled { opacity: .4; cursor: default; }
+.fsel-clear { display: inline-flex; align-items: center; gap: 4px; }
+
+/* filter tabs (Traits / Type / Numbers) */
+.fsel-tabs { display: flex; gap: 5px; padding: 8px 12px 2px; }
+.fsel-tab {
+  flex: 1; text-align: center; font-size: 12.5px; font-weight: 600;
+  padding: 6px 4px; border-radius: var(--app-radius-sm);
+  border: var(--app-bw) solid transparent; background: transparent; color: var(--app-text-dim); cursor: pointer;
+}
+.fsel-tab:hover { color: var(--app-text); }
+.fsel-tab.on { background: var(--app-surface-2); color: var(--app-text); border-color: var(--app-border); }
+
+/* tri-state pills: excluded state (red, ✕, no bullet) + action-cost pills (glyph, no bullet) */
+.fsel-chip.exc { color: var(--app-bad); border-color: color-mix(in srgb, var(--app-bad) 55%, transparent); }
+.fsel-chip.exc::before { display: none; }
+.fsel-chip-ex { font-size: 11px; margin-right: -1px; }
+.fsel-chip-cost::before { display: none; }
+.fsel-chip-cost .pf2-action { color: inherit; font-size: 1.25em; }
+
+/* traits shown as a visible tap-to-cycle pill grid (scrolls when long); search narrows the visible pills */
+.fsel-traitgrid { max-height: 172px; overflow-y: auto; padding-right: 2px; align-content: flex-start; }
+.fsel-trait-search { margin-bottom: 4px; }
+
+/* tri-state trait tags (include = accent, exclude = red "not X"); label & ✕ are separate buttons */
+.fsel-trait-tag.on { background: var(--app-accent); color: var(--app-accent-text); }
+.fsel-trait-tag.exc { background: color-mix(in srgb, var(--app-bad) 18%, var(--app-surface-2)); color: var(--app-bad); padding-left: 6px; }
+.fsel-trait-tag .fsel-trait-lbl { background: transparent; border: none; color: inherit; cursor: pointer; font: inherit; padding: 0; }
+.fsel-trait-tag .fsel-trait-rm { background: transparent; border: none; color: inherit; cursor: pointer; opacity: .85; display: inline-flex; padding: 0 2px; }
+.fsel-trait-tag .fsel-not { font-weight: 700; font-size: 9.5px; opacity: .85; }
+
+/* active-filter chip summary above the results list */
+.fsel-activechips { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 12px; border-bottom: var(--app-bw) solid var(--app-border); }
+.fsel-achip {
+  display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px;
+  padding: 3px 8px 3px 10px; border-radius: 999px;
+  background: color-mix(in srgb, var(--app-accent) 16%, var(--app-surface-2));
+  border: var(--app-bw) solid color-mix(in srgb, var(--app-accent) 40%, transparent);
+  color: var(--app-text); cursor: pointer;
+}
+.fsel-achip.exc { background: color-mix(in srgb, var(--app-bad) 14%, var(--app-surface-2)); border-color: color-mix(in srgb, var(--app-bad) 40%, transparent); }
+.fsel-achip-not { color: var(--app-bad); font-weight: 700; font-size: 10px; }
+.fsel-achip .ti-x { color: var(--app-text-faint); font-size: 12px; }
+.fsel-achip .pf2-action { color: var(--app-accent); font-size: 1.2em; }
+.fsel-achip.clear { background: transparent; border-style: dashed; color: var(--app-text-dim); }
+
+/* DESKTOP full-takeover: the filter panel covers the whole popup body while open (mobile already does) */
+.fsel.filters-open .fsel-body { position: relative; }
+.fsel.filters-open .fsel-panel {
+  position: absolute; inset: 0; z-index: 6; width: auto; border-right: none;
+  background: var(--app-surface); overflow-y: auto;
+}
 
 /* min-height:0 is load-bearing: on mobile .fsel-body flips to a column, making height the main axis,
    and the default min-height:auto would resolve to the whole list's min-content height — .fsel-list
@@ -9410,6 +9548,20 @@ button.strike-name:hover {
     border: var(--app-bw) solid var(--app-accent); background: var(--app-accent); color: var(--app-accent-text);
     font-size: 13px; display: inline-flex; align-items: center; gap: 5px; cursor: pointer;
   }
+
+  /* ----- Narrow-viewport overflow fixes: rows that were single-line on desktop must wrap on a phone so
+     no control is pushed off the right edge (the whole tab would otherwise scroll sideways). ----- */
+  /* Inventory header: let the search take its own row and the Add/Create buttons wrap below it (else the
+     'Create item' button clips off-screen — ~28px at 375px, ~83px at 320px). */
+  .inv-top { flex-wrap: wrap; }
+  .inv-top .search { flex: 1 1 100%; min-width: 0; }
+  /* Feats filter chips: the container refused to shrink (flex:0 0 auto), so its chips ran off the edge on a
+     320px phone. Give it a full-width row so its own flex-wrap actually triggers. */
+  .ff-bar .ff-filters { flex: 1 1 100%; min-width: 0; justify-content: flex-start; }
+  /* Strike attack line: a long damage string (bonus dice / property runes) could overflow the fixed row —
+     let it wrap and drop the damage onto its own line. */
+  .strike-line { flex-wrap: wrap; }
+  .strike-line .strike-dmg { flex-basis: 100%; margin-left: 0; }
 
   /* ===== Phone / very-narrow layout (Android WebView + narrow windows) ===== */
   /* Stack the builder's setup sidebar above its main (the fixed 244px sidebar doesn't fit a phone). */
@@ -10002,3 +10154,23 @@ button.strike-name:hover {
   .fsel-results-bar { flex-wrap: wrap; }
   .fsel-results-search { flex: 1 1 100%; min-width: 0; max-width: none; }
 }
+
+/* Missing-data warnings on the Feats & Features tab (effects referencing legacy content). */
+.ff-warnings { display: flex; gap: 10px; align-items: flex-start; background: color-mix(in srgb, var(--warn, #b8862e) 12%, var(--card-bg, #fff)); border: 1px solid color-mix(in srgb, var(--warn, #b8862e) 40%, transparent); border-radius: 8px; padding: 10px 12px; margin: 0 0 10px; font-size: 13px; }
+.ff-warnings > i { color: var(--warn, #b8862e); font-size: 18px; margin-top: 1px; }
+.ff-warnings ul { margin: 4px 0 0; padding-left: 18px; }
+.ff-warnings li { margin: 2px 0; color: var(--app-text-dim, #726c7c); }
+
+/* Class-archetype banner (Feats & Features): what the archetype replaced in your class. */
+.ff-arch { display: flex; gap: 10px; align-items: flex-start; background: color-mix(in srgb, var(--accent, #7a5af8) 10%, var(--card-bg, #fff)); border: 1px solid color-mix(in srgb, var(--accent, #7a5af8) 35%, transparent); border-radius: 8px; padding: 10px 12px; margin: 0 0 10px; font-size: 13px; }
+.ff-arch > i { color: var(--accent, #7a5af8); font-size: 18px; margin-top: 1px; }
+.ff-arch ul { margin: 4px 0 0; padding-left: 18px; }
+.ff-arch li { margin: 2px 0; color: var(--app-text-dim, #726c7c); }
+
+/* Doubling Rings — rune-copy picker on a wielded weapon (Inventory). */
+.inv-runecopy { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--app-text-dim); background: var(--app-surface-2); border: 1px solid var(--app-border); border-radius: var(--app-radius); padding: 3px 8px; }
+.inv-runecopy > .ti { font-size: 13px; opacity: 0.8; }
+.inv-runecopy-lbl { letter-spacing: 0.01em; }
+.inv-runecopy select { font: inherit; color: var(--app-text); background: transparent; border: 0; border-bottom: 1px dashed var(--app-border); padding: 1px 2px; cursor: pointer; max-width: 130px; }
+
+.mc-key { font-size: 11px; color: var(--app-text-dim); font-weight: 400; }

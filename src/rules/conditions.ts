@@ -91,6 +91,26 @@ export function conditionPenalty(conditions: ActiveCondition[], ability: Ability
   return -(status + circumstance);
 }
 
+/** Condition penalties as raw typed mods (negative), so they pool by type WITH mode/stance modifiers
+ *  instead of being summed independently — a frightened status penalty and a mode's status penalty
+ *  take the worst, not both. Returns only the non-zero status / circumstance penalties. */
+export function conditionTypedMods(conditions: ActiveCondition[], ability: AbilityId, slot: ConditionSlot): { type: 'status' | 'circumstance'; value: number }[] {
+  let status = 0;
+  let circumstance = 0;
+  for (const c of conditions) {
+    for (const e of CONDITION_EFFECTS[c.id] ?? []) {
+      if (!effectMatches(e, ability, slot)) continue;
+      const amt = e.amount === 'valued' ? c.value ?? 1 : e.amount;
+      if (e.type === 'status') status = Math.max(status, amt);
+      else circumstance = Math.max(circumstance, amt);
+    }
+  }
+  const out: { type: 'status' | 'circumstance'; value: number }[] = [];
+  if (status) out.push({ type: 'status', value: -status });
+  if (circumstance) out.push({ type: 'circumstance', value: -circumstance });
+  return out;
+}
+
 /** Max-HP reduction from Drained (value × level). */
 export function drainedHpLoss(c: Character): number {
   const d = c.conditions.find((x) => x.id === 'drained');

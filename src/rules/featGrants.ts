@@ -21,6 +21,37 @@
  * with new tracks as needed (they must be wired into applyFeatGrant in build.ts).
  */
 import type { ArmorCategory, ProficiencyKey, ProficiencyRank, SaveId, SkillId, WeaponCategory } from './types';
+import { FEAT_SKILL_GRANTS } from './featGrantsAuto';
+
+/** One step of a level-gated proficiency upgrade a feat grants. */
+export interface RankUpgradeStep {
+  level: number;
+  rank: ProficiencyRank;
+}
+
+/** The upgrade steps of a grant, normalized to a list sorted by level. */
+export function upgradeSteps(g: FeatGrant): RankUpgradeStep[] {
+  if (!g.rankUpgrade) return [];
+  return (Array.isArray(g.rankUpgrade) ? g.rankUpgrade : [g.rankUpgrade]).slice().sort((a, b) => a.level - b.level);
+}
+
+/** The rank a grant upgrades to at `level` — the highest step reached, or undefined below the first. */
+export function upgradeRankAt(g: FeatGrant, level: number): ProficiencyRank | undefined {
+  const reached = upgradeSteps(g).filter((s) => level >= s.level);
+  return reached.length ? reached[reached.length - 1].rank : undefined;
+}
+
+/** Upgrades that trigger EXACTLY at `level`, for the builder's "you gain automatically" list — so the
+ *  player sees the step land on the level card instead of a silently-changed number. */
+export function featUpgradesAtLevel(featIds: Iterable<string>, level: number): { featId: string; rank: ProficiencyRank }[] {
+  const out: { featId: string; rank: ProficiencyRank }[] = [];
+  for (const id of featIds) {
+    const g = FEAT_GRANTS[id];
+    if (!g) continue;
+    for (const s of upgradeSteps(g)) if (s.level === level) out.push({ featId: id, rank: s.rank });
+  }
+  return out;
+}
 
 export interface FeatGrant {
   /** Armor category → minimum rank granted (e.g. Sentinel Dedication: light+medium trained). */
@@ -34,13 +65,54 @@ export interface FeatGrant {
   /** Skill (or `lore:<subject>`) → minimum rank granted (e.g. Medic Dedication: Medicine expert). */
   skills?: Partial<Record<ProficiencyKey, ProficiencyRank>>;
   /**
+   * Conditional skill upgrades — "trained in X; if you were ALREADY trained, expert instead" (Lastwall
+   * Sentry, Linguist, …). Grants `base`, but if the character already meets `base` from another source,
+   * grants `upgraded` instead. Evaluated against the pre-feat rank; RAISES only, never lowers.
+   */
+  conditionalSkills?: Partial<Record<ProficiencyKey, { base: ProficiencyRank; upgraded: ProficiencyRank }>>;
+  /**
+   * "Trained in a Lore subject of your choice" (Gnome Obsession, Elemental Lore, …). The number of
+   * such Lore-training slots. The player types each subject in the builder; the pick is stored in
+   * BuildState.featLoreChoices keyed `<featId>:<slot index>` and granted as `lore:<subject>` trained.
+   */
+  loreChoices?: number;
+  /**
    * Skill-training CHOICES the feat offers ("your choice of Acrobatics or Athletics"). Each entry is
    * one training slot; the player picks one skill from `options` (or any skill when `options: 'any'`).
    * The pick is stored in BuildState.featSkillChoices keyed `<featId>:<slot index>`; an unset slot
    * defaults to the first listed option (or Acrobatics for an 'any' slot). Grants training at `rank`
    * (RAISES only, like the static grants).
    */
-  skillChoices?: { options: SkillId[] | 'any'; rank: ProficiencyRank }[];
+  skillChoices?: {
+    options: SkillId[] | 'any';
+    rank: ProficiencyRank;
+    /** Conditional slot rank — "trained in your choice of Deception or Stealth; expert if already
+     *  trained" (Lion Blade). When set, the PICKED skill gets `upgraded` if it already met `base`
+     *  before this grant, else `base`; the flat `rank` is ignored. */
+    conditionalRank?: { base: ProficiencyRank; upgraded: ProficiencyRank };
+  }[];
+  /**
+   * "If you were already trained in <the granted skill(s)>, you instead become trained in a skill of
+   * your choice." When set, each STATIC non-Lore skill in `skills` that was already at (or above) its
+   * granted rank BEFORE this feat converts into a replacement-skill pick: buildCharacter records the
+   * triggered slot on Character.skillFallbacks (so the builder offers the picker) and applies the pick
+   * from BuildState.featSkillChoices keyed `<featId>:fallback:<skill>` (trained, RAISES only).
+   */
+  redundantFallback?: boolean;
+  /**
+   * Ancestry Weapon Familiarity / Expertise — proficiency in NAMED weapons rather than a whole
+   * category. `rank` is a flat grant ("you're trained in the dogslicer and horsechopper"); with
+   * `mirrorBestCategory` the listed weapons instead match the best weapon-CATEGORY rank the character
+   * has (the Expertise feats: "whenever a class feature grants you expert or greater proficiency in
+   * certain weapons, you also gain that proficiency for …"). Applied as weaponOverrides, which
+   * deriveStrike already maxes against the weapon's own category rank — so this only ever helps
+   * weapons the category doesn't already cover (advanced ancestry weapons, limited-expertise classes).
+   */
+  weaponFamiliarity?: {
+    weapons: string[];
+    rank?: ProficiencyRank;
+    mirrorBestCategory?: boolean;
+  };
   /**
    * The feat grants a BONUS skill feat the player picks (Rogue Dedication: "You gain a skill feat").
    * Injected as an extra level-<feat's level> skill-feat slot; the pick is stored in
@@ -62,7 +134,13 @@ export interface FeatGrant {
    * then master at 17). Applied to every rank this feat grants, static or choice-driven, and still
    * only ever RAISES.
    */
-  rankUpgrade?: { level: number; rank: ProficiencyRank };
+  /** Level-gated rank upgrade(s) on everything this feat grants. A LIST expresses a multi-step
+   *  progression ("expert now, master at 7th, legendary at 15th" — Brilliant Crafter); the highest
+   *  step the character has reached applies. A single object is the one-step form. */
+  /** The grant does not start at the feat's own level — it begins here (Martial Experience trains
+   *  you in every weapon only from 11th). Everything in the grant is withheld until this level. */
+  minLevel?: number;
+  rankUpgrade?: RankUpgradeStep | RankUpgradeStep[];
   /**
    * Armor Proficiency's cascade. The feat's three ChoiceSet options (light/medium/heavy) are gated by
    * mutually-exclusive predicates so that EXACTLY ONE is ever legal — it is not a real choice but a
@@ -106,7 +184,7 @@ export interface FeatGrant {
  *   rankUpgrade 11/expert. The repeatable advanced-weapon branch ("trained in one advanced weapon of
  *   your choice") is NOT modeled — Foundry itself omits it, so repeat takes are inert.
  */
-export const FEAT_GRANTS: Record<string, FeatGrant> = {
+const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
   'sentinel-dedication': { armor: { light: 'trained', medium: 'trained' } },
   'fighter-dedication': {
     weapon: { martial: 'trained' },
@@ -129,7 +207,19 @@ export const FEAT_GRANTS: Record<string, FeatGrant> = {
   },
   'armor-proficiency': { armorCascade: true, rankUpgrade: { level: 13, rank: 'expert' } },
   'weapon-proficiency': { weapon: { martial: 'trained' }, rankUpgrade: { level: 11, rank: 'expert' } },
+  // "Trained in your choice of the battle axe or longsword" — the feat's own weapon-choice dropdown
+  // drives which specific weapon is trained (the Shield Block reaction is granted via featFeatGrants).
+  'viking-shieldbearer': {
+    choiceGrants: {
+      'battle-axe': { weaponFamiliarity: { weapons: ['battle-axe'], rank: 'trained' } },
+      longsword: { weaponFamiliarity: { weapons: ['longsword'], rank: 'trained' } },
+    },
+  },
 };
+
+/** The full feat-proficiency table: auto-extracted skill grants (featGrantsAuto.ts) overlaid with the
+ *  hand-authored cases (armor cascades / choiceGrants / weapon grants), which WIN on any id conflict. */
+export const FEAT_GRANTS: Record<string, FeatGrant> = { ...FEAT_SKILL_GRANTS, ...HAND_AUTHORED_GRANTS };
 
 /**
  * How many times a feat may be taken. Mirrors Foundry's `system.maxTakable`: absent → 1, `null` →

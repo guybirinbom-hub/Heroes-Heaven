@@ -36,6 +36,9 @@ export interface CasterArchetype {
   keyByTradition?: boolean;
   /** Magaambyan Attendant: grants a single INNATE cantrip of the chosen tradition — no spell slots. */
   innateCantrip?: boolean;
+  /** Bloodrager: a repertoire of cantrips only — no Basic/Expert/Master feats ship, so it never gains
+   *  ranked spell slots. */
+  cantripsOnly?: boolean;
   /** A non-standard slot schedule (Halcyon Speaker): each entry unlocks one slot of `rank` at character
    *  level `level` once `featId` is taken (the dedication counts as taken while active). Overrides the
    *  standard basic/expert/master RANK_UNLOCKS. */
@@ -56,6 +59,15 @@ export const CASTER_ARCHETYPES: Record<string, CasterArchetype> = {
   'captivator-dedication': mk('occult', 'cha', 2, 'captivator'),
   'prophet-of-kalistrade-dedication': mk('occult', 'cha', 3, 'prophet'),
   'rivethun-involutionist-dedication': mk('divine', 'wis', 2, 'rivethun'),
+  // Bloodrager: a spontaneous repertoire of 2 cantrips from EITHER the arcane or divine list (player's
+  // choice), Cha key, trained spell attack/DC. No Basic/Expert/Master Bloodrager feats ship, so it stays
+  // a cantrips-only pool — the archetype's power is the rage synergy (see BLOODRAGER_NOTE) + Harvest Blood.
+  'bloodrager-dedication': {
+    ...mk('arcane', 'cha', 2, 'bloodrager', true),
+    traditionOptions: ['arcane', 'divine'],
+    repertoire: true,
+    cantripsOnly: true,
+  },
   // Choice-tradition: the tradition follows a bloodline (sorcerer) / patron (witch);
   // the builder offers a tradition picker rather than modelling the full sub-choice.
   'sorcerer-dedication': mk('arcane', 'cha', 2, 'sorcerer', true),

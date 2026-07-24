@@ -32,7 +32,7 @@ export const DEFAULT_CUSTOMIZATION: Customization = {
 };
 
 /** The natural (unconfigured) order of the vitals-rail cards. */
-export const DEFAULT_RAIL_ORDER = ['hp', 'saves', 'movement', 'defenses', 'resources', 'panache', 'champion', 'mythic', 'conditions', 'languages'];
+export const DEFAULT_RAIL_ORDER = ['hp', 'saves', 'movement', 'defenses', 'resources', 'multiclassDc', 'panache', 'champion', 'mythic', 'conditions', 'languages'];
 
 /** The desktop sheet tabs, in order — the single source of truth shared by the sheet + Customize editor. */
 export const SHEET_TABS = ['Main', 'Spells', 'Inventory', 'Feats & features', 'Companions', 'Notes', 'Details'];

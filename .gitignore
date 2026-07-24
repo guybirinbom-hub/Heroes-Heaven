@@ -28,6 +28,23 @@ src-tauri/gen
 # Foundry source clone for the data importer (not tracked)
 .import-src/
 
+# Generated ast description trees: ship ONLY the gzipped buckets (`public/ast/*.json.gz`) — the raw JSON
+# is ~88 MB and individual files exceed static-host per-file limits. The runtime loader fetches the .gz
+# and decompresses. `idmap.json` is a build-time-only artifact (the importer bakes refs into the ast).
+public/ast/*.json
+public/idmap.json
+# The importer's pristine Foundry transcription reference (~18 MB) — a LOCAL build reference, never shipped.
+public/core.foundry-backup.json
+
+# Local audit/migration tooling & working-data (~19 MB reassessment/patch/chunk JSONs) — not needed for
+# build or runtime (the compiled overlay ships as scripts/data/effect-backfill.json). Keep only the two
+# render-quality SCANNERS, which are the guardrails for the description pipeline.
+scripts/audit/*
+!scripts/audit/ast-coverage.mjs
+!scripts/audit/ast-artifacts.mjs
+scripts/aon-verify/
+tmptest/
+
 # Android release signing — NEVER commit the keystore or its passwords.
 # BACK THESE UP somewhere safe: losing the keystore means release updates can no longer be installed.
 signing/

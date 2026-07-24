@@ -11,7 +11,7 @@ import type {
   ProficiencyKey,
   ProficiencyRank,
   SaveId,
-  Speeds,
+  SpeedGrants,
   SpellcastingEntry,
 } from './types';
 import type { BuildState } from './build';
@@ -344,7 +344,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       };
     }
     case 'perception': {
-      const d = derivePerception(c);
+      const d = derivePerception(c, db);
       const cls = c.classId ? db.classes[c.classId] : undefined;
       const parts: CalcPart[] = [profPart(d.rank, lvl, pwl(c)), abilityPart(c, 'wis')];
       // Perception item bonus — the higher of ABP Perception potency and a Monster-Parts refined-Perception
@@ -538,7 +538,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       // (rare — most heritage/feat grants are non-land speeds).
       let preArmorLand = ancestryLand;
       let landGrantSource: string | undefined;
-      const grantSources: { name?: string; speeds?: Partial<Speeds> }[] = [];
+      const grantSources: { name?: string; speeds?: SpeedGrants }[] = [];
       if (c.heritageId && db.heritages[c.heritageId]) grantSources.push(db.heritages[c.heritageId]);
       for (const f of c.feats) {
         const ft = db.feats[f.featId];

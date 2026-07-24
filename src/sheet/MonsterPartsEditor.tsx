@@ -415,29 +415,45 @@ export function MonsterPartsSection({
             );
           })}
 
-          {slots > 0 &&
-            blob.imbuements.length < slots &&
-            (adding ? (
-              <select
-                className="mp-select mp-add-select"
-                defaultValue=""
-                onChange={(e) => e.target.value && addImb(e.target.value)}
-                aria-label="Choose a property to imbue"
-              >
-                <option value="" disabled>
-                  Choose a property…
-                </option>
-                {options.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}
-                  </option>
-                ))}
-              </select>
-            ) : (
+          {slots > 0 && blob.imbuements.length < slots && (
+            <>
               <button className="mp-add-btn" onClick={() => setAdding(true)}>
                 <i className="ti ti-plus" aria-hidden="true" /> Imbue a property
               </button>
-            ))}
+              {adding && (
+                // Read-first: each row's name is an info term (tap to read the property's rules); a
+                // dedicated Imbue button is the only thing that adds it — no more commit-on-change select.
+                <div className="picker-overlay" onClick={() => setAdding(false)}>
+                  <div className="picker" onClick={(e) => e.stopPropagation()}>
+                    <div className="picker-head">
+                      Imbue a property
+                      <button className="picker-close" style={{ marginLeft: 'auto' }} onClick={() => setAdding(false)} aria-label="Close">
+                        <i className="ti ti-x" aria-hidden="true" />
+                      </button>
+                    </div>
+                    <div className="picker-list">
+                      {options.map((p) => {
+                        const reqTags = propertyRequirementTags(p.id);
+                        return (
+                          <div key={p.id} className="pick-row">
+                            <div className="pick-body pick-body-static">
+                              <div className="picker-text">
+                                <div className="picker-name"><MpPropertyTerm prop={p} /></div>
+                                {reqTags.length > 0 && <div className="picker-traits">needs: {reqTags.join(' / ')}</div>}
+                              </div>
+                            </div>
+                            <button type="button" className="pick-add" onClick={() => { addImb(p.id); setAdding(false); }}>
+                              Imbue
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
         </div>
       )}
 

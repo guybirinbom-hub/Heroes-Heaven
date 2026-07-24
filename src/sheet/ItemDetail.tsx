@@ -374,7 +374,7 @@ export function ItemDetail({
               <span className="sd-uses-hint">These effects apply to this item while it's wielded/worn.</span>
             </div>
           )}
-          <DescBody description={item.description} descRefs={item.descRefs} onExit={onClose} />
+          <DescBody description={item.description} descRefs={item.descRefs} onExit={onClose} astKey="items" astId={item.id} />
           {onPlay && (
             <div className="sd-remove">
               <button

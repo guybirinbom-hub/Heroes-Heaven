@@ -13,6 +13,8 @@ import {
   type Strike,
 } from '../rules/derive';
 import { togglePin, togglePinnedDesc, toggleTactic, setActiveStance, descId, type PlayUpdater } from '../rules/play';
+import { resourcesForCharacter } from '../rules/classResources';
+import { actionGate, gateLabel, type ResourceGate } from '../rules/actionGates';
 import { AlchemyPanel } from './AlchemyPanel';
 import { critSpec } from '../rules/critSpec';
 import { ACTIVITIES, type ActivityDef } from '../rules/actions';
@@ -199,12 +201,25 @@ export function MainTab({
     .map((a) => ({ id: a.id, name: a.name, cost: a.actionCost, desc: a.description, descRefs: a.descRefs, traits: a.traits }));
   const preparedTactics = new Set(character.commanderTactics?.prepared ?? []);
   const tacticPreparedMax = character.commanderTactics?.preparedMax ?? 3;
+  // Signature resource STATES the character has (rage / panache, from the base class or an archetype
+  // dedication) and whether each is currently active. An action gated on a state the character has but
+  // hasn't turned on is shown with a "needs <state>" badge — still readable, just not usable yet.
+  const resourceIds = new Set(resourcesForCharacter(character.classId, new Set(character.feats.map((f) => f.featId))).map((r) => r.id));
+  const gateActive = (g: ResourceGate) => (character.classResources?.[g] ?? 0) > 0;
+  /** The unmet gate for an action, or null (no gate / character lacks the state / already active). */
+  const unmetGate = (a: Act): ResourceGate | null => {
+    const g = actionGate(a);
+    return g && resourceIds.has(g) && !gateActive(g) ? g : null;
+  };
   // Stance feats the character has → an EXCLUSIVE stance toggle (entering one exits the others). Each
   // stance's mechanical effects live in content.stances (keyed by the feat slug/id); the active one's
   // Strike + AC/dex-cap/speed changes are injected in derive.
+  // A feat surfaces as a stance/form toggle when it has a stance/form data entry — either a real
+  // `stance`-trait footwork stance, or an alternate FORM (Ursine Avenger, Bat Form) flagged `form:true`
+  // in the data even though it carries the morph trait instead of stance.
   const stanceFeats = character.feats
     .map((f) => content.feats[f.featId])
-    .filter((f): f is NonNullable<typeof f> => !!f && (f.traits ?? []).includes('stance') && !!content.stances?.[f.id]);
+    .filter((f): f is NonNullable<typeof f> => !!f && !!content.stances?.[f.id] && ((f.traits ?? []).includes('stance') || !!content.stances[f.id]!.form));
   // Item actions: activatable carried items (consumables, or invested/worn/equipped magic items).
   const itemActions: (Act & { key: string })[] = (character.inventory ?? [])
     .map((inv) => ({ inv, item: content.items[inv.itemId] }))
@@ -371,13 +386,16 @@ export function MainTab({
       });
     // Compact mode: a chip (cost glyph + name) that opens the popup; no inline description or
     // star — those live in the popup. Tactics keep their prepared state visible via the trailing dot.
+    // Gated on a class-resource state the character has but hasn't switched on (rage / panache).
+    const gate = unmetGate(a);
     if (compactActions) {
       return (
-        <button type="button" className={'action-chip' + (onPrepare && !prepared ? ' unprepared' : '')} title={`Show ${a.name}`} onClick={openDetail}>
+        <button type="button" className={'action-chip' + (onPrepare && !prepared ? ' unprepared' : '') + (gate ? ' gated' : '')} title={gate ? `Needs ${gateLabel(gate)} — ${a.name}` : `Show ${a.name}`} onClick={openDetail}>
           <span className="action-cost">
             {a.cost ? <ActionGlyph cost={a.cost} /> : <i className="ti ti-hourglass-low action-activity-icon" aria-hidden="true" />}
           </span>
           <span className="action-chip-name">{a.name}</span>
+          {gate && <span className="needs-badge" title={`Requires ${gateLabel(gate)}`}><i className="ti ti-lock" aria-hidden="true" />{gateLabel(gate)}</span>}
           {a.skill && <span className="action-skill">{a.skill}</span>}
           {onPrepare && <i className={'ti chip-prep ' + (prepared ? 'ti-circle-check-filled' : 'ti-circle')} aria-hidden="true" />}
         </button>
@@ -386,9 +404,9 @@ export function MainTab({
     // Full mode: the same row as before, now clickable to open the full description + traits popup.
     return (
       <div
-        className={'action clickable' + (onPrepare && !prepared ? ' unprepared' : '')}
+        className={'action clickable' + (onPrepare && !prepared ? ' unprepared' : '') + (gate ? ' gated' : '')}
         onClick={openDetail}
-        title={`Show ${a.name}`}
+        title={gate ? `Needs ${gateLabel(gate)} — ${a.name}` : `Show ${a.name}`}
       >
         <span className="action-cost">
           {a.cost ? (
@@ -400,6 +418,7 @@ export function MainTab({
         <div className="action-body">
           <div className="action-name">
             {a.name}
+            {gate && <span className="needs-badge" title={`Requires ${gateLabel(gate)}`}><i className="ti ti-lock" aria-hidden="true" />Needs {gateLabel(gate)}</span>}
             {a.skill && <span className="action-skill">{a.skill}</span>}
           </div>
           <div className="action-desc">{toPlainText(a.desc)}</div>
@@ -675,7 +694,13 @@ export function MainTab({
 
             {stanceFeats.length > 0 && (
               <div className="stance-bar">
-                <span className="stance-bar-label">Stance</span>
+                <span className="stance-bar-label">
+                  {stanceFeats.every((f) => content.stances[f.id]?.form)
+                    ? 'Form'
+                    : stanceFeats.some((f) => content.stances[f.id]?.form)
+                      ? 'Stance / Form'
+                      : 'Stance'}
+                </span>
                 <div className="stance-chips">
                   {stanceFeats.map((f) => (
                     <button

@@ -11,7 +11,6 @@ import {
   type EidolonBlock,
   type FamiliarBlock,
 } from '../rules/companions';
-import { toPlainText } from './RichText';
 import { parsePrice } from '../rules/wealth';
 import { confirmDialog } from './confirm';
 import {
@@ -35,14 +34,18 @@ import {
   updatePlayCompanion,
   type PlayUpdater,
 } from '../rules/play';
-import { formatMod } from '../rules/derive';
+import { formatMod, ownedFeatureIds } from '../rules/derive';
 import { HpControl } from './HpControl';
 import { SPECIFIC_FAMILIARS } from '../rules/specificFamiliars';
+import { featGrantedCompanions, FEAT_COMPANION_GRANTS } from '../rules/companionGrants';
 import { ActionGlyph } from './widgets';
 import { InfoTerm } from './InfoTerm';
 import { ConditionsModal } from './ConditionsModal';
 import { CATALOG_MODES, CATALOG_MODE_MAP } from '../rules/modes';
 import { AddItemsModal } from './AddItemsModal';
+import { PickerRow, descNodeOf } from './FilterableSelect';
+import { DescriptionModal } from './DescriptionModal';
+import type { DescNode } from './descref';
 import { processPortrait } from './imageUtil';
 import { usePortrait } from './usePortrait';
 import { newPortraitRef, setSharpPortrait } from '../data/portraitStore';
@@ -132,7 +135,18 @@ function rowToConfig(r: AddRow): Omit<CompanionConfig, 'id'> {
 function AddCompanionModal({ content, currency, onAdd, onClose }: { content: ContentDatabase; currency?: Coins; onAdd: (r: AddRow, buy: boolean) => void; onClose: () => void }) {
   const [cat, setCat] = useState<AddCat>('all');
   const [q, setQ] = useState('');
+  const [descNode, setDescNode] = useState<DescNode | null>(null);
   const ql = q.trim().toLowerCase();
+  // The content record behind a row (for its description popup), or undefined (generic familiar has none).
+  const rowRecord = (r: AddRow): { name: string; description?: string; descRefs?: DescNode['descRefs'] } | undefined => {
+    if (r.kind === 'animal') return content.animalCompanions[r.typeId];
+    if (r.kind === 'vehicle') return content.vehicles?.[r.typeId];
+    if (r.kind === 'siege') return content.siegeWeapons?.[r.typeId];
+    if (r.kind === 'follower') return content.followers?.[r.typeId];
+    if (r.kind === 'pet') return content.pets?.[r.typeId];
+    if (r.kind === 'eidolon') return content.classes.summoner?.subclass?.options?.find((o) => o.id === r.typeId);
+    return undefined;
+  };
   const rows = addRows(content).filter((r) => (cat === 'all' || r.cat === cat) && (!ql || r.name.toLowerCase().includes(ql)));
   return (
     <div className="picker-overlay" onClick={onClose}>
@@ -161,26 +175,21 @@ function AddCompanionModal({ content, currency, onAdd, onClose }: { content: Con
             const priced = (r.kind === 'vehicle' || r.kind === 'siege') && !!r.price;
             const coins = priced ? parsePrice(r.price) : undefined;
             const affordable = !coins || canAfford(currency, coins);
-            return (
-              <div
-                key={r.kind + ':' + r.cat + ':' + r.typeId}
-                className="cond-row"
-                role={priced ? undefined : 'button'}
-                tabIndex={priced ? undefined : 0}
-                onClick={priced ? undefined : () => onAdd(r, false)}
-              >
-                <span className="cond-row-check">
-                  <i className={'ti ' + (r.cat === 'construct' ? 'ti-robot' : KIND_ICON[r.kind])} aria-hidden="true" />
-                </span>
-                <div className="cond-row-text">
-                  <div className="cond-row-name">
-                    {r.name}
-                    <span className="cond-valued-tag">{r.cat === 'all' ? r.kind : r.cat}</span>
-                    {r.note && <span className="cmp-add-note">{r.note}</span>}
-                  </div>
-                  {priced && <div className="cond-row-desc">{r.price}</div>}
-                </div>
-                {priced ? (
+            const rec = rowRecord(r);
+            const node = rec ? descNodeOf(rec, 'companion') : null;
+            // The row body opens the companion's stat block/description (never commits); a dedicated
+            // Add (or Buy / Free for priced vehicles & siege) button is the only thing that adds it.
+            const name = (
+              <>{r.name}<span className="cond-valued-tag">{r.cat === 'all' ? r.kind : r.cat}</span>{r.note && <span className="cmp-add-note">{r.note}</span>}</>
+            );
+            const lead = <span className="cond-row-check"><i className={'ti ' + (r.cat === 'construct' ? 'ti-robot' : KIND_ICON[r.kind])} aria-hidden="true" /></span>;
+            if (priced) {
+              return (
+                <div key={r.kind + ':' + r.cat + ':' + r.typeId} className="pick-row">
+                  <button type="button" className={'pick-body' + (node ? '' : ' pick-body-static')} onClick={node ? () => setDescNode(node) : undefined} title={node ? 'View description' : undefined}>
+                    {lead}
+                    <div className="picker-text"><div className="picker-name">{name}</div><div className="cond-row-desc">{r.price}</div></div>
+                  </button>
                   <span className="cmp-add-buy">
                     <button className="comp-manage-btn" disabled={!affordable} title={affordable ? `Buy for ${r.price}` : `You can't afford ${r.price}`} onClick={() => onAdd(r, true)}>
                       <i className="ti ti-coins" aria-hidden="true" /> Buy
@@ -189,16 +198,23 @@ function AddCompanionModal({ content, currency, onAdd, onClose }: { content: Con
                       Free
                     </button>
                   </span>
-                ) : (
-                  <span className="picker-add-hint">
-                    <i className="ti ti-plus" aria-hidden="true" /> Add
-                  </span>
-                )}
-              </div>
+                </div>
+              );
+            }
+            return (
+              <PickerRow
+                key={r.kind + ':' + r.cat + ':' + r.typeId}
+                lead={lead}
+                name={name}
+                onOpenDesc={node ? () => setDescNode(node) : undefined}
+                onSelect={() => onAdd(r, false)}
+                selectLabel={<><i className="ti ti-plus" aria-hidden="true" /> Add</>}
+              />
             );
           })}
           {rows.length === 0 && <div className="acts-empty">No companions match.</div>}
         </div>
+        {descNode && <DescriptionModal root={descNode} onClose={() => setDescNode(null)} />}
       </div>
     </div>
   );
@@ -208,6 +224,7 @@ function AddCompanionModal({ content, currency, onAdd, onClose }: { content: Con
 
 function FamiliarAbilityPicker({ content, chosen, onToggle, onClose }: { content: ContentDatabase; chosen: string[]; onToggle: (id: string) => void; onClose: () => void }) {
   const [q, setQ] = useState('');
+  const [descNode, setDescNode] = useState<DescNode | null>(null);
   const has = new Set(chosen);
   const list = Object.values(content.familiarAbilities)
     .filter((a) => a.name.toLowerCase().includes(q.trim().toLowerCase()))
@@ -231,26 +248,28 @@ function FamiliarAbilityPicker({ content, chosen, onToggle, onClose }: { content
         <div className="cond-list">
           {list.map((a) => {
             const on = has.has(a.id);
+            // The row body opens the ability's full description; the Add/Remove button is the only toggle.
+            const node = descNodeOf({ name: a.name, description: a.description }, 'familiarAbilities');
             return (
-              <div key={a.id} className={'cond-row' + (on ? ' on' : '')} role="button" tabIndex={0} onClick={() => onToggle(a.id)}>
-                <span className="cond-row-check">{on && <i className="ti ti-check" aria-hidden="true" />}</span>
-                <div className="cond-row-text">
-                  <div className="cond-row-name">
-                    {a.name}
-                    {a.kind === 'master' && <span className="cond-valued-tag">master</span>}
-                  </div>
-                  {a.description && <div className="cond-row-desc">{toPlainText(a.description)}</div>}
-                </div>
-              </div>
+              <PickerRow
+                key={a.id}
+                name={<>{a.name}{a.kind === 'master' && <span className="cond-valued-tag">master</span>}</>}
+                chosen={on}
+                onOpenDesc={node ? () => setDescNode(node) : undefined}
+                selectLabel={on ? 'Remove' : 'Add'}
+                onSelect={() => onToggle(a.id)}
+              />
             );
           })}
         </div>
+        {descNode && <DescriptionModal root={descNode} onClose={() => setDescNode(null)} />}
       </div>
     </div>
   );
 }
 
 function SpecializationPicker({ content, chosen, onPick, onClose }: { content: ContentDatabase; chosen?: string; onPick: (id: string | undefined) => void; onClose: () => void }) {
+  const [descNode, setDescNode] = useState<DescNode | null>(null);
   const list = Object.values(content.companionSpecializations ?? {});
   return (
     <div className="picker-overlay" onClick={onClose}>
@@ -264,17 +283,22 @@ function SpecializationPicker({ content, chosen, onPick, onClose }: { content: C
         <div className="cond-list">
           {list.map((s) => {
             const on = chosen === s.id;
+            // The row body opens the specialization's description; the Select button (which keeps the
+            // modal open only long enough to commit) chooses it. Selecting the current one clears it.
+            const node = descNodeOf({ name: s.name, description: s.description }, 'companionSpecializations');
             return (
-              <div key={s.id} className={'cond-row' + (on ? ' on' : '')} role="button" tabIndex={0} onClick={() => { onPick(on ? undefined : s.id); onClose(); }}>
-                <span className="cond-row-check">{on && <i className="ti ti-check" aria-hidden="true" />}</span>
-                <div className="cond-row-text">
-                  <div className="cond-row-name">{s.name}</div>
-                  <div className="cond-row-desc">{toPlainText(s.description)}</div>
-                </div>
-              </div>
+              <PickerRow
+                key={s.id}
+                name={s.name}
+                chosen={on}
+                onOpenDesc={node ? () => setDescNode(node) : undefined}
+                selectLabel={on ? 'Chosen' : 'Select'}
+                onSelect={() => { onPick(on ? undefined : s.id); onClose(); }}
+              />
             );
           })}
         </div>
+        {descNode && <DescriptionModal root={descNode} onClose={() => setDescNode(null)} />}
       </div>
     </div>
   );
@@ -478,6 +502,12 @@ function AnimalBlock({ b, cond, hp }: { b: AnimalCompanionBlock; cond?: ReactNod
       <div className="sb-line">
         <b>AC</b> {b.ac}; <b>Fort</b> {formatMod(b.saves.fortitude.modifier)}, <b>Ref</b> {formatMod(b.saves.reflex.modifier)}, <b>Will</b> {formatMod(b.saves.will.modifier)}
       </div>
+      {b.iwr?.length ? (
+        <div className="sb-line">
+          <b>IWR</b> {b.iwr.join('; ')}
+        </div>
+      ) : null}
+      {b.modNotes?.length ? <div className="sb-line sb-muted">{b.modNotes.join(' · ')}</div> : null}
       {hp ? (
         <>
           <div className="sb-hp-block">{hp}</div>
@@ -595,12 +625,18 @@ function EidolonBlockView({ b, cond }: { b: EidolonBlock; cond?: ReactNode }) {
       {cond}
       <div className="sb-line">
         <b>Perception</b> {formatMod(b.perception)}
+        {b.senses?.length ? <span className="sb-muted"> · {b.senses.join(', ')}</span> : null}
       </div>
       {b.skills.length > 0 && (
         <div className="sb-line">
           <b>Trained skills</b> {b.skills.map(cap).join(', ')}
         </div>
       )}
+      {b.iwr?.length ? (
+        <div className="sb-line">
+          <b>IWR</b> {b.iwr.join('; ')}
+        </div>
+      ) : null}
       <div className="sb-line">
         {(['str', 'dex', 'con', 'int', 'wis', 'cha'] as const).map((a, i) => (
           <span key={a}>
@@ -621,7 +657,9 @@ function EidolonBlockView({ b, cond }: { b: EidolonBlock; cond?: ReactNode }) {
       <SaveLine ac={b.ac} saves={b.saves} />
       <div className="sb-line">
         <b>HP</b> {b.hp} (shared); <b>Speed</b> {b.speed} feet
+        {b.extraSpeeds?.length ? `, ${b.extraSpeeds.join(', ')}` : ''}
       </div>
+      {b.evoNotes?.length ? <div className="sb-line sb-muted">{b.evoNotes.join(' ')}</div> : null}
       {b.description && (
         <>
           <div className="sb-div" />
@@ -1019,7 +1057,22 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
     character.classId === 'summoner' && character.subclassId && !explicit.some((c) => c.kind === 'eidolon')
       ? [{ id: 'eidolon-auto', kind: 'eidolon', name: '', typeId: character.subclassId }]
       : [];
-  const companions = [...explicit, ...autoEidolon];
+  // Companions granted by the character's feats (e.g. the Pet feat, Friend of the Sea). Each is shown
+  // as a synthetic, materialized-on-edit card (like the auto-eidolon); the locked abilities are seeded
+  // so the grant's mechanics are present immediately. Suppressed once a real companion for that grant
+  // exists (materialized), so it never double-shows.
+  // grant sources = chosen feats + auto-granted class features (Witch's Familiar) + subclass choices
+  // whose id matches a grant (druid orders 'animal-order'/…, inventor 'construct-innovation', animist
+  // 'shaman') + slugified extra-choice names (wizard thesis 'Improved Familiar Attunement').
+  const grantSourceIds = new Set<string>([...character.feats.map((f) => f.featId), ...ownedFeatureIds(character, content)]);
+  if (character.subclassId) grantSourceIds.add(character.subclassId);
+  if (character.subclassId2) grantSourceIds.add(character.subclassId2);
+  for (const cc of character.classChoices ?? [])
+    grantSourceIds.add(cc.name.toLowerCase().normalize('NFKD').replace(/[’']/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''));
+  const autoGranted: CompanionConfig[] = featGrantedCompanions(grantSourceIds)
+    .filter((g) => !explicit.some((c) => c.grantSlug === g.grantSlug))
+    .map((g) => ({ id: g.id, kind: g.grant.kind, name: '', abilities: g.grant.lockedAbilities ?? [], grantSlug: g.grantSlug }));
+  const companions = [...explicit, ...autoEidolon, ...autoGranted];
 
   const [selId, setSelId] = useState<string | null>(null);
   const [mode, setMode] = useState<'stats' | 'edit' | 'inv'>('stats');
@@ -1054,18 +1107,19 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
     if (cfg.kind === 'siege' && cfg.typeId) return content.siegeWeapons?.[cfg.typeId]?.level ?? character.level;
     return character.level;
   };
-  const AUTO_ID = 'eidolon-auto';
-  const isAuto = (cfg: CompanionConfig) => cfg.id === AUTO_ID;
-  // The summoner's eidolon is shown automatically (synthetic). It's editable too — the first edit
-  // persists it as a real companion so renaming/subtype/gear/portrait stick.
+  // Synthetic companions (not yet persisted): the summoner's auto-eidolon and feat-granted companions.
+  const isAuto = (cfg: CompanionConfig) => cfg.id === 'eidolon-auto' || cfg.id.startsWith('featcmp-');
+  // A synthetic companion is shown automatically. It's editable too — the first edit persists it as a
+  // real companion so renaming/subtype/abilities/gear/portrait stick.
   const editable = (cfg: CompanionConfig) => !!onPlay && (explicitIds.has(cfg.id) || isAuto(cfg));
-  // Persist the synthetic eidolon as a real companion and select it. Returns nothing; the next
-  // render resolves `current` to the now-real companion (same predicted id) so edits target it.
+  // Persist a synthetic companion as a real one and select it. Carries the kind + seeded abilities +
+  // grant marker across, so a feat-granted pet keeps its locked abilities and stops double-showing.
+  // The next render resolves `current` to the now-real companion (same predicted id) so edits target it.
   const materializeAuto = (cfg: CompanionConfig) => {
     if (!onPlay) return;
     const max = explicit.reduce((m, c) => Math.max(m, Number(/(\d+)$/.exec(c.id)?.[1] ?? -1)), -1);
     setSelId(`cmp-${max + 1}`); // matches play.ts nextCompanionId
-    onPlay((p) => addPlayCompanion(p, { kind: 'eidolon', name: cfg.name || '', typeId: cfg.typeId }));
+    onPlay((p) => addPlayCompanion(p, { kind: cfg.kind, name: cfg.name || '', typeId: cfg.typeId, abilities: cfg.abilities, eidolon: cfg.eidolon, grantSlug: cfg.grantSlug }));
   };
   // Switch the card mode; entering an editing mode on the synthetic eidolon materializes it first.
   const enterMode = (m: 'stats' | 'edit' | 'inv') => {
@@ -1139,7 +1193,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
     if (cfg.kind === 'animal') {
       const type = cfg.typeId ? content.animalCompanions[cfg.typeId] : undefined;
       if (!type) return { node: <StatBlock name={cfg.name || 'Animal companion'} kind="Animal companion" icon="ti-paw"><div className="sb-line sb-muted">Pick a type in Edit.</div></StatBlock> };
-      const b = deriveAnimalCompanion(cfg, type, character.level, content, condsOf(cfg.id), !!character.variantRules?.proficiencyWithoutLevel, modesOf(cfg.id));
+      const b = deriveAnimalCompanion(cfg, type, character.level, content, condsOf(cfg.id), !!character.variantRules?.proficiencyWithoutLevel, modesOf(cfg.id), new Set(character.feats.map((f) => f.featId)));
       return { node: <AnimalBlock b={b} cond={cond} hp={hpTrackerFor(cfg.id, b.hp)} />, bulkMax: b.bulk.max };
     }
     if (cfg.kind === 'familiar') {
@@ -1186,6 +1240,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
       {invAddFor && onPlay && (
         <AddItemsModal
           content={content}
+          hideLegacy={character.hideLegacy}
           currency={character.currency}
           onGive={(itemId) => onPlay((p) => addCompanionItem(p, invAddFor, itemId))}
           onBuy={(itemId) => onPlay((p) => buyCompanionItem(p, invAddFor, itemId, content.items[itemId]?.price))}
@@ -1232,6 +1287,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
   if (!current) return <div className="placeholder">{modals}</div>;
   const block = renderBlock(current);
   const canEdit = editable(current);
+  const grant = current.grantSlug ? FEAT_COMPANION_GRANTS[current.grantSlug] : undefined;
 
   return (
     <div className="maincol">
@@ -1297,6 +1353,11 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           )}
         </div>
         <div className="cmp-cardbody" key={mode}>
+          {grant?.note && (
+            <div className="cmp-grantnote">
+              <i className="ti ti-info-circle" aria-hidden="true" /> <span>Granted by a feat. {grant.note}</span>
+            </div>
+          )}
           {(!canEdit || mode === 'stats') && block.node}
           {canEdit && mode === 'edit' && onPlay && (
             <EditChoices cfg={current} content={content} onPlay={onPlay} onAbilities={() => setAbilityFor(current.id)} onSpecialization={() => setSpecFor(current.id)} />

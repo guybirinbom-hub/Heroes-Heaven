@@ -347,9 +347,20 @@ export function DetailsTab({
         <div className="id-row">
           <span className="idl">Size</span>
           <div className="idpills">
-            <span className="lang-pill">{ancestry ? cap(ancestry.size) : '—'}</span>
+            <span className="lang-pill">{cap(character.size ?? ancestry?.size ?? '—')}</span>
+            {character.size && ancestry && character.size !== ancestry.size && (
+              <span className="lang-pill" style={{ opacity: 0.7 }}>from {cap(ancestry.size)}</span>
+            )}
           </div>
         </div>
+        {character.reach != null && character.reach !== 5 && (
+          <div className="id-row">
+            <span className="idl">Reach</span>
+            <div className="idpills">
+              <span className="lang-pill">{character.reach} ft</span>
+            </div>
+          </div>
+        )}
         <div className="id-row">
           <span className="idl">Traits</span>
           <div className="idpills">

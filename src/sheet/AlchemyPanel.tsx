@@ -3,6 +3,9 @@ import type { AbilityId, Character, ContentDatabase } from '../rules/types';
 import { abilityMod } from '../rules/derive';
 import { CLASS_RESOURCES, resourceMax } from '../rules/classResources';
 import { setAlchemyItem, quickAlchemy, type PlayUpdater } from '../rules/play';
+import { PickerRow, descNodeOf } from './FilterableSelect';
+import { DescriptionModal } from './DescriptionModal';
+import type { DescNode } from './descref';
 
 /**
  * Alchemist play aid (Remaster): the day's infused items ("what I made today") + Quick Alchemy.
@@ -15,6 +18,7 @@ import { setAlchemyItem, quickAlchemy, type PlayUpdater } from '../rules/play';
 export function AlchemyPanel({ character, content, onPlay }: { character: Character; content: ContentDatabase; onPlay?: PlayUpdater }) {
   const [picker, setPicker] = useState<null | 'advanced' | 'quick'>(null);
   const [q, setQ] = useState('');
+  const [descNode, setDescNode] = useState<DescNode | null>(null);
 
   const intMod = abilityMod(character.abilities.int);
   const budget = 4 + intMod; // Advanced Alchemy: 4 + Int items during daily prep
@@ -103,17 +107,26 @@ export function AlchemyPanel({ character, content, onPlay }: { character: Charac
             )}
             <input className="hb-input" autoFocus placeholder="Search alchemical items…" value={q} onChange={(e) => setQ(e.target.value)} />
             <div className="alchemy-pick-list">
-              {shown.map((it) => (
-                <button type="button" key={it.id} className="alchemy-pick" onClick={() => pick(it.id)}>
-                  <span>{it.name}</span>
-                  <span className="alchemy-pick-lvl">Lvl {it.level ?? 0}</span>
-                </button>
-              ))}
+              {shown.map((it) => {
+                const node = descNodeOf({ name: it.name, description: it.description, descRefs: it.descRefs }, 'items');
+                return (
+                  <PickerRow
+                    key={it.id}
+                    name={it.name}
+                    lead={<span className="alchemy-pick-lvl">Lvl {it.level ?? 0}</span>}
+                    chosen={(prep[it.id] ?? 0) > 0}
+                    onOpenDesc={node ? () => setDescNode(node) : undefined}
+                    selectLabel={picker === 'quick' ? 'Make' : 'Prepare'}
+                    onSelect={() => pick(it.id)}
+                  />
+                );
+              })}
               {shown.length === 0 && <div className="acts-empty">No alchemical items match.</div>}
             </div>
           </div>
         </div>
       )}
+      {descNode && <DescriptionModal root={descNode} onClose={() => setDescNode(null)} />}
     </div>
   );
 }

@@ -2102,6 +2102,22 @@ if (existsSync('scripts/data/fixes.json')) {
   if (n) console.log(`[import-core] applied ${n} content fixes`);
 }
 
+// Mechanical-effect backfill from the full player-effect audit (scripts/data/effect-backfill.json):
+// per-id field patches (senses/speeds/innateSpells/focusSpells/passiveEffects/…) extracted from each
+// record's rules text and validated by scripts/audit/apply-patches.ts. Same overlay shape as
+// fixes.json; living here keeps every backfilled effect through future regenerations.
+if (existsSync('scripts/data/effect-backfill.json')) {
+  let n = 0;
+  for (const fix of JSON.parse(readFileSync('scripts/data/effect-backfill.json', 'utf8'))) {
+    const entry = db[fix.category]?.[fix.id];
+    if (entry && fix.field) {
+      entry[fix.field] = fix.value;
+      n++;
+    }
+  }
+  if (n) console.log(`[import-core] applied ${n} audit effect backfills`);
+}
+
 // Class sub-option additions (scripts/data/class-extras.json): inject sub-options that aren't
 // represented in the curated Foundry clone — Investigator's Esoterica methodology, plus the
 // Commander "Tactics" and Witch "Lessons" pick-by-level choice groups. `subclassOptions` extend a

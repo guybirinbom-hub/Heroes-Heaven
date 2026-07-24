@@ -1,0 +1,151 @@
+/* Description-popup styling for the ast renderer (migration Step 1). The design-approved look,
+   wired to HH's live theme tokens so it adapts to every palette. */
+
+/* the Pathfinder action-cost font (same file AoN + the archives use) */
+@font-face {
+  font-family: 'ActionIcons';
+  src: url('/Pathfinder2eActions.ttf') format('truetype');
+  font-display: block;
+}
+
+.ast-pop {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius, 10px);
+  overflow: hidden;
+  /* NOTE: no `container-type` here — it establishes size containment that stops the modal's `width:
+     fit-content` from measuring this content, pinning every popup to its min-width. Nothing uses a
+     `@container` query against it, so it's simply omitted. */
+}
+.ast-bar { height: 3px; background: var(--app-accent); }
+.ast-head {
+  display: flex; align-items: center; gap: 9px; padding: 11px 13px;
+  border-bottom: 1px solid var(--app-border);
+}
+.ast-name { font-size: 16px; font-weight: 650; letter-spacing: .1px; flex: 0 1 auto; color: var(--app-text); }
+.ast-head-right { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; }
+.ast-badge { font-size: 12px; font-weight: 600; color: var(--app-text-dim); white-space: nowrap; }
+.ast-controls { display: inline-flex; align-items: center; gap: 2px; }
+
+/* embedded (bodyOnly) description — no popup chrome, flows in a detail/stat view */
+.ast-embed { padding: 0; }
+
+/* ast popup used as a modal (recursive description navigation). Sizes to its content up to a comfortable
+   reading width, and is user-RESIZABLE by dragging the bottom-right corner (long rules pages often want
+   more room). Mobile keeps one consistent width (see the phone override below). */
+.ast-modal {
+  width: fit-content;
+  min-width: min(340px, 94vw);
+  max-width: min(760px, 94vw);
+  max-height: 88dvh;
+  overflow: auto;
+  resize: both;
+  box-shadow: var(--app-shadow, 0 12px 30px rgba(0, 0, 0, .3));
+  border-radius: var(--app-radius, 10px);
+}
+/* Draw a subtle resize grip in the corner (the native one is hidden) so it's clear the popup can grow. */
+.ast-modal::-webkit-resizer { display: none; }
+.ast-modal::after {
+  content: ''; position: absolute; right: 3px; bottom: 3px; width: 13px; height: 13px;
+  pointer-events: none; z-index: 4; opacity: .5; background-color: var(--app-text-dim);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13'%3E%3Cg fill='none' stroke='black' stroke-width='1.3' stroke-linecap='round'%3E%3Cline x1='12' y1='5' x2='5' y2='12'/%3E%3Cline x1='12' y1='9' x2='9' y2='12'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13'%3E%3Cg fill='none' stroke='black' stroke-width='1.3' stroke-linecap='round'%3E%3Cline x1='12' y1='5' x2='5' y2='12'/%3E%3Cline x1='12' y1='9' x2='9' y2='12'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+}
+.ast-modal .ast-pop { border: none; min-height: 100%; }
+/* HH's Back/pin/close controls sit inline in the ast header */
+.ast-controls .info-back, .ast-controls .info-star, .ast-controls .picker-close { position: static; }
+
+.ast-traits { display: flex; flex-wrap: wrap; gap: 5px; padding: 10px 13px 2px; }
+.ast-tr {
+  font-size: 10.5px; font-weight: 600; letter-spacing: .02em; text-transform: capitalize;
+  padding: 2.5px 8px; border-radius: 5px; background: var(--app-surface-2); color: var(--app-text-dim);
+  border: 1px solid transparent;
+}
+.ast-tr-uncommon { background: color-mix(in srgb, #c8823c 20%, var(--app-surface-2)); color: #c8823c; border-color: color-mix(in srgb, #c8823c 35%, transparent); }
+.ast-tr-rare     { background: color-mix(in srgb, #5b8dd6 20%, var(--app-surface-2)); color: #5b8dd6; border-color: color-mix(in srgb, #5b8dd6 35%, transparent); }
+.ast-tr-unique   { background: color-mix(in srgb, #a874d6 20%, var(--app-surface-2)); color: #a874d6; border-color: color-mix(in srgb, #a874d6 35%, transparent); }
+.ast-tr-size     { background: color-mix(in srgb, #3fae9b 18%, var(--app-surface-2)); color: #3fae9b; }
+/* clickable trait chip (opens the trait's rules — like the archives app) */
+.ast-tr-link { cursor: pointer; text-decoration: none; transition: border-color .1s, background .1s; }
+.ast-tr-link:hover { border-color: var(--app-accent); background: color-mix(in srgb, var(--app-accent) 12%, var(--app-surface-2)); }
+.ast-tr-link:focus-visible { outline: 2px solid var(--app-accent); outline-offset: 1px; }
+
+.ast-body { padding: 12px 15px 15px; font-size: 14px; line-height: 1.62; color: var(--app-text); }
+/* Phone: keep ONE consistent popup width (the user relies on that) and drop the desktop resize grip. */
+@media (max-width: 720px) {
+  .ast-modal { width: min(460px, 94vw); min-width: 0; max-width: 94vw; resize: none; }
+  .ast-modal::after { display: none; }
+}
+.ast-body p { margin: 0 0 .6em; }
+.ast-body p:last-child { margin-bottom: 0; }
+.ast-body strong { font-weight: 650; }
+.ast-body em { font-style: italic; }
+.ast-hr { border: none; border-top: 1px solid var(--app-border); opacity: .7; margin: .7em 0; }
+
+/* meta block (Source / Range / Defense / Price …) */
+.ast-meta { font-size: 12.6px; color: var(--app-text-dim); margin: 0 0 .35em; line-height: 1.55; }
+.ast-meta strong { color: var(--app-text); }
+.ast-meta.src { color: var(--app-text-faint); }
+
+/* cross-links: author-written = accent + dotted; auto-matched term = normal text + dashed */
+/* Cross-links stay READABLE as prose: body text color with only a FAINT underline, so a rules page dense
+   with links (Unconscious, Hero Points…) reads like text, not a wall of highlighted words. Hovering (or
+   tapping) a term fills it to the accent color — that's when you're actually reaching for the link. */
+.ast-lk { color: inherit; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--app-accent) 34%, transparent); text-decoration-thickness: 1px; text-underline-offset: 2px; cursor: pointer; transition: color .1s, text-decoration-color .1s; }
+.ast-lk:hover { color: var(--app-accent); text-decoration-color: var(--app-accent); }
+/* Auto-matched terms are even quieter — a faint dotted underline in the dim color. */
+.ast-lk.auto { text-decoration-color: color-mix(in srgb, var(--app-text-dim) 30%, transparent); text-decoration-style: dotted; }
+.ast-lk.auto:hover { color: var(--app-accent); text-decoration-color: var(--app-accent); }
+/* a target HH still doesn't ship (creature/hazard/kingdom stat-blocks): render as ordinary prose — no
+   underline, no link affordance (it's a reference, not a broken link). Glossary targets (traits, rules,
+   sources, skills, domains, class options…) ARE shipped now, so those resolve to a live .ast-lk. */
+.ast-lk-dead { color: inherit; text-decoration: none; cursor: text; }
+/* external URL reference (no in-app page): shown as ordinary text with a faint dotted underline. */
+.ast-lk-ext { color: inherit; text-decoration: underline; text-decoration-style: dotted; text-decoration-color: color-mix(in srgb, var(--app-text-dim) 30%, transparent); text-underline-offset: 2px; }
+
+/* action-cost glyph — the Pathfinder action font */
+.ast-ag { font-family: 'ActionIcons', var(--app-font); color: var(--app-accent); font-size: 15px; line-height: 1; vertical-align: -2px; }
+.ast-ag.head { font-size: 18px; }
+.ast-ag-to { font-family: var(--app-font); font-size: .72em; color: var(--app-text-dim); padding: 0 3px; vertical-align: 1px; }
+
+/* degree-of-success outcome lines */
+.ast-ds { margin: .28em 0; }
+.ast-ds-lbl { font-weight: 650; }
+.ast-ds-crit-success .ast-ds-lbl, .ast-ds-success .ast-ds-lbl { color: var(--app-good); }
+.ast-ds-failure .ast-ds-lbl { color: var(--app-warn); }
+.ast-ds-crit-failure .ast-ds-lbl { color: var(--app-bad); }
+
+/* item activation — inline, unboxed */
+.ast-act { margin: .55em 0; }
+.ast-act .ast-ag { margin: 0 3px; }
+.ast-actline { margin: .4em 0; }
+
+/* ---- section headings (AoN title level 2/3) so a full class/ancestry page keeps its structure ---- */
+.ast-h2 {
+  display: flex; align-items: baseline; gap: 8px; margin: 1.15em 0 .45em;
+  font-size: 15px; font-weight: 700; color: var(--app-text);
+  border-bottom: 1px solid var(--app-border); padding-bottom: 4px;
+}
+.ast-body > .ast-h2:first-child, .ast-body .ast-embed > .ast-h2:first-child { margin-top: 0; }
+.ast-h3 { display: flex; align-items: baseline; gap: 8px; margin: .95em 0 .3em; font-size: 13.5px; font-weight: 650; color: var(--app-accent); }
+.ast-hname { flex: 1; min-width: 0; }
+.ast-hbadge { font-size: 11.5px; font-weight: 600; color: var(--app-text-dim); white-space: nowrap; }
+
+/* ---- lists ---- */
+.ast-list { margin: .5em 0; padding-left: 1.5em; }
+.ast-list li { margin: .25em 0; }
+.ast-list li > p { margin: 0; }
+
+/* ---- tables (proficiency tables etc.) — scroll horizontally inside the popup when wide ---- */
+.ast-tablewrap { overflow-x: auto; margin: .8em 0; }
+.ast-table { border-collapse: collapse; width: 100%; font-size: 12.8px; }
+.ast-table th, .ast-table td { border: 1px solid var(--app-border); padding: 5px 9px; text-align: left; vertical-align: top; }
+.ast-table th { background: var(--app-surface-2); font-weight: 650; color: var(--app-text); }
+
+/* ---- aside / sidebar (Key Terms, etc.) ---- */
+.ast-aside {
+  margin: .85em 0; padding: 10px 13px; border-left: 3px solid var(--app-accent);
+  background: var(--app-surface-2); border-radius: 0 var(--app-radius-sm, 6px) var(--app-radius-sm, 6px) 0;
+}
+.ast-aside > .ast-h2, .ast-aside > .ast-h3 { border: none; margin-top: 0; padding-bottom: 0; color: var(--app-text); }
+.ast-aside p:last-child { margin-bottom: 0; }

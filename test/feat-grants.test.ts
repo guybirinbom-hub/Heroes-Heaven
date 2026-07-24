@@ -2,7 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { content, build, prof } from './_content';
 import { deityFavorsSimpleOrUnarmed } from '../src/rules/build';
 import { emptyBuild, type BuildState } from '../src/rules/build';
-import { maxTakes } from '../src/rules/featGrants';
+import { maxTakes, FEAT_GRANTS } from '../src/rules/featGrants';
+import { FEAT_PICK_GRANTS, pickableFeats } from '../src/rules/featPickGrants';
 import { eligibleFeatsForSlot } from '../src/rules/featSlots';
 
 /*
@@ -44,6 +45,167 @@ describe('archetype dedications grant proficiencies (featGrants table)', () => {
     // Fighter is trained in light armor at L1 (not lowered by rogue-dedication's trained grant).
     expect(ch.proficiencies.defenses.light).toBe('trained');
     expect(ch.proficiencies.attacks.martial).toBe('expert');
+  });
+});
+
+/*
+ * Auto-extracted skill grants (featGrantsAuto.ts) — ~175 dedications/ancestry feats that train a skill,
+ * derived from Foundry ActiveEffectLike rule elements and merged into FEAT_GRANTS (hand-authored wins).
+ */
+describe('auto-extracted feat skill grants', () => {
+  it('the merged table is large and hand-authored entries WIN on conflict', () => {
+    expect(Object.keys(FEAT_GRANTS).length).toBeGreaterThan(150);
+    // fighter-dedication is hand-authored (martial weapons); the auto-extractor mis-maps it to `simple`,
+    // so the merge order (hand last) is load-bearing.
+    expect(FEAT_GRANTS['fighter-dedication'].weapon?.martial).toBe('trained');
+    expect(FEAT_GRANTS['fighter-dedication'].weapon?.simple).toBeUndefined();
+  });
+
+  it('Lastwall Sentry Dedication trains Athletics (a wizard lacks it)', () => {
+    expect(build('wizard', 4).proficiencies.skills.athletics ?? 'untrained').toBe('untrained');
+    const ch = build('wizard', 4, { featPicks: { '2:class:0': 'lastwall-sentry-dedication' } });
+    expect(ch.proficiencies.skills.athletics).toBe('trained');
+  });
+
+  it('a rank>trained grant applies (Wrestler Dedication → expert Athletics)', () => {
+    expect(build('wizard', 4, { featPicks: { '2:class:0': 'wrestler-dedication' } }).proficiencies.skills.athletics).toBe('expert');
+  });
+
+  it('AoN correction: Lastwall Sentry grants Undead LORE + Athletics trained (not expert, for the untrained)', () => {
+    // AoN prose grants a Lore skill Foundry-structured extraction dropped, and Athletics is "trained;
+    // expert if already trained" — the UNTRAINED wizard gets the base trained.
+    const ch = build('wizard', 4, { featPicks: { '2:class:0': 'lastwall-sentry-dedication' } });
+    expect(ch.proficiencies.skills.athletics).toBe('trained');
+    expect(ch.proficiencies.skills['lore:undead']).toBe('trained');
+  });
+
+  it('conditional upgrade: a character ALREADY trained in the skill gets expert instead', () => {
+    // A barbarian is auto-trained in Athletics, so Lastwall Sentry's "expert if already trained" fires.
+    expect(build('barbarian', 4).proficiencies.skills.athletics).toBe('trained');
+    const ch = build('barbarian', 4, { featPicks: { '2:class:0': 'lastwall-sentry-dedication' } });
+    expect(ch.proficiencies.skills.athletics).toBe('expert');
+  });
+
+  it("lore choice: a 'trained in a Lore of your choice' feat grants the typed subject", () => {
+    const ch = build('wizard', 4, { featPicks: { '1:ancestry:0': 'gnome-obsession' }, featLoreChoices: { 'gnome-obsession:0': 'Warfare Lore' } });
+    expect(ch.proficiencies.skills['lore:warfare']).toBe('trained');
+    // no subject typed → no lore granted
+    expect(build('wizard', 4, { featPicks: { '1:ancestry:0': 'gnome-obsession' } }).proficiencies.skills['lore:warfare']).toBeUndefined();
+  });
+
+  it('never lowers: a trained grant is a no-op on an already-equal-or-higher skill', () => {
+    // Juggler Dedication grants trained Performance; a bard already has Performance ≥ trained, so its
+    // rank must be UNCHANGED (the grant raises only, never regresses).
+    const base = build('bard', 7);
+    const withFeat = build('bard', 7, { featPicks: { '2:class:0': 'juggler-dedication' } });
+    expect(base.proficiencies.skills.performance ?? 'untrained').not.toBe('untrained');
+    expect(withFeat.proficiencies.skills.performance).toBe(base.proficiencies.skills.performance);
+  });
+});
+
+/*
+ * Feats that GRANT another feat (FEAT_FEAT_GRANTS). The granted feat is added as a bonus (no slot),
+ * shows in Feats & Features, and its own effects apply. e.g. Lastwall Sentry Dedication grants both
+ * the Reactive Shield feat AND trained Athletics.
+ */
+describe('feats that grant another feat', () => {
+  it('adds the granted feat (Lastwall Sentry Dedication → Reactive Shield), tagged grantedBy', () => {
+    const ch = build('wizard', 4, { featPicks: { '2:class:0': 'lastwall-sentry-dedication' } });
+    const granted = ch.feats.find((f) => f.featId === 'reactive-shield');
+    expect(granted).toBeTruthy();
+    expect(granted?.grantedBy).toBe('lastwall-sentry-dedication');
+    // a wizard without the dedication does NOT have Reactive Shield
+    expect(build('wizard', 4).feats.some((f) => f.featId === 'reactive-shield')).toBe(false);
+  });
+
+  it('the granting feat still applies its OWN grants too (Athletics trained)', () => {
+    const ch = build('wizard', 4, { featPicks: { '2:class:0': 'lastwall-sentry-dedication' } });
+    expect(ch.proficiencies.skills.athletics).toBe('trained');
+  });
+
+  it('grants multiple feats when the source lists several (Vestigial Wings → Steady Balance + Cat Fall)', () => {
+    // build a character with the ancestry feat via overrides (bypasses ancestry gating in the test)
+    const ch = build('wizard', 4, { overrides: { addedFeats: [{ featId: 'vestigial-wings', level: 1, category: 'ancestry' }] } } as never);
+    const ids = new Set(ch.feats.map((f) => f.featId));
+    expect(ids.has('steady-balance')).toBe(true);
+    expect(ids.has('cat-fall')).toBe(true);
+  });
+
+  it('does not duplicate a granted feat the character already has', () => {
+    const ch = build('wizard', 4, {
+      featPicks: { '2:class:0': 'lastwall-sentry-dedication', '1:general:0': 'reactive-shield' },
+    });
+    expect(ch.feats.filter((f) => f.featId === 'reactive-shield')).toHaveLength(1);
+  });
+});
+
+/*
+ * Pick-a-feat grants (FEAT_PICK_GRANTS): a feat lets the player CHOOSE a bonus feat from a filtered
+ * pool (General Training → a 1st-level general feat, Basic Maneuver → a low-level fighter feat, …).
+ */
+describe('pick-a-feat grants', () => {
+  const c = content();
+
+  it('pickableFeats(Basic Maneuver) offers only low-level fighter feats', () => {
+    const b = { ...emptyBuild(), classId: 'wizard', level: 6 };
+    const opts = pickableFeats(FEAT_PICK_GRANTS['basic-maneuver'], b, c);
+    expect(opts.length).toBeGreaterThan(3);
+    expect(opts.every((f) => f.traits.includes('fighter') && f.category === 'class' && f.level <= 2)).toBe(true);
+  });
+
+  it('grants the picked feat, tagged grantedBy', () => {
+    const b = { ...emptyBuild(), classId: 'wizard', level: 4 };
+    const pick = pickableFeats(FEAT_PICK_GRANTS['general-training'], b, c)[0].id;
+    const ch = build('wizard', 4, { featPicks: { '3:general:0': 'general-training' }, pickFeatChoices: { 'general-training': pick } });
+    const granted = ch.feats.find((f) => f.featId === pick);
+    expect(granted).toBeTruthy();
+    expect(granted?.grantedBy).toBe('general-training');
+  });
+
+  it('ignores an illegal pick outside the pool', () => {
+    // a fighter class feat is not a legal General Training pick (that pool is general feats)
+    const fighterFeat = Object.values(c.feats).find((f) => f.traits.includes('fighter') && f.category === 'class')!;
+    const ch = build('wizard', 4, { featPicks: { '3:general:0': 'general-training' }, pickFeatChoices: { 'general-training': fighterFeat.id } });
+    expect(ch.feats.some((f) => f.featId === fighterFeat.id)).toBe(false);
+  });
+
+  it("Natural Ambition picks a feat of the character's OWN class", () => {
+    const b = { ...emptyBuild(), classId: 'fighter', level: 3 };
+    const opts = pickableFeats(FEAT_PICK_GRANTS['natural-ambition'], b, c);
+    expect(opts.length).toBeGreaterThan(0);
+    expect(opts.every((f) => f.traits.includes('fighter') && f.level <= 1)).toBe(true);
+    // a wizard's Natural Ambition would instead offer wizard feats
+    expect(pickableFeats(FEAT_PICK_GRANTS['natural-ambition'], { ...b, classId: 'wizard' }, c).every((f) => f.traits.includes('wizard'))).toBe(true);
+  });
+});
+
+/*
+ * Pick-a-cantrip grants (FEAT_CANTRIP_GRANTS): a feat grants a CHOSEN innate spell (Dragon Spit → a
+ * cantrip, cast at-will; Hag Magic → a spell, 1/day). The pick feeds the character's innate entry.
+ */
+describe('pick-a-cantrip grants', () => {
+  it("Dragon Spit's chosen cantrip becomes an at-will innate spell", () => {
+    const ch = build('fighter', 4, { featPicks: { '1:ancestry:0': 'dragon-spit' }, pickCantripChoices: { 'dragon-spit': 'electric-arc' } });
+    const innate = ch.spellcasting.find((s) => s.type === 'innate');
+    expect(innate).toBeTruthy();
+    expect(innate?.cantrips).toContain('electric-arc');
+    // no pick → no innate electric-arc
+    expect(build('fighter', 4, { featPicks: { '1:ancestry:0': 'dragon-spit' } }).spellcasting.find((s) => s.type === 'innate')?.cantrips ?? []).not.toContain('electric-arc');
+  });
+
+  it('ignores a chosen spell that is not in the grant list', () => {
+    const ch = build('fighter', 4, { featPicks: { '1:ancestry:0': 'dragon-spit' }, pickCantripChoices: { 'dragon-spit': 'fireball' } });
+    const innate = ch.spellcasting.find((s) => s.type === 'innate');
+    expect((innate?.cantrips ?? []).includes('fireball')).toBe(false);
+    for (const rank of Object.values(innate?.repertoire ?? {})) expect(rank).not.toContain('fireball');
+  });
+
+  it("Hag Magic's chosen higher-rank spell is a 1/day innate spell (in the repertoire, not cantrips)", () => {
+    const ch = build('fighter', 14, { featPicks: { '1:ancestry:0': 'hag-magic' }, pickCantripChoices: { 'hag-magic': 'charm' } });
+    const innate = ch.spellcasting.find((s) => s.type === 'innate');
+    const allRep = Object.values(innate?.repertoire ?? {}).flat();
+    expect(allRep).toContain('charm');
+    expect(innate?.cantrips ?? []).not.toContain('charm');
   });
 });
 

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import type { Character, CompanionConfig, ContentDatabase, InventoryItem, Item, SiegeWeaponStat, VehicleStat } from '../rules/types';
 import { useIsMobile } from './useIsMobile';
-import { deriveBulk, containerLoads, effectiveItemBulk, mpActive } from '../rules/derive';
+import { deriveBulk, containerLoads, effectiveItemBulk, mpActive, doublingRingsAvailable, isHandwraps } from '../rules/derive';
 import { isAttachable, planAttach } from '../rules/attachments';
 import {
   addInventoryItem,
@@ -136,10 +136,14 @@ function ItemCard({
   onAttachOver,
   onAttachLeave,
   onAttachDrop,
+  runeCopy,
 }: {
   inv: InventoryItem;
   item: Item;
   content: ContentDatabase;
+  /** Doubling Rings: pick another wielded weapon whose runes copy onto this one. Present only for a
+   *  wielded weapon while the rings are invested and ≥2 weapons are wielded; undefined hides it. */
+  runeCopy?: { value?: string; options: { value: string; label: string }[]; onChange: (v: string) => void };
   /** " 2", " 3", … appended to the name when the character holds multiple copies of this item, so
    *  otherwise-identical instances (e.g. two Longswords, one refined) are distinguishable. */
   nameSuffix?: string;
@@ -277,6 +281,17 @@ function ItemCard({
               >
                 {inv.invested ? 'Invested' : 'Invest'}
               </button>
+            )}
+            {runeCopy && (
+              <label className="inv-runecopy" title="Doubling Rings: duplicate another wielded weapon's runes onto this one" onClick={stop}>
+                <i className="ti ti-copy" aria-hidden="true" />
+                <span className="inv-runecopy-lbl">Runes from</span>
+                <select value={runeCopy.value ?? ''} onChange={(e) => runeCopy.onChange(e.target.value)}>
+                  {runeCopy.options.map((o) => (
+                    <option key={o.value} value={o.value}>{o.label}</option>
+                  ))}
+                </select>
+              </label>
             )}
             {counters.map((u) => (
               <span className="inv-uses" key={u.id} title={`${u.label}${u.resetsOnRest ? ' — refills on daily preparations' : ''}`}>
@@ -496,6 +511,12 @@ export function InventoryTab({
   const loads = containerLoads(character, content);
 
   const resolve = (inv: InventoryItem) => content.items[inv.itemId];
+  // Doubling Rings context: the rune-copy picker only appears while the rings are invested and the
+  // character wields ≥2 weapons (so there's a source hand and a target hand).
+  const drAvailable = doublingRingsAvailable(character, content);
+  const wieldedWeapons = drAvailable
+    ? character.inventory.filter((inv) => inv.equipped && content.items[inv.itemId]?.itemType === 'weapon' && !isHandwraps(content.items[inv.itemId]))
+    : [];
   const q = query.trim().toLowerCase();
   const match = (inv: InventoryItem) => !q || (resolve(inv) && displayName(resolve(inv)!, content).toLowerCase().includes(q));
 
@@ -900,12 +921,28 @@ export function InventoryTab({
               // hides its rune section for the same reason).
               const attachHost = !!onPlay && draggingAttachable && isHostType && inv.instanceId !== dragId && !mpActive(character, inv);
               const plan = attachHost && draggedItem && draggedInv ? planAttach(draggedItem, draggedInv, item, inv, character.inventory, content) : null;
+              // Doubling Rings: a wielded weapon can borrow another wielded weapon's runes. Only offered
+              // while the rings are invested and there's a second weapon to copy from.
+              const runeCopy =
+                onPlay && drAvailable && inv.equipped && item.itemType === 'weapon' && !isHandwraps(item) && !mpActive(character, inv)
+                  ? {
+                      value: inv.copyRunesFrom,
+                      options: [
+                        { value: '', label: 'its own runes' },
+                        ...wieldedWeapons
+                          .filter((w) => w.instanceId !== inv.instanceId)
+                          .map((w) => ({ value: w.instanceId, label: content.items[w.itemId]!.name })),
+                      ],
+                      onChange: (v: string) => onPlay((p) => updateInventoryItem(p, inv.instanceId, { copyRunesFrom: v || undefined })),
+                    }
+                  : undefined;
               return (
                 <ItemCard
                   key={inv.instanceId}
                   inv={inv}
                   item={item}
                   content={content}
+                  runeCopy={runeCopy}
                   nameSuffix={dupSuffix.get(inv.instanceId) ?? ''}
                   onOpen={() => open(inv)}
                   onPlay={onPlay}
@@ -1118,6 +1155,7 @@ export function InventoryTab({
       {addOpen && onPlay && (
         <AddItemsModal
           content={content}
+          hideLegacy={character.hideLegacy}
           currency={coins}
           onBuy={(id) => onPlay((p) => buyItem(p, id, content.items[id]?.price))}
           onGive={(id) => onPlay((p) => addInventoryItem(p, id))}
