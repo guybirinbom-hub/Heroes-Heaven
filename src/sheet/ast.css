@@ -120,6 +120,16 @@
 .ast-act .ast-ag { margin: 0 3px; }
 .ast-actline { margin: .4em 0; }
 
+/* Placeholder shown while a description's ast bucket is still downloading — prevents a flash of the
+   plain-text fallback (which for armor/weapons prints the stat line as prose, looking like a wrong layout). */
+.ast-loading { min-height: 64px; position: relative; }
+.ast-loading::after {
+  content: ''; position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; margin: -10px 0 0 -10px;
+  border: 2px solid color-mix(in srgb, var(--app-text-dim) 40%, transparent); border-top-color: var(--app-accent);
+  border-radius: 50%; animation: ast-spin .7s linear infinite;
+}
+@keyframes ast-spin { to { transform: rotate(360deg); } }
+
 /* ---- section headings (AoN title level 2/3) so a full class/ancestry page keeps its structure ---- */
 .ast-h2 {
   display: flex; align-items: baseline; gap: 8px; margin: 1.15em 0 .45em;

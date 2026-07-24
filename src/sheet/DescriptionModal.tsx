@@ -37,7 +37,7 @@ export function DescriptionModal({
   // explicit slug (from a resolved cross-ref) or best-effort from the title, so any titled node can
   // resolve its ast; a miss simply falls back to the RichText path.
   const curSlug = cur.slug ?? astSlug(cur.title);
-  const { node: astNode, bucket: astBucket } = useAstNode(cur.key, curSlug);
+  const { node: astNode, bucket: astBucket, loading: astLoading } = useAstNode(cur.key, curSlug);
 
   // Re-fit the popup to each node's text (the modal element persists across the stack).
   const modalRef = useRef<HTMLDivElement>(null);
@@ -88,6 +88,25 @@ export function DescriptionModal({
       <div className="picker-overlay" onClick={exit}>
         <div ref={modalRef} className="ast-modal" onClick={(e) => e.stopPropagation()}>
           <AstRenderer node={astNode} selfRef={`${astBucket}:${curSlug}`} onOpenRef={openRef} headerControls={controls} />
+        </div>
+      </div>
+    );
+  }
+
+  // The record HAS an ast still loading: show the popup shell + a placeholder body instead of flashing the
+  // plain-text/markdown fallback (which looks like a different, wrong layout for a beat).
+  if (astLoading) {
+    return (
+      <div className="picker-overlay" onClick={exit}>
+        <div ref={modalRef} className="ast-modal" onClick={(e) => e.stopPropagation()}>
+          <div className="ast-pop">
+            <div className="ast-bar" />
+            <div className="ast-head">
+              <span className="ast-name">{cur.title}</span>
+              <span className="ast-head-right"><span className="ast-controls">{controls}</span></span>
+            </div>
+            <div className="ast-body ast-loading" aria-busy="true" />
+          </div>
         </div>
       </div>
     );

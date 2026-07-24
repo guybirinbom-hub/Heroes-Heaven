@@ -134,6 +134,19 @@ function isSourceP(p: AstNode): boolean {
   return !!first && first.t === 'b' && textOf(first).trim().toLowerCase() === 'source';
 }
 
+/** A leading META/STAT layout block (a Source line, or a compact stat line with several item/armor/weapon
+ *  fields) — the kind a DETAIL view already shows in its own stat panel, so `hideMeta` drops it to avoid a
+ *  duplicate stat block. Scoped to row/column LAYOUT nodes so it never touches prose paragraphs. */
+const STAT_LABELS = /\b(?:AC Bonus|Dex Cap|Check Penalty|Speed Penalty|Strength|Bulk|Group|Category|Hardness|Hit Points|HP|BT|Damage|Hands|Reload|Ammunition|Capacity|Range|Price|Usage|Craft Requirements)\b/gi;
+function isMetaishBlock(n: AstNode): boolean {
+  const t = textOf(n);
+  // A Source-led header block is ALWAYS meta — even when a long PFS Note or Favored-Weapon deity list is
+  // appended (those pushed it past a length cap and leaked into detail views).
+  if (/^\s*Source\b/i.test(t) && /\bpg\.?\s*\d/i.test(t)) return true;
+  if (t.length > 500) return false; // otherwise a long block is prose/content (e.g. an effect table), keep it
+  return (t.match(STAT_LABELS) || []).length >= 2; // a compact stat line (≥2 fields)
+}
+
 /* A title node holds its text inside a <p>; unwrap it to inline content for a heading. */
 function titleInline(n: AstNode): AstNode[] {
   return (n.c || []).flatMap((c) => (c.t === 'p' ? (c.c || []) : [c]));
@@ -272,6 +285,9 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
     case 'aside':
       return <aside key={key} className="ast-aside"><Blocks nodes={n.c || []} ctx={ctx} hideMeta={hideMeta} kb={key} /></aside>;
     case 'row': {
+      // A detail view shows its own stat panel, so drop a leading Source/stat layout row to avoid a
+      // duplicate stat block.
+      if (hideMeta && isMetaishBlock(n)) return null;
       const kids = n.c || [];
       // A row that holds BLOCK children (columns, a TABLE, paragraphs, lists…) is a layout/content row —
       // render those as blocks. (A row wrapping a table was the bug that mashed the whole exemplars table
@@ -282,6 +298,10 @@ function renderBlock(n: AstNode, ctx: Ctx, hideMeta: boolean | undefined, key: s
       return hideMeta ? null : <div key={key} className="ast-meta">{parts.map((f, m) => <Fragment key={m}>{m > 0 ? '; ' : ''}<Kids node={f} ctx={ctx} /></Fragment>)}</div>;
     }
     case 'column':
+      // The leading Source + stat column (armor/weapon/gear header) duplicates a detail view's own stat
+      // panel — drop it when hiding meta; otherwise render its children as blocks.
+      if (hideMeta && isMetaishBlock(n)) return null;
+      return <Blocks key={key} nodes={n.c || []} ctx={ctx} hideMeta={hideMeta} kb={key} />;
     case 'document':
     case 'doc':
       return <Blocks key={key} nodes={n.c || []} ctx={ctx} hideMeta={hideMeta} kb={key} />;

@@ -40,7 +40,7 @@ export function DescBody({
 }) {
   const content = useContent();
   const [node, setNode] = useState<DescNode | null>(null);
-  const { node: ast, bucket: astBucket } = useAstNode(astKey, astId);
+  const { node: ast, bucket: astBucket, loading: astLoading } = useAstNode(astKey, astId);
 
   // Ast path — the new-data description prose (meta hidden; links open the recursive ast popup).
   if (ast && astId) {
@@ -57,6 +57,10 @@ export function DescBody({
       </>
     );
   }
+
+  // The record HAS an ast that's still loading: show a quiet placeholder rather than flashing the plain-text
+  // fallback (which, for armor/weapons, prints the stat line as prose and looks like a duplicate stat block).
+  if (astLoading && astId) return <div className={className + ' ast-loading'} aria-busy="true" />;
 
   if (!description) return null;
 
