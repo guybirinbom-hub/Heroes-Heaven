@@ -42,8 +42,14 @@ const ALWAYS_KEYS: Record<string, string> = {
 /** Every localStorage key this app owns and a restore must clear before writing, so "replace
  *  everything" truly replaces (a target-device-only key — e.g. a pref or appearance the backup
  *  never wrote — must not survive the restore). Any key present in the backup is written on top;
- *  ALWAYS_KEYS names the ones that may be absent from the backup yet must still be cleared. */
-export const APP_KEY_PREFIXES = ['wanderers-codex:', 'pf2e-codex.'];
+ *  ALWAYS_KEYS names the ones that may be absent from the backup yet must still be cleared.
+ *
+ *  `pf2e-` covers BOTH the app's own `pf2e-codex.*` keys AND the embedded initiative tracker's
+ *  `pf2e-*` keys (pf2e-parties, pf2e-settings, pf2e-encounters, pf2e-custom-creatures/-conditions/
+ *  -themes, pf2e-disabled-sources, pf2e-encounter-tables, pf2e-gm-layout, pf2e-dm-turn-average,
+ *  pf2e-current-combat, …) — so the tracker's data rides HH's one Backup/Restore instead of its own.
+ *  Deliberately NOT `sb-` (Supabase auth) so a restore never signs the user out. */
+export const APP_KEY_PREFIXES = ['wanderers-codex:', 'pf2e-'];
 function isAppKey(key: string): boolean {
   return APP_KEY_PREFIXES.some((p) => key.startsWith(p));
 }

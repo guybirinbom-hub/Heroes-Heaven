@@ -8132,6 +8132,11 @@ button.strike-name:hover {
     transform: rotate(360deg);
   }
 }
+/* Spinner utility — e.g. the "Importing…" button icon. */
+.spin {
+  display: inline-block;
+  animation: app-loading-spin 0.8s linear infinite;
+}
 /* Roster placeholders while the content database is still loading. */
 .roster-loading {
   color: var(--app-text-dim);

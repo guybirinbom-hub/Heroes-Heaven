@@ -85,6 +85,7 @@ export function RosterScreen({
   const [exportFor, setExportFor] = useState<string | null>(null);
   const [result, setResult] = useState<ImportReport | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [importing, setImporting] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const activeCount = roster.filter((c) => !c.archived).length;
@@ -109,9 +110,16 @@ export function RosterScreen({
   const handleFile = (file: File | undefined) => {
     if (!file || !content) return; // import needs the content database to resolve entries
 
+    // Show an "Importing…" state for the whole read → parse → build. A Wanderer's Guide export can be
+    // ~10 MB (it embeds a full content snapshot), and parsing + rebuilding it briefly blocks the main
+    // thread — with no feedback that reads as "nothing happened," which is exactly what was reported.
+    setImporting(true);
     const reader = new FileReader();
     reader.onload = async () => {
       try {
+        // Yield one frame so the "Importing…" state actually paints before the synchronous
+        // importCharacter (JSON.parse + buildCharacter) blocks the thread.
+        await new Promise((r) => setTimeout(r, 0));
         const { saved, report, customItems, customModes } = importCharacter(String(reader.result), content);
         setError(null);
         // onImport may prompt on a name collision; it returns false if the user cancelled. Only show
@@ -121,9 +129,14 @@ export function RosterScreen({
       } catch (e) {
         setResult(null);
         setError((e as Error).message);
+      } finally {
+        setImporting(false);
       }
     };
-    reader.onerror = () => setError('Could not read that file.');
+    reader.onerror = () => {
+      setError('Could not read that file.');
+      setImporting(false);
+    };
     reader.readAsText(file);
   };
 
@@ -170,11 +183,15 @@ export function RosterScreen({
           <div className="roster-hero-actions">
             <button
               className="add-item-btn ghost"
-              disabled={!content}
+              disabled={!content || importing}
               title={content ? undefined : 'Available once game data finishes loading'}
               onClick={() => fileRef.current?.click()}
             >
-              <i className="ti ti-upload" aria-hidden="true" /> Import
+              {importing ? (
+                <><i className="ti ti-loader-2 spin" aria-hidden="true" /> Importing…</>
+              ) : (
+                <><i className="ti ti-upload" aria-hidden="true" /> Import</>
+              )}
             </button>
             <button className="add-item-btn" onClick={onNew}>
               <i className="ti ti-user-plus" aria-hidden="true" /> New character
@@ -318,8 +335,12 @@ export function RosterScreen({
                   <button className="add-item-btn" onClick={onNew}>
                     <i className="ti ti-user-plus" aria-hidden="true" /> Create your first character
                   </button>
-                  <button className="btn" onClick={() => fileRef.current?.click()}>
-                    <i className="ti ti-upload" aria-hidden="true" /> Import
+                  <button className="btn" disabled={importing} onClick={() => fileRef.current?.click()}>
+                    {importing ? (
+                      <><i className="ti ti-loader-2 spin" aria-hidden="true" /> Importing…</>
+                    ) : (
+                      <><i className="ti ti-upload" aria-hidden="true" /> Import</>
+                    )}
                   </button>
                 </div>
               </div>

@@ -38,6 +38,11 @@ export interface Party {
   /** Per-party override of the global PC detail level. Undefined = use the
    *  global default from settings. */
   pcDetail?: PcDetailConfig
+  /** Set when this party MIRRORS a Heroes Heaven campaign (embedded tracker). Its PC roster is
+   *  kept in sync with the campaign's characters by `syncCampaignParty`; it exists so the tracker's
+   *  own machinery (Add-to-Initiative, turn-timer "Save to Averages", per-player turn history) has a
+   *  real party to work against. Undefined for hand-made standalone parties. */
+  campaignId?: string
 }
 
 interface PartyStore {
@@ -74,6 +79,12 @@ interface PartyStore {
    *  insensitive) already exists there, its stats/sheet are updated in place;
    *  otherwise a new PC is added. Returns whether it matched and the player id. */
   importCharacter: (partyId: string, parsed: ImportedCharacter) => { matched: boolean; playerId: string }
+  /** Mirror a Heroes Heaven campaign's PCs into the party tagged with `campaignId` (creating it if
+   *  needed), so the tracker's own features have a party to act on. Upserts one PC player per member
+   *  matched case-insensitively by name — PRESERVING any accumulated turnAvg/turnCount/turnHistory —
+   *  sets each PC's maxHP, prunes PCs who left (keeping hand-added NPCs), makes it the active party,
+   *  and returns its id. Called by the embed from the live campaign roster. */
+  syncCampaignParty: (campaignId: string, campaignName: string, members: { name: string; maxHP?: number }[]) => string
 }
 
 function saveToStorage(parties: Party[]) {
@@ -302,5 +313,37 @@ export const usePartyStore = create<PartyStore>()(immer((set, get) => ({
     // If this PC is already in the tracker, refresh its HP bar from the import.
     if (typeof parsed.pcStats?.maxHP === 'number') useCombatStore.getState().setPcMaxHP(parsed.name, parsed.pcStats.maxHP)
     return result
+  },
+
+  syncCampaignParty(campaignId, campaignName, members) {
+    let partyId = ''
+    set(s => {
+      let p = s.parties.find(pp => pp.campaignId === campaignId)
+      if (!p) {
+        p = { id: npid(), name: campaignName, level: 1, players: [], isFavorite: false, campaignId }
+        s.parties.push(p)
+      } else {
+        p.name = campaignName
+      }
+      partyId = p.id
+      const wanted = new Set(members.map(m => m.name.trim().toLowerCase()))
+      // Prune PCs who left the campaign; keep any NPCs the GM added to this party by hand.
+      p.players = p.players.filter(pl => pl.memberType === 'npc' || wanted.has(pl.name.trim().toLowerCase()))
+      // Upsert each campaign PC. Matching by name PRESERVES accumulated turn history on that player.
+      for (const m of members) {
+        const lower = m.name.trim().toLowerCase()
+        let pl = p.players.find(x => x.memberType !== 'npc' && x.name.trim().toLowerCase() === lower)
+        if (!pl) {
+          pl = { id: nplid(), name: m.name, notes: '', memberType: 'pc' }
+          p.players.push(pl)
+        } else {
+          pl.name = m.name // adopt the campaign's exact casing
+        }
+        if (typeof m.maxHP === 'number') pl.pcStats = { ...(pl.pcStats ?? {}), maxHP: m.maxHP }
+      }
+      s.activePartyId = partyId
+    })
+    saveToStorage(get().parties)
+    return partyId
   },
 })))

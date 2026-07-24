@@ -221,14 +221,42 @@
   background: var(--app-surface);
 }
 
-/* Footer: quick-add field + Clear. */
+/* Footer: primary "Add combatants" (bestiary) button, then a quick-add-by-name field + Clear. */
 .ct-rail-foot {
   flex: none;
   display: flex;
+  flex-direction: column;
   gap: 6px;
   padding: 8px;
   border-top: var(--app-bw) solid var(--app-border);
   background: var(--app-surface);
+}
+/* Primary add = opens the bestiary picker, styled like the original app's dashed "+ Add Combatants". */
+.ct-rail-add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 10px;
+  cursor: pointer;
+  color: var(--app-accent);
+  background: transparent;
+  border: var(--app-bw) dashed var(--app-accent);
+  border-radius: var(--app-radius-sm);
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.ct-rail-add-btn:hover {
+  background: var(--app-accent);
+  color: var(--app-accent-text, #fff);
+  border-style: solid;
+}
+.ct-rail-foot-row {
+  display: flex;
+  gap: 6px;
 }
 .ct-rail-add {
   flex: 1;
@@ -600,12 +628,62 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 14px;
   color: var(--app-text-dim);
   font-size: 13px;
   padding: 24px;
   text-align: center;
   line-height: 1.7;
+}
+.ct-empty-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 16px;
+  cursor: pointer;
+  color: var(--app-accent);
+  background: transparent;
+  border: var(--app-bw) dashed var(--app-accent);
+  border-radius: var(--app-radius-sm);
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.ct-empty-add:hover {
+  background: var(--app-accent);
+  color: var(--app-accent-text, #fff);
+  border-style: solid;
+}
+
+/* Per-player turn-time chip on a campaign party card — opens the TurnTimeline graph. */
+.mt-turn-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  color: var(--app-accent);
+  background: transparent;
+  border: var(--app-bw) solid color-mix(in srgb, var(--app-accent) 45%, transparent);
+  border-radius: 999px;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+.mt-turn-chip:hover {
+  background: color-mix(in srgb, var(--app-accent) 14%, transparent);
+  border-color: var(--app-accent);
+}
+.mt-turn-chip.empty {
+  color: var(--app-text-dim);
+  border-color: var(--app-border);
+}
+.mt-turn-chip.empty:hover {
+  color: var(--app-accent);
+  border-color: var(--app-accent);
 }
 
 /* ── row 1: the tools, inside HH's chrome ──────────────────────── */
@@ -614,6 +692,15 @@
   align-items: center;
   gap: 6px;
   margin-left: auto;
+}
+/* The turn timer moved into the top bar. It's wrapped in a bare `.tracker-root` (to resolve the
+   tracker's CSS vars in HH's chrome); pin that wrapper to an inline, vertically-centred box so it
+   sits in the tools row instead of inheriting any block/height from the class. */
+.tracker-tools-timer {
+  display: inline-flex;
+  align-items: center;
+  height: auto;
+  margin-right: 2px;
 }
 .icon-btn.tracker-tool {
   display: inline-flex;

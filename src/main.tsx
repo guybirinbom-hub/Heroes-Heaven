@@ -26,9 +26,27 @@ initCustomization();
 
 // PWA service worker: register it in the production WEB build ONLY. The Tauri desktop/mobile shells
 // serve from their own protocol and manage their own lifecycle, so they must not run the SW.
+//
+// registerType is 'autoUpdate' (vite.config), so a new deploy's SW skip-waits, claims clients, and
+// vite-plugin-pwa reloads the page once it activates. But the SW only checks for a new version at
+// REGISTRATION (page load) — a browser left open for days on a stale cached build would never notice
+// a new release. So we poll for updates hourly and whenever the tab regains focus, which is what
+// keeps web users from getting "stuck" on an old version (the reported Wanderer's-Guide-import case).
 if (!isTauri && import.meta.env.PROD) {
   void import('virtual:pwa-register')
-    .then(({ registerSW }) => registerSW({ immediate: true }))
+    .then(({ registerSW }) =>
+      registerSW({
+        immediate: true,
+        onRegisteredSW(_swUrl, r) {
+          if (!r) return;
+          const check = () => void r.update().catch(() => {});
+          setInterval(check, 60 * 60 * 1000);
+          document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') check();
+          });
+        },
+      }),
+    )
     .catch(() => {});
 }
 // Tag the root on phone/tablet WebViews so CSS can apply mobile-only tweaks (safe-area insets, etc.);

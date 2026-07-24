@@ -803,6 +803,11 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
   const openWin = useWindowStore(s => s.open)
   const spellIndicator = useSettingsStore(s => s.spellIndicator)
   const spellLayout = useSettingsStore(s => s.spellLayout)
+  // User-chosen stat-block layout (defense cubes vs one line, ability style, …). Hoisted ABOVE the
+  // `if (!creature) return` further down so a name-only combatant (no creature) renders the SAME
+  // number of hooks as a creature — otherwise switching a pane tab between the two, or follow-the-turn
+  // reassigning a pane, throws "rendered fewer hooks than expected" and blanks the whole workspace.
+  const sb = useSettingsStore(s => s.statBlock)
   // Transient drag state for the Settings editor (no effect when edit is unset).
   // dragId = the item being dragged; overZone = the drop zone under the cursor
   // ("line:<id>" to join that row, or "strip:<n>" for an own-line slot).
@@ -905,9 +910,6 @@ export function StatBlock({ combatant, hideHP, hideTraits, edit }: Props) {
   const muted: React.CSSProperties = { color: 'var(--text-muted)' }
   // Spell link
   const spellLink: React.CSSProperties = { color: 'var(--linked)', fontWeight: 500, cursor: 'pointer', borderBottom: '1px dotted var(--linked)' }
-
-  // User-chosen stat-block layout (defense cubes vs one line, ability style, …).
-  const sb = useSettingsStore(s => s.statBlock)
 
   // Senses rendered once here so they can sit inline after Perception, OR on
   // their own "Senses" row when Perception is pulled into a defense cube.

@@ -32,6 +32,9 @@ export type MainView = 'combatant' | 'party' | 'gm';
 
 export interface TrackerUiState {
   searchOpen: boolean;
+  /** The bestiary "Add Combatants" panel (MonsterSearch) is open — search the
+   *  Archives creatures/hazards and drop them into the initiative order. */
+  monsterSearchOpen: boolean;
   customOpen: boolean;
   encountersOpen: boolean;
   /** The tracker's "Customize" panel (theme/style for the GM's view) is open. */
@@ -61,8 +64,8 @@ export interface TrackerUiState {
 }
 
 const INITIAL: TrackerUiState = {
-  searchOpen: false, customOpen: false, encountersOpen: false, appearanceOpen: false, mainView: 'party',
-  paneRequest: 0, settingsRequest: 0,
+  searchOpen: false, monsterSearchOpen: false, customOpen: false, encountersOpen: false, appearanceOpen: false,
+  mainView: 'party', paneRequest: 0, settingsRequest: 0,
 };
 
 let state: TrackerUiState = INITIAL;
@@ -87,6 +90,7 @@ export function useTrackerUi(): TrackerUiState {
 
 export const trackerUi = {
   setSearch: (searchOpen: boolean) => set({ searchOpen }),
+  setMonsterSearch: (monsterSearchOpen: boolean) => set({ monsterSearchOpen }),
   setCustom: (customOpen: boolean) => set({ customOpen }),
   setEncounters: (encountersOpen: boolean) => set({ encountersOpen }),
   setAppearance: (appearanceOpen: boolean) => set({ appearanceOpen }),

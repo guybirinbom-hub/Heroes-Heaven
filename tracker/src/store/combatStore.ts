@@ -385,6 +385,10 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       record(s)
       s.combatants.splice(idx, 1)
       if (s.selectedId === id) s.selectedId = null
+      // Removing a combatant BEFORE the active one shifts every later entry down by one, so the
+      // active pointer has to follow or the turn silently jumps to the next creature (skipping whose
+      // turn it actually is). Decrement first, then clamp to the new length.
+      if (idx < s.activeIndex) s.activeIndex -= 1
       if (s.activeIndex >= s.combatants.length) s.activeIndex = Math.max(0, s.combatants.length-1)
     })
   },

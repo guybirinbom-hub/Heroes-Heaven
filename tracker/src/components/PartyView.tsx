@@ -12,8 +12,6 @@ import { PcStatsEditor } from './PcStatsEditor'
 import { PcDetailControls } from './PcDetailControls'
 import { useSettingsStore } from '../store/settingsStore'
 import { type PcDetailConfig } from '../utils/pcDetail'
-import { derivePartyLevel } from '../utils/partyLevel'
-import { useCampaignPartyLevel } from '../data/partyLevelContext'
 import { TrashIcon, XIcon, PlusIcon, CheckIcon, PencilIcon, LinkIcon, SwordIcon, EyeIcon, ChevronRightIcon } from './Icons'
 
 // ── Masonry grid ─────────────────────────────────────────────────────────────
@@ -299,7 +297,6 @@ export function PartyView({ partyId, playersSlot }: Props) {
   const party = parties.find(p => p.id === partyId)
 
   const [nameVal, setNameVal] = useState('')
-  const [levelVal, setLevelVal] = useState('')
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [pickerPlayerId, setPickerPlayerId] = useState<string | null>(null)
   const [showDetail, setShowDetail] = useState(false)
@@ -347,8 +344,8 @@ export function PartyView({ partyId, playersSlot }: Props) {
   }
 
   useEffect(() => {
-    if (party) { setNameVal(party.name); setLevelVal(String(party.level)) }
-  }, [party?.name, party?.level])
+    if (party) setNameVal(party.name)
+  }, [party?.name])
 
   if (!party) return (
     <div className="flex-1 flex items-center justify-center text-pf-muted text-sm italic">Party not found.</div>
@@ -360,12 +357,6 @@ export function PartyView({ partyId, playersSlot }: Props) {
     const t = nameVal.trim()
     if (t) updateParty(partyId, { name: t })
     else setNameVal(party.name)
-  }
-
-  const commitLevel = () => {
-    const lvl = parseInt(levelVal)
-    if (!isNaN(lvl)) updateParty(partyId, { level: lvl })
-    else setLevelVal(String(party.level))
   }
 
   const handleDelete = () => { removeParty(partyId) }
@@ -390,21 +381,9 @@ export function PartyView({ partyId, playersSlot }: Props) {
   const pcs = party.players.filter(p => p.memberType !== 'npc')
   const npcs = party.players.filter(p => p.memberType === 'npc')
 
-  /*
-   * Party level, derived rather than typed — see utils/partyLevel.ts for why the input had to go.
-   * Priority: the host campaign's real characters, then this party's own PC stat blocks. Both are
-   * read-only, because in either case the characters already know their levels and a second,
-   * hand-typed number could only disagree with them.
-   *
-   * `derived == null` means nothing on screen knows a level (a standalone party of name-only PCs),
-   * and ONLY THEN does the manual input survive — otherwise there'd be no way to rate encounters
-   * for such a party at all. In a Heroes Heaven campaign that branch is unreachable.
-   */
-  const campaignLevel = useCampaignPartyLevel()
-  const derived = campaignLevel ?? derivePartyLevel(
-    pcs.map(p => p.creature?.level).filter((l): l is number => typeof l === 'number'),
-  )
-  const shownLevel = derived ?? party.level
+  // The party-level readout was removed (there's no need for a party-level VALUE on screen — a
+  // campaign derives it from the real characters, and encounter difficulty is rated silently in the
+  // initiative panel). Nothing here reads a level anymore.
   // Effective detail level: this party's override, else the global default.
   const detail = party.pcDetail ?? globalDetail
   const isOverridden = party.pcDetail !== undefined
@@ -452,41 +431,6 @@ export function PartyView({ partyId, playersSlot }: Props) {
               onFocus={e => (e.currentTarget.style.borderBottomColor = 'var(--accent-line)')}
               onMouseLeave={e => { if (document.activeElement !== e.currentTarget) e.currentTarget.style.borderBottomColor = 'transparent' }}
             />
-          )}
-          {/* Party level — DERIVED from the characters, not typed. Shown standalone (it's what
-              encounter difficulty is rated against, and there's nowhere else to see it), but hidden
-              when host-managed: the campaign owns the party's level and it's redundant here. */}
-          {!hostManaged && (
-            <span
-              title={derived != null
-                ? "Derived from your characters' levels — this is what encounter difficulty is rated against."
-                : 'Party level — what encounter difficulty is rated against. Give your PCs stat blocks and this follows them automatically.'}
-              style={{
-                display: 'inline-flex', alignItems: 'baseline', gap: 6,
-                color: 'var(--text-faded)', fontFamily: 'var(--font-mono)', fontSize: 14,
-              }}
-            >
-              LV
-              {derived != null ? (
-                <span style={{ color: 'var(--accent)', fontWeight: 500 }}>{shownLevel}</span>
-              ) : (
-                <input
-                  type="number" min={1} max={30}
-                  value={levelVal}
-                  onChange={e => setLevelVal(e.target.value)}
-                  onBlur={commitLevel}
-                  onKeyDown={e => e.key === 'Enter' && (e.currentTarget as HTMLInputElement).blur()}
-                  style={{
-                    background: 'transparent', border: 'none',
-                    borderBottom: 'var(--app-bw) solid var(--border-strong)',
-                    color: 'var(--accent)',
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: 14, fontWeight: 500,
-                    padding: '1px 0', outline: 'none', width: 36,
-                  }}
-                />
-              )}
-            </span>
           )}
         </div>
 

@@ -307,7 +307,13 @@ function RowContextMenu({ c, x, y, onClose, onRename }: {
   // filter: grayscale (which makes the row the containing block for our
   // position:fixed coords, mis-placing the menu off-target and unclickable).
   return createPortal(
+    // `.tracker-root` is LOAD-BEARING here: the menu is portalled to <body>, OUTSIDE the tracker's
+    // wrapper, and its colours (`--bg-panel`, `--border-strong`, …) are tracker CSS variables that the
+    // Heroes Heaven embed defines only under `.tracker-root`. Without the class those vars resolve to
+    // nothing and the menu's background falls back to transparent (the "half-translucent" bug). The
+    // standalone tracker defines the vars on :root so it never noticed.
     <div ref={ref}
+      className="tracker-root"
       onClick={e => e.stopPropagation()}
       style={{
         position: 'fixed', left, top, zIndex: 9999, minWidth: W,
@@ -376,14 +382,11 @@ export function InitiativeTracker({ onCombatantClick, onMinWidthMeasured, onColl
   const parties        = usePartyStore(s => s.parties)
   const activePartyId  = usePartyStore(s => s.activePartyId)
 
-  // Party level / size — prefer active party, fall back to local override
-  const [localLevel, setLocalLevel] = useState<number>(() => {
-    const s = localStorage.getItem('pf2e-party-level')
-    return s ? (parseInt(s) || 1) : 1
-  })
-  const [editingLevel, setEditingLevel] = useState(false)
+  // Party level / size — prefer active party, fall back to a persisted local value. The party-level
+  // READOUT was removed from the header (a campaign derives it from the real characters, and there's
+  // no useful place to show/edit it), but the number is still needed to RATE encounter difficulty.
+  const localLevel = parseInt(localStorage.getItem('pf2e-party-level') || '') || 1
   const [showXpTables, setShowXpTables] = useState(false)
-  const [levelInput, setLevelInput] = useState('')
 
   const activeParty = parties.find(p => p.id === activePartyId)
   /*
@@ -400,15 +403,6 @@ export function InitiativeTracker({ onCombatantClick, onMinWidthMeasured, onColl
   const partySize   = Math.max(1, combatants.filter(c =>
     !c.isDefeated && (c.isPC || (c.isAlly && c.creature != null))
   ).length)
-
-  const commitLevel = () => {
-    const v = parseInt(levelInput)
-    if (!isNaN(v) && v >= 1 && v <= 20) {
-      setLocalLevel(v)
-      localStorage.setItem('pf2e-party-level', String(v))
-    }
-    setEditingLevel(false)
-  }
 
   // Encounter stats — recomputed whenever combatants or party info changes
   const stats = computeEncounter(combatants, partyLevel, partySize)
@@ -560,54 +554,12 @@ export function InitiativeTracker({ onCombatantClick, onMinWidthMeasured, onColl
         borderBottom: 'var(--app-bw) solid var(--border)',
         flexShrink: 0,
       }}>
-        {/* Row 1: title + party level (if no active party) + round */}
+        {/* Row 1: title + round (the party-level readout was removed — it's derived silently and
+            only used to rate encounter difficulty, never shown). */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10, gap: 6 }}>
           <span className="pf-label muted" style={{ flexShrink: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginBottom: 0 }}>
             Initiative Order
           </span>
-
-          {/* Party level indicator. In a campaign it's derived from the characters and therefore
-              READ-ONLY — there's nothing to type, and a typed value could only disagree with them
-              (which is exactly how this read "LV 1" for a level-3 party). Editable only when the
-              tracker has no better source. */}
-          {campaignLevel != null ? (
-            <span
-              title="Party level comes from your characters — it's what encounter difficulty is rated against."
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: 10.5, color: 'var(--text-faded)', flexShrink: 0,
-              }}
-            >
-              LV {campaignLevel}
-            </span>
-          ) : !activeParty && (
-            editingLevel ? (
-              <input
-                autoFocus
-                style={{
-                  width: 32, textAlign: 'center', background: 'transparent',
-                  border: 'none', borderBottom: 'var(--app-bw) solid var(--accent-line)',
-                  color: 'var(--text)', fontSize: 10, outline: 'none',
-                }}
-                value={levelInput}
-                onChange={e => setLevelInput(e.target.value)}
-                onBlur={commitLevel}
-                onKeyDown={e => { if (e.key === 'Enter') commitLevel(); if (e.key === 'Escape') setEditingLevel(false) }}
-              />
-            ) : (
-              <span
-                title="Click to set party level"
-                style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: 10.5, color: 'var(--text-faded)',
-                  cursor: 'pointer', flexShrink: 0,
-                }}
-                onClick={() => { setLevelInput(String(localLevel)); setEditingLevel(true) }}
-              >
-                LV {localLevel}
-              </span>
-            )
-          )}
 
           {inCombat && (
             <div style={{ marginLeft: 'auto', flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>

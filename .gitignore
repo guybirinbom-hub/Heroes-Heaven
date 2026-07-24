@@ -35,6 +35,9 @@ public/ast/*.json
 public/idmap.json
 # The importer's pristine Foundry transcription reference (~18 MB) — a LOCAL build reference, never shipped.
 public/core.foundry-backup.json
+# Initiative-tracker bestiary/stat-block data (~51 MB: creatures, hazards, spells, actions…). LOCAL for
+# now while the tracker's stat-block rendering is validated; not deployed until the tracker ships.
+public/data/
 
 # Local audit/migration tooling & working-data (~19 MB reassessment/patch/chunk JSONs) — not needed for
 # build or runtime (the compiled overlay ships as scripts/data/effect-backfill.json). Keep only the two

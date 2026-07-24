@@ -1,4 +1,6 @@
 import { useTrackerUi, trackerUi } from './trackerUiStore';
+import { TurnTimerWidget } from '../../tracker/src/components/TurnTimerWidget';
+import { useSettingsStore } from '../../tracker/src/store/settingsStore';
 
 /*
  * The tracker's tools, rendered in Heroes Heaven's TOP BAR (Option B, row 1).
@@ -11,6 +13,7 @@ import { useTrackerUi, trackerUi } from './trackerUiStore';
  */
 export function TrackerTools() {
   const { searchOpen, customOpen, encountersOpen, mainView } = useTrackerUi();
+  const turnTimerEnabled = useSettingsStore((s) => s.turnTimerEnabled);
 
   /**
    * `on: undefined` means "this button doesn't have an on/off state" — it navigates. Such a button
@@ -33,6 +36,16 @@ export function TrackerTools() {
 
   return (
     <div className="tracker-tools">
+      {/* The turn timer lives here in the top bar (it used to sit in the initiative rail). Wrapped in
+          `.tracker-root` because this row is Heroes Heaven's chrome — OUTSIDE the tracker's wrapper —
+          and the widget's colours are tracker CSS variables scoped to `.tracker-root`. Self-gated on
+          the "Timer" setting; the widget reads only the shared combat/settings stores. Adding a
+          combatant is the rail's "Add combatants" button now, so no top-bar Add button. */}
+      {turnTimerEnabled && (
+        <div className="tracker-root tracker-tools-timer">
+          <TurnTimerWidget />
+        </div>
+      )}
       {btn(searchOpen, 'Search everything — conditions, spells, items, traits, actions (Ctrl+K)', 'ti-search', () => trackerUi.setSearch(true), 'Search')}
       {/* Party — the way back to the dashboard from whatever is covering the pane. A sheet can take
           the pane on its own now (clicking a card, or combat reaching a PC's turn), so without this

@@ -1,8 +1,10 @@
 /// <reference path="../../tracker/src/types/electron.d.ts" />
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import type { CampaignMembership } from '../data/campaigns';
 import { loadRoster, type SavedChar } from '../data/storage';
 import { GmEditSheet, type GmEditHandle } from '../sheet/GmEditSheet';
+import { DescriptionModal } from '../sheet/DescriptionModal';
 import { ForceMobileContext } from '../sheet/useIsMobile';
 import { useBackHandler } from '../sheet/useEscapeClose';
 import { useTrackerVars, useGlobalVars } from './trackerAppearance';
@@ -15,16 +17,18 @@ import type { PcStats } from '../../tracker/src/utils/pcDetail';
 import { useCampaignDefaults } from './useCampaignDefaults';
 import { computePcStats } from './computePcStats';
 import { PcStatsCardExtra } from './PcStatsCardExtra';
+import { MemberTurnButton } from './MemberTurnButton';
 import { useCombatStore } from '../../tracker/src/store/combatStore';
 import { useSettingsStore } from '../../tracker/src/store/settingsStore';
 import { useLayoutStore, leafCids } from '../../tracker/src/store/layoutStore';
 import { GameDataProvider } from '../../tracker/src/data/gameDataContext';
+import { HostSearchProvider, type HostSearchRecord } from '../../tracker/src/data/hostSearchContext';
 import { InitiativeTracker } from '../../tracker/src/components/InitiativeTracker';
-import { TurnTimerWidget } from '../../tracker/src/components/TurnTimerWidget';
 import { PaneLayout } from '../../tracker/src/components/PaneLayout';
 import { PartyView } from '../../tracker/src/components/PartyView';
 import { GMScreen } from '../../tracker/src/components/GMScreen';
 import { GlobalSearch } from '../../tracker/src/components/GlobalSearch';
+import { MonsterSearch } from '../../tracker/src/components/MonsterSearch';
 import { TextConverter } from '../../tracker/src/components/TextConverter';
 import { EncounterManager } from '../../tracker/src/components/EncounterManager';
 import { DiceOverlay } from '../../tracker/src/components/DiceOverlay';
@@ -33,7 +37,7 @@ import { usePartyStore } from '../../tracker/src/store/partyStore';
 import type { Combatant } from '../../tracker/src/types/pf2e';
 import { PartyMembers } from '../sheet/PartyMembers';
 import type { PartyMember } from '../data/party';
-import type { ContentDatabase } from '../rules/types';
+import type { ContentDatabase, DescRef } from '../rules/types';
 import { useLocalCampaignMembers } from './useLocalCampaignMembers';
 import { TEST_CAMPAIGNS_WITHOUT_LOGIN } from './enabled';
 import { useTrackerUi, trackerUi } from './trackerUiStore';
@@ -81,7 +85,7 @@ export function CampaignTracker({
   /** Open a member's sheet — the same GM view the old campaign detail panel offered. */
   onViewMember: (mem: PartyMember) => void;
 }) {
-  const { searchOpen, customOpen, encountersOpen, appearanceOpen, mainView, paneRequest, settingsRequest } = useTrackerUi();
+  const { searchOpen, monsterSearchOpen, customOpen, encountersOpen, appearanceOpen, mainView, paneRequest, settingsRequest } = useTrackerUi();
   /*
    * The GM's own theme for this tracker view (theme/style only, local, never synced).
    *  - trackerVars: paint the tracker with them; null → inherit the app's global appearance.
@@ -130,6 +134,60 @@ export function CampaignTracker({
     // localMembers changes whenever the roster relevant to this campaign changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localMembers, content, m.id]);
+
+  /*
+   * Mirror the campaign's PCs into the tracker's OWN party store (the party tagged with this
+   * campaign). This is the bridge that lets the tracker's native features act on the real characters
+   * instead of an empty local party:
+   *   • PartyView's "Add to Initiative" now adds these PCs (with real HP) to the order, and
+   *   • the turn timer's "Save to Averages" matches them by name and records per-player turn history
+   *     (which the per-player turn-time graph on the cards then reads).
+   * It also makes this the active party, so `partyId` resolves to it. Only while testing without
+   * login — the real flow publishes a server party. useLayoutEffect so the party exists before the
+   * first paint (no "Party not found" flash).
+   */
+  const syncCampaignParty = usePartyStore((s) => s.syncCampaignParty);
+  const hostPcs = useMemo(
+    () => localMembers.map((mem) => ({ name: mem.name, maxHP: pcStats.byName.get(mem.name.trim().toLowerCase())?.maxHP })),
+    [localMembers, pcStats],
+  );
+  useLayoutEffect(() => {
+    if (!TEST_CAMPAIGNS_WITHOUT_LOGIN) return;
+    syncCampaignParty(m.id, m.name, hostPcs);
+  }, [hostPcs, m.id, m.name, syncCampaignParty]);
+
+  /*
+   * Global Search over ALL of Heroes Heaven's content (feats, spells, items, ancestries, rules,
+   * traits, conditions, actions, deities, …) — like the Archives search — opening HH's own
+   * description popup on select. Built once from the content DB this view already holds; the few
+   * purely-mechanical buckets with no description are skipped. It reaches the tracker's GlobalSearch
+   * through HostSearchProvider, and the popup is portalled to <body> so it renders in HH's normal CSS
+   * environment (outside the tracker's scoped stylesheet). Creatures stay searchable via the tracker
+   * data (GlobalSearch adds them), since HH has no bestiary content.
+   */
+  const [descTarget, setDescTarget] = useState<{ bucket: string; id: string } | null>(null);
+  const searchRecords = useMemo<HostSearchRecord[]>(() => {
+    const skip = new Set(['modes', 'runes', 'stances']);
+    const db = content as unknown as Record<string, Record<string, { name?: string }> | undefined>;
+    const recs: HostSearchRecord[] = [];
+    for (const bucket of Object.keys(db)) {
+      if (skip.has(bucket)) continue;
+      const rows = db[bucket];
+      if (!rows || typeof rows !== 'object') continue;
+      for (const id of Object.keys(rows)) {
+        const name = rows[id]?.name;
+        if (typeof name === 'string' && name) recs.push({ bucket, id, name });
+      }
+    }
+    return recs;
+  }, [content]);
+  const hostSearch = useMemo(
+    () => ({ records: searchRecords, open: (bucket: string, id: string) => setDescTarget({ bucket, id }) }),
+    [searchRecords],
+  );
+  const descRec = descTarget
+    ? (content as unknown as Record<string, Record<string, { name: string; description?: string; descRefs?: DescRef[] }> | undefined>)[descTarget.bucket]?.[descTarget.id]
+    : null;
 
   // "Stats shown" — the per-party override, else the global default. The party page's dropdown
   // (PcDetailControls) writes party.pcDetail; both live in the tracker's own stores.
@@ -249,7 +307,6 @@ export function CampaignTracker({
    * <InitiativeTracker /> is inert by design: nothing was broken, it simply was never wired up.
    */
   const showInitCollapse = useSettingsStore((s) => s.showInitCollapseButton);
-  const turnTimerEnabled = useSettingsStore((s) => s.turnTimerEnabled);
 
   /*
    * While the tracker is on screen, Ctrl+Z means UNDO THE COMBAT — the damage, condition, defeat or
@@ -461,6 +518,7 @@ export function CampaignTracker({
   return (
     <div className="tracker-root campaign-tracker" style={trackerVars ?? undefined}>
       <GameDataProvider>
+       <HostSearchProvider value={hostSearch}>
        <CampaignPartyLevelProvider levels={partyLevels}>
         <CampaignMonsterPartsProvider enabled={monsterParts} mode={monsterPartsMode}>
         <CampaignPcStatsProvider byName={pcStats.byName}>
@@ -484,14 +542,7 @@ export function CampaignTracker({
                 className="ct-order"
                 style={{ width: railWidth, minWidth: railWidth, maxWidth: railWidth }}
               >
-                {/* The turn timer — a data-free feature the original tracker put in its toolbar. It
-                    self-hides unless enabled in Settings → Initiative tracker → Timer, and reads only
-                    the combat/settings stores, so mounting it is all that's needed. */}
-                {turnTimerEnabled && (
-                  <div className="ct-rail-timer">
-                    <TurnTimerWidget />
-                  </div>
-                )}
+                {/* The turn timer now lives in the TOP BAR (TrackerTools), not the rail. */}
                 {/* InitiativeTracker is h-full, so it needs its own flex:1 box to leave room for the
                     footer below it. */}
                 <div className="ct-order-scroll">
@@ -534,7 +585,12 @@ export function CampaignTracker({
                     // the tracker's own PcDetailConfig — the same dropdown in the party header.
                     renderExtra={(mem) => {
                       const st = pcStats.byId.get(mem.charId);
-                      return st ? <PcStatsCardExtra stats={st} detail={pcDetail} /> : null;
+                      return (
+                        <>
+                          <MemberTurnButton campaignId={m.id} name={mem.name} />
+                          {st ? <PcStatsCardExtra stats={st} detail={pcDetail} /> : null}
+                        </>
+                      );
                     }}
                     onView={(mem) => {
                       if (!TEST_CAMPAIGNS_WITHOUT_LOGIN) {
@@ -564,12 +620,24 @@ export function CampaignTracker({
         </div>
 
         {/* The tracker's own overlays, driven from the top-bar tools. */}
+        {monsterSearchOpen && <MonsterSearch onClose={() => trackerUi.setMonsterSearch(false)} />}
         {searchOpen && <GlobalSearch onClose={() => trackerUi.setSearch(false)} />}
         {customOpen && <TextConverter onClose={() => trackerUi.setCustom(false)} />}
         {encountersOpen && <EncounterManager onClose={() => trackerUi.setEncounters(false)} />}
         {appearanceOpen && <TrackerCustomize onClose={() => trackerUi.setAppearance(false)} />}
         <DiceOverlay />
         <FloatingWindowLayer />
+
+        {/* Global-search result → HH's own description popup. Portalled to <body> so it renders in
+            HH's normal CSS environment, not the tracker's scoped stylesheet. */}
+        {descTarget && descRec && createPortal(
+          <DescriptionModal
+            root={{ title: descRec.name, description: descRec.description ?? '', descRefs: descRec.descRefs, key: descTarget.bucket, slug: descTarget.id }}
+            onClose={() => setDescTarget(null)}
+            onExit={() => setDescTarget(null)}
+          />,
+          document.body,
+        )}
 
         {/* Out of combat there's nothing to keep an eye on, so a party card's sheet gets the view.
             fullSheetRevert pins THIS review sheet to the app's global appearance when the tracker is
@@ -592,6 +660,7 @@ export function CampaignTracker({
         </CampaignPcStatsProvider>
         </CampaignMonsterPartsProvider>
        </CampaignPartyLevelProvider>
+       </HostSearchProvider>
       </GameDataProvider>
     </div>
   );
@@ -690,12 +759,14 @@ function PcPaneShell({
 }
 
 /**
- * The rail's footer — a data-free "quick add" combatant field and a "Clear" button.
+ * The rail's footer.
  *
- * The original tracker's only add path is the (data-dependent, unwired) creature search, so in the
- * embed there was no way to drop a name-only combatant — a hazard, a nameless goblin — into the order
- * mid-fight, and no way to empty the board (End Combat ends the round but keeps everyone). Both are
- * pure combat-store operations that need no bestiary.
+ * PRIMARY add = the bestiary picker (MonsterSearch), exactly like the original app's dashed
+ * "+ Add Combatants" button — search Archives creatures/hazards and drop them in with a full stat
+ * block. The original embed had only the name-only text box (built before creature data was wired);
+ * now that the bestiary loads, the button opens it. The name-only "quick add" is KEPT as a smaller
+ * secondary control so a nameless goblin or a hazard can still go in without the bestiary, alongside
+ * "Clear" (empty the board — End Combat ends the round but keeps everyone).
  */
 function RailFooter() {
   const combatants = useCombatStore((s) => s.combatants);
@@ -721,24 +792,33 @@ function RailFooter() {
 
   return (
     <div className="ct-rail-foot">
-      <input
-        className="ct-rail-add"
-        placeholder="+ Add combatant"
-        aria-label="Add a combatant to the initiative order"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') add();
-        }}
-      />
       <button
-        className="ct-rail-clear"
-        onClick={() => void clear()}
-        disabled={combatants.length === 0}
-        title={combatants.length === 0 ? 'Nothing to clear' : 'Remove every combatant'}
+        className="ct-rail-add-btn"
+        onClick={() => trackerUi.setMonsterSearch(true)}
+        title="Search the bestiary and add creatures with full stat blocks"
       >
-        <i className="ti ti-trash" aria-hidden="true" /> Clear
+        <i className="ti ti-plus" aria-hidden="true" /> Add combatants
       </button>
+      <div className="ct-rail-foot-row">
+        <input
+          className="ct-rail-add"
+          placeholder="Quick add by name…"
+          aria-label="Quick-add a name-only combatant to the initiative order"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') add();
+          }}
+        />
+        <button
+          className="ct-rail-clear"
+          onClick={() => void clear()}
+          disabled={combatants.length === 0}
+          title={combatants.length === 0 ? 'Nothing to clear' : 'Remove every combatant'}
+        >
+          <i className="ti ti-trash" aria-hidden="true" /> Clear
+        </button>
+      </div>
     </div>
   );
 }
@@ -748,9 +828,16 @@ function CombatantWorkspace({ combatants }: { combatants: Combatant[] }) {
   if (!root) {
     return (
       <div className="ct-empty" data-dock-empty="">
-        Click anyone in the initiative order to open their stat block here.
-        <br />
-        Drag one onto a pane's edge to tile it, or onto its tabs to stack it.
+        <div>
+          Click anyone in the initiative order to open their stat block here.
+          <br />
+          Drag one onto a pane's edge to tile it, or onto its tabs to stack it.
+        </div>
+        {/* An add affordance right where the eye lands when the board is empty — the original app
+            put a "+ Add Combatants" button in this same empty state. */}
+        <button className="ct-empty-add" onClick={() => trackerUi.setMonsterSearch(true)}>
+          <i className="ti ti-plus" aria-hidden="true" /> Add combatants
+        </button>
       </div>
     );
   }

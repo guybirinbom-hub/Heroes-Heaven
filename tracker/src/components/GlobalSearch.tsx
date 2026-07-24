@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { useGameData } from '../data/gameDataContext'
+import { useHostSearch } from '../data/hostSearchContext'
 import { useWindowStore, type WinType } from '../store/windowStore'
 import { SearchIcon, XIcon } from './Icons'
 import { GM_WIDGETS, newWidgetRef } from './GmWidgets'
@@ -19,7 +20,10 @@ interface Hit {
   ref: string        // lowercase lookup key
   title: string      // display name
   tl: string         // title, lowercased (for matching)
-  category: WinType
+  category: string
+  /** Set when this is a host (Heroes Heaven) content record — selecting it opens the host's OWN
+   *  description popup (HostSearch.open) instead of the tracker's reference window. */
+  host?: { bucket: string; id: string }
 }
 
 const CATEGORY: Record<string, { label: string; fg: string; bg: string; bd: string }> = {
@@ -50,6 +54,7 @@ export function GlobalSearch({ onClose, onPick, title }: {
   title?: string
 }) {
   const data = useGameData()
+  const host = useHostSearch()
   const openWin = useWindowStore(s => s.open)
   const disabledSources = useSourcesStore(s => s.disabled)
   const disabledSourceSet = useMemo(() => new Set(disabledSources), [disabledSources])
@@ -63,6 +68,18 @@ export function GlobalSearch({ onClose, onPick, title }: {
   // the game data has loaded; titles are precomputed so keystrokes are cheap).
   const index = useMemo<Hit[]>(() => {
     const out: Hit[] = []
+    // Host (Heroes Heaven) mode — search EVERYTHING the app has, like the Archives search.
+    if (host) {
+      for (const r of host.records) {
+        out.push({ type: 'rule', ref: r.id, title: r.name, tl: r.name.toLowerCase(), category: r.bucket, host: { bucket: r.bucket, id: r.id } })
+      }
+      // The bestiary the host content has no records for — creatures/hazards from the tracker data,
+      // opened as stat-block reference windows (their own richer add path is "Add Combatants").
+      for (const [k, v] of data.creatures) { out.push({ type: 'creature', ref: k, title: v.name, tl: v.name.toLowerCase(), category: 'creature' }) }
+      // GM-screen tool widgets stay searchable.
+      for (const w of GM_WIDGETS) out.push({ type: 'widget', ref: w.kind, title: w.label, tl: `${w.label} ${w.keywords}`.toLowerCase(), category: 'widget' })
+      return out
+    }
     const addStr = (m: Map<string, string>, type: WinType) => {
       for (const k of m.keys()) { const title = titleCase(k); out.push({ type, ref: k, title, tl: title.toLowerCase(), category: type }) }
     }
@@ -85,7 +102,7 @@ export function GlobalSearch({ onClose, onPick, title }: {
     // (freshened to a unique instance id in `choose`).
     for (const w of GM_WIDGETS) out.push({ type: 'widget', ref: w.kind, title: w.label, tl: `${w.label} ${w.keywords}`.toLowerCase(), category: 'widget' })
     return out
-  }, [data, disabledSourceSet, showMonsterParts])
+  }, [data, host, disabledSourceSet, showMonsterParts])
 
   const results = useMemo<Hit[]>(() => {
     const q = query.trim().toLowerCase()
@@ -116,6 +133,8 @@ export function GlobalSearch({ onClose, onPick, title }: {
 
   const choose = (h: Hit | undefined) => {
     if (!h) return
+    // Host (Heroes Heaven) content opens HH's own description popup.
+    if (h.host) { host?.open(h.host.bucket, h.host.id); onClose(); return }
     // Widgets need a fresh instance id each time they're added (so two timers
     // don't share state / dedupe to one); references keep their stable key.
     const ref = h.category === 'widget' ? newWidgetRef(h.ref) : h.ref
@@ -172,7 +191,7 @@ export function GlobalSearch({ onClose, onPick, title }: {
             ref={inputRef}
             value={query}
             onChange={e => setQuery(e.target.value)}
-            placeholder={ready ? 'Search rules, conditions, spells, items, traits, actions, skills, creatures…' : 'Loading game data…'}
+            placeholder={ready ? (host ? 'Search everything — feats, spells, items, ancestries, rules, creatures…' : 'Search rules, conditions, spells, items, traits, actions, skills, creatures…') : 'Loading game data…'}
             disabled={!ready}
             className="themed-placeholder"
             style={{
@@ -201,11 +220,13 @@ export function GlobalSearch({ onClose, onPick, title }: {
             </div>
           )}
           {results.map((h, i) => {
-            const meta = CATEGORY[h.category] ?? CATEGORY.glossary
+            // Known category → its chip; a host bucket ('feats', 'ancestries', …) → a chip labelled
+            // with the title-cased bucket name.
+            const meta = CATEGORY[h.category] ?? { label: titleCase(h.category), fg: 'var(--text-muted)', bg: 'var(--bg-elevated)', bd: 'var(--border)' }
             const on = i === active
             return (
               <div
-                key={`${h.type}:${h.ref}`}
+                key={h.host ? `h:${h.host.bucket}:${h.host.id}` : `${h.type}:${h.ref}`}
                 data-row={i}
                 onMouseEnter={() => setActive(i)}
                 onClick={() => choose(h)}
