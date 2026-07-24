@@ -13,11 +13,18 @@ import { TurnTimeline } from '../../tracker/src/components/TurnTimeline';
  * graph's "run combat with the timer, then Save to Averages" empty state; once data exists it shows
  * the lifetime average. Part of the removable seam.
  */
-export function MemberTurnButton({ campaignId, name }: { campaignId: string; name: string }) {
+export function MemberTurnButton({ campaignId, charId, name }: { campaignId: string; charId: string; name: string }) {
   const player = usePartyStore((s) => {
     const p = s.parties.find((pp) => pp.campaignId === campaignId);
+    if (!p) return null;
+    // Match on the stable character id (kept in sync by syncCampaignParty) so a renamed PC or two
+    // same-named PCs resolve to the right turn history; fall back to name for any pre-charId player.
     const lower = name.trim().toLowerCase();
-    return p?.players.find((pl) => pl.name.trim().toLowerCase() === lower) ?? null;
+    return (
+      p.players.find((pl) => pl.charId === charId) ??
+      p.players.find((pl) => pl.memberType !== 'npc' && pl.name.trim().toLowerCase() === lower) ??
+      null
+    );
   });
   const [open, setOpen] = useState(false);
   const hasData = !!player && (player.turnCount ?? 0) > 0;

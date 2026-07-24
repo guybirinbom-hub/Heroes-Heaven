@@ -35,6 +35,9 @@ export function GameDataProvider({ children }: { children: ReactNode }) {
         for (const [k, v] of abilitiesGlossary) merged.set(k, v)
         setData({ conditions, traits, spells, rituals, actions: merged, actionTraits, skills, equipment, families, creatures, creatureLinks, rules })
       })
+      // Defense-in-depth: every loader already degrades to an empty map, so this should never fire —
+      // but if one ever throws outside its own guard, log it instead of silently leaving ALL data empty.
+      .catch((err) => console.error('Tracker game data failed to load; continuing with what resolved.', err))
   }, [])
   return <GameDataCtx.Provider value={data}>{children}</GameDataCtx.Provider>
 }

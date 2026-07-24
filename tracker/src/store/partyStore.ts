@@ -14,6 +14,10 @@ export interface PartyPlayer {
   name: string
   notes: string
   memberType: 'pc' | 'npc'
+  /** Stable Heroes Heaven character id, set for PCs mirrored from a campaign (see syncCampaignParty).
+   *  Matching on this instead of the name is what lets a PC be renamed without losing its turn history
+   *  and keeps two same-named PCs distinct. Undefined for hand-made standalone players. */
+  charId?: string
   creature?: Creature | null   // NPCs only — linked stat block
   /** Cumulative turn-time average (seconds) folded in via the turn timer's
    *  "Save to Averages". Paired with turnCount so new batches weight right. */
@@ -84,7 +88,7 @@ interface PartyStore {
    *  matched case-insensitively by name — PRESERVING any accumulated turnAvg/turnCount/turnHistory —
    *  sets each PC's maxHP, prunes PCs who left (keeping hand-added NPCs), makes it the active party,
    *  and returns its id. Called by the embed from the live campaign roster. */
-  syncCampaignParty: (campaignId: string, campaignName: string, members: { name: string; maxHP?: number }[]) => string
+  syncCampaignParty: (campaignId: string, campaignName: string, members: { charId: string; name: string; maxHP?: number }[]) => string
 }
 
 function saveToStorage(parties: Party[]) {
@@ -198,28 +202,44 @@ export const usePartyStore = create<PartyStore>()(immer((set, get) => ({
 
   findPlayerByName(combatantName) {
     const lower = combatantName.toLowerCase()
+    // Prefer a real PC over a hand-added NPC that happens to share the name (an NPC "Kyra" must not
+    // shadow the PC "Kyra" and bind the combat-detail panel to the wrong one). Fall back to an NPC
+    // match only if no PC matches.
+    let npcFallback: { party: Party; player: PartyPlayer } | null = null
     for (const party of get().parties) {
-      const player = party.players.find(pl => pl.name.toLowerCase() === lower)
-      if (player) return { party, player }
+      for (const player of party.players) {
+        if (player.name.toLowerCase() !== lower) continue
+        if (player.memberType !== 'npc') return { party, player }
+        npcFallback ??= { party, player }
+      }
     }
-    return null
+    return npcFallback
   },
 
   addTurnsToPlayerByName(name, sumSeconds, count) {
     if (count <= 0) return
     const lower = name.trim().toLowerCase()
     set(s => {
-      for (const party of s.parties) {
+      // Scope to the ACTIVE party when there is one, so a PC name that also exists in another party
+      // (e.g. a standalone party + the campaign mirror) doesn't get the same turn batch folded in twice.
+      // Falls back to all parties only when nothing is active (a standalone with no active selection).
+      const parties = s.activePartyId ? s.parties.filter(p => p.id === s.activePartyId) : s.parties
+      for (const party of parties) {
         for (const pl of party.players) {
+          // Turn averages are a PC stat — a hand-added NPC that happens to share a PC's name must not
+          // absorb the PC's turns.
+          if (pl.memberType === 'npc') continue
           if (pl.name.trim().toLowerCase() !== lower) continue
           const oldAvg = pl.turnAvgSeconds ?? 0
           const oldCount = pl.turnCount ?? 0
           const newCount = oldCount + count
           pl.turnAvgSeconds = (oldAvg * oldCount + sumSeconds) / newCount
           pl.turnCount = newCount
-          // Append this session's average as a dated timeline point.
+          // Append this session's average as a dated timeline point, capped so a long-lived party's
+          // blob can't grow without bound (the per-day graph only ever shows a handful of recent days).
           if (!pl.turnHistory) pl.turnHistory = []
           pl.turnHistory.push({ at: Date.now(), avgSeconds: sumSeconds / count, turnCount: count })
+          if (pl.turnHistory.length > 500) pl.turnHistory = pl.turnHistory.slice(-500)
         }
       }
     })
@@ -230,7 +250,10 @@ export const usePartyStore = create<PartyStore>()(immer((set, get) => ({
     const lower = name.trim().toLowerCase()
     let changed = false
     set(s => {
-      for (const party of s.parties) {
+      // Scope to the active party so damage to a PC in one campaign's combat can't overwrite the HP
+      // bar of an unrelated party's same-named PC (falls back to all parties only when none is active).
+      const parties = s.activePartyId ? s.parties.filter(p => p.id === s.activePartyId) : s.parties
+      for (const party of parties) {
         for (const pl of party.players) {
           // Only PCs that already have a stat sheet show an HP bar to update.
           if (pl.memberType === 'npc' || !pl.pcStats || pl.name.trim().toLowerCase() !== lower) continue
@@ -326,18 +349,24 @@ export const usePartyStore = create<PartyStore>()(immer((set, get) => ({
         p.name = campaignName
       }
       partyId = p.id
-      const wanted = new Set(members.map(m => m.name.trim().toLowerCase()))
-      // Prune PCs who left the campaign; keep any NPCs the GM added to this party by hand.
-      p.players = p.players.filter(pl => pl.memberType === 'npc' || wanted.has(pl.name.trim().toLowerCase()))
-      // Upsert each campaign PC. Matching by name PRESERVES accumulated turn history on that player.
+      const wantedIds = new Set(members.map(m => m.charId))
+      // Prune PCs whose character left the campaign — matched by stable charId, NOT name. Keep any NPCs
+      // the GM added by hand, and (back-compat) any PC player that predates charId tracking, so a first
+      // sync after upgrading doesn't discard its accumulated turn history.
+      p.players = p.players.filter(pl => pl.memberType === 'npc' || pl.charId === undefined || wantedIds.has(pl.charId))
       for (const m of members) {
+        // Match on the stable character id so a RENAMED PC keeps its turn history and two PCs that share
+        // a name stay distinct. Fall back once to a name match to adopt a pre-charId player, then stamp
+        // the id onto it.
         const lower = m.name.trim().toLowerCase()
-        let pl = p.players.find(x => x.memberType !== 'npc' && x.name.trim().toLowerCase() === lower)
+        let pl = p.players.find(x => x.memberType !== 'npc' && x.charId === m.charId)
+        if (!pl) pl = p.players.find(x => x.memberType !== 'npc' && x.charId === undefined && x.name.trim().toLowerCase() === lower)
         if (!pl) {
-          pl = { id: nplid(), name: m.name, notes: '', memberType: 'pc' }
+          pl = { id: nplid(), name: m.name, notes: '', memberType: 'pc', charId: m.charId }
           p.players.push(pl)
         } else {
-          pl.name = m.name // adopt the campaign's exact casing
+          pl.charId = m.charId
+          pl.name = m.name // adopt the current name in place (handles a rename)
         }
         if (typeof m.maxHP === 'number') pl.pcStats = { ...(pl.pcStats ?? {}), maxHP: m.maxHP }
       }

@@ -107,12 +107,17 @@ export async function loadIndex(): Promise<IndexEntry[]> {
 
 export async function loadConditions(): Promise<Map<string, string>> {
   if (_conditions) return _conditions
-  const data = await fetchJSON<{ condition: (RawCondition & { text?: string })[] }>('conditions.json')
   _conditions = new Map()
-  for (const c of data.condition ?? []) {
-    // Prefer the link-preserving `text` rebuilt from AoN markdown.
-    _conditions.set(c.name.toLowerCase(), c.text ?? entriesToText(c.entries))
-  }
+  // Degrade to an empty map on a missing/corrupt file, exactly like every sibling loader below — this
+  // was the ONE loader without a try/catch, so a single failed conditions.json fetch rejected the
+  // `Promise.all` in gameDataContext and left ALL game data permanently empty.
+  try {
+    const data = await fetchJSON<{ condition: (RawCondition & { text?: string })[] }>('conditions.json')
+    for (const c of data.condition ?? []) {
+      // Prefer the link-preserving `text` rebuilt from AoN markdown.
+      _conditions.set(c.name.toLowerCase(), c.text ?? entriesToText(c.entries))
+    }
+  } catch { /* no conditions glossary if the file can't load — non-fatal */ }
   return _conditions
 }
 

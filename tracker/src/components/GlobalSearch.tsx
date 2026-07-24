@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from 'react'
+import { useState, useMemo, useEffect, useRef, useDeferredValue } from 'react'
 import { useGameData } from '../data/gameDataContext'
 import { useHostSearch } from '../data/hostSearchContext'
 import { useWindowStore, type WinType } from '../store/windowStore'
@@ -60,6 +60,10 @@ export function GlobalSearch({ onClose, onPick, title }: {
   const disabledSourceSet = useMemo(() => new Set(disabledSources), [disabledSources])
   const showMonsterParts = useSettingsStore(s => s.showMonsterParts)
   const [query, setQuery] = useState('')
+  // In host (Heroes Heaven) mode the index is the WHOLE content DB (~24k records), scanned + sorted on
+  // every keystroke. Defer the value the results are computed from so typing stays responsive and the
+  // heavy scan runs on the settled query instead of blocking each key.
+  const deferredQuery = useDeferredValue(query)
   const [active, setActive] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
   const listRef = useRef<HTMLDivElement>(null)
@@ -105,7 +109,7 @@ export function GlobalSearch({ onClose, onPick, title }: {
   }, [data, host, disabledSourceSet, showMonsterParts])
 
   const results = useMemo<Hit[]>(() => {
-    const q = query.trim().toLowerCase()
+    const q = deferredQuery.trim().toLowerCase()
     if (!q) return []
     const scored: { hit: Hit; score: number }[] = []
     for (const it of index) {
@@ -120,7 +124,7 @@ export function GlobalSearch({ onClose, onPick, title }: {
       a.hit.title.length - b.hit.title.length ||
       a.hit.title.localeCompare(b.hit.title))
     return scored.slice(0, 80).map(s => s.hit)
-  }, [query, index])
+  }, [deferredQuery, index])
 
   useEffect(() => { setActive(0) }, [query])
   useEffect(() => { inputRef.current?.focus() }, [])

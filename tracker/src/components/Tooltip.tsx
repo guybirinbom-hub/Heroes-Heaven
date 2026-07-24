@@ -158,7 +158,11 @@ export function Tooltip({ content, children, className = '', style, bare, onActi
   }
 
   const popupEl = visible && content ? (
-    <div ref={popupRef} style={popupWrapperStyle}>
+    // `.tracker-root` is load-bearing: this popup is portalled to <body> (below), OUTSIDE the tracker's
+    // wrapper, and its colours (`--bg-panel`, `--border-strong`, `--shadow-md`, …) are tracker CSS
+    // variables the Heroes Heaven embed defines only under `.tracker-root`. Without the class they
+    // resolve to nothing and the tooltip renders unstyled/translucent (same fix as RowContextMenu).
+    <div ref={popupRef} className="tracker-root" style={popupWrapperStyle}>
       {isBare ? (
         content
       ) : (

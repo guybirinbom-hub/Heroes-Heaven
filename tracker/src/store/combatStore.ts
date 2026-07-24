@@ -255,6 +255,14 @@ function record(s: CombatStore) {
   s.canUndo = true
   s.canRedo = false
 }
+/** Drop the redo stack WITHOUT recording an undo step — for mutations that change the combatants but
+ *  aren't themselves on the undo timeline (add / duplicate / set-initiative / roll-initiative). Without
+ *  this, doing one of them after an Undo leaves Redo lit, and pressing Redo replays a STALE snapshot
+ *  that wholesale-replaces the just-made change. */
+function invalidateRedo(s: CombatStore) {
+  _redoStack.length = 0
+  s.canRedo = false
+}
 /** Push a PC's current HP back to its party-card sheet (matched by name). */
 function syncPcHp(c: Combatant | undefined) {
   if (c?.isPC) usePartyStore.getState().syncCurrentHpByName(c.name, c.currentHP)
@@ -318,6 +326,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
 
   addCombatant(creature, opts = {}) {
     set(s => {
+      invalidateRedo(s)
       const count = opts.count ?? 1
       for (let i = 0; i < count; i++) {
         const suffix = count > 1 ? ` ${String.fromCharCode(65+i)}` : ''
@@ -343,6 +352,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       if (idx < 0) return
       const src = s.combatants[idx]
       if (src.isPC) return   // PCs can't appear twice
+      invalidateRedo(s)
       // Make a distinct name: append " (n)" with the lowest free n.
       let name = src.name
       if (s.combatants.some(c => c.name === name)) {
@@ -397,6 +407,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
     set(s => {
       const c = s.combatants.find(c => c.id === id)
       if (!c) return
+      invalidateRedo(s)
       c.initiative = v
       // Mid-combat: re-sort immediately and keep activeIndex pointing to the same combatant
       if (s.inCombat && v !== null) {
@@ -416,6 +427,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
 
   rollMonsterInitiative() {
     set(s => {
+      invalidateRedo(s)
       for (const c of s.combatants) {
         if (c.isPC || !c.creature) continue
         const perc = c.scaledToLevel !== undefined
@@ -498,14 +510,18 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       // their turn — a downed player can spend actions, recover, etc.
       const len = s.combatants.length
       let next = (s.activeIndex + 1) % len
-      if (next === 0) s.round += 1
+      // Bump the round exactly ONCE if the advance crosses back past the top of the order — whether
+      // that happens on the first step OR while skipping a run of defeated NPCs. (Two separate bump
+      // sites previously double-counted the round when the entire order was defeated NPCs.)
+      let wrapped = next === 0
       let safety = 0
       while (s.combatants[next]?.isDefeated && !s.combatants[next]?.isPC && safety < len) {
         const stepped = (next + 1) % len
-        if (stepped === 0) s.round += 1
+        if (stepped === 0) wrapped = true
         next = stepped
         safety++
       }
+      if (wrapped) s.round += 1
       s.activeIndex = next
       // Start-of-turn conditions (Stunned) are consumed as the new creature's
       // turn begins.
@@ -557,7 +573,12 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
       if (!c) return
       record(s)
       c.currentHP = Math.min(c.maxHP, c.currentHP + amt)
-      if (c.currentHP > 0) c.isDefeated = false
+      if (c.currentHP > 0) {
+        c.isDefeated = false
+        // Healed back above 0 → no longer knocked out. Mirror setDefeated(false): drop the Unconscious
+        // condition applyPCDefeat added, so a revived PC doesn't keep its -4 Perception/Reflex + off-guard.
+        if (c.isPC) c.conditions = c.conditions.filter(x => x.name.toLowerCase() !== 'unconscious')
+      }
     })
     syncPcHp(get().combatants.find(c => c.id === id))
   },

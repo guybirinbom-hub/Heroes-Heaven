@@ -20,6 +20,7 @@ import { PcStatsCardExtra } from './PcStatsCardExtra';
 import { MemberTurnButton } from './MemberTurnButton';
 import { useCombatStore } from '../../tracker/src/store/combatStore';
 import { useSettingsStore } from '../../tracker/src/store/settingsStore';
+import { useWindowStore } from '../../tracker/src/store/windowStore';
 import { useLayoutStore, leafCids } from '../../tracker/src/store/layoutStore';
 import { GameDataProvider } from '../../tracker/src/data/gameDataContext';
 import { HostSearchProvider, type HostSearchRecord } from '../../tracker/src/data/hostSearchContext';
@@ -148,7 +149,7 @@ export function CampaignTracker({
    */
   const syncCampaignParty = usePartyStore((s) => s.syncCampaignParty);
   const hostPcs = useMemo(
-    () => localMembers.map((mem) => ({ name: mem.name, maxHP: pcStats.byName.get(mem.name.trim().toLowerCase())?.maxHP })),
+    () => localMembers.map((mem) => ({ charId: mem.charId, name: mem.name, maxHP: pcStats.byName.get(mem.name.trim().toLowerCase())?.maxHP })),
     [localMembers, pcStats],
   );
   useLayoutEffect(() => {
@@ -166,6 +167,10 @@ export function CampaignTracker({
    * data (GlobalSearch adds them), since HH has no bestiary content.
    */
   const [descTarget, setDescTarget] = useState<{ bucket: string; id: string } | null>(null);
+  // The tracker's floating stat-block windows join the root stacking context at z ≥ 501 (climbing on
+  // each focus), so the host-search description popup — portalled to <body> at HH's .picker-overlay
+  // z-index — would paint BEHIND any open window. Lift its wrapper above the current top.
+  const floatingTopZ = useWindowStore((s) => s.topZ);
   const searchRecords = useMemo<HostSearchRecord[]>(() => {
     const skip = new Set(['modes', 'runes', 'stances']);
     const db = content as unknown as Record<string, Record<string, { name?: string }> | undefined>;
@@ -587,7 +592,7 @@ export function CampaignTracker({
                       const st = pcStats.byId.get(mem.charId);
                       return (
                         <>
-                          <MemberTurnButton campaignId={m.id} name={mem.name} />
+                          <MemberTurnButton campaignId={m.id} charId={mem.charId} name={mem.name} />
                           {st ? <PcStatsCardExtra stats={st} detail={pcDetail} /> : null}
                         </>
                       );
@@ -631,11 +636,13 @@ export function CampaignTracker({
         {/* Global-search result → HH's own description popup. Portalled to <body> so it renders in
             HH's normal CSS environment, not the tracker's scoped stylesheet. */}
         {descTarget && descRec && createPortal(
-          <DescriptionModal
-            root={{ title: descRec.name, description: descRec.description ?? '', descRefs: descRec.descRefs, key: descTarget.bucket, slug: descTarget.id }}
-            onClose={() => setDescTarget(null)}
-            onExit={() => setDescTarget(null)}
-          />,
+          <div style={{ position: 'fixed', inset: 0, zIndex: floatingTopZ + 10 }}>
+            <DescriptionModal
+              root={{ title: descRec.name, description: descRec.description ?? '', descRefs: descRec.descRefs, key: descTarget.bucket, slug: descTarget.id }}
+              onClose={() => setDescTarget(null)}
+              onExit={() => setDescTarget(null)}
+            />
+          </div>,
           document.body,
         )}
 
