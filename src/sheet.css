@@ -5044,6 +5044,16 @@ button.strike-name:hover {
   align-items: center;
   gap: 6px;
 }
+.sd-container-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.sd-container-chips .ec-chip:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
 .sd-uses-btn {
   width: 24px;
   height: 24px;

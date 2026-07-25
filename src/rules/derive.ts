@@ -1734,3 +1734,61 @@ export function containerLoads(c: Character, db: ContentDatabase): Record<string
   }
   return loads;
 }
+
+/** A container an item may be stowed into, from the perspective of one inventory item. */
+export interface ContainerOption {
+  instanceId: string;
+  name: string;
+  capacity?: number;
+  used: number;
+  /** Free Bulk if the item were placed here (its own Bulk discounted if it's already inside). */
+  remaining?: number;
+  /** Whether the item's effective Bulk fits the remaining capacity. */
+  fits: boolean;
+  /** Whether the item is currently stowed in this container. */
+  current: boolean;
+}
+
+/** The containers `instanceId` may be stowed into: every container in the inventory EXCEPT the item
+ *  itself and any of its own descendants (which would form a cycle), each flagged with whether the
+ *  item fits the remaining capacity. Mirrors InventoryTab's drag `canDrop`/`fitsIn` rules so a
+ *  tap-to-stow control agrees with drag-and-drop. Takes the raw inventory so non-sheet callers (the
+ *  item-detail popup) don't need a full Character — the derive helpers only read `.inventory`. */
+export function containerOptionsFor(inventory: InventoryItem[], db: ContentDatabase, instanceId: string): ContainerOption[] {
+  const c = { inventory } as Character;
+  const inv = inventory.find((i) => i.instanceId === instanceId);
+  if (!inv) return [];
+  const { containerIds } = childrenByContainer(c, db);
+  const loads = containerLoads(c, db);
+  const effB = effectiveItemBulk(c, db, instanceId);
+  const isInside = (childId: string, ancestorId: string): boolean => {
+    let cur = inventory.find((i) => i.instanceId === childId);
+    const seen = new Set<string>();
+    while (cur?.containerInstanceId && !seen.has(cur.containerInstanceId)) {
+      if (cur.containerInstanceId === ancestorId) return true;
+      seen.add(cur.containerInstanceId);
+      cur = inventory.find((i) => i.instanceId === cur!.containerInstanceId);
+    }
+    return false;
+  };
+  const opts: ContainerOption[] = [];
+  for (const cont of inventory) {
+    if (!containerIds.has(cont.instanceId)) continue; // only containers
+    if (cont.instanceId === instanceId) continue; // not itself
+    if (isInside(cont.instanceId, instanceId)) continue; // not into its own descendant (cycle)
+    const load = loads[cont.instanceId] ?? { used: 0, capacity: undefined };
+    const already = inv.containerInstanceId === cont.instanceId;
+    const cap = load.capacity;
+    const base = load.used - (already ? effB : 0); // load without this item
+    opts.push({
+      instanceId: cont.instanceId,
+      name: db.items[cont.itemId]?.name ?? 'Container',
+      capacity: cap,
+      used: load.used,
+      remaining: cap == null ? undefined : Math.round((cap - base) * 10) / 10,
+      fits: cap == null ? true : base + effB <= cap + 1e-9,
+      current: already,
+    });
+  }
+  return opts;
+}

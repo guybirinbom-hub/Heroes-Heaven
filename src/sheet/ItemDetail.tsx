@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { ContentDatabase, InventoryItem, Item } from '../rules/types';
 import { removeInventoryItem, setItemCounter, setItemQuantity, updateInventoryItem, type PlayUpdater } from '../rules/play';
+import { containerOptionsFor } from '../rules/derive';
 import { formatPrice } from '../rules/wealth';
 import { useEscapeClose } from './useEscapeClose';
 import { confirmDialog } from './confirm';
@@ -313,6 +314,60 @@ export function ItemDetail({
               </span>
             </div>
           )}
+          {onPlay &&
+            (() => {
+              // Stow this item in a container (or take it out). This is the tap-friendly path — the
+              // Inventory tab also allows drag-and-drop, but that's disabled on touch, so without this
+              // control phone users can't nest anything and a backpack's ignored Bulk never applies.
+              const opts = containerOptionsFor(inventory, content, id);
+              const currentId = inv.containerInstanceId;
+              if (opts.length === 0 && !currentId) return null; // nothing to stow into and not stowed
+              const currentName = currentId
+                ? content.items[inventory.find((i) => i.instanceId === currentId)?.itemId ?? '']?.name ?? 'a container'
+                : null;
+              const stow = (dest?: string) =>
+                onPlay(
+                  (p) =>
+                    updateInventoryItem(
+                      p,
+                      id,
+                      dest
+                        ? { containerInstanceId: dest, worn: false, equipped: false, invested: false }
+                        : { containerInstanceId: undefined },
+                    ),
+                  `stow:${id}`,
+                );
+              return (
+                <div className="sd-uses">
+                  <span className="sd-uses-title">Container</span>
+                  <div className="sd-container-chips">
+                    <button className={'ec-chip' + (!currentId ? ' on' : '')} onClick={() => stow(undefined)}>
+                      Carried
+                    </button>
+                    {opts.map((o) => (
+                      <button
+                        key={o.instanceId}
+                        className={'ec-chip' + (o.current ? ' on' : '')}
+                        disabled={!o.fits && !o.current}
+                        onClick={() => stow(o.instanceId)}
+                        title={
+                          o.capacity != null
+                            ? `${o.used}/${o.capacity} Bulk used${!o.fits && !o.current ? ' — no room' : ''}`
+                            : undefined
+                        }
+                      >
+                        {o.name}
+                      </button>
+                    ))}
+                  </div>
+                  <span className="sd-uses-hint">
+                    {currentId
+                      ? `Stowed in ${currentName} — a worn backpack ignores the first 2 Bulk of its contents.`
+                      : 'Stow this in a worn container (e.g. a backpack ignores the first 2 Bulk it holds) to reduce your Bulk.'}
+                  </span>
+                </div>
+              );
+            })()}
           {item.spellSlot && (
             <div className="sd-uses">
               <span className="sd-uses-title">Stored spell</span>
