@@ -344,7 +344,17 @@ export function MainTab({
               {formatMod(mod)}
             </span>
           ))}
-          <span className="strike-dmg">{s.damage}</span>
+          {/* A strike's attack roll and its damage take conditional bonuses from different sources
+              (Bestiary Scholar sharpens the attack; Pivot Strike adds damage), so they star apart. */}
+          {statHasSituational(character, { kind: 'strikeAttack', instanceId: s.instanceId }, content) && (
+            <SituationalStar />
+          )}
+          <span className="strike-dmg">
+            {s.damage}
+            {statHasSituational(character, { kind: 'strikeDamage', instanceId: s.instanceId }, content) && (
+              <SituationalStar />
+            )}
+          </span>
         </div>
         {(s.group || (s.ranged && s.range != null)) && (
           <div className="strike-meta">

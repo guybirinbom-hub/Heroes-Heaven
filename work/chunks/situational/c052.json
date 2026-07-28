@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "forgefathers-seal",
+  "name": "Forgefather's Seal"
+ },
+ {
+  "collection": "items",
+  "id": "philosophers-extractor",
+  "name": "Philosopher's Extractor"
+ },
+ {
+  "collection": "items",
+  "id": "serithtial",
+  "name": "Serithtial"
+ },
+ {
+  "collection": "items",
+  "id": "blackaxe",
+  "name": "Blackaxe"
+ },
+ {
+  "collection": "items",
+  "id": "camouflaging-chromatophores",
+  "name": "Camouflaging Chromatophores"
+ },
+ {
+  "collection": "items",
+  "id": "camouflaging-chromatophores-lesser",
+  "name": "Camouflaging Chromatophores (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "camouflaging-chromatophores-greater",
+  "name": "Camouflaging Chromatophores (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "tubeworm-gland",
+  "name": "Tubeworm Gland"
+ },
+ {
+  "collection": "items",
+  "id": "whip-tail",
+  "name": "Whip Tail"
+ },
+ {
+  "collection": "items",
+  "id": "constricting-whip-tail",
+  "name": "Constricting Whip Tail"
+ },
+ {
+  "collection": "items",
+  "id": "mantis-plate",
+  "name": "Mantis Plate"
+ },
+ {
+  "collection": "items",
+  "id": "hippopotamus-klar",
+  "name": "Hippopotamus Klar"
+ },
+ {
+  "collection": "items",
+  "id": "catoblepas-maul",
+  "name": "Catoblepas Maul"
+ },
+ {
+  "collection": "items",
+  "id": "constricting-meteor",
+  "name": "Constricting Meteor"
+ },
+ {
+  "collection": "items",
+  "id": "whip-tongue-sling",
+  "name": "Whip-Tongue Sling"
+ },
+ {
+  "collection": "items",
+  "id": "arachnolute",
+  "name": "Arachnolute"
+ },
+ {
+  "collection": "items",
+  "id": "cauthooj-bagpipes",
+  "name": "Cauthooj Bagpipes"
+ },
+ {
+  "collection": "items",
+  "id": "amulet-of-the-hellcat",
+  "name": "Amulet of the Hellcat"
+ },
+ {
+  "collection": "items",
+  "id": "dweomerveil",
+  "name": "Dweomerveil"
+ },
+ {
+  "collection": "items",
+  "id": "mantle-of-the-tikbalang",
+  "name": "Mantle of the Tikbalang"
+ },
+ {
+  "collection": "items",
+  "id": "orm-choker",
+  "name": "Orm Choker"
+ },
+ {
+  "collection": "items",
+  "id": "aroma-concealer",
+  "name": "Aroma Concealer"
+ },
+ {
+  "collection": "items",
+  "id": "hydra-mutagen",
+  "name": "Hydra Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "ommatophoric-mutagen",
+  "name": "Ommatophoric Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "pallesthetic-mutagen",
+  "name": "Pallesthetic Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "viperous-elixir",
+  "name": "Viperous Elixir"
+ },
+ {
+  "collection": "items",
+  "id": "viperous-elixir-lesser",
+  "name": "Viperous Elixir (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "viperous-elixir-moderate",
+  "name": "Viperous Elixir (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "viperous-elixir-greater",
+  "name": "Viperous Elixir (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "animal-blind",
+  "name": "Animal Blind"
+ },
+ {
+  "collection": "items",
+  "id": "portable-animal-blind",
+  "name": "Portable Animal Blind"
+ },
+ {
+  "collection": "items",
+  "id": "animal-call",
+  "name": "Animal Call"
+ },
+ {
+  "collection": "items",
+  "id": "superior-catch-pole",
+  "name": "Superior Catch Pole"
+ },
+ {
+  "collection": "items",
+  "id": "field-guide",
+  "name": "Field Guide"
+ },
+ {
+  "collection": "items",
+  "id": "high-contrast-goggles",
+  "name": "High-Contrast Goggles"
+ },
+ {
+  "collection": "items",
+  "id": "hippogriff-feather",
+  "name": "Hippogriff Feather"
+ },
+ {
+  "collection": "items",
+  "id": "dragonhide-armor",
+  "name": "Dragonhide Armor"
+ },
+ {
+  "collection": "items",
+  "id": "dragonhide-armor-standard-grade",
+  "name": "Dragonhide Armor (Standard-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "dragonhide-armor-high-grade",
+  "name": "Dragonhide Armor (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "ghoul-hide",
+  "name": "Ghoul Hide"
+ }
+]

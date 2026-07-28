@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "feats",
+  "id": "consume-energy",
+  "name": "Consume Energy"
+ },
+ {
+  "collection": "feats",
+  "id": "borrowed-ability",
+  "name": "Borrowed Ability"
+ },
+ {
+  "collection": "feats",
+  "id": "bone-spikes",
+  "name": "Bone Spikes"
+ },
+ {
+  "collection": "feats",
+  "id": "dracomancer",
+  "name": "Dracomancer"
+ },
+ {
+  "collection": "feats",
+  "id": "elite-dracomancer",
+  "name": "Elite Dracomancer"
+ },
+ {
+  "collection": "feats",
+  "id": "terra-dragonblood",
+  "name": "Terra Dragonblood"
+ },
+ {
+  "collection": "feats",
+  "id": "draconic-acolyte-dedication",
+  "name": "Draconic Acolyte Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "expert-skysage-divination",
+  "name": "Expert Skysage Divination"
+ },
+ {
+  "collection": "feats",
+  "id": "master-skysage-divination",
+  "name": "Master Skysage Divination"
+ },
+ {
+  "collection": "feats",
+  "id": "avenging-runelord-dedication",
+  "name": "Avenging Runelord Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "autonomous-arms",
+  "name": "Autonomous Arms"
+ },
+ {
+  "collection": "feats",
+  "id": "heroic-scion-dedication",
+  "name": "Heroic Scion Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "ive-been-here-before",
+  "name": "I've Been Here Before"
+ },
+ {
+  "collection": "feats",
+  "id": "warshard-warrior-dedication",
+  "name": "Warshard Warrior Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "transmute-weapon",
+  "name": "Transmute Weapon"
+ },
+ {
+  "collection": "feats",
+  "id": "warshard-rune",
+  "name": "Warshard Rune"
+ },
+ {
+  "collection": "feats",
+  "id": "astral-tether",
+  "name": "Astral Tether"
+ },
+ {
+  "collection": "feats",
+  "id": "homing-beacon",
+  "name": "Homing Beacon"
+ },
+ {
+  "collection": "feats",
+  "id": "whispering-steps",
+  "name": "Whispering Steps"
+ },
+ {
+  "collection": "feats",
+  "id": "breached-defenses",
+  "name": "Breached Defenses"
+ },
+ {
+  "collection": "feats",
+  "id": "share-weakness",
+  "name": "Share Weakness"
+ },
+ {
+  "collection": "feats",
+  "id": "thaumaturges-demesne",
+  "name": "Thaumaturge's Demesne"
+ },
+ {
+  "collection": "feats",
+  "id": "wonder-worker",
+  "name": "Wonder Worker"
+ },
+ {
+  "collection": "feats",
+  "id": "psychic-dedication",
+  "name": "Psychic Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "thaumaturge-dedication",
+  "name": "Thaumaturge Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "echo-of-the-fallen",
+  "name": "Echo of the Fallen"
+ },
+ {
+  "collection": "feats",
+  "id": "malleable-form",
+  "name": "Malleable Form"
+ },
+ {
+  "collection": "feats",
+  "id": "fake-it-till-you-make-it",
+  "name": "Fake It Till You Make it"
+ },
+ {
+  "collection": "feats",
+  "id": "time-mage-dedication",
+  "name": "Time Mage Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "chronoskimmer-dedication",
+  "name": "Chronoskimmer Dedication"
+ }
+]

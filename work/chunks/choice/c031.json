@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "backgrounds",
+  "id": "gambler",
+  "name": "Gambler"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "gladiator",
+  "name": "Gladiator"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "guard",
+  "name": "Guard"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "herbalist",
+  "name": "Herbalist"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "hermit",
+  "name": "Hermit"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "hunter",
+  "name": "Hunter"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "laborer",
+  "name": "Laborer"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "martial-disciple",
+  "name": "Martial Disciple"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "merchant",
+  "name": "Merchant"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "miner",
+  "name": "Miner"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "noble",
+  "name": "Noble"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "nomad",
+  "name": "Nomad"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "prisoner",
+  "name": "Prisoner"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "raised-by-belief",
+  "name": "Raised by Belief"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "sailor",
+  "name": "Sailor"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "scholar",
+  "name": "Scholar"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "scout",
+  "name": "Scout"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "street-urchin",
+  "name": "Street Urchin"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "teacher",
+  "name": "Teacher"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "tinker",
+  "name": "Tinker"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "warrior",
+  "name": "Warrior"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "mortuarium-survivor",
+  "name": "Mortuarium Survivor"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "astrologer",
+  "name": "Astrologer"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "barber",
+  "name": "Barber"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "bookkeeper",
+  "name": "Bookkeeper"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "courier",
+  "name": "Courier"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "insurgent",
+  "name": "Insurgent"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "outrider",
+  "name": "Outrider"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "pilgrim",
+  "name": "Pilgrim"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "root-worker",
+  "name": "Root Worker"
+ }
+]

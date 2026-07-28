@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "items",
+  "id": "the-trader",
+  "name": "The Trader"
+ },
+ {
+  "collection": "items",
+  "id": "conch-of-otherworldly-seas",
+  "name": "Conch of Otherworldly Seas"
+ },
+ {
+  "collection": "items",
+  "id": "storm-flash",
+  "name": "Storm Flash"
+ },
+ {
+  "collection": "items",
+  "id": "storm-flash-greater",
+  "name": "Storm Flash (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "sneaky-key",
+  "name": "Sneaky Key"
+ },
+ {
+  "collection": "items",
+  "id": "possibility-tome",
+  "name": "Possibility Tome"
+ },
+ {
+  "collection": "items",
+  "id": "skeleton-key",
+  "name": "Skeleton Key"
+ },
+ {
+  "collection": "items",
+  "id": "skeleton-key-greater",
+  "name": "Skeleton Key (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "dweomerveil",
+  "name": "Dweomerveil"
+ },
+ {
+  "collection": "items",
+  "id": "silvertongue-mutagen",
+  "name": "Silvertongue Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "silvertongue-mutagen-lesser",
+  "name": "Silvertongue Mutagen (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "silvertongue-mutagen-moderate",
+  "name": "Silvertongue Mutagen (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "silvertongue-mutagen-greater",
+  "name": "Silvertongue Mutagen (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "silvertongue-mutagen-major",
+  "name": "Silvertongue Mutagen (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "taper-of-sanctification",
+  "name": "Taper of Sanctification"
+ },
+ {
+  "collection": "items",
+  "id": "ring-of-maniacal-devices",
+  "name": "Ring of Maniacal Devices"
+ },
+ {
+  "collection": "items",
+  "id": "ring-of-maniacal-devices-greater",
+  "name": "Ring of Maniacal Devices (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "storied-skin",
+  "name": "Storied Skin"
+ },
+ {
+  "collection": "items",
+  "id": "essence-forge",
+  "name": "Essence Forge"
+ },
+ {
+  "collection": "items",
+  "id": "essence-forge-lesser",
+  "name": "Essence Forge (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "essence-forge-moderate",
+  "name": "Essence Forge (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "essence-forge-greater",
+  "name": "Essence Forge (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "paradigm-cube",
+  "name": "Paradigm Cube"
+ },
+ {
+  "collection": "items",
+  "id": "cape-of-justice",
+  "name": "Cape of Justice"
+ },
+ {
+  "collection": "items",
+  "id": "stone-of-unrivaled-skill",
+  "name": "Stone of Unrivaled Skill"
+ },
+ {
+  "collection": "items",
+  "id": "ring-of-fair-assessment",
+  "name": "Ring of Fair Assessment"
+ },
+ {
+  "collection": "items",
+  "id": "muse",
+  "name": "Muse"
+ },
+ {
+  "collection": "items",
+  "id": "artistic-perfection",
+  "name": "Artistic Perfection"
+ },
+ {
+  "collection": "items",
+  "id": "ancestors-call",
+  "name": "Ancestors' Call"
+ },
+ {
+  "collection": "items",
+  "id": "righteous-call",
+  "name": "Righteous Call"
+ }
+]

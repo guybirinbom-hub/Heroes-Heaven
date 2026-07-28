@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "hagbane-biscuit",
+  "name": "Hagbane Biscuit"
+ },
+ {
+  "collection": "items",
+  "id": "hardshell-surki-carapace",
+  "name": "Hardshell Surki Carapace"
+ },
+ {
+  "collection": "items",
+  "id": "heartmoss-greater",
+  "name": "Heartmoss (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "heartmoss-major",
+  "name": "Heartmoss (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "heros-plate-greater",
+  "name": "Hero's Plate (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "inflammation-flask-greater",
+  "name": "Inflammation Flask (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "inflammation-flask-major",
+  "name": "Inflammation Flask (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "inflammation-flask-moderate",
+  "name": "Inflammation Flask (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "inspiring-spotlight-mounted",
+  "name": "Inspiring Spotlight (Mounted)"
+ },
+ {
+  "collection": "items",
+  "id": "inspiring-spotlight-portable",
+  "name": "Inspiring Spotlight (Portable)"
+ },
+ {
+  "collection": "items",
+  "id": "ka-stone",
+  "name": "Ka Stone"
+ },
+ {
+  "collection": "items",
+  "id": "killers-belt-greater",
+  "name": "Killer's Belt (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "kolss-oath-greater",
+  "name": "Kols's Oath (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "lastwall-soup-greater",
+  "name": "Lastwall Soup (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "lastwall-soup-improved",
+  "name": "Lastwall Soup (Improved)"
+ },
+ {
+  "collection": "items",
+  "id": "magical-medal-gorillas-might",
+  "name": "Magical Medal (Gorilla's Might)"
+ },
+ {
+  "collection": "items",
+  "id": "magical-medal-griffons-heart",
+  "name": "Magical Medal (Griffon's Heart)"
+ },
+ {
+  "collection": "items",
+  "id": "magical-medal-wolf-pack",
+  "name": "Magical Medal (Wolf Pack)"
+ },
+ {
+  "collection": "items",
+  "id": "medics-armband-greater",
+  "name": "Medic's Armband (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "mythic-resilient",
+  "name": "Mythic Resilient"
+ },
+ {
+  "collection": "items",
+  "id": "nail-bomb-greater",
+  "name": "Nail Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "nail-bomb-major",
+  "name": "Nail Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "nail-bomb-moderate",
+  "name": "Nail Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "oathbow",
+  "name": "Oathbow"
+ },
+ {
+  "collection": "items",
+  "id": "olfactory-obfuscator-lesser",
+  "name": "Olfactory Obfuscator (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "one-days-breath",
+  "name": "One Day's Breath"
+ },
+ {
+  "collection": "items",
+  "id": "orc-warmask",
+  "name": "Orc Warmask"
+ },
+ {
+  "collection": "items",
+  "id": "peshpine-grenade-greater",
+  "name": "Peshpine Grenade (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "peshpine-grenade-lesser",
+  "name": "Peshpine Grenade (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "peshpine-grenade-major",
+  "name": "Peshpine Grenade (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "peshpine-grenade-moderate",
+  "name": "Peshpine Grenade (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "plate-armor-of-the-deep",
+  "name": "Plate Armor of the Deep"
+ },
+ {
+  "collection": "items",
+  "id": "razmiri-mask-gold",
+  "name": "Razmiri Mask (Gold)"
+ },
+ {
+  "collection": "items",
+  "id": "razmiri-mask-porcelain",
+  "name": "Razmiri Mask (Porcelain)"
+ },
+ {
+  "collection": "items",
+  "id": "razmiri-mask-silver",
+  "name": "Razmiri Mask (Silver)"
+ },
+ {
+  "collection": "items",
+  "id": "rite-of-reinforcement-exoskeleton",
+  "name": "Rite of Reinforcement Exoskeleton"
+ },
+ {
+  "collection": "items",
+  "id": "runic-skullcap",
+  "name": "Runic Skullcap"
+ },
+ {
+  "collection": "items",
+  "id": "sailors-collar-greater",
+  "name": "Sailor's Collar (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "shrine-inarizushi",
+  "name": "Shrine Inarizushi"
+ },
+ {
+  "collection": "items",
+  "id": "signifers-mask",
+  "name": "Signifer's Mask"
+ }
+]

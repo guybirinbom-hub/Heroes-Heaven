@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "feats",
+  "id": "split-hex",
+  "name": "Split Hex"
+ },
+ {
+  "collection": "feats",
+  "id": "split-slot",
+  "name": "Split Slot"
+ },
+ {
+  "collection": "feats",
+  "id": "bard-dedication",
+  "name": "Bard Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "cleric-dedication",
+  "name": "Cleric Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "druid-dedication",
+  "name": "Druid Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "witch-dedication",
+  "name": "Witch Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "wizard-dedication",
+  "name": "Wizard Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "additional-lore",
+  "name": "Additional Lore"
+ },
+ {
+  "collection": "feats",
+  "id": "adopted-ancestry",
+  "name": "Adopted Ancestry"
+ },
+ {
+  "collection": "feats",
+  "id": "assurance",
+  "name": "Assurance"
+ },
+ {
+  "collection": "feats",
+  "id": "automatic-knowledge",
+  "name": "Automatic Knowledge"
+ },
+ {
+  "collection": "feats",
+  "id": "charming-liar",
+  "name": "Charming Liar"
+ },
+ {
+  "collection": "feats",
+  "id": "magical-shorthand",
+  "name": "Magical Shorthand"
+ },
+ {
+  "collection": "feats",
+  "id": "pet",
+  "name": "Pet"
+ },
+ {
+  "collection": "feats",
+  "id": "quick-unlock",
+  "name": "Quick Unlock"
+ },
+ {
+  "collection": "feats",
+  "id": "train-animal",
+  "name": "Train Animal"
+ },
+ {
+  "collection": "feats",
+  "id": "coral-reserve",
+  "name": "Coral Reserve"
+ },
+ {
+  "collection": "feats",
+  "id": "sequestered-spell",
+  "name": "Sequestered Spell"
+ },
+ {
+  "collection": "feats",
+  "id": "secondary-adaptation",
+  "name": "Secondary Adaptation"
+ },
+ {
+  "collection": "feats",
+  "id": "grand-metamorphosis",
+  "name": "Grand Metamorphosis"
+ },
+ {
+  "collection": "feats",
+  "id": "unlimited-pluripotency",
+  "name": "Unlimited Pluripotency"
+ },
+ {
+  "collection": "feats",
+  "id": "animal-strength",
+  "name": "Animal Strength"
+ },
+ {
+  "collection": "feats",
+  "id": "chaining-mutation",
+  "name": "Chaining Mutation"
+ },
+ {
+  "collection": "feats",
+  "id": "levered-swing",
+  "name": "Levered Swing"
+ },
+ {
+  "collection": "feats",
+  "id": "slurp-up",
+  "name": "Slurp Up"
+ },
+ {
+  "collection": "feats",
+  "id": "evolved-spellhorn",
+  "name": "Evolved Spellhorn"
+ },
+ {
+  "collection": "feats",
+  "id": "resplendent-spellhorn",
+  "name": "Resplendent Spellhorn"
+ },
+ {
+  "collection": "feats",
+  "id": "arcane-dragonblood",
+  "name": "Arcane Dragonblood"
+ },
+ {
+  "collection": "feats",
+  "id": "divine-dragonblood",
+  "name": "Divine Dragonblood"
+ },
+ {
+  "collection": "feats",
+  "id": "occult-dragonblood",
+  "name": "Occult Dragonblood"
+ }
+]

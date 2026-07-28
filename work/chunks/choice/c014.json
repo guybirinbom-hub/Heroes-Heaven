@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-toxicologist",
+  "name": "Perpetual Perfection (Toxicologist)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-bomber",
+  "name": "Perpetual Potency (Bomber)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-chirurgeon",
+  "name": "Perpetual Potency (Chirurgeon)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-mutagenist",
+  "name": "Perpetual Potency (Mutagenist)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-toxicologist",
+  "name": "Perpetual Potency (Toxicologist)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "runelord",
+  "name": "Runelord"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "school-of-rooted-wisdom",
+  "name": "School of Rooted Wisdom"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "school-of-thassilonian-rune-magic",
+  "name": "School of Thassilonian Rune Magic"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "second-gates-threshold",
+  "name": "Second Gate's Threshold"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "spell-repertoire-bard",
+  "name": "Spell Repertoire (Bard)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "spell-repertoire-oracle",
+  "name": "Spell Repertoire (Oracle)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "spell-repertoire-psychic",
+  "name": "Spell Repertoire (Psychic)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "spell-repertoire-sorcerer",
+  "name": "Spell Repertoire (Sorcerer)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "superstition-instinct",
+  "name": "Superstition Instinct"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-infinite-eye",
+  "name": "The Infinite Eye"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "third-gates-threshold",
+  "name": "Third Gate's Threshold"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "vindicator",
+  "name": "Vindicator"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "warrior-of-legend",
+  "name": "Warrior of Legend"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "weapon-innovation",
+  "name": "Weapon Innovation"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "mutagenic-flashback",
+  "name": "Mutagenic Flashback"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "iron-command",
+  "name": "Iron Command"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "base-kinesis",
+  "name": "Base Kinesis"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "elemental-blast",
+  "name": "Elemental Blast"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "restore-the-mind",
+  "name": "Restore the Mind"
+ },
+ {
+  "collection": "items",
+  "id": "gloves-of-precision",
+  "name": "Gloves of Precision"
+ },
+ {
+  "collection": "items",
+  "id": "greater-gloves-of-precision",
+  "name": "Greater Gloves of Precision"
+ },
+ {
+  "collection": "items",
+  "id": "eye-of-the-wise",
+  "name": "Eye of the Wise"
+ },
+ {
+  "collection": "items",
+  "id": "insistent-door-knocker",
+  "name": "Insistent Door Knocker"
+ },
+ {
+  "collection": "items",
+  "id": "insistent-door-knocker-greater",
+  "name": "Insistent Door Knocker (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "insistent-door-knocker-major",
+  "name": "Insistent Door Knocker (Major)"
+ }
+]

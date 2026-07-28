@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "items",
+  "id": "fiendish-bargain",
+  "name": "Fiendish Bargain"
+ },
+ {
+  "collection": "items",
+  "id": "profane-fervor",
+  "name": "Profane Fervor"
+ },
+ {
+  "collection": "items",
+  "id": "awakened-cold-iron-shot",
+  "name": "Awakened Cold Iron Shot"
+ },
+ {
+  "collection": "items",
+  "id": "fate-tempters-ring",
+  "name": "Fate Tempter's Ring"
+ },
+ {
+  "collection": "items",
+  "id": "fulu-of-concealment",
+  "name": "Fulu of Concealment"
+ },
+ {
+  "collection": "items",
+  "id": "tyrants-writs",
+  "name": "Tyrant's Writs"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-chromatic-burst-4th-rank",
+  "name": "Wand of Chromatic Burst (4th-rank)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-chromatic-burst-7th-rank",
+  "name": "Wand of Chromatic Burst (7th-rank)"
+ },
+ {
+  "collection": "items",
+  "id": "aon-fulus-of-concealment",
+  "name": "Fulus of Concealment"
+ },
+ {
+  "collection": "items",
+  "id": "aon-awakened-metal-shot",
+  "name": "Awakened Metal Shot"
+ },
+ {
+  "collection": "items",
+  "id": "aon-tyrant-s-writ",
+  "name": "Tyrant's Writ"
+ },
+ {
+  "collection": "items",
+  "id": "aon-propaganda",
+  "name": "Propaganda"
+ },
+ {
+  "collection": "items",
+  "id": "aon-muse",
+  "name": "Muse"
+ },
+ {
+  "collection": "items",
+  "id": "aon-artistic-perfection",
+  "name": "Artistic Perfection"
+ },
+ {
+  "collection": "items",
+  "id": "aon-ancestors-call",
+  "name": "Ancestors' Call"
+ },
+ {
+  "collection": "items",
+  "id": "aon-righteous-call",
+  "name": "Righteous Call"
+ },
+ {
+  "collection": "items",
+  "id": "aon-fiendish-bargain",
+  "name": "Fiendish Bargain"
+ },
+ {
+  "collection": "items",
+  "id": "aon-profane-fervor",
+  "name": "Profane Fervor"
+ },
+ {
+  "collection": "heritages",
+  "id": "anvil-dwarf",
+  "name": "Anvil Dwarf"
+ },
+ {
+  "collection": "heritages",
+  "id": "elemental-heart-dwarf",
+  "name": "Elemental Heart Dwarf"
+ },
+ {
+  "collection": "heritages",
+  "id": "beastkin",
+  "name": "Beastkin"
+ },
+ {
+  "collection": "heritages",
+  "id": "adaptive-anadi",
+  "name": "Adaptive Anadi"
+ },
+ {
+  "collection": "heritages",
+  "id": "forge-blessed-dwarf",
+  "name": "Forge-Blessed Dwarf"
+ },
+ {
+  "collection": "heritages",
+  "id": "fey-touched-gnome",
+  "name": "Fey-touched Gnome"
+ },
+ {
+  "collection": "heritages",
+  "id": "versatile-human",
+  "name": "Versatile Human"
+ },
+ {
+  "collection": "heritages",
+  "id": "mottle-coat-centaur",
+  "name": "Mottle-Coat Centaur"
+ },
+ {
+  "collection": "heritages",
+  "id": "spellhorn-kobold",
+  "name": "Spellhorn Kobold"
+ },
+ {
+  "collection": "heritages",
+  "id": "tsukumogami-poppet",
+  "name": "Tsukumogami Poppet"
+ },
+ {
+  "collection": "heritages",
+  "id": "shadow-of-the-hermit",
+  "name": "Shadow of the Hermit"
+ },
+ {
+  "collection": "heritages",
+  "id": "born-of-celestial",
+  "name": "Born of Celestial"
+ }
+]

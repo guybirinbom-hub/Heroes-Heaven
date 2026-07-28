@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "feats",
+  "id": "kineticist-dedication",
+  "name": "Kineticist Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "add-element",
+  "name": "Add Element"
+ },
+ {
+  "collection": "feats",
+  "id": "call-worm-spirit",
+  "name": "Call Worm Spirit"
+ },
+ {
+  "collection": "feats",
+  "id": "march-the-mines",
+  "name": "March the Mines"
+ },
+ {
+  "collection": "feats",
+  "id": "expert-longevity",
+  "name": "Expert Longevity"
+ },
+ {
+  "collection": "feats",
+  "id": "otherworldly-acumen",
+  "name": "Otherworldly Acumen"
+ },
+ {
+  "collection": "feats",
+  "id": "rough-rider",
+  "name": "Rough Rider"
+ },
+ {
+  "collection": "feats",
+  "id": "shadow-self",
+  "name": "Shadow Self"
+ },
+ {
+  "collection": "feats",
+  "id": "adapted-cantrip",
+  "name": "Adapted Cantrip"
+ },
+ {
+  "collection": "feats",
+  "id": "unconventional-weaponry",
+  "name": "Unconventional Weaponry"
+ },
+ {
+  "collection": "feats",
+  "id": "adaptive-adept",
+  "name": "Adaptive Adept"
+ },
+ {
+  "collection": "feats",
+  "id": "scion-of-many-planes",
+  "name": "Scion of Many Planes"
+ },
+ {
+  "collection": "feats",
+  "id": "elf-atavism",
+  "name": "Elf Atavism"
+ },
+ {
+  "collection": "feats",
+  "id": "combat-reading",
+  "name": "Combat Reading"
+ },
+ {
+  "collection": "feats",
+  "id": "earworm",
+  "name": "Earworm"
+ },
+ {
+  "collection": "feats",
+  "id": "advanced-domain",
+  "name": "Advanced Domain"
+ },
+ {
+  "collection": "feats",
+  "id": "ebb-and-flow",
+  "name": "Ebb and Flow"
+ },
+ {
+  "collection": "feats",
+  "id": "divine-apex",
+  "name": "Divine Apex"
+ },
+ {
+  "collection": "feats",
+  "id": "echoing-channel",
+  "name": "Echoing Channel"
+ },
+ {
+  "collection": "feats",
+  "id": "order-explorer",
+  "name": "Order Explorer"
+ },
+ {
+  "collection": "feats",
+  "id": "leshy-familiar-secrets",
+  "name": "Leshy Familiar Secrets"
+ },
+ {
+  "collection": "feats",
+  "id": "order-magic",
+  "name": "Order Magic"
+ },
+ {
+  "collection": "feats",
+  "id": "snowdrift-spell",
+  "name": "Snowdrift Spell"
+ },
+ {
+  "collection": "feats",
+  "id": "reactive-transformation",
+  "name": "Reactive Transformation"
+ },
+ {
+  "collection": "feats",
+  "id": "advanced-weapon-training",
+  "name": "Advanced Weapon Training"
+ },
+ {
+  "collection": "feats",
+  "id": "determination",
+  "name": "Determination"
+ },
+ {
+  "collection": "feats",
+  "id": "double-prey",
+  "name": "Double Prey"
+ },
+ {
+  "collection": "feats",
+  "id": "sabotage",
+  "name": "Sabotage"
+ },
+ {
+  "collection": "feats",
+  "id": "rites-of-convocation",
+  "name": "Rites of Convocation"
+ },
+ {
+  "collection": "feats",
+  "id": "incredible-familiar",
+  "name": "Incredible Familiar"
+ }
+]

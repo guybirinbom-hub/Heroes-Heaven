@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "handwraps-of-mighty-blows-1",
+  "name": "Handwraps of Mighty Blows (+1)"
+ },
+ {
+  "collection": "items",
+  "id": "handwraps-of-mighty-blows-1-striking",
+  "name": "Handwraps of Mighty Blows (+1 striking)"
+ },
+ {
+  "collection": "items",
+  "id": "handwraps-of-mighty-blows-2-striking",
+  "name": "Handwraps of Mighty Blows (+2 striking)"
+ },
+ {
+  "collection": "items",
+  "id": "handwraps-of-mighty-blows-2-greater-striking",
+  "name": "Handwraps of Mighty Blows (+2 greater striking)"
+ },
+ {
+  "collection": "items",
+  "id": "handwraps-of-mighty-blows-3-greater-striking",
+  "name": "Handwraps of Mighty Blows (+3 greater striking)"
+ },
+ {
+  "collection": "items",
+  "id": "handwraps-of-mighty-blows-3-major-striking",
+  "name": "Handwraps of Mighty Blows (+3 major striking)"
+ },
+ {
+  "collection": "items",
+  "id": "healers-gloves",
+  "name": "Healer's Gloves"
+ },
+ {
+  "collection": "items",
+  "id": "healers-gloves-greater",
+  "name": "Healer's Gloves (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "humbug-pocket",
+  "name": "Humbug Pocket"
+ },
+ {
+  "collection": "items",
+  "id": "humbug-pocket-greater",
+  "name": "Humbug Pocket (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "inexplicable-apparatus",
+  "name": "Inexplicable Apparatus"
+ },
+ {
+  "collection": "items",
+  "id": "lifting-belt",
+  "name": "Lifting Belt"
+ },
+ {
+  "collection": "items",
+  "id": "living-mantle",
+  "name": "Living Mantle"
+ },
+ {
+  "collection": "items",
+  "id": "living-mantle-greater",
+  "name": "Living Mantle (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "lovers-gloves",
+  "name": "Lover's Gloves"
+ },
+ {
+  "collection": "items",
+  "id": "mages-hat",
+  "name": "Mage's Hat"
+ },
+ {
+  "collection": "items",
+  "id": "mages-hat-greater",
+  "name": "Mage's Hat (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "messengers-ring",
+  "name": "Messenger's Ring"
+ },
+ {
+  "collection": "items",
+  "id": "messengers-ring-greater",
+  "name": "Messenger's Ring (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "obsidian-goggles",
+  "name": "Obsidian Goggles"
+ },
+ {
+  "collection": "items",
+  "id": "obsidian-goggles-greater",
+  "name": "Obsidian Goggles (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "obsidian-goggles-major",
+  "name": "Obsidian Goggles (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "pendant-of-the-occult",
+  "name": "Pendant of the Occult"
+ },
+ {
+  "collection": "items",
+  "id": "pendant-of-the-occult-greater",
+  "name": "Pendant of the Occult (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "persona-mask",
+  "name": "Persona Mask"
+ },
+ {
+  "collection": "items",
+  "id": "persona-mask-greater",
+  "name": "Persona Mask (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "primeval-mistletoe",
+  "name": "Primeval Mistletoe"
+ },
+ {
+  "collection": "items",
+  "id": "primeval-mistletoe-greater",
+  "name": "Primeval Mistletoe (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "propulsive-boots",
+  "name": "Propulsive Boots"
+ },
+ {
+  "collection": "items",
+  "id": "ring-of-lies",
+  "name": "Ring of Lies"
+ },
+ {
+  "collection": "items",
+  "id": "shining-symbol",
+  "name": "Shining Symbol"
+ },
+ {
+  "collection": "items",
+  "id": "shining-symbol-greater",
+  "name": "Shining Symbol (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "shining-symbol-major",
+  "name": "Shining Symbol (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "symbol-of-conflict",
+  "name": "Symbol of Conflict"
+ },
+ {
+  "collection": "items",
+  "id": "symbol-of-conflict-greater",
+  "name": "Symbol of Conflict (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "symbol-of-conflict-major",
+  "name": "Symbol of Conflict (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "third-eye",
+  "name": "Third Eye"
+ },
+ {
+  "collection": "items",
+  "id": "ventriloquists-ring",
+  "name": "Ventriloquist's Ring"
+ },
+ {
+  "collection": "items",
+  "id": "ventriloquists-ring-greater",
+  "name": "Ventriloquist's Ring (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "whisper-of-the-first-lie",
+  "name": "Whisper of the First Lie"
+ }
+]

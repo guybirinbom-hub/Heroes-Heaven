@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "inubrix-weapon-high-grade",
+  "name": "Inubrix Weapon (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "noqual",
+  "name": "Noqual"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-chunk",
+  "name": "Noqual Chunk"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-ingot",
+  "name": "Noqual Ingot"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-object-standard-grade",
+  "name": "Noqual Object (Standard-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-object-high-grade",
+  "name": "Noqual Object (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-armor",
+  "name": "Noqual Armor"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-armor-standard-grade",
+  "name": "Noqual Armor (Standard-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-armor-high-grade",
+  "name": "Noqual Armor (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-shield",
+  "name": "Noqual Shield"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-buckler-high-grade",
+  "name": "Noqual Buckler (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-shield-high-grade",
+  "name": "Noqual Shield (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-weapon",
+  "name": "Noqual Weapon"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-weapon-standard-grade",
+  "name": "Noqual Weapon (Standard-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "noqual-weapon-high-grade",
+  "name": "Noqual Weapon (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "fanged-greater",
+  "name": "Fanged (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "fanged-major",
+  "name": "Fanged (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "brooch-of-inspiration",
+  "name": "Brooch of Inspiration"
+ },
+ {
+  "collection": "items",
+  "id": "brooch-of-inspiration-greater",
+  "name": "Brooch of Inspiration (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "brooch-of-inspiration-major",
+  "name": "Brooch of Inspiration (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-the-dreamlands",
+  "name": "Staff of the Dreamlands"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-the-dreamlands-greater",
+  "name": "Staff of the Dreamlands (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-the-dreamlands-major",
+  "name": "Staff of the Dreamlands (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "dragon-rune-bracelet",
+  "name": "Dragon Rune Bracelet"
+ },
+ {
+  "collection": "items",
+  "id": "exploration-lens",
+  "name": "Exploration Lens"
+ },
+ {
+  "collection": "items",
+  "id": "exploration-lens-detecting",
+  "name": "Exploration Lens (Detecting)"
+ },
+ {
+  "collection": "items",
+  "id": "exploration-lens-investigating",
+  "name": "Exploration Lens (Investigating)"
+ },
+ {
+  "collection": "items",
+  "id": "exploration-lens-searching",
+  "name": "Exploration Lens (Searching)"
+ },
+ {
+  "collection": "items",
+  "id": "red-rib-gill-mask",
+  "name": "Red-Rib Gill Mask"
+ },
+ {
+  "collection": "items",
+  "id": "red-rib-gill-mask-lesser",
+  "name": "Red-Rib Gill Mask (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "red-rib-gill-mask-moderate",
+  "name": "Red-Rib Gill Mask (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "red-rib-gill-mask-greater",
+  "name": "Red-Rib Gill Mask (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "deflecting-branch",
+  "name": "Deflecting Branch"
+ },
+ {
+  "collection": "items",
+  "id": "wyrm-drinker",
+  "name": "Wyrm Drinker"
+ },
+ {
+  "collection": "items",
+  "id": "spellcutter",
+  "name": "Spellcutter"
+ },
+ {
+  "collection": "items",
+  "id": "junk-bomb",
+  "name": "Junk Bomb"
+ },
+ {
+  "collection": "items",
+  "id": "junk-bomb-moderate",
+  "name": "Junk Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "junk-bomb-greater",
+  "name": "Junk Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "junk-bomb-major",
+  "name": "Junk Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "pressure-bomb",
+  "name": "Pressure Bomb"
+ }
+]

@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "feats",
+  "id": "drenching-mist",
+  "name": "Drenching Mist"
+ },
+ {
+  "collection": "feats",
+  "id": "greater-sun-blessing",
+  "name": "Greater Sun Blessing"
+ },
+ {
+  "collection": "feats",
+  "id": "irezoko-tattoo",
+  "name": "Irezoko Tattoo"
+ },
+ {
+  "collection": "feats",
+  "id": "all-of-the-animal",
+  "name": "All of the Animal"
+ },
+ {
+  "collection": "feats",
+  "id": "tame-animal",
+  "name": "Tame Animal"
+ },
+ {
+  "collection": "feats",
+  "id": "sacred-spells",
+  "name": "Sacred Spells"
+ },
+ {
+  "collection": "feats",
+  "id": "psychopomp-familiar",
+  "name": "Psychopomp Familiar"
+ },
+ {
+  "collection": "feats",
+  "id": "ghost-dedication",
+  "name": "Ghost Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "drain-soul-cage",
+  "name": "Drain Soul Cage"
+ },
+ {
+  "collection": "feats",
+  "id": "lead-the-way",
+  "name": "Lead the Way"
+ },
+ {
+  "collection": "feats",
+  "id": "devoted-guardian",
+  "name": "Devoted Guardian"
+ },
+ {
+  "collection": "feats",
+  "id": "divine-emissary",
+  "name": "Divine Emissary"
+ },
+ {
+  "collection": "feats",
+  "id": "secret-eater",
+  "name": "Secret Eater"
+ },
+ {
+  "collection": "feats",
+  "id": "civil-service",
+  "name": "Civil Service"
+ },
+ {
+  "collection": "feats",
+  "id": "kingdom-assurance",
+  "name": "Kingdom Assurance"
+ },
+ {
+  "collection": "feats",
+  "id": "endless-memories",
+  "name": "Endless Memories"
+ },
+ {
+  "collection": "feats",
+  "id": "debilitating-venom",
+  "name": "Debilitating Venom"
+ },
+ {
+  "collection": "feats",
+  "id": "masquerade-of-seasons-stance",
+  "name": "Masquerade of Seasons Stance"
+ },
+ {
+  "collection": "feats",
+  "id": "illusory-identity",
+  "name": "Illusory Identity"
+ },
+ {
+  "collection": "feats",
+  "id": "benevolent-spirit-deck",
+  "name": "Benevolent Spirit Deck"
+ },
+ {
+  "collection": "feats",
+  "id": "axumas-awakening",
+  "name": "Axuma's Awakening"
+ },
+ {
+  "collection": "feats",
+  "id": "weapon-infusion",
+  "name": "Weapon Infusion"
+ },
+ {
+  "collection": "feats",
+  "id": "command-elemental",
+  "name": "Command Elemental"
+ },
+ {
+  "collection": "feats",
+  "id": "two-element-infusion",
+  "name": "Two-Element Infusion"
+ },
+ {
+  "collection": "feats",
+  "id": "purify-element",
+  "name": "Purify Element"
+ },
+ {
+  "collection": "feats",
+  "id": "aura-shaping",
+  "name": "Aura Shaping"
+ },
+ {
+  "collection": "feats",
+  "id": "flash-forge",
+  "name": "Flash Forge"
+ },
+ {
+  "collection": "feats",
+  "id": "magnetic-field",
+  "name": "Magnetic Field"
+ },
+ {
+  "collection": "feats",
+  "id": "consume-power",
+  "name": "Consume Power"
+ },
+ {
+  "collection": "feats",
+  "id": "usurp-the-lunar-reins",
+  "name": "Usurp the Lunar Reins"
+ }
+]

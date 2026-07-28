@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "feats",
+  "id": "combat-premonition",
+  "name": "Combat Premonition"
+ },
+ {
+  "collection": "feats",
+  "id": "reset-the-past",
+  "name": "Reset the Past"
+ },
+ {
+  "collection": "feats",
+  "id": "psychic-duelist-dedication",
+  "name": "Psychic Duelist Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "instigate-psychic-duel",
+  "name": "Instigate Psychic Duel"
+ },
+ {
+  "collection": "feats",
+  "id": "mental-forge",
+  "name": "Mental Forge"
+ },
+ {
+  "collection": "feats",
+  "id": "runic-mind-smithing",
+  "name": "Runic Mind Smithing"
+ },
+ {
+  "collection": "feats",
+  "id": "talons-mark",
+  "name": "Talon's Mark"
+ },
+ {
+  "collection": "feats",
+  "id": "do-you-know-who-i-am",
+  "name": "Do You Know Who I Am?"
+ },
+ {
+  "collection": "feats",
+  "id": "starstone-aspirant-dedication",
+  "name": "Starstone Aspirant Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "minor-deific-power",
+  "name": "Minor Deific Power"
+ },
+ {
+  "collection": "feats",
+  "id": "advanced-deific-power",
+  "name": "Advanced Deific Power"
+ },
+ {
+  "collection": "feats",
+  "id": "greater-deific-power",
+  "name": "Greater Deific Power"
+ },
+ {
+  "collection": "feats",
+  "id": "major-deific-power",
+  "name": "Major Deific Power"
+ },
+ {
+  "collection": "feats",
+  "id": "mortal-possibility",
+  "name": "Mortal Possibility"
+ },
+ {
+  "collection": "feats",
+  "id": "remote-detonation",
+  "name": "Remote Detonation"
+ },
+ {
+  "collection": "feats",
+  "id": "liberating-dive",
+  "name": "Liberating Dive"
+ },
+ {
+  "collection": "feats",
+  "id": "harsh-judgement",
+  "name": "Harsh Judgement"
+ },
+ {
+  "collection": "feats",
+  "id": "blessing-of-the-five",
+  "name": "Blessing of the Five"
+ },
+ {
+  "collection": "feats",
+  "id": "incredible-familiar-animist",
+  "name": "Incredible Familiar (Animist)"
+ },
+ {
+  "collection": "feats",
+  "id": "flashforge",
+  "name": "Flashforge"
+ },
+ {
+  "collection": "feats",
+  "id": "aon-warding-rune",
+  "name": "Warding Rune"
+ },
+ {
+  "collection": "feats",
+  "id": "aon-harsh-judgment",
+  "name": "Harsh Judgment"
+ },
+ {
+  "collection": "feats",
+  "id": "aon-civil-service",
+  "name": "Civil Service"
+ },
+ {
+  "collection": "feats",
+  "id": "aon-kingdom-assurance",
+  "name": "Kingdom Assurance"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "hybrid-study",
+  "name": "Hybrid Study"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "eidolon",
+  "name": "Eidolon"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "spell-repertoire",
+  "name": "Spell Repertoire"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "innovation",
+  "name": "Innovation"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "breakthrough-innovation",
+  "name": "Breakthrough Innovation"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "offensive-boost",
+  "name": "Offensive Boost"
+ }
+]

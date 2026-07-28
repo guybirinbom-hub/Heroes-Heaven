@@ -241,12 +241,17 @@ export function VitalsRail({
   cards.hp = (
       <section className="card">
         <div
-          className={'ct' + (onOpenStat ? ' openable' : '')}
+          className={
+            'ct' +
+            (onOpenStat ? ' openable' : '') +
+            (statHasSituational(character, { kind: 'hp' }, content) ? ' has-mode' : '')
+          }
           onClick={onOpenStat ? () => onOpenStat({ kind: 'hp' }) : undefined}
           title={onOpenStat ? 'How is this calculated?' : undefined}
         >
           <i className="ti ti-heart" aria-hidden="true" />
           Hit points
+          {statHasSituational(character, { kind: 'hp' }, content) && <SituationalStar />}
         </div>
         <div className="hp-line">
           {onPlay ? (
@@ -569,11 +574,19 @@ export function VitalsRail({
         </div>
         <div className="kv-cubes">
         <div
-          className={'rail-kv' + (onOpenStat ? ' openable' : '') + (hasTempSpeed ? ' has-temp' : '')}
+          className={
+            'rail-kv' +
+            (onOpenStat ? ' openable' : '') +
+            (hasTempSpeed ? ' has-temp' : '') +
+            (statHasSituational(character, { kind: 'speed' }, content) ? ' has-mode' : '')
+          }
           onClick={onOpenStat ? () => onOpenStat({ kind: 'speed' }) : undefined}
           title={onOpenStat ? 'Speed — how is this calculated? Set a temporary Speed here.' : undefined}
         >
-          <span className="kv-label">Speed</span>
+          <span className="kv-label">
+            Speed
+            {statHasSituational(character, { kind: 'speed' }, content) && <SituationalStar />}
+          </span>
           <span className="iwr-val">
             {([
               ['', effectiveLand],

@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "pressure-bomb-moderate",
+  "name": "Pressure Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "pressure-bomb-greater",
+  "name": "Pressure Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "pressure-bomb-major",
+  "name": "Pressure Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "spiderfoot-brew",
+  "name": "Spiderfoot Brew"
+ },
+ {
+  "collection": "items",
+  "id": "spiderfoot-brew-major",
+  "name": "Spiderfoot Brew (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "librarians-baton",
+  "name": "Librarian's Baton"
+ },
+ {
+  "collection": "items",
+  "id": "conundrum-spectacles",
+  "name": "Conundrum Spectacles"
+ },
+ {
+  "collection": "items",
+  "id": "conundrum-spectacles-greater",
+  "name": "Conundrum Spectacles (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "spear-of-the-destroyers-flame",
+  "name": "Spear of the Destroyer's Flame"
+ },
+ {
+  "collection": "items",
+  "id": "ridill",
+  "name": "Ridill"
+ },
+ {
+  "collection": "items",
+  "id": "grisantian-pelt-armor",
+  "name": "Grisantian Pelt Armor"
+ },
+ {
+  "collection": "items",
+  "id": "grisantian-pelt-armor-standard-grade",
+  "name": "Grisantian Pelt Armor (Standard-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "grisantian-pelt-armor-high-grade",
+  "name": "Grisantian Pelt Armor (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "jacks-tattered-cape",
+  "name": "Jack's Tattered Cape"
+ },
+ {
+  "collection": "items",
+  "id": "star-chart-tattoo",
+  "name": "Star Chart Tattoo"
+ },
+ {
+  "collection": "items",
+  "id": "ivory-baton",
+  "name": "Ivory Baton"
+ },
+ {
+  "collection": "items",
+  "id": "ivory-baton-greater",
+  "name": "Ivory Baton (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "qat",
+  "name": "Qat"
+ },
+ {
+  "collection": "items",
+  "id": "grit",
+  "name": "Grit"
+ },
+ {
+  "collection": "items",
+  "id": "demon-dust",
+  "name": "Demon Dust"
+ },
+ {
+  "collection": "items",
+  "id": "succubus-kiss",
+  "name": "Succubus Kiss"
+ },
+ {
+  "collection": "items",
+  "id": "tallow-bomb",
+  "name": "Tallow Bomb"
+ },
+ {
+  "collection": "items",
+  "id": "tallow-bomb-moderate",
+  "name": "Tallow Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "tallow-bomb-greater",
+  "name": "Tallow Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "tallow-bomb-major",
+  "name": "Tallow Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "twigjack-sack",
+  "name": "Twigjack Sack"
+ },
+ {
+  "collection": "items",
+  "id": "twigjack-sack-moderate",
+  "name": "Twigjack Sack (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "twigjack-sack-greater",
+  "name": "Twigjack Sack (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "twigjack-sack-major",
+  "name": "Twigjack Sack (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "broken-tusk-pendant",
+  "name": "Broken Tusk Pendant"
+ },
+ {
+  "collection": "items",
+  "id": "broken-tusk-pendant-greater",
+  "name": "Broken Tusk Pendant (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "mud-bomb",
+  "name": "Mud Bomb"
+ },
+ {
+  "collection": "items",
+  "id": "mud-bomb-moderate",
+  "name": "Mud Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "mud-bomb-greater",
+  "name": "Mud Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "mud-bomb-major",
+  "name": "Mud Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "pernicious-spore-bomb",
+  "name": "Pernicious Spore Bomb"
+ },
+ {
+  "collection": "items",
+  "id": "pernicious-spore-bomb-moderate",
+  "name": "Pernicious Spore Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "pernicious-spore-bomb-greater",
+  "name": "Pernicious Spore Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "pernicious-spore-bomb-major",
+  "name": "Pernicious Spore Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "water-bomb",
+  "name": "Water Bomb"
+ }
+]

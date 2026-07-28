@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "umbral-wings",
+  "name": "Umbral Wings"
+ },
+ {
+  "collection": "items",
+  "id": "azarim",
+  "name": "Azarim"
+ },
+ {
+  "collection": "items",
+  "id": "cresset-of-grisly-interrogation",
+  "name": "Cresset of Grisly Interrogation"
+ },
+ {
+  "collection": "items",
+  "id": "crown-of-the-kobold-king",
+  "name": "Crown of the Kobold King"
+ },
+ {
+  "collection": "items",
+  "id": "drazmorgs-staff-of-all-sight",
+  "name": "Drazmorg's Staff of All-Sight"
+ },
+ {
+  "collection": "items",
+  "id": "grasp-of-droskar",
+  "name": "Grasp of Droskar"
+ },
+ {
+  "collection": "items",
+  "id": "heartripper-blade",
+  "name": "Heartripper Blade"
+ },
+ {
+  "collection": "items",
+  "id": "ring-of-torag",
+  "name": "Ring of Torag"
+ },
+ {
+  "collection": "items",
+  "id": "guiding-cajon-drum",
+  "name": "Guiding Cajon Drum"
+ },
+ {
+  "collection": "items",
+  "id": "briar",
+  "name": "Briar"
+ },
+ {
+  "collection": "items",
+  "id": "oculus-of-abaddon",
+  "name": "Oculus of Abaddon"
+ },
+ {
+  "collection": "items",
+  "id": "ring-of-bestial-friendship",
+  "name": "Ring of Bestial Friendship"
+ },
+ {
+  "collection": "items",
+  "id": "ring-of-the-tiger",
+  "name": "Ring of the Tiger"
+ },
+ {
+  "collection": "items",
+  "id": "ring-of-the-tiger-greater",
+  "name": "Ring of the Tiger (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "stags-helm",
+  "name": "Stag's Helm"
+ },
+ {
+  "collection": "items",
+  "id": "feyfoul",
+  "name": "Feyfoul"
+ },
+ {
+  "collection": "items",
+  "id": "feyfoul-lesser",
+  "name": "Feyfoul (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "feyfoul-moderate",
+  "name": "Feyfoul (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "feyfoul-greater",
+  "name": "Feyfoul (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "admirers-bouquet",
+  "name": "Admirer's Bouquet"
+ },
+ {
+  "collection": "items",
+  "id": "palette-of-masterstrokes",
+  "name": "Palette of Masterstrokes"
+ },
+ {
+  "collection": "items",
+  "id": "songbirds-brush",
+  "name": "Songbird's Brush"
+ },
+ {
+  "collection": "items",
+  "id": "deathdrinking",
+  "name": "Deathdrinking"
+ },
+ {
+  "collection": "items",
+  "id": "curtain-call-cloak",
+  "name": "Curtain Call Cloak"
+ },
+ {
+  "collection": "items",
+  "id": "phantom-shroud",
+  "name": "Phantom Shroud"
+ },
+ {
+  "collection": "items",
+  "id": "spectral-opera-glasses",
+  "name": "Spectral Opera Glasses"
+ },
+ {
+  "collection": "items",
+  "id": "splendid-floodlight",
+  "name": "Splendid Floodlight"
+ },
+ {
+  "collection": "items",
+  "id": "plated-duster",
+  "name": "Plated Duster"
+ },
+ {
+  "collection": "items",
+  "id": "wrenchgear",
+  "name": "Wrenchgear"
+ },
+ {
+  "collection": "items",
+  "id": "tyrants-writ",
+  "name": "Tyrant's Writ"
+ },
+ {
+  "collection": "items",
+  "id": "open-mind",
+  "name": "Open Mind"
+ },
+ {
+  "collection": "items",
+  "id": "silent-heart",
+  "name": "Silent Heart"
+ },
+ {
+  "collection": "items",
+  "id": "thoughtwhip-claw",
+  "name": "Thoughtwhip Claw"
+ },
+ {
+  "collection": "items",
+  "id": "vengeful-arm",
+  "name": "Vengeful Arm"
+ },
+ {
+  "collection": "items",
+  "id": "venomed-tongue",
+  "name": "Venomed Tongue"
+ },
+ {
+  "collection": "items",
+  "id": "goo-grenade",
+  "name": "Goo Grenade"
+ },
+ {
+  "collection": "items",
+  "id": "goo-grenade-moderate",
+  "name": "Goo Grenade (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "goo-grenade-greater",
+  "name": "Goo Grenade (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "goo-grenade-major",
+  "name": "Goo Grenade (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "oozepick",
+  "name": "Oozepick"
+ }
+]

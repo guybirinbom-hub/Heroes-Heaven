@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "glue-bomb-moderate",
+  "name": "Glue Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "glue-bomb-greater",
+  "name": "Glue Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "glue-bomb-major",
+  "name": "Glue Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "antidote-lesser",
+  "name": "Antidote (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "antidote-moderate",
+  "name": "Antidote (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "antidote-greater",
+  "name": "Antidote (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "antidote-major",
+  "name": "Antidote (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "antiplague-lesser",
+  "name": "Antiplague (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "antiplague-moderate",
+  "name": "Antiplague (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "antiplague-greater",
+  "name": "Antiplague (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "antiplague-major",
+  "name": "Antiplague (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "bombers-eye-elixir-lesser",
+  "name": "Bomber's Eye Elixir (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "bombers-eye-elixir-greater",
+  "name": "Bomber's Eye Elixir (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "bravos-brew-lesser",
+  "name": "Bravo's Brew (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "bravos-brew-moderate",
+  "name": "Bravo's Brew (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "bravos-brew-greater",
+  "name": "Bravo's Brew (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "cheetahs-elixir-lesser",
+  "name": "Cheetah's Elixir (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "cheetahs-elixir-moderate",
+  "name": "Cheetah's Elixir (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "cheetahs-elixir-greater",
+  "name": "Cheetah's Elixir (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "eagle-eye-elixir-lesser",
+  "name": "Eagle-Eye Elixir (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "eagle-eye-elixir-moderate",
+  "name": "Eagle-Eye Elixir (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "eagle-eye-elixir-greater",
+  "name": "Eagle-Eye Elixir (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "eagle-eye-elixir-major",
+  "name": "Eagle-Eye Elixir (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "elixir-of-life-minor",
+  "name": "Elixir of Life (Minor)"
+ },
+ {
+  "collection": "items",
+  "id": "elixir-of-life-lesser",
+  "name": "Elixir of Life (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "elixir-of-life-moderate",
+  "name": "Elixir of Life (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "elixir-of-life-greater",
+  "name": "Elixir of Life (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "elixir-of-life-major",
+  "name": "Elixir of Life (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "elixir-of-life-true",
+  "name": "Elixir of Life (True)"
+ },
+ {
+  "collection": "items",
+  "id": "bestial-mutagen",
+  "name": "Bestial Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "bestial-mutagen-lesser",
+  "name": "Bestial Mutagen (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "bestial-mutagen-moderate",
+  "name": "Bestial Mutagen (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "bestial-mutagen-greater",
+  "name": "Bestial Mutagen (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "bestial-mutagen-major",
+  "name": "Bestial Mutagen (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "cognitive-mutagen",
+  "name": "Cognitive Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "cognitive-mutagen-lesser",
+  "name": "Cognitive Mutagen (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "cognitive-mutagen-moderate",
+  "name": "Cognitive Mutagen (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "cognitive-mutagen-greater",
+  "name": "Cognitive Mutagen (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "cognitive-mutagen-major",
+  "name": "Cognitive Mutagen (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "drakeheart-mutagen",
+  "name": "Drakeheart Mutagen"
+ }
+]

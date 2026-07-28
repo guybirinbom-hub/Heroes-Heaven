@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "items",
+  "id": "tyrants-writ",
+  "name": "Tyrant's Writ"
+ },
+ {
+  "collection": "items",
+  "id": "oozepick",
+  "name": "Oozepick"
+ },
+ {
+  "collection": "items",
+  "id": "oozepick-greater",
+  "name": "Oozepick (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "library-robes",
+  "name": "Library Robes"
+ },
+ {
+  "collection": "items",
+  "id": "library-robes-greater",
+  "name": "Library Robes (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "library-robes-major",
+  "name": "Library Robes (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "library-robes-true",
+  "name": "Library Robes (True)"
+ },
+ {
+  "collection": "items",
+  "id": "anathema-fulu",
+  "name": "Anathema Fulu"
+ },
+ {
+  "collection": "items",
+  "id": "mindlock-shot",
+  "name": "Mindlock Shot"
+ },
+ {
+  "collection": "items",
+  "id": "captivating-score",
+  "name": "Captivating Score"
+ },
+ {
+  "collection": "items",
+  "id": "blending-brooch",
+  "name": "Blending Brooch"
+ },
+ {
+  "collection": "items",
+  "id": "whelming-scrimshaw",
+  "name": "Whelming Scrimshaw"
+ },
+ {
+  "collection": "items",
+  "id": "beguiling-crown",
+  "name": "Beguiling Crown"
+ },
+ {
+  "collection": "items",
+  "id": "tome-of-restorative-cleansing",
+  "name": "Tome of Restorative Cleansing"
+ },
+ {
+  "collection": "items",
+  "id": "tome-of-restorative-cleansing-lesser",
+  "name": "Tome of Restorative Cleansing (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "tome-of-restorative-cleansing-moderate",
+  "name": "Tome of Restorative Cleansing (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "tome-of-restorative-cleansing-greater",
+  "name": "Tome of Restorative Cleansing (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "cube-of-recall",
+  "name": "Cube of Recall"
+ },
+ {
+  "collection": "items",
+  "id": "ghost-lantern",
+  "name": "Ghost Lantern"
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom-amaranth",
+  "name": "Bewitching Bloom (Amaranth)"
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom-bellflower",
+  "name": "Bewitching Bloom (Bellflower)"
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom-cherry-blossom",
+  "name": "Bewitching Bloom (Cherry Blossom)"
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom-lilac",
+  "name": "Bewitching Bloom (Lilac)"
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom-lotus",
+  "name": "Bewitching Bloom (Lotus)"
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom-purple-iris",
+  "name": "Bewitching Bloom (Purple Iris)"
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom-white-poppy",
+  "name": "Bewitching Bloom (White Poppy)"
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo",
+  "name": "Faith Tattoo"
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo-greater",
+  "name": "Faith Tattoo (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo-major",
+  "name": "Faith Tattoo (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo-true",
+  "name": "Faith Tattoo (True)"
+ }
+]

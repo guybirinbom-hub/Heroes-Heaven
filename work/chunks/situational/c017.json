@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "classFeatures",
+  "id": "eidolon",
+  "name": "Eidolon"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "breakthrough-innovation",
+  "name": "Breakthrough Innovation"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "kinetic-gate",
+  "name": "Kinetic Gate"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "battlefield-surveyor",
+  "name": "Battlefield Surveyor"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "masterful-hunter",
+  "name": "Masterful Hunter"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "furious-footfalls",
+  "name": "Furious Footfalls"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "blessing-of-the-devoted",
+  "name": "Blessing of the Devoted"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "investigator-expertise",
+  "name": "Investigator Expertise"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "incredible-movement",
+  "name": "Incredible Movement"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "mystic-strikes",
+  "name": "Mystic Strikes"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "sorcerous-potency",
+  "name": "Sorcerous Potency"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "stylish-combatant",
+  "name": "Stylish Combatant"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "vivacious-speed",
+  "name": "Vivacious Speed"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "exemplary-finisher",
+  "name": "Exemplary Finisher"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "swashbuckler-expertise",
+  "name": "Swashbuckler Expertise"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "continuous-flair",
+  "name": "Continuous Flair"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "commanders-banner",
+  "name": "Commander's Banner"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "guardian-mastery",
+  "name": "Guardian Mastery"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "adept-benefit-regalia",
+  "name": "Adept Benefit (Regalia)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "adept-benefit-shield",
+  "name": "Adept Benefit (Shield)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "adept-benefit-tome",
+  "name": "Adept Benefit (Tome)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "air-gate",
+  "name": "Air Gate"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "amulet",
+  "name": "Amulet"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "antimagic-plating",
+  "name": "Antimagic Plating"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "armor-innovation",
+  "name": "Armor Innovation"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "bands-of-imprisonment",
+  "name": "Bands of Imprisonment"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "blessed-swiftness",
+  "name": "Blessed Swiftness"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "bloodline-aberrant",
+  "name": "Bloodline: Aberrant"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "bloodline-aesir",
+  "name": "Bloodline: Aesir"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "bloodline-angelic",
+  "name": "Bloodline: Angelic"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "bloodline-demonic",
+  "name": "Bloodline: Demonic"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "bloodline-diabolic",
+  "name": "Bloodline: Diabolic"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "bloodline-draconic",
+  "name": "Bloodline: Draconic"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "bloodline-elemental",
+  "name": "Bloodline: Elemental"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "bloodline-fey",
+  "name": "Bloodline: Fey"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "bloodline-genie",
+  "name": "Bloodline: Genie"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "bloodline-imperial",
+  "name": "Bloodline: Imperial"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "bloodline-nymph",
+  "name": "Bloodline: Nymph"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "bloodline-psychopomp",
+  "name": "Bloodline: Psychopomp"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "bloodline-shadow",
+  "name": "Bloodline: Shadow"
+ }
+]

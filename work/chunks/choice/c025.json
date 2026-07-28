@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "backgrounds",
+  "id": "unsponsored",
+  "name": "Unsponsored"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "academy-dropout",
+  "name": "Academy Dropout"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "eidolon-contact",
+  "name": "Eidolon Contact"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "false-medium",
+  "name": "False Medium"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "magical-merchant",
+  "name": "Magical Merchant"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "magical-misfit",
+  "name": "Magical Misfit"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "musical-prodigy",
+  "name": "Musical Prodigy"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "occult-librarian",
+  "name": "Occult Librarian"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "plant-whisperer",
+  "name": "Plant Whisperer"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "street-preacher",
+  "name": "Street Preacher"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "student-of-magic",
+  "name": "Student of Magic"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "anti-magical",
+  "name": "Anti-Magical"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "chosen-one",
+  "name": "Chosen One"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "genie-blessed",
+  "name": "Genie-Blessed"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "magical-experiment",
+  "name": "Magical Experiment"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "time-traveler",
+  "name": "Time Traveler"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "energy-scarred",
+  "name": "Energy Scarred"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "mystic-tutor",
+  "name": "Mystic Tutor"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "surge-investigator",
+  "name": "Surge Investigator"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "anti-tech-activist",
+  "name": "Anti-Tech Activist"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "clockfighter",
+  "name": "Clockfighter"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "clockwork-researcher",
+  "name": "Clockwork Researcher"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "codebreaker",
+  "name": "Codebreaker"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "disciple-of-the-gear",
+  "name": "Disciple of the Gear"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "driver",
+  "name": "Driver"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "hounded-thief",
+  "name": "Hounded Thief"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "junker",
+  "name": "Junker"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "mechanic",
+  "name": "Mechanic"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "medicinal-clocksmith",
+  "name": "Medicinal Clocksmith"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "printer",
+  "name": "Printer"
+ }
+]

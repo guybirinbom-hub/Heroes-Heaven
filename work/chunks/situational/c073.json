@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "heritages",
+  "id": "whisper-elf",
+  "name": "Whisper Elf"
+ },
+ {
+  "collection": "heritages",
+  "id": "chameleon-gnome",
+  "name": "Chameleon Gnome"
+ },
+ {
+  "collection": "heritages",
+  "id": "sensate-gnome",
+  "name": "Sensate Gnome"
+ },
+ {
+  "collection": "heritages",
+  "id": "irongut-goblin",
+  "name": "Irongut Goblin"
+ },
+ {
+  "collection": "heritages",
+  "id": "root-leshy",
+  "name": "Root Leshy"
+ },
+ {
+  "collection": "heritages",
+  "id": "grave-orc",
+  "name": "Grave Orc"
+ },
+ {
+  "collection": "heritages",
+  "id": "rainfall-orc",
+  "name": "Rainfall Orc"
+ },
+ {
+  "collection": "heritages",
+  "id": "coral-athamaru",
+  "name": "Coral Athamaru"
+ },
+ {
+  "collection": "heritages",
+  "id": "hopeful-athamaru",
+  "name": "Hopeful Athamaru"
+ },
+ {
+  "collection": "heritages",
+  "id": "kaleidoscopic-athamaru",
+  "name": "Kaleidoscopic Athamaru"
+ },
+ {
+  "collection": "heritages",
+  "id": "mottle-coat-centaur",
+  "name": "Mottle-Coat Centaur"
+ },
+ {
+  "collection": "heritages",
+  "id": "ponygait-centaur",
+  "name": "Ponygait Centaur"
+ },
+ {
+  "collection": "heritages",
+  "id": "stoutheart-centaur",
+  "name": "Stoutheart Centaur"
+ },
+ {
+  "collection": "heritages",
+  "id": "sailfish-merfolk",
+  "name": "Sailfish Merfolk"
+ },
+ {
+  "collection": "heritages",
+  "id": "ghost-bull-minotaur",
+  "name": "Ghost Bull Minotaur"
+ },
+ {
+  "collection": "heritages",
+  "id": "hardshell-surki",
+  "name": "Hardshell Surki"
+ },
+ {
+  "collection": "heritages",
+  "id": "hunting-catfolk",
+  "name": "Hunting Catfolk"
+ },
+ {
+  "collection": "heritages",
+  "id": "liminal-catfolk",
+  "name": "Liminal Catfolk"
+ },
+ {
+  "collection": "heritages",
+  "id": "sharp-eared-catfolk",
+  "name": "Sharp-Eared Catfolk"
+ },
+ {
+  "collection": "heritages",
+  "id": "ant-kholo",
+  "name": "Ant Kholo"
+ },
+ {
+  "collection": "heritages",
+  "id": "great-kholo",
+  "name": "Great Kholo"
+ },
+ {
+  "collection": "heritages",
+  "id": "sweetbreath-kholo",
+  "name": "Sweetbreath Kholo"
+ },
+ {
+  "collection": "heritages",
+  "id": "witch-kholo",
+  "name": "Witch Kholo"
+ },
+ {
+  "collection": "heritages",
+  "id": "dragonscaled-kobold",
+  "name": "Dragonscaled Kobold"
+ },
+ {
+  "collection": "heritages",
+  "id": "unseen-lizardfolk",
+  "name": "Unseen Lizardfolk"
+ },
+ {
+  "collection": "heritages",
+  "id": "longsnout-rat",
+  "name": "Longsnout Rat"
+ },
+ {
+  "collection": "heritages",
+  "id": "sewer-rat",
+  "name": "Sewer Rat"
+ },
+ {
+  "collection": "heritages",
+  "id": "stickytoe-tripkee",
+  "name": "Stickytoe Tripkee"
+ },
+ {
+  "collection": "heritages",
+  "id": "thickskin-tripkee",
+  "name": "Thickskin Tripkee"
+ },
+ {
+  "collection": "heritages",
+  "id": "dokkaebi-goblin",
+  "name": "Dokkaebi Goblin"
+ },
+ {
+  "collection": "heritages",
+  "id": "chrysanthemum-leshy",
+  "name": "Chrysanthemum Leshy"
+ },
+ {
+  "collection": "heritages",
+  "id": "bakuwa-lizardfolk",
+  "name": "Bakuwa Lizardfolk"
+ },
+ {
+  "collection": "heritages",
+  "id": "kanchil",
+  "name": "Kanchil"
+ },
+ {
+  "collection": "heritages",
+  "id": "tsukumogami-poppet",
+  "name": "Tsukumogami Poppet"
+ },
+ {
+  "collection": "heritages",
+  "id": "half-moon-sarangay",
+  "name": "Half Moon Sarangay"
+ },
+ {
+  "collection": "heritages",
+  "id": "new-moon-sarangay",
+  "name": "New Moon Sarangay"
+ },
+ {
+  "collection": "heritages",
+  "id": "waxing-moon-sarangay",
+  "name": "Waxing Moon Sarangay"
+ },
+ {
+  "collection": "heritages",
+  "id": "ascetic-tanuki",
+  "name": "Ascetic Tanuki"
+ },
+ {
+  "collection": "heritages",
+  "id": "even-tempered-tanuki",
+  "name": "Even-tempered Tanuki"
+ },
+ {
+  "collection": "heritages",
+  "id": "courageous-tanuki",
+  "name": "Courageous Tanuki"
+ }
+]

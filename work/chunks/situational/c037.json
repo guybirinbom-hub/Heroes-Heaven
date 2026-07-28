@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "caydens-brew-double",
+  "name": "Cayden's Brew (Double)"
+ },
+ {
+  "collection": "items",
+  "id": "caydens-brew-triple",
+  "name": "Cayden's Brew (Triple)"
+ },
+ {
+  "collection": "items",
+  "id": "eidetic-potion",
+  "name": "Eidetic Potion"
+ },
+ {
+  "collection": "items",
+  "id": "elysian-dew",
+  "name": "Elysian Dew"
+ },
+ {
+  "collection": "items",
+  "id": "empaths-cordial",
+  "name": "Empath's Cordial"
+ },
+ {
+  "collection": "items",
+  "id": "rovagugs-mud",
+  "name": "Rovagug's Mud"
+ },
+ {
+  "collection": "items",
+  "id": "rovagugs-mud-greater",
+  "name": "Rovagug's Mud (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "starsong-nectar",
+  "name": "Starsong Nectar"
+ },
+ {
+  "collection": "items",
+  "id": "sure-step-potion",
+  "name": "Sure-Step Potion"
+ },
+ {
+  "collection": "items",
+  "id": "ensnaring-disk",
+  "name": "Ensnaring Disk"
+ },
+ {
+  "collection": "items",
+  "id": "grudgestone",
+  "name": "Grudgestone"
+ },
+ {
+  "collection": "items",
+  "id": "grudgestone-greater",
+  "name": "Grudgestone (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "hungering-maw",
+  "name": "Hungering Maw"
+ },
+ {
+  "collection": "items",
+  "id": "bargainers-instrument",
+  "name": "Bargainer's Instrument"
+ },
+ {
+  "collection": "items",
+  "id": "neophytes-fipple",
+  "name": "Neophyte's Fipple"
+ },
+ {
+  "collection": "items",
+  "id": "amulet-of-the-third-eye",
+  "name": "Amulet of the Third Eye"
+ },
+ {
+  "collection": "items",
+  "id": "artificer-spectacles",
+  "name": "Artificer Spectacles"
+ },
+ {
+  "collection": "items",
+  "id": "avalanche-boots",
+  "name": "Avalanche Boots"
+ },
+ {
+  "collection": "items",
+  "id": "dragon-handwraps",
+  "name": "Dragon Handwraps"
+ },
+ {
+  "collection": "items",
+  "id": "laurel-of-the-empath",
+  "name": "Laurel of the Empath"
+ },
+ {
+  "collection": "items",
+  "id": "mantle-of-amazing-health",
+  "name": "Mantle of Amazing Health"
+ },
+ {
+  "collection": "items",
+  "id": "pilferers-gloves",
+  "name": "Pilferer's Gloves"
+ },
+ {
+  "collection": "items",
+  "id": "sandals-of-the-stag",
+  "name": "Sandals of the Stag"
+ },
+ {
+  "collection": "items",
+  "id": "shadowmist-cape",
+  "name": "Shadowmist Cape"
+ },
+ {
+  "collection": "items",
+  "id": "troubadours-cap",
+  "name": "Troubadour's Cap"
+ },
+ {
+  "collection": "items",
+  "id": "viper-rapier",
+  "name": "Viper Rapier"
+ },
+ {
+  "collection": "items",
+  "id": "whispering-staff",
+  "name": "Whispering Staff"
+ },
+ {
+  "collection": "items",
+  "id": "empathy-charm",
+  "name": "Empathy Charm"
+ },
+ {
+  "collection": "items",
+  "id": "basic-face-mask",
+  "name": "Basic Face Mask"
+ },
+ {
+  "collection": "items",
+  "id": "bootstrap-respirator",
+  "name": "Bootstrap Respirator"
+ },
+ {
+  "collection": "items",
+  "id": "confabulator",
+  "name": "Confabulator"
+ },
+ {
+  "collection": "items",
+  "id": "chair-of-inventions",
+  "name": "Chair of Inventions"
+ },
+ {
+  "collection": "items",
+  "id": "architects-pattern-book",
+  "name": "Architect's Pattern Book"
+ },
+ {
+  "collection": "items",
+  "id": "draxies-recipe-book",
+  "name": "Draxie's Recipe Book"
+ },
+ {
+  "collection": "items",
+  "id": "battle-medics-baton",
+  "name": "Battle Medic's Baton"
+ },
+ {
+  "collection": "items",
+  "id": "bring-me-near",
+  "name": "Bring Me Near"
+ },
+ {
+  "collection": "items",
+  "id": "jug-of-fond-remembrance",
+  "name": "Jug of Fond Remembrance"
+ },
+ {
+  "collection": "items",
+  "id": "sextant-of-the-night",
+  "name": "Sextant of the Night"
+ },
+ {
+  "collection": "items",
+  "id": "standard-of-the-primeval-howl",
+  "name": "Standard of the Primeval Howl"
+ },
+ {
+  "collection": "items",
+  "id": "violin-of-the-waves",
+  "name": "Violin of the Waves"
+ }
+]

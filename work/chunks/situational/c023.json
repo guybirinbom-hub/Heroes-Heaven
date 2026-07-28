@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "sovereign-steel-object-standard-grade",
+  "name": "Sovereign Steel Object (Standard-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "sovereign-steel-object-high-grade",
+  "name": "Sovereign Steel Object (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "sovereign-steel-armor",
+  "name": "Sovereign Steel Armor"
+ },
+ {
+  "collection": "items",
+  "id": "sovereign-steel-armor-standard-grade",
+  "name": "Sovereign Steel Armor (Standard-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "sovereign-steel-armor-high-grade",
+  "name": "Sovereign Steel Armor (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "plasma-hype",
+  "name": "Plasma Hype"
+ },
+ {
+  "collection": "items",
+  "id": "applereed-mutagen",
+  "name": "Applereed Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "applereed-mutagen-lesser",
+  "name": "Applereed Mutagen (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "applereed-mutagen-moderate",
+  "name": "Applereed Mutagen (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "applereed-mutagen-greater",
+  "name": "Applereed Mutagen (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "oily-button",
+  "name": "Oily Button"
+ },
+ {
+  "collection": "items",
+  "id": "sixfingers-elixir",
+  "name": "Sixfingers Elixir"
+ },
+ {
+  "collection": "items",
+  "id": "sixfingers-elixir-lesser",
+  "name": "Sixfingers Elixir (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "sixfingers-elixir-moderate",
+  "name": "Sixfingers Elixir (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "sixfingers-elixir-greater",
+  "name": "Sixfingers Elixir (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "grolna",
+  "name": "Grolna"
+ },
+ {
+  "collection": "items",
+  "id": "skinsaw-mask",
+  "name": "Skinsaw Mask"
+ },
+ {
+  "collection": "items",
+  "id": "vaultbreakers-harness",
+  "name": "Vaultbreaker's Harness"
+ },
+ {
+  "collection": "items",
+  "id": "harrow-mat",
+  "name": "Harrow Mat"
+ },
+ {
+  "collection": "items",
+  "id": "death-knell-powder",
+  "name": "Death Knell Powder"
+ },
+ {
+  "collection": "items",
+  "id": "blade-of-the-rabbit-prince",
+  "name": "Blade of the Rabbit Prince"
+ },
+ {
+  "collection": "items",
+  "id": "hardened-harrow-deck",
+  "name": "Hardened Harrow Deck"
+ },
+ {
+  "collection": "items",
+  "id": "writ-of-authenticity",
+  "name": "Writ of Authenticity"
+ },
+ {
+  "collection": "items",
+  "id": "boulderhead-bock",
+  "name": "Boulderhead Bock"
+ },
+ {
+  "collection": "items",
+  "id": "astrolabe",
+  "name": "Astrolabe"
+ },
+ {
+  "collection": "items",
+  "id": "astrolabe-standard",
+  "name": "Astrolabe (Standard)"
+ },
+ {
+  "collection": "items",
+  "id": "astrolabe-mariners",
+  "name": "Astrolabe (Mariner's)"
+ },
+ {
+  "collection": "items",
+  "id": "alignment-ampoule",
+  "name": "Alignment Ampoule"
+ },
+ {
+  "collection": "items",
+  "id": "alignment-ampoule-lesser",
+  "name": "Alignment Ampoule (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "alignment-ampoule-moderate",
+  "name": "Alignment Ampoule (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "alignment-ampoule-greater",
+  "name": "Alignment Ampoule (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "alignment-ampoule-major",
+  "name": "Alignment Ampoule (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "psychic-warding-bracelet",
+  "name": "Psychic Warding Bracelet"
+ },
+ {
+  "collection": "items",
+  "id": "diviners-nose-chain",
+  "name": "Diviner's Nose Chain"
+ },
+ {
+  "collection": "items",
+  "id": "snowshoes-of-the-long-trek",
+  "name": "Snowshoes of the Long Trek"
+ },
+ {
+  "collection": "items",
+  "id": "vermin-repellent-agent",
+  "name": "Vermin Repellent Agent"
+ },
+ {
+  "collection": "items",
+  "id": "vermin-repellent-agent-lesser",
+  "name": "Vermin Repellent Agent (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "vermin-repellent-agent-moderate",
+  "name": "Vermin Repellent Agent (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "vermin-repellent-agent-greater",
+  "name": "Vermin Repellent Agent (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "vermin-repellent-agent-major",
+  "name": "Vermin Repellent Agent (Major)"
+ }
+]

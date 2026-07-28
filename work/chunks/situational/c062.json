@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "atlas-arcane",
+  "name": "Atlas Arcane"
+ },
+ {
+  "collection": "items",
+  "id": "bedroll-of-deep-slumber",
+  "name": "Bedroll of Deep Slumber"
+ },
+ {
+  "collection": "items",
+  "id": "bellows-pipes",
+  "name": "Bellows Pipes"
+ },
+ {
+  "collection": "items",
+  "id": "benthic-drums",
+  "name": "Benthic Drums"
+ },
+ {
+  "collection": "items",
+  "id": "blakenshipper",
+  "name": "Blakenshipper"
+ },
+ {
+  "collection": "items",
+  "id": "booming-bell",
+  "name": "Booming Bell"
+ },
+ {
+  "collection": "items",
+  "id": "constant-crosier",
+  "name": "Constant Crosier"
+ },
+ {
+  "collection": "items",
+  "id": "core-bugle",
+  "name": "Core Bugle"
+ },
+ {
+  "collection": "items",
+  "id": "doom-switch",
+  "name": "Doom Switch"
+ },
+ {
+  "collection": "items",
+  "id": "draconic-verge",
+  "name": "Draconic Verge"
+ },
+ {
+  "collection": "items",
+  "id": "feather-of-the-unfounded-bravado",
+  "name": "Feather of the Unfounded Bravado"
+ },
+ {
+  "collection": "items",
+  "id": "fife-of-the-faithful",
+  "name": "Fife of the Faithful"
+ },
+ {
+  "collection": "items",
+  "id": "guangu-of-the-steppe",
+  "name": "Guangu of the Steppe"
+ },
+ {
+  "collection": "items",
+  "id": "horn-of-the-archon",
+  "name": "Horn of the Archon"
+ },
+ {
+  "collection": "items",
+  "id": "marshals-baton",
+  "name": "Marshal's Baton"
+ },
+ {
+  "collection": "items",
+  "id": "semaphore-of-slanders",
+  "name": "Semaphore of Slanders"
+ },
+ {
+  "collection": "items",
+  "id": "sinuous-recorder",
+  "name": "Sinuous Recorder"
+ },
+ {
+  "collection": "items",
+  "id": "snare-of-speed",
+  "name": "Snare of Speed"
+ },
+ {
+  "collection": "items",
+  "id": "swagger-stick",
+  "name": "Swagger Stick"
+ },
+ {
+  "collection": "items",
+  "id": "timpani-of-panic",
+  "name": "Timpani of Panic"
+ },
+ {
+  "collection": "items",
+  "id": "vine-baton",
+  "name": "Vine Baton"
+ },
+ {
+  "collection": "items",
+  "id": "warpipes",
+  "name": "Warpipes"
+ },
+ {
+  "collection": "items",
+  "id": "wyvern-nafir",
+  "name": "Wyvern Nafir"
+ },
+ {
+  "collection": "items",
+  "id": "abidance-blinders",
+  "name": "Abidance Blinders"
+ },
+ {
+  "collection": "items",
+  "id": "admirals-bicorne",
+  "name": "Admiral's Bicorne"
+ },
+ {
+  "collection": "items",
+  "id": "boots-of-the-dead",
+  "name": "Boots of the Dead"
+ },
+ {
+  "collection": "items",
+  "id": "comandants-scabbard",
+  "name": "Comandant's Scabbard"
+ },
+ {
+  "collection": "items",
+  "id": "gas-mask-of-clean-air",
+  "name": "Gas Mask of Clean Air"
+ },
+ {
+  "collection": "items",
+  "id": "golden-greaves",
+  "name": "Golden Greaves"
+ },
+ {
+  "collection": "items",
+  "id": "grippy-gloves",
+  "name": "Grippy Gloves"
+ },
+ {
+  "collection": "items",
+  "id": "killers-belt",
+  "name": "Killer's Belt"
+ },
+ {
+  "collection": "items",
+  "id": "greater-killers-belt",
+  "name": "Greater Killer’s Belt"
+ },
+ {
+  "collection": "items",
+  "id": "lieutenants-sash",
+  "name": "Lieutenant's Sash"
+ },
+ {
+  "collection": "items",
+  "id": "locket-of-love-left-behind",
+  "name": "Locket of Love Left Behind"
+ },
+ {
+  "collection": "items",
+  "id": "magical-medals",
+  "name": "Magical Medals"
+ },
+ {
+  "collection": "items",
+  "id": "medal-of-gorillas-might",
+  "name": "Medal of Gorilla’s Might"
+ },
+ {
+  "collection": "items",
+  "id": "medal-of-griffons-heart",
+  "name": "Medal of Griffon’s Heart"
+ },
+ {
+  "collection": "items",
+  "id": "medal-of-the-wolf-pack",
+  "name": "Medal of the Wolf Pack"
+ },
+ {
+  "collection": "items",
+  "id": "medal-of-unicorns-purity",
+  "name": "Medal of Unicorn’s Purity"
+ },
+ {
+  "collection": "items",
+  "id": "medal-of-phoenixs-fire",
+  "name": "Medal of Phoenix’s Fire"
+ }
+]

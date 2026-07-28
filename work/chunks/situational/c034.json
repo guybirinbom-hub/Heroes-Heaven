@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "skunk-bomb-moderate",
+  "name": "Skunk Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "skunk-bomb-greater",
+  "name": "Skunk Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "skunk-bomb-major",
+  "name": "Skunk Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "trueshape-bomb",
+  "name": "Trueshape Bomb"
+ },
+ {
+  "collection": "items",
+  "id": "trueshape-bomb-greater",
+  "name": "Trueshape Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "auric-noodles",
+  "name": "Auric Noodles"
+ },
+ {
+  "collection": "items",
+  "id": "cinnamon-seers",
+  "name": "Cinnamon Seers"
+ },
+ {
+  "collection": "items",
+  "id": "cooperative-waffles",
+  "name": "Cooperative Waffles"
+ },
+ {
+  "collection": "items",
+  "id": "cooperative-waffles-greater",
+  "name": "Cooperative Waffles (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "crackling-bubble-gum",
+  "name": "Crackling Bubble Gum"
+ },
+ {
+  "collection": "items",
+  "id": "crackling-bubble-gum-lesser",
+  "name": "Crackling Bubble Gum (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "crackling-bubble-gum-moderate",
+  "name": "Crackling Bubble Gum (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "crackling-bubble-gum-greater",
+  "name": "Crackling Bubble Gum (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "crackling-bubble-gum-major",
+  "name": "Crackling Bubble Gum (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "delve-scale",
+  "name": "Delve Scale"
+ },
+ {
+  "collection": "items",
+  "id": "diplomats-charcuterie",
+  "name": "Diplomat's Charcuterie"
+ },
+ {
+  "collection": "items",
+  "id": "egg-cream-fizz",
+  "name": "Egg Cream Fizz"
+ },
+ {
+  "collection": "items",
+  "id": "fury-cocktail",
+  "name": "Fury Cocktail"
+ },
+ {
+  "collection": "items",
+  "id": "fury-cocktail-lesser",
+  "name": "Fury Cocktail (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "fury-cocktail-moderate",
+  "name": "Fury Cocktail (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "fury-cocktail-greater",
+  "name": "Fury Cocktail (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "ginger-chew",
+  "name": "Ginger Chew"
+ },
+ {
+  "collection": "items",
+  "id": "insight-coffee",
+  "name": "Insight Coffee"
+ },
+ {
+  "collection": "items",
+  "id": "insight-coffee-lesser",
+  "name": "Insight Coffee (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "insight-coffee-moderate",
+  "name": "Insight Coffee (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "insight-coffee-greater",
+  "name": "Insight Coffee (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "journeybread-power",
+  "name": "Journeybread (Power)"
+ },
+ {
+  "collection": "items",
+  "id": "menders-soup",
+  "name": "Mender's Soup"
+ },
+ {
+  "collection": "items",
+  "id": "phantom-roll",
+  "name": "Phantom Roll"
+ },
+ {
+  "collection": "items",
+  "id": "poison-fizz",
+  "name": "Poison Fizz"
+ },
+ {
+  "collection": "items",
+  "id": "poison-fizz-lesser",
+  "name": "Poison Fizz (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "poison-fizz-moderate",
+  "name": "Poison Fizz (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "poison-fizz-greater",
+  "name": "Poison Fizz (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "scholars-drop",
+  "name": "Scholar's Drop"
+ },
+ {
+  "collection": "items",
+  "id": "silver-crescent",
+  "name": "Silver Crescent"
+ },
+ {
+  "collection": "items",
+  "id": "silver-crescent-lesser",
+  "name": "Silver Crescent (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "silver-crescent-moderate",
+  "name": "Silver Crescent (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "silver-crescent-greater",
+  "name": "Silver Crescent (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "soothing-toddy",
+  "name": "Soothing Toddy"
+ },
+ {
+  "collection": "items",
+  "id": "sprite-apple",
+  "name": "Sprite Apple"
+ }
+]

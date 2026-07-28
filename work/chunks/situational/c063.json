@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "medics-armband",
+  "name": "Medic's Armband"
+ },
+ {
+  "collection": "items",
+  "id": "greater-medics-armband",
+  "name": "Greater Medic’s Armband"
+ },
+ {
+  "collection": "items",
+  "id": "motion-seeking-lenses",
+  "name": "Motion-Seeking Lenses"
+ },
+ {
+  "collection": "items",
+  "id": "pristine-epaulets",
+  "name": "Pristine Epaulets"
+ },
+ {
+  "collection": "items",
+  "id": "protective-netting",
+  "name": "Protective Netting"
+ },
+ {
+  "collection": "items",
+  "id": "sailors-collar",
+  "name": "Sailor's Collar"
+ },
+ {
+  "collection": "items",
+  "id": "greater-sailors-collar",
+  "name": "Greater Sailor’s Collar"
+ },
+ {
+  "collection": "items",
+  "id": "shining-hackle",
+  "name": "Shining Hackle"
+ },
+ {
+  "collection": "items",
+  "id": "sturdy-neck-stock",
+  "name": "Sturdy Neck Stock"
+ },
+ {
+  "collection": "items",
+  "id": "tasset-of-flexibility",
+  "name": "Tasset of Flexibility"
+ },
+ {
+  "collection": "items",
+  "id": "trusty-helmet",
+  "name": "Trusty Helmet"
+ },
+ {
+  "collection": "items",
+  "id": "underbrush-cloak",
+  "name": "Underbrush Cloak"
+ },
+ {
+  "collection": "items",
+  "id": "watchers-armband",
+  "name": "Watcher's Armband"
+ },
+ {
+  "collection": "items",
+  "id": "champions-laurels",
+  "name": "Champions Laurels"
+ },
+ {
+  "collection": "items",
+  "id": "champions-laurels-amateur",
+  "name": "Champions Laurels (Amateur)"
+ },
+ {
+  "collection": "items",
+  "id": "champions-laurels-professional",
+  "name": "Champions Laurels (Professional)"
+ },
+ {
+  "collection": "items",
+  "id": "champions-laurels-renowned",
+  "name": "Champions Laurels (Renowned)"
+ },
+ {
+  "collection": "items",
+  "id": "gift-of-olives",
+  "name": "Gift of Olives"
+ },
+ {
+  "collection": "items",
+  "id": "pyrefeather-cloak",
+  "name": "Pyrefeather Cloak"
+ },
+ {
+  "collection": "items",
+  "id": "vortex-pouch",
+  "name": "Vortex Pouch"
+ },
+ {
+  "collection": "items",
+  "id": "mask-of-shifting-monstrosity",
+  "name": "Mask of Shifting Monstrosity"
+ },
+ {
+  "collection": "items",
+  "id": "strand-of-the-seven-births",
+  "name": "Strand of the Seven Births"
+ },
+ {
+  "collection": "items",
+  "id": "successor-doll",
+  "name": "Successor Doll"
+ },
+ {
+  "collection": "items",
+  "id": "anti-dragon-barding",
+  "name": "Anti-Dragon Barding"
+ },
+ {
+  "collection": "items",
+  "id": "greater-anti-dragon-barding",
+  "name": "Greater Anti-Dragon Barding"
+ },
+ {
+  "collection": "items",
+  "id": "the-timeless-bond",
+  "name": "The Timeless Bond"
+ },
+ {
+  "collection": "items",
+  "id": "pact-of-the-agonized-destroyer",
+  "name": "Pact of the Agonized Destroyer"
+ },
+ {
+  "collection": "items",
+  "id": "shadewither-key",
+  "name": "Shadewither Key"
+ },
+ {
+  "collection": "items",
+  "id": "greater-stalk-goggles",
+  "name": "Greater Stalk Goggles"
+ },
+ {
+  "collection": "items",
+  "id": "major-stalk-goggles",
+  "name": "Major Stalk Goggles"
+ },
+ {
+  "collection": "items",
+  "id": "standard-astrolabe",
+  "name": "Standard Astrolabe"
+ },
+ {
+  "collection": "items",
+  "id": "mariners-astrolabe",
+  "name": "Mariner's Astrolabe"
+ },
+ {
+  "collection": "items",
+  "id": "aether-marbles",
+  "name": "Aether Marbles"
+ },
+ {
+  "collection": "items",
+  "id": "lesser-aether-marbles",
+  "name": "Lesser Aether Marbles"
+ },
+ {
+  "collection": "items",
+  "id": "moderate-aether-marbles",
+  "name": "Moderate Aether Marbles"
+ },
+ {
+  "collection": "items",
+  "id": "greater-aether-marbles",
+  "name": "Greater Aether Marbles"
+ },
+ {
+  "collection": "items",
+  "id": "oil-of-corpse-restoration",
+  "name": "Oil of Corpse Restoration"
+ },
+ {
+  "collection": "items",
+  "id": "star-of-cynosure",
+  "name": "Star of Cynosure"
+ },
+ {
+  "collection": "items",
+  "id": "paradigm-cube",
+  "name": "Paradigm Cube"
+ },
+ {
+  "collection": "items",
+  "id": "elixir-of-the-peaks",
+  "name": "Elixir of the Peaks"
+ }
+]

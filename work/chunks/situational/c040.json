@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "entertainers-lute",
+  "name": "Entertainer's Lute"
+ },
+ {
+  "collection": "items",
+  "id": "entertainers-lute-greater",
+  "name": "Entertainer's Lute (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "entertainers-lute-major",
+  "name": "Entertainer's Lute (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "fiddle-of-the-maestro",
+  "name": "Fiddle of the Maestro"
+ },
+ {
+  "collection": "items",
+  "id": "pipes-of-compulsion",
+  "name": "Pipes of Compulsion"
+ },
+ {
+  "collection": "items",
+  "id": "pipes-of-compulsion-greater",
+  "name": "Pipes of Compulsion (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "pipes-of-compulsion-major",
+  "name": "Pipes of Compulsion (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "seers-flute",
+  "name": "Seer's Flute"
+ },
+ {
+  "collection": "items",
+  "id": "seers-flute-greater",
+  "name": "Seer's Flute (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "seers-flute-major",
+  "name": "Seer's Flute (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "tricksters-mandolin",
+  "name": "Trickster's Mandolin"
+ },
+ {
+  "collection": "items",
+  "id": "tricksters-mandolin-greater",
+  "name": "Trickster's Mandolin (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "tricksters-mandolin-major",
+  "name": "Trickster's Mandolin (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain",
+  "name": "Wand of Legerdemain"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-1st-rank-spell",
+  "name": "Wand of Legerdemain (1st-Rank Spell)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-2nd-rank-spell",
+  "name": "Wand of Legerdemain (2nd-Rank Spell)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-3rd-rank-spell",
+  "name": "Wand of Legerdemain (3rd-Rank Spell)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-4th-rank-spell",
+  "name": "Wand of Legerdemain (4th-Rank Spell)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-5th-rank-spell",
+  "name": "Wand of Legerdemain (5th-Rank Spell)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-6th-rank-spell",
+  "name": "Wand of Legerdemain (6th-Rank Spell)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-7th-rank-spell",
+  "name": "Wand of Legerdemain (7th-Rank Spell)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-8th-rank-spell",
+  "name": "Wand of Legerdemain (8th-Rank Spell)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-9th-rank-spell",
+  "name": "Wand of Legerdemain (9th-Rank Spell)"
+ },
+ {
+  "collection": "items",
+  "id": "catching",
+  "name": "Catching"
+ },
+ {
+  "collection": "items",
+  "id": "menacing",
+  "name": "Menacing"
+ },
+ {
+  "collection": "items",
+  "id": "menacing-greater",
+  "name": "Menacing (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "trackless",
+  "name": "Trackless"
+ },
+ {
+  "collection": "items",
+  "id": "trackless-greater",
+  "name": "Trackless (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "alchemists-haversack",
+  "name": "Alchemist's Haversack"
+ },
+ {
+  "collection": "items",
+  "id": "fearless-sash",
+  "name": "Fearless Sash"
+ },
+ {
+  "collection": "items",
+  "id": "clarity-goggles",
+  "name": "Clarity Goggles"
+ },
+ {
+  "collection": "items",
+  "id": "clarity-goggles-lesser",
+  "name": "Clarity Goggles (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "clarity-goggles-moderate",
+  "name": "Clarity Goggles (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "clarity-goggles-greater",
+  "name": "Clarity Goggles (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "mirror-goggles",
+  "name": "Mirror Goggles"
+ },
+ {
+  "collection": "items",
+  "id": "mirror-goggles-lesser",
+  "name": "Mirror Goggles (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "mirror-goggles-moderate",
+  "name": "Mirror Goggles (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "mirror-goggles-greater",
+  "name": "Mirror Goggles (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "spectacles-of-inquiry",
+  "name": "Spectacles of Inquiry"
+ },
+ {
+  "collection": "items",
+  "id": "spectacles-of-piercing-sight",
+  "name": "Spectacles of Piercing Sight"
+ }
+]

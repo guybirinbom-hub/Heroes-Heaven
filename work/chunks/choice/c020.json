@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "heritages",
+  "id": "born-of-item",
+  "name": "Born of Item"
+ },
+ {
+  "collection": "heritages",
+  "id": "warden-human-bb",
+  "name": "Warden Human (BB)"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "lesser-scion",
+  "name": "Lesser Scion"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "lost-and-alone",
+  "name": "Lost and Alone"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "missionary",
+  "name": "Missionary"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "teamster",
+  "name": "Teamster"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "dragon-scholar",
+  "name": "Dragon Scholar"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "emancipated",
+  "name": "Emancipated"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "haunting-vision",
+  "name": "Haunting Vision"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "hellknight-historian",
+  "name": "Hellknight Historian"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "local-scion",
+  "name": "Local Scion"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "out-of-towner",
+  "name": "Out-of-Towner"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "reputation-seeker",
+  "name": "Reputation Seeker"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "returning-descendant",
+  "name": "Returning Descendant"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "truth-seeker",
+  "name": "Truth Seeker"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "pathfinder-hopeful",
+  "name": "Pathfinder Hopeful"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "trade-consortium-underling",
+  "name": "Trade Consortium Underling"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "grand-council-bureaucrat",
+  "name": "Grand Council Bureaucrat"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "child-of-the-puddles",
+  "name": "Child of the Puddles"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "freed-slave-of-absalom",
+  "name": "Freed Slave of Absalom"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "inlander",
+  "name": "Inlander"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "menagerie-dung-sweeper",
+  "name": "Menagerie Dung Sweeper"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "diobel-pearl-diver",
+  "name": "Diobel Pearl Diver"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "aspiring-river-monarch",
+  "name": "Aspiring River Monarch"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "razmiran-faithful",
+  "name": "Razmiran Faithful"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "sarkorian-reclaimer",
+  "name": "Sarkorian Reclaimer"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "rostland-partisan",
+  "name": "Rostland Partisan"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "wonder-taster",
+  "name": "Wonder Taster"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "issian-partisan",
+  "name": "Issian Partisan"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "belkzen-slayer",
+  "name": "Belkzen Slayer"
+ }
+]

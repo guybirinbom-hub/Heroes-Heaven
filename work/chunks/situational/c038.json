@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "wind-at-your-back",
+  "name": "Wind at Your Back"
+ },
+ {
+  "collection": "items",
+  "id": "ancestral-geometry",
+  "name": "Ancestral Geometry"
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom",
+  "name": "Bewitching Bloom"
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom-bellflower",
+  "name": "Bewitching Bloom (Bellflower)"
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom-lilac",
+  "name": "Bewitching Bloom (Lilac)"
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom-lotus",
+  "name": "Bewitching Bloom (Lotus)"
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom-magnolia",
+  "name": "Bewitching Bloom (Magnolia)"
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom-red-rose",
+  "name": "Bewitching Bloom (Red Rose)"
+ },
+ {
+  "collection": "items",
+  "id": "boozy-bottle",
+  "name": "Boozy Bottle"
+ },
+ {
+  "collection": "items",
+  "id": "eye-slash-greater",
+  "name": "Eye Slash (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "eye-slash-major",
+  "name": "Eye Slash (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "eye-slash-true",
+  "name": "Eye Slash (True)"
+ },
+ {
+  "collection": "items",
+  "id": "nemesis-name",
+  "name": "Nemesis Name"
+ },
+ {
+  "collection": "items",
+  "id": "one-hundred-victories",
+  "name": "One Hundred Victories"
+ },
+ {
+  "collection": "items",
+  "id": "tradecraft-tattoo",
+  "name": "Tradecraft Tattoo"
+ },
+ {
+  "collection": "items",
+  "id": "tradecraft-tattoo-greater",
+  "name": "Tradecraft Tattoo (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "triangular-teeth",
+  "name": "Triangular Teeth"
+ },
+ {
+  "collection": "items",
+  "id": "unbreakable-heart",
+  "name": "Unbreakable Heart"
+ },
+ {
+  "collection": "items",
+  "id": "unifying-emblem",
+  "name": "Unifying Emblem"
+ },
+ {
+  "collection": "items",
+  "id": "unifying-emblem-tamiir-quah",
+  "name": "Unifying Emblem (Tamiir-Quah)"
+ },
+ {
+  "collection": "items",
+  "id": "unifying-emblem-lyrune-quah",
+  "name": "Unifying Emblem (Lyrune-Quah)"
+ },
+ {
+  "collection": "items",
+  "id": "unifying-emblem-shadde-quah",
+  "name": "Unifying Emblem (Shadde-Quah)"
+ },
+ {
+  "collection": "items",
+  "id": "unifying-emblem-shriikirri-quah",
+  "name": "Unifying Emblem (Shriikirri-Quah)"
+ },
+ {
+  "collection": "items",
+  "id": "unifying-emblem-shundar-quah",
+  "name": "Unifying Emblem (Shundar-Quah)"
+ },
+ {
+  "collection": "items",
+  "id": "unifying-emblem-sklar-quah",
+  "name": "Unifying Emblem (Sklar-Quah)"
+ },
+ {
+  "collection": "items",
+  "id": "unifying-emblem-skoan-quah",
+  "name": "Unifying Emblem (Skoan-Quah)"
+ },
+ {
+  "collection": "items",
+  "id": "wildwood-ink",
+  "name": "Wildwood Ink"
+ },
+ {
+  "collection": "items",
+  "id": "wildwood-ink-greater",
+  "name": "Wildwood Ink (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "wildwood-ink-major",
+  "name": "Wildwood Ink (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "beastmasters-sigil",
+  "name": "Beastmaster's Sigil"
+ },
+ {
+  "collection": "items",
+  "id": "beastmasters-sigil-greater",
+  "name": "Beastmaster's Sigil (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "beastmasters-sigil-major",
+  "name": "Beastmaster's Sigil (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "desolation-locket",
+  "name": "Desolation Locket"
+ },
+ {
+  "collection": "items",
+  "id": "desolation-locket-greater",
+  "name": "Desolation Locket (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "desolation-locket-major",
+  "name": "Desolation Locket (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "jyotis-feather",
+  "name": "Jyoti's Feather"
+ },
+ {
+  "collection": "items",
+  "id": "jyotis-feather-greater",
+  "name": "Jyoti's Feather (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "jyotis-feather-major",
+  "name": "Jyoti's Feather (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "lightweave-scarf",
+  "name": "Lightweave Scarf"
+ },
+ {
+  "collection": "items",
+  "id": "lightweave-scarf-greater",
+  "name": "Lightweave Scarf (Greater)"
+ }
+]

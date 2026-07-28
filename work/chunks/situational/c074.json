@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "heritages",
+  "id": "deny-the-firstborn-pursuit",
+  "name": "Deny the Firstborn Pursuit"
+ },
+ {
+  "collection": "heritages",
+  "id": "deny-lady-nanbyos-charity",
+  "name": "Deny Lady Nanbyo's Charity"
+ },
+ {
+  "collection": "heritages",
+  "id": "deny-the-traitors-rebirth",
+  "name": "Deny the Traitor's Rebirth"
+ },
+ {
+  "collection": "heritages",
+  "id": "respite-of-cloudless-paths",
+  "name": "Respite of Cloudless Paths"
+ },
+ {
+  "collection": "heritages",
+  "id": "born-of-animal",
+  "name": "Born of Animal"
+ },
+ {
+  "collection": "heritages",
+  "id": "born-of-celestial",
+  "name": "Born of Celestial"
+ },
+ {
+  "collection": "heritages",
+  "id": "born-of-elements",
+  "name": "Born of Elements"
+ },
+ {
+  "collection": "heritages",
+  "id": "born-of-item",
+  "name": "Born of Item"
+ },
+ {
+  "collection": "heritages",
+  "id": "born-of-vegetation",
+  "name": "Born of Vegetation"
+ },
+ {
+  "collection": "heritages",
+  "id": "keeper-jotunborn",
+  "name": "Keeper Jotunborn"
+ },
+ {
+  "collection": "heritages",
+  "id": "weaver-jotunborn",
+  "name": "Weaver Jotunborn"
+ },
+ {
+  "collection": "heritages",
+  "id": "fey-dragonet",
+  "name": "Fey Dragonet"
+ },
+ {
+  "collection": "heritages",
+  "id": "house-drake",
+  "name": "House Drake"
+ },
+ {
+  "collection": "heritages",
+  "id": "aon-ganzi",
+  "name": "Ganzi"
+ },
+ {
+  "collection": "heritages",
+  "id": "aon-three-kobolds-in-a-trench-coat",
+  "name": "Three Kobolds in a Trench Coat"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "ex-con-token-guard",
+  "name": "Ex-Con Token Guard"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "godless-graycloak",
+  "name": "Godless Graycloak"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "grizzled-muckrucker",
+  "name": "Grizzled Muckrucker"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "harbor-guard-moonlighter",
+  "name": "Harbor Guard Moonlighter"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "learned-guard-prodigy",
+  "name": "Learned Guard Prodigy"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "political-scion",
+  "name": "Political Scion"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "sleepless-suns-star",
+  "name": "Sleepless Suns Star"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "undercover-lotus-guard",
+  "name": "Undercover Lotus Guard"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "mechanical-symbiosis",
+  "name": "Mechanical Symbiosis"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "saved-by-clockwork",
+  "name": "Saved by Clockwork"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "tech-reliant",
+  "name": "Tech-Reliant"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "wished-alive",
+  "name": "Wished Alive"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "sun-dancer",
+  "name": "Sun Dancer"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "tide-watcher",
+  "name": "Tide Watcher"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "glorianas-fixer",
+  "name": "Gloriana's Fixer"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "almas-clerk",
+  "name": "Almas Clerk"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "friend-of-greensteeples",
+  "name": "Friend of Greensteeples"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "guest-of-sedeq-lodge",
+  "name": "Guest of Sedeq Lodge"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "sandswept-survivor",
+  "name": "Sandswept Survivor"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "gold-falls-regular",
+  "name": "Gold Falls Regular"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "harrow-chosen",
+  "name": "Harrow-Chosen"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "close-ties",
+  "name": "Close Ties"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "folklore-enthusiast",
+  "name": "Folklore Enthusiast"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "northridge-scholar",
+  "name": "Northridge Scholar"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "outskirt-dweller",
+  "name": "Outskirt Dweller"
+ }
+]

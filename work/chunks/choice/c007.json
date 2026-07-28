@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "feats",
+  "id": "swashbuckler-dedication",
+  "name": "Swashbuckler Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "settlement-scholastics",
+  "name": "Settlement Scholastics"
+ },
+ {
+  "collection": "feats",
+  "id": "lead-the-pack",
+  "name": "Lead the Pack"
+ },
+ {
+  "collection": "feats",
+  "id": "blessed-denial",
+  "name": "Blessed Denial"
+ },
+ {
+  "collection": "feats",
+  "id": "cavalier-dedication",
+  "name": "Cavalier Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "dual-onslaught",
+  "name": "Dual Onslaught"
+ },
+ {
+  "collection": "feats",
+  "id": "duelists-challenge",
+  "name": "Duelist's Challenge"
+ },
+ {
+  "collection": "feats",
+  "id": "eldritch-archer-dedication",
+  "name": "Eldritch Archer Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "magic-ammunition",
+  "name": "Magic Ammunition"
+ },
+ {
+  "collection": "feats",
+  "id": "play-to-the-crowd",
+  "name": "Play to the Crowd"
+ },
+ {
+  "collection": "feats",
+  "id": "spot-translate",
+  "name": "Spot Translate"
+ },
+ {
+  "collection": "feats",
+  "id": "steel-yourself",
+  "name": "Steel Yourself!"
+ },
+ {
+  "collection": "feats",
+  "id": "to-battle",
+  "name": "To Battle!"
+ },
+ {
+  "collection": "feats",
+  "id": "treat-condition",
+  "name": "Treat Condition"
+ },
+ {
+  "collection": "feats",
+  "id": "assured-ritualist",
+  "name": "Assured Ritualist"
+ },
+ {
+  "collection": "feats",
+  "id": "scouts-charge",
+  "name": "Scout's Charge"
+ },
+ {
+  "collection": "feats",
+  "id": "terrain-scout",
+  "name": "Terrain Scout"
+ },
+ {
+  "collection": "feats",
+  "id": "scrounger-dedication",
+  "name": "Scrounger Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "expert-disassembly",
+  "name": "Expert Disassembly"
+ },
+ {
+  "collection": "feats",
+  "id": "bon-mot",
+  "name": "Bon Mot"
+ },
+ {
+  "collection": "feats",
+  "id": "sanctify-water",
+  "name": "Sanctify Water"
+ },
+ {
+  "collection": "feats",
+  "id": "signature-crafting",
+  "name": "Signature Crafting"
+ },
+ {
+  "collection": "feats",
+  "id": "elemental-spark",
+  "name": "Elemental Spark"
+ },
+ {
+  "collection": "feats",
+  "id": "samsaran-weapon-memory",
+  "name": "Samsaran Weapon Memory"
+ },
+ {
+  "collection": "feats",
+  "id": "memory-of-skill",
+  "name": "Memory of Skill"
+ },
+ {
+  "collection": "feats",
+  "id": "rejuvenating-embrace",
+  "name": "Rejuvenating Embrace"
+ },
+ {
+  "collection": "feats",
+  "id": "inherit-the-dreaming-heirloom",
+  "name": "Inherit the Dreaming Heirloom"
+ },
+ {
+  "collection": "feats",
+  "id": "natural-mutagen",
+  "name": "Natural Mutagen"
+ },
+ {
+  "collection": "feats",
+  "id": "signature-weapon",
+  "name": "Signature Weapon"
+ },
+ {
+  "collection": "feats",
+  "id": "form-up",
+  "name": "Form Up!"
+ }
+]

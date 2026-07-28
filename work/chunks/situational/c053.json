@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "holy-chain",
+  "name": "Holy Chain"
+ },
+ {
+  "collection": "items",
+  "id": "mariners-splint",
+  "name": "Mariner's Splint"
+ },
+ {
+  "collection": "items",
+  "id": "warleaders-bulwark",
+  "name": "Warleader's Bulwark"
+ },
+ {
+  "collection": "items",
+  "id": "warleaders-bulwark-greater",
+  "name": "Warleader's Bulwark (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "glamorous-buckler",
+  "name": "Glamorous Buckler"
+ },
+ {
+  "collection": "items",
+  "id": "spellguard-blade",
+  "name": "Spellguard Blade"
+ },
+ {
+  "collection": "items",
+  "id": "acid-flask-moderate",
+  "name": "Acid Flask (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "acid-flask-greater",
+  "name": "Acid Flask (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "acid-flask-major",
+  "name": "Acid Flask (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "alchemists-fire-moderate",
+  "name": "Alchemist's Fire (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "alchemists-fire-greater",
+  "name": "Alchemist's Fire (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "alchemists-fire-major",
+  "name": "Alchemist's Fire (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "blasting-stone",
+  "name": "Blasting Stone"
+ },
+ {
+  "collection": "items",
+  "id": "blasting-stone-moderate",
+  "name": "Blasting Stone (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "blasting-stone-greater",
+  "name": "Blasting Stone (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "blasting-stone-major",
+  "name": "Blasting Stone (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "blight-bomb",
+  "name": "Blight Bomb"
+ },
+ {
+  "collection": "items",
+  "id": "blight-bomb-moderate",
+  "name": "Blight Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "blight-bomb-greater",
+  "name": "Blight Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "blight-bomb-major",
+  "name": "Blight Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "bottled-lightning",
+  "name": "Bottled Lightning"
+ },
+ {
+  "collection": "items",
+  "id": "bottled-lightning-moderate",
+  "name": "Bottled Lightning (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "bottled-lightning-greater",
+  "name": "Bottled Lightning (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "bottled-lightning-major",
+  "name": "Bottled Lightning (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "crystal-shards",
+  "name": "Crystal Shards"
+ },
+ {
+  "collection": "items",
+  "id": "crystal-shards-moderate",
+  "name": "Crystal Shards (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "crystal-shards-greater",
+  "name": "Crystal Shards (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "crystal-shards-major",
+  "name": "Crystal Shards (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "dread-ampoule-lesser",
+  "name": "Dread Ampoule (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "dread-ampoule-moderate",
+  "name": "Dread Ampoule (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "dread-ampoule-greater",
+  "name": "Dread Ampoule (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "dread-ampoule-major",
+  "name": "Dread Ampoule (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "frost-vial",
+  "name": "Frost Vial"
+ },
+ {
+  "collection": "items",
+  "id": "frost-vial-moderate",
+  "name": "Frost Vial (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "frost-vial-greater",
+  "name": "Frost Vial (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "frost-vial-major",
+  "name": "Frost Vial (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "ghost-charge",
+  "name": "Ghost Charge"
+ },
+ {
+  "collection": "items",
+  "id": "ghost-charge-moderate",
+  "name": "Ghost Charge (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "ghost-charge-greater",
+  "name": "Ghost Charge (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "ghost-charge-major",
+  "name": "Ghost Charge (Major)"
+ }
+]

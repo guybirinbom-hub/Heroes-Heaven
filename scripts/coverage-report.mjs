@@ -58,6 +58,12 @@ const asksToChoose = (r) => {
 /* ---- lane 2: records granting a TYPED bonus (the ★ situational marker) --------------------- */
 const TYPED_BONUS = /(circumstance|status|item) bonus/i;
 
+/** Every bucket a situational / grant record can legitimately live in. */
+const COLLECTIONS = [
+  'feats', 'items', 'heritages', 'backgrounds', 'classFeatures',
+  'ancestries', 'animalCompanions', 'companionSpecializations',
+];
+
 function lane(collection, predicate, isModelled) {
   const recs = Object.values(db[collection] ?? {});
   const need = recs.filter(predicate);
@@ -81,19 +87,25 @@ const choices = [
   lane('heritages', asksToChoose, choiceModelled),
 ];
 
-// The situational registry is FEATS-ONLY by construction (explain.ts reads characterFeatIds), so
-// every non-feat record here is structurally unreachable — not merely unauthored.
+// The situational registry used to be feats-only by construction, so the non-feat lanes below were
+// hardcoded to 0% as "structurally unreachable". The reach fix (c00984a) made every collection
+// reachable, so they are now scored the same way feats are — anything else under-reports the work.
 const sitModelled = (r) => situational.has(r.id);
 const sits = [
   lane('feats', (r) => TYPED_BONUS.test(String(r.description ?? '')), sitModelled),
-  lane('items', (r) => TYPED_BONUS.test(String(r.description ?? '')), () => false),
-  lane('classFeatures', (r) => TYPED_BONUS.test(String(r.description ?? '')), () => false),
-  lane('heritages', (r) => TYPED_BONUS.test(String(r.description ?? '')), () => false),
+  lane('items', (r) => TYPED_BONUS.test(String(r.description ?? '')), sitModelled),
+  lane('classFeatures', (r) => TYPED_BONUS.test(String(r.description ?? '')), sitModelled),
+  lane('heritages', (r) => TYPED_BONUS.test(String(r.description ?? '')), sitModelled),
 ];
 
 const report = {
+  // Count ids that resolve in ANY collection: the situational table is deliberately multi-collection
+  // now, so filtering to db.feats would hide ~1,400 real item/heritage/classFeature entries.
   registryCounts: Object.fromEntries(
-    Object.entries(registry).map(([k, v]) => [k, [...v].filter((id) => db.feats[id]).length]),
+    Object.entries(registry).map(([k, v]) => [
+      k,
+      [...v].filter((id) => COLLECTIONS.some((col) => db[col]?.[id])).length,
+    ]),
   ),
   playerChoices: choices,
   situationalBonuses: sits,

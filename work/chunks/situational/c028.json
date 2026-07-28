@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "servers-stew",
+  "name": "Server's Stew"
+ },
+ {
+  "collection": "items",
+  "id": "energy-robe",
+  "name": "Energy Robe"
+ },
+ {
+  "collection": "items",
+  "id": "energy-robe-fire",
+  "name": "Energy Robe (Fire)"
+ },
+ {
+  "collection": "items",
+  "id": "energy-robe-cold",
+  "name": "Energy Robe (Cold)"
+ },
+ {
+  "collection": "items",
+  "id": "energy-robe-acid",
+  "name": "Energy Robe (Acid)"
+ },
+ {
+  "collection": "items",
+  "id": "energy-robe-electricity",
+  "name": "Energy Robe (Electricity)"
+ },
+ {
+  "collection": "items",
+  "id": "experimental-clothing",
+  "name": "Experimental Clothing"
+ },
+ {
+  "collection": "items",
+  "id": "pickpockets-tailoring",
+  "name": "Pickpocket's Tailoring"
+ },
+ {
+  "collection": "items",
+  "id": "quick-wig",
+  "name": "Quick Wig"
+ },
+ {
+  "collection": "items",
+  "id": "wardrobe-stone",
+  "name": "Wardrobe Stone"
+ },
+ {
+  "collection": "items",
+  "id": "wardrobe-stone-moderate",
+  "name": "Wardrobe Stone (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "wardrobe-stone-greater",
+  "name": "Wardrobe Stone (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "waverider-barding",
+  "name": "Waverider Barding"
+ },
+ {
+  "collection": "items",
+  "id": "exquisite-surprise-doll",
+  "name": "Exquisite Surprise Doll"
+ },
+ {
+  "collection": "items",
+  "id": "games",
+  "name": "Games"
+ },
+ {
+  "collection": "items",
+  "id": "loaded-dice",
+  "name": "Loaded Dice"
+ },
+ {
+  "collection": "items",
+  "id": "enhanced-hearing-aid",
+  "name": "Enhanced Hearing Aid"
+ },
+ {
+  "collection": "items",
+  "id": "maestros-chair",
+  "name": "Maestro's Chair"
+ },
+ {
+  "collection": "items",
+  "id": "minotaur-chair",
+  "name": "Minotaur Chair"
+ },
+ {
+  "collection": "items",
+  "id": "eye-of-the-unseen",
+  "name": "Eye of the Unseen"
+ },
+ {
+  "collection": "items",
+  "id": "eye-of-the-unseen-greater",
+  "name": "Eye of the Unseen (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "memory-palace",
+  "name": "Memory Palace"
+ },
+ {
+  "collection": "items",
+  "id": "sarkorian-god-caller-garb",
+  "name": "Sarkorian God-Caller Garb"
+ },
+ {
+  "collection": "items",
+  "id": "hopeful",
+  "name": "Hopeful"
+ },
+ {
+  "collection": "items",
+  "id": "presentable",
+  "name": "Presentable"
+ },
+ {
+  "collection": "items",
+  "id": "presentable-greater",
+  "name": "Presentable (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "wind-catcher",
+  "name": "Wind-Catcher"
+ },
+ {
+  "collection": "items",
+  "id": "wind-catcher-greater",
+  "name": "Wind-Catcher (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "portable-ram",
+  "name": "Portable Ram"
+ },
+ {
+  "collection": "items",
+  "id": "portable-ram-reinforced",
+  "name": "Portable Ram (Reinforced)"
+ },
+ {
+  "collection": "items",
+  "id": "inubrix-armor",
+  "name": "Inubrix Armor"
+ },
+ {
+  "collection": "items",
+  "id": "inubrix-armor-standard-grade",
+  "name": "Inubrix Armor (Standard-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "inubrix-armor-high-grade",
+  "name": "Inubrix Armor (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "inubrix-shield",
+  "name": "Inubrix Shield"
+ },
+ {
+  "collection": "items",
+  "id": "inubrix-buckler-standard-grade",
+  "name": "Inubrix Buckler (Standard-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "inubrix-shield-standard-grade",
+  "name": "Inubrix Shield (Standard-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "inubrix-buckler-high-grade",
+  "name": "Inubrix Buckler (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "inubrix-shield-high-grade",
+  "name": "Inubrix Shield (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "inubrix-weapon",
+  "name": "Inubrix Weapon"
+ },
+ {
+  "collection": "items",
+  "id": "inubrix-weapon-standard-grade",
+  "name": "Inubrix Weapon (Standard-Grade)"
+ }
+]

@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "keymaking-tools",
+  "name": "Keymaking Tools"
+ },
+ {
+  "collection": "items",
+  "id": "mask-of-allure",
+  "name": "Mask of Allure"
+ },
+ {
+  "collection": "items",
+  "id": "mercurial-mantle",
+  "name": "Mercurial Mantle"
+ },
+ {
+  "collection": "items",
+  "id": "north-winds-night-verse",
+  "name": "North Wind's Night Verse"
+ },
+ {
+  "collection": "items",
+  "id": "sages-lash",
+  "name": "Sage's Lash"
+ },
+ {
+  "collection": "items",
+  "id": "singing-shortbow",
+  "name": "Singing Shortbow"
+ },
+ {
+  "collection": "items",
+  "id": "singing-shortbow-greater",
+  "name": "Singing Shortbow (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "south-winds-scorch-song",
+  "name": "South Wind's Scorch Song"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-the-desert-winds",
+  "name": "Staff of the Desert Winds"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-the-desert-winds-greater",
+  "name": "Staff of the Desert Winds (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-the-desert-winds-major",
+  "name": "Staff of the Desert Winds (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-the-desert-winds-true",
+  "name": "Staff of the Desert Winds (True)"
+ },
+ {
+  "collection": "items",
+  "id": "stampede-medallion",
+  "name": "Stampede Medallion"
+ },
+ {
+  "collection": "items",
+  "id": "stampede-medallion-greater",
+  "name": "Stampede Medallion (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "stampede-medallion-major",
+  "name": "Stampede Medallion (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "thousand-blade-thesis",
+  "name": "Thousand-Blade Thesis"
+ },
+ {
+  "collection": "items",
+  "id": "titans-grasp",
+  "name": "Titan's Grasp"
+ },
+ {
+  "collection": "items",
+  "id": "crown-of-the-companion",
+  "name": "Crown of the Companion"
+ },
+ {
+  "collection": "items",
+  "id": "leopards-armor",
+  "name": "Leopard's Armor"
+ },
+ {
+  "collection": "items",
+  "id": "nosoi-charm",
+  "name": "Nosoi Charm"
+ },
+ {
+  "collection": "items",
+  "id": "nosoi-charm-greater",
+  "name": "Nosoi Charm (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "magnetic-suit",
+  "name": "Magnetic Suit"
+ },
+ {
+  "collection": "items",
+  "id": "magnetic-suit-greater",
+  "name": "Magnetic Suit (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "magnetic-suit-major",
+  "name": "Magnetic Suit (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "spirit-singer",
+  "name": "Spirit-Singer"
+ },
+ {
+  "collection": "items",
+  "id": "spirit-singer-handheld",
+  "name": "Spirit-Singer (Handheld)"
+ },
+ {
+  "collection": "items",
+  "id": "spirit-singer-incredible",
+  "name": "Spirit-Singer (Incredible)"
+ },
+ {
+  "collection": "items",
+  "id": "spirit-singer-incredible-handheld",
+  "name": "Spirit-Singer (Incredible Handheld)"
+ },
+ {
+  "collection": "items",
+  "id": "violet-ray",
+  "name": "Violet Ray"
+ },
+ {
+  "collection": "items",
+  "id": "day-goggles",
+  "name": "Day Goggles"
+ },
+ {
+  "collection": "items",
+  "id": "holy-steam-ball",
+  "name": "Holy Steam Ball"
+ },
+ {
+  "collection": "items",
+  "id": "arboreals-revenge",
+  "name": "Arboreal's Revenge"
+ },
+ {
+  "collection": "items",
+  "id": "immolation-clan-pistol",
+  "name": "Immolation Clan Pistol"
+ },
+ {
+  "collection": "items",
+  "id": "duchy-defender",
+  "name": "Duchy Defender"
+ },
+ {
+  "collection": "items",
+  "id": "aromatic-ammunition",
+  "name": "Aromatic Ammunition"
+ },
+ {
+  "collection": "items",
+  "id": "camouflage-suit",
+  "name": "Camouflage Suit"
+ },
+ {
+  "collection": "items",
+  "id": "camouflage-suit-superb",
+  "name": "Camouflage Suit (Superb)"
+ },
+ {
+  "collection": "items",
+  "id": "concealed-holster",
+  "name": "Concealed Holster"
+ },
+ {
+  "collection": "items",
+  "id": "darkvision-scope",
+  "name": "Darkvision Scope"
+ },
+ {
+  "collection": "items",
+  "id": "darkvision-scope-greater",
+  "name": "Darkvision Scope (Greater)"
+ }
+]

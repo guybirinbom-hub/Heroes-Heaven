@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "water-bomb-moderate",
+  "name": "Water Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "water-bomb-greater",
+  "name": "Water Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "water-bomb-major",
+  "name": "Water Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "metuaks-pendant",
+  "name": "Metuak's Pendant"
+ },
+ {
+  "collection": "items",
+  "id": "spiritsight-ring",
+  "name": "Spiritsight Ring"
+ },
+ {
+  "collection": "items",
+  "id": "sure-step-crampons",
+  "name": "Sure-Step Crampons"
+ },
+ {
+  "collection": "items",
+  "id": "halcyon-heart",
+  "name": "Halcyon Heart"
+ },
+ {
+  "collection": "items",
+  "id": "ectoplasmic-tracer",
+  "name": "Ectoplasmic Tracer"
+ },
+ {
+  "collection": "items",
+  "id": "grim-ring",
+  "name": "Grim Ring"
+ },
+ {
+  "collection": "items",
+  "id": "blaze",
+  "name": "Blaze"
+ },
+ {
+  "collection": "items",
+  "id": "war-blood-mutagen",
+  "name": "War Blood Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "war-blood-mutagen-lesser",
+  "name": "War Blood Mutagen (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "war-blood-mutagen-moderate",
+  "name": "War Blood Mutagen (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "war-blood-mutagen-greater",
+  "name": "War Blood Mutagen (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "war-blood-mutagen-major",
+  "name": "War Blood Mutagen (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "horn-of-the-sun-aurochs",
+  "name": "Horn of the Sun Aurochs"
+ },
+ {
+  "collection": "items",
+  "id": "knights-maintenance-kit",
+  "name": "Knight's Maintenance Kit"
+ },
+ {
+  "collection": "items",
+  "id": "knights-tabard",
+  "name": "Knight's Tabard"
+ },
+ {
+  "collection": "items",
+  "id": "portable-altar",
+  "name": "Portable Altar"
+ },
+ {
+  "collection": "items",
+  "id": "parade-armor",
+  "name": "Parade Armor"
+ },
+ {
+  "collection": "items",
+  "id": "armor-of-the-holy-warrior",
+  "name": "Armor of the Holy Warrior"
+ },
+ {
+  "collection": "items",
+  "id": "busine-of-divine-reinforcement",
+  "name": "Busine of Divine Reinforcement"
+ },
+ {
+  "collection": "items",
+  "id": "guardian-shield",
+  "name": "Guardian Shield"
+ },
+ {
+  "collection": "items",
+  "id": "knight-captains-lance",
+  "name": "Knight Captain's Lance"
+ },
+ {
+  "collection": "items",
+  "id": "swiftmount-saddle",
+  "name": "Swiftmount Saddle"
+ },
+ {
+  "collection": "items",
+  "id": "undead-compendium",
+  "name": "Undead Compendium"
+ },
+ {
+  "collection": "items",
+  "id": "lodestone-pellet",
+  "name": "Lodestone Pellet"
+ },
+ {
+  "collection": "items",
+  "id": "thunder-helm",
+  "name": "Thunder Helm"
+ },
+ {
+  "collection": "items",
+  "id": "containment-contraption",
+  "name": "Containment Contraption"
+ },
+ {
+  "collection": "items",
+  "id": "metronomic-hammer",
+  "name": "Metronomic Hammer"
+ },
+ {
+  "collection": "items",
+  "id": "winders-ring",
+  "name": "Winder's Ring"
+ },
+ {
+  "collection": "items",
+  "id": "lawbringers-lasso",
+  "name": "Lawbringer's Lasso"
+ },
+ {
+  "collection": "items",
+  "id": "blast-suit",
+  "name": "Blast Suit"
+ },
+ {
+  "collection": "items",
+  "id": "star-grenade",
+  "name": "Star Grenade"
+ },
+ {
+  "collection": "items",
+  "id": "star-grenade-moderate",
+  "name": "Star Grenade (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "star-grenade-greater",
+  "name": "Star Grenade (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "star-grenade-major",
+  "name": "Star Grenade (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "corpse-compass",
+  "name": "Corpse Compass"
+ },
+ {
+  "collection": "items",
+  "id": "corpsecaller-round",
+  "name": "Corpsecaller Round"
+ },
+ {
+  "collection": "items",
+  "id": "gloaming-arc",
+  "name": "Gloaming Arc"
+ }
+]

@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "essence-forge-moderate",
+  "name": "Essence Forge (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "essence-forge-greater",
+  "name": "Essence Forge (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "psyche-salts",
+  "name": "Psyche Salts"
+ },
+ {
+  "collection": "items",
+  "id": "psyche-salts-lesser",
+  "name": "Psyche Salts (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "psyche-salts-moderate",
+  "name": "Psyche Salts (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "psyche-salts-greater",
+  "name": "Psyche Salts (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "essence-charm",
+  "name": "Essence Charm"
+ },
+ {
+  "collection": "items",
+  "id": "security-badge",
+  "name": "Security Badge"
+ },
+ {
+  "collection": "items",
+  "id": "miniaturization-module",
+  "name": "Miniaturization Module"
+ },
+ {
+  "collection": "items",
+  "id": "schematic-scanner",
+  "name": "Schematic Scanner"
+ },
+ {
+  "collection": "items",
+  "id": "bismuth-armor",
+  "name": "Bismuth Armor"
+ },
+ {
+  "collection": "items",
+  "id": "command-cuirass",
+  "name": "Command Cuirass"
+ },
+ {
+  "collection": "items",
+  "id": "eagle-wing",
+  "name": "Eagle Wing"
+ },
+ {
+  "collection": "items",
+  "id": "lifting-leather",
+  "name": "Lifting Leather"
+ },
+ {
+  "collection": "items",
+  "id": "locust-leather",
+  "name": "Locust Leather"
+ },
+ {
+  "collection": "items",
+  "id": "medics-shield",
+  "name": "Medic's Shield"
+ },
+ {
+  "collection": "items",
+  "id": "vambrace-of-gorum",
+  "name": "Vambrace of Gorum"
+ },
+ {
+  "collection": "items",
+  "id": "vanguards-shield",
+  "name": "Vanguard's Shield"
+ },
+ {
+  "collection": "items",
+  "id": "calvary-commanders-lance",
+  "name": "Calvary Commander's Lance"
+ },
+ {
+  "collection": "items",
+  "id": "doomsweeper",
+  "name": "Doomsweeper"
+ },
+ {
+  "collection": "items",
+  "id": "draddeths-edge",
+  "name": "Draddeth's Edge"
+ },
+ {
+  "collection": "items",
+  "id": "gravediggers-call",
+  "name": "Gravedigger's Call"
+ },
+ {
+  "collection": "items",
+  "id": "horselords-longbow",
+  "name": "Horselord's Longbow"
+ },
+ {
+  "collection": "items",
+  "id": "radiant-victory",
+  "name": "Radiant Victory"
+ },
+ {
+  "collection": "items",
+  "id": "talonstrike-blade",
+  "name": "Talonstrike Blade"
+ },
+ {
+  "collection": "items",
+  "id": "greater-talonstrike-blade",
+  "name": "Greater Talonstrike Blade"
+ },
+ {
+  "collection": "items",
+  "id": "ulfen-shieldbreaker",
+  "name": "Ulfen Shieldbreaker"
+ },
+ {
+  "collection": "items",
+  "id": "chivalric-emblem",
+  "name": "Chivalric Emblem"
+ },
+ {
+  "collection": "items",
+  "id": "phasing-trine",
+  "name": "Phasing Trine"
+ },
+ {
+  "collection": "items",
+  "id": "valorous-coin",
+  "name": "Valorous Coin"
+ },
+ {
+  "collection": "items",
+  "id": "banner-of-the-restful",
+  "name": "Banner of the Restful"
+ },
+ {
+  "collection": "items",
+  "id": "greater-banner-of-the-restful",
+  "name": "Greater Banner of the Restful"
+ },
+ {
+  "collection": "items",
+  "id": "major-banner-of-the-restful",
+  "name": "Major Banner of the Restful"
+ },
+ {
+  "collection": "items",
+  "id": "major-dawnfire-beacon",
+  "name": "Major Dawnfire Beacon"
+ },
+ {
+  "collection": "items",
+  "id": "stalwarts-banner",
+  "name": "Stalwart's Banner"
+ },
+ {
+  "collection": "items",
+  "id": "greater-stalwarts-banner",
+  "name": "Greater Stalwart’s Banner"
+ },
+ {
+  "collection": "items",
+  "id": "major-stalwarts-banner",
+  "name": "Major Stalwart’s Banner"
+ },
+ {
+  "collection": "items",
+  "id": "swift-standard",
+  "name": "Swift Standard"
+ },
+ {
+  "collection": "items",
+  "id": "greater-swift-standard",
+  "name": "Greater Swift Standard"
+ },
+ {
+  "collection": "items",
+  "id": "major-swift-standard",
+  "name": "Major Swift Standard"
+ }
+]

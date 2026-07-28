@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "everair-mask",
+  "name": "Everair Mask"
+ },
+ {
+  "collection": "items",
+  "id": "everair-mask-lesser",
+  "name": "Everair Mask (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "everair-mask-moderate",
+  "name": "Everair Mask (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "everair-mask-greater",
+  "name": "Everair Mask (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "everair-mask-major",
+  "name": "Everair Mask (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "keep-stone-armor",
+  "name": "Keep Stone Armor"
+ },
+ {
+  "collection": "items",
+  "id": "keep-stone-armor-high-grade",
+  "name": "Keep Stone Armor (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "keep-stone-shield",
+  "name": "Keep Stone Shield"
+ },
+ {
+  "collection": "items",
+  "id": "keep-stone-shield-high-grade",
+  "name": "Keep Stone Shield (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "keep-stone-weapon",
+  "name": "Keep Stone Weapon"
+ },
+ {
+  "collection": "items",
+  "id": "keep-stone-weapon-high-grade",
+  "name": "Keep Stone Weapon (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "aerial-cloak",
+  "name": "Aerial Cloak"
+ },
+ {
+  "collection": "items",
+  "id": "atmospheric-staff",
+  "name": "Atmospheric Staff"
+ },
+ {
+  "collection": "items",
+  "id": "atmospheric-staff-lesser",
+  "name": "Atmospheric Staff (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "atmospheric-staff-greater",
+  "name": "Atmospheric Staff (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "atmospheric-staff-major",
+  "name": "Atmospheric Staff (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "jaathooms-scarf",
+  "name": "Jaathoom's Scarf"
+ },
+ {
+  "collection": "items",
+  "id": "spun-cloud",
+  "name": "Spun Cloud"
+ },
+ {
+  "collection": "items",
+  "id": "spun-cloud-white",
+  "name": "Spun Cloud (White)"
+ },
+ {
+  "collection": "items",
+  "id": "jabalis-dice",
+  "name": "Jabali's Dice"
+ },
+ {
+  "collection": "items",
+  "id": "vital-earth",
+  "name": "Vital Earth"
+ },
+ {
+  "collection": "items",
+  "id": "ash-gown",
+  "name": "Ash Gown"
+ },
+ {
+  "collection": "items",
+  "id": "ash-gown-greater",
+  "name": "Ash Gown (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "brazier-of-harmony",
+  "name": "Brazier of Harmony"
+ },
+ {
+  "collection": "items",
+  "id": "globe-of-shrouds",
+  "name": "Globe of Shrouds"
+ },
+ {
+  "collection": "items",
+  "id": "rhyton-of-the-radiant-ifrit",
+  "name": "Rhyton of the Radiant Ifrit"
+ },
+ {
+  "collection": "items",
+  "id": "smoke-veil",
+  "name": "Smoke Veil"
+ },
+ {
+  "collection": "items",
+  "id": "curious-teardrop",
+  "name": "Curious Teardrop"
+ },
+ {
+  "collection": "items",
+  "id": "morphing-weapon",
+  "name": "Morphing Weapon"
+ },
+ {
+  "collection": "items",
+  "id": "resonant-guitar",
+  "name": "Resonant Guitar"
+ },
+ {
+  "collection": "items",
+  "id": "spellsap-grenade",
+  "name": "Spellsap Grenade"
+ },
+ {
+  "collection": "items",
+  "id": "spellsap-grenade-moderate",
+  "name": "Spellsap Grenade (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "spellsap-grenade-greater",
+  "name": "Spellsap Grenade (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "spiny-lodestone",
+  "name": "Spiny Lodestone"
+ },
+ {
+  "collection": "items",
+  "id": "spiny-lodestone-greater",
+  "name": "Spiny Lodestone (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "spiny-lodestone-major",
+  "name": "Spiny Lodestone (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-metal",
+  "name": "Staff of Metal"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-metal-greater",
+  "name": "Staff of Metal (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-metal-major",
+  "name": "Staff of Metal (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "zuhras-gloves",
+  "name": "Zuhra's Gloves"
+ }
+]

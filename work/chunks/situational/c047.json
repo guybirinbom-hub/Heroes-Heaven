@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "shadow-greater",
+  "name": "Shadow (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "shadow-major",
+  "name": "Shadow (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "slick",
+  "name": "Slick"
+ },
+ {
+  "collection": "items",
+  "id": "slick-greater",
+  "name": "Slick (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "slick-major",
+  "name": "Slick (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "orichalcum-armor",
+  "name": "Orichalcum Armor"
+ },
+ {
+  "collection": "items",
+  "id": "orichalcum-armor-high-grade",
+  "name": "Orichalcum Armor (High-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "magic-armor",
+  "name": "Magic Armor"
+ },
+ {
+  "collection": "items",
+  "id": "magic-armor-1",
+  "name": "Magic Armor (+1)"
+ },
+ {
+  "collection": "items",
+  "id": "magic-armor-1-resilient",
+  "name": "Magic Armor (+1 Resilient)"
+ },
+ {
+  "collection": "items",
+  "id": "magic-armor-2-resilient",
+  "name": "Magic Armor (+2 Resilient)"
+ },
+ {
+  "collection": "items",
+  "id": "magic-armor-2-greater-resilient",
+  "name": "Magic Armor (+2 Greater Resilient)"
+ },
+ {
+  "collection": "items",
+  "id": "magic-armor-3-greater-resilient",
+  "name": "Magic Armor (+3 Greater Resilient)"
+ },
+ {
+  "collection": "items",
+  "id": "magic-armor-3-major-resilient",
+  "name": "Magic Armor (+3 Major Resilient)"
+ },
+ {
+  "collection": "items",
+  "id": "electric-eelskin",
+  "name": "Electric Eelskin"
+ },
+ {
+  "collection": "items",
+  "id": "lions-armor",
+  "name": "Lion's Armor"
+ },
+ {
+  "collection": "items",
+  "id": "lions-armor-greater",
+  "name": "Lion's Armor (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "tideplate",
+  "name": "Tideplate"
+ },
+ {
+  "collection": "items",
+  "id": "dragonslayers-shield",
+  "name": "Dragonslayer's Shield"
+ },
+ {
+  "collection": "items",
+  "id": "spellguard-shield",
+  "name": "Spellguard Shield"
+ },
+ {
+  "collection": "items",
+  "id": "weapon-potency",
+  "name": "Weapon Potency"
+ },
+ {
+  "collection": "items",
+  "id": "weapon-potency-1",
+  "name": "Weapon Potency (+1)"
+ },
+ {
+  "collection": "items",
+  "id": "weapon-potency-2",
+  "name": "Weapon Potency (+2)"
+ },
+ {
+  "collection": "items",
+  "id": "weapon-potency-3",
+  "name": "Weapon Potency (+3)"
+ },
+ {
+  "collection": "items",
+  "id": "animated",
+  "name": "Animated"
+ },
+ {
+  "collection": "items",
+  "id": "magic-weapon",
+  "name": "Magic Weapon"
+ },
+ {
+  "collection": "items",
+  "id": "magic-weapon-1",
+  "name": "Magic Weapon (+1)"
+ },
+ {
+  "collection": "items",
+  "id": "magic-weapon-1-striking",
+  "name": "Magic Weapon (+1 Striking)"
+ },
+ {
+  "collection": "items",
+  "id": "magic-weapon-2-striking",
+  "name": "Magic Weapon (+2 Striking)"
+ },
+ {
+  "collection": "items",
+  "id": "magic-weapon-2-greater-striking",
+  "name": "Magic Weapon (+2 Greater Striking)"
+ },
+ {
+  "collection": "items",
+  "id": "magic-weapon-3-greater-striking",
+  "name": "Magic Weapon (+3 Greater Striking)"
+ },
+ {
+  "collection": "items",
+  "id": "magic-weapon-3-major-striking",
+  "name": "Magic Weapon (+3 Major Striking)"
+ },
+ {
+  "collection": "items",
+  "id": "chaplains-cudgel",
+  "name": "Chaplain's Cudgel"
+ },
+ {
+  "collection": "items",
+  "id": "retribution-axe",
+  "name": "Retribution Axe"
+ },
+ {
+  "collection": "items",
+  "id": "acid-flask",
+  "name": "Acid Flask"
+ },
+ {
+  "collection": "items",
+  "id": "alchemists-fire",
+  "name": "Alchemist's Fire"
+ },
+ {
+  "collection": "items",
+  "id": "dread-ampoule",
+  "name": "Dread Ampoule"
+ },
+ {
+  "collection": "items",
+  "id": "glue-bomb",
+  "name": "Glue Bomb"
+ },
+ {
+  "collection": "items",
+  "id": "antidote",
+  "name": "Antidote"
+ },
+ {
+  "collection": "items",
+  "id": "antiplague",
+  "name": "Antiplague"
+ }
+]

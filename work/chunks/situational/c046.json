@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "horn-of-rust",
+  "name": "Horn of Rust"
+ },
+ {
+  "collection": "items",
+  "id": "alchemists-lab-expanded",
+  "name": "Alchemist's Lab (Expanded)"
+ },
+ {
+  "collection": "items",
+  "id": "artisans-toolkit-sterling",
+  "name": "Artisan's Toolkit (Sterling)"
+ },
+ {
+  "collection": "items",
+  "id": "climbing-kit-extreme",
+  "name": "Climbing Kit (Extreme)"
+ },
+ {
+  "collection": "items",
+  "id": "concealed-sheath",
+  "name": "Concealed Sheath"
+ },
+ {
+  "collection": "items",
+  "id": "clothing-high-fashion-fine",
+  "name": "Clothing (High-Fashion Fine)"
+ },
+ {
+  "collection": "items",
+  "id": "compass-lensatic",
+  "name": "Compass (Lensatic)"
+ },
+ {
+  "collection": "items",
+  "id": "crowbar-levered",
+  "name": "Crowbar (Levered)"
+ },
+ {
+  "collection": "items",
+  "id": "detectives-kit",
+  "name": "Detective's Kit"
+ },
+ {
+  "collection": "items",
+  "id": "disguise-kit-elite",
+  "name": "Disguise Kit (Elite)"
+ },
+ {
+  "collection": "items",
+  "id": "disguise-kit-elite-cosmetics",
+  "name": "Disguise Kit (Elite Cosmetics)"
+ },
+ {
+  "collection": "items",
+  "id": "dueling-cape",
+  "name": "Dueling Cape"
+ },
+ {
+  "collection": "items",
+  "id": "fishing-tackle-professional",
+  "name": "Fishing Tackle (Professional)"
+ },
+ {
+  "collection": "items",
+  "id": "healers-toolkit-expanded",
+  "name": "Healer's Toolkit (Expanded)"
+ },
+ {
+  "collection": "items",
+  "id": "magnifying-glass",
+  "name": "Magnifying Glass"
+ },
+ {
+  "collection": "items",
+  "id": "musical-instrument",
+  "name": "Musical Instrument"
+ },
+ {
+  "collection": "items",
+  "id": "musical-instrument-virtuoso-handheld",
+  "name": "Musical Instrument (Virtuoso Handheld)"
+ },
+ {
+  "collection": "items",
+  "id": "musical-instrument-virtuoso-heavy",
+  "name": "Musical Instrument (Virtuoso Heavy)"
+ },
+ {
+  "collection": "items",
+  "id": "net",
+  "name": "Net"
+ },
+ {
+  "collection": "items",
+  "id": "parrying-scabbard",
+  "name": "Parrying Scabbard"
+ },
+ {
+  "collection": "items",
+  "id": "repair-toolkit-superb",
+  "name": "Repair Toolkit (Superb)"
+ },
+ {
+  "collection": "items",
+  "id": "spyglass-fine",
+  "name": "Spyglass (Fine)"
+ },
+ {
+  "collection": "items",
+  "id": "thieves-toolkit-infiltrator",
+  "name": "Thieves' Toolkit (Infiltrator)"
+ },
+ {
+  "collection": "items",
+  "id": "scholarly-journal",
+  "name": "Scholarly Journal"
+ },
+ {
+  "collection": "items",
+  "id": "scholarly-journal-compendium",
+  "name": "Scholarly Journal (Compendium)"
+ },
+ {
+  "collection": "items",
+  "id": "survey-map",
+  "name": "Survey Map"
+ },
+ {
+  "collection": "items",
+  "id": "survey-map-atlas",
+  "name": "Survey Map (Atlas)"
+ },
+ {
+  "collection": "items",
+  "id": "steelscour",
+  "name": "Steelscour"
+ },
+ {
+  "collection": "items",
+  "id": "steelscour-moderate",
+  "name": "Steelscour (moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "steelscour-greater",
+  "name": "Steelscour (greater)"
+ },
+ {
+  "collection": "items",
+  "id": "steelscour-major",
+  "name": "Steelscour (major)"
+ },
+ {
+  "collection": "items",
+  "id": "armor-potency",
+  "name": "Armor Potency"
+ },
+ {
+  "collection": "items",
+  "id": "armor-potency-1",
+  "name": "Armor Potency (+1)"
+ },
+ {
+  "collection": "items",
+  "id": "armor-potency-2",
+  "name": "Armor Potency (+2)"
+ },
+ {
+  "collection": "items",
+  "id": "armor-potency-3",
+  "name": "Armor Potency (+3)"
+ },
+ {
+  "collection": "items",
+  "id": "resilient",
+  "name": "Resilient"
+ },
+ {
+  "collection": "items",
+  "id": "resilient-greater",
+  "name": "Resilient (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "resilient-major",
+  "name": "Resilient (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "antimagic",
+  "name": "Antimagic"
+ },
+ {
+  "collection": "items",
+  "id": "shadow",
+  "name": "Shadow"
+ }
+]

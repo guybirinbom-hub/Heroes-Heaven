@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "the-hidden-truth",
+  "name": "The Hidden Truth"
+ },
+ {
+  "collection": "items",
+  "id": "the-keep",
+  "name": "The Keep"
+ },
+ {
+  "collection": "items",
+  "id": "the-marriage",
+  "name": "The Marriage"
+ },
+ {
+  "collection": "items",
+  "id": "the-midwife",
+  "name": "The Midwife"
+ },
+ {
+  "collection": "items",
+  "id": "the-owl",
+  "name": "The Owl"
+ },
+ {
+  "collection": "items",
+  "id": "the-sickness",
+  "name": "The Sickness"
+ },
+ {
+  "collection": "items",
+  "id": "the-survivor",
+  "name": "The Survivor"
+ },
+ {
+  "collection": "items",
+  "id": "the-tyrant",
+  "name": "The Tyrant"
+ },
+ {
+  "collection": "items",
+  "id": "the-uprising",
+  "name": "The Uprising"
+ },
+ {
+  "collection": "items",
+  "id": "the-waxworks",
+  "name": "The Waxworks"
+ },
+ {
+  "collection": "items",
+  "id": "statue-skin-salve",
+  "name": "Statue Skin Salve"
+ },
+ {
+  "collection": "items",
+  "id": "bangles-of-crowns",
+  "name": "Bangles of Crowns"
+ },
+ {
+  "collection": "items",
+  "id": "bracers-of-hammers",
+  "name": "Bracers of Hammers"
+ },
+ {
+  "collection": "items",
+  "id": "coronet-of-stars",
+  "name": "Coronet of Stars"
+ },
+ {
+  "collection": "items",
+  "id": "cowl-of-keys",
+  "name": "Cowl of Keys"
+ },
+ {
+  "collection": "items",
+  "id": "sash-of-books",
+  "name": "Sash of Books"
+ },
+ {
+  "collection": "items",
+  "id": "the-deck-of-destiny",
+  "name": "The Deck of Destiny"
+ },
+ {
+  "collection": "items",
+  "id": "the-avalanche",
+  "name": "The Avalanche"
+ },
+ {
+  "collection": "items",
+  "id": "the-betrayal",
+  "name": "The Betrayal"
+ },
+ {
+  "collection": "items",
+  "id": "the-courtesan",
+  "name": "The Courtesan"
+ },
+ {
+  "collection": "items",
+  "id": "the-cricket",
+  "name": "The Cricket"
+ },
+ {
+  "collection": "items",
+  "id": "the-crows",
+  "name": "The Crows"
+ },
+ {
+  "collection": "items",
+  "id": "the-dance",
+  "name": "The Dance"
+ },
+ {
+  "collection": "items",
+  "id": "the-eclipse",
+  "name": "The Eclipse"
+ },
+ {
+  "collection": "items",
+  "id": "the-fool",
+  "name": "The Fool"
+ },
+ {
+  "collection": "items",
+  "id": "the-inquisitor",
+  "name": "The Inquisitor"
+ },
+ {
+  "collection": "items",
+  "id": "the-peacock",
+  "name": "The Peacock"
+ },
+ {
+  "collection": "items",
+  "id": "the-trader",
+  "name": "The Trader"
+ },
+ {
+  "collection": "items",
+  "id": "the-twin",
+  "name": "The Twin"
+ },
+ {
+  "collection": "items",
+  "id": "the-unicorn",
+  "name": "The Unicorn"
+ },
+ {
+  "collection": "items",
+  "id": "the-winged-serpent",
+  "name": "The Winged Serpent"
+ },
+ {
+  "collection": "items",
+  "id": "grindlegrub-steak",
+  "name": "Grindlegrub Steak"
+ },
+ {
+  "collection": "items",
+  "id": "grub-gloves",
+  "name": "Grub Gloves"
+ },
+ {
+  "collection": "items",
+  "id": "grub-gloves-lesser",
+  "name": "Grub Gloves (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "grub-gloves-moderate",
+  "name": "Grub Gloves (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "grub-gloves-greater",
+  "name": "Grub Gloves (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom",
+  "name": "Words of Wisdom"
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom-lesser",
+  "name": "Words of Wisdom (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom-moderate",
+  "name": "Words of Wisdom (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom-greater",
+  "name": "Words of Wisdom (Greater)"
+ }
+]

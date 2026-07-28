@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "animal-staff",
+  "name": "Animal Staff"
+ },
+ {
+  "collection": "items",
+  "id": "animal-staff-greater",
+  "name": "Animal Staff (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "animal-staff-major",
+  "name": "Animal Staff (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "fluid-form-staff",
+  "name": "Fluid Form Staff"
+ },
+ {
+  "collection": "items",
+  "id": "fluid-form-staff-greater",
+  "name": "Fluid Form Staff (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "fluid-form-staff-major",
+  "name": "Fluid Form Staff (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "mentalists-staff",
+  "name": "Mentalist's Staff"
+ },
+ {
+  "collection": "items",
+  "id": "mentalists-staff-greater",
+  "name": "Mentalist's Staff (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "mentalists-staff-major",
+  "name": "Mentalist's Staff (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-control",
+  "name": "Staff of Control"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-control-greater",
+  "name": "Staff of Control (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-control-major",
+  "name": "Staff of Control (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-elemental-power",
+  "name": "Staff of Elemental Power"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-elemental-power-greater",
+  "name": "Staff of Elemental Power (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-elemental-power-major",
+  "name": "Staff of Elemental Power (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-healing",
+  "name": "Staff of Healing"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-healing-greater",
+  "name": "Staff of Healing (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-healing-major",
+  "name": "Staff of Healing (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-healing-true",
+  "name": "Staff of Healing (True)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-phantasms",
+  "name": "Staff of Phantasms"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-phantasms-greater",
+  "name": "Staff of Phantasms (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-phantasms-major",
+  "name": "Staff of Phantasms (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-protection",
+  "name": "Staff of Protection"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-protection-greater",
+  "name": "Staff of Protection (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-protection-major",
+  "name": "Staff of Protection (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-the-unblinking-eye",
+  "name": "Staff of the Unblinking Eye"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-the-unblinking-eye-greater",
+  "name": "Staff of the Unblinking Eye (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-the-unblinking-eye-major",
+  "name": "Staff of the Unblinking Eye (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "verdant-staff",
+  "name": "Verdant Staff"
+ },
+ {
+  "collection": "items",
+  "id": "verdant-staff-greater",
+  "name": "Verdant Staff (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "accolade-robe",
+  "name": "Accolade Robe"
+ },
+ {
+  "collection": "items",
+  "id": "accolade-robe-greater",
+  "name": "Accolade Robe (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "aeon-stone",
+  "name": "Aeon Stone"
+ },
+ {
+  "collection": "items",
+  "id": "aeon-stone-amplifying",
+  "name": "Aeon Stone (Amplifying)"
+ },
+ {
+  "collection": "items",
+  "id": "aeon-stone-formulating",
+  "name": "Aeon Stone (Formulating)"
+ },
+ {
+  "collection": "items",
+  "id": "aeon-stone-repairing",
+  "name": "Aeon Stone (Repairing)"
+ },
+ {
+  "collection": "items",
+  "id": "aeon-stone-flickering",
+  "name": "Aeon Stone (Flickering)"
+ },
+ {
+  "collection": "items",
+  "id": "arboreal-boots",
+  "name": "Arboreal Boots"
+ },
+ {
+  "collection": "items",
+  "id": "arboreal-boots-greater",
+  "name": "Arboreal Boots (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "armbands-of-athleticism",
+  "name": "Armbands of Athleticism"
+ }
+]

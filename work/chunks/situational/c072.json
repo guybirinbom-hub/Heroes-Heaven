@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "aon-shroud-of-the-afterlife",
+  "name": "Shroud of the Afterlife"
+ },
+ {
+  "collection": "items",
+  "id": "aon-pierce-the-veil",
+  "name": "Pierce the Veil"
+ },
+ {
+  "collection": "items",
+  "id": "aon-fiendish-defiance",
+  "name": "Fiendish Defiance"
+ },
+ {
+  "collection": "items",
+  "id": "aon-fiendish-bargain",
+  "name": "Fiendish Bargain"
+ },
+ {
+  "collection": "items",
+  "id": "aon-jet-propulsion",
+  "name": "Jet Propulsion"
+ },
+ {
+  "collection": "items",
+  "id": "aon-overflowing-life",
+  "name": "Overflowing Life"
+ },
+ {
+  "collection": "items",
+  "id": "aon-recalculate",
+  "name": "Recalculate"
+ },
+ {
+  "collection": "items",
+  "id": "aon-grappling-vine",
+  "name": "Grappling Vine"
+ },
+ {
+  "collection": "items",
+  "id": "aon-encompassing-darkness",
+  "name": "Encompassing Darkness"
+ },
+ {
+  "collection": "items",
+  "id": "aon-infiltration-garb",
+  "name": "Infiltration Garb"
+ },
+ {
+  "collection": "items",
+  "id": "aon-monk-s-attire",
+  "name": "Monk's Attire"
+ },
+ {
+  "collection": "items",
+  "id": "aon-seer-s-array",
+  "name": "Seer's Array"
+ },
+ {
+  "collection": "heritages",
+  "id": "oathkeeper-dwarf",
+  "name": "Oathkeeper Dwarf"
+ },
+ {
+  "collection": "heritages",
+  "id": "tailed-goblin",
+  "name": "Tailed Goblin"
+ },
+ {
+  "collection": "heritages",
+  "id": "treedweller-goblin",
+  "name": "Treedweller Goblin"
+ },
+ {
+  "collection": "heritages",
+  "id": "observant-halfling",
+  "name": "Observant Halfling"
+ },
+ {
+  "collection": "heritages",
+  "id": "bloodhound-shoony",
+  "name": "Bloodhound Shoony"
+ },
+ {
+  "collection": "heritages",
+  "id": "tactile-azarketi",
+  "name": "Tactile Azarketi"
+ },
+ {
+  "collection": "heritages",
+  "id": "flexible-catfolk",
+  "name": "Flexible Catfolk"
+ },
+ {
+  "collection": "heritages",
+  "id": "impersonator-android",
+  "name": "Impersonator Android"
+ },
+ {
+  "collection": "heritages",
+  "id": "liminal-fetchling",
+  "name": "Liminal Fetchling"
+ },
+ {
+  "collection": "heritages",
+  "id": "wisp-fetchling",
+  "name": "Wisp Fetchling"
+ },
+ {
+  "collection": "heritages",
+  "id": "created-fleshwarp",
+  "name": "Created Fleshwarp"
+ },
+ {
+  "collection": "heritages",
+  "id": "grig",
+  "name": "Grig"
+ },
+ {
+  "collection": "heritages",
+  "id": "nyktera",
+  "name": "Nyktera"
+ },
+ {
+  "collection": "heritages",
+  "id": "scavenger-strix",
+  "name": "Scavenger Strix"
+ },
+ {
+  "collection": "heritages",
+  "id": "songbird-strix",
+  "name": "Songbird Strix"
+ },
+ {
+  "collection": "heritages",
+  "id": "rite-of-reinforcement",
+  "name": "Rite of Reinforcement"
+ },
+ {
+  "collection": "heritages",
+  "id": "insightful-goloma",
+  "name": "Insightful Goloma"
+ },
+ {
+  "collection": "heritages",
+  "id": "pine-leshy",
+  "name": "Pine Leshy"
+ },
+ {
+  "collection": "heritages",
+  "id": "enchanting-lily",
+  "name": "Enchanting Lily"
+ },
+ {
+  "collection": "heritages",
+  "id": "strong-oak",
+  "name": "Strong Oak"
+ },
+ {
+  "collection": "heritages",
+  "id": "lethoci",
+  "name": "Lethoci"
+ },
+ {
+  "collection": "heritages",
+  "id": "sacred-nagaji",
+  "name": "Sacred Nagaji"
+ },
+ {
+  "collection": "heritages",
+  "id": "titan-nagaji",
+  "name": "Titan Nagaji"
+ },
+ {
+  "collection": "heritages",
+  "id": "venomshield-nagaji",
+  "name": "Venomshield Nagaji"
+ },
+ {
+  "collection": "heritages",
+  "id": "wajaghand-vanara",
+  "name": "Wajaghand Vanara"
+ },
+ {
+  "collection": "heritages",
+  "id": "elusive-vishkanya",
+  "name": "Elusive Vishkanya"
+ },
+ {
+  "collection": "heritages",
+  "id": "rock-dwarf",
+  "name": "Rock Dwarf"
+ },
+ {
+  "collection": "heritages",
+  "id": "seer-elf",
+  "name": "Seer Elf"
+ }
+]

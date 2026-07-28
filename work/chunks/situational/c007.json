@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "feats",
+  "id": "advantageous-assault",
+  "name": "Advantageous Assault"
+ },
+ {
+  "collection": "feats",
+  "id": "disarming-stance",
+  "name": "Disarming Stance"
+ },
+ {
+  "collection": "feats",
+  "id": "guardians-deflection-fighter",
+  "name": "Guardian's Deflection (Fighter)"
+ },
+ {
+  "collection": "feats",
+  "id": "incredible-aim",
+  "name": "Incredible Aim"
+ },
+ {
+  "collection": "feats",
+  "id": "resounding-bravery",
+  "name": "Resounding Bravery"
+ },
+ {
+  "collection": "feats",
+  "id": "disarming-twist",
+  "name": "Disarming Twist"
+ },
+ {
+  "collection": "feats",
+  "id": "fearsome-brute",
+  "name": "Fearsome Brute"
+ },
+ {
+  "collection": "feats",
+  "id": "monster-hunter",
+  "name": "Monster Hunter"
+ },
+ {
+  "collection": "feats",
+  "id": "favored-terrain",
+  "name": "Favored Terrain"
+ },
+ {
+  "collection": "feats",
+  "id": "hunters-aim",
+  "name": "Hunter's Aim"
+ },
+ {
+  "collection": "feats",
+  "id": "monster-warden",
+  "name": "Monster Warden"
+ },
+ {
+  "collection": "feats",
+  "id": "scouts-warning",
+  "name": "Scout's Warning"
+ },
+ {
+  "collection": "feats",
+  "id": "deadly-aim",
+  "name": "Deadly Aim"
+ },
+ {
+  "collection": "feats",
+  "id": "predictable",
+  "name": "Predictable!"
+ },
+ {
+  "collection": "feats",
+  "id": "watch-your-back",
+  "name": "Watch Your Back"
+ },
+ {
+  "collection": "feats",
+  "id": "bullseye",
+  "name": "Bullseye"
+ },
+ {
+  "collection": "feats",
+  "id": "methodical-debilitations",
+  "name": "Methodical Debilitations"
+ },
+ {
+  "collection": "feats",
+  "id": "coven-spell",
+  "name": "Coven Spell"
+ },
+ {
+  "collection": "feats",
+  "id": "witchs-broom",
+  "name": "Witch’s Broom"
+ },
+ {
+  "collection": "feats",
+  "id": "spell-protection-array",
+  "name": "Spell Protection Array"
+ },
+ {
+  "collection": "feats",
+  "id": "irresistible-magic",
+  "name": "Irresistible Magic"
+ },
+ {
+  "collection": "feats",
+  "id": "knowledge-is-power",
+  "name": "Knowledge is Power"
+ },
+ {
+  "collection": "feats",
+  "id": "confabulator",
+  "name": "Confabulator"
+ },
+ {
+  "collection": "feats",
+  "id": "courtly-graces",
+  "name": "Courtly Graces"
+ },
+ {
+  "collection": "feats",
+  "id": "incredible-initiative",
+  "name": "Incredible Initiative"
+ },
+ {
+  "collection": "feats",
+  "id": "natural-medicine",
+  "name": "Natural Medicine"
+ },
+ {
+  "collection": "feats",
+  "id": "pet",
+  "name": "Pet"
+ },
+ {
+  "collection": "feats",
+  "id": "robust-recovery",
+  "name": "Robust Recovery"
+ },
+ {
+  "collection": "feats",
+  "id": "seasoned",
+  "name": "Seasoned"
+ },
+ {
+  "collection": "feats",
+  "id": "ocean-wariness",
+  "name": "Ocean Wariness"
+ },
+ {
+  "collection": "feats",
+  "id": "swift-eel-mount",
+  "name": "Swift Eel Mount"
+ },
+ {
+  "collection": "feats",
+  "id": "natural-ambassador",
+  "name": "Natural Ambassador"
+ },
+ {
+  "collection": "feats",
+  "id": "wild-stride",
+  "name": "Wild Stride"
+ },
+ {
+  "collection": "feats",
+  "id": "sharpened-senses",
+  "name": "Sharpened Senses"
+ },
+ {
+  "collection": "feats",
+  "id": "fierce-competitor",
+  "name": "Fierce Competitor"
+ },
+ {
+  "collection": "feats",
+  "id": "healing-flesh",
+  "name": "Healing Flesh"
+ },
+ {
+  "collection": "feats",
+  "id": "puzzle-solver",
+  "name": "Puzzle Solver"
+ },
+ {
+  "collection": "feats",
+  "id": "threatening-pursuit",
+  "name": "Threatening Pursuit"
+ },
+ {
+  "collection": "feats",
+  "id": "begin-stampede",
+  "name": "Begin Stampede"
+ },
+ {
+  "collection": "feats",
+  "id": "tactile-magic-feedback",
+  "name": "Tactile Magic Feedback"
+ }
+]

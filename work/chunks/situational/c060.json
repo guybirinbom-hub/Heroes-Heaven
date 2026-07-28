@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "moderate-flowing-water",
+  "name": "Moderate Flowing Water"
+ },
+ {
+  "collection": "items",
+  "id": "greater-flowing-water",
+  "name": "Greater Flowing Water"
+ },
+ {
+  "collection": "items",
+  "id": "stormshard",
+  "name": "Stormshard"
+ },
+ {
+  "collection": "items",
+  "id": "greater-stormshard",
+  "name": "Greater Stormshard"
+ },
+ {
+  "collection": "items",
+  "id": "major-stormshard",
+  "name": "Major Stormshard"
+ },
+ {
+  "collection": "items",
+  "id": "antifungal-salve",
+  "name": "Antifungal Salve"
+ },
+ {
+  "collection": "items",
+  "id": "greater-antifungal-salve",
+  "name": "Greater Antifungal Salve"
+ },
+ {
+  "collection": "items",
+  "id": "major-antifungal-salve",
+  "name": "Major Antifungal Salve"
+ },
+ {
+  "collection": "items",
+  "id": "lesser-antifungal-salve",
+  "name": "Lesser Antifungal Salve"
+ },
+ {
+  "collection": "items",
+  "id": "moderate-antifungal-salve",
+  "name": "Moderate Antifungal Salve"
+ },
+ {
+  "collection": "items",
+  "id": "anima-robe-artifact",
+  "name": "Anima Robe (Artifact)"
+ },
+ {
+  "collection": "items",
+  "id": "fiendbreaker-artifact",
+  "name": "Fiendbreaker (Artifact)"
+ },
+ {
+  "collection": "items",
+  "id": "slithermaws-bane-artifact",
+  "name": "Slithermaw's Bane (Artifact)"
+ },
+ {
+  "collection": "items",
+  "id": "soulcutter-artifact",
+  "name": "Soulcutter (Artifact)"
+ },
+ {
+  "collection": "items",
+  "id": "graymist",
+  "name": "Graymist"
+ },
+ {
+  "collection": "items",
+  "id": "red-hands-satchel",
+  "name": "Red Hand's Satchel"
+ },
+ {
+  "collection": "items",
+  "id": "white-cleomes-eye",
+  "name": "White Cleome's Eye"
+ },
+ {
+  "collection": "items",
+  "id": "viridian-crown",
+  "name": "Viridian Crown"
+ },
+ {
+  "collection": "items",
+  "id": "crimson-godsblood-serum",
+  "name": "Crimson Godsblood Serum"
+ },
+ {
+  "collection": "items",
+  "id": "lesser-crimson-godsblood-serum",
+  "name": "Lesser Crimson Godsblood Serum"
+ },
+ {
+  "collection": "items",
+  "id": "moderate-crimson-godsblood-serum",
+  "name": "Moderate Crimson Godsblood Serum"
+ },
+ {
+  "collection": "items",
+  "id": "greater-crimson-godsblood-serum",
+  "name": "Greater Crimson Godsblood Serum"
+ },
+ {
+  "collection": "items",
+  "id": "twilight-tattoo",
+  "name": "Twilight Tattoo"
+ },
+ {
+  "collection": "items",
+  "id": "emperors-peak-quartz-bracelet",
+  "name": "Emperor's Peak Quartz Bracelet"
+ },
+ {
+  "collection": "items",
+  "id": "memory-ribbon",
+  "name": "Memory Ribbon"
+ },
+ {
+  "collection": "items",
+  "id": "bolkas-blessing",
+  "name": "Bolka's Blessing"
+ },
+ {
+  "collection": "items",
+  "id": "greater-bolkas-blessing",
+  "name": "Greater Bolka's Blessing"
+ },
+ {
+  "collection": "items",
+  "id": "kolss-oath",
+  "name": "Kols's Oath"
+ },
+ {
+  "collection": "items",
+  "id": "greater-kolss-oath",
+  "name": "Greater Kols's Oath"
+ },
+ {
+  "collection": "items",
+  "id": "trudds-strength",
+  "name": "Trudd's Strength"
+ },
+ {
+  "collection": "items",
+  "id": "greater-trudds-strength",
+  "name": "Greater Trudd's Strength"
+ },
+ {
+  "collection": "items",
+  "id": "splinter-of-finality",
+  "name": "Splinter of Finality"
+ },
+ {
+  "collection": "items",
+  "id": "shawl-of-seasons",
+  "name": "Shawl of Seasons"
+ },
+ {
+  "collection": "items",
+  "id": "taldogis-badge",
+  "name": "Taldogis Badge"
+ },
+ {
+  "collection": "items",
+  "id": "jaws-of-the-grogrisant",
+  "name": "Jaws of the Grogrisant"
+ },
+ {
+  "collection": "items",
+  "id": "paws-of-the-grogrisant",
+  "name": "Paws of the Grogrisant"
+ },
+ {
+  "collection": "items",
+  "id": "heart-bloodstone-of-arazni",
+  "name": "Heart Bloodstone of Arazni"
+ },
+ {
+  "collection": "items",
+  "id": "lung-bloodstone-of-arazni",
+  "name": "Lung Bloodstone of Arazni"
+ },
+ {
+  "collection": "items",
+  "id": "essence-forge",
+  "name": "Essence Forge"
+ },
+ {
+  "collection": "items",
+  "id": "essence-forge-lesser",
+  "name": "Essence Forge (Lesser)"
+ }
+]

@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "drakeheart-mutagen-lesser",
+  "name": "Drakeheart Mutagen (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "drakeheart-mutagen-moderate",
+  "name": "Drakeheart Mutagen (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "drakeheart-mutagen-greater",
+  "name": "Drakeheart Mutagen (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "drakeheart-mutagen-major",
+  "name": "Drakeheart Mutagen (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "juggernaut-mutagen",
+  "name": "Juggernaut Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "juggernaut-mutagen-lesser",
+  "name": "Juggernaut Mutagen (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "juggernaut-mutagen-moderate",
+  "name": "Juggernaut Mutagen (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "juggernaut-mutagen-greater",
+  "name": "Juggernaut Mutagen (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "juggernaut-mutagen-major",
+  "name": "Juggernaut Mutagen (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "quicksilver-mutagen",
+  "name": "Quicksilver Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "quicksilver-mutagen-lesser",
+  "name": "Quicksilver Mutagen (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "quicksilver-mutagen-moderate",
+  "name": "Quicksilver Mutagen (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "quicksilver-mutagen-greater",
+  "name": "Quicksilver Mutagen (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "quicksilver-mutagen-major",
+  "name": "Quicksilver Mutagen (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "serene-mutagen",
+  "name": "Serene Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "serene-mutagen-lesser",
+  "name": "Serene Mutagen (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "serene-mutagen-moderate",
+  "name": "Serene Mutagen (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "serene-mutagen-greater",
+  "name": "Serene Mutagen (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "serene-mutagen-major",
+  "name": "Serene Mutagen (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "silvertongue-mutagen",
+  "name": "Silvertongue Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "silvertongue-mutagen-lesser",
+  "name": "Silvertongue Mutagen (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "silvertongue-mutagen-moderate",
+  "name": "Silvertongue Mutagen (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "silvertongue-mutagen-greater",
+  "name": "Silvertongue Mutagen (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "silvertongue-mutagen-major",
+  "name": "Silvertongue Mutagen (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "skinstitch-salve",
+  "name": "Skinstitch Salve"
+ },
+ {
+  "collection": "items",
+  "id": "marking-snare",
+  "name": "Marking Snare"
+ },
+ {
+  "collection": "items",
+  "id": "shielding-salve",
+  "name": "Shielding Salve"
+ },
+ {
+  "collection": "items",
+  "id": "tricky-liniment",
+  "name": "Tricky Liniment"
+ },
+ {
+  "collection": "items",
+  "id": "potion-of-disguise",
+  "name": "Potion of Disguise"
+ },
+ {
+  "collection": "items",
+  "id": "potion-of-disguise-lesser",
+  "name": "Potion of Disguise (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "potion-of-disguise-moderate",
+  "name": "Potion of Disguise (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "potion-of-disguise-greater",
+  "name": "Potion of Disguise (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-providence",
+  "name": "Staff of Providence"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-providence-greater",
+  "name": "Staff of Providence (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-providence-major",
+  "name": "Staff of Providence (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-providence-true",
+  "name": "Staff of Providence (True)"
+ },
+ {
+  "collection": "items",
+  "id": "alchemist-goggles-greater",
+  "name": "Alchemist Goggles (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "alchemist-goggles-major",
+  "name": "Alchemist Goggles (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "berserkers-cloak",
+  "name": "Berserker's Cloak"
+ },
+ {
+  "collection": "items",
+  "id": "berserkers-cloak-greater",
+  "name": "Berserker's Cloak (Greater)"
+ }
+]

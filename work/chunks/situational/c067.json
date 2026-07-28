@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "clay-sphere-greater",
+  "name": "Clay Sphere (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "clay-sphere-major",
+  "name": "Clay Sphere (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "cleft-head-marking-greater",
+  "name": "Cleft Head Marking (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "cleft-head-marking-lesser",
+  "name": "Cleft Head Marking (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "cloak-of-elvenkind-greater",
+  "name": "Cloak of Elvenkind (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "cloak-of-elvenkind",
+  "name": "Cloak of Elvenkind"
+ },
+ {
+  "collection": "items",
+  "id": "commandants-scabbard",
+  "name": "Commandant's Scabbard"
+ },
+ {
+  "collection": "items",
+  "id": "conductors-instrument",
+  "name": "Conductor's Instrument"
+ },
+ {
+  "collection": "items",
+  "id": "crimson-godsblood-serum-greater",
+  "name": "Crimson Godsblood Serum (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "crimson-godsblood-serum-lesser",
+  "name": "Crimson Godsblood Serum (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "crimson-godsblood-serum-moderate",
+  "name": "Crimson Godsblood Serum (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "dawnfire-beacon-major",
+  "name": "Dawnfire Beacon (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "defoliation-bomb-greater",
+  "name": "Defoliation Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "defoliation-bomb-major",
+  "name": "Defoliation Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "defoliation-bomb-moderate",
+  "name": "Defoliation Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "doll-exquisite-surprise",
+  "name": "Doll (Exquisite surprise)"
+ },
+ {
+  "collection": "items",
+  "id": "dragon-pearl-draconic-codex",
+  "name": "Dragon Pearl (Draconic Codex)"
+ },
+ {
+  "collection": "items",
+  "id": "dragonscale-staff",
+  "name": "Dragonscale Staff"
+ },
+ {
+  "collection": "items",
+  "id": "dragontooth-club",
+  "name": "Dragontooth Club"
+ },
+ {
+  "collection": "items",
+  "id": "dream-hunters-lodge",
+  "name": "Dream Hunter's Lodge"
+ },
+ {
+  "collection": "items",
+  "id": "durian-bomb-greater",
+  "name": "Durian Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "durian-bomb-major",
+  "name": "Durian Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "durian-bomb-moderate",
+  "name": "Durian Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "earplugs-pfs-guide",
+  "name": "Earplugs (PFS Guide)"
+ },
+ {
+  "collection": "items",
+  "id": "elixir-of-the-peaks-greater",
+  "name": "Elixir of the Peaks (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "elixir-of-the-peaks-lesser",
+  "name": "Elixir of the Peaks (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "elixir-of-the-peaks-major",
+  "name": "Elixir of the Peaks (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "elixir-of-the-peaks-moderate",
+  "name": "Elixir of the Peaks (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "energy-robe-of-fire",
+  "name": "Energy Robe of Fire"
+ },
+ {
+  "collection": "items",
+  "id": "enhanced-hearing-aids",
+  "name": "Enhanced Hearing Aids"
+ },
+ {
+  "collection": "items",
+  "id": "fate-tempters-ring",
+  "name": "Fate Tempter's Ring"
+ },
+ {
+  "collection": "items",
+  "id": "feather-of-unfounded-bravado",
+  "name": "Feather of Unfounded Bravado"
+ },
+ {
+  "collection": "items",
+  "id": "fiendbreaker-heroic",
+  "name": "Fiendbreaker (Heroic)"
+ },
+ {
+  "collection": "items",
+  "id": "flowing-water-greater",
+  "name": "Flowing Water (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "flowing-water-lesser",
+  "name": "Flowing Water (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "flowing-water-moderate",
+  "name": "Flowing Water (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "fox-marble",
+  "name": "Fox Marble"
+ },
+ {
+  "collection": "items",
+  "id": "games-loaded-dice",
+  "name": "Games (Loaded Dice)"
+ },
+ {
+  "collection": "items",
+  "id": "gasping-lament-greater",
+  "name": "Gasping Lament (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "ghast-stiletto",
+  "name": "Ghast Stiletto"
+ }
+]

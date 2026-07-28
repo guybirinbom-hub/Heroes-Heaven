@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "earplugs",
+  "name": "Earplugs"
+ },
+ {
+  "collection": "items",
+  "id": "marked-playing-cards",
+  "name": "Marked Playing Cards"
+ },
+ {
+  "collection": "items",
+  "id": "rubbing-set",
+  "name": "Rubbing Set"
+ },
+ {
+  "collection": "items",
+  "id": "fixer",
+  "name": "Fixer"
+ },
+ {
+  "collection": "items",
+  "id": "fixer-basic-informant",
+  "name": "Fixer (Basic Informant)"
+ },
+ {
+  "collection": "items",
+  "id": "fixer-expert-informant",
+  "name": "Fixer (Expert Informant)"
+ },
+ {
+  "collection": "items",
+  "id": "fixer-basic-councelor",
+  "name": "Fixer (Basic Councelor)"
+ },
+ {
+  "collection": "items",
+  "id": "fixer-expert-councelor",
+  "name": "Fixer (Expert Councelor)"
+ },
+ {
+  "collection": "items",
+  "id": "spectacles-of-understanding",
+  "name": "Spectacles of Understanding"
+ },
+ {
+  "collection": "items",
+  "id": "spectacles-of-understanding-greater",
+  "name": "Spectacles of Understanding (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "cunning",
+  "name": "Cunning"
+ },
+ {
+  "collection": "items",
+  "id": "clockwork-cloak",
+  "name": "Clockwork Cloak"
+ },
+ {
+  "collection": "items",
+  "id": "cane-of-the-maelstrom",
+  "name": "Cane of the Maelstrom"
+ },
+ {
+  "collection": "items",
+  "id": "radiant-spark",
+  "name": "Radiant Spark"
+ },
+ {
+  "collection": "items",
+  "id": "sun-wheel",
+  "name": "Sun Wheel"
+ },
+ {
+  "collection": "items",
+  "id": "redpitch-bomb",
+  "name": "Redpitch Bomb"
+ },
+ {
+  "collection": "items",
+  "id": "redpitch-bomb-lesser",
+  "name": "Redpitch Bomb (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "redpitch-bomb-moderate",
+  "name": "Redpitch Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "redpitch-bomb-greater",
+  "name": "Redpitch Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "redpitch-bomb-major",
+  "name": "Redpitch Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "secret-keepers-mask",
+  "name": "Secret-Keeper's Mask"
+ },
+ {
+  "collection": "items",
+  "id": "secret-keepers-mask-blackfingers",
+  "name": "Secret-Keeper's Mask (Blackfingers)"
+ },
+ {
+  "collection": "items",
+  "id": "secret-keepers-mask-gray-master",
+  "name": "Secret-Keeper's Mask (Gray Master)"
+ },
+ {
+  "collection": "items",
+  "id": "secret-keepers-mask-father-skinsaw",
+  "name": "Secret-Keeper's Mask (Father Skinsaw)"
+ },
+ {
+  "collection": "items",
+  "id": "secret-keepers-mask-reaper-of-reputation",
+  "name": "Secret-Keeper's Mask (Reaper of Reputation)"
+ },
+ {
+  "collection": "items",
+  "id": "skeptics-elixir",
+  "name": "Skeptic's Elixir"
+ },
+ {
+  "collection": "items",
+  "id": "skeptics-elixir-lesser",
+  "name": "Skeptic's Elixir (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "skeptics-elixir-moderate",
+  "name": "Skeptic's Elixir (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "skeptics-elixir-greater",
+  "name": "Skeptic's Elixir (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "the-whispering-reeds",
+  "name": "The Whispering Reeds"
+ },
+ {
+  "collection": "items",
+  "id": "soaring",
+  "name": "Soaring"
+ },
+ {
+  "collection": "items",
+  "id": "cooperative-blade",
+  "name": "Cooperative Blade"
+ },
+ {
+  "collection": "items",
+  "id": "ichthyosis-mutagen",
+  "name": "Ichthyosis Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "right-of-retribution",
+  "name": "Right of Retribution"
+ },
+ {
+  "collection": "items",
+  "id": "icy-disposition",
+  "name": "Icy Disposition"
+ },
+ {
+  "collection": "items",
+  "id": "necrotic-bomb",
+  "name": "Necrotic Bomb"
+ },
+ {
+  "collection": "items",
+  "id": "necrotic-bomb-moderate",
+  "name": "Necrotic Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "fungal-walk-musk",
+  "name": "Fungal Walk Musk"
+ },
+ {
+  "collection": "items",
+  "id": "fulcrum-lenses",
+  "name": "Fulcrum Lenses"
+ },
+ {
+  "collection": "items",
+  "id": "crimson-fulcrum-lens",
+  "name": "Crimson Fulcrum Lens"
+ }
+]

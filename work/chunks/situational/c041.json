@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "accompaniment-cloak",
+  "name": "Accompaniment Cloak"
+ },
+ {
+  "collection": "items",
+  "id": "bloodline-robe",
+  "name": "Bloodline Robe"
+ },
+ {
+  "collection": "items",
+  "id": "bracers-of-devotion",
+  "name": "Bracers of Devotion"
+ },
+ {
+  "collection": "items",
+  "id": "cloister-robe",
+  "name": "Cloister Robe"
+ },
+ {
+  "collection": "items",
+  "id": "cloister-robe-lesser",
+  "name": "Cloister Robe (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "cloister-robe-moderate",
+  "name": "Cloister Robe (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "cloister-robe-greater",
+  "name": "Cloister Robe (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "cloister-robe-major",
+  "name": "Cloister Robe (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "eidolon-cape",
+  "name": "Eidolon Cape"
+ },
+ {
+  "collection": "items",
+  "id": "hexing-jar",
+  "name": "Hexing Jar"
+ },
+ {
+  "collection": "items",
+  "id": "mala-beads-of-foresight",
+  "name": "Mala Beads of Foresight"
+ },
+ {
+  "collection": "items",
+  "id": "mask-of-uncanny-breath",
+  "name": "Mask of Uncanny Breath"
+ },
+ {
+  "collection": "items",
+  "id": "master-magus-ring",
+  "name": "Master Magus Ring"
+ },
+ {
+  "collection": "items",
+  "id": "minds-light-circlet",
+  "name": "Mind's Light Circlet"
+ },
+ {
+  "collection": "items",
+  "id": "oracular-crown",
+  "name": "Oracular Crown"
+ },
+ {
+  "collection": "items",
+  "id": "wardens-signet",
+  "name": "Warden's Signet"
+ },
+ {
+  "collection": "items",
+  "id": "thunderblast-slippers",
+  "name": "Thunderblast Slippers"
+ },
+ {
+  "collection": "items",
+  "id": "thunderblast-slippers-greater",
+  "name": "Thunderblast Slippers (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "cassisian-helmet",
+  "name": "Cassisian Helmet"
+ },
+ {
+  "collection": "items",
+  "id": "druids-crown",
+  "name": "Druid's Crown"
+ },
+ {
+  "collection": "items",
+  "id": "submersible-helm",
+  "name": "Submersible Helm"
+ },
+ {
+  "collection": "items",
+  "id": "submersible-helm-greater",
+  "name": "Submersible Helm (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "tacticians-helm",
+  "name": "Tactician's Helm"
+ },
+ {
+  "collection": "items",
+  "id": "coldstar-pistols",
+  "name": "Coldstar Pistols"
+ },
+ {
+  "collection": "items",
+  "id": "scale-of-igroon",
+  "name": "Scale of Igroon"
+ },
+ {
+  "collection": "items",
+  "id": "starfaring-cloak",
+  "name": "Starfaring Cloak"
+ },
+ {
+  "collection": "items",
+  "id": "whisperer-of-souls",
+  "name": "Whisperer of Souls"
+ },
+ {
+  "collection": "items",
+  "id": "ursine-avenger-hood",
+  "name": "Ursine Avenger Hood"
+ },
+ {
+  "collection": "items",
+  "id": "gelid-shard",
+  "name": "Gelid Shard"
+ },
+ {
+  "collection": "items",
+  "id": "heartblood-ring",
+  "name": "Heartblood Ring"
+ },
+ {
+  "collection": "items",
+  "id": "phoenix-cinder",
+  "name": "Phoenix Cinder"
+ },
+ {
+  "collection": "items",
+  "id": "void-fragment",
+  "name": "Void Fragment"
+ },
+ {
+  "collection": "items",
+  "id": "corruption-cassock",
+  "name": "Corruption Cassock"
+ },
+ {
+  "collection": "items",
+  "id": "gaffe-glasses",
+  "name": "Gaffe Glasses"
+ },
+ {
+  "collection": "items",
+  "id": "sluggish-bracelet",
+  "name": "Sluggish Bracelet"
+ },
+ {
+  "collection": "items",
+  "id": "unfathomable-stargazer",
+  "name": "Unfathomable Stargazer"
+ },
+ {
+  "collection": "items",
+  "id": "majordomo-torc",
+  "name": "Majordomo Torc"
+ },
+ {
+  "collection": "items",
+  "id": "phantom-piano",
+  "name": "Phantom Piano"
+ },
+ {
+  "collection": "items",
+  "id": "fan-of-the-four-winds",
+  "name": "Fan of the Four Winds"
+ },
+ {
+  "collection": "items",
+  "id": "sleuths-pipe",
+  "name": "Sleuth's Pipe"
+ }
+]

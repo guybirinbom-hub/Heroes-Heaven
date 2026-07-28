@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "coral-aspect",
+  "name": "Coral Aspect"
+ },
+ {
+  "collection": "items",
+  "id": "mariners-mien",
+  "name": "Mariner's Mien"
+ },
+ {
+  "collection": "items",
+  "id": "lesser-mariners-mien",
+  "name": "Lesser Mariner's Mien"
+ },
+ {
+  "collection": "items",
+  "id": "moderate-mariners-mien",
+  "name": "Moderate Mariner's Mien"
+ },
+ {
+  "collection": "items",
+  "id": "mordant-mask",
+  "name": "Mordant Mask"
+ },
+ {
+  "collection": "items",
+  "id": "whispering-veil",
+  "name": "Whispering Veil"
+ },
+ {
+  "collection": "items",
+  "id": "crown-of-the-master",
+  "name": "Crown of the Master"
+ },
+ {
+  "collection": "items",
+  "id": "greater-crown-of-the-master",
+  "name": "Greater Crown of the Master"
+ },
+ {
+  "collection": "items",
+  "id": "helm-of-the-tides",
+  "name": "Helm of the Tides"
+ },
+ {
+  "collection": "items",
+  "id": "snare-kit",
+  "name": "Snare Kit"
+ },
+ {
+  "collection": "items",
+  "id": "snare-kit-specialist",
+  "name": "Snare Kit (Specialist)"
+ },
+ {
+  "collection": "items",
+  "id": "infiltrators-elixir",
+  "name": "Infiltrator's Elixir"
+ },
+ {
+  "collection": "items",
+  "id": "feather-token-fan",
+  "name": "Feather Token (Fan)"
+ },
+ {
+  "collection": "items",
+  "id": "horn-of-blasting",
+  "name": "Horn of Blasting"
+ },
+ {
+  "collection": "items",
+  "id": "tritons-conch",
+  "name": "Triton's Conch"
+ },
+ {
+  "collection": "items",
+  "id": "wondrous-figurine",
+  "name": "Wondrous Figurine"
+ },
+ {
+  "collection": "items",
+  "id": "wondrous-figurine-onyx-dog",
+  "name": "Wondrous Figurine (Onyx Dog)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-the-magi",
+  "name": "Staff of the Magi"
+ },
+ {
+  "collection": "items",
+  "id": "mattock-of-the-titans",
+  "name": "Mattock of the Titans"
+ },
+ {
+  "collection": "items",
+  "id": "aeon-stone-black-pearl",
+  "name": "Aeon Stone (Black Pearl)"
+ },
+ {
+  "collection": "items",
+  "id": "aeon-stone-amber-sphere",
+  "name": "Aeon  Stone (Amber Sphere)"
+ },
+ {
+  "collection": "items",
+  "id": "aeon-stone-cymophane-cabochon",
+  "name": "Aeon Stone (Cymophane Cabochon)"
+ },
+ {
+  "collection": "items",
+  "id": "aeon-stone-olivine-pendeloque",
+  "name": "Aeon Stone (Olivine Pendeloque)"
+ },
+ {
+  "collection": "items",
+  "id": "aeon-stone-polished-pebble",
+  "name": "Aeon Stone (Polished Pebble)"
+ },
+ {
+  "collection": "items",
+  "id": "alchemist-goggles",
+  "name": "Alchemist Goggles"
+ },
+ {
+  "collection": "items",
+  "id": "belt-of-the-five-kings",
+  "name": "Belt of the Five Kings"
+ },
+ {
+  "collection": "items",
+  "id": "cloak-of-the-bat",
+  "name": "Cloak of the Bat"
+ },
+ {
+  "collection": "items",
+  "id": "cloak-of-the-bat-greater",
+  "name": "Cloak of the Bat (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "phylactery-of-faithfulness",
+  "name": "Phylactery of Faithfulness"
+ },
+ {
+  "collection": "items",
+  "id": "phylactery-of-faithfulness-greater",
+  "name": "Phylactery of Faithfulness (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "ring-of-wizardry",
+  "name": "Ring of Wizardry"
+ },
+ {
+  "collection": "items",
+  "id": "ring-of-wizardry-type-i",
+  "name": "Ring of Wizardry (Type I)"
+ },
+ {
+  "collection": "items",
+  "id": "ring-of-wizardry-type-ii",
+  "name": "Ring of Wizardry (Type II)"
+ },
+ {
+  "collection": "items",
+  "id": "ring-of-wizardry-type-iii",
+  "name": "Ring of Wizardry (Type III)"
+ },
+ {
+  "collection": "items",
+  "id": "ring-of-wizardry-type-iv",
+  "name": "Ring of Wizardry (Type IV)"
+ },
+ {
+  "collection": "items",
+  "id": "robe-of-eyes",
+  "name": "Robe of Eyes"
+ },
+ {
+  "collection": "items",
+  "id": "robe-of-the-archmagi",
+  "name": "Robe of the Archmagi"
+ },
+ {
+  "collection": "items",
+  "id": "robe-of-the-archmagi-greater",
+  "name": "Robe of the Archmagi (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "razmiri-wayfinder",
+  "name": "Razmiri Wayfinder"
+ },
+ {
+  "collection": "items",
+  "id": "borts-blessing",
+  "name": "Bort's Blessing"
+ }
+]

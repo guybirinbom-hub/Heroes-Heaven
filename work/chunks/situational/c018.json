@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "classFeatures",
+  "id": "bloodline-wyrmblessed",
+  "name": "Bloodline: Wyrmblessed"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "choir-politic",
+  "name": "Choir Politic"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "construct-eidolon",
+  "name": "Construct Eidolon"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "devotion-phantom-eidolon",
+  "name": "Devotion Phantom Eidolon"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "earth-gate",
+  "name": "Earth Gate"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "elemental-eidolon",
+  "name": "Elemental Eidolon"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "fire-gate",
+  "name": "Fire Gate"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "gate-junction",
+  "name": "Gate Junction"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "gaze-sharp-as-steel",
+  "name": "Gaze Sharp as Steel"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "hyper-boosters",
+  "name": "Hyper Boosters"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "initiate-benefit-lantern",
+  "name": "Initiate Benefit (Lantern)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "initiate-benefit-regalia",
+  "name": "Initiate Benefit (Regalia)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "initiate-benefit-shield",
+  "name": "Initiate Benefit (Shield)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "initiate-benefit-tome",
+  "name": "Initiate Benefit (Tome)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "lantern",
+  "name": "Lantern"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "laughing-shadow",
+  "name": "Laughing Shadow"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "masterful-hunter-outwit",
+  "name": "Masterful Hunter (Outwit)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "metal-gate",
+  "name": "Metal Gate"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "mirrored-aegis",
+  "name": "Mirrored Aegis"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "muscular-exoskeleton",
+  "name": "Muscular Exoskeleton"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "outwit",
+  "name": "Outwit"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "paragon-benefit-regalia",
+  "name": "Paragon Benefit (Regalia)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "paragon-benefit-shield",
+  "name": "Paragon Benefit (Shield)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "paragon-benefit-tome",
+  "name": "Paragon Benefit (Tome)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "regalia",
+  "name": "Regalia"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "scar-of-the-survivor",
+  "name": "Scar of the Survivor"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "seer",
+  "name": "Seer"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "segmented-frame",
+  "name": "Segmented Frame"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "shield",
+  "name": "Shield"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "skybearers-belt",
+  "name": "Skybearer's Belt"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "sparkling-targe",
+  "name": "Sparkling Targe"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "speed-boosters",
+  "name": "Speed Boosters"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "spinner-of-threads",
+  "name": "Spinner of Threads"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "subtle-dampeners",
+  "name": "Subtle Dampeners"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "superstition-instinct",
+  "name": "Superstition Instinct"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-distant-grasp",
+  "name": "The Distant Grasp"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-infinite-eye",
+  "name": "The Infinite Eye"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-proud",
+  "name": "The Proud"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-unbound-step",
+  "name": "The Unbound Step"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "thousand-league-sandals",
+  "name": "Thousand-League Sandals"
+ }
+]

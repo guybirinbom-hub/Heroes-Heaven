@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "classFeatures",
+  "id": "revolutionary-innovation",
+  "name": "Revolutionary Innovation"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "kinetic-gate",
+  "name": "Kinetic Gate"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "impulses",
+  "name": "Impulses"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "gates-threshold",
+  "name": "Gate's Threshold"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "muses",
+  "name": "Muses"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "signature-spells",
+  "name": "Signature Spells"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "fighter-weapon-mastery",
+  "name": "Fighter Weapon Mastery"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "weapon-legend",
+  "name": "Weapon Legend"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "hunters-edge",
+  "name": "Hunter's Edge"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "rogues-racket",
+  "name": "Rogue's Racket"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "blessing-of-the-devoted",
+  "name": "Blessing of the Devoted"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "methodology",
+  "name": "Methodology"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "second-path-to-perfection",
+  "name": "Second Path to Perfection"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "third-path-to-perfection",
+  "name": "Third Path to Perfection"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "divine-access",
+  "name": "Divine Access"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "bloodline",
+  "name": "Bloodline"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "swashbucklers-style",
+  "name": "Swashbuckler’s Style"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "apparition-attunement",
+  "name": "Apparition Attunement"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "animistic-practice",
+  "name": "Animistic Practice"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "third-apparition",
+  "name": "Third Apparition"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "divine-spark-and-ikons",
+  "name": "Divine Spark and Ikons"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "dominion-epithet",
+  "name": "Dominion Epithet"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "sovereignty-epithet",
+  "name": "Sovereignty Epithet"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "subconscious-mind",
+  "name": "Subconscious Mind"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "conscious-mind",
+  "name": "Conscious Mind"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "first-implement-and-esoterica",
+  "name": "First Implement and Esoterica"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "second-implement",
+  "name": "Second Implement"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "implement-adept",
+  "name": "Implement Adept"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "implement-paragon",
+  "name": "Implement Paragon"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "adept-benefit-wand",
+  "name": "Adept Benefit (Wand)"
+ }
+]

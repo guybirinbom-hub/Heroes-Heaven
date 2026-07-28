@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "magnetite-scope",
+  "name": "Magnetite Scope"
+ },
+ {
+  "collection": "items",
+  "id": "magnetite-scope-greater",
+  "name": "Magnetite Scope (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "magnifying-scope",
+  "name": "Magnifying Scope"
+ },
+ {
+  "collection": "items",
+  "id": "magnifying-scope-greater",
+  "name": "Magnifying Scope (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "magnifying-scope-major",
+  "name": "Magnifying Scope (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "scope-of-truth",
+  "name": "Scope of Truth"
+ },
+ {
+  "collection": "items",
+  "id": "sulfur-bomb",
+  "name": "Sulfur Bomb"
+ },
+ {
+  "collection": "items",
+  "id": "sulfur-bomb-moderate",
+  "name": "Sulfur Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "sulfur-bomb-greater",
+  "name": "Sulfur Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "sulfur-bomb-major",
+  "name": "Sulfur Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "cursebreak-bulwark",
+  "name": "Cursebreak Bulwark"
+ },
+ {
+  "collection": "items",
+  "id": "diving-suit",
+  "name": "Diving Suit"
+ },
+ {
+  "collection": "items",
+  "id": "malleable-mixture",
+  "name": "Malleable Mixture"
+ },
+ {
+  "collection": "items",
+  "id": "malleable-mixture-lesser",
+  "name": "Malleable Mixture (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "malleable-mixture-greater",
+  "name": "Malleable Mixture (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "clockwork-heels",
+  "name": "Clockwork Heels"
+ },
+ {
+  "collection": "items",
+  "id": "dragonfly-potion",
+  "name": "Dragonfly Potion"
+ },
+ {
+  "collection": "items",
+  "id": "vexing-vapor",
+  "name": "Vexing Vapor"
+ },
+ {
+  "collection": "items",
+  "id": "vexing-vapor-moderate",
+  "name": "Vexing Vapor (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "vexing-vapor-greater",
+  "name": "Vexing Vapor (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "vexing-vapor-major",
+  "name": "Vexing Vapor (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "amaranthine-pavise",
+  "name": "Amaranthine Pavise"
+ },
+ {
+  "collection": "items",
+  "id": "drum-of-upheaval",
+  "name": "Drum of Upheaval"
+ },
+ {
+  "collection": "items",
+  "id": "private-workshop",
+  "name": "Private Workshop"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-final-rest",
+  "name": "Staff of Final Rest"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-final-rest-greater",
+  "name": "Staff of Final Rest (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-final-rest-major",
+  "name": "Staff of Final Rest (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "krakens-guard",
+  "name": "Kraken's Guard"
+ },
+ {
+  "collection": "items",
+  "id": "quick-runners-shirt",
+  "name": "Quick Runner's Shirt"
+ },
+ {
+  "collection": "items",
+  "id": "quick-runners-shirt-greater",
+  "name": "Quick Runner's Shirt (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "silhouette-cloak",
+  "name": "Silhouette Cloak"
+ },
+ {
+  "collection": "items",
+  "id": "brewers-regret",
+  "name": "Brewer's Regret"
+ },
+ {
+  "collection": "items",
+  "id": "brewers-regret-greater",
+  "name": "Brewer's Regret (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "dragons-blood-pudding-lesser",
+  "name": "Dragon's Blood Pudding (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "dragons-blood-pudding-moderate",
+  "name": "Dragon's Blood Pudding (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "dragons-blood-pudding-greater",
+  "name": "Dragon's Blood Pudding (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "dragons-blood-pudding-major",
+  "name": "Dragon's Blood Pudding (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "impossible-cake",
+  "name": "Impossible Cake"
+ },
+ {
+  "collection": "items",
+  "id": "impossible-cake-greater",
+  "name": "Impossible Cake (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "impossible-cake-major",
+  "name": "Impossible Cake (Major)"
+ }
+]

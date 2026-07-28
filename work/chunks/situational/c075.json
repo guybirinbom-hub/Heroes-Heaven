@@ -1,0 +1,102 @@
+[
+ {
+  "collection": "backgrounds",
+  "id": "southbank-traditionalist",
+  "name": "Southbank Traditionalist"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "willowshore-urchin",
+  "name": "Willowshore Urchin"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "haunted",
+  "name": "Haunted"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "fated-rival",
+  "name": "Fated Rival"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "kaiju-stalker",
+  "name": "Kaiju Stalker"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "blight-survivor",
+  "name": "Blight Survivor"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "demon-hunted",
+  "name": "Demon Hunted"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "distant-traveler",
+  "name": "Distant Traveler"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "escaped-from-time",
+  "name": "Escaped from Time"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "runelord-researcher",
+  "name": "Runelord Researcher"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "reborn-soul",
+  "name": "Reborn Soul"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "post-guard-of-all-trades",
+  "name": "Post Guard of All Trades"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "aon-post-guard-of-all-trade",
+  "name": "Post Guard of All Trade"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "aon-muesello-s-student",
+  "name": "Muesello's Student"
+ },
+ {
+  "collection": "animalCompanions",
+  "id": "aon-vulture",
+  "name": "Vulture"
+ },
+ {
+  "collection": "animalCompanions",
+  "id": "aon-shotalashu",
+  "name": "Shotalashu"
+ },
+ {
+  "collection": "companionSpecializations",
+  "id": "racer",
+  "name": "Racer"
+ },
+ {
+  "collection": "companionSpecializations",
+  "id": "wind-chaser",
+  "name": "Wind Chaser"
+ },
+ {
+  "collection": "companionSpecializations",
+  "id": "deep-diver",
+  "name": "Deep Diver"
+ },
+ {
+  "collection": "companionSpecializations",
+  "id": "steadfast-strider",
+  "name": "Steadfast Strider"
+ }
+]

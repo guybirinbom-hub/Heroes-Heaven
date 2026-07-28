@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "classFeatures",
+  "id": "undead-eidolon",
+  "name": "Undead Eidolon"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "victors-wreath",
+  "name": "Victor's Wreath"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "vindicator",
+  "name": "Vindicator"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "wand",
+  "name": "Wand"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "weapon-innovation",
+  "name": "Weapon Innovation"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "weapon",
+  "name": "Weapon"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "insta-ballista",
+  "name": "Insta-Ballista"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-bigger-they-are",
+  "name": "The Bigger They Are"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "wait-for-it",
+  "name": "Wait For It..."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "break-free",
+  "name": "Break Free"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "feral-swing",
+  "name": "Feral Swing"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "one-moment-till-glory",
+  "name": "One Moment till Glory"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "only-you-and-i",
+  "name": "Only You and I"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "raise-the-walls",
+  "name": "Raise the Walls"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "survive-the-wilds",
+  "name": "Survive the Wilds"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "unravel-the-future",
+  "name": "Unravel the Future"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "break-them-down",
+  "name": "Break Them Down"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "clear-a-path",
+  "name": "Clear a Path"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "living-fortification",
+  "name": "Living Fortification"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "siegebreaker",
+  "name": "Siegebreaker"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "ten-paces",
+  "name": "Ten Paces"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "pursue-a-lead",
+  "name": "Pursue a Lead"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "clue-in",
+  "name": "Clue In"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "pointed-question",
+  "name": "Pointed Question"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "elemental-blast",
+  "name": "Elemental Blast"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "calculate-threats",
+  "name": "Calculate Threats"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "restore-the-mind",
+  "name": "Restore the Mind"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "beasts-charge",
+  "name": "Beast's Charge"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "furious-strike",
+  "name": "Furious Strike"
+ },
+ {
+  "collection": "items",
+  "id": "explorers-clothing",
+  "name": "Explorer's Clothing"
+ },
+ {
+  "collection": "items",
+  "id": "golden-liberators-feather",
+  "name": "Golden Liberator's Feather"
+ },
+ {
+  "collection": "items",
+  "id": "cloak-of-social-graces",
+  "name": "Cloak of Social Graces"
+ },
+ {
+  "collection": "items",
+  "id": "greater-cloak-of-social-graces",
+  "name": "Greater Cloak of Social Graces"
+ },
+ {
+  "collection": "items",
+  "id": "major-cloak-of-social-graces",
+  "name": "Major Cloak of Social Graces"
+ },
+ {
+  "collection": "items",
+  "id": "gloves-of-precision",
+  "name": "Gloves of Precision"
+ },
+ {
+  "collection": "items",
+  "id": "greater-gloves-of-precision",
+  "name": "Greater Gloves of Precision"
+ },
+ {
+  "collection": "items",
+  "id": "kinetic-wraps-of-strength",
+  "name": "Kinetic Wraps of Strength"
+ },
+ {
+  "collection": "items",
+  "id": "greater-kinetic-wraps-of-strength",
+  "name": "Greater Kinetic Wraps of Strength"
+ },
+ {
+  "collection": "items",
+  "id": "bloodstride-blade",
+  "name": "Bloodstride Blade"
+ },
+ {
+  "collection": "items",
+  "id": "gaze-of-the-mantis",
+  "name": "Gaze of the Mantis"
+ }
+]

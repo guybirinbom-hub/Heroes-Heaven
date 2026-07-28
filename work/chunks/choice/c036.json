@@ -1,0 +1,117 @@
+[
+ {
+  "collection": "backgrounds",
+  "id": "goblinblood-survivor",
+  "name": "Goblinblood Survivor"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "isgeri-reclaimer",
+  "name": "Isgeri Reclaimer"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "deckhand",
+  "name": "Deckhand"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "anti-thrune-saboteur",
+  "name": "Anti-Thrune Saboteur"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "defiant-noble",
+  "name": "Defiant Noble"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "embargo-survivor",
+  "name": "Embargo Survivor"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "hell-hunted",
+  "name": "Hell-Hunted"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "scholar-of-battlefields",
+  "name": "Scholar of Battlefields"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "post-guard-of-all-trades",
+  "name": "Post Guard of All Trades"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "wish-for-riches",
+  "name": "Wish for Riches"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "historical-reenactor",
+  "name": "Historical Reenactor"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "reclaimer-investigator",
+  "name": "Reclaimer Investigator"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "refugee-fall-of-plaguestone",
+  "name": "Refugee (Fall of Plaguestone)"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "refugee-pc2",
+  "name": "Refugee (PC2)"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "aon-post-guard-of-all-trade",
+  "name": "Post Guard of All Trade"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "aon-reclaimed-investigator",
+  "name": "Reclaimed Investigator"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "aon-muesello-s-student",
+  "name": "Muesello's Student"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "aon-historical-reeanactor",
+  "name": "Historical Reeanactor"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "aon-wishes-for-riches",
+  "name": "Wishes for Riches"
+ },
+ {
+  "collection": "specificFamiliars",
+  "id": "clockwork-familiar",
+  "name": "Clockwork Familiar"
+ },
+ {
+  "collection": "deities",
+  "id": "lurlup",
+  "name": "Lurlup"
+ },
+ {
+  "collection": "deities",
+  "id": "atheists-and-free-agents",
+  "name": "Atheists and Free Agents"
+ },
+ {
+  "collection": "deities",
+  "id": "aon-atheism",
+  "name": "Atheism"
+ }
+]

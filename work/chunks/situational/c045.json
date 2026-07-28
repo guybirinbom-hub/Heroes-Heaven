@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "conch-of-otherworldly-seas",
+  "name": "Conch of Otherworldly Seas"
+ },
+ {
+  "collection": "items",
+  "id": "kraken-figurehead",
+  "name": "Kraken Figurehead"
+ },
+ {
+  "collection": "items",
+  "id": "kraken-figurehead-wracking",
+  "name": "Kraken Figurehead (Wracking)"
+ },
+ {
+  "collection": "items",
+  "id": "lionfish-spear",
+  "name": "Lionfish Spear"
+ },
+ {
+  "collection": "items",
+  "id": "lionfish-spear-greater",
+  "name": "Lionfish Spear (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "sharkskin-robe",
+  "name": "Sharkskin Robe"
+ },
+ {
+  "collection": "items",
+  "id": "sticky-algae-bomb",
+  "name": "Sticky Algae Bomb"
+ },
+ {
+  "collection": "items",
+  "id": "sticky-algae-bomb-moderate",
+  "name": "Sticky Algae Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "sticky-algae-bomb-greater",
+  "name": "Sticky Algae Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "sticky-algae-bomb-major",
+  "name": "Sticky Algae Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "carver-cutter",
+  "name": "Carver-Cutter"
+ },
+ {
+  "collection": "items",
+  "id": "carver-cutter-greater",
+  "name": "Carver-Cutter (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "carver-cutter-major",
+  "name": "Carver-Cutter (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "carver-cutter-true",
+  "name": "Carver-Cutter (True)"
+ },
+ {
+  "collection": "items",
+  "id": "tales-in-timber",
+  "name": "Tales in Timber"
+ },
+ {
+  "collection": "items",
+  "id": "tales-in-timber-greater",
+  "name": "Tales in Timber (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "tales-in-timber-major",
+  "name": "Tales in Timber (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "therapeutic-snap-peas",
+  "name": "Therapeutic Snap Peas"
+ },
+ {
+  "collection": "items",
+  "id": "gate-attenuator",
+  "name": "Gate Attenuator"
+ },
+ {
+  "collection": "items",
+  "id": "gate-attenuator-greater",
+  "name": "Gate Attenuator (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "gate-attenuator-major",
+  "name": "Gate Attenuator (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "janns-prism",
+  "name": "Jann's Prism"
+ },
+ {
+  "collection": "items",
+  "id": "sparkwarden",
+  "name": "Sparkwarden"
+ },
+ {
+  "collection": "items",
+  "id": "spore-shepherds-staff",
+  "name": "Spore Shepherd's Staff"
+ },
+ {
+  "collection": "items",
+  "id": "spore-shepherds-staff-greater",
+  "name": "Spore Shepherd's Staff (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "spore-shepherds-staff-major",
+  "name": "Spore Shepherd's Staff (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "steadyfoot-tassel",
+  "name": "Steadyfoot Tassel"
+ },
+ {
+  "collection": "items",
+  "id": "blood-bomb",
+  "name": "Blood Bomb"
+ },
+ {
+  "collection": "items",
+  "id": "blood-bomb-moderate",
+  "name": "Blood Bomb (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "blood-bomb-greater",
+  "name": "Blood Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "blood-bomb-major",
+  "name": "Blood Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen",
+  "name": "Prey Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen-lesser",
+  "name": "Prey Mutagen (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen-moderate",
+  "name": "Prey Mutagen (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen-greater",
+  "name": "Prey Mutagen (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen-major",
+  "name": "Prey Mutagen (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "demons-knot",
+  "name": "Demon's Knot"
+ },
+ {
+  "collection": "items",
+  "id": "sigil-of-the-first-clan",
+  "name": "Sigil of the First Clan"
+ },
+ {
+  "collection": "items",
+  "id": "armor-polishing-kit",
+  "name": "Armor Polishing Kit"
+ },
+ {
+  "collection": "items",
+  "id": "sanitizing-pin",
+  "name": "Sanitizing Pin"
+ }
+]

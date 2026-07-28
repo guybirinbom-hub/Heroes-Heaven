@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "tenderizer-grenade-greater",
+  "name": "Tenderizer Grenade (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "tenderizer-grenade-major",
+  "name": "Tenderizer Grenade (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "tenderizer-grenade-moderate",
+  "name": "Tenderizer Grenade (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "the-kardosian-fragments",
+  "name": "The Kardosian Fragments"
+ },
+ {
+  "collection": "items",
+  "id": "thieves-tools-concealable",
+  "name": "Thieves' Tools (Concealable)"
+ },
+ {
+  "collection": "items",
+  "id": "three-days-breath",
+  "name": "Three Day's Breath"
+ },
+ {
+  "collection": "items",
+  "id": "titan-nagaji-scales",
+  "name": "Titan Nagaji Scales"
+ },
+ {
+  "collection": "items",
+  "id": "tough-skin",
+  "name": "Tough Skin"
+ },
+ {
+  "collection": "items",
+  "id": "trudds-strength-greater",
+  "name": "Trudd's Strength (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "tteokguk-of-time-advancement",
+  "name": "Tteokguk of Time Advancement"
+ },
+ {
+  "collection": "items",
+  "id": "tyrants-writs",
+  "name": "Tyrant's Writs"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-1st-rank",
+  "name": "Wand of Legerdemain (1st-rank)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-2nd-rank",
+  "name": "Wand of Legerdemain (2nd-rank)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-3rd-rank",
+  "name": "Wand of Legerdemain (3rd-rank)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-4th-rank",
+  "name": "Wand of Legerdemain (4th-rank)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-5th-rank",
+  "name": "Wand of Legerdemain (5th-rank)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-6th-rank",
+  "name": "Wand of Legerdemain (6th-rank)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-7th-rank",
+  "name": "Wand of Legerdemain (7th-rank)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-8th-rank",
+  "name": "Wand of Legerdemain (8th-rank)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-legerdemain-9th-rank",
+  "name": "Wand of Legerdemain (9th-rank)"
+ },
+ {
+  "collection": "items",
+  "id": "aon-snare-kit",
+  "name": "Snare Kit"
+ },
+ {
+  "collection": "items",
+  "id": "aon-peshspine-grenade",
+  "name": "Peshspine Grenade"
+ },
+ {
+  "collection": "items",
+  "id": "aon-sovereign-steel",
+  "name": "Sovereign Steel"
+ },
+ {
+  "collection": "items",
+  "id": "aon-sovereign-steel-object-standard-grade",
+  "name": "Sovereign Steel Object (Standard-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "aon-sovereign-steel-armor",
+  "name": "Sovereign Steel Armor"
+ },
+ {
+  "collection": "items",
+  "id": "aon-death-knell-powder",
+  "name": "Death Knell Powder"
+ },
+ {
+  "collection": "items",
+  "id": "aon-astrolabe",
+  "name": "Astrolabe"
+ },
+ {
+  "collection": "items",
+  "id": "aon-alignment-ampoule",
+  "name": "Alignment Ampoule"
+ },
+ {
+  "collection": "items",
+  "id": "aon-fixer",
+  "name": "Fixer"
+ },
+ {
+  "collection": "items",
+  "id": "aon-fulcrum-lenses",
+  "name": "Fulcrum Lenses"
+ },
+ {
+  "collection": "items",
+  "id": "aon-energy-robe",
+  "name": "Energy Robe"
+ },
+ {
+  "collection": "items",
+  "id": "aon-loaded-dice",
+  "name": "Loaded Dice"
+ },
+ {
+  "collection": "items",
+  "id": "aon-enhanced-hearing-aid",
+  "name": "Enhanced Hearing Aid"
+ },
+ {
+  "collection": "items",
+  "id": "aon-inubrix-armor",
+  "name": "Inubrix Armor"
+ },
+ {
+  "collection": "items",
+  "id": "aon-inubrix-shield",
+  "name": "Inubrix Shield"
+ },
+ {
+  "collection": "items",
+  "id": "aon-inubrix-buckler-standard-grade",
+  "name": "Inubrix Buckler (Standard-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "aon-inubrix-weapon",
+  "name": "Inubrix Weapon"
+ },
+ {
+  "collection": "items",
+  "id": "aon-noqual",
+  "name": "Noqual"
+ },
+ {
+  "collection": "items",
+  "id": "aon-noqual-object-standard-grade",
+  "name": "Noqual Object (Standard-Grade)"
+ },
+ {
+  "collection": "items",
+  "id": "aon-noqual-armor",
+  "name": "Noqual Armor"
+ }
+]

@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "bombers-eye-elixir",
+  "name": "Bomber's Eye Elixir"
+ },
+ {
+  "collection": "items",
+  "id": "bravos-brew",
+  "name": "Bravo's Brew"
+ },
+ {
+  "collection": "items",
+  "id": "cheetahs-elixir",
+  "name": "Cheetah's Elixir"
+ },
+ {
+  "collection": "items",
+  "id": "eagle-eye-elixir",
+  "name": "Eagle-Eye Elixir"
+ },
+ {
+  "collection": "items",
+  "id": "elixir-of-life",
+  "name": "Elixir of Life"
+ },
+ {
+  "collection": "items",
+  "id": "gecko-potion",
+  "name": "Gecko Potion"
+ },
+ {
+  "collection": "items",
+  "id": "potion-of-emergency-escape",
+  "name": "Potion of Emergency Escape"
+ },
+ {
+  "collection": "items",
+  "id": "shrinking-potion-greater",
+  "name": "Shrinking Potion (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "bronze-bull-pendant",
+  "name": "Bronze Bull Pendant"
+ },
+ {
+  "collection": "items",
+  "id": "crying-angel-pendant",
+  "name": "Crying Angel Pendant"
+ },
+ {
+  "collection": "items",
+  "id": "iron-medallion",
+  "name": "Iron Medallion"
+ },
+ {
+  "collection": "items",
+  "id": "monkey-pin",
+  "name": "Monkey Pin"
+ },
+ {
+  "collection": "items",
+  "id": "onyx-panther",
+  "name": "Onyx Panther"
+ },
+ {
+  "collection": "items",
+  "id": "potency-crystal",
+  "name": "Potency Crystal"
+ },
+ {
+  "collection": "items",
+  "id": "potency-crystal-greater",
+  "name": "Potency Crystal (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "potency-crystal-major",
+  "name": "Potency Crystal (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "savior-spike",
+  "name": "Savior Spike"
+ },
+ {
+  "collection": "items",
+  "id": "shark-tooth-charm",
+  "name": "Shark Tooth Charm"
+ },
+ {
+  "collection": "items",
+  "id": "sneaky-key",
+  "name": "Sneaky Key"
+ },
+ {
+  "collection": "items",
+  "id": "bracers-of-strength",
+  "name": "Bracers of Strength"
+ },
+ {
+  "collection": "items",
+  "id": "cloak-of-swiftness",
+  "name": "Cloak of Swiftness"
+ },
+ {
+  "collection": "items",
+  "id": "crown-of-intellect",
+  "name": "Crown of Intellect"
+ },
+ {
+  "collection": "items",
+  "id": "necklace-of-allure",
+  "name": "Necklace of Allure"
+ },
+ {
+  "collection": "items",
+  "id": "alacritous-horsehoes",
+  "name": "Alacritous Horsehoes"
+ },
+ {
+  "collection": "items",
+  "id": "alacritous-horseshoes",
+  "name": "Alacritous Horseshoes"
+ },
+ {
+  "collection": "items",
+  "id": "alacritous-horseshoes-greater",
+  "name": "Alacritous Horseshoes (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "madcap-top",
+  "name": "Madcap Top"
+ },
+ {
+  "collection": "items",
+  "id": "maestros-instrument",
+  "name": "Maestro's Instrument"
+ },
+ {
+  "collection": "items",
+  "id": "maestros-instrument-lesser",
+  "name": "Maestro's Instrument (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "maestros-instrument-moderate",
+  "name": "Maestro's Instrument (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "maestros-instrument-greater",
+  "name": "Maestro's Instrument (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "marvelous-medicines",
+  "name": "Marvelous Medicines"
+ },
+ {
+  "collection": "items",
+  "id": "marvelous-medicines-greater",
+  "name": "Marvelous Medicines (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "possibility-tome",
+  "name": "Possibility Tome"
+ },
+ {
+  "collection": "items",
+  "id": "skeleton-key",
+  "name": "Skeleton Key"
+ },
+ {
+  "collection": "items",
+  "id": "skeleton-key-greater",
+  "name": "Skeleton Key (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "thurible-of-revelation",
+  "name": "Thurible of Revelation"
+ },
+ {
+  "collection": "items",
+  "id": "thurible-of-revelation-lesser",
+  "name": "Thurible of Revelation (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "thurible-of-revelation-moderate",
+  "name": "Thurible of Revelation (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "thurible-of-revelation-greater",
+  "name": "Thurible of Revelation (Greater)"
+ }
+]

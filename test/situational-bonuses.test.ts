@@ -9,9 +9,21 @@ describe('feat situational bonuses', () => {
   it('the registry is populated and well-formed', () => {
     const ids = Object.keys(FEAT_SITUATIONAL);
     expect(ids.length).toBeGreaterThan(200);
-    // every entry names a real feat and has targets + text
+    // The table is named FEAT_SITUATIONAL for history, but a conditional bonus comes from an ITEM
+    // (Coral Aspect), a heritage, a background or a class feature just as often as from a feat — and
+    // since the reach fix all of those raise the star. So an id must resolve in SOME collection;
+    // the old feats-only assertion would now reject correct data.
+    // Companion buckets are included because records like `aon-vulture` (an animal companion) and
+    // `steadfast-strider` (a companion specialization) legitimately carry conditional bonuses. Note
+    // those bonuses apply to the COMPANION, not the PC, so they correctly do not raise a star on the
+    // player's own rows — characterSituationalIds does not walk companions.
+    const cols: (Record<string, unknown> | undefined)[] = [
+      c.feats, c.items, c.heritages, c.backgrounds, c.classFeatures, c.ancestries,
+      c.animalCompanions, c.companionSpecializations,
+    ];
+    const dead = ids.filter((id) => !cols.some((col) => col && col[id]));
+    expect(dead, `registry ids matching no record: ${dead.slice(0, 8).join(', ')}`).toHaveLength(0);
     for (const id of ids) {
-      expect(c.feats[id], id).toBeTruthy();
       for (const b of FEAT_SITUATIONAL[id]) {
         expect(b.targets.length, id).toBeGreaterThan(0);
         expect(b.when.length, id).toBeGreaterThan(0);

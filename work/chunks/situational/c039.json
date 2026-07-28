@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "lightweave-scarf-major",
+  "name": "Lightweave Scarf (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "phantasmal-doorknob",
+  "name": "Phantasmal Doorknob"
+ },
+ {
+  "collection": "items",
+  "id": "phantasmal-doorknob-greater",
+  "name": "Phantasmal Doorknob (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "phantasmal-doorknob-major",
+  "name": "Phantasmal Doorknob (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "resonating-fork",
+  "name": "Resonating Fork"
+ },
+ {
+  "collection": "items",
+  "id": "resonating-fork-greater",
+  "name": "Resonating Fork (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "resonating-fork-major",
+  "name": "Resonating Fork (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "sanguine-fang",
+  "name": "Sanguine Fang"
+ },
+ {
+  "collection": "items",
+  "id": "sanguine-fang-greater",
+  "name": "Sanguine Fang (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "sanguine-fang-major",
+  "name": "Sanguine Fang (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "warding-statuette",
+  "name": "Warding Statuette"
+ },
+ {
+  "collection": "items",
+  "id": "warding-statuette-greater",
+  "name": "Warding Statuette (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "beast-staff",
+  "name": "Beast Staff"
+ },
+ {
+  "collection": "items",
+  "id": "beast-staff-greater",
+  "name": "Beast Staff (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "beast-staff-major",
+  "name": "Beast Staff (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "celestial-staff",
+  "name": "Celestial Staff"
+ },
+ {
+  "collection": "items",
+  "id": "chronomancer-staff",
+  "name": "Chronomancer Staff"
+ },
+ {
+  "collection": "items",
+  "id": "composer-staff",
+  "name": "Composer Staff"
+ },
+ {
+  "collection": "items",
+  "id": "composer-staff-greater",
+  "name": "Composer Staff (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "composer-staff-major",
+  "name": "Composer Staff (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "dragonprism-staff",
+  "name": "Dragonprism Staff"
+ },
+ {
+  "collection": "items",
+  "id": "dragonprism-staff-greater",
+  "name": "Dragonprism Staff (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "gamblers-staff",
+  "name": "Gambler's Staff"
+ },
+ {
+  "collection": "items",
+  "id": "guardian-staff",
+  "name": "Guardian Staff"
+ },
+ {
+  "collection": "items",
+  "id": "guardian-staff-greater",
+  "name": "Guardian Staff (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "guardian-staff-major",
+  "name": "Guardian Staff (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "lyrakien-staff",
+  "name": "Lyrakien Staff"
+ },
+ {
+  "collection": "items",
+  "id": "lyrakien-staff-greater",
+  "name": "Lyrakien Staff (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "lyrakien-staff-major",
+  "name": "Lyrakien Staff (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "pirate-staff",
+  "name": "Pirate Staff"
+ },
+ {
+  "collection": "items",
+  "id": "socialite-staff",
+  "name": "Socialite Staff"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-earth",
+  "name": "Staff of Earth"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-earth-greater",
+  "name": "Staff of Earth (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-earth-major",
+  "name": "Staff of Earth (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "bagpipes-of-turmoil",
+  "name": "Bagpipes of Turmoil"
+ },
+ {
+  "collection": "items",
+  "id": "bagpipes-of-turmoil-greater",
+  "name": "Bagpipes of Turmoil (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "bagpipes-of-turmoil-major",
+  "name": "Bagpipes of Turmoil (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "drums-of-war",
+  "name": "Drums of War"
+ },
+ {
+  "collection": "items",
+  "id": "drums-of-war-greater",
+  "name": "Drums of War (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "drums-of-war-major",
+  "name": "Drums of War (Major)"
+ }
+]

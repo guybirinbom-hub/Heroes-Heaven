@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "feats",
+  "id": "magical-master",
+  "name": "Magical Master"
+ },
+ {
+  "collection": "feats",
+  "id": "summoner-dedication",
+  "name": "Summoner Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "cathartic-mage-dedication",
+  "name": "Cathartic Mage Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "shadow-spell",
+  "name": "Shadow Spell"
+ },
+ {
+  "collection": "feats",
+  "id": "shadow-reservoir",
+  "name": "Shadow Reservoir"
+ },
+ {
+  "collection": "feats",
+  "id": "soulforger-dedication",
+  "name": "Soulforger Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "soul-arsenal",
+  "name": "Soul Arsenal"
+ },
+ {
+  "collection": "feats",
+  "id": "built-in-tools",
+  "name": "Built-In Tools"
+ },
+ {
+  "collection": "feats",
+  "id": "dual-form-weapon",
+  "name": "Dual-Form Weapon"
+ },
+ {
+  "collection": "feats",
+  "id": "megavolt",
+  "name": "Megavolt"
+ },
+ {
+  "collection": "feats",
+  "id": "deep-freeze",
+  "name": "Deep Freeze"
+ },
+ {
+  "collection": "feats",
+  "id": "ubiquitous-overdrive",
+  "name": "Ubiquitous Overdrive"
+ },
+ {
+  "collection": "feats",
+  "id": "core-attunement",
+  "name": "Core Attunement"
+ },
+ {
+  "collection": "feats",
+  "id": "inventor-dedication",
+  "name": "Inventor Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "vehicle-mechanic-dedication",
+  "name": "Vehicle Mechanic Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "pistoleros-challenge",
+  "name": "Pistolero's Challenge"
+ },
+ {
+  "collection": "feats",
+  "id": "penetrating-fire",
+  "name": "Penetrating Fire"
+ },
+ {
+  "collection": "feats",
+  "id": "ricochet-shot",
+  "name": "Ricochet Shot"
+ },
+ {
+  "collection": "feats",
+  "id": "gunslinger-dedication",
+  "name": "Gunslinger Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "sniping-duo-dedication",
+  "name": "Sniping Duo Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "call-gun",
+  "name": "Call Gun"
+ },
+ {
+  "collection": "feats",
+  "id": "dongun-education",
+  "name": "Dongun Education"
+ },
+ {
+  "collection": "feats",
+  "id": "harsh-judgment",
+  "name": "Harsh Judgment"
+ },
+ {
+  "collection": "feats",
+  "id": "captivator-dedication",
+  "name": "Captivator Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "basic-captivator-spellcasting",
+  "name": "Basic Captivator Spellcasting"
+ },
+ {
+  "collection": "feats",
+  "id": "heightened-captivation",
+  "name": "Heightened Captivation"
+ },
+ {
+  "collection": "feats",
+  "id": "reactive-charm",
+  "name": "Reactive Charm"
+ },
+ {
+  "collection": "feats",
+  "id": "spell-trickster-dedication",
+  "name": "Spell Trickster Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "agile-hand",
+  "name": "Agile Hand"
+ },
+ {
+  "collection": "feats",
+  "id": "summon-ensemble",
+  "name": "Summon Ensemble"
+ }
+]

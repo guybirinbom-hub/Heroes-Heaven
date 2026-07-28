@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "backgrounds",
+  "id": "scavenger",
+  "name": "Scavenger"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "servant",
+  "name": "Servant"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "squire",
+  "name": "Squire"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "tax-collector",
+  "name": "Tax Collector"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "ward",
+  "name": "Ward"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "amnesiac",
+  "name": "Amnesiac"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "blessed",
+  "name": "Blessed"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "cursed",
+  "name": "Cursed"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "feral-child",
+  "name": "Feral Child"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "feybound",
+  "name": "Feybound"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "haunted",
+  "name": "Haunted"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "returned",
+  "name": "Returned"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "royalty",
+  "name": "Royalty"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "acupuncturist",
+  "name": "Acupuncturist"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "bachuan-revolutionary",
+  "name": "Bachuan Revolutionary"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "gossip",
+  "name": "Gossip"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "jeweler",
+  "name": "Jeweler"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "ocean-diver",
+  "name": "Ocean Diver"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "runaway-noble",
+  "name": "Runaway Noble"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "remittance-agent",
+  "name": "Remittance Agent"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "silk-farmer",
+  "name": "Silk Farmer"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "streetfood-vendor",
+  "name": "Streetfood Vendor"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "tiffin-box-deliverer",
+  "name": "Tiffin Box Deliverer"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "weaver",
+  "name": "Weaver"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "traveling-gourmand",
+  "name": "Traveling Gourmand"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "banished-celestial",
+  "name": "Banished Celestial"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "eagle-hunter",
+  "name": "Eagle Hunter"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "fated-rival",
+  "name": "Fated Rival"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "favored",
+  "name": "Favored"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "warded-by-kami",
+  "name": "Warded by Kami"
+ }
+]

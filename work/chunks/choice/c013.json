@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "classFeatures",
+  "id": "animal-instinct",
+  "name": "Animal Instinct"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "armor-innovation",
+  "name": "Armor Innovation"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "avenger",
+  "name": "Avenger"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "blessed-armament",
+  "name": "Blessed Armament"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "bloodline-spells",
+  "name": "Bloodline Spells"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "construct-eidolon",
+  "name": "Construct Eidolon"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "construct-innovation",
+  "name": "Construct Innovation"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "deity-champion",
+  "name": "Deity (Champion)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "demon-eidolon",
+  "name": "Demon Eidolon"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "dragon-deviant-classification",
+  "name": "Dragon Deviant Classification"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "dragon-eidolon",
+  "name": "Dragon Eidolon"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "dragon-instinct",
+  "name": "Dragon Instinct"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "eldritch-trickster",
+  "name": "Eldritch Trickster"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "elemental-instinct",
+  "name": "Elemental Instinct"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "elemental-magic",
+  "name": "Elemental Magic"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "elemental-school",
+  "name": "Elemental School"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "fourth-gates-threshold",
+  "name": "Fourth Gate's Threshold"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "gate-junction",
+  "name": "Gate Junction"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "incredible-resistance",
+  "name": "Incredible Resistance"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "light-mortar-innovation",
+  "name": "Light Mortar Innovation"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "medium",
+  "name": "Medium"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "thiefs-calling",
+  "name": "Thief's Calling"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "palatine-detective",
+  "name": "Palatine Detective"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-infusions-bomber",
+  "name": "Perpetual Infusions (Bomber)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-infusions-chirurgeon",
+  "name": "Perpetual Infusions (Chirurgeon)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-infusions-mutagenist",
+  "name": "Perpetual Infusions (Mutagenist)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-infusions-toxicologist",
+  "name": "Perpetual Infusions (Toxicologist)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-bomber",
+  "name": "Perpetual Perfection (Bomber)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-chirurgeon",
+  "name": "Perpetual Perfection (Chirurgeon)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-mutagenist",
+  "name": "Perpetual Perfection (Mutagenist)"
+ }
+]

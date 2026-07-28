@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "feats",
+  "id": "medic-dedication",
+  "name": "Medic Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "scouts-speed",
+  "name": "Scout's Speed"
+ },
+ {
+  "collection": "feats",
+  "id": "reverse-engineering",
+  "name": "Reverse Engineering"
+ },
+ {
+  "collection": "feats",
+  "id": "improvised-pummel",
+  "name": "Improvised Pummel"
+ },
+ {
+  "collection": "feats",
+  "id": "wrestler-dedication",
+  "name": "Wrestler Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "disengaging-twist",
+  "name": "Disengaging Twist"
+ },
+ {
+  "collection": "feats",
+  "id": "elbow-breaker",
+  "name": "Elbow Breaker"
+ },
+ {
+  "collection": "feats",
+  "id": "strangle",
+  "name": "Strangle"
+ },
+ {
+  "collection": "feats",
+  "id": "biographical-eye",
+  "name": "Biographical Eye"
+ },
+ {
+  "collection": "feats",
+  "id": "forensic-acumen",
+  "name": "Forensic Acumen"
+ },
+ {
+  "collection": "feats",
+  "id": "glean-contents",
+  "name": "Glean Contents"
+ },
+ {
+  "collection": "feats",
+  "id": "incredible-scout",
+  "name": "Incredible Scout"
+ },
+ {
+  "collection": "feats",
+  "id": "inoculation",
+  "name": "Inoculation"
+ },
+ {
+  "collection": "feats",
+  "id": "keen-follower",
+  "name": "Keen Follower"
+ },
+ {
+  "collection": "feats",
+  "id": "legendary-guide",
+  "name": "Legendary Guide"
+ },
+ {
+  "collection": "feats",
+  "id": "leverage-connections",
+  "name": "Leverage Connections"
+ },
+ {
+  "collection": "feats",
+  "id": "numb-to-death",
+  "name": "Numb to Death"
+ },
+ {
+  "collection": "feats",
+  "id": "robust-health",
+  "name": "Robust Health"
+ },
+ {
+  "collection": "feats",
+  "id": "root-magic",
+  "name": "Root Magic"
+ },
+ {
+  "collection": "feats",
+  "id": "signature-crafting",
+  "name": "Signature Crafting"
+ },
+ {
+  "collection": "feats",
+  "id": "sow-rumor",
+  "name": "Sow Rumor"
+ },
+ {
+  "collection": "feats",
+  "id": "supertaster",
+  "name": "Supertaster"
+ },
+ {
+  "collection": "feats",
+  "id": "tumbling-theft",
+  "name": "Tumbling Theft"
+ },
+ {
+  "collection": "feats",
+  "id": "underground-network",
+  "name": "Underground Network"
+ },
+ {
+  "collection": "feats",
+  "id": "crimson-shroud",
+  "name": "Crimson Shroud"
+ },
+ {
+  "collection": "feats",
+  "id": "perfected-gamtu",
+  "name": "Perfected Gamtu"
+ },
+ {
+  "collection": "feats",
+  "id": "bloodsoaked-dash",
+  "name": "Bloodsoaked Dash"
+ },
+ {
+  "collection": "feats",
+  "id": "green-dash",
+  "name": "Green Dash"
+ },
+ {
+  "collection": "feats",
+  "id": "charmed-sleep",
+  "name": "Charmed Sleep"
+ },
+ {
+  "collection": "feats",
+  "id": "fox-arson",
+  "name": "Fox Arson"
+ },
+ {
+  "collection": "feats",
+  "id": "larger-than-life-kitsune",
+  "name": "Larger than Life (Kitsune)"
+ },
+ {
+  "collection": "feats",
+  "id": "it-takes-a-village",
+  "name": "It Takes a Village"
+ },
+ {
+  "collection": "feats",
+  "id": "hasty-celebration",
+  "name": "Hasty Celebration"
+ },
+ {
+  "collection": "feats",
+  "id": "statue-form",
+  "name": "Statue Form"
+ },
+ {
+  "collection": "feats",
+  "id": "dance-of-the-mousedeer",
+  "name": "Dance of the Mousedeer"
+ },
+ {
+  "collection": "feats",
+  "id": "shadowplay",
+  "name": "Shadowplay"
+ },
+ {
+  "collection": "feats",
+  "id": "avowed-insight",
+  "name": "Avowed Insight"
+ },
+ {
+  "collection": "feats",
+  "id": "unwavering-guide",
+  "name": "Unwavering Guide"
+ },
+ {
+  "collection": "feats",
+  "id": "wild-haired-fury",
+  "name": "Wild-haired Fury"
+ },
+ {
+  "collection": "feats",
+  "id": "immobile-form",
+  "name": "Immobile Form"
+ }
+]

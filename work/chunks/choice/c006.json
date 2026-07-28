@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "feats",
+  "id": "primal-dragonblood",
+  "name": "Primal Dragonblood"
+ },
+ {
+  "collection": "feats",
+  "id": "wing-buffet",
+  "name": "Wing Buffet"
+ },
+ {
+  "collection": "feats",
+  "id": "supreme-invigorating-elixir",
+  "name": "Supreme Invigorating Elixir"
+ },
+ {
+  "collection": "feats",
+  "id": "exploitive-bomb",
+  "name": "Exploitive Bomb"
+ },
+ {
+  "collection": "feats",
+  "id": "improbable-elixirs",
+  "name": "Improbable Elixirs"
+ },
+ {
+  "collection": "feats",
+  "id": "animalistic-brutality",
+  "name": "Animalistic Brutality"
+ },
+ {
+  "collection": "feats",
+  "id": "unbalancing-sweep",
+  "name": "Unbalancing Sweep"
+ },
+ {
+  "collection": "feats",
+  "id": "security",
+  "name": "Security"
+ },
+ {
+  "collection": "feats",
+  "id": "auspicious-mount",
+  "name": "Auspicious Mount"
+ },
+ {
+  "collection": "feats",
+  "id": "known-weaknesses",
+  "name": "Known Weaknesses"
+ },
+ {
+  "collection": "feats",
+  "id": "underworld-investigator",
+  "name": "Underworld Investigator"
+ },
+ {
+  "collection": "feats",
+  "id": "defensive-stratagem",
+  "name": "Defensive Stratagem"
+ },
+ {
+  "collection": "feats",
+  "id": "plot-the-future",
+  "name": "Plot the Future"
+ },
+ {
+  "collection": "feats",
+  "id": "tricksters-ace",
+  "name": "Trickster's Ace"
+ },
+ {
+  "collection": "feats",
+  "id": "fuse-stance",
+  "name": "Fuse Stance"
+ },
+ {
+  "collection": "feats",
+  "id": "domain-acumen",
+  "name": "Domain Acumen"
+ },
+ {
+  "collection": "feats",
+  "id": "domain-fluency",
+  "name": "Domain Fluency"
+ },
+ {
+  "collection": "feats",
+  "id": "diverse-mystery",
+  "name": "Diverse Mystery"
+ },
+ {
+  "collection": "feats",
+  "id": "paradoxical-mystery",
+  "name": "Paradoxical Mystery"
+ },
+ {
+  "collection": "feats",
+  "id": "arcane-evolution",
+  "name": "Arcane Evolution"
+ },
+ {
+  "collection": "feats",
+  "id": "occult-evolution",
+  "name": "Occult Evolution"
+ },
+ {
+  "collection": "feats",
+  "id": "split-shot",
+  "name": "Split Shot"
+ },
+ {
+  "collection": "feats",
+  "id": "energy-fusion",
+  "name": "Energy Fusion"
+ },
+ {
+  "collection": "feats",
+  "id": "greater-crossblooded-evolution",
+  "name": "Greater Crossblooded Evolution"
+ },
+ {
+  "collection": "feats",
+  "id": "bloodline-mutation",
+  "name": "Bloodline Mutation"
+ },
+ {
+  "collection": "feats",
+  "id": "targeting-finisher",
+  "name": "Targeting Finisher"
+ },
+ {
+  "collection": "feats",
+  "id": "barbarian-dedication",
+  "name": "Barbarian Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "perfections-path",
+  "name": "Perfection's Path"
+ },
+ {
+  "collection": "feats",
+  "id": "oracle-dedication",
+  "name": "Oracle Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "sorcerer-dedication",
+  "name": "Sorcerer Dedication"
+ }
+]

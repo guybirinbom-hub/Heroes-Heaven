@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "spiderfoot-brew-lesser",
+  "name": "Spiderfoot Brew (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "spiderfoot-brew-moderate",
+  "name": "Spiderfoot Brew (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "spiderfoot-brew-greater",
+  "name": "Spiderfoot Brew (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "theatrical-mutagen",
+  "name": "Theatrical Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "theatrical-mutagen-lesser",
+  "name": "Theatrical Mutagen (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "theatrical-mutagen-moderate",
+  "name": "Theatrical Mutagen (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "theatrical-mutagen-greater",
+  "name": "Theatrical Mutagen (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "theatrical-mutagen-major",
+  "name": "Theatrical Mutagen (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "vaccine-minor",
+  "name": "Vaccine (Minor)"
+ },
+ {
+  "collection": "items",
+  "id": "vaccine-lesser",
+  "name": "Vaccine (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "vaccine-moderate",
+  "name": "Vaccine (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "vaccine-greater",
+  "name": "Vaccine (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "vaccine-major",
+  "name": "Vaccine (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "dread-helm",
+  "name": "Dread Helm"
+ },
+ {
+  "collection": "items",
+  "id": "living-leaf-weave",
+  "name": "Living Leaf Weave"
+ },
+ {
+  "collection": "items",
+  "id": "magnetic-shield",
+  "name": "Magnetic Shield"
+ },
+ {
+  "collection": "items",
+  "id": "ooze-skin",
+  "name": "Ooze Skin"
+ },
+ {
+  "collection": "items",
+  "id": "poison-concentrator",
+  "name": "Poison Concentrator"
+ },
+ {
+  "collection": "items",
+  "id": "poison-concentrator-lesser",
+  "name": "Poison Concentrator (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "poison-concentrator-moderate",
+  "name": "Poison Concentrator (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "poison-concentrator-greater",
+  "name": "Poison Concentrator (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "poison-concentrator-major",
+  "name": "Poison Concentrator (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "powered-full-plate",
+  "name": "Powered Full Plate"
+ },
+ {
+  "collection": "items",
+  "id": "execution-powder",
+  "name": "Execution Powder"
+ },
+ {
+  "collection": "items",
+  "id": "dragonfly-fulu",
+  "name": "Dragonfly Fulu"
+ },
+ {
+  "collection": "items",
+  "id": "escape-fulu",
+  "name": "Escape Fulu"
+ },
+ {
+  "collection": "items",
+  "id": "black-tendril-shot",
+  "name": "Black Tendril Shot"
+ },
+ {
+  "collection": "items",
+  "id": "black-tendril-shot-lesser",
+  "name": "Black Tendril Shot (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "black-tendril-shot-moderate",
+  "name": "Black Tendril Shot (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "black-tendril-shot-greater",
+  "name": "Black Tendril Shot (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "magnetic-shot",
+  "name": "Magnetic Shot"
+ },
+ {
+  "collection": "items",
+  "id": "magnetic-shot-lesser",
+  "name": "Magnetic Shot (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "magnetic-shot-moderate",
+  "name": "Magnetic Shot (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "magnetic-shot-greater",
+  "name": "Magnetic Shot (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "heartening-missive",
+  "name": "Heartening Missive"
+ },
+ {
+  "collection": "items",
+  "id": "heartening-missive-bull",
+  "name": "Heartening Missive (Bull)"
+ },
+ {
+  "collection": "items",
+  "id": "heartening-missive-rabbit",
+  "name": "Heartening Missive (Rabbit)"
+ },
+ {
+  "collection": "items",
+  "id": "heartening-missive-turtle",
+  "name": "Heartening Missive (Turtle)"
+ },
+ {
+  "collection": "items",
+  "id": "oil-of-skating",
+  "name": "Oil of Skating"
+ },
+ {
+  "collection": "items",
+  "id": "caydens-brew",
+  "name": "Cayden's Brew"
+ }
+]

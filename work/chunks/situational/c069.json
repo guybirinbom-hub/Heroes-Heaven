@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "sihedron-medallion-greater",
+  "name": "Sihedron Medallion (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "sihedron-medallion-major",
+  "name": "Sihedron Medallion (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "sihedron-ring-greater",
+  "name": "Sihedron Ring (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "silversoul-bomb-greater",
+  "name": "Silversoul Bomb (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "silversoul-bomb-major",
+  "name": "Silversoul Bomb (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "skitter-knot-greater",
+  "name": "Skitter Knot (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "skitter-knot-lesser",
+  "name": "Skitter Knot (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "skitter-knot-major",
+  "name": "Skitter Knot (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "slithermaws-bane-heroic",
+  "name": "Slithermaw's Bane (Heroic)"
+ },
+ {
+  "collection": "items",
+  "id": "soulcutter-heroic",
+  "name": "Soulcutter (Heroic)"
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring-abjuration",
+  "name": "Specialist's Ring (Abjuration)"
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring-conjuration",
+  "name": "Specialist's Ring (Conjuration)"
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring-divination",
+  "name": "Specialist's Ring (Divination)"
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring-enchantment",
+  "name": "Specialist's Ring (Enchantment)"
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring-evocation",
+  "name": "Specialist's Ring (Evocation)"
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring-illusion",
+  "name": "Specialist's Ring (Illusion)"
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring-necromancy",
+  "name": "Specialist's Ring (Necromancy)"
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring-transmutation",
+  "name": "Specialist's Ring (Transmutation)"
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring",
+  "name": "Specialist's Ring"
+ },
+ {
+  "collection": "items",
+  "id": "spider-satchel-greater",
+  "name": "Spider Satchel (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "spider-satchel-major",
+  "name": "Spider Satchel (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "spider-satchel-moderate",
+  "name": "Spider Satchel (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "splendid-skull-mask",
+  "name": "Splendid Skull Mask"
+ },
+ {
+  "collection": "items",
+  "id": "spore-shephards-staff-greater",
+  "name": "Spore Shephard's Staff (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "spore-shephards-staff-major",
+  "name": "Spore Shephard's Staff (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "spore-shephards-staff",
+  "name": "Spore Shephard's Staff"
+ },
+ {
+  "collection": "items",
+  "id": "stalk-goggles-greater",
+  "name": "Stalk Goggles (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "stalk-goggles-major",
+  "name": "Stalk Goggles (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "stalwarts-banner-greater",
+  "name": "Stalwart's Banner (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "stalwarts-banner-major",
+  "name": "Stalwart's Banner (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "stormshard-greater",
+  "name": "Stormshard (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "stormshard-major",
+  "name": "Stormshard (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "submersible-helmet-greater",
+  "name": "Submersible Helmet (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "submersible-helmet",
+  "name": "Submersible Helmet"
+ },
+ {
+  "collection": "items",
+  "id": "swift-standard-greater",
+  "name": "Swift Standard (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "swift-standard-major",
+  "name": "Swift Standard (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "taljjaes-mask-the-general",
+  "name": "Taljjae's Mask (The General)"
+ },
+ {
+  "collection": "items",
+  "id": "taljjaes-mask-the-hero",
+  "name": "Taljjae's Mask (The Hero)"
+ },
+ {
+  "collection": "items",
+  "id": "talonstrike-blade-greater",
+  "name": "Talonstrike Blade (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "ten-days-breath",
+  "name": "Ten Day's Breath"
+ }
+]

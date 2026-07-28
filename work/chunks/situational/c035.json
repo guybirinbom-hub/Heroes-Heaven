@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "sprite-apple-chartreuse",
+  "name": "Sprite Apple (Chartreuse)"
+ },
+ {
+  "collection": "items",
+  "id": "sprite-apple-pink",
+  "name": "Sprite Apple (Pink)"
+ },
+ {
+  "collection": "items",
+  "id": "sprite-apple-teal",
+  "name": "Sprite Apple (Teal)"
+ },
+ {
+  "collection": "items",
+  "id": "trackers-stew",
+  "name": "Tracker's Stew"
+ },
+ {
+  "collection": "items",
+  "id": "warding-element-draught",
+  "name": "Warding Element Draught"
+ },
+ {
+  "collection": "items",
+  "id": "colorful-coating",
+  "name": "Colorful Coating"
+ },
+ {
+  "collection": "items",
+  "id": "colorful-coating-blue",
+  "name": "Colorful Coating (Blue)"
+ },
+ {
+  "collection": "items",
+  "id": "colorful-coating-yellow",
+  "name": "Colorful Coating (Yellow)"
+ },
+ {
+  "collection": "items",
+  "id": "emetic-paste",
+  "name": "Emetic Paste"
+ },
+ {
+  "collection": "items",
+  "id": "emetic-paste-lesser",
+  "name": "Emetic Paste (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "emetic-paste-moderate",
+  "name": "Emetic Paste (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "emetic-paste-greater",
+  "name": "Emetic Paste (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "healing-vapor",
+  "name": "Healing Vapor"
+ },
+ {
+  "collection": "items",
+  "id": "healing-vapor-lesser",
+  "name": "Healing Vapor (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "healing-vapor-moderate",
+  "name": "Healing Vapor (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "healing-vapor-greater",
+  "name": "Healing Vapor (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "healing-vapor-major",
+  "name": "Healing Vapor (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "sense-dulling-hood",
+  "name": "Sense-Dulling Hood"
+ },
+ {
+  "collection": "items",
+  "id": "sense-dulling-hood-lesser",
+  "name": "Sense-Dulling Hood (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "sense-dulling-hood-greater",
+  "name": "Sense-Dulling Hood (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "affliction-suppressant",
+  "name": "Affliction Suppressant"
+ },
+ {
+  "collection": "items",
+  "id": "affliction-suppressant-lesser",
+  "name": "Affliction Suppressant (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "affliction-suppressant-moderate",
+  "name": "Affliction Suppressant (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "affliction-suppressant-greater",
+  "name": "Affliction Suppressant (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "affliction-suppressant-major",
+  "name": "Affliction Suppressant (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "bendy-arm-mutagen",
+  "name": "Bendy-Arm Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "bendy-arm-mutagen-lesser",
+  "name": "Bendy-Arm Mutagen (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "bendy-arm-mutagen-moderate",
+  "name": "Bendy-Arm Mutagen (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "bendy-arm-mutagen-greater",
+  "name": "Bendy-Arm Mutagen (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "bendy-arm-mutagen-major",
+  "name": "Bendy-Arm Mutagen (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "deadweight-mutagen",
+  "name": "Deadweight Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "deadweight-mutagen-lesser",
+  "name": "Deadweight Mutagen (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "deadweight-mutagen-moderate",
+  "name": "Deadweight Mutagen (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "deadweight-mutagen-greater",
+  "name": "Deadweight Mutagen (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "deadweight-mutagen-major",
+  "name": "Deadweight Mutagen (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "sanguine-mutagen",
+  "name": "Sanguine Mutagen"
+ },
+ {
+  "collection": "items",
+  "id": "sanguine-mutagen-lesser",
+  "name": "Sanguine Mutagen (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "sanguine-mutagen-moderate",
+  "name": "Sanguine Mutagen (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "sanguine-mutagen-greater",
+  "name": "Sanguine Mutagen (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "sanguine-mutagen-major",
+  "name": "Sanguine Mutagen (Major)"
+ }
+]

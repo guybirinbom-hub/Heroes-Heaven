@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "feats",
+  "id": "tattoo-artist",
+  "name": "Tattoo Artist"
+ },
+ {
+  "collection": "feats",
+  "id": "steadying-stone",
+  "name": "Steadying Stone"
+ },
+ {
+  "collection": "feats",
+  "id": "stoked-flame-stance",
+  "name": "Stoked Flame Stance"
+ },
+ {
+  "collection": "feats",
+  "id": "shadow-spell",
+  "name": "Shadow Spell"
+ },
+ {
+  "collection": "feats",
+  "id": "soulforger-dedication",
+  "name": "Soulforger Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "soul-flare",
+  "name": "Soul Flare"
+ },
+ {
+  "collection": "feats",
+  "id": "rule-of-three",
+  "name": "Rule of Three"
+ },
+ {
+  "collection": "feats",
+  "id": "fleet-tempo",
+  "name": "Fleet Tempo"
+ },
+ {
+  "collection": "feats",
+  "id": "lock-on",
+  "name": "Lock On"
+ },
+ {
+  "collection": "feats",
+  "id": "engine-of-destruction",
+  "name": "Engine of Destruction"
+ },
+ {
+  "collection": "feats",
+  "id": "reinforced-chassis",
+  "name": "Reinforced Chassis"
+ },
+ {
+  "collection": "feats",
+  "id": "arcane-slam",
+  "name": "Arcane Slam"
+ },
+ {
+  "collection": "feats",
+  "id": "core-cannon",
+  "name": "Core Cannon"
+ },
+ {
+  "collection": "feats",
+  "id": "overwatch-dedication",
+  "name": "Overwatch Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "topple-giants",
+  "name": "Topple Giants"
+ },
+ {
+  "collection": "feats",
+  "id": "control-tower",
+  "name": "Control Tower"
+ },
+ {
+  "collection": "feats",
+  "id": "golem-dynamo",
+  "name": "Golem Dynamo"
+ },
+ {
+  "collection": "feats",
+  "id": "push-it",
+  "name": "Push it"
+ },
+ {
+  "collection": "feats",
+  "id": "vehicle-mechanic-dedication",
+  "name": "Vehicle Mechanic Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "superior-propulsion",
+  "name": "Superior Propulsion"
+ },
+ {
+  "collection": "feats",
+  "id": "impervious-vehicle",
+  "name": "Impervious Vehicle"
+ },
+ {
+  "collection": "feats",
+  "id": "cover-fire",
+  "name": "Cover Fire"
+ },
+ {
+  "collection": "feats",
+  "id": "defensive-armaments",
+  "name": "Defensive Armaments"
+ },
+ {
+  "collection": "feats",
+  "id": "fake-out",
+  "name": "Fake Out"
+ },
+ {
+  "collection": "feats",
+  "id": "black-powder-boost",
+  "name": "Black Powder Boost"
+ },
+ {
+  "collection": "feats",
+  "id": "pistoleros-challenge",
+  "name": "Pistolero's Challenge"
+ },
+ {
+  "collection": "feats",
+  "id": "snipers-aim",
+  "name": "Sniper's Aim"
+ },
+ {
+  "collection": "feats",
+  "id": "stab-and-blast",
+  "name": "Stab and Blast"
+ },
+ {
+  "collection": "feats",
+  "id": "deflecting-shot",
+  "name": "Deflecting Shot"
+ },
+ {
+  "collection": "feats",
+  "id": "reach-for-the-stars",
+  "name": "Reach for the Stars"
+ },
+ {
+  "collection": "feats",
+  "id": "artillerist-dedication",
+  "name": "Artillerist Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "named-artillery",
+  "name": "Named Artillery"
+ },
+ {
+  "collection": "feats",
+  "id": "safety-measures",
+  "name": "Safety Measures"
+ },
+ {
+  "collection": "feats",
+  "id": "explosive-entry",
+  "name": "Explosive Entry"
+ },
+ {
+  "collection": "feats",
+  "id": "phenoms-verve",
+  "name": "Phenom's Verve"
+ },
+ {
+  "collection": "feats",
+  "id": "sniping-duo-dedication",
+  "name": "Sniping Duo Dedication"
+ },
+ {
+  "collection": "feats",
+  "id": "exploit-opening",
+  "name": "Exploit Opening"
+ },
+ {
+  "collection": "feats",
+  "id": "duos-aim",
+  "name": "Duo's Aim"
+ },
+ {
+  "collection": "feats",
+  "id": "phase-bullet",
+  "name": "Phase Bullet"
+ },
+ {
+  "collection": "feats",
+  "id": "forge-blessed-shot",
+  "name": "Forge-Blessed Shot"
+ }
+]

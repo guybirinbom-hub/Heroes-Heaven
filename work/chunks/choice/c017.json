@@ -1,0 +1,152 @@
+[
+ {
+  "collection": "items",
+  "id": "enigma-mirror",
+  "name": "Enigma Mirror"
+ },
+ {
+  "collection": "items",
+  "id": "enigma-mirror-greater",
+  "name": "Enigma Mirror (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "enigma-mirror-major",
+  "name": "Enigma Mirror (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "phantasmal-doorknob",
+  "name": "Phantasmal Doorknob"
+ },
+ {
+  "collection": "items",
+  "id": "phantasmal-doorknob-greater",
+  "name": "Phantasmal Doorknob (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "phantasmal-doorknob-major",
+  "name": "Phantasmal Doorknob (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "spellstriker-staff",
+  "name": "Spellstriker Staff"
+ },
+ {
+  "collection": "items",
+  "id": "spellstriker-staff-greater",
+  "name": "Spellstriker Staff (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "spellstriker-staff-major",
+  "name": "Spellstriker Staff (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-chromatic-burst",
+  "name": "Wand of Chromatic Burst"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-chromatic-burst-4th-rank-spell",
+  "name": "Wand of Chromatic Burst (4th-Rank Spell)"
+ },
+ {
+  "collection": "items",
+  "id": "wand-of-chromatic-burst-7th-rank-spell",
+  "name": "Wand of Chromatic Burst (7th-Rank Spell)"
+ },
+ {
+  "collection": "items",
+  "id": "tacticians-helm",
+  "name": "Tactician's Helm"
+ },
+ {
+  "collection": "items",
+  "id": "shrieking-key",
+  "name": "Shrieking Key"
+ },
+ {
+  "collection": "items",
+  "id": "propaganda",
+  "name": "Propaganda"
+ },
+ {
+  "collection": "items",
+  "id": "propaganda-level-1",
+  "name": "Propaganda (Level 1)"
+ },
+ {
+  "collection": "items",
+  "id": "propaganda-level-2",
+  "name": "Propaganda (Level 2)"
+ },
+ {
+  "collection": "items",
+  "id": "propaganda-level-3",
+  "name": "Propaganda (Level 3)"
+ },
+ {
+  "collection": "items",
+  "id": "propaganda-level-4",
+  "name": "Propaganda (Level 4)"
+ },
+ {
+  "collection": "items",
+  "id": "propaganda-level-5",
+  "name": "Propaganda (Level 5)"
+ },
+ {
+  "collection": "items",
+  "id": "propaganda-level-6",
+  "name": "Propaganda (Level 6)"
+ },
+ {
+  "collection": "items",
+  "id": "propaganda-level-7",
+  "name": "Propaganda (Level 7)"
+ },
+ {
+  "collection": "items",
+  "id": "the-locksmith",
+  "name": "The Locksmith"
+ },
+ {
+  "collection": "items",
+  "id": "the-rakshasa",
+  "name": "The Rakshasa"
+ },
+ {
+  "collection": "items",
+  "id": "the-marriage",
+  "name": "The Marriage"
+ },
+ {
+  "collection": "items",
+  "id": "cowl-of-keys",
+  "name": "Cowl of Keys"
+ },
+ {
+  "collection": "items",
+  "id": "the-avalanche",
+  "name": "The Avalanche"
+ },
+ {
+  "collection": "items",
+  "id": "the-fool",
+  "name": "The Fool"
+ },
+ {
+  "collection": "items",
+  "id": "the-queen-mother",
+  "name": "The Queen Mother"
+ },
+ {
+  "collection": "items",
+  "id": "the-teamster",
+  "name": "The Teamster"
+ }
+]

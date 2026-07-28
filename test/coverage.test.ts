@@ -34,14 +34,19 @@ const REGISTRY_FLOOR: Record<string, number> = {
   featCantripGrants: 51,
   featFeatGrants: 185,
   companionGrants: 57,
-  situationalBonuses: 308,
+  situationalBonuses: 1999,
 };
 
 /** Ceilings for work outstanding — these may only ever go DOWN.
  *  2026-07-28  choices 549 · situational 2976   (baseline)
  *  2026-07-28  choices 546                      (choose-a-skill batch 1: Assurance, Automatic
- *                                                Knowledge, Expert Longevity) */
-const MISSING_CEILING = { choices: 546, situational: 2976 };
+ *                                                Knowledge, Expert Longevity)
+ *  2026-07-28  situational 1312                 (applied the adversarially verified lane: 1,758
+ *                                                records / 2,620 bonuses. Also corrected the report
+ *                                                itself, which scored items/classFeatures/heritages
+ *                                                as 0% on a stale "registry is feats-only" comment.)
+ *  Lower these when work lands; never raise one to make a red build green. */
+const MISSING_CEILING = { choices: 546, situational: 1312 };
 
 describe('mechanical coverage ratchet', () => {
   const r = report();

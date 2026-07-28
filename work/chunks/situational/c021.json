@@ -1,0 +1,202 @@
+[
+ {
+  "collection": "items",
+  "id": "merchants-guile",
+  "name": "Merchant's Guile"
+ },
+ {
+  "collection": "items",
+  "id": "ring-of-the-weary-traveler",
+  "name": "Ring of the Weary Traveler"
+ },
+ {
+  "collection": "items",
+  "id": "warriors-training-ring",
+  "name": "Warrior's Training Ring"
+ },
+ {
+  "collection": "items",
+  "id": "hunters-arrowhead",
+  "name": "Hunter's Arrowhead"
+ },
+ {
+  "collection": "items",
+  "id": "heartstone",
+  "name": "Heartstone"
+ },
+ {
+  "collection": "items",
+  "id": "skarjas-heartstone",
+  "name": "Skarja's Heartstone"
+ },
+ {
+  "collection": "items",
+  "id": "swim-fins",
+  "name": "Swim Fins"
+ },
+ {
+  "collection": "items",
+  "id": "golden-legion-epaulet",
+  "name": "Golden Legion Epaulet"
+ },
+ {
+  "collection": "items",
+  "id": "refined-pesh",
+  "name": "Refined Pesh"
+ },
+ {
+  "collection": "items",
+  "id": "eclipse",
+  "name": "Eclipse"
+ },
+ {
+  "collection": "items",
+  "id": "bountiful-cauldron",
+  "name": "Bountiful Cauldron"
+ },
+ {
+  "collection": "items",
+  "id": "dreamstone",
+  "name": "Dreamstone"
+ },
+ {
+  "collection": "items",
+  "id": "eye-of-the-wise",
+  "name": "Eye of the Wise"
+ },
+ {
+  "collection": "items",
+  "id": "cloak-of-repute",
+  "name": "Cloak of Repute"
+ },
+ {
+  "collection": "items",
+  "id": "cloak-of-repute-greater",
+  "name": "Cloak of Repute (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "cloak-of-repute-major",
+  "name": "Cloak of Repute (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "insistent-door-knocker",
+  "name": "Insistent Door Knocker"
+ },
+ {
+  "collection": "items",
+  "id": "insistent-door-knocker-greater",
+  "name": "Insistent Door Knocker (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "insistent-door-knocker-major",
+  "name": "Insistent Door Knocker (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "unmemorable-mantle",
+  "name": "Unmemorable Mantle"
+ },
+ {
+  "collection": "items",
+  "id": "unmemorable-mantle-greater",
+  "name": "Unmemorable Mantle (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "unmemorable-mantle-major",
+  "name": "Unmemorable Mantle (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "armored-skirt",
+  "name": "Armored Skirt"
+ },
+ {
+  "collection": "items",
+  "id": "lastwall-soup",
+  "name": "Lastwall Soup"
+ },
+ {
+  "collection": "items",
+  "id": "sinister-knight",
+  "name": "Sinister Knight"
+ },
+ {
+  "collection": "items",
+  "id": "rock-braced",
+  "name": "Rock-Braced"
+ },
+ {
+  "collection": "items",
+  "id": "kin-warding",
+  "name": "Kin-Warding"
+ },
+ {
+  "collection": "items",
+  "id": "guiding-chisel",
+  "name": "Guiding Chisel"
+ },
+ {
+  "collection": "items",
+  "id": "pactmasters-grace",
+  "name": "Pactmaster's Grace"
+ },
+ {
+  "collection": "items",
+  "id": "peshspine-grenade",
+  "name": "Peshspine Grenade"
+ },
+ {
+  "collection": "items",
+  "id": "peshspine-grenade-lesser",
+  "name": "Peshspine Grenade (Lesser)"
+ },
+ {
+  "collection": "items",
+  "id": "peshspine-grenade-moderate",
+  "name": "Peshspine Grenade (Moderate)"
+ },
+ {
+  "collection": "items",
+  "id": "peshspine-grenade-greater",
+  "name": "Peshspine Grenade (Greater)"
+ },
+ {
+  "collection": "items",
+  "id": "peshspine-grenade-major",
+  "name": "Peshspine Grenade (Major)"
+ },
+ {
+  "collection": "items",
+  "id": "orb-of-dragonkind",
+  "name": "Orb of Dragonkind"
+ },
+ {
+  "collection": "items",
+  "id": "glaive-of-the-artist",
+  "name": "Glaive of the Artist"
+ },
+ {
+  "collection": "items",
+  "id": "miter-of-communion",
+  "name": "Miter of Communion"
+ },
+ {
+  "collection": "items",
+  "id": "torags-silver-anvil",
+  "name": "Torag's Silver Anvil"
+ },
+ {
+  "collection": "items",
+  "id": "acrobats-staff",
+  "name": "Acrobat's Staff"
+ },
+ {
+  "collection": "items",
+  "id": "bullhook",
+  "name": "Bullhook"
+ }
+]
