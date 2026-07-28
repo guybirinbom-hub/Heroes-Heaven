@@ -24,6 +24,11 @@ const idsIn = (p) => {
   try { return new Set([...read(p).matchAll(/["']?([a-z0-9]+(?:-[a-z0-9]+)+)["']?\s*:/g)].map((m) => m[1])); }
   catch { return new Set(); }
 };
+/** Feature ids that appear in some class's feature list — the class pipeline advances these. */
+const CLASS_FEATURE_IDS = new Set(
+  Object.values(db.classes ?? {}).flatMap((c) => (c.features ?? []).map((f) => f.featureId)),
+);
+
 const MODELLED = {
   choice: new Set([
     ...idsIn('src/rules/featPickGrants.ts'),
@@ -55,7 +60,22 @@ const LANES = [
     id: 'proficiency',
     what: 'raises or grants a proficiency rank',
     re: /\b(become|becomes|are|you're|you are)\s+(trained|expert|master|legendary)\b|\bproficiency rank\b.*\b(to|in)\b/i,
-    modelled: (r) => MODELLED.proficiency.has(r.id) || !!r.skillChoices || !!r.grants,
+    /**
+     * A proficiency can be modelled in FOUR different places, and checking only the feat registry
+     * over-counted the gap badly: it reported 1,062 unmodelled records, of which 477 were backgrounds
+     * that already carry their skill data, 157 were class features the class pipeline already
+     * advances, and only ~20 were real. FEAT_GRANTS is iterated over TAKEN FEATS only (build.ts
+     * ~2129), so a background or class feature listed there would be inert data that this very report
+     * would then count as "modelled" — the worst outcome.
+     */
+    modelled: (r) =>
+      MODELLED.proficiency.has(r.id) ||
+      !!r.skillChoices ||
+      !!r.grants ||
+      // backgrounds carry their own training fields
+      !!r.trainedSkills || !!r.trainedLore || !!r.trainedLoreChoice || !!r.trainedSkillChoice ||
+      // class features are advanced by the class pipeline, not by any registry
+      CLASS_FEATURE_IDS.has(r.id),
   },
   {
     id: 'resource',
@@ -91,7 +111,12 @@ const LANES = [
     id: 'defense',
     what: 'grants resistance, immunity, weakness or a sense',
     re: /\b(resistance \d|immunity to|immune to|weakness \d|darkvision|low-light vision|scent|tremorsense)\b/i,
-    modelled: (r) => !!r.defenses || !!r.senses,
+    /** `defenses` is the wrapper NO record actually uses; the real storage is direct fields, which is
+     *  also where derive.ts reads from. Checking only defenses/senses under-reported every applied
+     *  resistance, immunity and weakness — the mirror image of the proficiency over-count above. */
+    modelled: (r) =>
+      !!r.defenses || !!r.senses || !!r.resistances || !!r.weaknesses || !!r.immunities ||
+      !!r.speeds || !!r.whileActive,
   },
 ];
 

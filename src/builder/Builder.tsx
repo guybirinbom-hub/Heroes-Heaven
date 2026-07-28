@@ -1213,7 +1213,9 @@ export function Builder({
                                         featSkillChoices: { ...(build.featSkillChoices ?? {}), [skKey]: v as (typeof SKILLS)[number] },
                                       })
                                     }
-                                    options={opts.map((s) => ({ value: s, label: cap(s) }))}
+                                    // skillLabel, not cap: a Lore option would otherwise read
+                                    // "Lore:spirit" instead of "Spirit Lore".
+                                    options={opts.map((s) => ({ value: s, label: skillLabel(s) }))}
                                   />
                                 </SubCard>
                               );

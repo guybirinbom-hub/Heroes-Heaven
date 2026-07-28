@@ -20,8 +20,9 @@
  * To add a feat: add an entry keyed by its core.json id with the ranks it grants. Extend FeatGrant
  * with new tracks as needed (they must be wired into applyFeatGrant in build.ts).
  */
-import type { ArmorCategory, ProficiencyKey, ProficiencyRank, SaveId, SkillId, WeaponCategory } from './types';
+import type { ArmorCategory, ProficiencyKey, ProficiencyRank, SaveId, WeaponCategory } from './types';
 import { FEAT_SKILL_GRANTS } from './featGrantsAuto';
+import { FEAT_LANE_GRANTS } from './featGrantsLane';
 
 /** One step of a level-gated proficiency upgrade a feat grants. */
 export interface RankUpgradeStep {
@@ -84,7 +85,11 @@ export interface FeatGrant {
    * (RAISES only, like the static grants).
    */
   skillChoices?: {
-    options: SkillId[] | 'any';
+    /** ProficiencyKey rather than SkillId because several feats offer a choice among LORE skills —
+     *  Know the Beat ("Guild, Legal, Mercantile or Underworld Lore"), Ghost Hunter Dedication. The
+     *  static `skills` map already accepts `lore:*`, so restricting the choice list to non-Lore
+     *  skills made those feats inexpressible for no reason. */
+    options: ProficiencyKey[] | 'any';
     rank: ProficiencyRank;
     /** Conditional slot rank — "trained in your choice of Deception or Stealth; expert if already
      *  trained" (Lion Blade). When set, the PICKED skill gets `upgraded` if it already met `base`
@@ -217,9 +222,14 @@ const HAND_AUTHORED_GRANTS: Record<string, FeatGrant> = {
   },
 };
 
-/** The full feat-proficiency table: auto-extracted skill grants (featGrantsAuto.ts) overlaid with the
- *  hand-authored cases (armor cascades / choiceGrants / weapon grants), which WIN on any id conflict. */
-export const FEAT_GRANTS: Record<string, FeatGrant> = { ...FEAT_SKILL_GRANTS, ...HAND_AUTHORED_GRANTS };
+/** The full feat-proficiency table: auto-extracted skill grants (featGrantsAuto.ts), then the
+ *  proficiency-lane classification (featGrantsLane.ts), overlaid with the hand-authored cases (armor
+ *  cascades / choiceGrants / weapon grants), which WIN on any id conflict. */
+export const FEAT_GRANTS: Record<string, FeatGrant> = {
+  ...FEAT_SKILL_GRANTS,
+  ...FEAT_LANE_GRANTS,
+  ...HAND_AUTHORED_GRANTS,
+};
 
 /**
  * How many times a feat may be taken. Mirrors Foundry's `system.maxTakable`: absent → 1, `null` →

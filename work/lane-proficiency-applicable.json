@@ -1,0 +1,378 @@
+[
+ {
+  "id": "different-worlds",
+  "grants": true,
+  "loreChoices": 1,
+  "note": "Grants trained in the Lore skill of a second background — modeled as one free Lore choice; the second-background linkage itself is not representable."
+ },
+ {
+  "id": "know-the-beat",
+  "grants": true,
+  "skillChoices": [
+   {
+    "rank": "trained",
+    "options": [
+     "lore:guild",
+     "lore:legal",
+     "lore:mercantile",
+     "lore:underworld"
+    ]
+   }
+  ],
+  "note": "Unconditional trained rank in one of four named Lore skills."
+ },
+ {
+  "id": "ghost-hunter-dedication",
+  "grants": true,
+  "skillChoices": [
+   {
+    "rank": "trained",
+    "options": [
+     "lore:spirit",
+     "lore:haunt"
+    ]
+   }
+  ],
+  "note": "Also grants trained in occult spell attack rolls/DCs (spellcasting, not representable) and a free Lore if already trained in both listed Lores."
+ },
+ {
+  "id": "ancestral-insight",
+  "grants": true,
+  "skills": [
+   {
+    "skill": "lore:alghollthu",
+    "rank": "trained"
+   },
+   {
+    "skill": "lore:azlanti",
+    "rank": "trained"
+   }
+  ],
+  "note": "Unconditional trained rank in both named Lore skills."
+ },
+ {
+  "id": "basic-red-mantis-magic",
+  "grants": true,
+  "note": "Unconditionally grants trained in spell attack modifier and spell DC — spellcasting proficiency has no field in this schema, so nothing could be represented."
+ },
+ {
+  "id": "special-sentinel-technique",
+  "grants": true,
+  "note": "Unconditionally grants trained in spell attack modifier and spell DC (Cha) — spellcasting proficiency is not representable in this schema."
+ },
+ {
+  "id": "animist-dedication",
+  "grants": true,
+  "note": "Grants trained in spell attack modifier/spell DC plus trained (expert at 8th, master at 16th) in the chosen apparition's skills — apparition skills vary by apparition and spellcasting has no field, so neither could be represented."
+ },
+ {
+  "id": "godling-dedication",
+  "grants": true,
+  "note": "Character gains expert in spell attack modifier and spell DC (the hierophant's trained rank is an ally grant and is excluded); spellcasting proficiency is not representable in this schema."
+ },
+ {
+  "id": "listeners-boon",
+  "grants": true,
+  "note": "Grants trained in spell attack modifier and spell DC, increasing to expert at 11th level — spellcasting proficiency has no field here, so the grant and its 11th-level upgrade could not be represented."
+ },
+ {
+  "id": "domain-embodiment",
+  "grants": true,
+  "note": "Unconditionally grants trained in spell attacks and spell DCs (\"if you were not already\" is a non-downgrade clause) — spellcasting proficiency is not representable in this schema."
+ },
+ {
+  "id": "free-heart",
+  "grants": true,
+  "skillChoices": [
+   {
+    "rank": "trained",
+    "options": [
+     "any"
+    ]
+   }
+  ],
+  "loreChoices": 1,
+  "note": "Trains you in a second common background's skills — modelled as the usual background pattern (one skill + one Lore); the actual pair is constrained by the background chosen, which could not be represented."
+ },
+ {
+  "id": "ironclad-fortitude",
+  "grants": true,
+  "save": [
+   {
+    "save": "fortitude",
+    "rank": "master"
+   }
+  ],
+  "note": "Unconditionally raises Fortitude save proficiency to master."
+ },
+ {
+  "id": "diverse-weapon-expert",
+  "grants": true,
+  "weapon": [
+   {
+    "category": "simple",
+    "rank": "expert"
+   },
+   {
+    "category": "martial",
+    "rank": "expert"
+   },
+   {
+    "category": "advanced",
+    "rank": "trained"
+   }
+  ],
+  "note": "Unconditional weapon-category raise; unarmed is deliberately not included."
+ },
+ {
+  "id": "master-spotter-ranger",
+  "grants": true,
+  "perception": "master",
+  "note": "Unconditional Perception raise (expert in Perception is only the prerequisite)."
+ },
+ {
+  "id": "juggernauts-fortitude",
+  "grants": true,
+  "save": [
+   {
+    "save": "fortitude",
+    "rank": "master"
+   }
+  ],
+  "note": "Unconditional Fortitude raise to master (expert in Fortitude is only the prerequisite)."
+ },
+ {
+  "id": "perfections-path",
+  "grants": true,
+  "note": "Unconditionally raises ONE player-chosen save (Fort/Ref/Will) to master, but the schema has no save-choice field, so the grant could not be represented — needs a saveChoices lane."
+ },
+ {
+  "id": "evasiveness",
+  "grants": true,
+  "save": [
+   {
+    "save": "reflex",
+    "rank": "master"
+   }
+  ],
+  "note": "Unconditional Reflex raise to master (expert in Reflex is only the prerequisite)."
+ },
+ {
+  "id": "blessed-one-dedication",
+  "grants": true,
+  "note": "Unconditionally grants trained spell attack modifier + spell DC — a spellcasting proficiency with no field in this schema; already modeled in core.json as spellcastingGrant (divine/cha/trained)."
+ },
+ {
+  "id": "eldritch-archer-dedication",
+  "grants": true,
+  "note": "Unconditionally grants trained spell attack modifier + spell DC (cha) — spellcasting proficiency, no field in this schema, and core.json is MISSING a spellcastingGrant for this feat."
+ },
+ {
+  "id": "gladiator-dedication",
+  "grants": true,
+  "skills": [
+   {
+    "skill": "lore:gladiatorial",
+    "rank": "trained"
+   }
+  ],
+  "note": "Grants the Additional Lore feat for Gladiatorial Lore (unconditional trained, plus its own 3rd/7th/15th skill increases via the granted feat); the extra Lore-of-choice is conditional on already being trained, so it is not recorded as a loreChoice."
+ },
+ {
+  "id": "words-of-unraveling",
+  "grants": true,
+  "note": "Unconditionally trained (expert if already an occult caster) in occult spell attack rolls/DCs; spellcasting proficiency has no field in this schema."
+ },
+ {
+  "id": "entities-from-afar",
+  "grants": true,
+  "note": "Same as Words of Unraveling: trained/expert in occult spell attack rolls and DCs; spellcasting proficiency not representable here."
+ },
+ {
+  "id": "summoner-dedication",
+  "grants": true,
+  "note": "Character becomes trained in the chosen eidolon type's listed skills (already-trained ones convert to a free skill) - varies by eidolon type, so not statically representable; the eidolon's own proficiencies are companion-side and excluded."
+ },
+ {
+  "id": "basic-summoner-spellcasting",
+  "grants": true,
+  "note": "Trained in spell attack rolls and spell DCs of the eidolon's tradition; spellcasting proficiency has no field in this schema."
+ },
+ {
+  "id": "cathartic-mage-dedication",
+  "grants": true,
+  "note": "Trained in spell attack rolls and spell DCs for the chosen tradition; spellcasting proficiency not representable here."
+ },
+ {
+  "id": "master-spotter",
+  "grants": true,
+  "perception": "master",
+  "note": "Unconditionally raises the character's Perception proficiency to master."
+ },
+ {
+  "id": "beast-gunner-dedication",
+  "grants": true,
+  "note": "Unconditionally trained in spell attack modifier and spell DC (spellcasting proficiency, no schema field); the beast-gun clause only remaps advanced firearms to martial for proficiency purposes and grants no rank."
+ },
+ {
+  "id": "blessing-of-the-sun-gods",
+  "grants": true,
+  "note": "Trained in divine spell attacks and spell DCs (Cha); spellcasting proficiency has no field in this schema."
+ },
+ {
+  "id": "soul-warden-dedication",
+  "grants": true,
+  "note": "Trained in divine spell attack rolls and spell DCs (Wis); spellcasting proficiency not representable in this schema."
+ },
+ {
+  "id": "divine-healing",
+  "grants": true,
+  "note": "Trained in divine spell attack rolls and spell DCs (Cha) for the Lay on Hands focus spell; spellcasting proficiency has no field here."
+ },
+ {
+  "id": "vigilant-benediction",
+  "grants": true,
+  "note": "Trained in spell attack modifiers and DCs is permanent (the once-per-day limit applies to the innate spell only); spellcasting proficiency not representable."
+ },
+ {
+  "id": "for-love-for-lightning",
+  "grants": true,
+  "note": "Trained in divine spell attacks and spell DCs when you gain the feat; spellcasting proficiency has no field in this schema."
+ },
+ {
+  "id": "molten-wit",
+  "grants": true,
+  "skillChoices": [
+   {
+    "rank": "trained",
+    "options": [
+     "deception",
+     "diplomacy"
+    ]
+   }
+  ],
+  "note": "Choose Deception or Diplomacy (trained); if already trained in both, the grant becomes a free skill of your choice instead - that fallback is not modelled."
+ },
+ {
+  "id": "vanara-weapon-familiarity",
+  "grants": true,
+  "note": "Unconditionally trained with bo staff, chakram, katar, panabas and urumi and shifts martial/advanced vanara weapons down one category - per-weapon grants and category remapping cannot be expressed with a category-only weapon field."
+ },
+ {
+  "id": "vishkanya-weapon-familiarity",
+  "grants": true,
+  "note": "Unconditionally trained with blowgun, fighting fan, kris, kukri and shuriken plus a category downshift for vishkanyan weapons - per-weapon grant, not representable as a weapon category."
+ },
+ {
+  "id": "first-frost",
+  "grants": true,
+  "note": "Trained in spell attack modifier and spell DC for the granted arcane spontaneous casting (Cha); spellcasting proficiency has no field in this schema."
+ },
+ {
+  "id": "gildedsoul",
+  "grants": true,
+  "skillChoices": [
+   {
+    "rank": "trained",
+    "options": [
+     "diplomacy",
+     "society"
+    ]
+   }
+  ],
+  "note": "Trained in your choice of Diplomacy or Society; the 'already trained in both -> any skill' fallback is not modelled."
+ },
+ {
+  "id": "hold-mark",
+  "grants": true,
+  "skillChoices": [
+   {
+    "rank": "trained",
+    "options": [
+     "diplomacy",
+     "survival",
+     "religion",
+     "intimidation"
+    ]
+   }
+  ],
+  "note": "Trained in the skill tied to the chosen hold emblem: Burning Sun/Diplomacy, Death's Head/Survival, Defiled Corpse/Religion, Empty Hand/Intimidation."
+ },
+ {
+  "id": "oatia-skysage-dedication",
+  "grants": true,
+  "skillChoices": [
+   {
+    "rank": "trained",
+    "options": [
+     "lore:astronomy",
+     "occultism"
+    ]
+   }
+  ],
+  "note": "Either/or with different ranks (Occultism branch is expert) - recorded at trained to avoid over-granting; occult spell attack/DC not representable; core.json already models this as effectChoices."
+ },
+ {
+  "id": "avenging-runelord-dedication",
+  "grants": true,
+  "skills": [
+   {
+    "skill": "arcana",
+    "rank": "trained"
+   }
+  ],
+  "rankUpgrade": [
+   {
+    "level": 14,
+    "rank": "expert"
+   },
+   {
+    "level": 16,
+    "rank": "master"
+   }
+  ],
+  "note": "If already trained in Arcana it is instead a free skill choice (generic fallback lane); polearm/spear weapon familiarity and mythic proficiency are not rank grants; the 16th-level sentence is garbled in source but clearly means master."
+ },
+ {
+  "id": "magical-knowledge",
+  "grants": true,
+  "skillChoices": [
+   {
+    "rank": "master",
+    "options": [
+     "arcana",
+     "nature",
+     "occultism",
+     "religion"
+    ]
+   },
+   {
+    "rank": "expert",
+    "options": [
+     "arcana",
+     "nature",
+     "occultism",
+     "religion"
+    ]
+   }
+  ],
+  "note": "Unconditional two-step increase (one expert to master, another trained to expert); the prerequisite line is the gate, not a condition on the grant."
+ },
+ {
+  "id": "resolute",
+  "grants": true,
+  "save": [
+   {
+    "save": "will",
+    "rank": "master"
+   }
+  ],
+  "note": "Thaumaturge archetype feat; 'expert in Will' is a feat prerequisite, the grant itself is unconditional."
+ },
+ {
+  "id": "master-spotter-investigator",
+  "grants": true,
+  "perception": "master",
+  "note": "Unconditional Perception increase; 'expert in Perception' is only the feat prerequisite."
+ }
+]
