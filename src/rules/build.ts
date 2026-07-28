@@ -693,8 +693,40 @@ function cap(s: string): string {
  * not a regex.
  */
 export function featChoiceLabel(raw: string): string {
+  // A raw Foundry compendium PATH ("Compendium.pf2e.classfeatures.Item.Blessed Armament") — the
+  // importer kept the reference instead of the referenced feature's name. Keep only the last
+  // segment, which IS the name. Affects Devout Blessing / Second Blessing / Manifold Modifications,
+  // whose dropdowns otherwise read as full dotted paths.
+  const compendium = /^Compendium\.[A-Za-z0-9-]+\.[A-Za-z0-9-]+\.Item\.(.+)$/.exec(raw);
+  if (compendium) return compendium[1];
+  // "Ability Str" / "Ability Dex" (the dedication attribute pickers) — expand to the real name.
+  const ability = /^Ability\s+(Str|Dex|Con|Int|Wis|Cha)$/i.exec(raw);
+  if (ability) return ABILITY_NAMES[ability[1].toLowerCase()] ?? raw;
   const s = raw.replace(/\s+(?:Label|Short)$/, '').replace(/^Saves\s+/, '');
   return s || raw;
+}
+
+const ABILITY_NAMES: Record<string, string> = {
+  str: 'Strength',
+  dex: 'Dexterity',
+  con: 'Constitution',
+  int: 'Intelligence',
+  wis: 'Wisdom',
+  cha: 'Charisma',
+};
+
+/**
+ * Heading for a feat's sub-choice card / picker.
+ *
+ * The importer failed to resolve Foundry's i18n key for 31 feats and stored the literal word
+ * "Prompt", so the builder showed a card headed "Prompt" with a button reading "Prompt…". Four
+ * dedications got a concatenated key, "Class DCAbility Score". Fall back to the same wording the
+ * other 28 feats already use rather than inventing a new one.
+ */
+export function featChoicePrompt(prompt: string | undefined): string {
+  if (!prompt || prompt === 'Prompt') return 'Choose an option';
+  if (prompt === 'Class DCAbility Score') return 'Ability score';
+  return prompt;
 }
 
 function slug(s: string): string {

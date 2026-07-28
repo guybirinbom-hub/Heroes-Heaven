@@ -15,6 +15,7 @@ import {
   checkPrerequisites,
   emptyBuild,
   featChoiceLabel,
+  featChoicePrompt,
   levelGrants,
   setupMissing,
 } from '../rules/build';
@@ -1154,10 +1155,10 @@ export function Builder({
                                     }))
                                   : def.options ?? [];
                               return (
-                                <SubCard icon="ti-adjustments" label={def.prompt}>
+                                <SubCard icon="ti-adjustments" label={featChoicePrompt(def.prompt)}>
                                   <PopupSelect
-                                    title={def.prompt}
-                                    placeholder={`${def.prompt}…`}
+                                    title={featChoicePrompt(def.prompt)}
+                                    placeholder={`${featChoicePrompt(def.prompt)}…`}
                                     value={build.featChoices[key] ?? ''}
                                     onChange={(v) => actions.setFeatChoice(key, v)}
                                     options={opts.map((o) => ({ value: o.value, label: featChoiceLabel(o.label), description: (o as { description?: string }).description }))}
@@ -1271,10 +1272,10 @@ export function Builder({
                                     ? ((build.deityId ? content.deities[build.deityId]?.domains : undefined) ?? []).map((d) => ({ value: d, label: cap(d) }))
                                     : gdef.options ?? [];
                                 return (
-                                  <SubCard key={`gfc-${gid}`} icon="ti-adjustments" label={`${content.feats[gid]!.name}: ${gdef.prompt}`}>
+                                  <SubCard key={`gfc-${gid}`} icon="ti-adjustments" label={`${content.feats[gid]!.name}: ${featChoicePrompt(gdef.prompt)}`}>
                                     <PopupSelect
-                                      title={gdef.prompt}
-                                      placeholder={`${gdef.prompt}…`}
+                                      title={featChoicePrompt(gdef.prompt)}
+                                      placeholder={`${featChoicePrompt(gdef.prompt)}…`}
                                       value={build.grantedFeatChoices?.[gid] ?? ''}
                                       onChange={(v) => actions.patch({ grantedFeatChoices: { ...(build.grantedFeatChoices ?? {}), [gid]: v } })}
                                       options={gopts.map((o) => ({ value: o.value, label: featChoiceLabel(o.label) }))}
