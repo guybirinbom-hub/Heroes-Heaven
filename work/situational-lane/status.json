@@ -1,0 +1,12 @@
+{
+ "classified": 3020,
+ "verifiedChunks": 22,
+ "expectedChunks": 76,
+ "VERIFICATION_INCOMPLETE": true,
+ "situational": 2355,
+ "notSituational": 665,
+ "bonuses": 3593,
+ "corrections": 98,
+ "escalate": 369,
+ "engineWork": 870
+}
