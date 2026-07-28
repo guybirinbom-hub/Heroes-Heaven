@@ -35,9 +35,13 @@ public/ast/*.json
 public/idmap.json
 # The importer's pristine Foundry transcription reference (~18 MB) — a LOCAL build reference, never shipped.
 public/core.foundry-backup.json
-# Initiative-tracker bestiary/stat-block data (~51 MB: creatures, hazards, spells, actions…). LOCAL for
-# now while the tracker's stat-block rendering is validated; not deployed until the tracker ships.
-public/data/
+# Initiative-tracker bestiary/stat-block data (~51 MB) is now TRACKED — do not re-ignore it. It has
+# to be in the repo for the WEB tracker to have a bestiary at all: Cloudflare Pages builds only from
+# the repo, so while it was ignored "Add Combatants" came up empty on the website. The installers were
+# never affected (a local `vite build` copies public/data → dist/data, which Tauri embeds), which is
+# why the gap only ever showed on the web. Size is fine: the largest single file is 4.2 MB (GitHub
+# warns at 50 MB, Cloudflare caps at 25 MB/file), and tracker/src/data/dataStore.ts fetches per-book
+# on demand, so a visitor downloads index.json (~1.6 MB) plus only the books they actually open.
 
 # Local audit/migration tooling & working-data (~19 MB reassessment/patch/chunk JSONs) — not needed for
 # build or runtime (the compiled overlay ships as scripts/data/effect-backfill.json). Keep only the two
