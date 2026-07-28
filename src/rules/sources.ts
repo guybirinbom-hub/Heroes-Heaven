@@ -64,11 +64,16 @@ const RULEBOOK_TITLES = new Set([...[...LEGACY_HARDCOVERS].map(stripBook), 'dark
 export function categoryOfBook(book: string): SourceCategory {
   if (CORE_BOOKS.includes(book)) return 'Core';
   const base = stripBook(book);
+  // Joke products, blogs and web supplements → the niche "Other" shelf. This MUST run BEFORE the
+  // Lost Omens test: a few of them are titled "Lost Omens: …" ("Pathfinder Lost Omens: Fools
+  // Aplenty" is an April Fools product; "…Divine Mysteries Web Supplement" is a web extra), so the
+  // /Lost Omens/ test used to shelve them as normal setting books — leaving joke feats (Wombat
+  // Style, Dad Joke) selectable even with niche sources turned off. The real "Lost Omens Divine
+  // Mysteries" hardcover does NOT match and stays a Lost Omens book.
+  if (/Blog|Web Supplement|Article|Fools Aplenty|April Fools|Special:|Fumbus|Comic/.test(book)) return 'Other';
   if (/Lost Omens/.test(book) || LOST_OMENS_TITLES.has(base)) return 'Lost Omens';
   // Rulebooks first, so the Advanced Player's Guide isn't swept up by the AP "Player's Guide" rule.
   if (LEGACY_HARDCOVERS.has(book) || RULEBOOK_TITLES.has(base) || /Bestiary|NPC Core|Monster Core 2|Beginner Box/.test(book)) return 'Rulebooks';
-  // Blogs and web specials → the niche "Other" shelf.
-  if (/Blog|Web Supplement|Article/.test(book)) return 'Other';
   if (
     /Pathfinder Society|Organized Play|One-Shot|\bPFS\b/.test(book) || // Society play folds in with Adventure Paths
     /Adventure Path/.test(book) || // the Adventure Path hardcover line
@@ -169,6 +174,9 @@ export interface SourceGroup {
 /** Which condensed bundle (if any) a niche "Other"-shelf book folds into — keeps that shelf to a
  *  couple of toggles (all Society play together, all blog/web posts together). null = its own entry. */
 function otherBundleLabel(book: string): string | null {
+  // The joke line ships under two titles ("Pathfinder Fools Aplenty" and "Pathfinder Lost Omens:
+  // Fools Aplenty") — one toggle for both.
+  if (/Fools Aplenty/.test(book)) return 'Fools Aplenty (April Fools)';
   if (/Blog|Web Supplement|Article/.test(book)) return 'Blogs & web articles';
   if (/Special:|Fumbus|Comic/.test(book)) return 'Specials & comics';
   return null;

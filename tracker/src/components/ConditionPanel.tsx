@@ -99,7 +99,9 @@ function ConditionBadge({ cond, combatantId }: { cond: AppliedCondition; combata
             onClick={() => updateConditionValue(combatantId, cond.id, Math.min(max, (cond.value ?? 1) + 1))}>+</button>
         </div>
       )}
-      {!meta?.autoDecrement && (
+      {/* Auto-decrementing conditions normally show no duration (the value IS the clock), but one
+       * pinned "until removed" still needs the ∞ so you can tell it won't tick down. */}
+      {(!meta?.autoDecrement || cond.isPermanent) && (
         <span style={{ color: 'var(--accent)', fontSize: 10, fontFamily: 'var(--font-mono)' }}>
           {cond.isPermanent ? '∞' : `${cond.duration ?? 0}r`}
         </span>
@@ -460,8 +462,20 @@ function AddConditionPopup({ combatant, anchorEl, onClose }: PopupProps) {
           )}
 
           {effectiveMeta?.autoDecrement ? (
-            <div style={{ color: 'var(--text-faded)', fontSize: 11, fontStyle: 'italic' }}>
-              Auto-decrements by 1 each turn
+            /* Auto-decrementing conditions (Frightened, Stunned) can ALSO be pinned "until removed"
+             * — e.g. a fear aura that keeps you Frightened 2 as long as you're near it. The store
+             * skips its per-turn tick while isPermanent is set. */
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+              <span style={{ color: 'var(--text-faded)', fontSize: 11, fontStyle: 'italic' }}>
+                {isPermanent
+                  ? 'Held at its current value until removed'
+                  : `Auto-decrements by ${effectiveMeta.decrementBy ?? 1} each turn`}
+              </span>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 5, cursor: 'pointer', marginLeft: 'auto' }}>
+                <input type="checkbox" checked={isPermanent} onChange={e => setIsPermanent(e.target.checked)}
+                  style={{ accentColor: 'var(--accent)' }} />
+                <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>until removed</span>
+              </label>
             </div>
           ) : (
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>

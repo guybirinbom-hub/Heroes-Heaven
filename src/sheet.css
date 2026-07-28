@@ -990,6 +990,14 @@ body {
   gap: 8px;
   font-size: 13px;
   font-weight: 500;
+  /* Absorb the bar's free space so everything after the brand (the page hamburger, the campaign
+   * tracker tools, the min/max/close group) packs against the RIGHT edge. Without this, `.chrome`'s
+   * `justify-content: space-between` spreads the children evenly — and on the INSTALLED desktop app
+   * WindowControls renders a real third child, which parked the hamburger in the middle of the bar.
+   * (On web WindowControls renders null, so two children happened to lay out correctly — which is
+   * why this only ever looked broken in the PC app.) Deliberately no `min-width: 0`: the campaign
+   * detail bar relies on this element's content-based minimum so the campaign title doesn't shrink. */
+  flex: 1 1 auto;
 }
 .chrome-brand i {
   color: var(--app-accent);
@@ -5043,6 +5051,10 @@ button.strike-name:hover {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+}
+/* Trash icon in the item-detail header (mirrors the footer Remove button, always reachable). */
+.sd-head-remove:hover {
+  color: var(--app-danger, #e5484d);
 }
 .sd-container-chips {
   display: flex;
@@ -9193,8 +9205,24 @@ button.strike-name:hover {
   cursor: pointer;
 }
 .fsel-clear:hover { color: var(--app-accent); border-color: var(--app-accent); }
-.fsel-fields { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 4px 12px 14px; }
-.fsel-sec { margin-top: 14px; }
+/* The filter panel is a FULL-WIDTH takeover of the ~900px picker, but this body kept the default
+ * block layout it had as a 360px sidebar — so every facet (Rarity, Category, Level…) claimed a whole
+ * row and a handful of short chips left most of the width empty. Flow the facets into as many
+ * columns as fit; it collapses to a single column on a narrow/phone panel by itself. */
+.fsel-fields {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 4px 12px 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 0 20px;
+  align-content: start;
+}
+/* The traits facet holds its own dense grid of many chips — give it the full width instead of
+ * squeezing it into one column. */
+.fsel-fields > .fsel-sec:has(.fsel-traitgrid) { grid-column: 1 / -1; }
+.fsel-sec { margin-top: 14px; min-width: 0; }
 .fsel-sec-label {
   display: flex;
   align-items: baseline;

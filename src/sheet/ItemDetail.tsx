@@ -174,6 +174,13 @@ export function ItemDetail({
   const editable = !!onEdit;
   // Applied Monster-Parts effects (refinement benefits + imbued property effects) for the readout.
   const applied = mpApplied(inv.monsterPart, item.itemType === 'weapon' ? item.damage.type : undefined, charLevel);
+  // Shared by the header trash icon and the footer "Remove item" button — one confirm, one path.
+  const removeItem = async () => {
+    if (!onPlay) return;
+    if (!(await confirmDialog({ title: `Remove ${item.name}?`, message: 'This removes the item (and any runes or attachments on it) from your inventory. You can undo with Ctrl+Z.', confirmLabel: 'Remove', danger: true }))) return;
+    onPlay((p) => removeInventoryItem(p, id));
+    onClose();
+  };
   const attached = inventory.filter((i) => i.attachedTo === inv.instanceId);
   // If THIS item is affixed to something, name the host so the card can show it.
   const host = inv.attachedTo ? inventory.find((i) => i.instanceId === inv.attachedTo) : undefined;
@@ -188,6 +195,15 @@ export function ItemDetail({
             <PinStar node={{ title: item.name, description: item.description, descRefs: item.descRefs, key: 'items' }} />
             {editable && (
               <i className="ti ti-pencil" style={{ cursor: 'pointer' }} title="Edit item" onClick={() => onEdit!(item, inv)} aria-label="Edit item" />
+            )}
+            {/* Delete lives in the ALWAYS-VISIBLE header as well as at the foot of the body. The
+             * footer button sits below the item's full, untruncated description inside a scrolling
+             * panel — on a phone that's a long scroll past, so it read as "there's no way to delete
+             * an item". Same confirm dialog either way. */}
+            {onPlay && (
+              <button className="picker-close sd-head-remove" onClick={removeItem} aria-label={`Remove ${item.name}`} title="Remove item">
+                <i className="ti ti-trash" aria-hidden="true" />
+              </button>
             )}
             <button className="picker-close" onClick={onClose} aria-label="Close">
               <i className="ti ti-x" aria-hidden="true" />
@@ -432,15 +448,7 @@ export function ItemDetail({
           <DescBody description={item.description} descRefs={item.descRefs} onExit={onClose} astKey="items" astId={item.id} />
           {onPlay && (
             <div className="sd-remove">
-              <button
-                className="sd-remove-btn"
-                aria-label="Remove item"
-                onClick={async () => {
-                  if (!(await confirmDialog({ title: `Remove ${item.name}?`, message: 'This removes the item (and any runes or attachments on it) from your inventory. You can undo with Ctrl+Z.', confirmLabel: 'Remove', danger: true }))) return;
-                  onPlay((p) => removeInventoryItem(p, id));
-                  onClose();
-                }}
-              >
+              <button className="sd-remove-btn" aria-label="Remove item" onClick={removeItem}>
                 <i className="ti ti-trash" aria-hidden="true" /> Remove item
               </button>
             </div>

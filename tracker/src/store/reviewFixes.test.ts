@@ -55,6 +55,43 @@ describe('combatStore review fixes', () => {
     expect(c.conditions.some(x => x.name.toLowerCase() === 'unconscious')).toBe(false)
   })
 
+  it('"until removed" pins an auto-decrementing condition (Frightened) across turns', () => {
+    add('A'); add('B')
+    const cs = useCombatStore.getState()
+    useCombatStore.setState({
+      combatants: cs.combatants.map((c, i) => ({
+        ...c,
+        conditions: [{
+          id: `f${i}`, name: 'frightened', value: 2,
+          // A is pinned "until removed"; B is a normal Frightened 2 that should tick down.
+          isPermanent: i === 0,
+        }],
+      })) as AnyCombatant[],
+      activeIndex: 0, inCombat: true,
+    } as never)
+    useCombatStore.getState().nextTurn() // ends A's turn -> end-of-turn tick
+    const [a, b] = useCombatStore.getState().combatants
+    expect(a.conditions[0]?.value).toBe(2)     // pinned: unchanged
+    expect(b.conditions[0]?.value).toBe(2)     // B hasn't ended a turn yet
+    useCombatStore.getState().nextTurn()       // ends B's turn
+    const after = useCombatStore.getState().combatants
+    expect(after[0].conditions[0]?.value).toBe(2) // still pinned
+    expect(after[1].conditions[0]?.value).toBe(1) // normal one decremented
+  })
+
+  it('a pinned auto-decrementing condition is never auto-removed at value 0', () => {
+    add('A')
+    const cs = useCombatStore.getState()
+    useCombatStore.setState({
+      combatants: cs.combatants.map(c => ({
+        ...c, conditions: [{ id: 'f1', name: 'frightened', value: 0, isPermanent: true }],
+      })) as AnyCombatant[],
+      activeIndex: 0, inCombat: true,
+    } as never)
+    useCombatStore.getState().nextTurn()
+    expect(useCombatStore.getState().combatants[0].conditions).toHaveLength(1)
+  })
+
   it('#3 an add after Undo clears Redo (no stale-snapshot replay)', () => {
     add('A'); add('B')
     const bId = useCombatStore.getState().combatants[1].id

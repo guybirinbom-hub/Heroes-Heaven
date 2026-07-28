@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { content } from './_content';
 import { applySources, collectChosenIds, emptyBuild } from '../src/rules/build';
-import { CORE_BOOKS, sourceCatalog, enabledBookSet, categoryOfBook } from '../src/rules/sources';
+import { CORE_BOOKS, sourceCatalog, enabledBookSet, categoryOfBook, NICHE_CATEGORIES } from '../src/rules/sources';
 
 const db = content();
 
@@ -68,6 +68,26 @@ describe('source catalog', () => {
     expect(other.entries.every((e) => e.label !== 'Pathfinder Society')).toBe(true);
     // no Lost Omens setting book leaked into the "Other" shelf
     expect(other.entries.every((e) => !/Tian Xia|Ancestry Guide|Character Guide|Mwangi/.test(e.label))).toBe(true);
+  });
+
+  it('shelves joke/web-supplement books as niche even when titled "Lost Omens: …"', () => {
+    // Regression: the /Lost Omens/ test used to run FIRST, so the April Fools product and the web
+    // supplement shelved as normal Lost Omens setting books — their joke feats (Wombat Style, Dad
+    // Joke) stayed selectable with niche sources turned off.
+    expect(categoryOfBook('Pathfinder Lost Omens: Fools Aplenty')).toBe('Other');
+    expect(categoryOfBook('Pathfinder Fools Aplenty')).toBe('Other');
+    expect(categoryOfBook('Pathfinder Lost Omens Divine Mysteries Web Supplement')).toBe('Other');
+    expect(categoryOfBook('Pathfinder Special: Fumbus!')).toBe('Other');
+    // …while the real hardcovers with similar names are untouched.
+    expect(categoryOfBook('Pathfinder Lost Omens Divine Mysteries')).toBe('Lost Omens');
+    expect(categoryOfBook('Pathfinder Lost Omens Character Guide')).toBe('Lost Omens');
+    // "Other" is the only niche category, so these are hidden unless niche sources are shown.
+    expect(NICHE_CATEGORIES.has('Other')).toBe(true);
+    // Both Fools Aplenty titles collapse into ONE toggle rather than two stray rows.
+    const other = sourceCatalog(db).groups.find((g) => g.category === 'Other')!;
+    const fools = other.entries.filter((e) => /Fools Aplenty/.test(e.label));
+    expect(fools).toHaveLength(1);
+    expect(fools[0].books.length).toBeGreaterThanOrEqual(2);
   });
 });
 

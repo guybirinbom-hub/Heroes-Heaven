@@ -77,14 +77,16 @@ function tickConditionsAtStart(c: Combatant | undefined | null) {
   c.conditions = c.conditions
     .map(cc => {
       const m = CONDITION_META[cc.name.toLowerCase()]
-      if (m?.autoDecrement && m.tickAtStart && cc.value !== undefined && cc.value > 0) {
+      // `isPermanent` ("until removed") pins the value: an auto-decrementing condition set this way
+      // stays at its current value until someone clears it by hand.
+      if (m?.autoDecrement && m.tickAtStart && !cc.isPermanent && cc.value !== undefined && cc.value > 0) {
         return { ...cc, value: Math.max(0, cc.value - (m.decrementBy ?? 1)) }
       }
       return cc
     })
     .filter(cc => {
       const m = CONDITION_META[cc.name.toLowerCase()]
-      return !(m?.autoDecrement && m.tickAtStart && (cc.value ?? 1) <= 0)
+      return !(m?.autoDecrement && m.tickAtStart && !cc.isPermanent && (cc.value ?? 1) <= 0)
     })
 }
 
@@ -483,7 +485,8 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
             // END-of-turn auto-decrement (e.g. Frightened −1). Conditions consumed
             // at the START of a turn (Stunned) are handled below, when the next
             // creature's turn begins, so they're skipped here.
-            if (meta?.autoDecrement && !meta.tickAtStart && c.value !== undefined && c.value > 0) {
+            // `isPermanent` ("until removed") pins the value — see tickConditionsAtStart.
+            if (meta?.autoDecrement && !meta.tickAtStart && !c.isPermanent && c.value !== undefined && c.value > 0) {
               return { ...c, value: Math.max(0, c.value - (meta.decrementBy ?? 1)) }
             }
             // Normal timed conditions tick duration
@@ -494,7 +497,7 @@ export const useCombatStore = create<CombatStore>()(immer((set, get) => ({
           })
           .filter(c => {
             const meta = CONDITION_META[c.name.toLowerCase()]
-            if (meta?.autoDecrement && !meta.tickAtStart && (c.value ?? 1) <= 0) return false
+            if (meta?.autoDecrement && !meta.tickAtStart && !c.isPermanent && (c.value ?? 1) <= 0) return false
             if (!c.isPermanent && c.duration !== undefined && c.duration <= 0) return false
             return true
           })
