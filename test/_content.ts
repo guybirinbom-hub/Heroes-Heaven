@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { seedContent } from '../src/rules/seed';
 import { buildCharacter, emptyBuild, type BuildState } from '../src/rules/build';
 import type { Character, ContentDatabase } from '../src/rules/types';
+import { findDuplicateIds } from '../src/data';
 
 /**
  * Load the imported game data (public/core.json) merged with the seed, exactly as
@@ -19,6 +20,9 @@ export function content(): ContentDatabase {
     merged[k] = { ...((seedContent as Record<string, Record<string, unknown>>)[k] ?? {}), ...(core[k] ?? {}) };
   }
   cached = merged as ContentDatabase;
+  // Same duplicate-scrape suppression the app computes in mergeWithSeed, using the SAME function, so
+  // tests see the lists the user actually sees.
+  cached.duplicateIds = findDuplicateIds(cached);
   return cached;
 }
 

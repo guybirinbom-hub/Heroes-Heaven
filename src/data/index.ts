@@ -22,6 +22,56 @@ function merge<T>(base: Record<string, T>, over: Record<string, T>): Record<stri
  *  the data file, so the exclusion survives every core.json regeneration. */
 export const EXCLUDED_FEATS = new Set(['arcane-tattoos', 'hag-magic']);
 
+/** Collections where an `aon-`-prefixed scrape can shadow an existing record of the same name. */
+const DEDUPE_MAPS = ['items', 'feats', 'spells', 'actions', 'vehicles'] as const;
+const dedupeKey = (name: string) => name.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+/**
+ * Ids of `aon-`-prefixed records that DUPLICATE a canonical record of the same name in the same
+ * collection. An earlier scrape re-added content the app already had under a different id, so
+ * pickers list many entries twice (408 item pairs, 100 actions, 81 feats, 91 Kingmaker rows…).
+ *
+ * These are HIDDEN FROM LISTS rather than deleted from the database. Deleting them would orphan any
+ * saved character that already picked one (characters store raw ids — feats[].featId,
+ * inventory[].itemId, spell slots…), and 149 other `aon-` records are the ONLY copy of their content
+ * (72 animal companions, 37 vehicles, 14 conditions) so a blanket prefix rule would destroy real
+ * data. Collision-only + hide-don't-delete keeps every existing reference resolvable.
+ */
+export function findDuplicateIds(db: ContentDatabase): Set<string> {
+  const dupes = new Set<string>();
+  for (const mapName of DEDUPE_MAPS) {
+    const map = db[mapName] as unknown as Record<string, { name?: string }> | undefined;
+    if (!map) continue;
+    const canonical = new Set<string>();
+    for (const [id, rec] of Object.entries(map)) {
+      if (!rec?.name || id.startsWith('aon-')) continue;
+      canonical.add(dedupeKey(rec.name));
+    }
+    for (const [id, rec] of Object.entries(map)) {
+      // Only an `aon-` record that COLLIDES with a canonical twin is a duplicate; an `aon-` record
+      // that is the sole copy of its content stays visible.
+      if (id.startsWith('aon-') && rec?.name && canonical.has(dedupeKey(rec.name))) dupes.add(id);
+    }
+  }
+  return dupes;
+}
+
+/** True if `id` is a duplicate scrape that should be omitted from user-facing lists. */
+export function isDuplicateId(content: ContentDatabase, id: string): boolean {
+  return !!content.duplicateIds?.has(id);
+}
+
+/** `Object.values(map)` minus duplicate scrapes — use this for ANY list the user reads or picks
+ *  from, so the same entry never appears twice. Direct `content.x[id]` lookups are untouched, so a
+ *  character that already references a duplicate still resolves it. */
+export function listValues<T>(content: ContentDatabase, map: Record<string, T>): T[] {
+  const dupes = content.duplicateIds;
+  if (!dupes?.size) return Object.values(map);
+  const out: T[] = [];
+  for (const id in map) if (!dupes.has(id)) out.push(map[id]);
+  return out;
+}
+
 function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
   const c = core as ContentDatabase;
   // Seed → Core → user homebrew, so homebrew entries resolve everywhere core content does.
@@ -70,6 +120,9 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
   const extra = db as unknown as Record<string, unknown>;
   const coreRec = c as unknown as Record<string, unknown>;
   for (const k in coreRec) if (!(k in db)) extra[k] = coreRec[k];
+  // Computed last, so it sees seed + core + homebrew (homebrew never uses the `aon-` prefix, but a
+  // homebrew entry CAN be the canonical twin that unmasks a duplicate).
+  db.duplicateIds = findDuplicateIds(db);
   return db;
 }
 

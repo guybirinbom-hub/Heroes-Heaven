@@ -1,4 +1,5 @@
 import { useMemo, useState, type ReactNode } from 'react';
+import { listValues } from '../data';
 import type { ActionCost, Character, ContentDatabase, DescRef, PinnedDesc, ProficiencyKey } from '../rules/types';
 import { ABILITIES, SKILLS } from '../rules/types';
 import {
@@ -257,7 +258,7 @@ export function MainTab({
     return plain.length > 170 ? plain.slice(0, 168).replace(/\s+\S*$/, '') + '…' : plain;
   };
   const campingActs: Act[] = character.kingmakerEnabled
-    ? Object.values(content.actions)
+    ? listValues(content, content.actions)
         .filter((a) => (a.traits ?? []).includes('camping'))
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((a) => ({ name: a.name, desc: campingSummary(a.description), traits: a.traits, fullDesc: a.description, fullRefs: a.descRefs }))

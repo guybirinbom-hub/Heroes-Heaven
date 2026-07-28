@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { listValues } from '../data';
 import './builder.css';
 import {
   attributeBoostCount,
@@ -249,7 +250,7 @@ export function Builder({
   type Sp = (typeof content.spells)[string];
   const spellIndex = useMemo(() => {
     const byRank: Record<string, Record<number, Sp[]>> = {};
-    for (const s of Object.values(content.spells)) {
+    for (const s of listValues(content, content.spells)) {
       for (const t of s.traditions) {
         const m = (byRank[t] ??= {});
         (m[s.rank] ??= []).push(s);
@@ -305,7 +306,7 @@ export function Builder({
   // Level-1 wizard class feats — the option list for the School of Unified Magical Theory bonus feat.
   const umtFeatOpts = useMemo(
     () =>
-      Object.values(content.feats)
+      listValues(content, content.feats)
         .filter((f) => f.category === 'class' && f.level <= 1 && (f.traits ?? []).includes('wizard'))
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((f) => ({ value: f.id, label: f.name, description: f.description })),
@@ -315,7 +316,7 @@ export function Builder({
   // Skill feats — option list for a dedication's bonus skill feat (Rogue Dedication).
   const skillFeatOpts = useMemo(
     () =>
-      Object.values(content.feats)
+      listValues(content, content.feats)
         .filter((f) => f.category === 'skill')
         .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
         .map((f) => ({ value: f.id, label: f.name, description: f.description })),
@@ -1582,7 +1583,7 @@ export function Builder({
             resultsFooter={(query, openDesc) => {
               const hidden = findHiddenFeatMatches({
                 query,
-                allFeats: Object.values(ovContent.feats),
+                allFeats: listValues(ovContent, ovContent.feats),
                 shownIds,
                 slotEligibleIds,
                 enabledBooks,

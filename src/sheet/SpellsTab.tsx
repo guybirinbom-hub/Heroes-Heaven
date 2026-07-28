@@ -1,4 +1,5 @@
 import { useMemo, useState, type ReactNode } from 'react';
+import { listValues } from '../data';
 import type { ActionCost, Character, ContentDatabase, Spell, SpellcastingEntry } from '../rules/types';
 import { deriveSpellcasting, deriveClassDc, formatMod } from '../rules/derive';
 import {
@@ -234,7 +235,7 @@ function ManageSpellsModal({
   const traditionSpellsByRank = useMemo(() => {
     const byRank: Record<number, Spell[]> = {};
     const hideLegacy = character.hideLegacy;
-    for (const s of Object.values(content.spells)) {
+    for (const s of listValues(content, content.spells)) {
       const e = (s as { edition?: string }).edition;
       if (e === 'superseded') continue; // renamed/outdated half of a remaster change — always hidden
       if (hideLegacy && (e === 'legacy' || e === 'legacy-era')) continue; // per-character Hide legacy data

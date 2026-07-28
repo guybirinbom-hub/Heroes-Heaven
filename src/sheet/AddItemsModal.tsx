@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { listValues } from '../data';
 import type { Coins, ContentDatabase, Item } from '../rules/types';
 import { canAfford } from '../rules/play';
 import { formatPrice, parsePrice } from '../rules/wealth';
@@ -110,7 +111,7 @@ export function AddItemsModal({
           ),
         ]
       : [];
-    const items = Object.values(content.items).filter((i) => {
+    const items = listValues(content, content.items).filter((i) => {
       const e = (i as { edition?: string }).edition;
       if (e === 'superseded') return false; // renamed/outdated half of a remaster change — always hidden
       if (hideLegacy && (e === 'legacy' || e === 'legacy-era')) return false;

@@ -1293,6 +1293,10 @@ export interface ContentDatabase {
   stances: Record<string, StanceDef>;
   /** Etchable runes (potency/striking/resilient/reinforcing + property runes), keyed by id. */
   runes: Record<string, RuneDef>;
+  /** Ids of `aon-` scrape records that duplicate a canonical record of the same name. They stay in
+   *  the database (so a saved character that already picked one still resolves) but are omitted from
+   *  user-facing LISTS. Computed at load time — see findDuplicateIds in src/data/index.ts. */
+  duplicateIds?: Set<string>;
 }
 
 /** An etchable rune (a weapon/armor/shield enhancement). */

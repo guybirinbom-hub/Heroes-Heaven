@@ -39,6 +39,9 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
   const granted = resolveBackground(build, content)?.grantedFeatId;
   if (granted) taken.set(granted, (taken.get(granted) ?? 0) + 1);
   return Object.values(content.feats).filter((f) => {
+    // Skip `aon-` scrapes that duplicate a canonical feat of the same name — they would offer the
+    // SAME feat twice in one picker. They stay in the db, so a feat already picked still resolves.
+    if (content.duplicateIds?.has(f.id)) return false;
     if (f.level > p.level) return false;
     if ((taken.get(f.id) ?? 0) >= maxTakes(f)) return false;
     // Free Archetype slot: any archetype feat (these are stored as class-category feats carrying the

@@ -5,6 +5,7 @@
  * (actions with the `camping` trait, the kingdom-turn downtime actions, and `kingdom`-trait feats).
  */
 import { useMemo, useState, type ReactNode } from 'react';
+import { listValues } from '../data';
 import type { ContentDatabase, DescRef, Feat, Action } from '../rules/types';
 import { useIsMobile } from './useIsMobile';
 import { useBackHandler } from './useEscapeClose';
@@ -33,7 +34,7 @@ const ARMY_TRAITS = ['army', 'cavalry', 'infantry', 'skirmisher', 'siege', 'mane
 
 /** The camping activities (camping-trait actions) — the daily-preparation options during travel. */
 export function campingActivities(content: ContentDatabase): Action[] {
-  return Object.values(content.actions)
+  return listValues(content, content.actions)
     .filter((a) => (a.traits ?? []).includes('camping'))
     .sort((a, b) => a.name.localeCompare(b.name));
 }
@@ -42,7 +43,7 @@ export function campingActivities(content: ContentDatabase): Action[] {
  *  excluding camping (its own section) and army/warfare actions (out of scope for this app). */
 export function kingdomActivities(content: ContentDatabase): Action[] {
   const KINGDOM_TRAITS = ['downtime', 'leadership', 'region', 'civic', 'commerce', 'upkeep'];
-  return Object.values(content.actions)
+  return listValues(content, content.actions)
     .filter(
       (a) =>
         /kingmaker/i.test(a.source?.book ?? '') &&
