@@ -1,0 +1,387 @@
+[
+ {
+  "id": "wondrous-figurine",
+  "collection": "items",
+  "name": "Wondrous Figurine",
+  "level": 2,
+  "text": "The dog has a +4 circumstance bonus to Survival checks to Track, and it has darkvision. When the dog senses a hidden creature with its scent, that creature is instead observed and concealed. The bear remains balanced upon its rubber ball, and is therefore ungainly: it cannot Climb or Swim, has a –10- foot circumstance penalty to its Speed, and is always flat-footed."
+ },
+ {
+  "id": "wondrous-figurine-onyx-dog",
+  "collection": "items",
+  "name": "Wondrous Figurine (Onyx Dog)",
+  "level": 2,
+  "text": "The dog has a +4 circumstance bonus to Survival checks to Track, and it has darkvision. When the dog senses a hidden creature with its scent, that creature is instead observed and concealed."
+ },
+ {
+  "id": "aeon-stone-pearly-white-spindle",
+  "collection": "items",
+  "name": "Aeon Stone (Pearly White Spindle)",
+  "level": 3,
+  "text": "The resonant power grants you resistance 1 to void damage."
+ },
+ {
+  "id": "belt-of-the-five-kings",
+  "collection": "items",
+  "name": "Belt of the Five Kings",
+  "level": 9,
+  "text": "The belt also grants you darkvision and the ability to understand, speak, and write the Dwarven language. **Activate** ⟨1⟩ Interact **Frequency** once per day **Requirements** You are a dwarf --- **Effect** You tighten the belt one notch to gain temporary Hit Points equal to your level and grant allies within 20 feet of you darkvision."
+ },
+ {
+  "id": "robe-of-the-archmagi",
+  "collection": "items",
+  "name": "Robe of the Archmagi",
+  "level": 15,
+  "text": "The robes are *+2 greater resilient explorer's clothing*, and they grant a +1 circumstance bonus to saving throws against arcane spells and resistance 5 to damage from arcane spells."
+ },
+ {
+  "id": "elemental-wayfinder-fire",
+  "collection": "items",
+  "name": "Elemental Wayfinder (Fire)",
+  "level": 9,
+  "text": "--- Additionally, you gain resistance 5 to fire."
+ },
+ {
+  "id": "energy-mutagen",
+  "collection": "items",
+  "name": "Energy Mutagen",
+  "level": 1,
+  "text": "Benefit You gain resistance to the attuned energy type. Drawback You gain weakness 5 to the other three energy types. 56 Price 4 gp Bulk L You gain resistance 5, add 1 damage on a hit with a melee weapon, and the duration is 1 minute. 56 Price 12 gp Bulk L You gain resistance 10, add 1d4 damage on a hit with a melee weapon, and the duration is 10 minutes. 56 Price 300 gp Bulk L You gain resistance 15, add 1d6 damage on a hit with a melee weapon, and the duration is 1 hour. 56 Price 3,000 gp Bulk L You gain resistance 20, add 2d6 damage on a hit with a me"
+ },
+ {
+  "id": "stone-body-mutagen",
+  "collection": "items",
+  "name": "Stone Body Mutagen",
+  "level": 5,
+  "text": "Benefit You gain resistance to physical damage (except bludgeoning) equal to the listed amount. Drawback Your Speeds are reduced by 10 feet (to a minimum of 5 feet) and you take a –2 penalty to Reflex saves. 56 Price 22 gp Bulk L You gain resistance 5 to physical damage (except bludgeoning) and the duration is 10 minutes. 56 Price 300 gp Bulk L You gain resistance 5 to physical damage (except bludgeoning) and the duration is 1 hour. 56 Price 920 gp Bulk L You gain resistance 10 to physical damage (except bludgeoning) and the duration is 1 hour."
+ },
+ {
+  "id": "dragons-eye-charm",
+  "collection": "items",
+  "name": "Dragon's Eye Charm",
+  "level": 7,
+  "text": "You can look through the charm to gain Darkvision for as long as you Sustain the Activation, to a maximum of 10 minutes. You gain fire resistance 5 for 10 minutes."
+ },
+ {
+  "id": "eclipse",
+  "collection": "items",
+  "name": "Eclipse",
+  "level": 8,
+  "text": "Whenever you score a critical hit with Eclipse, the target creature's eyes are plunged into darkness; if that creature doesn't have darkvision, it is blinded for 1 round."
+ },
+ {
+  "id": "dragonscale-amulet",
+  "collection": "items",
+  "name": "Dragonscale Amulet",
+  "level": 15,
+  "text": "You gain resistance 5 to acid, cold, electricity, fire, and poison. If you take damage of one of these types from a dragon's Breath Weapon, the amulet begins to glow brightly; for the next 10 minutes, your resistance against that type of damage increases to 20."
+ },
+ {
+  "id": "orb-of-dragonkind",
+  "collection": "items",
+  "name": "Orb of Dragonkind",
+  "level": 25,
+  "text": "While holding an *orb of dragonkind*, you are immune to the breath weapon of the dragon variety associated with the orb. An *orb of dragonkind* also grants a number of additional senses. The dragon is then temporarily immune to further domination via the orb for 24 hours."
+ },
+ {
+  "id": "dagger-of-eternal-sleep",
+  "collection": "items",
+  "name": "Dagger of Eternal Sleep",
+  "level": 5,
+  "text": "The damage from the Strike and the bleed from the critical specialization effect do not awaken the target, though the target becomes temporarily immune to this effect until the next time it wakes up, meaning further daggers of eternal sleep awaken it as normal."
+ },
+ {
+  "id": "axe-of-the-dwarven-lords",
+  "collection": "items",
+  "name": "Axe of the Dwarven Lords",
+  "level": 26,
+  "text": "If you are a dwarf, you gain greater darkvision while holding the axe."
+ },
+ {
+  "id": "horns-of-naraga",
+  "collection": "items",
+  "name": "Horns of Naraga",
+  "level": 26,
+  "text": "While wearing the *Horns of Naraga*, you gain greater darkvision and immunity to acid. If you are undead, you gain resistance 40 to vitality damage."
+ },
+ {
+  "id": "noxious-jerkin",
+  "collection": "items",
+  "name": "Noxious Jerkin",
+  "level": 13,
+  "text": "This +2 resilient padded armor is woven from many strands of gut cord strung with dried organs and preserved xulgath scent glands. Creatures with a stench aura, such as otyughs and xulgaths, are immune to this effect. **Success** The creature is unaffected and is immune to the effects of the noxious jerkin for 1 minute."
+ },
+ {
+  "id": "stoneraiser-javelin",
+  "collection": "items",
+  "name": "Stoneraiser Javelin",
+  "level": 11,
+  "text": "It's immune to critical hits and precision damage."
+ },
+ {
+  "id": "staff-of-the-black-desert",
+  "collection": "items",
+  "name": "Staff of the Black Desert",
+  "level": 12,
+  "text": "- **Cantrip** Know the Way - **1st** Create Water Cleanse Cuisine Phantasmal Minion - **2nd** Darkvision Environmental Endurance - **3rd** Earthbind Cleanse Affliction Wanderer's Guide - **4th** Air Walk Mirage Rope Trick - **5th** Pillars of Sand Illusory Disguise --- **Craft Requirements** Supply one casting of all listed levels of all listed spells."
+ },
+ {
+  "id": "staff-of-the-black-desert-greater",
+  "collection": "items",
+  "name": "Staff of the Black Desert (Greater)",
+  "level": 16,
+  "text": "- **Cantrip** Know the Way - **1st** Create Water Cleanse Cuisine Phantasmal Minion - **2nd** Darkvision Environmental Endurance - **3rd** Earthbind Cleanse Affliction Wanderer's Guide - **4th** Air Walk Mirage Rope Trick - **5th** Pillars of Sand Illusory Disguise - **6th** Purple Worm Sting Summon Entity - **7th** Blightburn Blast Control Sand Unfettered Pack --- **Craft Requirements** Supply one casting of all listed levels of all listed spells."
+ },
+ {
+  "id": "ambrosia-of-undying-hope",
+  "collection": "items",
+  "name": "Ambrosia of Undying Hope",
+  "level": 19,
+  "text": "The next time you would die from damage within 8 hours after you drink the ambrosia, it prevents you from dying, you regain 20 Hit Points, the elixir's benefits end, and you become temporarily immune to the ambrosia of undying hope for 24 hours."
+ },
+ {
+  "id": "olfactory-obfuscator",
+  "collection": "items",
+  "name": "Olfactory Obfuscator",
+  "level": 3,
+  "text": "For the listed duration after drinking this elixir, your scent is nearly unnoticeable. Creatures with imprecise scent don't detect you with that sense unless they Seek for you, and you are concealed from creatures that perceive you with precise scent. You gain a +4 item bonus against attempts to Seek you by creatures using only scent-based senses; if they use any other senses as well, the bonus doesn't apply."
+ },
+ {
+  "id": "olfactory-obfuscator-greater",
+  "collection": "items",
+  "name": "Olfactory Obfuscator (Greater)",
+  "level": 10,
+  "text": "For 8 hours after drinking this elixir, your scent is nearly unnoticeable. Creatures with imprecise scent don't detect you with that sense unless they Seek for you, and you are concealed from creatures that perceive you with precise scent. You gain a +4 item bonus against attempts to Seek you by creatures using only scent-based senses; if they use any other senses as well, the bonus doesn't apply."
+ },
+ {
+  "id": "bloodhound-mask",
+  "collection": "items",
+  "name": "Bloodhound Mask",
+  "level": 2,
+  "text": "Once activated, the mask sharpens odors, giving you imprecise scent with the listed range. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if you're untrained, and the mask grants you the listed item bonus to your Survival check. The GM sets the Survival DC based on the area's ability to hold scent rather than on visual clues, as normal for using scent."
+ },
+ {
+  "id": "bloodhound-mask-lesser",
+  "collection": "items",
+  "name": "Bloodhound Mask (Lesser)",
+  "level": 2,
+  "text": "Once activated, the mask sharpens odors, giving you imprecise scent with a 15 foot range. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if you're untrained, and the mask grants you a +1 item bonus to your Survival check. The GM sets the Survival DC based on the area's ability to hold scent rather than on visual clues, as normal for using scent."
+ },
+ {
+  "id": "bloodhound-mask-moderate",
+  "collection": "items",
+  "name": "Bloodhound Mask (Moderate)",
+  "level": 6,
+  "text": "Once activated, the mask sharpens odors, giving you imprecise scent a 30 foot range. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if you're untrained, and the mask grants you a +2 item bonus to your Survival check. The GM sets the Survival DC based on the area's ability to hold scent rather than on visual clues, as normal for using scent."
+ },
+ {
+  "id": "bloodhound-mask-greater",
+  "collection": "items",
+  "name": "Bloodhound Mask (Greater)",
+  "level": 11,
+  "text": "Once activated, the mask sharpens odors, giving you imprecise scent with a 60 foot range. When you use Survival to Track a creature by its scent, your proficiency bonus is equal to your level even if you're untrained, and the mask grants you a +3 item bonus to your Survival check. The GM sets the Survival DC based on the area's ability to hold scent rather than on visual clues, as normal for using scent."
+ },
+ {
+  "id": "victory-plate",
+  "collection": "items",
+  "name": "Victory Plate",
+  "level": 9,
+  "text": "That creature vanishes from the tabard, and for 1 minute, you gain resistance 5 to a damage type based on the creature's trait (you gain resistance to only one type, even if the creature has more than one trait that could apply): - **Aberration or Fey** mental - **Celestial** good - **Construct** poison - **Dragon or Elemental** one energy type that matches one of the dragon's or elemental's traits - **Fiend** evil - **Ooze** precision, and the resistance is 10 - **Undead** void"
+ },
+ {
+  "id": "fiendish-teleportation",
+  "collection": "items",
+  "name": "Fiendish Teleportation",
+  "level": 11,
+  "text": "You cast dimension *door.* The space you leave and the one you appear in are filled with the scent of brimstone, dealing 2d6 spirit damage to creatures adjacent to both spaces."
+ },
+ {
+  "id": "vaccine",
+  "collection": "items",
+  "name": "Vaccine",
+  "level": 1,
+  "text": "71 Usage held in 1 hand Bulk L Activate (manipulate) A vaccine grants a creature immunity to a specific strain of disease of a level equal to or less than the vaccine’s level, and a +2 item bonus on all saving throws against other strains of the same disease. For example, a vaccine could grant immunity to putrid plague inflicted by harpies but would only grant a +2 bonus against putrid plague inflicted by a giant rat."
+ },
+ {
+  "id": "wand-of-noisome-acid",
+  "collection": "items",
+  "name": "Wand of Noisome Acid",
+  "level": 6,
+  "text": "61 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in hand."
+ },
+ {
+  "id": "wand-of-noisome-acid-2nd-level-spell",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (2nd-Level Spell)",
+  "level": 6,
+  "text": "141 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in a hand."
+ },
+ {
+  "id": "wand-of-noisome-acid-4th-level-spell",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (4th-Level Spell)",
+  "level": 10,
+  "text": "141 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in a hand."
+ },
+ {
+  "id": "wand-of-noisome-acid-6th-level-spell",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (6th-Level Spell)",
+  "level": 14,
+  "text": "141 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in a hand."
+ },
+ {
+  "id": "wand-of-noisome-acid-8th-level-spell",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (8th-Level Spell)",
+  "level": 18,
+  "text": "141 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in a hand."
+ },
+ {
+  "id": "corpseward-pendant",
+  "collection": "items",
+  "name": "Corpseward Pendant",
+  "level": 5,
+  "text": "Undead can't see, hear, or smell you, or detect you with sensory capabilities such as tremorsense. An undead creature who observes you in this manner or one who succeeds at the Will save is immune to the *corpseward pendant* for 24 hours."
+ },
+ {
+  "id": "grolna",
+  "collection": "items",
+  "name": "Grolna",
+  "level": 1,
+  "text": "**Activate** ⟨1⟩ Interact --- This caligni-made, murky-green drug supercharges a creature's olfactory senses at the expense of dulling their mind. Popular throughout the Darklands for its ability to transform normally dull scents and flavors into intense, euphoric experiences, grolna can also be a great aid to trackers who want to follow scent trails, turning ordinary humanoids into effective bloodhounds. --- **Saving Throw** **Onset** 1 minute **Maximum Duration** 8 hours **Stage 1** gain scent (imprecise) 30 feet, gain a +3 item bonus to Survival check"
+ },
+ {
+  "id": "knockout-dram",
+  "collection": "items",
+  "name": "Knockout Dram",
+  "level": 7,
+  "text": "This soporific chemical comes in liquid form and is virtually undetectable by taste or scent."
+ },
+ {
+  "id": "numerian-steel-breastplate",
+  "collection": "items",
+  "name": "Numerian Steel Breastplate",
+  "level": 10,
+  "text": "It protects the wearer from harsh elements and common laser fire, granting the wearer fire resistance 5."
+ },
+ {
+  "id": "deafening-music-box",
+  "collection": "items",
+  "name": "Deafening Music Box",
+  "level": 8,
+  "text": "On a critical success, a creature need not make any more saves and is temporarily immune to the *deafening music box* for the next 24 hours; on a success, the creature must attempt a new save each round it remains within 60 feet of the music box."
+ },
+ {
+  "id": "diviners-nose-chain",
+  "collection": "items",
+  "name": "Diviner's Nose Chain",
+  "level": 9,
+  "text": "The diviner's nose chain is worn by attaching piercings to the ear and nose, creating a connection between the senses of hearing and smell. The diviner's nose chain grants you scent out to 30 feet as an imprecise sense, and a +1 item bonus to checks to Seek or Sense Motive."
+ },
+ {
+  "id": "radiant-spark",
+  "collection": "items",
+  "name": "Radiant Spark",
+  "level": 25,
+  "text": "--- **Activate** ⟨5⟩ envision, Interact **Trigger** The target critically fails their save against the Radiant Spark's dominate spell or you critically succeed at binding the target with the planar binding ritual using the artifact --- **Effect** The target must attempt a save and is immune to further attempts for 24 hours."
+ },
+ {
+  "id": "void-mirror",
+  "collection": "items",
+  "name": "Void Mirror",
+  "level": 20,
+  "text": "The character is then temporarily immune to this effect for 24 hours. The creature can attempt a Will save against the user's Occultism DC to resist being returned; if it succeeds, it's temporarily immune for 24 hours."
+ },
+ {
+  "id": "oath-of-the-devoted",
+  "collection": "items",
+  "name": "Oath of the Devoted",
+  "level": 9,
+  "text": "You gain fire and mental resistance 5."
+ },
+ {
+  "id": "psychopomp-mask",
+  "collection": "items",
+  "name": "Psychopomp Mask",
+  "level": 1,
+  "text": "The psychopomps won't be so easily fooled again-you are temporarily immune to the effects of any psychopomp mask for 1 year."
+ },
+ {
+  "id": "rune-of-sin",
+  "collection": "items",
+  "name": "Rune of Sin",
+  "level": 12,
+  "text": "When you Cast a Spell of the school matching the sin, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against spells of the matching school."
+ },
+ {
+  "id": "warding-tattoo",
+  "collection": "items",
+  "name": "Warding Tattoo",
+  "level": 5,
+  "text": "--- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** An enemy, hazard, or the environment makes an attack against your AC, requires you to attempt a saving throw, or causes you to take damage automatically --- **Effect** Until the end of the current turn, against the triggering effect, you gain a +1 status bonus to AC and saving throws and gain resistance 2 to damage."
+ },
+ {
+  "id": "warding-tattoo-trail",
+  "collection": "items",
+  "name": "Warding Tattoo (Trail)",
+  "level": 6,
+  "text": "You gain resistance 2 to damage from hazardous terrain and environmental hazards at all times. --- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** An enemy, hazard, or the environment makes an attack against your AC, requires you to attempt a saving throw, or causes you to take damage automatically --- **Effect** Until the end of the current turn, against the triggering effect, you gain a +1 status bonus to AC and saving throws and gain resistance 2 to damage. Your resistance to damage from hazardous terrain and environmental hazards bec"
+ },
+ {
+  "id": "warding-tattoo-wave",
+  "collection": "items",
+  "name": "Warding Tattoo (Wave)",
+  "level": 6,
+  "text": "--- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** An enemy, hazard, or the environment makes an attack against your AC, requires you to attempt a saving throw, or causes you to take damage automatically --- **Effect** Until the end of the current turn, against the triggering effect, you gain a +1 status bonus to AC and saving throws and gain resistance 2 to damage."
+ },
+ {
+  "id": "warding-tattoo-fiend",
+  "collection": "items",
+  "name": "Warding Tattoo (Fiend)",
+  "level": 7,
+  "text": "You gain resistance 2 to spells cast by fiends and magical attacks by fiends. --- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** An enemy, hazard, or the environment makes an attack against your AC, requires you to attempt a saving throw, or causes you to take damage automatically --- **Effect** Until the end of the current turn, against the triggering effect, you gain a +1 status bonus to AC and saving throws and gain resistance 2 to damage. Your resistance to damage from fiends and magical attacks by fiends becomes resistance 5."
+ },
+ {
+  "id": "five-feather-wreath",
+  "collection": "items",
+  "name": "Five-Feather Wreath",
+  "level": 4,
+  "text": "- **Armor** You gain a +1 item bonus to Acrobatics checks and resistance 2 to falling damage. This must be your next action, and if you don't have a fly Speed, you must end the flight on solid ground or fall."
+ },
+ {
+  "id": "five-feather-wreath-greater",
+  "collection": "items",
+  "name": "Five-Feather Wreath (Greater)",
+  "level": 8,
+  "text": "- **Armor** You gain a +1 item bonus to Acrobatics checks and resistance 5 to falling damage. This must be your next action, and if you don't have a fly Speed, you must end the flight on solid ground or fall."
+ },
+ {
+  "id": "flaming-star",
+  "collection": "items",
+  "name": "Flaming Star",
+  "level": 3,
+  "text": "- **Armor** You gain resistance 2 to fire."
+ },
+ {
+  "id": "flaming-star-greater",
+  "collection": "items",
+  "name": "Flaming Star (Greater)",
+  "level": 8,
+  "text": "- **Armor** You gain resistance 5 to fire."
+ },
+ {
+  "id": "grim-sandglass",
+  "collection": "items",
+  "name": "Grim Sandglass",
+  "level": 3,
+  "text": "- **Armor** You gain resistance 2 to void."
+ },
+ {
+  "id": "grim-sandglass-greater",
+  "collection": "items",
+  "name": "Grim Sandglass (Greater)",
+  "level": 8,
+  "text": "- **Armor** You gain resistance 5 to void."
+ }
+]

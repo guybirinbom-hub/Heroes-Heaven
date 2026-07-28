@@ -1,0 +1,387 @@
+[
+ {
+  "id": "wooden-palisade",
+  "collection": "feats",
+  "name": "Wooden Palisade",
+  "level": 6,
+  "text": "Each 10-foot-by-10-foot section of the wall has AC 10, Hardness 10, and 20 Hit Points, and is immune to critical hits and precision damage."
+ },
+ {
+  "id": "orchards-endurance",
+  "collection": "feats",
+  "name": "Orchard's Endurance",
+  "level": 14,
+  "text": "You and your allies in your kinetic aura gain resistance 5 to bludgeoning and piercing damage. --- **Level (+4)** The resistance increases by 2."
+ },
+ {
+  "id": "jagged-berms",
+  "collection": "feats",
+  "name": "Jagged Berms",
+  "level": 6,
+  "text": "A mound has AC 10, Hardness 10, and 20 HP, and is immune to critical hits and precision damage."
+ },
+ {
+  "id": "tree-of-duality",
+  "collection": "feats",
+  "name": "Tree of Duality",
+  "level": 6,
+  "text": "- **Cleansing Pollen** (healing, vitality) Each living ally that's in the area or enters it regains HP and is then temporarily immune to regaining HP from Tree of Duality for 10 minutes."
+ },
+ {
+  "id": "read-the-roots",
+  "collection": "feats",
+  "name": "Read the Roots",
+  "level": 5,
+  "text": "You Seek within 30 feet using tremorsense, an imprecise sense, instead of one of your own senses."
+ },
+ {
+  "id": "inexorable",
+  "collection": "feats",
+  "name": "Inexorable",
+  "level": 6,
+  "text": "When using Worm Form you are immune to penalties to your Speed and the immobilized condition, you gain a +2 circumstance bonus to your Fortitude or Reflex DC against attempts to Shove or Trip you, and you ignore difficult terrain and greater difficult terrain."
+ },
+ {
+  "id": "worm-form",
+  "collection": "feats",
+  "name": "Worm Form",
+  "level": 14,
+  "text": "Ignore your armor's check penalty and Speed reduction. - Darkvision. You also gain specific abilities based on the type of monster you choose: - **Purple Worm** Speed 40 feet, burrow 30 feet, swim 20 feet **Melee** 1 jaws (deadly 2d10, reach 15 feet), **Damage** 3d10+15 piercing - **Melee** 1 stinger (agile, poison, reach 15 feet), **Damage** 2d12+15 piercing plus 2d6 persistent poison - **Melee** 1 body (reach 15 feet) **Damage** 1d10+13 bludgeoning **Hybrid** Speed 40 feet - **Melee** 1 stinger (agile, poison, reach 10 feet), **Damage** 2d12+15 piercin"
+ },
+ {
+  "id": "echoes-in-stone",
+  "collection": "feats",
+  "name": "Echoes in Stone",
+  "level": 9,
+  "text": "--- You pause a moment to attune your senses to the stone around you. Until the start of your next turn, you gain imprecise tremorsense with a range of 20 feet."
+ },
+ {
+  "id": "goblin-song",
+  "collection": "feats",
+  "name": "Goblin Song",
+  "level": 1,
+  "text": "**Critical Failure** The target is temporarily immune to Goblin Song for 1 hour."
+ },
+ {
+  "id": "nephilim-resistance",
+  "collection": "feats",
+  "name": "Nephilim Resistance",
+  "level": 5,
+  "text": "You resist energy like your extraplanar predecessors. You gain resistance 5 to that damage type. For instance, an Angelkin might choose resistance to cold, while a Hellspawn might choose resistance to fire."
+ },
+ {
+  "id": "combat-reading",
+  "collection": "feats",
+  "name": "Combat Reading",
+  "level": 4,
+  "text": "You use a performer's cold reading techniques, aura reading, and other tricks to discover your foe's strengths and weaknesses. The enemy is then temporarily immune to your Combat Reading for 1 day. --- **Critical Success** The GM chooses and tells you two of the following pieces of information about the enemy: which of the enemy's weaknesses is highest, which of the enemy's saving throws has the lowest modifier, one immunity the enemy has, or which of the enemy's resistances is highest."
+ },
+ {
+  "id": "unusual-composition",
+  "collection": "feats",
+  "name": "Unusual Composition",
+  "level": 10,
+  "text": "If your next action is to cast a composition spell that is auditory or visual, you can have it affect creatures who can witness it with any sense, not just those the traits indicate, even including special senses like tremorsense. You can choose to exclude any senses you choose."
+ },
+ {
+  "id": "all-in-my-head",
+  "collection": "feats",
+  "name": "All in my Head",
+  "level": 18,
+  "text": "You can't use this reaction if you are immune to mental effects or mental damage."
+ },
+ {
+  "id": "panic-the-dead",
+  "collection": "feats",
+  "name": "Panic the Dead",
+  "level": 2,
+  "text": "Mindless undead are not immune to this effect due to being mindless."
+ },
+ {
+  "id": "elemental-shape",
+  "collection": "feats",
+  "name": "Elemental Shape",
+  "level": 10,
+  "text": "Whenever you're polymorphed into another shape using *untamed form*, you gain resistance 5 to fire."
+ },
+ {
+  "id": "plant-shape",
+  "collection": "feats",
+  "name": "Plant Shape",
+  "level": 10,
+  "text": "If you do have Untamed Form, add the shapes listed in Plant Form to your Untamed Form list, and whenever you're polymorphed into another shape using untamed form, you gain resistance 5 to poison."
+ },
+ {
+  "id": "dragon-shape",
+  "collection": "feats",
+  "name": "Dragon Shape",
+  "level": 12,
+  "text": "Whenever you're polymorphed into another form using *untamed form*, you gain resistance 5 to your choice of bludgeoning or poison."
+ },
+ {
+  "id": "garland-spell",
+  "collection": "feats",
+  "name": "Garland Spell",
+  "level": 12,
+  "text": "You and your familiar are immune to this damage."
+ },
+ {
+  "id": "combat-assessment",
+  "collection": "feats",
+  "name": "Combat Assessment",
+  "level": 1,
+  "text": "The target is temporarily immune to Combat Assessment for 1 day."
+ },
+ {
+  "id": "sabotage",
+  "collection": "feats",
+  "name": "Sabotage",
+  "level": 4,
+  "text": "**Critical Failure** The item is temporarily immune to your Sabotage for 1 day."
+ },
+ {
+  "id": "vicious-debilitations",
+  "collection": "feats",
+  "name": "Vicious Debilitations",
+  "level": 10,
+  "text": "- **Debilitation** The target gains weakness 5 to your choice of bludgeoning, piercing, or slashing damage."
+ },
+ {
+  "id": "forcible-energy",
+  "collection": "feats",
+  "name": "Forcible Energy",
+  "level": 12,
+  "text": "If your next action is to Cast a Spell that deals acid, cold, electricity, fire, or sonic damage, you can select one target that was damaged to gain weakness 5 to that damage type until the end of your next turn. If a spell deals multiple types of energy damage, choose one that the target gains weakness to. This has no effect on creatures with resistance or immunity to the energy type you choose."
+ },
+ {
+  "id": "battle-medicine",
+  "collection": "feats",
+  "name": "Battle Medicine",
+  "level": 1,
+  "text": "This does not make them immune to, or otherwise count as, Treat Wounds."
+ },
+ {
+  "id": "pet",
+  "collection": "feats",
+  "name": "Pet",
+  "level": 1,
+  "text": "**Senses** Your pet has low-light vision and can gain additional senses from pet abilities. **Speed** Your pet has a Speed of 25 feet. You can choose to instead have an aquatic pet, which breathes in water instead of air and has the aquatic trait, no land Speed, and a swim Speed of 25 feet. If your pet is an animal that naturally has one of these abilities (for instance, an owl has a fly Speed), you must select that ability. - **Amphibious** It gains the amphibious trait, allowing it to breathe in both air and water, and has both a land Speed and a swim "
+ },
+ {
+  "id": "growing-eel-friend",
+  "collection": "feats",
+  "name": "Growing Eel Friend",
+  "level": 5,
+  "text": "Your eel pet's size changes to Small, and the eel gains the Scent and Tough pet abilities."
+ },
+ {
+  "id": "natural-senses",
+  "collection": "feats",
+  "name": "Natural Senses",
+  "level": 1,
+  "text": "You have retained your sharp animal senses even after awakening. Choose one of the following senses appropriate to your kind of animal: darkvision, echolocation 10 feet, low-light vision, scent (imprecise) 30 feet, or tremorsense (imprecise) 30 feet. (Echolocation allows you to use hearing as a precise sense at the listed range.) If your animal kind doesn't typically have a specific type of sense, you can't gain that sense with this feat. --- **Special** You can take this feat multiple times, choosing a different sense each time."
+ },
+ {
+  "id": "siren-song",
+  "collection": "feats",
+  "name": "Siren Song",
+  "level": 9,
+  "text": "Typically, creatures that have traveled with you for a significant time, such as your fellow party members, are immune to your Siren Song. --- **Critical Success** The target is unaffected and becomes immune to your Siren Song for 24 hours."
+ },
+ {
+  "id": "alarming-disappearance",
+  "collection": "feats",
+  "name": "Alarming Disappearance",
+  "level": 5,
+  "text": "They are then temporarily immune to Alarming Disappearance for 1 hour. Typically, creatures that have traveled with you for a significant time, such as your fellow party members, are immune to your Alarming Disappearance."
+ },
+ {
+  "id": "bestial-snarling",
+  "collection": "feats",
+  "name": "Bestial Snarling",
+  "level": 2,
+  "text": "Regardless of the result, each target is temporarily immune to your Bestial Snarling for 10 minutes."
+ },
+ {
+  "id": "ears-of-the-forest",
+  "collection": "feats",
+  "name": "Ears of the Forest",
+  "level": 8,
+  "text": "Beyond relying on your own senses, you keep an ear open for nearby creatures for help in exploring your surroundings. When you Seek, if there are any willing animals in the selected area, you can borrow their senses. Doing so lets you Seek with scent and tremorsense as imprecise senses, along with any other senses appropriate to the animals in the area, at the GM's discretion."
+ },
+ {
+  "id": "swarmkeeper-dedication",
+  "collection": "feats",
+  "name": "Swarmkeeper Dedication",
+  "level": 2,
+  "text": "You're immune to any damage from your swarm, and during your daily preparations you can anoint up to five willing creatures with a concoction made from your pheromones to grant them immunity as well. While outside your body, your swarm is Large and has a Speed of 15 feet and a climb Speed of 15 feet. It uses your statistics for defenses but is immune to grabbed, prone, restrained, and mental effects that target only a specific number of creatures. The swarm has resistance equal to your level to physical damage and weakness equal to your level to area and"
+ },
+ {
+  "id": "weavers-web",
+  "collection": "feats",
+  "name": "Weaver's Web",
+  "level": 4,
+  "text": "The swarm is immune to its webs."
+ },
+ {
+  "id": "sportlebore-choke",
+  "collection": "feats",
+  "name": "Sportlebore Choke",
+  "level": 8,
+  "text": "Regardless of the result of its save, the creature is temporarily immune to sportlebore choke for 1 hour."
+ },
+ {
+  "id": "spinning-release",
+  "collection": "feats",
+  "name": "Spinning Release",
+  "level": 14,
+  "text": "They are then temporarily immune to being confused or sickened by Spinning Release for 10 minutes, though the ability can still be used to move them."
+ },
+ {
+  "id": "feral-senses",
+  "collection": "feats",
+  "name": "Feral Senses",
+  "level": 4,
+  "text": "While in your hybrid or animal shape, you gain low-light vision and imprecise scent with a range of 30 feet."
+ },
+ {
+  "id": "fearful-symmetry",
+  "collection": "feats",
+  "name": "Fearful Symmetry",
+  "level": 6,
+  "text": "Regardless of the effects of the save, the creature is immune to Fearful Symmetry for 1 hour."
+ },
+ {
+  "id": "feeding-frenzy",
+  "collection": "feats",
+  "name": "Feeding Frenzy",
+  "level": 6,
+  "text": "If you have scent as a special sense, it's a precise sense with double its normal range when locating creatures taking persistent bleed damage."
+ },
+ {
+  "id": "terrifying-transformation",
+  "collection": "feats",
+  "name": "Terrifying Transformation",
+  "level": 8,
+  "text": "Regardless of the results of your checks, each creature is temporarily immune to Terrifying Transformation for 1 minute."
+ },
+ {
+  "id": "petrifying-gaze-mimicry",
+  "collection": "feats",
+  "name": "Petrifying Gaze Mimicry",
+  "level": 10,
+  "text": "--- **Critical Success** The creature is unaffected and temporarily immune to your Petrifying Gaze Mimicry for 24 hours."
+ },
+ {
+  "id": "sunbird-glare",
+  "collection": "feats",
+  "name": "Sunbird Glare",
+  "level": 6,
+  "text": "Regardless of their result, the target is temporarily immune to Sunbird Glare for 10 minutes."
+ },
+ {
+  "id": "bonekeepers-bane",
+  "collection": "feats",
+  "name": "Bonekeeper's Bane",
+  "level": 13,
+  "text": "Regardless of the result of its save, the creature is then temporarily immune to bonekeeper's bane for 24 hours."
+ },
+ {
+  "id": "cringe",
+  "collection": "feats",
+  "name": "Cringe",
+  "level": 1,
+  "text": "The attacker is then immune to your Cringe for 24 hours."
+ },
+ {
+  "id": "draconic-sight",
+  "collection": "feats",
+  "name": "Draconic Sight",
+  "level": 1,
+  "text": "You have a fraction of the senses of your draconic forebear. You gain low-light vision, or you gain darkvision if your ancestry already grants you low-light vision."
+ },
+ {
+  "id": "majestic-presence",
+  "collection": "feats",
+  "name": "Majestic Presence",
+  "level": 13,
+  "text": "Regardless of the result of the saving throw, the creature is temporarily immune to your Majestic Presence for 24 hours."
+ },
+ {
+  "id": "resist-ruin",
+  "collection": "feats",
+  "name": "Resist Ruin",
+  "level": 13,
+  "text": "You gain resistance 5 to void, and once per day, you can cast False Vitality as a 5th-rank divine innate spell."
+ },
+ {
+  "id": "invigorating-elixir",
+  "collection": "feats",
+  "name": "Invigorating Elixir",
+  "level": 4,
+  "text": "The imbiber is then temporarily immune to the effects of this additive for 10 minutes."
+ },
+ {
+  "id": "combine-elixirs",
+  "collection": "feats",
+  "name": "Combine Elixirs",
+  "level": 6,
+  "text": "For example, you can combine two Lesser Elixirs of Life to create a combined elixir that heals twice the normal amount, or you can combine a Lesser Darkvision Elixir with a Lesser Eagle-Eye Elixir to both gain darkvision and find secret doors."
+ },
+ {
+  "id": "alchemical-revivification",
+  "collection": "feats",
+  "name": "Alchemical Revivification",
+  "level": 20,
+  "text": "After being revived, you're temporarily immune to Alchemical Rejuvenation for 1d4 hours."
+ },
+ {
+  "id": "acute-vision",
+  "collection": "feats",
+  "name": "Acute Vision",
+  "level": 1,
+  "text": "When you are raging, your visual senses improve, granting you darkvision."
+ },
+ {
+  "id": "acute-scent",
+  "collection": "feats",
+  "name": "Acute Scent",
+  "level": 2,
+  "text": "When your anger is heightened, your sense of smell improves. While you're raging, you gain imprecise scent with a range of 30 feet."
+ },
+ {
+  "id": "supernatural-senses",
+  "collection": "feats",
+  "name": "Supernatural Senses",
+  "level": 4,
+  "text": "Your scent is preternaturally sharp, and you can always rely on your sense of smell to help guide you when your vision is compromised."
+ },
+ {
+  "id": "nocturnal-senses",
+  "collection": "feats",
+  "name": "Nocturnal Senses",
+  "level": 6,
+  "text": "Your senses gain even greater clarity. While raging, if you have low-light vision you gain darkvision, and if you have scent the range of your imprecise scent increases to 60 feet."
+ },
+ {
+  "id": "instinctive-strike",
+  "collection": "feats",
+  "name": "Instinctive Strike",
+  "level": 8,
+  "text": "You trust your instincts and your sense of smell, using all your senses to pinpoint your opponent's location. When you make a melee Strike against an opponent you're detecting using scent, ignore any flat check required due to the target being concealed or hidden."
+ },
+ {
+  "id": "terrifying-howl",
+  "collection": "feats",
+  "name": "Terrifying Howl",
+  "level": 10,
+  "text": "Regardless of the results of your checks, each target is then temporarily immune to Terrifying Howl for 1 minute."
+ },
+ {
+  "id": "sunder-spell",
+  "collection": "feats",
+  "name": "Sunder Spell",
+  "level": 12,
+  "text": "Whether or not you succeed at your Strike, the target becomes temporarily immune to your Sunder Spell for 24 hours."
+ }
+]

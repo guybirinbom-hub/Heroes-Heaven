@@ -1,0 +1,387 @@
+[
+ {
+  "id": "slithermaws-bane-artifact",
+  "collection": "items",
+  "name": "Slithermaw's Bane (Artifact)",
+  "level": 20,
+  "text": "73 Usage worn armor Bulk L Perception +34; precise low-light vision and hearing within 30 feet Communication telepathy (partner only) Skills Intimidation +35, Society +33, Warfare Lore +33 Int +5, Wis +6, Cha +7 Will +34 The heroism of Kyloss Syndar, founder of Greengold and slayer of the demonic hydra Slithermaw, imprinted this suit of armor with a gleaming, prismatic sheen that sparkles under bright light. Slithermaw’s Bane is a suit of +3 major resilient greater fortification high-grade elven chain that grants his wearer poison resistance 15, and the "
+ },
+ {
+  "id": "soulcutter-artifact",
+  "collection": "items",
+  "name": "Soulcutter (Artifact)",
+  "level": 20,
+  "text": "73 Usage held in 1 hand Bulk 2 Perception +34; precise low-light vision and hearing within 30 feet Communication telepathy (partner only) Skills Nature +34, Religion +34, Survival +34 Int +7, Wis +6, Cha +5 Will +34 The echo of the Calistrian witch Silisifex imbues her legendary blade with a shimmering pale-green glow equivalent to that of candlelight; Soulcutter can activate or deactivate this radiance as a free action once per round on her partner’s turn. Soulcutter’s telepathic voice is a sultry whisper that often infuses her observations with a flirt"
+ },
+ {
+  "id": "wintershot-artifact",
+  "collection": "items",
+  "name": "Wintershot (Artifact)",
+  "level": 20,
+  "text": "73 Usage held in 1+ hand(s) Bulk 1 Perception +35; precise low-light vision and hearing within 30 feet Communication telepathy (partner only) Skills Diplomacy +33, Intimidation +35, Survival +35 Int +6, Wis +7, Cha +5 Will +35 The echo of the snowcaster Jelarial causes Wintershot to become chill to the touch, yet despite feeling as cold as ice, she never causes harm or discomfort to her partner. That creature must attempt a DC 43 Fortitude save, after which point they’re temporarily immune to Rimecrust for 24 hours. Creatures that are immune to cold are "
+ },
+ {
+  "id": "gravity-inverter",
+  "collection": "items",
+  "name": "Gravity Inverter",
+  "level": 11,
+  "text": "Pushing Off is a single action that has the move trait, allowing the creature to move half its Speed in a straight line through the area (if the creature remains in the area, this momentum will be disrupted by the gravity inverter at the beginning of the creature's next turn, as noted above). Creatures who can fly are immune to this fall damage."
+ },
+ {
+  "id": "ankhrav-carapace",
+  "collection": "items",
+  "name": "Ankhrav Carapace",
+  "level": 7,
+  "text": "While wearing this armor, you gain resistance 2 to acid damage. For 1 minute, you gain a burrow Speed equal to half your land Speed."
+ },
+ {
+  "id": "sun-slayer",
+  "collection": "items",
+  "name": "Sun Slayer",
+  "level": 10,
+  "text": "While you have this shield raised, you gain fire resistance 5."
+ },
+ {
+  "id": "testudo-shield",
+  "collection": "items",
+  "name": "Testudo Shield",
+  "level": 5,
+  "text": "The barrier is created with the Hardness and Hit Points equal to those of the testudo shield and is immune to critical hits and precision damage."
+ },
+ {
+  "id": "greater-testudo-shield",
+  "collection": "items",
+  "name": "Greater Testudo Shield",
+  "level": 13,
+  "text": "The barrier is created with the Hardness and Hit Points equal to those of the testudo shield and is immune to critical hits and precision damage."
+ },
+ {
+  "id": "belkzen-deadsmasher",
+  "collection": "items",
+  "name": "Belkzen Deadsmasher",
+  "level": 13,
+  "text": "Forged deep in the Hold of Belkzen and wielded by elite warriors tasked with protecting their lands from the servants of the Whispering Tyrant, this brutal weapon grants void resistance 5 to any living creature who wields it."
+ },
+ {
+  "id": "greater-belkzen-deadsmasher",
+  "collection": "items",
+  "name": "Greater Belkzen Deadsmasher",
+  "level": 18,
+  "text": "Forged deep in the Hold of Belkzen and wielded by elite warriors tasked with protecting their lands from the servants of the Whispering Tyrant, this brutal weapon grants void resistance 5 to any living creature who wields it. 126 Price 22,000 gp This +3 greater striking ghost touch greater vitalizing morningstar grants its wielder void resistance 10."
+ },
+ {
+  "id": "chain-of-command",
+  "collection": "items",
+  "name": "Chain of Command",
+  "level": 6,
+  "text": "Regardless of the outcome, the target is then immune to this effect for 24 hours."
+ },
+ {
+  "id": "lamentation-of-the-faithless",
+  "collection": "items",
+  "name": "Lamentation of the Faithless",
+  "level": 25,
+  "text": "Creatures with the unholy trait are immune to this effect, but creatures with the holy trait take a –2 status penalty on this save."
+ },
+ {
+  "id": "mageslayer",
+  "collection": "items",
+  "name": "Mageslayer",
+  "level": 8,
+  "text": "When wearing or wielding a mageslayer, you gain resistance 5 to damage from spells from the arcane tradition."
+ },
+ {
+  "id": "arcane-standard",
+  "collection": "items",
+  "name": "Arcane Standard",
+  "level": 10,
+  "text": "**Activate—Magical Weakness** ⟨1⟩ (concentrate) **Frequency** once per turn --- **Effect** The magic of the banner causes energy to linger, tearing away at its target, leaving them vulnerable to more. One creature within the banner's aura that has taken acid, cold, electricity, fire, or sonic damage this turn gains weakness 5 to that damage type for 1 round. --- *PFS Note:* If a PC uses this item's Magical Weakness ability against a creature which has taken more than one type of energy damage, the player chooses which energy type the creature gains weakn"
+ },
+ {
+  "id": "greater-arcane-standard",
+  "collection": "items",
+  "name": "Greater Arcane Standard",
+  "level": 20,
+  "text": "138 PFS Note If a PC uses an arcane standard’s Magical Weakness ability against a creature which has taken more than one type of energy damage, the player chooses which energy type the creature gains weakness to. Activate—Magical Weakness (concentrate) Frequency once per turn; Effect The magic of the banner causes energy to linger, tearing away at its target, leaving them vulnerable to more. One creature within the banner’s aura that has taken acid, cold, electricity, fire, or sonic damage this turn gains weakness 5 to that damage type for 1 round. 138 P"
+ },
+ {
+  "id": "banner-of-the-rising-star",
+  "collection": "items",
+  "name": "Banner of the Rising Star",
+  "level": 20,
+  "text": "They become immune to Rise Up for 1 day."
+ },
+ {
+  "id": "flag-of-the-stronghold",
+  "collection": "items",
+  "name": "Flag of the Stronghold",
+  "level": 10,
+  "text": "You and allies within the banner's aura gain resistance 5 to damage from siege weapons."
+ },
+ {
+  "id": "major-flag-of-the-stronghold",
+  "collection": "items",
+  "name": "Major Flag of the Stronghold",
+  "level": 20,
+  "text": "You and allies within the banner’s aura gain resistance 5 to damage from siege weapons. 140 Price 70,000 gp The resistance to damage from siege weapons increases to 10."
+ },
+ {
+  "id": "hexwise-banner",
+  "collection": "items",
+  "name": "Hexwise Banner",
+  "level": 10,
+  "text": "You and allies within the banner's aura gain resistance 5 to damage from spells; for spells that apply multiple instances of damage, such as Force Barrage, this applies only to the first instance of damage."
+ },
+ {
+  "id": "major-hexwise-banner",
+  "collection": "items",
+  "name": "Major Hexwise Banner",
+  "level": 20,
+  "text": "You and allies within the banner’s aura gain resistance 5 to damage from spells; for spells that apply multiple instances of damage, such as force barrage, this applies only to the first instance of damage. 140 Price 70,000 gp The resistance to damage from spells increases to 10."
+ },
+ {
+  "id": "standard-of-the-true-ally",
+  "collection": "items",
+  "name": "Standard of the True Ally",
+  "level": 10,
+  "text": "They then become immune to this effect for 10 minutes."
+ },
+ {
+  "id": "timepiece-standard",
+  "collection": "items",
+  "name": "Timepiece Standard",
+  "level": 10,
+  "text": "Whenever you or an ally within the banner's aura uses the Delay or Ready action, you or the ally gain 5 temporary Hit Points that last for 1 minute and then become immune to this effect for 10 minutes."
+ },
+ {
+  "id": "major-timepiece-standard",
+  "collection": "items",
+  "name": "Major Timepiece Standard",
+  "level": 20,
+  "text": "Whenever you or an ally within the banner’s aura uses the Delay or Ready action, you or the ally gain 5 temporary Hit Points that last for 1 minute and then become immune to this effect for 10 minutes."
+ },
+ {
+  "id": "constant-crosier",
+  "collection": "items",
+  "name": "Constant Crosier",
+  "level": 10,
+  "text": "While traveling in exploration mode, you and your allies within 120 feet count anyone's travel Speed of 15 feet or lower as 25 feet. All allies within 60 feet who can see the crosier receive a +1 status bonus to Fortitude saves and resistance 5 to persistent damage for 1 minute."
+ },
+ {
+  "id": "fireproof-gloves",
+  "collection": "items",
+  "name": "Fireproof Gloves",
+  "level": 9,
+  "text": "When wearing these gloves, you gain fire resistance 5."
+ },
+ {
+  "id": "greater-fireproof-gloves",
+  "collection": "items",
+  "name": "Greater Fireproof Gloves",
+  "level": 13,
+  "text": "When wearing these gloves, you gain fire resistance 5. 149 Price 2,500 gp You gain fire resistance 10 when wearing the gloves."
+ },
+ {
+  "id": "gas-mask-of-clean-air",
+  "collection": "items",
+  "name": "Gas Mask of Clean Air",
+  "level": 4,
+  "text": "For 1 round, you are immune to inhaled poisons, inhaled diseases, and olfactory effects."
+ },
+ {
+  "id": "warming-parka",
+  "collection": "items",
+  "name": "Warming Parka",
+  "level": 3,
+  "text": "For the next minute, you gain resistance 3 to cold damage, but also take a –2 item penalty to Perception checks."
+ },
+ {
+  "id": "gift-of-olives",
+  "collection": "items",
+  "name": "Gift of Olives",
+  "level": 3,
+  "text": "Creatures in the sheltered area gain resistance 3 to any environmental damage, gain a +1 status bonus to saving throws against environmental hazards, and gain a +1 status bonus to Survival checks to Subsist."
+ },
+ {
+  "id": "pyrefeather-cloak",
+  "collection": "items",
+  "name": "Pyrefeather Cloak",
+  "level": 3,
+  "text": "You gain fire resistance 5 and a +1 circumstance bonus to saving throws against the triggering effect until the beginning of your next turn."
+ },
+ {
+  "id": "dragon-scute",
+  "collection": "items",
+  "name": "Dragon Scute",
+  "level": 12,
+  "text": "Instead of the spell’s normal effects, the target gains damage resistance based on the type and dragon’s tradition. Arcane resistance 5 against all damage from spells Divine resistance 10 to spirit, vitality, and void Occult resistance 10 to mental Primal resistance 7 to bludgeoning, piercing, slashing, and poison Moderate Dragon Scute Source Draconic Codex pg. Arcane resistance 7 against all damage from spells Divine resistance 15 to spirit, vitality, and void Occult resistance 15 to mental Primal resistance 10 to bludgeoning, piercing, slashing, and po"
+ },
+ {
+  "id": "lesser-dragon-scute",
+  "collection": "items",
+  "name": "Lesser Dragon Scute",
+  "level": 12,
+  "text": "Instead of the spell’s normal effects, the target gains damage resistance based on the type and dragon’s tradition. Arcane resistance 5 against all damage from spells Divine resistance 10 to spirit, vitality, and void Occult resistance 10 to mental Primal resistance 7 to bludgeoning, piercing, slashing, and poison Moderate Dragon Scute Source Draconic Codex pg. Arcane resistance 7 against all damage from spells Divine resistance 15 to spirit, vitality, and void Occult resistance 15 to mental Primal resistance 10 to bludgeoning, piercing, slashing, and po"
+ },
+ {
+  "id": "moderate-dragon-scute",
+  "collection": "items",
+  "name": "Moderate Dragon Scute",
+  "level": 16,
+  "text": "Instead of the spell’s normal effects, the target gains damage resistance based on the type and dragon’s tradition. Arcane resistance 5 against all damage from spells Divine resistance 10 to spirit, vitality, and void Occult resistance 10 to mental Primal resistance 7 to bludgeoning, piercing, slashing, and poison Moderate Dragon Scute Source Draconic Codex pg. Arcane resistance 7 against all damage from spells Divine resistance 15 to spirit, vitality, and void Occult resistance 15 to mental Primal resistance 10 to bludgeoning, piercing, slashing, and po"
+ },
+ {
+  "id": "greater-dragon-scute",
+  "collection": "items",
+  "name": "Greater Dragon Scute",
+  "level": 20,
+  "text": "Instead of the spell’s normal effects, the target gains damage resistance based on the type and dragon’s tradition. Arcane resistance 5 against all damage from spells Divine resistance 10 to spirit, vitality, and void Occult resistance 10 to mental Primal resistance 7 to bludgeoning, piercing, slashing, and poison Moderate Dragon Scute Source Draconic Codex pg. Arcane resistance 7 against all damage from spells Divine resistance 15 to spirit, vitality, and void Occult resistance 15 to mental Primal resistance 10 to bludgeoning, piercing, slashing, and po"
+ },
+ {
+  "id": "duty-of-the-oathsworn",
+  "collection": "items",
+  "name": "Duty of the Oathsworn",
+  "level": 9,
+  "text": "(The GM selects the appropriate trait.) You gain resistance equal to half your level to physical and mental damage from these creatures. This undead creature has your mind; if it's normally mindless, it loses that trait and any immunity to mental."
+ },
+ {
+  "id": "greater-stalk-goggles",
+  "collection": "items",
+  "name": "Greater Stalk Goggles",
+  "level": 3,
+  "text": "231 Price 450 gp When you activate the goggles, you also gain a +2 item bonus to Perception checks involving sight and low-light vision for the duration of the effect"
+ },
+ {
+  "id": "major-stalk-goggles",
+  "collection": "items",
+  "name": "Major Stalk Goggles",
+  "level": 8,
+  "text": "231 Price 450 gp When you activate the goggles, you also gain a +2 item bonus to Perception checks involving sight and low-light vision for the duration of the effect"
+ },
+ {
+  "id": "bottled-omen",
+  "collection": "items",
+  "name": "Bottled Omen",
+  "level": 4,
+  "text": "You then become immune to *bottled omen* potions for 24 hours."
+ },
+ {
+  "id": "draft-of-stellar-radiance",
+  "collection": "items",
+  "name": "Draft of Stellar Radiance",
+  "level": 3,
+  "text": "A creature who succeeds at this save is immune to the effect for 24 hours."
+ },
+ {
+  "id": "pickled-demon-tongue",
+  "collection": "items",
+  "name": "Pickled Demon Tongue",
+  "level": 3,
+  "text": "- **Armor** You gain resistance 2 to acid and attacks by demons."
+ },
+ {
+  "id": "greater-pickled-demon-tongue",
+  "collection": "items",
+  "name": "Greater Pickled Demon Tongue",
+  "level": 8,
+  "text": "Armor You gain resistance 2 to acid and attacks by demons. 233 Price 460 gp Resistance when affixed to armor is 5, extra damage when affixed to a weapon is 1d6, the spell attack roll is +14, and the spell DC is 24. 233 Price 1,750 gp Resistance when affixed to armor is 10, extra damage when affixed to a weapon is 1d8, the spell attack roll is +19, and the spell DC is 29."
+ },
+ {
+  "id": "major-pickled-demon-tongue",
+  "collection": "items",
+  "name": "Major Pickled Demon Tongue",
+  "level": 12,
+  "text": "Armor You gain resistance 2 to acid and attacks by demons. 233 Price 460 gp Resistance when affixed to armor is 5, extra damage when affixed to a weapon is 1d6, the spell attack roll is +14, and the spell DC is 24. 233 Price 1,750 gp Resistance when affixed to armor is 10, extra damage when affixed to a weapon is 1d8, the spell attack roll is +19, and the spell DC is 29."
+ },
+ {
+  "id": "polished-demon-horn",
+  "collection": "items",
+  "name": "Polished Demon Horn",
+  "level": 3,
+  "text": "- **Armor** You gain resistance 2 to unholy."
+ },
+ {
+  "id": "greater-polished-demon-horn",
+  "collection": "items",
+  "name": "Greater Polished Demon Horn",
+  "level": 8,
+  "text": "Armor You gain resistance 2 to unholy. 233 Price 450 gp Resistance when affixed to armor is 5, extra damage when affixed to a weapon is 1d6, and the spell DC is 24. 233 Price 1,750 gp Resistance when affixed to armor is 10, extra damage when affixed to a weapon is 1d8, and the spell DC is 29."
+ },
+ {
+  "id": "major-polished-demon-horn",
+  "collection": "items",
+  "name": "Major Polished Demon Horn",
+  "level": 12,
+  "text": "Armor You gain resistance 2 to unholy. 233 Price 450 gp Resistance when affixed to armor is 5, extra damage when affixed to a weapon is 1d6, and the spell DC is 24. 233 Price 1,750 gp Resistance when affixed to armor is 10, extra damage when affixed to a weapon is 1d8, and the spell DC is 29."
+ },
+ {
+  "id": "sihedron-ring",
+  "collection": "items",
+  "name": "Sihedron Ring",
+  "level": 6,
+  "text": "As long as it's invested, a Sihedron ring protects its wearer from environmental extremes, rendering them immune to severe cold and heat."
+ },
+ {
+  "id": "greater-sihedron-ring",
+  "collection": "items",
+  "name": "Greater Sihedron Ring",
+  "level": 12,
+  "text": "As long as it’s invested, a Sihedron ring protects its wearer from environmental extremes, rendering them immune to severe cold and heat."
+ },
+ {
+  "id": "dragonfire-halfbow",
+  "collection": "items",
+  "name": "Dragonfire Halfbow",
+  "level": 12,
+  "text": "You and your mount are immune to the effects of this *fireball*."
+ },
+ {
+  "id": "lumber-lords-axe",
+  "collection": "items",
+  "name": "Lumber Lord's Axe",
+  "level": 11,
+  "text": "Grooves worn into the wooden handle over years of use and an irregularly sharpened blade give it the distinct impression of being cherished, and the potent scent of freshly chopped wood always clings to the axe's blade despite any attempt to clean it or remove the odor. **Activate—Transformative Polish** 1 minute (manipulate) **Frequency** once per day --- **Effect** You polish and sharpen the axe, after which its scent grows even more powerful and the axe's blade transforms into your choice of standard-grade adamantine or standard-grade dawnsilver for 1"
+ },
+ {
+  "id": "thousand-year-dragonroot",
+  "collection": "items",
+  "name": "Thousand-Year Dragonroot",
+  "level": 10,
+  "text": "You gain a fly Speed of 40 feet and fire resistance 5 for 1 minute."
+ },
+ {
+  "id": "injigos-loving-embrace",
+  "collection": "items",
+  "name": "Injigo's Loving Embrace",
+  "level": 9,
+  "text": "When you wake, you're filled with a sense of melancholia about those unsent letters, but these feelings distract you from other, more unpleasant thoughts, granting you mental resistance 5 and a +1 item bonus to saving throws against mental effects for the next 8 hours."
+ },
+ {
+  "id": "branch-of-the-great-sugi",
+  "collection": "items",
+  "name": "Branch of the Great Sugi",
+  "level": 7,
+  "text": "When used to Strike, the branch snaps with the sound of a cracking whip but fills the air surrounding the point of impact with the pleasant scent of freshly cut cedar and a sprinkling of fallen leaves on the ground."
+ },
+ {
+  "id": "resolute-mind-wrap",
+  "collection": "items",
+  "name": "Resolute Mind Wrap",
+  "level": 7,
+  "text": "The *resolute mind wrap* grants you mental resistance 5. If you succeed at this saving throw, the resistance to mental damage granted by the *resolute mind wrap* increases to 10 for 1 minute."
+ },
+ {
+  "id": "dog-bone-knife",
+  "collection": "items",
+  "name": "Dog-Bone Knife",
+  "level": 5,
+  "text": "On a successful save, the creature is temporarily immune to this effect for 1 minute. Kushtakas and other creatures vulnerable to canines take a -2 circumstance penalty to saves against this effect, and this weapon overcomes any resistance such creatures have to physical attacks."
+ },
+ {
+  "id": "serene-smelling-salts",
+  "collection": "items",
+  "name": "Serene Smelling Salts",
+  "level": 1,
+  "text": "When used on yourself or a creature within your reach, that target reduces the value of its frightened condition by 1 and becomes temporarily immune to any serene smelling salts for 1 hour."
+ }
+]

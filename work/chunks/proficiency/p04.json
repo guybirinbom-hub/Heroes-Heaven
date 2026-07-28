@@ -1,0 +1,387 @@
+[
+ {
+  "id": "lethargy-poisoner",
+  "collection": "feats",
+  "name": "Lethargy Poisoner",
+  "level": 8,
+  "text": "If you're an expert in Crafting, you can instead craft a dose of Stupor Poison. You can prepare two doses (of either poison) if you're a master in Crafting and three doses if you're legendary in Crafting."
+ },
+ {
+  "id": "borrowed-ability",
+  "collection": "feats",
+  "name": "Borrowed Ability",
+  "level": 2,
+  "text": "You touch an adjacent creature and choose any skill you believe they are trained or better in. If you choose a skill that they are trained or better in, you borrow their proficiency in that skill, becoming trained in that skill for 1 minute. If they are not trained in the skill you choose, the GM chooses the next most applicable skill (for instance, choosing Acrobatics instead of Athletics). At 12th level, you can become an expert in the skill if the target is as well."
+ },
+ {
+  "id": "dracomancer",
+  "collection": "feats",
+  "name": "Dracomancer",
+  "level": 9,
+  "text": "You gain the trained proficiency rank in the spell attack modifier and spell DC statistics, and your key spellcasting attribute is Charisma."
+ },
+ {
+  "id": "oatia-skysage-dedication",
+  "collection": "feats",
+  "name": "Oatia Skysage Dedication",
+  "level": 2,
+  "text": "You either become trained in Astronomy Lore or an expert in Occultism. You're trained in occult spell attack rolls and spell DCs."
+ },
+ {
+  "id": "spirit-guide-form",
+  "collection": "feats",
+  "name": "Spirit Guide Form",
+  "level": 14,
+  "text": "You're trained with this attack."
+ },
+ {
+  "id": "ilverani-purist",
+  "collection": "feats",
+  "name": "Ilverani Purist",
+  "level": 8,
+  "text": "All twilight speakers are trained to resist the alluring customs of younger peoples, but you have made it your mandate to keep the Ilverani way unchanged. Such dedication has given you a trained eye for subtlety and deception."
+ },
+ {
+  "id": "avenging-runelord-dedication",
+  "collection": "feats",
+  "name": "Avenging Runelord Dedication",
+  "level": 12,
+  "text": "You become trained in Arcana. If you are already trained in Arcana, you become trained in the skill of your choice. At 14th level, you gain expert proficiency in Arcana. At 16th level, if you gain master proficiency in Arcana. You have familiarity with weapons in the polearm and spear weapon groups—for the purposes of proficiency, you treat any of these that are martial weapons as simple weapons and any that are advanced weapons as martial weapons. Use mythic proficiency to determine any attack rolls or spell DCs."
+ },
+ {
+  "id": "warshard-warrior-dedication",
+  "collection": "feats",
+  "name": "Warshard Warrior Dedication",
+  "level": 12,
+  "text": "When you make your daily preparations, choose one weapon in your possession in which you have at least expert proficiency. Whenever you make a Strike with your warshard weapon at mythic proficiency, you double the amount of additional damage you deal with the weapon specialization class feature. When you make Crafting checks to Repair your warshard weapon, your treat your proficiency rank in Crafting as legendary for determining how many Hit Points you restore to the item; in addition, if your Crafting result is a critical failure, you get a failure inst"
+ },
+ {
+  "id": "like-a-roach",
+  "collection": "feats",
+  "name": "Like a Roach",
+  "level": 1,
+  "text": "You don't need a minimum proficiency rank to Subsist in unusual environments, nor do you take a –5 penalty if you Subsist after 8 hours or less of exploration."
+ },
+ {
+  "id": "wonder-worker",
+  "collection": "feats",
+  "name": "Wonder Worker",
+  "level": 20,
+  "text": "You can choose a spell of any tradition for which you're legendary in the associated skill (Arcana for arcane, Nature for primal, Occultism for occult, or Religion for divine)."
+ },
+ {
+  "id": "magical-knowledge",
+  "collection": "feats",
+  "name": "Magical Knowledge",
+  "level": 8,
+  "text": "Increase your proficiency rank in one of Arcana, Nature, Occultism, or Religion from expert to master and in another from trained to expert."
+ },
+ {
+  "id": "resolute",
+  "collection": "feats",
+  "name": "Resolute",
+  "level": 12,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "echo-of-the-fallen",
+  "collection": "feats",
+  "name": "Echo of the Fallen",
+  "level": 4,
+  "text": "When you take this feat, work with your GM to choose one martial weapon and one skill (or an advanced weapon if you're trained in all martial weapons) that are appropriate for the spirit; once you've chosen the weapon and skill, you can't change them."
+ },
+ {
+  "id": "crystal-healing",
+  "collection": "feats",
+  "name": "Crystal Healing",
+  "level": 1,
+  "text": "If you're an expert in Occultism and you use gems whose total value equals or exceeds 50 gp, you gain a +1 item bonus to your Occultism check. If you're a master and the gems' value equals or exceeds 700 gp, the item bonus increases to +2; if you're legendary in Occultism and the gems' value equals or exceeds 15,000 gp, the item bonus increases to +3."
+ },
+ {
+  "id": "sound-mirror",
+  "collection": "feats",
+  "name": "Sound Mirror",
+  "level": 6,
+  "text": "You become trained in the spell attack modifier and spell DC statistics, and your key spellcasting attribute for alter ego archetype spells is Charisma."
+ },
+ {
+  "id": "accursed-magic",
+  "collection": "feats",
+  "name": "Accursed Magic",
+  "level": 8,
+  "text": "If you couldn't already cast occult spells, these spells use Wisdom as your spellcasting attribute, and you become trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "chronocognizance",
+  "collection": "feats",
+  "name": "Chronocognizance",
+  "level": 7,
+  "text": "If you're legendary in Arcana, Nature, Occultism, or Religion, whenever a creature that you can observe gains the benefits of Freeze Time or similar effects, you can observe what happens during the stopped time, though you still can't act yourself for the duration."
+ },
+ {
+  "id": "what-could-have-been",
+  "collection": "feats",
+  "name": "What Could Have Been",
+  "level": 8,
+  "text": "The summoned creature gains a +1 status bonus to any skill check in which you're trained, a +2 status bonus if you're an expert, a +3 status bonus if you're a master, or a +4 status bonus if you're legendary."
+ },
+ {
+  "id": "instigate-psychic-duel",
+  "collection": "feats",
+  "name": "Instigate Psychic Duel",
+  "level": 12,
+  "text": "You can each choose a psychic center for any skill in which you're trained, as you would if you were using that skill to roll initiative for the duel."
+ },
+ {
+  "id": "dream-magic",
+  "collection": "feats",
+  "name": "Dream Magic",
+  "level": 8,
+  "text": "You become trained in the spell attack modifier and spell DC statistics, and your spellcasting attribute for these spells is Wisdom."
+ },
+ {
+  "id": "waking-dream",
+  "collection": "feats",
+  "name": "Waking Dream",
+  "level": 8,
+  "text": "You become trained in the spell attack modifier and spell DC statistics, and your spellcasting attribute for these spells is Wisdom."
+ },
+ {
+  "id": "commitment-to-protection",
+  "collection": "feats",
+  "name": "Commitment to Protection",
+  "level": 6,
+  "text": "If you're legendary in Warfare Lore, when you roll a failure or critical failure, you get a success instead."
+ },
+ {
+  "id": "denounce-tyranny",
+  "collection": "feats",
+  "name": "Denounce Tyranny",
+  "level": 6,
+  "text": "If you're a master in Diplomacy, you can instead target up to five creatures, and if you're legendary in Diplomacy, you can target up to 10 creatures."
+ },
+ {
+  "id": "fabricated-credentials",
+  "collection": "feats",
+  "name": "Fabricated Credentials",
+  "level": 7,
+  "text": "You can Create a Forgery using Deception, rather than Society, and doing so only takes 10 minutes, or 1 minute if you're legendary in Deception."
+ },
+ {
+  "id": "gather-disciples",
+  "collection": "feats",
+  "name": "Gather Disciples",
+  "level": 10,
+  "text": "You can have three groups of disciples at any one time (or five if you're legendary in Religion)."
+ },
+ {
+  "id": "paragon-battle-medicine",
+  "collection": "feats",
+  "name": "Paragon Battle Medicine",
+  "level": 7,
+  "text": "If you are legendary in Medicine, you can choose to reduce the target's frightened or stunned condition by 1 instead, and if you have the Godless Healing feat, you can choose to reduce the target's stupefied or drained condition by 1 instead."
+ },
+ {
+  "id": "holy-bloom",
+  "collection": "feats",
+  "name": "Holy Bloom",
+  "level": 4,
+  "text": "You become trained in spell attack modifier and spell DC, and your spellcasting attribute for these spells is Wisdom."
+ },
+ {
+  "id": "as-on-the-board-so-on-the-battlefield",
+  "collection": "feats",
+  "name": "As on the Board, so on the Battlefield",
+  "level": 7,
+  "text": "You're a master of strategy games, able to translate strategies and mechanics from these games to the actual battles they were created to simulate. You can use your proficiency rank in Games Lore for anything that requires proficiency in Warfare Lore (such as prerequisites) and use your Games Lore modifier in place of your Warfare Lore modifier for checks."
+ },
+ {
+  "id": "tactical-acumen",
+  "collection": "feats",
+  "name": "Tactical Acumen",
+  "level": 2,
+  "text": "If you're legendary in Warfare Lore, reduce any adjustment to the Recall Knowledge check's DC caused by the troop's rarity by 5."
+ },
+ {
+  "id": "specialized-companion-animal-trainer",
+  "collection": "feats",
+  "name": "Specialized Companion (Animal Trainer)",
+  "level": 18,
+  "text": "Increase its proficiency rank in Performance to legendary instead of one of the specialization's skill increases."
+ },
+ {
+  "id": "master-spotter-investigator",
+  "collection": "feats",
+  "name": "Master Spotter (Investigator)",
+  "level": 12,
+  "text": "Your proficiency rank in Perception increases to master."
+ },
+ {
+  "id": "the-harder-they-fall-kingmaker",
+  "collection": "feats",
+  "name": "The Harder They Fall (Kingmaker)",
+  "level": 8,
+  "text": "If you are master in Athletics, the damage increases to 2d8 damage (or 4d8 damage on a critical success)."
+ },
+ {
+  "id": "quick-contacts",
+  "collection": "feats",
+  "name": "Quick Contacts",
+  "level": 2,
+  "text": "If you're legendary in Society, you can form the required connections within 1 hour of entering a new settlement."
+ },
+ {
+  "id": "weapon-expertise",
+  "collection": "classFeatures",
+  "name": "Weapon Expertise",
+  "level": 5,
+  "text": "Your proficiency ranks for simple weapons, martial weapons, and unarmed attacks increase to expert. Your proficiency rank for simple weapons and unarmed attacks increases to expert. Your proficiency ranks for simple weapons, martial weapons, and unarmed attacks increase to expert. Your proficiency ranks for simple weapons and unarmed attacks increase to expert. Your proficiency rank for simple weapons and unarmed attacks increases to expert. Your proficiency ranks for simple weapons and unarmed attacks increase to expert. Your proficiency ranks for simpl"
+ },
+ {
+  "id": "weapon-specialization",
+  "collection": "classFeatures",
+  "name": "Weapon Specialization",
+  "level": 7,
+  "text": "You deal an additional 2 damage with weapons and unarmed attacks in which you are an expert. This damage increases to 3 if you're a master, and 4 if you're legendary."
+ },
+ {
+  "id": "alertness",
+  "collection": "classFeatures",
+  "name": "Alertness",
+  "level": 3,
+  "text": "Your proficiency rank for Perception increases to expert."
+ },
+ {
+  "id": "resolve",
+  "collection": "classFeatures",
+  "name": "Resolve",
+  "level": 7,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "greater-weapon-specialization",
+  "collection": "classFeatures",
+  "name": "Greater Weapon Specialization",
+  "level": 15,
+  "text": "Your damage from weapon specialization increases to 4 with weapons and unarmed attacks in which you're an expert, 6 if you're a master, and 8 if you're legendary."
+ },
+ {
+  "id": "juggernaut",
+  "collection": "classFeatures",
+  "name": "Juggernaut",
+  "level": 7,
+  "text": "Your proficiency rank for Fortitude saves increases to master. Your proficiency rank for Fortitude saves increases to master."
+ },
+ {
+  "id": "shared-vigilance",
+  "collection": "classFeatures",
+  "name": "Shared Vigilance",
+  "level": 3,
+  "text": "Your proficiency rank in Perception and your eidolon's proficiency rank in Perception increase to expert."
+ },
+ {
+  "id": "eidolon-unarmed-expertise",
+  "collection": "classFeatures",
+  "name": "Eidolon Unarmed Expertise",
+  "level": 5,
+  "text": "Its proficiency rank for unarmed attacks increases to expert."
+ },
+ {
+  "id": "shared-reflexes",
+  "collection": "classFeatures",
+  "name": "Shared Reflexes",
+  "level": 9,
+  "text": "Your proficiency rank for Reflex saves and your eidolon's proficiency rank for Reflex saves increase to expert."
+ },
+ {
+  "id": "eidolon-defensive-expertise",
+  "collection": "classFeatures",
+  "name": "Eidolon Defensive Expertise",
+  "level": 11,
+  "text": "Its proficiency rank for unarmored defense increases to expert."
+ },
+ {
+  "id": "simple-weapon-expertise",
+  "collection": "classFeatures",
+  "name": "Simple Weapon Expertise",
+  "level": 11,
+  "text": "Your proficiency rank for simple weapons and unarmed attacks increases to expert. Your proficiency rank for simple weapons and unarmed attacks increases to expert."
+ },
+ {
+  "id": "twin-juggernauts",
+  "collection": "classFeatures",
+  "name": "Twin Juggernauts",
+  "level": 11,
+  "text": "Your proficiency rank for Fortitude saves and your eidolon's proficiency rank for Fortitude saves increase to master."
+ },
+ {
+  "id": "defensive-robes",
+  "collection": "classFeatures",
+  "name": "Defensive Robes",
+  "level": 13,
+  "text": "Your proficiency rank in unarmored defense increases to expert."
+ },
+ {
+  "id": "eidolon-unarmed-mastery",
+  "collection": "classFeatures",
+  "name": "Eidolon Unarmed Mastery",
+  "level": 13,
+  "text": "Its proficiency rank for unarmed attacks increases to master."
+ },
+ {
+  "id": "eidolon-defensive-mastery",
+  "collection": "classFeatures",
+  "name": "Eidolon Defensive Mastery",
+  "level": 19,
+  "text": "Its proficiency rank for unarmored defense increases to master."
+ },
+ {
+  "id": "breakthrough-innovation",
+  "collection": "classFeatures",
+  "name": "Breakthrough Innovation",
+  "level": 7,
+  "text": "Your innovation becomes heavy armor, and your proficiency in your innovation armor (but no other heavy armor) advances to be equal to your proficiency in medium armor. If you're legendary in Crafting, it instead increases to a +30-foot status bonus when you're in Overdrive. - **Marvelous Gears** Your innovation gains expert proficiency in Intimidation, Stealth, and Survival. For any of these skills in which it was already an expert (because of being an advanced construct companion, for example), it gains master proficiency instead. If you have the revolu"
+ },
+ {
+  "id": "reflex-expertise",
+  "collection": "classFeatures",
+  "name": "Reflex Expertise",
+  "level": 3,
+  "text": "Your proficiency rank for Reflex saves increases to expert. Your proficiency rank for Reflex saves increases to expert."
+ },
+ {
+  "id": "inventive-expertise",
+  "collection": "classFeatures",
+  "name": "Inventive Expertise",
+  "level": 9,
+  "text": "Your proficiency rank for your inventor class DC increases to expert."
+ },
+ {
+  "id": "revolutionary-innovation",
+  "collection": "classFeatures",
+  "name": "Revolutionary Innovation",
+  "level": 15,
+  "text": "Finally, your construct becomes legendary in two Intelligence- or Charisma-based skills of your choice."
+ },
+ {
+  "id": "inventive-mastery",
+  "collection": "classFeatures",
+  "name": "Inventive Mastery",
+  "level": 17,
+  "text": "Your proficiency rank for your inventor class DC increases to master."
+ },
+ {
+  "id": "stubborn",
+  "collection": "classFeatures",
+  "name": "Stubborn",
+  "level": 3,
+  "text": "Your proficiency rank for Will saves increases to expert."
+ },
+ {
+  "id": "gunslinger-weapon-mastery",
+  "collection": "classFeatures",
+  "name": "Gunslinger Weapon Mastery",
+  "level": 5,
+  "text": "Your proficiency rank increases to master with simple and martial firearms and crossbows. Your proficiency rank for advanced firearms and crossbows, simple weapons, martial weapons, and unarmed attacks increases to expert."
+ }
+]

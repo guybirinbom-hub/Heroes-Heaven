@@ -1,0 +1,387 @@
+[
+ {
+  "id": "glowing-lantern-fruit",
+  "collection": "items",
+  "name": "Glowing Lantern Fruit",
+  "level": 1,
+  "text": "For the next 8 hours, the *glowing lantern fruit* emits as much light and heat as a bonfire, giving all creatures within 15 feet immunity to the effects of mild and severe cold temperatures for as long as they're within the area."
+ },
+ {
+  "id": "thorn-triad",
+  "collection": "items",
+  "name": "Thorn Triad",
+  "level": 4,
+  "text": "- **Armor** After you cast a plant spell by activating the triad, you gain resistance 2 to bludgeoning and piercing damage and weakness 3 to fire until the end of your next turn, or double the resistance for a non-cantrip spell."
+ },
+ {
+  "id": "thorn-triad-greater",
+  "collection": "items",
+  "name": "Thorn Triad (Greater)",
+  "level": 8,
+  "text": "- **Armor** After you cast a plant spell by activating the triad, you gain resistance 4 to bludgeoning and piercing damage and weakness 3 to fire until the end of your next turn, or double the resistance for a non-cantrip spell."
+ },
+ {
+  "id": "thorn-triad-major",
+  "collection": "items",
+  "name": "Thorn Triad (Major)",
+  "level": 12,
+  "text": "- **Armor** After you cast a plant spell by activating the triad, you gain resistance 6 to bludgeoning and piercing damage and weakness 3 to fire until the end of your next turn, or double the resistance for a non-cantrip spell."
+ },
+ {
+  "id": "janns-prism",
+  "collection": "items",
+  "name": "Jann's Prism",
+  "level": 9,
+  "text": "The light coruscates with two colors chosen by the jann, and you gain resistance 5 to two damage types based on the colors chosen: **red** fire, **orange** acid, **yellow** electricity, **green** poison, **blue** sonic, **indigo** mental, or **violet** force."
+ },
+ {
+  "id": "sparkwarden",
+  "collection": "items",
+  "name": "Sparkwarden",
+  "level": 5,
+  "text": "--- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** An enemy, hazard, or the environment makes an attack against your AC, requires you to attempt a saving throw, or causes you to take damage automatically --- **Effect** Until the end of the current turn, against the triggering effect, you gain a +1 status bonus to AC and saving throws and gain resistance 2 to damage."
+ },
+ {
+  "id": "festrem-mortu",
+  "collection": "items",
+  "name": "Festrem Mortu",
+  "level": 6,
+  "text": "The longer a living creature studies this book, the more the scent of decay appeals to them."
+ },
+ {
+  "id": "prey-mutagen",
+  "collection": "items",
+  "name": "Prey Mutagen",
+  "level": 1,
+  "text": "79 Usage held in 1 hand Bulk L Activate Interact A mixture of fey blood and rare ingredients give you incredible speed but also cause you to become particularly attractive to predators. Benefit You gain a status bonus to your speed and are able to use the following reaction: Timely Dodge Trigger You are targeted by a Strike; Effect You dart aside, gaining a circumstance bonus to AC, then Step after the Strike resolves. Drawback The range at which creatures can detect you with scent or tremorsense doubles. 79 Price 4 gp Bulk L You gain a +10 status bonus "
+ },
+ {
+  "id": "prey-mutagen-lesser",
+  "collection": "items",
+  "name": "Prey Mutagen (Lesser)",
+  "level": 1,
+  "text": "**Activate** ⟨1⟩ Interact --- A mixture of fey blood and rare ingredients give you incredible speed but also cause you to become particularly attractive to predators. **Benefit** You gain a +10 status bonus to your speed and are able to use the following reaction: **Timely Dodge** ⟨5⟩ **Trigger** You are targeted by a Strike **Effect** You dart aside, gaining a +1 circumstance bonus to AC, then Step after the Strike resolves. **Drawback** The range at which creatures can detect you with scent or tremorsense doubles."
+ },
+ {
+  "id": "prey-mutagen-moderate",
+  "collection": "items",
+  "name": "Prey Mutagen (Moderate)",
+  "level": 3,
+  "text": "**Activate** ⟨1⟩ Interact --- A mixture of fey blood and rare ingredients give you incredible speed but also cause you to become particularly attractive to predators. **Benefit** You gain a +20 status bonus to your speed and are able to use the following reaction: **Timely Dodge** ⟨5⟩ **Trigger** You are targeted by a Strike **Effect** You dart aside, gaining a +2 circumstance bonus to AC, then Step after the Strike resolves. **Drawback** The range at which creatures can detect you with scent or tremorsense doubles."
+ },
+ {
+  "id": "prey-mutagen-greater",
+  "collection": "items",
+  "name": "Prey Mutagen (Greater)",
+  "level": 11,
+  "text": "**Activate** ⟨1⟩ Interact --- A mixture of fey blood and rare ingredients give you incredible speed but also cause you to become particularly attractive to predators. **Benefit** You gain a +30 status bonus to your speed and are able to use the following reaction: **Timely Dodge** ⟨5⟩ **Trigger** You are targeted by a Strike **Effect** You dart aside, gaining a +3 circumstance bonus to AC, then Step after the Strike resolves. **Drawback** The range at which creatures can detect you with scent or tremorsense doubles."
+ },
+ {
+  "id": "prey-mutagen-major",
+  "collection": "items",
+  "name": "Prey Mutagen (Major)",
+  "level": 17,
+  "text": "**Activate** ⟨1⟩ Interact --- A mixture of fey blood and rare ingredients give you incredible speed but also cause you to become particularly attractive to predators. **Benefit** You gain a +40 status bonus to your speed and are able to use the following reaction: **Timely Dodge** ⟨5⟩ **Trigger** You are targeted by a Strike **Effect** You dart aside, gaining a +4 circumstance bonus to AC, then Step after the Strike resolves. **Drawback** The range at which creatures can detect you with scent or tremorsense doubles."
+ },
+ {
+  "id": "thumper-snare",
+  "collection": "items",
+  "name": "Thumper Snare",
+  "level": 3,
+  "text": "This small box contains a clockwork mechanism that rhythmically thumps the ground, allowing creatures with tremorsense to detect it at up to double their usual range."
+ },
+ {
+  "id": "demons-knot",
+  "collection": "items",
+  "name": "Demon's Knot",
+  "level": 15,
+  "text": "You become immune to the confused and controlled conditions. You gain weakness to cold iron 10 and holy 10."
+ },
+ {
+  "id": "toxic-effluence",
+  "collection": "items",
+  "name": "Toxic Effluence",
+  "level": 10,
+  "text": "**Activate** ⟨2⟩ Interact --- This dark green sludge has a caustic scent and gritty texture."
+ },
+ {
+  "id": "tome-of-dripping-shadows",
+  "collection": "items",
+  "name": "Tome of Dripping Shadows",
+  "level": 10,
+  "text": "This book constantly drips evanescent tendrils of shadow that seethe and writhe. While you hold the tome, you gain darkvision; if you already have darkvision, you gain greater darkvision instead. For the next minute, you become concealed to all creatures and you are hidden from the triggering creature, regardless of what precise sense it has."
+ },
+ {
+  "id": "horn-of-rust",
+  "collection": "items",
+  "name": "Horn of Rust",
+  "level": 5,
+  "text": "Worshippers of Xar-Azmak are immune to this effect. If it critically fails, not only is the disease not countered, but you are exposed to the disease and must attempt a saving throw against it to resist contracting the affliction."
+ },
+ {
+  "id": "nyctessas-staff",
+  "collection": "items",
+  "name": "Nyctessa's Staff",
+  "level": 4,
+  "text": "When you damage a creature with Nyctessa's staff, that creature gains weakness 2 to void damage until the end of your next turn."
+ },
+ {
+  "id": "energy-resistant",
+  "collection": "items",
+  "name": "Energy-Resistant",
+  "level": 8,
+  "text": "You gain resistance 5 to acid, cold, electricity, or fire. Multiple *energy-resistant* runes can be etched onto a suit of armor; rather than using only the strongest effect, each must provide resistance to a different damage type. For instance, a *+2 acid-resistant greater fire-resistant breastplate* would give you acid resistance 5 and fire resistance 10."
+ },
+ {
+  "id": "energy-resistant-greater",
+  "collection": "items",
+  "name": "Energy-Resistant (Greater)",
+  "level": 12,
+  "text": "You gain resistance 10 to acid, cold, electricity, or fire. Multiple *energy-resistant* runes can be etched onto a suit of armor; rather than using only the strongest effect, each must provide resistance to a different damage type. For instance, a *+2 acid-resistant greater fire-resistant breastplate* would give you acid resistance 5 and fire resistance 10."
+ },
+ {
+  "id": "moonlit-chain",
+  "collection": "items",
+  "name": "Moonlit Chain",
+  "level": 7,
+  "text": "You can see in moonlight as though you had low-light vision."
+ },
+ {
+  "id": "force-shield",
+  "collection": "items",
+  "name": "Force Shield",
+  "level": 9,
+  "text": "--- **Activate—Force Bubble** ⟨1⟩ (concentrate, force) **Frequency** once per day **Effect** The shield surrounds you with a bubble of force that protects you from harm, granting you resistance 5 to physical damage for 1 minute."
+ },
+ {
+  "id": "forge-warden",
+  "collection": "items",
+  "name": "Forge Warden",
+  "level": 10,
+  "text": "You and any adjacent allies have fire resistance 5 while you have the shield raised."
+ },
+ {
+  "id": "shockwave",
+  "collection": "items",
+  "name": "Shockwave",
+  "level": 13,
+  "text": "You're immune to this splash damage."
+ },
+ {
+  "id": "icicle",
+  "collection": "items",
+  "name": "Icicle",
+  "level": 16,
+  "text": "While wielding it, you gain fire resistance 5."
+ },
+ {
+  "id": "sky-hammer",
+  "collection": "items",
+  "name": "Sky Hammer",
+  "level": 20,
+  "text": "You are immune to the *fireball's* effect, though your allies are not."
+ },
+ {
+  "id": "darkvision-elixir",
+  "collection": "items",
+  "name": "Darkvision Elixir",
+  "level": 2,
+  "text": "Darkvision Elixir Source Player Core 2 pg. You gain darkvision for the listed duration. Darkvision Elixir (Lesser) Source Player Core 2 pg. Darkvision Elixir (Moderate) Source Player Core 2 pg. Darkvision Elixir (Greater) Source Player Core 2 pg."
+ },
+ {
+  "id": "antimagic-oil",
+  "collection": "items",
+  "name": "Antimagic Oil",
+  "level": 20,
+  "text": "When you apply this oil to armor, the creature wearing the armor becomes immune to all spells, effects of magic items (the wearer's and those of others), and effects with the magical trait for 1 minute."
+ },
+ {
+  "id": "obfuscation-oil",
+  "collection": "items",
+  "name": "Obfuscation Oil",
+  "level": 15,
+  "text": "It becomes immune to divination magic of 8th rank or lower (such as Locate)."
+ },
+ {
+  "id": "potion-of-resistance",
+  "collection": "items",
+  "name": "Potion of Resistance",
+  "level": 6,
+  "text": "Potion of Resistance Source GM Core pg. 260 Usage held in 1 hand Bulk L Activate (manipulate) Drinking this thick, fortifying potion grants resistance against a single damage type for 1 hour. Each potion of resistance is created to defend against acid, cold, electricity, fire, or sonic damage (and is called a lesser potion of fire resistance or the like). Potion of Resistance (Lesser) Source GM Core pg. 563 Price 45 gp You gain resistance 5 to the appropriate energy type Potion of Resistance (Moderate) Source GM Core pg. 563 Price 180 gp You gain resista"
+ },
+ {
+  "id": "time-shield-potion",
+  "collection": "items",
+  "name": "Time Shield Potion",
+  "level": 13,
+  "text": "You can't act or be targeted, you become immune to all effects, and you vanish from your space; as far as the universe is concerned, you simply don't exist as long as the potion lasts."
+ },
+ {
+  "id": "truth-potion",
+  "collection": "items",
+  "name": "Truth Potion",
+  "level": 6,
+  "text": "If you fail this saving throw, you must answer the question truthfully if you are able to do so; if you succeed, you are temporarily immune to further attempts to ask the same question within the potion's duration."
+ },
+ {
+  "id": "staff-of-the-unblinking-eye",
+  "collection": "items",
+  "name": "Staff of the Unblinking Eye",
+  "level": 6,
+  "text": "- **Cantrip** Detect Magic - **1st** Sure Strike - **2nd** Darkvision, See the Unseen, Translate **Craft Requirements** Supply one casting of all listed ranks of all listed spells."
+ },
+ {
+  "id": "staff-of-the-unblinking-eye-greater",
+  "collection": "items",
+  "name": "Staff of the Unblinking Eye (Greater)",
+  "level": 10,
+  "text": "- **Cantrip** Detect Magic - **1st** Sure Strike - **2nd** Darkvision, See the Unseen, Translate - **3rd** Darkvision, Mind Reading - **4th** , Detect Scrying, Telepathy **Craft Requirements** Supply one casting of all listed ranks of all listed spells."
+ },
+ {
+  "id": "staff-of-the-unblinking-eye-major",
+  "collection": "items",
+  "name": "Staff of the Unblinking Eye (Major)",
+  "level": 14,
+  "text": "- **Cantrip** Detect Magic - **1st** Sure Strike - **2nd** Darkvision, See the Unseen, Translate - **3rd** Darkvision, Mind Reading - **4th** , Detect Scrying, Telepathy - **5th** Mind Probe, Scouting Eye - **6th** Telepathy, Truesight **Craft Requirements** Supply one casting of all listed ranks of all listed spells."
+ },
+ {
+  "id": "aeon-stone",
+  "collection": "items",
+  "name": "Aeon Stone",
+  "level": 1,
+  "text": "You gain resistance 3 to persistent damage. At the end of any turn where the persistent damage can't overcome this resistance, end that condition. Aeon Stone (Crescent) Source Pathfinder #215: To Blot Out the Sun pg. 79 Price 225 gp Once holy relics, the creation of crescent aeon stones was inspired by Acavna, goddess of the moon and protection. The crescent aeon stone continually sheds dim light in a 5-foot radius. Activate—Moonbeam (concentrate, divine, holy, light, spirit) Frequency once per day; Effect The crescent aeon stone fires a blast of silvery"
+ },
+ {
+  "id": "aeon-stone-preserving",
+  "collection": "items",
+  "name": "Aeon Stone (Preserving)",
+  "level": 5,
+  "text": "You gain resistance 3 to persistent damage. At the end of any turn where the persistent damage can't overcome this resistance, end that condition."
+ },
+ {
+  "id": "aeon-stone-vital-amplification",
+  "collection": "items",
+  "name": "Aeon Stone (Vital amplification)",
+  "level": 7,
+  "text": "--- A vital amplification aeon stone improves the flow of vital energy through your body, speeding the healing process and safeguarding your body from life-draining effects. The resonant power grants you resistance 5 to void damage."
+ },
+ {
+  "id": "channel-protection-amulet",
+  "collection": "items",
+  "name": "Channel Protection Amulet",
+  "level": 3,
+  "text": "When wearing this amulet, you gain resistance 5 against damage from Harm spells if you're living, or against Heal spells if you're undead."
+ },
+ {
+  "id": "charm-of-resistance",
+  "collection": "items",
+  "name": "Charm of Resistance",
+  "level": 6,
+  "text": "This charm, normally hung from the belt or worn around the neck, grants you resistance 5 against one type of energy damage: acid, cold, electricity, fire, or sonic. For instance, a *charm of cold resistance* could be carved in the shape of a yeti, whereas a *charm of fire resistance* would be made from volcanic glass."
+ },
+ {
+  "id": "dread-blindfold",
+  "collection": "items",
+  "name": "Dread Blindfold",
+  "level": 17,
+  "text": "When tied over your eyes, this ragged strip of black linen gives you a +3 item bonus to Intimidation checks and darkvision. You can see through the blindfold, but only using darkvision. This is an emotion, fear, and mental effect, and your allies become immune to it after about a week. The creature is then temporarily immune for 24 hours."
+ },
+ {
+  "id": "eyes-of-the-cat",
+  "collection": "items",
+  "name": "Eyes of the Cat",
+  "level": 9,
+  "text": "They grant you low-light vision and a +2 item bonus to Perception checks that involve sight."
+ },
+ {
+  "id": "obsidian-goggles",
+  "collection": "items",
+  "name": "Obsidian Goggles",
+  "level": 5,
+  "text": "--- **Activate—Darkvision** ⟨1⟩ (manipulate) **Frequency** once per day **Effect** Adjusting your goggles, you gain darkvision for 1 hour."
+ },
+ {
+  "id": "obsidian-goggles-greater",
+  "collection": "items",
+  "name": "Obsidian Goggles (Greater)",
+  "level": 11,
+  "text": "--- **Activate—Darkvision** ⟨1⟩ (manipulate) **Frequency** any number of times per day **Effect** Adjusting your goggles, you gain darkvision until you deactivate it as an Interact action or the item is no longer invested by you, whichever comes first."
+ },
+ {
+  "id": "obsidian-goggles-major",
+  "collection": "items",
+  "name": "Obsidian Goggles (Major)",
+  "level": 18,
+  "text": "--- **Activate—Darkvision** ⟨1⟩ (manipulate) **Frequency** any number of times per day **Effect** Adjusting your goggles, you gain *greater darkvision* until you deactivate it as an Interact action or the item is no longer invested by you, whichever comes first."
+ },
+ {
+  "id": "shining-symbol-greater",
+  "collection": "items",
+  "name": "Shining Symbol (Greater)",
+  "level": 9,
+  "text": "Creatures in the light receive a –2 status penalty to Deception and Stealth checks, and while it's active your enemies in the light gain weakness 5 to spirit damage."
+ },
+ {
+  "id": "mirror-of-sorshen",
+  "collection": "items",
+  "name": "Mirror of Sorshen",
+  "level": 25,
+  "text": "At the GM's discretion, a truly innocent creature or a creature that has renounced all worldly pleasures might be immune to the mirror's fascination. **Activate—Irresistible Desire** ⟨3⟩ (concentrate, emotion, incapacitation, mental) **Requirements** The target must be fascinated by the mirror --- **Effect** You control the target for 30 days, with the effect of a critically failed saving throw against Dominate. **Destruction** The *Mirror of Sorshen* shatters into a thousand pieces if an intelligent but completely innocent creature resists the mirror's "
+ },
+ {
+  "id": "philosophers-extractor",
+  "collection": "items",
+  "name": "Philosopher's Extractor",
+  "level": 25,
+  "text": "This could grant one of several abilities such as a dragon's breath, darkvision, flight, frightful presence, or immunity to sleep."
+ },
+ {
+  "id": "arctic-worm-chitin-shield",
+  "collection": "items",
+  "name": "Arctic Worm Chitin Shield",
+  "level": 12,
+  "text": "Until the beginning of your next turn, you gain resistance 5 to cold and any creature that ends its turn adjacent to you takes 3d6 damage ( save)."
+ },
+ {
+  "id": "catoblepas-maul",
+  "collection": "items",
+  "name": "Catoblepas Maul",
+  "level": 13,
+  "text": "The putrid stench emanating from the catoblepas antlers adorning this *+2 greater striking Greater Crushing maul* interferes with your sense of smell. A creature that succeeds at its save becomes temporarily immune to Vile Stench for 1 minute."
+ },
+ {
+  "id": "storm-herald",
+  "collection": "items",
+  "name": "Storm Herald",
+  "level": 12,
+  "text": "This iridescent, black *+2 striking Shock Thundering fighting fan* is crafted from the crackling feathers of thunderbirds to resemble one of the beast's mighty wings. Channeling the avian's tempestuous nature, you are surrounded by a stormy shell of wind and electricity while wielding a *storm herald*, granting you resistance 5 to electricity and sonic damage."
+ },
+ {
+  "id": "fulmination-fang",
+  "collection": "items",
+  "name": "Fulmination Fang",
+  "level": 4,
+  "text": "--- **Activate—Lightning Rod** ⟨5⟩ **Trigger** You take electricity damage **Effect** You gain resistance 5 to the triggering damage, and the *fulmination fang* crackles with the absorbed energy."
+ },
+ {
+  "id": "nightmares-lament",
+  "collection": "items",
+  "name": "Nightmare's Lament",
+  "level": 6,
+  "text": "A creature that begins its turn in the area becomes Sickened 2 ( negates) and is then temporarily immune to the sickness from the smoke for 1 minute. The wielder of the *nightmare's lament*, any creature currently holding its breath (or that does not need to breathe), and any creature immune to poison are immune to the aura's sickened effect but not the concealment."
+ },
+ {
+  "id": "cauthooj-bagpipes",
+  "collection": "items",
+  "name": "Cauthooj Bagpipes",
+  "level": 13,
+  "text": "Each creature within a must attempt a save to resist the song. Creatures that attempt this save become temporarily immune to Disorienting Fugue for 1 minute. --- **Critical Success** The target is unaffected and its temporary immunity to Disorienting Fugue increases to 1 hour."
+ },
+ {
+  "id": "animal-pheromones",
+  "collection": "items",
+  "name": "Animal Pheromones",
+  "level": 5,
+  "text": "The animal is then temporarily immune to the pheromones for 24 hours."
+ }
+]

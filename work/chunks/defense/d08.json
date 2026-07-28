@@ -1,0 +1,387 @@
+[
+ {
+  "id": "perfect-droplet",
+  "collection": "items",
+  "name": "Perfect Droplet",
+  "level": 3,
+  "text": "- **Armor** You gain resistance 2 to water effects and attacks by water creatures."
+ },
+ {
+  "id": "perfect-droplet-greater",
+  "collection": "items",
+  "name": "Perfect Droplet (Greater)",
+  "level": 8,
+  "text": "- **Armor** You gain resistance 5 to water effects and attacks by water creatures."
+ },
+ {
+  "id": "trinity-geode",
+  "collection": "items",
+  "name": "Trinity Geode",
+  "level": 3,
+  "text": "- **Armor** After you cast an earth spell by Activating the *geode*, you gain resistance 1 to physical damage (except adamantine) until the end of your next turn, or double the resistance for a non-cantrip spell."
+ },
+ {
+  "id": "trinity-geode-greater",
+  "collection": "items",
+  "name": "Trinity Geode (Greater)",
+  "level": 8,
+  "text": "- **Armor** After you cast an earth spell by Activating the *geode*, you gain resistance 3 to physical damage (except adamantine) until the end of your next turn, or double the resistance for a non-cantrip spell."
+ },
+ {
+  "id": "trinity-geode-major",
+  "collection": "items",
+  "name": "Trinity Geode (Major)",
+  "level": 12,
+  "text": "- **Armor** After you cast an earth spell by Activating the *geode*, you gain resistance 5 to physical damage (except adamantine) until the end of your next turn, or double the resistance for a non-cantrip spell."
+ },
+ {
+  "id": "vapor-sphere",
+  "collection": "items",
+  "name": "Vapor Sphere",
+  "level": 14,
+  "text": "Against the trap's reaction or the attack, you gain resistance 25 to physical damage and are immune to precision damage."
+ },
+ {
+  "id": "backfire-mantle",
+  "collection": "items",
+  "name": "Backfire Mantle",
+  "level": 3,
+  "text": "You also gain resistance 3 to splash damage from your own alchemical items and those of your allies."
+ },
+ {
+  "id": "rebounding-breastplate",
+  "collection": "items",
+  "name": "Rebounding Breastplate",
+  "level": 20,
+  "text": "While wearing the armor, you gain resistance 5 to bludgeoning, piercing, and slashing damage and resistance 10 to force damage."
+ },
+ {
+  "id": "rhino-hide-brooch",
+  "collection": "items",
+  "name": "Rhino Hide Brooch",
+  "level": 5,
+  "text": "When activated, the talisman grants you resistance 5 to physical damage until the end of the current creature's turn. This resistance applies to the triggering attack."
+ },
+ {
+  "id": "warcallers-chime",
+  "collection": "items",
+  "name": "Warcaller's Chime",
+  "level": 4,
+  "text": "Warcaller's Chime of Resistance Source Pathfinder #170: Spoken on the Song Wind pg. You and creatures in the aura gain resistance 5 against the damage type you chose."
+ },
+ {
+  "id": "warcallers-chime-of-resistance",
+  "collection": "items",
+  "name": "Warcaller's Chime of Resistance",
+  "level": 5,
+  "text": "You and creatures in the aura gain resistance 5 against the damage type you chose."
+ },
+ {
+  "id": "deployable-cover-ballistic-cover",
+  "collection": "items",
+  "name": "Deployable Cover (Ballistic Cover)",
+  "level": 2,
+  "text": "While a creature has cover from Taking Cover behind a ballistic cover, it gains resistance 2 to piercing damage from ranged weapons and ranged unarmed attacks."
+ },
+ {
+  "id": "clockwork-goggles",
+  "collection": "items",
+  "name": "Clockwork Goggles",
+  "level": 1,
+  "text": "When activated, the clockwork mechanism on the goggles rapidly switches between the different lenses, granting you low-light vision for 10 minutes."
+ },
+ {
+  "id": "clockwork-goggles-greater",
+  "collection": "items",
+  "name": "Clockwork Goggles (Greater)",
+  "level": 4,
+  "text": "When activated, the clockwork mechanism on the goggles rapidly switches between the different lenses, granting you low-light vision and darkvision for 10 minutes."
+ },
+ {
+  "id": "clockwork-goggles-major",
+  "collection": "items",
+  "name": "Clockwork Goggles (Major)",
+  "level": 8,
+  "text": "When activated, the clockwork mechanism on the goggles rapidly switches between the different lenses, granting you low-light vision, darkvision, and the effects of See the Unseen for 10 minutes."
+ },
+ {
+  "id": "arboreals-revenge",
+  "collection": "items",
+  "name": "Arboreal's Revenge",
+  "level": 6,
+  "text": "You gain weakness 5 to fire and the flat check for you to recover from persistent fire damage increases from 15 to 17, or from 10 to 12 if you receive appropriate help. On a failure, they take a –10-foot circumstance penalty to their Speeds as roots rapidly sprout from their wounds, which lasts until they escape show-dc=all dc=20. However, the weakness to fire imposed by oaken resilience is cumulative with the weakness to fire imposed by this weapon's curse, for a total of weakness 8 to fire."
+ },
+ {
+  "id": "pact-bound-pistol",
+  "collection": "items",
+  "name": "Pact-Bound Pistol",
+  "level": 10,
+  "text": "You become immune to fire damage and the *pact-bound pistol* becomes a +2 striking greater fearsome dueling pistol."
+ },
+ {
+  "id": "reapers-grasp",
+  "collection": "items",
+  "name": "Reaper's Grasp",
+  "level": 11,
+  "text": "Creatures whose souls are protected by outside forces, such as a lich's soul cage, are immune to this effect, though the process, while painful, does not prevent the soul from going to the afterlife or being resurrected."
+ },
+ {
+  "id": "aromatic-ammunition",
+  "collection": "items",
+  "name": "Aromatic Ammunition",
+  "level": 2,
+  "text": "A creature hit by an activated aromatic ammunition gains a distinct odor for up to 1 hour or until the scent is washed off (requiring at least a gallon of water and 10 minutes of scrubbing). Any creatures within 30 feet smell the target, allowing even those with a weak sense of smell to detect its presence, and all creatures gain a +1 item bonus to Track the affected creature for as long as it has the odor. A creature that has imprecise or precise scent doubles the range at which they can detect the target using their scent compared to the normal range o"
+ },
+ {
+  "id": "eroding-bullet",
+  "collection": "items",
+  "name": "Eroding Bullet",
+  "level": 5,
+  "text": "Handling an eroding bullet without gloves deals 1 damage and leaves the putrid scent coated on your fingers."
+ },
+ {
+  "id": "exsanguinating-ammunition",
+  "collection": "items",
+  "name": "Exsanguinating Ammunition",
+  "level": 4,
+  "text": "For 1 minute after you deal damage to a creature with an activated exsanguinating ammunition that creature gains weakness 1 to persistent bleed damage."
+ },
+ {
+  "id": "exsanguinating-ammunition-greater",
+  "collection": "items",
+  "name": "Exsanguinating Ammunition (Greater)",
+  "level": 8,
+  "text": "For 1 minute after you deal damage to a creature with an activated exsanguinating ammunition that creature gains weakness 3 to persistent bleed damage."
+ },
+ {
+  "id": "exsanguinating-ammunition-major",
+  "collection": "items",
+  "name": "Exsanguinating Ammunition (Major)",
+  "level": 12,
+  "text": "For 1 minute after you deal damage to a creature with an activated exsanguinating ammunition that creature gains weakness 5 to persistent bleed damage."
+ },
+ {
+  "id": "darkvision-scope",
+  "collection": "items",
+  "name": "Darkvision Scope",
+  "level": 5,
+  "text": "**Activate—See Through Night** ⟨1⟩ (manipulate) --- **Effect** You gain darkvision until the beginning of your next turn, as long as you continue to look through the scope."
+ },
+ {
+  "id": "darkvision-scope-greater",
+  "collection": "items",
+  "name": "Darkvision Scope (Greater)",
+  "level": 15,
+  "text": "**Activate—See Through Night** ⟨1⟩ (manipulate) --- **Effect** You gain greater darkvision until the beginning of your next turn, as long as you continue to look through the scope."
+ },
+ {
+  "id": "admonishing-band",
+  "collection": "items",
+  "name": "Admonishing Band",
+  "level": 4,
+  "text": "If you already have the Warning Shot feat, the target doesn't become temporarily immune to your Demoralize, potentially allowing you to Demoralize them again."
+ },
+ {
+  "id": "scarab-cuirass",
+  "collection": "items",
+  "name": "Scarab Cuirass",
+  "level": 10,
+  "text": "You gain resistance 5 to void damage."
+ },
+ {
+  "id": "sulfur-bomb",
+  "collection": "items",
+  "name": "Sulfur Bomb",
+  "level": 1,
+  "text": "Creatures hit with this bomb are temporarily immune to the effects of the bomb for 1 minute."
+ },
+ {
+  "id": "sulfur-bomb-lesser",
+  "collection": "items",
+  "name": "Sulfur Bomb (Lesser)",
+  "level": 1,
+  "text": "Creatures hit with this bomb are temporarily immune to the effects of the bomb for 1 minute."
+ },
+ {
+  "id": "sulfur-bomb-moderate",
+  "collection": "items",
+  "name": "Sulfur Bomb (Moderate)",
+  "level": 3,
+  "text": "Creatures hit with this bomb are temporarily immune to the effects of the bomb for 1 minute."
+ },
+ {
+  "id": "sulfur-bomb-greater",
+  "collection": "items",
+  "name": "Sulfur Bomb (Greater)",
+  "level": 11,
+  "text": "Creatures hit with this bomb are temporarily immune to the effects of the bomb for 1 minute."
+ },
+ {
+  "id": "sulfur-bomb-major",
+  "collection": "items",
+  "name": "Sulfur Bomb (Major)",
+  "level": 17,
+  "text": "Creatures hit with this bomb are temporarily immune to the effects of the bomb for 1 minute."
+ },
+ {
+  "id": "cold-comfort",
+  "collection": "items",
+  "name": "Cold Comfort",
+  "level": 7,
+  "text": "The entire ice block has AC 10, Hardness 10, and 40 Hit Points, and it's immune to critical hits, cold damage, and precision damage."
+ },
+ {
+  "id": "cold-comfort-lesser",
+  "collection": "items",
+  "name": "Cold Comfort (Lesser)",
+  "level": 7,
+  "text": "The entire ice block has AC 10, Hardness 10, and 40 Hit Points, and it's immune to critical hits, cold damage, and precision damage."
+ },
+ {
+  "id": "cold-comfort-greater",
+  "collection": "items",
+  "name": "Cold Comfort (Greater)",
+  "level": 15,
+  "text": "The entire ice block has AC 10, Hardness 10, and 40 Hit Points, and it's immune to critical hits, cold damage, and precision damage."
+ },
+ {
+  "id": "dragonfly-potion",
+  "collection": "items",
+  "name": "Dragonfly Potion",
+  "level": 12,
+  "text": "You gain a fly Speed equal to your land Speed. Additionally, you gain low-light vision and a +2 item bonus to visual Perception checks, and you can't be flanked except by creatures higher level than you are (though lower-level creatures can still help their higher-level allies flank)."
+ },
+ {
+  "id": "toadskin-salve",
+  "collection": "items",
+  "name": "Toadskin Salve",
+  "level": 3,
+  "text": "--- **Activate** ⟨5⟩ Interact **Trigger** You are hit with a melee attack that deals physical damage --- **Effect** The mucus dulls the blow, granting you resistance 3 to physical damage against the triggering attack."
+ },
+ {
+  "id": "toadskin-salve-greater",
+  "collection": "items",
+  "name": "Toadskin Salve (Greater)",
+  "level": 7,
+  "text": "--- **Activate** ⟨5⟩ Interact **Trigger** You are hit with a melee attack that deals physical damage --- **Effect** The mucus dulls the blow, granting you resistance 5 to physical damage against the triggering attack."
+ },
+ {
+  "id": "toadskin-salve-major",
+  "collection": "items",
+  "name": "Toadskin Salve (Major)",
+  "level": 11,
+  "text": "--- **Activate** ⟨5⟩ Interact **Trigger** You are hit with a melee attack that deals physical damage --- **Effect** The mucus dulls the blow, granting you resistance 8 to physical damage against the triggering attack."
+ },
+ {
+  "id": "rampart-shield",
+  "collection": "items",
+  "name": "Rampart Shield",
+  "level": 12,
+  "text": "The rampart is immune to critical hits and precision damage."
+ },
+ {
+  "id": "crown-of-insight",
+  "collection": "items",
+  "name": "Crown of Insight",
+  "level": 7,
+  "text": "All creatures in the area are then temporarily immune to your crown of insight for 24 hours."
+ },
+ {
+  "id": "psychic-brigandine",
+  "collection": "items",
+  "name": "Psychic Brigandine",
+  "level": 13,
+  "text": "You gain resistance 5 to mental damage."
+ },
+ {
+  "id": "fire-and-iceberg",
+  "collection": "items",
+  "name": "Fire and Iceberg",
+  "level": 7,
+  "text": "The dueling sensations make some diners sweat and others shiver, but all leave with a lasting sense of heat and cold that make other sources pale in comparison. When you consume the salad, you gain resistance 5 to fire and cold for 1 minute."
+ },
+ {
+  "id": "energy-robe",
+  "collection": "items",
+  "name": "Energy Robe",
+  "level": 7,
+  "text": "50 Price 320 gp Bulk L You gain resistance 5 to fire. When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up. 50 Price 450 gp Bulk L You gain resistance 5 to cold. 50 Price 575 gp Bulk L You gain resistance 5 to acid. When the robe is activated, you gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds. 50 Price 900 gp Bulk L You gain resistance 5 to electricity. When the robe is activated, you gain a fly Speed equal to your Speed for 1 minu"
+ },
+ {
+  "id": "energy-robe-fire",
+  "collection": "items",
+  "name": "Energy Robe (Fire)",
+  "level": 7,
+  "text": "50 Price 320 gp Bulk L You gain resistance 5 to fire. When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up. 50 Price 450 gp Bulk L You gain resistance 5 to cold. 50 Price 575 gp Bulk L You gain resistance 5 to acid. When the robe is activated, you gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds. 50 Price 900 gp Bulk L You gain resistance 5 to electricity. When the robe is activated, you gain a fly Speed equal to your Speed for 1 minu"
+ },
+ {
+  "id": "energy-robe-cold",
+  "collection": "items",
+  "name": "Energy Robe (Cold)",
+  "level": 8,
+  "text": "50 Price 320 gp Bulk L You gain resistance 5 to fire. When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up. 50 Price 450 gp Bulk L You gain resistance 5 to cold. 50 Price 575 gp Bulk L You gain resistance 5 to acid. When the robe is activated, you gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds. 50 Price 900 gp Bulk L You gain resistance 5 to electricity. When the robe is activated, you gain a fly Speed equal to your Speed for 1 minu"
+ },
+ {
+  "id": "energy-robe-acid",
+  "collection": "items",
+  "name": "Energy Robe (Acid)",
+  "level": 9,
+  "text": "50 Price 320 gp Bulk L You gain resistance 5 to fire. When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up. 50 Price 450 gp Bulk L You gain resistance 5 to cold. 50 Price 575 gp Bulk L You gain resistance 5 to acid. When the robe is activated, you gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds. 50 Price 900 gp Bulk L You gain resistance 5 to electricity. When the robe is activated, you gain a fly Speed equal to your Speed for 1 minu"
+ },
+ {
+  "id": "energy-robe-electricity",
+  "collection": "items",
+  "name": "Energy Robe (Electricity)",
+  "level": 10,
+  "text": "50 Price 320 gp Bulk L You gain resistance 5 to fire. When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up. 50 Price 450 gp Bulk L You gain resistance 5 to cold. 50 Price 575 gp Bulk L You gain resistance 5 to acid. When the robe is activated, you gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds. 50 Price 900 gp Bulk L You gain resistance 5 to electricity. When the robe is activated, you gain a fly Speed equal to your Speed for 1 minu"
+ },
+ {
+  "id": "swarmsuit",
+  "collection": "items",
+  "name": "Swarmsuit",
+  "level": 1,
+  "text": "You gain resistance 3 to physical damage from swarms. Explorer's clothing altered in this way has a Dexterity cap of +2, check penalty of -1, and Speed penalty of -5 feet regardless of your Strength."
+ },
+ {
+  "id": "abysium-armor",
+  "collection": "items",
+  "name": "Abysium Armor",
+  "level": 12,
+  "text": "96 Usage worn armor Bulk varies by armor Base Material Abysium Typically only creatures immune to abysium's effects would don abysium armor. Afterwards, the creature is temporarily immune for 1 minute, but if they remain within the area for longer than 1 minute, they automatically critically fail the next save."
+ },
+ {
+  "id": "abysium-armor-standard-grade",
+  "collection": "items",
+  "name": "Abysium Armor (Standard-Grade)",
+  "level": 12,
+  "text": "96 Usage worn armor Bulk varies by armor Base Material Abysium Typically only creatures immune to abysium's effects would don abysium armor. Afterwards, the creature is temporarily immune for 1 minute, but if they remain within the area for longer than 1 minute, they automatically critically fail the next save."
+ },
+ {
+  "id": "abysium-armor-high-grade",
+  "collection": "items",
+  "name": "Abysium Armor (High-Grade)",
+  "level": 19,
+  "text": "96 Usage worn armor Bulk varies by armor Base Material Abysium Typically only creatures immune to abysium's effects would don abysium armor. Afterwards, the creature is temporarily immune for 1 minute, but if they remain within the area for longer than 1 minute, they automatically critically fail the next save."
+ },
+ {
+  "id": "siccatite-shield",
+  "collection": "items",
+  "name": "Siccatite Shield",
+  "level": 8,
+  "text": "Standard-grade siccatite shields have resistance 10 to the corresponding energy type: fire damage for a hot siccatite shield or cold damage for a cold siccatite shield, as it takes even more extreme temperatures to affect them. They also provide some resistance to opposing temperatures because of their own extreme temperature, which extends to you when you Raise the Shield. The shield has resistance 5 to the opposing damage type (cold damage for a hot siccatite shield or fire damage for a cold siccatite shield), and while you have a siccatite shield Rais"
+ },
+ {
+  "id": "siccatite-buckler-standard-grade",
+  "collection": "items",
+  "name": "Siccatite Buckler (Standard-Grade)",
+  "level": 8,
+  "text": "Standard-grade siccatite shields have resistance 10 to the corresponding energy type: fire damage for a hot siccatite shield or cold damage for a cold siccatite shield, as it takes even more extreme temperatures to affect them. They also provide some resistance to opposing temperatures because of their own extreme temperature, which extends to you when you Raise the Shield. The shield has resistance 5 to the opposing damage type (cold damage for a hot siccatite shield or fire damage for a cold siccatite shield), and while you have a siccatite shield Rais"
+ },
+ {
+  "id": "siccatite-shield-standard-grade",
+  "collection": "items",
+  "name": "Siccatite Shield (Standard-Grade)",
+  "level": 8,
+  "text": "Standard-grade siccatite shields have resistance 10 to the corresponding energy type: fire damage for a hot siccatite shield or cold damage for a cold siccatite shield, as it takes even more extreme temperatures to affect them. They also provide some resistance to opposing temperatures because of their own extreme temperature, which extends to you when you Raise the Shield. The shield has resistance 5 to the opposing damage type (cold damage for a hot siccatite shield or fire damage for a cold siccatite shield), and while you have a siccatite shield Rais"
+ }
+]

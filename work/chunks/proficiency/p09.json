@@ -1,0 +1,387 @@
+[
+ {
+  "id": "cognitive-mutagen",
+  "collection": "items",
+  "name": "Cognitive Mutagen",
+  "level": 1,
+  "text": "You become trained in one Intelligence-based skill, chosen at creation. You become trained in one skill, chosen at creation."
+ },
+ {
+  "id": "cognitive-mutagen-greater",
+  "collection": "items",
+  "name": "Cognitive Mutagen (Greater)",
+  "level": 11,
+  "text": "You become trained in one Intelligence-based skill [Arcana, Crafting, Lore, Occultism, Society], chosen at creation."
+ },
+ {
+  "id": "cognitive-mutagen-major",
+  "collection": "items",
+  "name": "Cognitive Mutagen (Major)",
+  "level": 17,
+  "text": "You become trained in one skill, chosen at creation."
+ },
+ {
+  "id": "silvertongue-mutagen",
+  "collection": "items",
+  "name": "Silvertongue Mutagen",
+  "level": 1,
+  "text": "Choose one skill in which you're trained; for the duration, you become untrained in that skill."
+ },
+ {
+  "id": "silvertongue-mutagen-lesser",
+  "collection": "items",
+  "name": "Silvertongue Mutagen (Lesser)",
+  "level": 1,
+  "text": "Choose one skill in which you are trained; for the duration, you become untrained in that skill."
+ },
+ {
+  "id": "silvertongue-mutagen-moderate",
+  "collection": "items",
+  "name": "Silvertongue Mutagen (Moderate)",
+  "level": 3,
+  "text": "Choose one skill in which you are trained; for the duration, you become untrained in that skill."
+ },
+ {
+  "id": "silvertongue-mutagen-greater",
+  "collection": "items",
+  "name": "Silvertongue Mutagen (Greater)",
+  "level": 11,
+  "text": "Choose one skill in which you are trained; for the duration, you become untrained in that skill."
+ },
+ {
+  "id": "silvertongue-mutagen-major",
+  "collection": "items",
+  "name": "Silvertongue Mutagen (Major)",
+  "level": 17,
+  "text": "Choose one skill in which you are trained; for the duration, you become untrained in that skill."
+ },
+ {
+  "id": "hunters-bane",
+  "collection": "items",
+  "name": "Hunter's Bane",
+  "level": 2,
+  "text": "**Usage** affixed to armor **Activate** ⟨4⟩ (concentrate) **Trigger** A hidden or undetected enemy hits you with an attack **Requirements** You are trained in Survival --- This talisman is a ring of dried, interwoven pieces of straw."
+ },
+ {
+  "id": "krasovnatype",
+  "collection": "items",
+  "name": "Krasovnatype",
+  "level": 4,
+  "text": "If you are trained in Occultism, you can look at the image and learn if the associated creature has innate, prepared, or spontaneous spellcasting, along with the tradition of that casting and the highest rank of spells they can cast."
+ },
+ {
+  "id": "navigators-feather",
+  "collection": "items",
+  "name": "Navigator's Feather",
+  "level": 2,
+  "text": "**Activate** ⟨4⟩ (concentrate, fortune) **Trigger** You would roll a Survival check to Sense Direction or Track but haven't rolled yet **Requirements** You're trained in Survival."
+ },
+ {
+  "id": "sages-bloom",
+  "collection": "items",
+  "name": "Sage's Bloom",
+  "level": 5,
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You attempt a Nature check to Recall Knowledge but haven't rolled **Requirements** You're trained in Nature."
+ },
+ {
+  "id": "crushing-bough-bracers",
+  "collection": "items",
+  "name": "Crushing Bough Bracers",
+  "level": 13,
+  "text": "When you cast *timber* on a plane with the wood planar essence trait (or a supernaturally verdant area, at the GM's discretion), you can modify the spell in one of the following two ways: increase the spell's area to 20 feet, to 25 feet if your proficiency rank for spell attack modifier and spell DC is expert, or to 30 feet if your proficiency is legendary; or increase the cantrip's damage die size to d6."
+ },
+ {
+  "id": "champions-laurels",
+  "collection": "items",
+  "name": "Champions Laurels",
+  "level": 2,
+  "text": "81 Usage affixed to armor Activate (concentrate) Trigger You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill; Requirements You can perceive at least 12 allies or friendly bystanders encouraging you."
+ },
+ {
+  "id": "champions-laurels-amateur",
+  "collection": "items",
+  "name": "Champions Laurels (Amateur)",
+  "level": 2,
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill **Requirements** You can perceive at least 12 allies or friendly bystanders encouraging you."
+ },
+ {
+  "id": "champions-laurels-professional",
+  "collection": "items",
+  "name": "Champions Laurels (Professional)",
+  "level": 10,
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill **Requirements** You can perceive at least 12 allies or friendly bystanders encouraging you."
+ },
+ {
+  "id": "champions-laurels-renowned",
+  "collection": "items",
+  "name": "Champions Laurels (Renowned)",
+  "level": 18,
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You are about to roll an Acrobatics or Athletics check, and you are trained or better in the skill **Requirements** You can perceive at least 12 allies or friendly bystanders encouraging you."
+ },
+ {
+  "id": "travelers-fulu",
+  "collection": "items",
+  "name": "Traveler's Fulu",
+  "level": 2,
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You attempt to Sense Direction **Requirements** You're trained in Survival. Your attempt to Sense Direction functions as if you have a compass, and you use the outcome one degree of success better than the result of your Survival check to Sense Direction, or by two degrees of success if you're a master in Survival."
+ },
+ {
+  "id": "horn-of-the-aoyin",
+  "collection": "items",
+  "name": "Horn of the Aoyin",
+  "level": 13,
+  "text": "**Activate—Cannibal Call** ⟨2⟩ (auditory, emotion, incapacitation, magical, manipulate, mental) **Frequency** once per hour **Requirements** You're trained in Performance --- **Effect** You blow the horn, creating a low growling sound."
+ },
+ {
+  "id": "stone-of-unrivaled-skill",
+  "collection": "items",
+  "name": "Stone of Unrivaled Skill",
+  "level": 17,
+  "text": "You become an expert in that skill; if you were already an expert, you become a master, and if you were already a master, you become legendary."
+ },
+ {
+  "id": "repository-of-knowledge",
+  "collection": "items",
+  "name": "Repository of Knowledge",
+  "level": 0,
+  "text": "While the relic is on your person, you are trained in 3 additional Lore skills of the GM's choice that fit the relic's history, decided at the time of gaining this gift. If the relic is 9th level, you instead have expert proficiency in these Lore skills, and if the relic is 17th level, you have master proficiency in these Lore skills."
+ },
+ {
+  "id": "frying-pan",
+  "collection": "items",
+  "name": "Frying Pan",
+  "level": 0,
+  "text": "Characters with the Halfling Weapon Familiarity ancestry feat are trained in the frying pan."
+ },
+ {
+  "id": "sakuras-sprig",
+  "collection": "items",
+  "name": "Sakura's Sprig",
+  "level": 5,
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You strike an unholy target with the affixed weapon **Requirements** You're trained in the affixed weapon."
+ },
+ {
+  "id": "aon-barding",
+  "collection": "items",
+  "name": "Barding",
+  "level": 0,
+  "text": "All animals have a trained proficiency rank in light barding, and combat-trained animals are trained in heavy barding."
+ },
+ {
+  "id": "aon-repository-of-knowledge",
+  "collection": "items",
+  "name": "Repository of Knowledge",
+  "level": 0,
+  "text": "While the relic is on your person, you are trained in 3 additional Lore skills of the GM's choice that fit the relic's history, decided at the time of gaining this gift. If the relic is 9th level, you instead have expert proficiency in these Lore skills, and if the relic is 17th level, you have master proficiency in these Lore skills."
+ },
+ {
+  "id": "anvil-dwarf",
+  "collection": "heritages",
+  "name": "Anvil Dwarf",
+  "level": null,
+  "text": "You become trained in Crafting (or another skill if you were already trained in Crafting) and gain the Specialty Crafting skill feat, but you can pick two different specialties instead of one."
+ },
+ {
+  "id": "artisan-android",
+  "collection": "heritages",
+  "name": "Artisan Android",
+  "level": null,
+  "text": "You become trained in Crafting (or another skill if you're already trained in Crafting), and you gain the Specialty Crafting skill feat in a specialty of your choice."
+ },
+ {
+  "id": "impersonator-android",
+  "collection": "heritages",
+  "name": "Impersonator Android",
+  "level": null,
+  "text": "You become trained in Deception (or another skill if you're already trained in Deception)."
+ },
+ {
+  "id": "laborer-android",
+  "collection": "heritages",
+  "name": "Laborer Android",
+  "level": null,
+  "text": "You become trained in Athletics (or another skill if you're already trained in Athletics), and you gain the Hefty Hauler skill feat."
+ },
+ {
+  "id": "warrior-android",
+  "collection": "heritages",
+  "name": "Warrior Android",
+  "level": null,
+  "text": "You're trained in all simple and martial weapons."
+ },
+ {
+  "id": "wisp-fetchling",
+  "collection": "heritages",
+  "name": "Wisp Fetchling",
+  "level": null,
+  "text": "You gain the trained proficiency rank in Acrobatics, the Quick Squeeze skill feat, and a +1 circumstance bonus to Acrobatics checks to tumble-through. If you would automatically become trained in Acrobatics (from your background or class, for example), you instead become trained in a skill of your choice."
+ },
+ {
+  "id": "scavenger-strix",
+  "collection": "heritages",
+  "name": "Scavenger Strix",
+  "level": null,
+  "text": "You are trained in Survival."
+ },
+ {
+  "id": "shoreline-strix",
+  "collection": "heritages",
+  "name": "Shoreline Strix",
+  "level": null,
+  "text": "You are trained in Athletics, and you gain the Underwater Marauder skill feat as a bonus skill feat."
+ },
+ {
+  "id": "polychromatic-anadi",
+  "collection": "heritages",
+  "name": "Polychromatic Anadi",
+  "level": null,
+  "text": "You become trained in Performance (or another skill if you were already trained in Performance), and you gain the Impressive Performance feat."
+ },
+ {
+  "id": "frightful-goloma",
+  "collection": "heritages",
+  "name": "Frightful Goloma",
+  "level": null,
+  "text": "You are trained in Intimidation (or another skill of your choice if you were already trained in Intimidation) and gain the Intimidating Glare skill feat as a bonus feat."
+ },
+ {
+  "id": "vigilant-goloma",
+  "collection": "heritages",
+  "name": "Vigilant Goloma",
+  "level": null,
+  "text": "Your proficiency rank in Perception is considered one step better when attempting to detect magical traps. (Trained is considered expert, expert is considered master, and master is considered legendary)."
+ },
+ {
+  "id": "lorekeeper-shisk",
+  "collection": "heritages",
+  "name": "Lorekeeper Shisk",
+  "level": null,
+  "text": "You become trained in one Lore skill and one other Intelligence- or Wisdom-based skill of your choice. At 5th level, you become expert in the chosen skills."
+ },
+ {
+  "id": "cataphract-fleshwarp",
+  "collection": "heritages",
+  "name": "Cataphract Fleshwarp",
+  "level": null,
+  "text": "You gain the Armor Proficiency feat. If your class makes you trained in all types of armor, you instead become trained in Athletics (or a skill of your choice if you're already trained in Athletics) and gain the Armor Assist skill feat."
+ },
+ {
+  "id": "surgewise-fleshwarp",
+  "collection": "heritages",
+  "name": "Surgewise Fleshwarp",
+  "level": null,
+  "text": "You gain the trained proficiency rank in Occultism. If you're trained in Occultism, you instead become trained in another skill of your choice."
+ },
+ {
+  "id": "ancient-ash",
+  "collection": "heritages",
+  "name": "Ancient Ash",
+  "level": null,
+  "text": "You become trained in one skill of your choice. At 5th level, you become an expert in that skill."
+ },
+ {
+  "id": "enchanting-lily",
+  "collection": "heritages",
+  "name": "Enchanting Lily",
+  "level": null,
+  "text": "You're trained in Diplomacy (or another skill if you were already trained in Diplomacy)."
+ },
+ {
+  "id": "old-blood-vishkanya",
+  "collection": "heritages",
+  "name": "Old-Blood Vishkanya",
+  "level": null,
+  "text": "You become trained in Society (or another skill of your choice if you're already trained in Society), and you gain your choice of the Courtly Graces or Streetwise feat."
+ },
+ {
+  "id": "prismatic-vishkanya",
+  "collection": "heritages",
+  "name": "Prismatic Vishkanya",
+  "level": null,
+  "text": "You become trained in Performance (or another skill of your choice if you're already trained in Performance) and gain the Fascinating Performance feat."
+ },
+ {
+  "id": "skilled-human",
+  "collection": "heritages",
+  "name": "Skilled Human",
+  "level": null,
+  "text": "You become trained in one skill of your choice. At 5th level, you become an expert in the chosen skill."
+ },
+ {
+  "id": "battle-ready-orc",
+  "collection": "heritages",
+  "name": "Battle-Ready Orc",
+  "level": null,
+  "text": "You become trained in Intimidation, and you gain the Intimidating Glare skill feat."
+ },
+ {
+  "id": "winter-orc",
+  "collection": "heritages",
+  "name": "Winter Orc",
+  "level": null,
+  "text": "You become trained in Survival, and you treat environmental cold effects as if they were one step less extreme (incredible cold becomes extreme, extreme cold becomes severe, and so on)."
+ },
+ {
+  "id": "roaming-minotaur",
+  "collection": "heritages",
+  "name": "Roaming Minotaur",
+  "level": null,
+  "text": "You become trained in Survival (or another skill if you were already trained in Survival) and gain the Terrain Expertise skill feat."
+ },
+ {
+  "id": "stalker-minotaur",
+  "collection": "heritages",
+  "name": "Stalker Minotaur",
+  "level": null,
+  "text": "You become trained in Stealth (or another skill if you were already trained in Stealth) and gain the Terrain Stalker skill feat, except you must choose rubble and you can Sneak no more than 10 feet instead of 5 feet without attempting a Stealth check."
+ },
+ {
+  "id": "ant-kholo",
+  "collection": "heritages",
+  "name": "Ant Kholo",
+  "level": null,
+  "text": "You are trained in Deception (or another skill if you were already trained in Deception)."
+ },
+ {
+  "id": "sweetbreath-kholo",
+  "collection": "heritages",
+  "name": "Sweetbreath Kholo",
+  "level": null,
+  "text": "You are trained in Diplomacy (or another skill if you were already trained in Diplomacy)."
+ },
+ {
+  "id": "spellhorn-kobold",
+  "collection": "heritages",
+  "name": "Spellhorn Kobold",
+  "level": null,
+  "text": "You are trained in the spell attack modifier and spell DC statistics, and your key spellcasting attribute is Charisma."
+ },
+ {
+  "id": "shadow-rat",
+  "collection": "heritages",
+  "name": "Shadow Rat",
+  "level": null,
+  "text": "You gain the trained proficiency rank in Intimidation and can use Intimidation to Coerce animals. If you would automatically become trained in Intimidation (from your background or class, for example), you become trained in another skill of your choice."
+ },
+ {
+  "id": "gandharva",
+  "collection": "heritages",
+  "name": "Gandharva",
+  "level": null,
+  "text": "You become trained in Performance (or another skill of your choice if you're already trained in Performance), and you can cast Summon Instrument as a divine innate cantrip."
+ },
+ {
+  "id": "kanchil",
+  "collection": "heritages",
+  "name": "Kanchil",
+  "level": null,
+  "text": "You become trained in Deception (or another skill if you were already trained in Deception)."
+ },
+ {
+  "id": "tsukumogami-poppet",
+  "collection": "heritages",
+  "name": "Tsukumogami Poppet",
+  "level": null,
+  "text": "You're trained in this skill, and you gain a +2 circumstance bonus to checks to Aid with this skill."
+ }
+]

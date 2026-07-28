@@ -1,0 +1,387 @@
+[
+ {
+  "id": "thorn-of-milani",
+  "collection": "items",
+  "name": "Thorn of Milani",
+  "level": 3,
+  "text": "You then gain weakness 1 to unholy until the end of your next turn. 210 Price 60 gp You deal an additional 2d4 spirit damage and don’t gain weakness to unholy."
+ },
+ {
+  "id": "thorn-of-milani-lesser",
+  "collection": "items",
+  "name": "Thorn of Milani (Lesser)",
+  "level": 3,
+  "text": "You then gain weakness 1 to unholy until the end of your next turn."
+ },
+ {
+  "id": "devilwing-badge",
+  "collection": "items",
+  "name": "Devilwing Badge",
+  "level": 4,
+  "text": "- **Armor** You gain resistance 2 to fire and unholy."
+ },
+ {
+  "id": "devilwing-badge-greater",
+  "collection": "items",
+  "name": "Devilwing Badge (Greater)",
+  "level": 8,
+  "text": "- **Armor** You gain resistance 5 to fire and unholy."
+ },
+ {
+  "id": "hellhusk-shroud",
+  "collection": "items",
+  "name": "Hellhusk Shroud",
+  "level": 6,
+  "text": "To creatures with scent, you also smell like a devil. **Activate—Hellish Senses** ⟨1⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You pull your hood up, allowing the remnants of fallen devils to nestle closely and whisper Hell's secrets. You gain fiendsense as an imprecise sense within 60 feet, allowing you to sense creatures with the fiend trait as a vague sense."
+ },
+ {
+  "id": "pallid-crystal",
+  "collection": "items",
+  "name": "Pallid Crystal",
+  "level": 7,
+  "text": "If you're healed by healing vitality effects, you gain void resistance 5, but if you're healed by void effects, you instead gain vitality resistance 5."
+ },
+ {
+  "id": "draconic-resistance",
+  "collection": "items",
+  "name": "Draconic Resistance",
+  "level": 0,
+  "text": "Draconic Resistance Source Secrets of Magic pg. You gain a +1 status bonus to AC against attacks from dragons and resistance to an energy type corresponding to the soul seed's draconic origin (such as fire resistance from a red dragon) equal to half the relic's level (minimum resistance 1)."
+ },
+ {
+  "id": "fascinating",
+  "collection": "items",
+  "name": "Fascinating",
+  "level": 0,
+  "text": "If you critically succeed against an observer, that target doesn't become temporarily immune to this effect."
+ },
+ {
+  "id": "emotion-conduit",
+  "collection": "items",
+  "name": "Emotion Conduit",
+  "level": 0,
+  "text": "The target is temporarily immune to your relic's emotion conduit until you make your next daily preparations."
+ },
+ {
+  "id": "quickening-emotion",
+  "collection": "items",
+  "name": "Quickening Emotion",
+  "level": 0,
+  "text": "You then become temporarily immune to this effect for 1 hour."
+ },
+ {
+  "id": "borrow-time",
+  "collection": "items",
+  "name": "Borrow Time",
+  "level": 0,
+  "text": "After the condition ends, the creature is slowed 1 for 1 round and temporarily immune to this gift until you next perform your daily preparations."
+ },
+ {
+  "id": "living-forge",
+  "collection": "items",
+  "name": "Living Forge",
+  "level": 0,
+  "text": "Forge Speed 30 feet; fire resistance 10, weakness 5 to cold and water; Melee forgestrike, Damage 1d10 modular; 1d4 persistent fire."
+ },
+ {
+  "id": "beast-senses",
+  "collection": "items",
+  "name": "Beast Senses",
+  "level": 0,
+  "text": "Beast Senses Source GM Core pg. The relic grants you an animal's acute senses as long as you wear it. You gain low-light vision. If you already have low-light vision, you instead gain darkvision. At 10th level, the relic grants you imprecise scent with a range of 10 feet."
+ },
+ {
+  "id": "death-gaze",
+  "collection": "items",
+  "name": "Death Gaze",
+  "level": 0,
+  "text": "An undead creature or other creature with void healing targeted this way is instead healed 1d6 HP per level of the relic and is temporarily immune to this effect for 10 minutes."
+ },
+ {
+  "id": "pierce-the-veil",
+  "collection": "items",
+  "name": "Pierce the Veil",
+  "level": 0,
+  "text": "In addition, whenever you are healed by a void spell or effect, you gain resistance 5 to all damage (except force, ghost touch, spirit, and vitality) until the start of your next turn."
+ },
+ {
+  "id": "grim-specter",
+  "collection": "items",
+  "name": "Grim Specter",
+  "level": 0,
+  "text": "You are immune to effects that require a physical body, including precision damage as well as exposure to most diseases and poisons. You also have resistance to all damage equal to half the relic's level; force damage, ghost touch attacks, spirit damage, void damage, and vitality damage ignore this resistance, and the resistance doubles against non-magical damage."
+ },
+ {
+  "id": "rolling-geode",
+  "collection": "items",
+  "name": "Rolling Geode",
+  "level": 0,
+  "text": "The geode persists for up to 1 minute or until destroyed or Dismissed; it has AC 5, Hardness 10, and 40 Hit Points, and is immune to critical hits and precision damage."
+ },
+ {
+  "id": "living-statue",
+  "collection": "items",
+  "name": "Living Statue",
+  "level": 0,
+  "text": "As long as you are standing on the earth, your body reflexively petrifies at the moment you are struck, granting you resistance 5 to physical damage (except adamantine)."
+ },
+ {
+  "id": "petal-dance",
+  "collection": "items",
+  "name": "Petal Dance",
+  "level": 0,
+  "text": "This grants you the swarm trait, immunity to falling damage, resistance 5 to bludgeoning and slashing damage, and weakness 5 to area and splash damage. At 13th level, the relic gains a reaction that triggers when you fall or take damage, applying this gift's resistances, weaknesses, and immunity to falling damage to the triggering effect."
+ },
+ {
+  "id": "megaflora",
+  "collection": "items",
+  "name": "Megaflora",
+  "level": 0,
+  "text": "A megaflora appears in an unoccupied 10-foot space within 30 feet and has 50 Hit Points, weakness 5 to fire, AC 37, Reflex +20, and Fortitude +30."
+ },
+ {
+  "id": "obscure",
+  "collection": "items",
+  "name": "Obscure",
+  "level": 0,
+  "text": "As long as you are in dim light in an area of shadows, you can attempt a Stealth check to Hide, even if you aren't concealed against the creature, such as with a creature with darkvision."
+ },
+ {
+  "id": "agathion-raiment",
+  "collection": "items",
+  "name": "Agathion Raiment",
+  "level": 0,
+  "text": "Five Items: In your form of fury, you have darkvision and gain 20 additional temporary Hit Points, but you have weakness 5 to unholy."
+ },
+ {
+  "id": "seers-array",
+  "collection": "items",
+  "name": "Seer's Array",
+  "level": 0,
+  "text": "Three Items: Creatures become temporarily immune to the relic's borrow time gift for 1 hour."
+ },
+ {
+  "id": "aetheric-irritant-greater",
+  "collection": "items",
+  "name": "Aetheric Irritant (Greater)",
+  "level": 11,
+  "text": "A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours."
+ },
+ {
+  "id": "aetheric-irritant-lesser",
+  "collection": "items",
+  "name": "Aetheric Irritant (Lesser)",
+  "level": 1,
+  "text": "A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours."
+ },
+ {
+  "id": "aetheric-irritant-major",
+  "collection": "items",
+  "name": "Aetheric Irritant (Major)",
+  "level": 17,
+  "text": "A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours."
+ },
+ {
+  "id": "aetheric-irritant-moderate",
+  "collection": "items",
+  "name": "Aetheric Irritant (Moderate)",
+  "level": 3,
+  "text": "A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours."
+ },
+ {
+  "id": "aged-arbor-wine",
+  "collection": "items",
+  "name": "Aged Arbor Wine",
+  "level": 12,
+  "text": "For 1 minute after drinking a glass of arbor wine, you have tremorsense at a range of 30 feet."
+ },
+ {
+  "id": "alghollthu-lash",
+  "collection": "items",
+  "name": "Alghollthu Lash",
+  "level": 7,
+  "text": "A remove disease spell can counteract this curse, but immunity to disease offers no protection against it."
+ },
+ {
+  "id": "anima-robe-heroic",
+  "collection": "items",
+  "name": "Anima Robe (Heroic)",
+  "level": 20,
+  "text": "**Perception** +33; precise low-light vision and hearing within 30 feet **Communication** telepathy (partner only) **Skills** Deception +35, Occultism +34, Performance +35 **Int** +6, **Wis** +5, **Cha** +7 **Will** +33 --- The artistic echo of the Ekujae hero Iyalirrin animates the *Anima Robe's* stitching to display embroidered reactions to situations experienced by the wearer. The *Anima Robe* grants a +3 item bonus to Diplomacy checks made to Make an Impression and to all Performance checks, and you gain resistance 15 to mental damage."
+ },
+ {
+  "id": "animal-nip-major",
+  "collection": "items",
+  "name": "Animal Nip (Major)",
+  "level": 12,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Animal nip contains a mix of herbaceous, fragrant plants, ground into a coarse powder with a strong scent that attracts a broad spectrum of animals. Regardless of the result of the creature's save, it's then immune to animal nip for 1 hour."
+ },
+ {
+  "id": "belimariuss-invidious-halberd",
+  "collection": "items",
+  "name": "Belimarius's Invidious Halberd",
+  "level": 17,
+  "text": "**Perception** +29; darkvision, imprecise hearing within 60 feet **Communication** speech (Azlanti, Elven, Thassilonian) **Skills** Arcana +33, Deception +29, Society +31 **Int** +8, **Wis** +6, **Cha** +4 **Will** +31 --- *Belimarius's Invidious Halberd* is a *+3 greater striking keen spell reservoir high-grade dawnsilver halberd* (at this time, their spell reservoir contains Slow)."
+ },
+ {
+  "id": "bloodhound-olfactory-stimulators",
+  "collection": "items",
+  "name": "Bloodhound Olfactory Stimulators",
+  "level": 5,
+  "text": "These *olfactory stimulators* can be enhanced to better localize scents. You gain imprecise scent with a range of 30 feet for 1 minute."
+ },
+ {
+  "id": "burglars-rosebud-greater",
+  "collection": "items",
+  "name": "Burglar's Rosebud (Greater)",
+  "level": 8,
+  "text": "A creature that successfully saves against the burglar's rosebud becomes temporarily immune to the effects for 24 hours."
+ },
+ {
+  "id": "chromatic-robe",
+  "collection": "items",
+  "name": "Chromatic Robe",
+  "level": 16,
+  "text": "The robe grants resistance 5 to acid, cold, electricity, and fire damage. The robe grants resistance 15 to the chosen damage type but no resistance to the remaining three types."
+ },
+ {
+  "id": "clay-sphere-greater",
+  "collection": "items",
+  "name": "Clay Sphere (Greater)",
+  "level": 6,
+  "text": "- **Armor** You gain resistance 5 to precision damage and a +2 item bonus to saving throws against effects with the morph or polymorph traits."
+ },
+ {
+  "id": "darkening-poison",
+  "collection": "items",
+  "name": "Darkening Poison",
+  "level": 0,
+  "text": "--- **Saving Throw** **Maximum Duration** 6 rounds --- **Stage 1** 1d6 (1 round) **Stage 2** 1d6 poison and creatures you can see only with darkvision are concealed from you (1 round) **Stage 3** 1d6 poison and creatures you can see only with darkvision are hidden from you (1 round)."
+ },
+ {
+  "id": "dragon-scute-lesser",
+  "collection": "items",
+  "name": "Dragon Scute (Lesser)",
+  "level": 12,
+  "text": "Instead of the spell's normal effects, the target gains damage resistance based on the type and dragon's tradition. **Arcane** resistance 5 against all damage from spells **Divine** resistance 10 to spirit, vitality, and void **Occult** resistance 10 to mental **Primal** resistance 7 to bludgeoning, piercing, slashing, and poison"
+ },
+ {
+  "id": "dragon-scute-moderate",
+  "collection": "items",
+  "name": "Dragon Scute (Moderate)",
+  "level": 16,
+  "text": "Instead of the spell's normal effects, the target gains damage resistance based on the type and dragon's tradition. **Arcane** resistance 7 against all damage from spells **Divine** resistance 15 to spirit, vitality, and void **Occult** resistance 15 to mental **Primal** resistance 10 to bludgeoning, piercing, slashing, and poison"
+ },
+ {
+  "id": "dragonscale-staff",
+  "collection": "items",
+  "name": "Dragonscale Staff",
+  "level": 6,
+  "text": "When benefiting from the circumstance bonus to AC granted by the bo staff's parry trait, you also gain resistance 5 to acid, cold, electricity, fire, or poison, according to the type of damage dealt by the breath weapon of the dragon that provided the scales; for instance, a staff made with scales taken from a white dragon would provide cold resistance. When this resistance prevents you from taking damage, the *dragonscale staff* deals an additional 1 damage of the type matching its resistance for 1 round."
+ },
+ {
+  "id": "durian-bomb-greater",
+  "collection": "items",
+  "name": "Durian Bomb (Greater)",
+  "level": 11,
+  "text": "Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they're immune to the sickened condition caused by other durian bombs for 1 minute."
+ },
+ {
+  "id": "durian-bomb-lesser",
+  "collection": "items",
+  "name": "Durian Bomb (Lesser)",
+  "level": 1,
+  "text": "Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they're immune to the sickened condition caused by other durian bombs for 1 minute."
+ },
+ {
+  "id": "durian-bomb-major",
+  "collection": "items",
+  "name": "Durian Bomb (Major)",
+  "level": 17,
+  "text": "Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they're immune to the sickened condition caused by other durian bombs for 1 minute."
+ },
+ {
+  "id": "durian-bomb-moderate",
+  "collection": "items",
+  "name": "Durian Bomb (Moderate)",
+  "level": 3,
+  "text": "Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they're immune to the sickened condition caused by other durian bombs for 1 minute."
+ },
+ {
+  "id": "energy-robe-of-acid",
+  "collection": "items",
+  "name": "Energy Robe of Acid",
+  "level": 9,
+  "text": "You gain resistance 5 to acid. You gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds."
+ },
+ {
+  "id": "energy-robe-of-cold",
+  "collection": "items",
+  "name": "Energy Robe of Cold",
+  "level": 8,
+  "text": "You gain resistance 5 to cold."
+ },
+ {
+  "id": "energy-robe-of-electricity",
+  "collection": "items",
+  "name": "Energy Robe of Electricity",
+  "level": 10,
+  "text": "You gain resistance 5 to electricity. You gain a fly Speed equal to your Speed for 1 minute."
+ },
+ {
+  "id": "energy-robe-of-fire",
+  "collection": "items",
+  "name": "Energy Robe of Fire",
+  "level": 7,
+  "text": "You gain resistance 5 to fire. You gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up."
+ },
+ {
+  "id": "fiendbreaker-heroic",
+  "collection": "items",
+  "name": "Fiendbreaker (Heroic)",
+  "level": 20,
+  "text": "**Perception** +35; precise low-light vision and hearing within 30 feet **Communication** telepathy (partner only) **Skills** Demon Lore +33, Diplomacy +34, Religion +35 **Int** +5, **Wis** +7, **Cha** +6 **Will** +35 --- The stately echo of Jininsiel, the woman who guided her people through the Darklands to escape the devastation of Earthfall, causes *Fiendbreaker* to softly shimmer with a silvery radiance equivalent to that of candlelight."
+ },
+ {
+  "id": "foxglove-token-greater",
+  "collection": "items",
+  "name": "Foxglove Token (Greater)",
+  "level": 8,
+  "text": "- **Armor** You gain resistance 5 to poison damage."
+ },
+ {
+  "id": "frost-brand",
+  "collection": "items",
+  "name": "Frost Brand",
+  "level": 16,
+  "text": "While wielding it, you gain fire resistance 5."
+ },
+ {
+  "id": "guiding-star-orb-heroic",
+  "collection": "items",
+  "name": "Guiding Star Orb (Heroic)",
+  "level": 20,
+  "text": "**Perception** +33; precise low-light vision and hearing within 30 feet **Communication** telepathy (partner only) **Skills** Arcana +35, Architecture Lore +35, Society +35 **Int** +7, **Wis** +5, **Cha** +6 **Will** +33 --- The stoic echo of Candlaron the Sculptor, architect of the aiudara network, infuses the *Guiding Star Orb*. That creature must attempt a save, after which that creature is temporarily immune to Blinding Spark for 24 hours."
+ },
+ {
+  "id": "heartmoss-greater",
+  "collection": "items",
+  "name": "Heartmoss (Greater)",
+  "level": 8,
+  "text": "This burgundy moss grows in heart-shaped clumps and releases a pleasant, calming scent. - **Armor** You gain resistance 5 to mental damage and a +1 item bonus to saving throws against effects with the emotion trait. - **Weapon** After you cast a healing spell by activating the heartmoss, the weapon exudes a soothing scent."
+ },
+ {
+  "id": "heartmoss-major",
+  "collection": "items",
+  "name": "Heartmoss (Major)",
+  "level": 12,
+  "text": "This burgundy moss grows in heart-shaped clumps and releases a pleasant, calming scent. - **Armor** You gain resistance 10 to mental damage and a +1 item bonus to saving throws against effects with the emotion trait. - **Weapon** After you cast a healing spell by activating the heartmoss, the weapon exudes a soothing scent."
+ },
+ {
+  "id": "inflammation-flask-greater",
+  "collection": "items",
+  "name": "Inflammation Flask (Greater)",
+  "level": 12,
+  "text": "On a hit, the target also gains weakness 3 to acid, fire, and slashing damage for 3 rounds. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (DC 30), or regaining Hit Points from a single effect equal to twice the inflammation flask's level."
+ }
+]

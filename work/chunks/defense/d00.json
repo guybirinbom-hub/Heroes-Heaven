@@ -1,0 +1,387 @@
+[
+ {
+  "id": "celestial-mount",
+  "collection": "feats",
+  "name": "Celestial Mount",
+  "level": 20,
+  "text": "It gains darkvision, its maximum Hit Points increase by 40, and it gains weakness 10 to unholy. Additionally, it grows wings appropriate to a servitor of your deity (such as metallic wings for an archon), granting it a fly Speed equal to its Speed."
+ },
+ {
+  "id": "battle-assessment",
+  "collection": "feats",
+  "name": "Battle Assessment",
+  "level": 4,
+  "text": "With careful observation during battle, you identify an enemy's strengths and weaknesses. The enemy is then temporarily immune to your Battle Assessment for 1 day. --- **Critical Success** The GM chooses two of the following pieces of information about the enemy to tell you: which of the enemy's weaknesses is highest, which of the enemy's saving throws has the lowest modifier, one immunity the enemy has, or which of the enemy's resistances is highest."
+ },
+ {
+  "id": "eye-of-the-arclords",
+  "collection": "feats",
+  "name": "Eye of the Arclords",
+  "level": 2,
+  "text": "--- You open an incandescent third eye upon your forehead. While the eye is open, you gain the following benefits: - you gain the effects of the detect magic arcane innate spell from your Arcane Sense at the start of each of your turns without needing to cast the spell; - you gain darkvision; - you gain a +2 status bonus to Perception checks to Seek undetected and hidden creatures and to your Perception DC against Hide and Sneak."
+ },
+ {
+  "id": "grave-sense",
+  "collection": "feats",
+  "name": "Grave Sense",
+  "level": 6,
+  "text": "Your time spent hunting the undead allows you to sense them. You sense undead as a vague sense similar to a human's sense of smell, an uncomfortable sensation akin to smelling something cloying and rotting. When in proximity to the undead, you eventually sense their presence, though you might not do so instantly, and you can't pinpoint their location. If the creature succeeds at its Deception check, it is then temporarily immune to your Grave Sense for 1 day."
+ },
+ {
+  "id": "attunement-to-stone",
+  "collection": "feats",
+  "name": "Attunement to Stone",
+  "level": 10,
+  "text": "When in contact with a stone surface, you gain tremorsense (imprecise) 5 feet along that surface, and you can activate your *ka stone* to cast One with Stone."
+ },
+ {
+  "id": "elven-verve",
+  "collection": "feats",
+  "name": "Elven Verve",
+  "level": 1,
+  "text": "While all elves are immune to the paralyzing touch of ghouls, you can shake off flesh-numbing magic of all kinds."
+ },
+ {
+  "id": "endure-deaths-touch",
+  "collection": "feats",
+  "name": "Endure Death's Touch",
+  "level": 10,
+  "text": "You gain resistance 5 to physical damage and resistance 10 to void damage against the triggering attack."
+ },
+ {
+  "id": "spellmasters-resilience",
+  "collection": "feats",
+  "name": "Spellmaster's Resilience",
+  "level": 12,
+  "text": "Your experience with a specific type of harmful magic makes you more resistant to it. You gain a +1 circumstance bonus to saving throws against spells and effects with that tradition's trait and resistance 5 to all damage from spells and effects with that tradition's trait."
+ },
+ {
+  "id": "superior-sight",
+  "collection": "feats",
+  "name": "Superior Sight",
+  "level": 20,
+  "text": "Your senses are peerless. You gain a +2 circumstance bonus to Perception checks, and you gain low-light vision. If you already have low-light vision, gain darkvision instead."
+ },
+ {
+  "id": "battle-prayer",
+  "collection": "feats",
+  "name": "Battle Prayer",
+  "level": 7,
+  "text": "The foe is then temporarily immune to Battle Prayers from your deity for 1 day."
+ },
+ {
+  "id": "bless-tonic",
+  "collection": "feats",
+  "name": "Bless Tonic",
+  "level": 7,
+  "text": "When a creature regains Hit Points using a blessed alchemical item, the overflowing energy grants them void resistance 5 for 1 round, or void resistance 10 if you are legendary in Crafting."
+ },
+ {
+  "id": "encouraging-words",
+  "collection": "feats",
+  "name": "Encouraging Words",
+  "level": 2,
+  "text": "No matter the result, the ally is temporarily immune to Encouraging Words until they either Take a Breather or rest for the day."
+ },
+ {
+  "id": "mimic-protections",
+  "collection": "feats",
+  "name": "Mimic Protections",
+  "level": 20,
+  "text": "When you use Hunt Prey on a foe within 100 feet, you gain resistance 10 to all damage types that target has resistance or immunity to for as long as the foe remains within 100 feet."
+ },
+ {
+  "id": "empathetic-plea",
+  "collection": "feats",
+  "name": "Empathetic Plea",
+  "level": 1,
+  "text": "**Failure** The creature's attack is unaffected, and the creature is temporarily immune to your Empathic Pleas for 24 hours."
+ },
+ {
+  "id": "fiendish-mount",
+  "collection": "feats",
+  "name": "Fiendish Mount",
+  "level": 20,
+  "text": "It gains darkvision, its maximum Hit Points increase by 40, and it gains weakness 10 to holy. Additionally, it grows wings appropriate for a servitor of your deity (such as bat wings for a devil), granting it a fly Speed equal to its Speed."
+ },
+ {
+  "id": "magical-adaptation",
+  "collection": "feats",
+  "name": "Magical Adaptation",
+  "level": 10,
+  "text": "You can cast Darkvision, Gecko Grip, and 4th-rank Water Breathing as innate primal spells, each once per day."
+ },
+ {
+  "id": "shadow-master",
+  "collection": "feats",
+  "name": "Shadow Master",
+  "level": 18,
+  "text": "Whenever you are in an area of dim light or darkness, you gain resistance 5 to all damage except force and damage from Strikes with the Ghost Touch property rune."
+ },
+ {
+  "id": "boleras-interrogation",
+  "collection": "feats",
+  "name": "Bolera's Interrogation",
+  "level": 6,
+  "text": "After your interrogation ends, the target is immune to this ability for 24 hours."
+ },
+ {
+  "id": "sky-and-heaven-stance",
+  "collection": "feats",
+  "name": "Sky and Heaven Stance",
+  "level": 6,
+  "text": "While in Sky and Heaven Stance, you gain resistance 2 to electricity and resistance 2 to sonic damage. These resistances increase to 5 at 12th level and to 8 at 18th level."
+ },
+ {
+  "id": "flourishing-finish",
+  "collection": "feats",
+  "name": "Flourishing Finish",
+  "level": 12,
+  "text": "Regardless of the result, each target is immune to your Flourishing Finish for 10 minutes."
+ },
+ {
+  "id": "discerning-strike",
+  "collection": "feats",
+  "name": "Discerning Strike",
+  "level": 6,
+  "text": "--- Identifying a creature is the first step in finding its weaknesses. The creature is then temporarily immune to Discerning Strike for 1 day."
+ },
+ {
+  "id": "healers-halo",
+  "collection": "feats",
+  "name": "Healer's Halo",
+  "level": 5,
+  "text": "Creatures who benefit from this power become temporarily immune to its effect for the next 10 minutes."
+ },
+ {
+  "id": "radiate-glory",
+  "collection": "feats",
+  "name": "Radiate Glory",
+  "level": 17,
+  "text": "The creature then becomes temporarily immune to this effect for 24 hours."
+ },
+ {
+  "id": "taste-blood",
+  "collection": "feats",
+  "name": "Taste Blood",
+  "level": 5,
+  "text": "Regardless of the outcome of this save, the target is temporarily immune to your Taste Blood for 1 day; further uses of this ability against the target don't increase the drained condition or grant you more temporary Hit Points."
+ },
+ {
+  "id": "spore-cloud",
+  "collection": "feats",
+  "name": "Spore Cloud",
+  "level": 9,
+  "text": "Plants and fungi are immune to this effect."
+ },
+ {
+  "id": "mask-of-pain",
+  "collection": "feats",
+  "name": "Mask of Pain",
+  "level": 9,
+  "text": "The target is then temporarily immune to additional damage from Mask of Pain for 24 hours."
+ },
+ {
+  "id": "plague-sniffer",
+  "collection": "feats",
+  "name": "Plague Sniffer",
+  "level": 5,
+  "text": "When you detect a creature by scent, you can also detect if that creature is suffering from a disease at a non-carrier state."
+ },
+ {
+  "id": "favor-of-heaven",
+  "collection": "feats",
+  "name": "Favor of Heaven",
+  "level": 17,
+  "text": "In addition, you gain resistance 5 to both holy and unholy."
+ },
+ {
+  "id": "animal-senses",
+  "collection": "feats",
+  "name": "Animal Senses",
+  "level": 1,
+  "text": "You gain one of the following senses available to your inherent animal: darkvision, low-light vision, or scent (imprecise) 30 feet. You must have low-light vision before you can gain darkvision with this feat. If your inherent animal doesn't typically have a specific type of sense, you can't gain that sense with this feat. --- **Special** You can select this feat multiple times, choosing a different sense each time."
+ },
+ {
+  "id": "greater-animal-senses",
+  "collection": "feats",
+  "name": "Greater Animal Senses",
+  "level": 5,
+  "text": "Your senses advance to match those of your animal aspect. You gain one of the following senses available to your inherent animal: echolocation (imprecise) 30 feet or tremorsense (imprecise) 30 feet. If your inherent animal doesn't typically have a specific type of sense, you can't gain the sense with this feat. --- **Special** You can select this feat multiple times, either choosing a different sense or improving an imprecise sense granted by this feat to a precise sense."
+ },
+ {
+  "id": "shadow-sight",
+  "collection": "feats",
+  "name": "Shadow Sight",
+  "level": 9,
+  "text": "You gain greater darkvision for 1 minute."
+ },
+ {
+  "id": "embers-eyes",
+  "collection": "feats",
+  "name": "Ember's Eyes",
+  "level": 1,
+  "text": "You gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. --- **Special** If your ancestry has neither low-light vision nor darkvision, you can take this ancestry feat a second time to gain darkvision."
+ },
+ {
+  "id": "elemental-bulwark",
+  "collection": "feats",
+  "name": "Elemental Bulwark",
+  "level": 5,
+  "text": "--- You call upon the corresponding elements of your suli heritage to resist the effect. You gain resistance 5 against the triggering damage."
+ },
+ {
+  "id": "aquatic-eyes",
+  "collection": "feats",
+  "name": "Aquatic Eyes",
+  "level": 1,
+  "text": "You gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. --- **Special** If your ancestry has neither low-light vision nor darkvision, you can take this ancestry feat a second time to gain darkvision."
+ },
+ {
+  "id": "fox-trick",
+  "collection": "feats",
+  "name": "Fox Trick",
+  "level": 9,
+  "text": "All creatures who witnessed your Fox Trick then wise up to it, becoming temporarily immune to your Fox Trick for 24 hours."
+ },
+ {
+  "id": "corgi-mount",
+  "collection": "feats",
+  "name": "Corgi Mount",
+  "level": 1,
+  "text": "It has the scent ability, which counts against your limit for familiar and master abilities as normal. Furthermore, it can never gain a familiar ability that grants it any Speeds other than a land Speed."
+ },
+ {
+  "id": "fey-skin",
+  "collection": "feats",
+  "name": "Fey Skin",
+  "level": 13,
+  "text": "However, you gain weakness 5 to cold iron."
+ },
+ {
+  "id": "heart-of-the-kaiju",
+  "collection": "feats",
+  "name": "Heart of the Kaiju",
+  "level": 20,
+  "text": "**Kaiju** Speed 40 feet; physical resistance 5; **Melee** ⟨1⟩ jaws (reach 20 feet), **Damage** 3d12+20 piercing; **Melee** ⟨1⟩ claws (agile, reach 20 feet), **Damage** 3d8+20 slashing; **Breath Weapon** ⟨2⟩ (evocation, primal) Each creature in a takes damage (of your chosen damage type), with a save against your spell DC."
+ },
+ {
+  "id": "vivacious-afterimage",
+  "collection": "feats",
+  "name": "Vivacious Afterimage",
+  "level": 20,
+  "text": "Alternatively, you can stop moving and send your afterimage forward instead, up to the remainder of your Speed. Once an enemy has disbelieved any of your afterimages, they are temporarily immune to all of your Vivacious Afterimages for 10 minutes."
+ },
+ {
+  "id": "reassuring-presence",
+  "collection": "feats",
+  "name": "Reassuring Presence",
+  "level": 1,
+  "text": "The ally is then temporarily immune to your Reassuring Presence for 1 hour."
+ },
+ {
+  "id": "ceremony-of-suns-gift",
+  "collection": "feats",
+  "name": "Ceremony of Sun's Gift",
+  "level": 17,
+  "text": "You don't become temporarily immune to the effects of your Sunlight Healing, and instead of rolling to recover Hit Points, you gain the maximum number of HP possible (for example, 64 HP instead of 8d8)."
+ },
+ {
+  "id": "inured-to-the-heat",
+  "collection": "feats",
+  "name": "Inured to the Heat",
+  "level": 5,
+  "text": "You gain resistance 4 to fire."
+ },
+ {
+  "id": "maguss-analysis",
+  "collection": "feats",
+  "name": "Magus's Analysis",
+  "level": 1,
+  "text": "The subject of your check is temporarily immune to Magus's Analysis for 1 day."
+ },
+ {
+  "id": "expanded-senses",
+  "collection": "feats",
+  "name": "Expanded Senses",
+  "level": 1,
+  "text": "Your eidolon evolves more acute senses. Your eidolon gains low-light vision and darkvision, as well as scent as an imprecise sense with a range of 30 feet."
+ },
+ {
+  "id": "vibration-sense",
+  "collection": "feats",
+  "name": "Vibration Sense",
+  "level": 4,
+  "text": "Your eidolon gains Tremorsense as an imprecise sense with a range of 30 feet. If aquatic, it gains Wavesense as an imprecise sense with a range of 30 feet instead."
+ },
+ {
+  "id": "harden-flesh",
+  "collection": "feats",
+  "name": "Harden Flesh",
+  "level": 10,
+  "text": "You gain resistance 3 to physical damage, except adamantine, until the beginning of your next turn. At 12th level, and every 4 levels thereafter, the resistance increases by 1, to a maximum of resistance 6 at 20th level."
+ },
+ {
+  "id": "geomancer-dedication",
+  "collection": "feats",
+  "name": "Geomancer Dedication",
+  "level": 2,
+  "text": "If you're in the water, you gain a swim Speed equal to your land Speed. If you're on a surface, temporary waves of water follow your movements, allowing you to use your swim Speed-if you have one-as your land Speed. They take a –5-foot status penalty to their Speeds for 2 rounds (-10-foot on a critical failure). You gain resistance to physical damage (except adamantine) equal to the spell rank for 1 round. If you're in the air at the end of the turn and don't have a fly Speed, you fall. - **Underground** (earth) The endless darkness of the cavern depths "
+ },
+ {
+  "id": "soulforger-dedication",
+  "collection": "feats",
+  "name": "Soulforger Dedication",
+  "level": 2,
+  "text": "When you manifest the essence form, gain your choice of a climb Speed or swim Speed equal to your land Speed. If you're 8th level or higher, you can choose a fly Speed instead. *Corruption Flaw* You take a –10-foot penalty to all your Speeds. You gain resistance equal to your level + 2 to damage of the selected type. *Corruption Flaw* You gain weakness 1 to all damage. Any time you hit with the soulforged weapon, the target takes a –10-foot penalty to its Speeds for 1 round. *Corruption Flaw* You take a –10-foot penalty to all your Speeds. *Corruption Fl"
+ },
+ {
+  "id": "magical-resistance",
+  "collection": "feats",
+  "name": "Magical Resistance",
+  "level": 5,
+  "text": "You gain resistance 5 to that damage type. **Enhancement** You tap deeper into your animating magic, and your resistances improve. Choose one of the following benefits: you gain resistance 5 to the remaining two damage types from the above list, or your chosen resistance increases to a value equal to 1 + half your level."
+ },
+ {
+  "id": "defensive-armaments",
+  "collection": "feats",
+  "name": "Defensive Armaments",
+  "level": 2,
+  "text": "While parrying with your weapon, you are immune to splash damage."
+ },
+ {
+  "id": "pistoleros-challenge",
+  "collection": "feats",
+  "name": "Pistolero's Challenge",
+  "level": 6,
+  "text": "No matter the result of the check, the foe is temporarily immune to your Pistolero's Challenge until noon the next day."
+ },
+ {
+  "id": "headshot",
+  "collection": "feats",
+  "name": "Headshot",
+  "level": 14,
+  "text": "A creature that survives is temporarily immune for 1 day. Creatures with no head (such as dullahans or oozes) are immune to this ability, and creatures with redundant heads (such as ettins) might survive the destruction of a head."
+ },
+ {
+  "id": "reach-for-the-sky",
+  "collection": "feats",
+  "name": "Reach for the Sky",
+  "level": 12,
+  "text": "Regardless of the result, each creature is then temporarily immune to Reach for the Sky for 1 minute."
+ },
+ {
+  "id": "blast-resistance",
+  "collection": "feats",
+  "name": "Blast Resistance",
+  "level": 5,
+  "text": "You gain resistance 3 to fire and sonic."
+ },
+ {
+  "id": "explosive-expert",
+  "collection": "feats",
+  "name": "Explosive Expert",
+  "level": 13,
+  "text": "You are immune to splash damage caused by your own Strikes with bombs and firearms (such as the splash damage from the scatter trait)."
+ }
+]

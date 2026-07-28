@@ -1,0 +1,387 @@
+[
+ {
+  "id": "inflammation-flask-lesser",
+  "collection": "items",
+  "name": "Inflammation Flask (Lesser)",
+  "level": 2,
+  "text": "On a hit, the target also gains weakness 1 to acid, fire, and slashing damage for 3 rounds. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (DC 17), or regaining Hit Points from a single effect equal to twice the inflammation flask's level."
+ },
+ {
+  "id": "inflammation-flask-major",
+  "collection": "items",
+  "name": "Inflammation Flask (Major)",
+  "level": 18,
+  "text": "On a hit, the target also gains weakness 4 to acid, fire, and slashing damage for 3 rounds. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (DC 38), or regaining Hit Points from a single effect equal to twice the inflammation flask's level."
+ },
+ {
+  "id": "inflammation-flask-moderate",
+  "collection": "items",
+  "name": "Inflammation Flask (Moderate)",
+  "level": 4,
+  "text": "On a hit, the target also gains weakness 2 to acid, fire, and slashing damage for 3 rounds. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (DC 20), or regaining Hit Points from a single effect equal to twice the inflammation flask's level."
+ },
+ {
+  "id": "irritating-seedpod-greater",
+  "collection": "items",
+  "name": "Irritating Seedpod (Greater)",
+  "level": 10,
+  "text": "A creature that succeeds at this saving throw becomes temporarily immune to the irritating seedpod's pollen for 10 minutes."
+ },
+ {
+  "id": "irritating-seedpod-lesser",
+  "collection": "items",
+  "name": "Irritating Seedpod (Lesser)",
+  "level": 3,
+  "text": "A creature that succeeds at this saving throw becomes temporarily immune to the irritating seedpod's pollen for 10 minutes."
+ },
+ {
+  "id": "irritating-seedpod-major",
+  "collection": "items",
+  "name": "Irritating Seedpod (Major)",
+  "level": 14,
+  "text": "A creature that succeeds at this saving throw becomes temporarily immune to the irritating seedpod's pollen for 10 minutes."
+ },
+ {
+  "id": "lucky-copper",
+  "collection": "items",
+  "name": "Lucky Copper",
+  "level": 2,
+  "text": "Either way, you're temporarily immune to Guarded Fortune for 1 hour."
+ },
+ {
+  "id": "lucky-gold",
+  "collection": "items",
+  "name": "Lucky Gold",
+  "level": 8,
+  "text": "Either way, you're temporarily immune to Guarded Fortune for 1 hour."
+ },
+ {
+  "id": "lucky-silver",
+  "collection": "items",
+  "name": "Lucky Silver",
+  "level": 5,
+  "text": "Either way, you're temporarily immune to Guarded Fortune for 1 hour."
+ },
+ {
+  "id": "maelstromic-destabilizer-lesser",
+  "collection": "items",
+  "name": "Maelstromic Destabilizer (Lesser)",
+  "level": 2,
+  "text": "For the next minute, the creature holding the gadget gains resistance 2 to spirit damage, while all creatures not immune to spirit damage in a gains weakness 2 to spirit damage."
+ },
+ {
+  "id": "maelstromic-destabilizer-major",
+  "collection": "items",
+  "name": "Maelstromic Destabilizer (Major)",
+  "level": 17,
+  "text": "For the next minute, the creature holding the gadget gains resistance 10 to spirit damage, while all creatures not immune to spirit damage in a gains weakness 10 to spirit damage."
+ },
+ {
+  "id": "maelstromic-destabilizer-moderate",
+  "collection": "items",
+  "name": "Maelstromic Destabilizer (Moderate)",
+  "level": 7,
+  "text": "For the next minute, the creature holding the gadget gains resistance 5 to spirit damage, while all creatures not immune to spirit damage in a gains weakness 5 to spirit damage."
+ },
+ {
+  "id": "olfactory-obfuscator-lesser",
+  "collection": "items",
+  "name": "Olfactory Obfuscator (Lesser)",
+  "level": 3,
+  "text": "For 10 minutes after drinking this elixir, your scent is nearly unnoticeable. Creatures with imprecise scent don't detect you with that sense unless they Seek for you, and you are concealed from creatures that perceive you with precise scent. You gain a +4 item bonus against attempts to Seek you by creatures using only scent-based senses; if they use any other senses as well, the bonus doesn't apply."
+ },
+ {
+  "id": "pickled-demon-tongue-greater",
+  "collection": "items",
+  "name": "Pickled Demon Tongue (Greater)",
+  "level": 8,
+  "text": "- **Armor** You gain resistance 5 to acid and attacks by demons."
+ },
+ {
+  "id": "polished-demon-horn-greater",
+  "collection": "items",
+  "name": "Polished Demon Horn (Greater)",
+  "level": 8,
+  "text": "- **Armor** You gain resistance 5 to unholy."
+ },
+ {
+  "id": "portable-seal-lesser",
+  "collection": "items",
+  "name": "Portable Seal (Lesser)",
+  "level": 6,
+  "text": "--- **Success** The action occurs normally, and the creature is immune to the effects of this portable seal this round. **Failure** The movement or Strike is disrupted, but the creature is immune to further effects of the portable seal this round."
+ },
+ {
+  "id": "portable-seal-major",
+  "collection": "items",
+  "name": "Portable Seal (Major)",
+  "level": 18,
+  "text": "--- **Success** The action occurs normally, and the creature is immune to the effects of this portable seal this round. **Failure** The movement or Strike is disrupted, but the creature is immune to further effects of the portable seal this round."
+ },
+ {
+  "id": "portable-seal-moderate",
+  "collection": "items",
+  "name": "Portable Seal (Moderate)",
+  "level": 12,
+  "text": "--- **Success** The action occurs normally, and the creature is immune to the effects of this portable seal this round. **Failure** The movement or Strike is disrupted, but the creature is immune to further effects of the portable seal this round."
+ },
+ {
+  "id": "potion-of-acid-resistance-lesser",
+  "collection": "items",
+  "name": "Potion of Acid Resistance (Lesser)",
+  "level": 6,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Drinking this thick, fortifying potion grants resistance 5 against acid damage for 1 hour."
+ },
+ {
+  "id": "potion-of-cold-resistance-lesser",
+  "collection": "items",
+  "name": "Potion of Cold Resistance (Lesser)",
+  "level": 6,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Drinking this thick, fortifying potion grants resistance 5 against cold damage for 1 hour."
+ },
+ {
+  "id": "potion-of-electricity-resistance-lesser",
+  "collection": "items",
+  "name": "Potion of Electricity Resistance (Lesser)",
+  "level": 6,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Drinking this thick, fortifying potion grants resistance 5 against electrical damage for 1 hour."
+ },
+ {
+  "id": "potion-of-fire-resistance-lesser",
+  "collection": "items",
+  "name": "Potion of Fire Resistance (Lesser)",
+  "level": 6,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Drinking this thick, fortifying potion grants resistance 5 against fire damage for 1 hour."
+ },
+ {
+  "id": "potion-of-sonic-resistance-lesser",
+  "collection": "items",
+  "name": "Potion of Sonic Resistance (Lesser)",
+  "level": 6,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Drinking this thick, fortifying potion grants resistance 5 against sonic damage for 1 hour."
+ },
+ {
+  "id": "rainbow-vinegar-moderate",
+  "collection": "items",
+  "name": "Rainbow Vinegar (Moderate)",
+  "level": 4,
+  "text": "During this time, your unarmed attacks deal an additional 1d4 acid damage, and you have resistance 10 to electricity. Taking more than one dose of rainbow vinegar in a single day gives you weakness 5 to acid until your next daily preparations."
+ },
+ {
+  "id": "rune-of-sin-envy",
+  "collection": "items",
+  "name": "Rune of Sin (Envy)",
+  "level": 12,
+  "text": "When you Cast an abjuration Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against abjuration spells."
+ },
+ {
+  "id": "rune-of-sin-gluttony",
+  "collection": "items",
+  "name": "Rune of Sin (Gluttony)",
+  "level": 12,
+  "text": "When you Cast a necromancy Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against necromancy spells."
+ },
+ {
+  "id": "rune-of-sin-greed",
+  "collection": "items",
+  "name": "Rune of Sin (Greed)",
+  "level": 12,
+  "text": "When you Cast a transmutation Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against transmutation spells."
+ },
+ {
+  "id": "rune-of-sin-lust",
+  "collection": "items",
+  "name": "Rune of Sin (Lust)",
+  "level": 12,
+  "text": "When you Cast an enchantment Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against enchantment spells."
+ },
+ {
+  "id": "rune-of-sin-pride",
+  "collection": "items",
+  "name": "Rune of Sin (Pride)",
+  "level": 12,
+  "text": "When you Cast an illusion Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against illusion spells."
+ },
+ {
+  "id": "rune-of-sin-sloth",
+  "collection": "items",
+  "name": "Rune of Sin (Sloth)",
+  "level": 12,
+  "text": "When you Cast a conjuration Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against conjuration spells."
+ },
+ {
+  "id": "rune-of-sin-wrath",
+  "collection": "items",
+  "name": "Rune of Sin (Wrath)",
+  "level": 12,
+  "text": "When you Cast an evocation Spell, you gain resistance 5 to damage from spells until the start of your next turn. This resistance is increased to 7 against evocation spells."
+ },
+ {
+  "id": "sihedron-ring-greater",
+  "collection": "items",
+  "name": "Sihedron Ring (Greater)",
+  "level": 12,
+  "text": "As long as it's invested, a Sihedron ring protects its wearer from environmental extremes, rendering them immune to severe cold and heat."
+ },
+ {
+  "id": "slithermaws-bane-heroic",
+  "collection": "items",
+  "name": "Slithermaw's Bane (Heroic)",
+  "level": 20,
+  "text": "**Perception** +34; precise low-light vision and hearing within 30 feet **Communication** telepathy (partner only) **Skills** Intimidation +35, Society +33, Warfare +33 **Int** +5, **Wis** +6, **Cha** +7 **Will** +34 --- The heroism of Kyloss Syndar, founder of Greengold and slayer of the demonic hydra Slithermaw, imprinted this suit of armor with a gleaming, prismatic sheen that sparkles under bright light. *Slithermaw's Bane* is a suit of *+3 major resilient greater fortification high-grade elven chain* that grants his wearer poison resistance 15, and "
+ },
+ {
+  "id": "sorshens-scintillating-garment",
+  "collection": "items",
+  "name": "Sorshen's Scintillating Garment",
+  "level": 20,
+  "text": "While wearing the garment, you're immune to mental effects unless you choose otherwise. If you spend 1 Mythic Point as part of this activation, the spell's area changes to a , and you can designate any number of creatures in that area to be immune to the spell's effects, and the spell loses the incapacitation trait."
+ },
+ {
+  "id": "sorshens-sinuous-guisarme",
+  "collection": "items",
+  "name": "Sorshen's Sinuous Guisarme",
+  "level": 23,
+  "text": "**Perception** +37; precise vision 300 feet, imprecise hearing 300 feet, darkvision **Communication** telepathy (Aklo, Azlanti, Chthonian, and Thassilonian) **Skills** Arcana +43, Occultism +38, Society +36 **Int** +6, **Wis** +6, **Cha** +8 **Will** +37 --- *Sorshen's Sinuous Guisarme* is a *+4 mythic striking keen quickstrike shifting spell reservoir high-grade dawnsilver guisarme*."
+ },
+ {
+  "id": "soulcutter-heroic",
+  "collection": "items",
+  "name": "Soulcutter (Heroic)",
+  "level": 20,
+  "text": "**Perception** +34; precise low-light vision and hearing within 30 feet **Communication** telepathy (partner only) **Skills** Nature +34, Religion +34, Survival +34 **Int** +7, **Wis** +6, **Cha** +5 **Will** +34 --- The echo of the Calistrian witch Silisifex imbues her legendary blade with a shimmering pale-green glow equivalent to that of candlelight; *Soulcutter* can activate or deactivate this radiance as a free action once per round on her partner's turn. *Soulcutter's* telepathic voice is a sultry whisper that often infuses her observations with a "
+ },
+ {
+  "id": "stalk-goggles-major",
+  "collection": "items",
+  "name": "Stalk Goggles (Major)",
+  "level": 8,
+  "text": "You gain all-around vision, low-light vision, and a +2 item bonus to Perception checks involving sight for 1 minute; during this time, you can't be flanked."
+ },
+ {
+  "id": "stormshard-greater",
+  "collection": "items",
+  "name": "Stormshard (Greater)",
+  "level": 12,
+  "text": "In addition, you can Demoralize undead creatures, even if those creatures are mindless or otherwise immune to emotion, fear, or mental effects."
+ },
+ {
+  "id": "stormshard-major",
+  "collection": "items",
+  "name": "Stormshard (Major)",
+  "level": 18,
+  "text": "In addition, you can Demoralize undead creatures, even if those creatures are mindless or otherwise immune to emotion, fear, or mental effects."
+ },
+ {
+  "id": "testudo-shield-greater",
+  "collection": "items",
+  "name": "Testudo Shield (Greater)",
+  "level": 13,
+  "text": "The barrier is created with the Hardness and Hit Points equal to those of the testudo shield and is immune to critical hits and precision damage."
+ },
+ {
+  "id": "timepiece-standard-major",
+  "collection": "items",
+  "name": "Timepiece Standard (Major)",
+  "level": 20,
+  "text": "Whenever you or an ally within the banner's aura uses the Delay or Ready action, you or the ally gain 10 temporary Hit Points that last for 1 minute and then become immune to this effect for 10 minutes."
+ },
+ {
+  "id": "wand-of-noisome-acid-2nd-rank",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (2nd-Rank)",
+  "level": 6,
+  "text": "This greasy stick emits a stomach-churning scent when held in a hand."
+ },
+ {
+  "id": "wand-of-noisome-acid-4nd-rank",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (4nd-Rank)",
+  "level": 10,
+  "text": "This greasy stick emits a stomach-churning scent when held in a hand."
+ },
+ {
+  "id": "wand-of-noisome-acid-6th-rank",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (6th-Rank)",
+  "level": 14,
+  "text": "This greasy stick emits a stomach-churning scent when held in a hand."
+ },
+ {
+  "id": "wand-of-noisome-acid-8th-rank",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (8th-Rank)",
+  "level": 18,
+  "text": "This greasy stick emits a stomach-churning scent when held in a hand."
+ },
+ {
+  "id": "wintershot-heroic",
+  "collection": "items",
+  "name": "Wintershot (Heroic)",
+  "level": 20,
+  "text": "**Perception** +35; precise low-light vision and hearing within 30 feet **Communication** telepathy (partner only) **Skills** Diplomacy +33, Intimidation +35, Survival +35 **Int** +6, **Wis** +7, **Cha** +5 **Will** +35 --- The echo of the snowcaster Jelarial causes *Wintershot* to become chill to the touch, yet despite feeling as cold as ice, she never causes harm or discomfort to her partner. That creature must attempt a save, after which point they're temporarily immune to Rimecrust for 24 hours. Creatures that are immune to cold are immune to this ef"
+ },
+ {
+  "id": "wyrm-claw",
+  "collection": "items",
+  "name": "Wyrm Claw",
+  "level": 12,
+  "text": "- **Armor** After you cast a conjuration spell by activating the *wyrm claw*, you gain resistance 5 to acid, cold, electricity, and fire for the next minute."
+ },
+ {
+  "id": "wyrm-on-the-wing",
+  "collection": "items",
+  "name": "Wyrm on the Wing",
+  "level": 9,
+  "text": "You gain resistance 5 to the damage type matching the tradition of the dragon your tattoo depicts."
+ },
+ {
+  "id": "zetogeki-hide-armor",
+  "collection": "items",
+  "name": "Zetogeki Hide Armor",
+  "level": 8,
+  "text": "This *+1 fire-resistant hide armor* is adorned with the shale-like scales of the zetogeki, a giant reptile that dwells near sites of volcanic activity. --- **Activate—Shift Scales** ⟨1⟩ **Frequency** once per day **Effect** Until the end of your next turn, you gain resistance 5 to bludgeoning, piercing, and slashing damage, but your Speeds are reduced by 10 feet (minimum 5 feet)."
+ },
+ {
+  "id": "aon-warcaller-s-chime",
+  "collection": "items",
+  "name": "Warcaller's Chime",
+  "level": 4,
+  "text": "You and creatures in the aura gain resistance 5 against the damage type you chose."
+ },
+ {
+  "id": "aon-lucky-coin",
+  "collection": "items",
+  "name": "Lucky Coin",
+  "level": 2,
+  "text": "Either way, you're temporarily immune to Guarded Fortune for 1 hour."
+ },
+ {
+  "id": "aon-energy-robe",
+  "collection": "items",
+  "name": "Energy Robe",
+  "level": 7,
+  "text": "You gain resistance 5 to fire. When the robe is activated, you gain a +30-foot status bonus to Speed for 1 minute as flames shoot out behind you to speed you up. You gain resistance 5 to cold. You gain resistance 5 to acid. When the robe is activated, you gain a climb Speed equal to your Speed, as the acid on your hands grants you easier handholds. You gain resistance 5 to electricity. When the robe is activated, you gain a fly Speed equal to your Speed for 1 minute."
+ },
+ {
+  "id": "aon-abysium-armor",
+  "collection": "items",
+  "name": "Abysium Armor",
+  "level": 12,
+  "text": "Typically only creatures immune to abysium's effects would don abysium armor. Afterwards, the creature is temporarily immune for 1 minute, but if they remain within the area for longer than 1 minute, they automatically critically fail the next save."
+ },
+ {
+  "id": "aon-siccatite-shield",
+  "collection": "items",
+  "name": "Siccatite Shield",
+  "level": 8,
+  "text": "Standard-grade siccatite shields have resistance 10 to the corresponding energy type: fire damage for a hot siccatite shield or cold damage for a cold siccatite shield, as it takes even more extreme temperatures to affect them. They also provide some resistance to opposing temperatures because of their own extreme temperature, which extends to you when you Raise the Shield. The shield has resistance 5 to the opposing damage type (cold damage for a hot siccatite shield or fire damage for a cold siccatite shield), and while you have a siccatite shield Rais"
+ },
+ {
+  "id": "aon-siccatite-buckler-standard-grade",
+  "collection": "items",
+  "name": "Siccatite Buckler (Standard-Grade)",
+  "level": 8,
+  "text": "Standard-grade siccatite shields have resistance 10 to the corresponding energy type: fire damage for a hot siccatite shield or cold damage for a cold siccatite shield, as it takes even more extreme temperatures to affect them. They also provide some resistance to opposing temperatures because of their own extreme temperature, which extends to you when you Raise the Shield. The shield has resistance 5 to the opposing damage type (cold damage for a hot siccatite shield or fire damage for a cold siccatite shield), and while you have a siccatite shield Rais"
+ }
+]

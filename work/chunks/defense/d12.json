@@ -1,0 +1,387 @@
+[
+ {
+  "id": "clinging-bubbles-lesser",
+  "collection": "items",
+  "name": "Clinging Bubbles (Lesser)",
+  "level": 3,
+  "text": "The bubbles are thick and sticky, and any creature who enters the same space as the bubble cloud becomes shrouded in them, taking a –5-foot circumstance penalty to its Speed. The cloud of bubbles has AC 5, 20 Hit Points, and weakness 5 to piercing and slashing."
+ },
+ {
+  "id": "clinging-bubbles-moderate",
+  "collection": "items",
+  "name": "Clinging Bubbles (Moderate)",
+  "level": 7,
+  "text": "The bubbles are thick and sticky, and any creature who enters the same space as the bubble cloud becomes shrouded in them, taking a –10-foot circumstance penalty to its Speed. The cloud of bubbles has AC 5, 30 Hit Points, and weakness 5 to piercing and slashing."
+ },
+ {
+  "id": "clinging-bubbles-greater",
+  "collection": "items",
+  "name": "Clinging Bubbles (Greater)",
+  "level": 11,
+  "text": "The bubbles are thick and sticky, and any creature who enters the same space as the bubble cloud becomes shrouded in them, taking a –15-foot circumstance penalty to its Speed. The cloud of bubbles has AC 5, 40 Hit Points, and weakness 5 to piercing and slashing."
+ },
+ {
+  "id": "horned-lion-amulet",
+  "collection": "items",
+  "name": "Horned Lion Amulet",
+  "level": 9,
+  "text": "When you activate the amulet, the lion's eyes glow with flames, granting you fire resistance 10 against the triggering damage and a subsequent fire resistance 5 for 1 minute."
+ },
+ {
+  "id": "stone-of-encouragement",
+  "collection": "items",
+  "name": "Stone of Encouragement",
+  "level": 2,
+  "text": "You become temporarily immune to the effects of all *stones of encouragement*, even ones other than the one you activated, for 1 day."
+ },
+ {
+  "id": "stone-of-encouragement-greater",
+  "collection": "items",
+  "name": "Stone of Encouragement (Greater)",
+  "level": 8,
+  "text": "You become temporarily immune to the effects of all *stones of encouragement*, even ones other than the one you activated, for 1 day."
+ },
+ {
+  "id": "the-fiend",
+  "collection": "items",
+  "name": "The Fiend",
+  "level": 20,
+  "text": "You are immune to the effects of your own phantasmal calamity."
+ },
+ {
+  "id": "the-rakshasa",
+  "collection": "items",
+  "name": "The Rakshasa",
+  "level": 20,
+  "text": "The pledged follower is temporarily immune to this activation for 24 hours."
+ },
+ {
+  "id": "the-desert",
+  "collection": "items",
+  "name": "The Desert",
+  "level": 20,
+  "text": "As long as *The Desert* is invested, you are immune to the effects of temperatures ranging from extreme cold to extreme heat, and can hold your breath and go without food and water for twice as long as normal."
+ },
+ {
+  "id": "statue-skin-salve",
+  "collection": "items",
+  "name": "Statue Skin Salve",
+  "level": 5,
+  "text": "During this time, it gains resistance 3 to piercing and slashing damage."
+ },
+ {
+  "id": "the-deck-of-destiny",
+  "collection": "items",
+  "name": "The Deck of Destiny",
+  "level": 25,
+  "text": "The deck also helps you maintain control of your own fate, granting you immunity to fortune and misfortune effects, though you can be affected by such effects if you wish. Regardless of whether they faced weal or woe, the triggering creature becomes temporarily immune to this ability for 24 hours. Regardless of the results, the creature becomes temporarily immune to this effect for 1 week."
+ },
+ {
+  "id": "frost-breath",
+  "collection": "items",
+  "name": "Frost Breath",
+  "level": 7,
+  "text": "After inhaling frost breath, you gain resistance 5 to cold."
+ },
+ {
+  "id": "jaathooms-scarf",
+  "collection": "items",
+  "name": "Jaathoom's Scarf",
+  "level": 10,
+  "text": "Creatures with the air trait are immune to all these effects."
+ },
+ {
+  "id": "nimbus-breath",
+  "collection": "items",
+  "name": "Nimbus Breath",
+  "level": 8,
+  "text": "After you inhale the *nimbus breath*, you gain resistance 5 to electricity and are affected by Fly as long as you hold your breath."
+ },
+ {
+  "id": "spun-cloud",
+  "collection": "items",
+  "name": "Spun Cloud",
+  "level": 2,
+  "text": "Creatures gain resistance 5 to electricity while in the cloud. Regardless of the result of its save, the creature becomes temporarily immune for 24 hours. Regardless of the result of its save, the creature becomes temporarily immune for 24 hours. 76 Price 7 gp Bulk L A white cloud swirls with winds that speed up travel. A creature that starts its turn in the cloud gains a +10-foot item bonus to its land Speed and fly Speed (if it has one) until the end of its turn."
+ },
+ {
+  "id": "spun-cloud-blue",
+  "collection": "items",
+  "name": "Spun Cloud (Blue)",
+  "level": 6,
+  "text": "Creatures gain resistance 5 to electricity while in the cloud."
+ },
+ {
+  "id": "storm-breath",
+  "collection": "items",
+  "name": "Storm Breath",
+  "level": 9,
+  "text": "After inhaling *storm breath*, you gain resistance 5 to both electricity and sonic."
+ },
+ {
+  "id": "fossil-fragment",
+  "collection": "items",
+  "name": "Fossil Fragment",
+  "level": 7,
+  "text": "It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious. It doesn't have the normal weaknesses of an awakened tree, but it's rooted in place, immobilized."
+ },
+ {
+  "id": "fossil-fragment-amber-mosquito",
+  "collection": "items",
+  "name": "Fossil Fragment (Amber Mosquito)",
+  "level": 13,
+  "text": "It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious."
+ },
+ {
+  "id": "fossil-fragment-brontosaurus-phalange",
+  "collection": "items",
+  "name": "Fossil Fragment (Brontosaurus Phalange)",
+  "level": 18,
+  "text": "It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious."
+ },
+ {
+  "id": "fossil-fragment-deinonychus-claw",
+  "collection": "items",
+  "name": "Fossil Fragment (Deinonychus Claw)",
+  "level": 7,
+  "text": "It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious."
+ },
+ {
+  "id": "fossil-fragment-eurypterid-paddle",
+  "collection": "items",
+  "name": "Fossil Fragment (Eurypterid Paddle)",
+  "level": 12,
+  "text": "It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious."
+ },
+ {
+  "id": "fossil-fragment-petrified-wood",
+  "collection": "items",
+  "name": "Fossil Fragment (Petrified Wood)",
+  "level": 14,
+  "text": "It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious. It doesn't have the normal weaknesses of an awakened tree, but it's rooted in place, immobilized."
+ },
+ {
+  "id": "fossil-fragment-triceratops-frill",
+  "collection": "items",
+  "name": "Fossil Fragment (Triceratops Frill)",
+  "level": 15,
+  "text": "It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious."
+ },
+ {
+  "id": "fossil-fragment-tyrannosaur-tooth",
+  "collection": "items",
+  "name": "Fossil Fragment (Tyrannosaur Tooth)",
+  "level": 17,
+  "text": "It's also immune to bleed, death effects, disease, doomed, drained, fatigued, healing, nonlethal attacks, paralyzed, poison, sickened, vitality, void, and unconscious."
+ },
+ {
+  "id": "jabalis-dice",
+  "collection": "items",
+  "name": "Jabali's Dice",
+  "level": 12,
+  "text": "| | --- | --- | | **6-9** | The shuyookh casts Grasping Earth but you and your allies are immune to it."
+ },
+ {
+  "id": "limestone-shield",
+  "collection": "items",
+  "name": "Limestone Shield",
+  "level": 7,
+  "text": "Each square of the wall has AC 10, Hardness 7, and 28 Hit Points, and it's immune to critical hits and precision damage."
+ },
+ {
+  "id": "robe-of-stone",
+  "collection": "items",
+  "name": "Robe of Stone",
+  "level": 11,
+  "text": "A *robe of stone*, decorated with patterns reminiscent of gems and geodes, constantly sheds tiny amounts of dust. While wearing it, you gain imprecise tremorsense in a radius of 10 feet, and you can speak and read Petran. In addition to the spell's normal effects, you can Burrow through any earthen matter, including rock, moving at the spell's burrow Speed, leaving no tunnels or signs of your passing. Also, the range of the tremorsense you gain from the robe increases to 30 feet."
+ },
+ {
+  "id": "sairazul-blue",
+  "collection": "items",
+  "name": "Sairazul Blue",
+  "level": 10,
+  "text": "For the next 8 hours, your skin becomes navy blue, and you gain resistance 5 to poison damage and void damage. The resistances the potion grants then end."
+ },
+ {
+  "id": "sandcastle",
+  "collection": "items",
+  "name": "Sandcastle",
+  "level": 11,
+  "text": "It's immune to critical hits and precision damage, and it has weakness to water 15."
+ },
+ {
+  "id": "ash-gown",
+  "collection": "items",
+  "name": "Ash Gown",
+  "level": 7,
+  "text": "The gown grants you resistance 5 to fire and a +1 item bonus to Intimidation checks."
+ },
+ {
+  "id": "lambent-perfume",
+  "collection": "items",
+  "name": "Lambent Perfume",
+  "level": 6,
+  "text": "After attempting a new saving throw against an affliction, a creature is temporarily immune to *lambent perfume* for the purpose of overcoming that affliction for 24 hours."
+ },
+ {
+  "id": "scalding-gauntlets",
+  "collection": "items",
+  "name": "Scalding Gauntlets",
+  "level": 11,
+  "text": "A creature you grab or restrain while wearing the gauntlets must succeed at a save or take 2d6 damage and be Sickened 1 from the pain; it's temporarily immune to being sickened by *scalding gauntlets* for 1 hour."
+ },
+ {
+  "id": "scalding-gauntlets-greater",
+  "collection": "items",
+  "name": "Scalding Gauntlets (Greater)",
+  "level": 13,
+  "text": "A creature you grab or restrain while wearing the gauntlets must succeed at a save or take 2d6 damage and be Sickened 1 from the pain; it's temporarily immune to being sickened by *scalding gauntlets* for 1 hour."
+ },
+ {
+  "id": "scalding-gauntlets-major",
+  "collection": "items",
+  "name": "Scalding Gauntlets (Major)",
+  "level": 15,
+  "text": "A creature you grab or restrain while wearing the gauntlets must succeed at a save or take 3d6 damage and be Sickened 1 from the pain; it's temporarily immune to being sickened by *scalding gauntlets* for 1 hour."
+ },
+ {
+  "id": "scalding-gauntlets-true",
+  "collection": "items",
+  "name": "Scalding Gauntlets (True)",
+  "level": 18,
+  "text": "A creature you grab or restrain while wearing the gauntlets must succeed at a save or take 4d6 damage and be Sickened 1 from the pain; it's temporarily immune to being sickened by *scalding gauntlets* for 1 hour."
+ },
+ {
+  "id": "ferrofluid-urchin",
+  "collection": "items",
+  "name": "Ferrofluid Urchin",
+  "level": 7,
+  "text": "You gain resistance to the triggering damage. 146 Price 55 gp You gain resistance 3. 146 Price 225 gp You gain resistance 6. 146 Price 925 gp You gain resistance 10."
+ },
+ {
+  "id": "ferrofluid-urchin-lesser",
+  "collection": "items",
+  "name": "Ferrofluid Urchin (Lesser)",
+  "level": 7,
+  "text": "You gain resistance 3 to the triggering damage."
+ },
+ {
+  "id": "ferrofluid-urchin-moderate",
+  "collection": "items",
+  "name": "Ferrofluid Urchin (Moderate)",
+  "level": 11,
+  "text": "You gain resistance 6 to the triggering damage."
+ },
+ {
+  "id": "spiny-lodestone",
+  "collection": "items",
+  "name": "Spiny Lodestone",
+  "level": 4,
+  "text": "- **Armor** You gain a +1 item bonus to Athletics checks and resistance 2 to nonlethal damage."
+ },
+ {
+  "id": "spiny-lodestone-greater",
+  "collection": "items",
+  "name": "Spiny Lodestone (Greater)",
+  "level": 8,
+  "text": "- **Armor** You gain a +1 item bonus to Athletics checks and resistance 5 to nonlethal damage."
+ },
+ {
+  "id": "anglerfish-lantern",
+  "collection": "items",
+  "name": "Anglerfish Lantern",
+  "level": 5,
+  "text": "Regardless of the result, the creature then becomes immune to this effect for the next 24 hours."
+ },
+ {
+  "id": "anglerfish-lantern-submersible",
+  "collection": "items",
+  "name": "Anglerfish Lantern (Submersible)",
+  "level": 8,
+  "text": "Regardless of the result, the creature then becomes immune to this effect for the next 24 hours."
+ },
+ {
+  "id": "shell-of-easy-breathing",
+  "collection": "items",
+  "name": "Shell of Easy Breathing",
+  "level": 5,
+  "text": "The creature is then temporarily immune to *shells of easy breathing* until the next time it makes its daily preparations."
+ },
+ {
+  "id": "shell-of-easy-breathing-greater",
+  "collection": "items",
+  "name": "Shell of Easy Breathing (Greater)",
+  "level": 9,
+  "text": "The creature is then temporarily immune to *shells of easy breathing* until the next time it makes its daily preparations."
+ },
+ {
+  "id": "animal-nip",
+  "collection": "items",
+  "name": "Animal Nip",
+  "level": 4,
+  "text": "200 Usage held in 1 hand Activate (manipulate) Animal nip contains a mix of herbaceous, fragrant plants, ground into a coarse powder with a strong scent that attracts a broad spectrum of animals. Regardless of the result of the creature's save, it's then immune to animal nip for 1 hour."
+ },
+ {
+  "id": "animal-nip-lesser",
+  "collection": "items",
+  "name": "Animal Nip (Lesser)",
+  "level": 4,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Animal nip contains a mix of herbaceous, fragrant plants, ground into a coarse powder with a strong scent that attracts a broad spectrum of animals. Regardless of the result of the creature's save, it's then immune to animal nip for 1 hour."
+ },
+ {
+  "id": "animal-nip-moderate",
+  "collection": "items",
+  "name": "Animal Nip (Moderate)",
+  "level": 8,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Animal nip contains a mix of herbaceous, fragrant plants, ground into a coarse powder with a strong scent that attracts a broad spectrum of animals. Regardless of the result of the creature's save, it's then immune to animal nip for 1 hour."
+ },
+ {
+  "id": "animal-nip-greater",
+  "collection": "items",
+  "name": "Animal Nip (Greater)",
+  "level": 12,
+  "text": "200 Usage held in 1 hand Activate (manipulate) Animal nip contains a mix of herbaceous, fragrant plants, ground into a coarse powder with a strong scent that attracts a broad spectrum of animals. Regardless of the result of the creature's save, it's then immune to animal nip for 1 hour."
+ },
+ {
+  "id": "blooming-lotus-seed-pod",
+  "collection": "items",
+  "name": "Blooming Lotus Seed Pod",
+  "level": 7,
+  "text": "Over the next 8 hours, creatures who sleep for at least 6 hours within 30 feet of the lotus flower gain the benefits of long-term rest as though they'd spent an entire day and night resting, and all creatures within the affected area are immune to the effects of the Nightmare spell and other magical effects that affect only sleeping creatures."
+ },
+ {
+  "id": "broadleaf-shield",
+  "collection": "items",
+  "name": "Broadleaf Shield",
+  "level": 6,
+  "text": "While you're wielding the shield, you gain resistance 3 to a damage type depending on the shield's color. This resistance doubles while you have the shield raised. - **Pink** (void resistance) In spring, the leaf is a delicate blossom-like pink and exudes the energy of life. - **Green** (fire resistance) In summer, the leaf is a deep, rich green with a waxy coating. - **Orange** (poison resistance) In autumn, the leaf turns orange, red, or yellow and dehydrates slightly. - **Brown** (cold resistance) In winter, the leaf turns dead, dry, and brown."
+ },
+ {
+  "id": "broadleaf-shield-greater",
+  "collection": "items",
+  "name": "Broadleaf Shield (Greater)",
+  "level": 9,
+  "text": "While you're wielding the shield, you gain resistance 4 to a damage type depending on the shield's color. This resistance doubles while you have the shield raised. - **Pink** (void resistance) In spring, the leaf is a delicate blossom-like pink and exudes the energy of life. - **Green** (fire resistance) In summer, the leaf is a deep, rich green with a waxy coating. - **Orange** (poison resistance) In autumn, the leaf turns orange, red, or yellow and dehydrates slightly. - **Brown** (cold resistance) In winter, the leaf turns dead, dry, and brown."
+ },
+ {
+  "id": "broadleaf-shield-major",
+  "collection": "items",
+  "name": "Broadleaf Shield (Major)",
+  "level": 13,
+  "text": "While you're wielding the shield, you gain resistance 5 to a damage type depending on the shield's color. This resistance doubles while you have the shield raised. - **Pink** (void resistance) In spring, the leaf is a delicate blossom-like pink and exudes the energy of life. - **Green** (fire resistance) In summer, the leaf is a deep, rich green with a waxy coating. - **Orange** (poison resistance) In autumn, the leaf turns orange, red, or yellow and dehydrates slightly. - **Brown** (cold resistance) In winter, the leaf turns dead, dry, and brown."
+ },
+ {
+  "id": "broadleaf-shield-true",
+  "collection": "items",
+  "name": "Broadleaf Shield (True)",
+  "level": 17,
+  "text": "While you're wielding the shield, you gain resistance 6 to a damage type depending on the shield's color. This resistance doubles while you have the shield raised. - **Pink** (void resistance) In spring, the leaf is a delicate blossom-like pink and exudes the energy of life. - **Green** (fire resistance) In summer, the leaf is a deep, rich green with a waxy coating. - **Orange** (poison resistance) In autumn, the leaf turns orange, red, or yellow and dehydrates slightly. - **Brown** (cold resistance) In winter, the leaf turns dead, dry, and brown."
+ },
+ {
+  "id": "captivating-rosebud",
+  "collection": "items",
+  "name": "Captivating Rosebud",
+  "level": 3,
+  "text": "Named because of its popularity among thieves to distract any authorities in pursuit, a *captivating rosebud* has a near-irresistible fragrance. --- **Activate - Scent of Roses** ⟨1⟩ (manipulate, mental, olfactory) **Effect** You throw the captivating rosebud in a square adjacent to you."
+ }
+]

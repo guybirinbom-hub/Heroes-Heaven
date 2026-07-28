@@ -1,0 +1,387 @@
+[
+ {
+  "id": "execution",
+  "collection": "feats",
+  "name": "Execution",
+  "level": 14,
+  "text": "The creature then becomes temporarily immune to your Execution for 1 day."
+ },
+ {
+  "id": "terrifying-countenance",
+  "collection": "feats",
+  "name": "Terrifying Countenance",
+  "level": 18,
+  "text": "If you critically hit a creature that's temporarily immune to the spell, the creature's temporary immunity ends."
+ },
+ {
+  "id": "volatile-grease",
+  "collection": "feats",
+  "name": "Volatile Grease",
+  "level": 6,
+  "text": "**Success** The target is splattered with grease and gains weakness 2 to fire until the end of your next turn. **Failure** As success, except the weakness to fire lasts for 1 minute. --- **Heightened (+2)** The weakness increases by 1."
+ },
+ {
+  "id": "curse-of-the-saumen-kar",
+  "collection": "feats",
+  "name": "Curse of the Saumen Kar",
+  "level": 14,
+  "text": "The dome has AC 10, Hardness 20, and 40 Hit Points; it's immune to cold, critical hits, and precision damage."
+ },
+ {
+  "id": "tame-animal",
+  "collection": "feats",
+  "name": "Tame Animal",
+  "level": 1,
+  "text": "To use this feat, choose a wild animal that isn't actively hostile to you and which isn't confined to an area smaller than its Speed in diameter (animals held in place or trapped are typically too scared to be tamed). **Critical Failure** The animal does its best to attack you and is immune to Tame Animal for 1 month."
+ },
+ {
+  "id": "game-hunter-dedication",
+  "collection": "feats",
+  "name": "Game Hunter Dedication",
+  "level": 2,
+  "text": "On a failure, the prey's Speeds are each reduced by 10 feet for 1 round; on a critical failure, the duration of this effect is 1 minute. The prey is then temporarily immune to this effect for 10 minutes. You apply the Stealth bonus and the Speed reduction only when your prey is an animal, beast, or dragon."
+ },
+ {
+  "id": "pyrophilic-recovery",
+  "collection": "feats",
+  "name": "Pyrophilic Recovery",
+  "level": 1,
+  "text": "For example, if an effect deals 15 fire Damage and you have fire resistance 5, you would take 10 fire Damage and Pyrophilic Recovery could recover at most 5 Hit Points, regardless of any other effects that increase healing."
+ },
+ {
+  "id": "cast-out",
+  "collection": "feats",
+  "name": "Cast Out",
+  "level": 6,
+  "text": "If you fail, the possessing creature is immune to your Cast Out for a year and a day"
+ },
+ {
+  "id": "necromancers-visage",
+  "collection": "feats",
+  "name": "Necromancer's Visage",
+  "level": 12,
+  "text": "Undead creatures can immediately sense your Necromancer's Visage and tend to act accordingly. If you take a hostile action against an undead creature, it becomes permanently immune to your Necromancer's Visage, and your Necromancer's Visage ends. You can spend 10 minutes to restore your Necromancer's Visage, though any creatures that became permanently immune remain so. --- **Critical Success** The creature is permanently immune to your Necromancer's Visage."
+ },
+ {
+  "id": "frightful-moan",
+  "collection": "feats",
+  "name": "Frightful Moan",
+  "level": 4,
+  "text": "**Success** The creature is unaffected and temporarily immune to Frightful Moans for 1 minute."
+ },
+ {
+  "id": "ghostly-resistance",
+  "collection": "feats",
+  "name": "Ghostly Resistance",
+  "level": 4,
+  "text": "Your ghostly form becomes innately weaker but also gains resistance to many forms of damage. You gain resistance 1 to all damage except for force, vitality, and any damage done by a weapon with the ghost touch rune (or any other source that acts like a ghost touch rune). This resistance increases to 2 if the source is non-magical. At 10th level, the resistance increases to 2, or 4 if the source is non-magical. At 16th level, the resistance increases to 3, or 5 if the source is non-magical."
+ },
+ {
+  "id": "paralyzing-slash",
+  "collection": "feats",
+  "name": "Paralyzing Slash",
+  "level": 8,
+  "text": "Regardless of the result of the save, the creature is temporarily immune to Paralyzing Slash for 24 hours."
+ },
+ {
+  "id": "corpse-stench",
+  "collection": "feats",
+  "name": "Corpse Stench",
+  "level": 12,
+  "text": "Your body exudes an overwhelming scent of decay in a , so putrid that it nauseates creates within that range. A creature that succeeds at its save is temporarily immune to Corpse Stench for 1 minute."
+ },
+ {
+  "id": "frightful-aura",
+  "collection": "feats",
+  "name": "Frightful Aura",
+  "level": 18,
+  "text": "You're surrounded by a palpable sense of menace and power that's terrifying to behold. **Success** The creature is unaffected and temporarily immune to your Frightful Aura for 1 minute."
+ },
+ {
+  "id": "mummys-despair",
+  "collection": "feats",
+  "name": "Mummy's Despair",
+  "level": 6,
+  "text": "A creature that succeeds at the save is temporarily immune to Mummy's Despair for 10 minutes."
+ },
+ {
+  "id": "skeletal-resistance",
+  "collection": "feats",
+  "name": "Skeletal Resistance",
+  "level": 9,
+  "text": "Your body becomes resistant, your hardened bones deflecting weapons and other forms of damage. You gain resistance 2 to cold, electricity, fire, piercing, and slashing damage. This resistance increases to 3 at 13th level and 4 at 17th level."
+ },
+ {
+  "id": "bone-swarm",
+  "collection": "feats",
+  "name": "Bone Swarm",
+  "level": 17,
+  "text": "You become Huge, gain the swarm trait, and gain a fly Speed of 40 feet. - You are immune to the grabbed, prone, and restrained conditions. - You have weakness 5 to area and splash damage."
+ },
+ {
+  "id": "dominating-gaze",
+  "collection": "feats",
+  "name": "Dominating Gaze",
+  "level": 16,
+  "text": "A creature that succeeds at its save is temporarily immune to your domination for 24 hours, though in most cases, you can't Cast the Spell again within 24 hours."
+ },
+ {
+  "id": "practiced-opposition",
+  "collection": "feats",
+  "name": "Practiced Opposition",
+  "level": 6,
+  "text": "If your attempt to Recall Knowledge is successful, your Strike treats the target's resistances as 5 lower. The target is then immune to your Practiced Opposition for 24 hours."
+ },
+ {
+  "id": "wave-the-flag",
+  "collection": "feats",
+  "name": "Wave the Flag",
+  "level": 16,
+  "text": "Regardless of the result, any ally that attempts a save is temporarily immune to Wave the Flag for 10 minutes."
+ },
+ {
+  "id": "unwind-death",
+  "collection": "feats",
+  "name": "Unwind Death",
+  "level": 16,
+  "text": "Whether you succeed or fail, the target is then temporarily immune to Unwind Death for 1 day."
+ },
+ {
+  "id": "corpse-tender-dedication",
+  "collection": "feats",
+  "name": "Corpse Tender Dedication",
+  "level": 2,
+  "text": "You can use Diplomacy to Make an Impression on mindless undead and to make very simple Requests of them; their mindless trait doesn't grant immunity to these mental effects."
+ },
+ {
+  "id": "breath-of-hungry-death",
+  "collection": "feats",
+  "name": "Breath of Hungry Death",
+  "level": 16,
+  "text": "A creature that succeeds at this save becomes temporarily immune to Breath of Hungry Death for 24 hours."
+ },
+ {
+  "id": "triumphant-boast",
+  "collection": "feats",
+  "name": "Triumphant Boast",
+  "level": 2,
+  "text": "Once a creature is boasted at in this manner, it becomes temporarily immune to further Triumphant Boasts for 24 hours."
+ },
+ {
+  "id": "hamstringing-strike",
+  "collection": "feats",
+  "name": "Hamstringing Strike",
+  "level": 8,
+  "text": "If you hit your prey, the creature takes a –5-foot status penalty to Speed. If you critically hit your prey, the creature takes a –10-foot status penalty to Speed. A creature immune to bleed damage does not take this penalty."
+ },
+ {
+  "id": "miraculous-repair",
+  "collection": "feats",
+  "name": "Miraculous Repair",
+  "level": 9,
+  "text": "Once the 10 minutes are up, the object falls back into disrepair and is temporarily immune to Miraculous Repair for 1 day."
+ },
+ {
+  "id": "idol-threat",
+  "collection": "feats",
+  "name": "Idol Threat",
+  "level": 13,
+  "text": "The creature is then temporarily immune to any Idol Threat using that specific object for 1 day."
+ },
+ {
+  "id": "perfume-cloud",
+  "collection": "feats",
+  "name": "Perfume Cloud",
+  "level": 9,
+  "text": "Plants and fungi are immune to this effect, but all other creatures in a must attempt a save against your class DC or spell DC (whichever is higher) with the following results."
+ },
+ {
+  "id": "consolidated-overlay-panopticon",
+  "collection": "feats",
+  "name": "Consolidated Overlay Panopticon",
+  "level": 4,
+  "text": "When you use your Consolidated Overlay Panopticon, you supercharge the prosthetic eyes; for the next minute, you gain darkvision and low-light vision, and you gain a +1 status bonus to visual Perception checks."
+ },
+ {
+  "id": "masquerade-of-seasons-stance",
+  "collection": "feats",
+  "name": "Masquerade of Seasons Stance",
+  "level": 4,
+  "text": "You gain resistance 5 to damage dealt by effects with the chosen trait. You can use an action to reenter this stance at any time, changing the granted resistance to another of the available options. If you are at least 12th level, the granted resistance increases to be equal to half your level."
+ },
+ {
+  "id": "senses-of-the-bear",
+  "collection": "feats",
+  "name": "Senses of the Bear",
+  "level": 4,
+  "text": "While in ursine form, you gain low-light vision and scent (imprecise) 30 feet. If you already had low-light vision, you instead gain darkvision."
+ },
+ {
+  "id": "icy-apotheosis",
+  "collection": "feats",
+  "name": "Icy Apotheosis",
+  "level": 20,
+  "text": "You are immune to cold damage and gain the cold trait."
+ },
+ {
+  "id": "helts-spelldance",
+  "collection": "feats",
+  "name": "Helt's Spelldance",
+  "level": 8,
+  "text": "All creatures that observed you become temporarily immune to your Helt's Spelldance for 10 minutes."
+ },
+ {
+  "id": "dazzling-display",
+  "collection": "feats",
+  "name": "Dazzling Display",
+  "level": 10,
+  "text": "Regardless of the results of your checks, each creature is then temporarily immune to Dazzling Display for 1 minute."
+ },
+ {
+  "id": "youre-an-embarrassment",
+  "collection": "feats",
+  "name": "You're an Embarrassment!",
+  "level": 4,
+  "text": "Regardless of the result of the save, your ally is temporarily immune to You're an Embarrassment! for 10 minutes."
+ },
+ {
+  "id": "grudging-compliment",
+  "collection": "feats",
+  "name": "Grudging Compliment",
+  "level": 7,
+  "text": "Regardless of your result, they are temporarily immune to your Grudging Compliments for 10 minutes."
+ },
+ {
+  "id": "public-execution",
+  "collection": "feats",
+  "name": "Public Execution",
+  "level": 8,
+  "text": "Your mark becomes temporarily immune to your Public Execution for 1 day."
+ },
+ {
+  "id": "illusory-identity",
+  "collection": "feats",
+  "name": "Illusory Identity",
+  "level": 12,
+  "text": "--- **Critical Success** The target sees the item as being entirely blank, and becomes immune to this effect until your next daily preparations."
+ },
+ {
+  "id": "acknowledge-fan",
+  "collection": "feats",
+  "name": "Acknowledge Fan",
+  "level": 12,
+  "text": "Regardless of the result, the target becomes temporarily immune to Acknowledge Fan for 1 minute. --- **Critical Success** The target is unaffected and becomes temporarily immune to Acknowledge Fan for 1 day. **Success** The target is Stunned 1 and becomes temporarily immune to Acknowledge Fan for 1 day."
+ },
+ {
+  "id": "benevolent-spirit-deck",
+  "collection": "feats",
+  "name": "Benevolent Spirit Deck",
+  "level": 6,
+  "text": "Select one willing target within 30 feet; the cards move through the air to surround that target, protecting them from harm and granting a +1 status bonus to AC and resistance 5 to a type of damage associated with your active harrow omen. This resistance increases to 10 if you're at least 10th level and 15 if you're 15th level."
+ },
+ {
+  "id": "safe-elements",
+  "collection": "feats",
+  "name": "Safe Elements",
+  "level": 4,
+  "text": "Choose whether they are immune to the benefits of your kinetic aura or immune to its damage and drawbacks."
+ },
+ {
+  "id": "geologic-attunement",
+  "collection": "feats",
+  "name": "Geologic Attunement",
+  "level": 1,
+  "text": "You tune to the earth and stone around you, extending your senses through it in rippling waves. You gain tremorsense (imprecise) in your kinetic aura. Once per round, you can Point Out a creature you can sense with tremorsense as a free action. --- **Level (13th)** The tremorsense becomes precise."
+ },
+ {
+  "id": "spike-skin",
+  "collection": "feats",
+  "name": "Spike Skin",
+  "level": 8,
+  "text": "The target gains resistance 4 to all physical damage (except adamantine). The target is temporarily immune to this impulse for 1 hour. --- **Level (+2)** The resistance and damage each increase by 2."
+ },
+ {
+  "id": "rebirth-in-living-stone",
+  "collection": "feats",
+  "name": "Rebirth in Living Stone",
+  "level": 18,
+  "text": "You're immune to critical hits and precision damage."
+ },
+ {
+  "id": "crawling-fire",
+  "collection": "feats",
+  "name": "Crawling Fire",
+  "level": 6,
+  "text": "You can sense from the crawling fire's space as well as your own, using your senses. It uses your statistics for defenses but is immune to fire."
+ },
+ {
+  "id": "solar-detonation",
+  "collection": "feats",
+  "name": "Solar Detonation",
+  "level": 8,
+  "text": "Each creature that attempts a save becomes temporarily immune to being dazzled or blinded by Solar Detonation for 10 minutes, but not the impulse's other effects."
+ },
+ {
+  "id": "scrap-barricade",
+  "collection": "feats",
+  "name": "Scrap Barricade",
+  "level": 6,
+  "text": "Each 10-foot-by-10-foot section of the wall has AC 10, Hardness 10, and 20 Hit Points, and it's immune to critical hits and precision damage."
+ },
+ {
+  "id": "alloy-flesh-and-steel",
+  "collection": "feats",
+  "name": "Alloy Flesh and Steel",
+  "level": 14,
+  "text": "If you suspend any conditions with Alloy Flesh and Steel, when it ends, you're temporarily immune to Alloy Flesh and Steel for 1 hour. --- **Level (16th)** The resistance is 15."
+ },
+ {
+  "id": "beasts-of-slumbering-steel",
+  "collection": "feats",
+  "name": "Beasts of Slumbering Steel",
+  "level": 18,
+  "text": "One form has only a land Speed of 80 feet, and the other forms each have a land Speed of 30 feet with a climb, fly, or swim Speed of 60 feet. They're mindless and immune to bleed, healing, paralyzed, poison, and sleep."
+ },
+ {
+  "id": "oceans-balm",
+  "collection": "feats",
+  "name": "Ocean's Balm",
+  "level": 1,
+  "text": "It regains HP and gains resistance 2 to fire for 1 minute. The target is temporarily immune to healing from Ocean's Balm for 10 minutes. --- **Level (+2)** The healing increases by 1d8, and the resistance increases by 1."
+ },
+ {
+  "id": "winter-sleet",
+  "collection": "feats",
+  "name": "Winter Sleet",
+  "level": 4,
+  "text": "You're immune to this effect."
+ },
+ {
+  "id": "torrent-in-the-blood",
+  "collection": "feats",
+  "name": "Torrent in the Blood",
+  "level": 6,
+  "text": "Each creature that benefited from this impulse becomes temporarily immune to Torrent in the Blood for 10 minutes."
+ },
+ {
+  "id": "glacial-prison",
+  "collection": "feats",
+  "name": "Glacial Prison",
+  "level": 12,
+  "text": "The creature is then temporarily immune for 24 hours. It can't act, its AC is 9, it has Hardness 5, and it's immune to other cold effects, critical hits, and precision damage."
+ },
+ {
+  "id": "fresh-produce",
+  "collection": "feats",
+  "name": "Fresh Produce",
+  "level": 1,
+  "text": "The creature feels full for 10 minutes, during which it has resistance 2 to void damage and can't eat another piece of produce. --- **Level (+2)** The healing increases by 1d4+5, and the resistance increases by 2."
+ },
+ {
+  "id": "dash-of-herbs",
+  "collection": "feats",
+  "name": "Dash of Herbs",
+  "level": 6,
+  "text": "The creature becomes temporarily immune to Dash of Herbs for 10 minutes."
+ }
+]

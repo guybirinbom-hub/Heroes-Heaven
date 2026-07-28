@@ -1,0 +1,387 @@
+[
+ {
+  "id": "animal-pheromones-lesser",
+  "collection": "items",
+  "name": "Animal Pheromones (Lesser)",
+  "level": 5,
+  "text": "The animal is then temporarily immune to the pheromones for 24 hours."
+ },
+ {
+  "id": "animal-pheromones-moderate",
+  "collection": "items",
+  "name": "Animal Pheromones (Moderate)",
+  "level": 11,
+  "text": "The animal is then temporarily immune to the pheromones for 24 hours."
+ },
+ {
+  "id": "animal-pheromones-greater",
+  "collection": "items",
+  "name": "Animal Pheromones (Greater)",
+  "level": 17,
+  "text": "The animal is then temporarily immune to the pheromones for 24 hours."
+ },
+ {
+  "id": "aroma-concealer",
+  "collection": "items",
+  "name": "Aroma Concealer",
+  "level": 1,
+  "text": "This bonus also applies to the DC to Track the creature by scent."
+ },
+ {
+  "id": "ommatophoric-mutagen",
+  "collection": "items",
+  "name": "Ommatophoric Mutagen",
+  "level": 7,
+  "text": "**Benefit** You gain all-around vision, a +2 item bonus to visual Perception checks, and low-light vision if you don't already have it."
+ },
+ {
+  "id": "pallesthetic-mutagen",
+  "collection": "items",
+  "name": "Pallesthetic Mutagen",
+  "level": 9,
+  "text": "**Benefit** For 1 minute, you gain precise echolocation out to 40 feet, imprecise tremorsense out to 60 feet, and a +2 item bonus to Perception checks using either of these senses."
+ },
+ {
+  "id": "witchwarg-fur",
+  "collection": "items",
+  "name": "Witchwarg Fur",
+  "level": 7,
+  "text": "The spell's fire trait is replaced with the cold trait, you gain resistance to fire damage and environmental heat effects (instead of cold effects), the shield is immune to cold damage instead of fire damage, and its Hardness is halved against fire effects."
+ },
+ {
+  "id": "dragonhide",
+  "collection": "items",
+  "name": "Dragonhide",
+  "level": 8,
+  "text": "Dragonhide objects are immune to one damage type, depending on the tradition associated with the dragon."
+ },
+ {
+  "id": "dragonhide-object-standard-grade",
+  "collection": "items",
+  "name": "Dragonhide Object (Standard-Grade)",
+  "level": 8,
+  "text": "Dragonhide objects are immune to one damage type, depending on the tradition associated with the dragon."
+ },
+ {
+  "id": "dragonhide-object-high-grade",
+  "collection": "items",
+  "name": "Dragonhide Object (High-Grade)",
+  "level": 16,
+  "text": "Dragonhide objects are immune to one damage type, depending on the tradition associated with the dragon."
+ },
+ {
+  "id": "dragonhide-armor",
+  "collection": "items",
+  "name": "Dragonhide Armor",
+  "level": 12,
+  "text": "276 Usage worn armor Bulk L varies by armor Base Material Dragonhide Dragonhide armor is immune to one damage type based on the type of dragon it's made from."
+ },
+ {
+  "id": "dragonhide-armor-standard-grade",
+  "collection": "items",
+  "name": "Dragonhide Armor (Standard-Grade)",
+  "level": 12,
+  "text": "276 Usage worn armor Bulk L varies by armor Base Material Dragonhide Dragonhide armor is immune to one damage type based on the type of dragon it's made from."
+ },
+ {
+  "id": "dragonhide-armor-high-grade",
+  "collection": "items",
+  "name": "Dragonhide Armor (High-Grade)",
+  "level": 19,
+  "text": "276 Usage worn armor Bulk L varies by armor Base Material Dragonhide Dragonhide armor is immune to one damage type based on the type of dragon it's made from."
+ },
+ {
+  "id": "dragonhide-shield",
+  "collection": "items",
+  "name": "Dragonhide Shield",
+  "level": 8,
+  "text": "277 Usage varies by shield Bulk L Base Material Dragonhide Dragonhide shields are each immune to one damage type based on the tradition associated with the dragon."
+ },
+ {
+  "id": "dragonhide-buckler-standard-grade",
+  "collection": "items",
+  "name": "Dragonhide Buckler (Standard-Grade)",
+  "level": 8,
+  "text": "277 Usage varies by shield Bulk L Base Material Dragonhide Dragonhide shields are each immune to one damage type based on the tradition associated with the dragon."
+ },
+ {
+  "id": "dragonhide-shield-standard-grade",
+  "collection": "items",
+  "name": "Dragonhide Shield (Standard-Grade)",
+  "level": 8,
+  "text": "277 Usage varies by shield Bulk L Base Material Dragonhide Dragonhide shields are each immune to one damage type based on the tradition associated with the dragon."
+ },
+ {
+  "id": "dragonhide-buckler-high-grade",
+  "collection": "items",
+  "name": "Dragonhide Buckler (High-Grade)",
+  "level": 16,
+  "text": "277 Usage varies by shield Bulk L Base Material Dragonhide Dragonhide shields are each immune to one damage type based on the tradition associated with the dragon."
+ },
+ {
+  "id": "dragonhide-shield-high-grade",
+  "collection": "items",
+  "name": "Dragonhide Shield (High-Grade)",
+  "level": 16,
+  "text": "277 Usage varies by shield Bulk L Base Material Dragonhide Dragonhide shields are each immune to one damage type based on the tradition associated with the dragon."
+ },
+ {
+  "id": "ghoul-hide",
+  "collection": "items",
+  "name": "Ghoul Hide",
+  "level": 6,
+  "text": "Stitched together from pieces of ghoul skin, this suit of *+1 hide armor* grants you a +1 item bonus to saving throws against curses and makes you immune to the stench of ghouls."
+ },
+ {
+  "id": "spiritsight-crossbow",
+  "collection": "items",
+  "name": "Spiritsight Crossbow",
+  "level": 8,
+  "text": "**Activate—Ethereal Vision** ⟨1⟩ (concentrate) **Frequency** once per minute --- **Effect** You aim through the crossbow's crystalline lenses, gaining imprecise vision onto the Ethereal Plane with a range of 60 feet in addition to your normal senses until the end of your turn. You can sense through objects in the Universe this way, and the sense is precise for detecting creatures. Because this sense detects spiritual energy, a creature that's immune to spirit can't be detected in this way."
+ },
+ {
+  "id": "darkvision-elixir-lesser",
+  "collection": "items",
+  "name": "Darkvision Elixir (Lesser)",
+  "level": 2,
+  "text": "You gain darkvision for 10 minutes."
+ },
+ {
+  "id": "darkvision-elixir-moderate",
+  "collection": "items",
+  "name": "Darkvision Elixir (Moderate)",
+  "level": 4,
+  "text": "You gain darkvision for 1 hour."
+ },
+ {
+  "id": "darkvision-elixir-greater",
+  "collection": "items",
+  "name": "Darkvision Elixir (Greater)",
+  "level": 8,
+  "text": "You gain darkvision for 24 hours."
+ },
+ {
+  "id": "marking-snare",
+  "collection": "items",
+  "name": "Marking Snare",
+  "level": 1,
+  "text": "When you create this snare, you must decide whether to make it a dye or a scent marker. Either type of marking grants a +2 circumstance bonus to Track the creature for up to 24 hours or until the dye or scent is washed off (requiring at least a gallon of water and 10 minutes of scrubbing)."
+ },
+ {
+  "id": "ration-tonic",
+  "collection": "items",
+  "name": "Ration Tonic",
+  "level": 1,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This slender vial appears to hold clean, clear water with a faintly fruity scent."
+ },
+ {
+  "id": "ration-tonic-greater",
+  "collection": "items",
+  "name": "Ration Tonic (Greater)",
+  "level": 7,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This slender vial appears to hold clean, clear water with a faintly fruity scent."
+ },
+ {
+  "id": "devils-breath-incense",
+  "collection": "items",
+  "name": "Devil's Breath Incense",
+  "level": 7,
+  "text": "A creature within 10 feet of a stick of burning *devil's breath incense* must succeed at a save or become Sickened 1 (Sickened 2 on a critical failure), after which they're temporarily immune to the incense for 1 hour."
+ },
+ {
+  "id": "iron-wine",
+  "collection": "items",
+  "name": "Iron Wine",
+  "level": 1,
+  "text": "Drinking more than one cup of iron wine in a single day gives you weakness 5 to fire until your next daily preparations."
+ },
+ {
+  "id": "rainbow-vinegar",
+  "collection": "items",
+  "name": "Rainbow Vinegar",
+  "level": 4,
+  "text": "During this time, your unarmed attacks deal an additional 1d4 acid damage, and you have resistance 10 to electricity. Taking more than one dose of rainbow vinegar in a single day gives you weakness 5 to acid until your next daily preparations. 105 Price 110 gp The resistance increases to 15."
+ },
+ {
+  "id": "rainbow-vinegar-greater",
+  "collection": "items",
+  "name": "Rainbow Vinegar (Greater)",
+  "level": 12,
+  "text": "During this time, your unarmed attacks deal an additional 1d8 acid damage, and you have resistance 15 to electricity. Taking more than one dose of rainbow vinegar in a single day gives you weakness 5 to acid until your next daily preparations."
+ },
+ {
+  "id": "ghost-fowl-porridge",
+  "collection": "items",
+  "name": "Ghost Fowl Porridge",
+  "level": 9,
+  "text": "You also gain resistance 3 against physical damage for the duration."
+ },
+ {
+  "id": "heavenly-rolling-flames",
+  "collection": "items",
+  "name": "Heavenly Rolling Flames",
+  "level": 14,
+  "text": "While wielded, you gain cold resistance 2, and you treat the effects of environmental cold as one degree lower. You gain a fly Speed of 20 feet for 10 minutes. **Activate—Speed of Heaven** ⟨2⟩ (manipulate) **Frequency** once per day --- **Effect** You cast Haste as a 3rd-rank occult spell, but you can target only yourself."
+ },
+ {
+  "id": "frost-fair-yanyuedao",
+  "collection": "items",
+  "name": "Frost Fair Yanyuedao",
+  "level": 14,
+  "text": "While under this effect, if you critically succeed at a Strike using this weapon against a creature who has resistance or immunity to cold, that creature must attempt a save or be Slowed 1 for 1 minute."
+ },
+ {
+  "id": "navaratna-of-the-solar-ruby",
+  "collection": "items",
+  "name": "Navaratna of the Solar Ruby",
+  "level": 13,
+  "text": "You are also immune to damage from starvation. The navaratna does not otherwise grant you resistance against damage (such as fire or cold damage)."
+ },
+ {
+  "id": "temperbrand",
+  "collection": "items",
+  "name": "Temperbrand",
+  "level": 20,
+  "text": "*Temperbrand's* wielder is immune to this splash damage. You are immune to the effects of Molten Smash, but your allies are not."
+ },
+ {
+  "id": "mask-of-the-mantis",
+  "collection": "items",
+  "name": "Mask of the Mantis",
+  "level": 5,
+  "text": "--- **Activate—Enhance Vision** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** You cast either Darkvision or See the Unseen on yourself."
+ },
+ {
+  "id": "mask-of-the-mantis-greater",
+  "collection": "items",
+  "name": "Mask of the Mantis (Greater)",
+  "level": 11,
+  "text": "--- **Activate—Enhance Vision** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** You cast either a 5th-rank Darkvision or See the Unseen on yourself."
+ },
+ {
+  "id": "mask-of-the-mantis-major",
+  "collection": "items",
+  "name": "Mask of the Mantis (Major)",
+  "level": 18,
+  "text": "--- **Activate—Enhance Vision** ⟨2⟩ (concentrate, manipulate) **Frequency** once per day **Effect** You cast either a 5th-rank Darkvision or See the Unseen on yourself."
+ },
+ {
+  "id": "final-scalecloak",
+  "collection": "items",
+  "name": "Final Scalecloak",
+  "level": 20,
+  "text": "Any kaiju within a 5-mile radius of the *Final Scalecloak* can sense the presence and nature of the item, and can also determine whether it's being worn by a mortal. This sense grows stronger as the item and kaiju near one another, until the kaiju can pinpoint exactly where the cloak is and who currently possesses it. When worn, the *Final Scalecloak* grants you resistance 15 to physical and precision damage, immunity to electricity, and a Fly speed of 60 feet."
+ },
+ {
+  "id": "one-hour-flower",
+  "collection": "items",
+  "name": "One-Hour Flower",
+  "level": 1,
+  "text": "At the end of an hour, the plant disintegrates, leaving only a vaguely pleasant scent in the air."
+ },
+ {
+  "id": "spiced-demonade",
+  "collection": "items",
+  "name": "Spiced Demonade",
+  "level": 2,
+  "text": "These effects resume when the spiced demonade wears off, and you become temporarily immune to spiced demonade for 24 hours."
+ },
+ {
+  "id": "perfections-first-step",
+  "collection": "items",
+  "name": "Perfection's First Step",
+  "level": 5,
+  "text": "You are then temporarily immune to benefiting from further copies of *perfection's first step* until your next daily preparations."
+ },
+ {
+  "id": "aetheric-irritant",
+  "collection": "items",
+  "name": "Aetheric Irritant",
+  "level": 1,
+  "text": "A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours."
+ },
+ {
+  "id": "lesser-aetheric-irritant",
+  "collection": "items",
+  "name": "Lesser Aetheric Irritant",
+  "level": 1,
+  "text": "A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours."
+ },
+ {
+  "id": "moderate-aetheric-irritant",
+  "collection": "items",
+  "name": "Moderate Aetheric Irritant",
+  "level": 3,
+  "text": "A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours."
+ },
+ {
+  "id": "greater-aetheric-irritant",
+  "collection": "items",
+  "name": "Greater Aetheric Irritant",
+  "level": 11,
+  "text": "A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours."
+ },
+ {
+  "id": "major-aetheric-irritant",
+  "collection": "items",
+  "name": "Major Aetheric Irritant",
+  "level": 17,
+  "text": "A creature that critically succeeds at the save is immune to all aetheric irritants for 24 hours."
+ },
+ {
+  "id": "maelstromic-destabilizer",
+  "collection": "items",
+  "name": "Maelstromic Destabilizer",
+  "level": 2,
+  "text": "For the next minute, the creature holding the gadget gains the listed resistance to spirit damage, while all creatures not immune to spirit damage in a 10-foot emanation gain the listed weakness to spirit damage. 92 Price 6 gp The value for the spirit resistance and weakness is 2. 92 Price 65 gp The value for the spirit resistance and weakness is 5. 92 Price 2,750 gp The value for the spirit resistance and weakness is 10."
+ },
+ {
+  "id": "lesser-maelstromic-destabilizer",
+  "collection": "items",
+  "name": "Lesser Maelstromic Destabilizer",
+  "level": 2,
+  "text": "For the next minute, the creature holding the gadget gains the listed resistance to spirit damage, while all creatures not immune to spirit damage in a 10-foot emanation gain the listed weakness to spirit damage. 92 Price 6 gp The value for the spirit resistance and weakness is 2. 92 Price 65 gp The value for the spirit resistance and weakness is 5. 92 Price 2,750 gp The value for the spirit resistance and weakness is 10."
+ },
+ {
+  "id": "moderate-maelstromic-destabilizer",
+  "collection": "items",
+  "name": "Moderate Maelstromic Destabilizer",
+  "level": 7,
+  "text": "For the next minute, the creature holding the gadget gains the listed resistance to spirit damage, while all creatures not immune to spirit damage in a 10-foot emanation gain the listed weakness to spirit damage. 92 Price 6 gp The value for the spirit resistance and weakness is 2. 92 Price 65 gp The value for the spirit resistance and weakness is 5. 92 Price 2,750 gp The value for the spirit resistance and weakness is 10."
+ },
+ {
+  "id": "major-maelstromic-destabilizer",
+  "collection": "items",
+  "name": "Major Maelstromic Destabilizer",
+  "level": 17,
+  "text": "For the next minute, the creature holding the gadget gains the listed resistance to spirit damage, while all creatures not immune to spirit damage in a 10-foot emanation gain the listed weakness to spirit damage. 92 Price 6 gp The value for the spirit resistance and weakness is 2. 92 Price 65 gp The value for the spirit resistance and weakness is 5. 92 Price 2,750 gp The value for the spirit resistance and weakness is 10."
+ },
+ {
+  "id": "portable-seal",
+  "collection": "items",
+  "name": "Portable Seal",
+  "level": 6,
+  "text": "Success The action occurs normally, and the creature is immune to the effects of this portable seal this round. Failure The movement or Strike is disrupted, but the creature is immune to further effects of the portable seal this round."
+ },
+ {
+  "id": "lesser-portable-seal",
+  "collection": "items",
+  "name": "Lesser Portable Seal",
+  "level": 6,
+  "text": "Success The action occurs normally, and the creature is immune to the effects of this portable seal this round. Failure The movement or Strike is disrupted, but the creature is immune to further effects of the portable seal this round."
+ },
+ {
+  "id": "moderate-portable-seal",
+  "collection": "items",
+  "name": "Moderate Portable Seal",
+  "level": 12,
+  "text": "Success The action occurs normally, and the creature is immune to the effects of this portable seal this round. Failure The movement or Strike is disrupted, but the creature is immune to further effects of the portable seal this round."
+ },
+ {
+  "id": "major-portable-seal",
+  "collection": "items",
+  "name": "Major Portable Seal",
+  "level": 18,
+  "text": "Success The action occurs normally, and the creature is immune to the effects of this portable seal this round. Failure The movement or Strike is disrupted, but the creature is immune to further effects of the portable seal this round."
+ }
+]

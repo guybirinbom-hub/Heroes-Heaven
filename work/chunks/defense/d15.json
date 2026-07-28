@@ -1,0 +1,387 @@
+[
+ {
+  "id": "three-pillared-yang-na",
+  "collection": "items",
+  "name": "Three-Pillared Yang Na",
+  "level": 4,
+  "text": "--- **Activate—Third Blessing** ⟨5⟩ (concentrate) **Trigger** You take spirit damage --- **Effect** You gain resistance 3 against that spirit damage."
+ },
+ {
+  "id": "diglys-oil-of-sympathy",
+  "collection": "items",
+  "name": "Digly's Oil of Sympathy",
+  "level": 1,
+  "text": "The creature is then temporarily immune to Digly's oil of sympathy for 10 minutes."
+ },
+ {
+  "id": "diglys-oil-of-sympathy-minor",
+  "collection": "items",
+  "name": "Digly's Oil of Sympathy (Minor)",
+  "level": 1,
+  "text": "The creature is then temporarily immune to *Digly's oil of sympathy* for 10 minutes."
+ },
+ {
+  "id": "diglys-oil-of-sympathy-lesser",
+  "collection": "items",
+  "name": "Digly's Oil of Sympathy (Lesser)",
+  "level": 3,
+  "text": "The creature is then temporarily immune to *Digly's oil of sympathy* for 10 minutes."
+ },
+ {
+  "id": "diglys-oil-of-sympathy-moderate",
+  "collection": "items",
+  "name": "Digly's Oil of Sympathy (Moderate)",
+  "level": 6,
+  "text": "The creature is then temporarily immune to *Digly's oil of sympathy* for 10 minutes."
+ },
+ {
+  "id": "diglys-oil-of-sympathy-greater",
+  "collection": "items",
+  "name": "Digly's Oil of Sympathy (Greater)",
+  "level": 12,
+  "text": "The creature is then temporarily immune to *Digly's oil of sympathy* for 10 minutes."
+ },
+ {
+  "id": "diglys-oil-of-sympathy-major",
+  "collection": "items",
+  "name": "Digly's Oil of Sympathy (Major)",
+  "level": 18,
+  "text": "The creature is then temporarily immune to *Digly's oil of sympathy* for 10 minutes."
+ },
+ {
+  "id": "sages-bloom",
+  "collection": "items",
+  "name": "Sage's Bloom",
+  "level": 5,
+  "text": "When activated, it releases a soothing scent, which helps you focus your mind."
+ },
+ {
+  "id": "netherwalk-incense",
+  "collection": "items",
+  "name": "Netherwalk Incense",
+  "level": 11,
+  "text": "**Activate** 1 minute (concentrate, manipulate) --- This stick of dark-gray incense carries a faint, strange odor that's different for any creature that smells it—mimicking a scent that evokes feelings of nostalgia or homesickness. After spending a minute concentrating on the smoke and its scent, you and the affected creatures move into the Netherworld and can use its warped nature to speed travel."
+ },
+ {
+  "id": "soulfeeding-mask",
+  "collection": "items",
+  "name": "Soulfeeding Mask",
+  "level": 17,
+  "text": "While wearing a *soulfeeding mask*, you gain darkvision."
+ },
+ {
+  "id": "angelic-opera-cloak",
+  "collection": "items",
+  "name": "Angelic Opera Cloak",
+  "level": 19,
+  "text": "**Activate—On Angel's Wings** ⟨2⟩ (concentrate) **Frequency** once per hour --- **Effect** The opera cloak transforms into two pairs of brilliant, feathered wings that grant you a fly Speed of 40 feet for 10 minutes. During this time, you gain immunity to paralysis effects and ignore effects that would give you a circumstance penalty to speed."
+ },
+ {
+  "id": "choral-toga",
+  "collection": "items",
+  "name": "Choral Toga",
+  "level": 19,
+  "text": "You gain resistance to poison 20 and become immune to deafened. --- **Activate—Elysium's Gasp** ⟨5⟩ (concentrate) **Frequency** once per hour **Trigger** You are exposed to an inhaled poison **Effect** Purifying gusts of sweet-scented air swirl around you, making you immune to inhaled poisons for 1 minute. For 8 hours, you become immune to diseases spread via inhalation, olfactory effects, and environmental effects that would prevent you from breathing (including being underwater or from being strangled)."
+ },
+ {
+  "id": "draconal-mask",
+  "collection": "items",
+  "name": "Draconal Mask",
+  "level": 19,
+  "text": "You gain darkvision, or greater darkvision if you have darkvision."
+ },
+ {
+  "id": "zeto-geki-hide-armor",
+  "collection": "items",
+  "name": "Zeto Geki Hide Armor",
+  "level": 8,
+  "text": "79 Price 500 gp Usage worn armor Bulk 2 Base Armor Hide Armor This +1 fire-resistant hide armor is adorned with the shale-like scales of the zetogeki, a giant reptile that dwells near sites of volcanic activity. Activate Shift Scales; Frequency once per day; Effect Until the end of your next turn, you gain resistance 5 to bludgeoning, piercing, and slashing damage, but your Speeds are reduced by 10 feet (minimum 5 feet)."
+ },
+ {
+  "id": "aurochs-jerky",
+  "collection": "items",
+  "name": "Aurochs Jerky",
+  "level": 9,
+  "text": "During this time, you are not immune to fatigue and can become fatigued by subsequent effects, but you gain a +2 item bonus to saving throws against effects that would fatigue you."
+ },
+ {
+  "id": "cindergrass-cloak",
+  "collection": "items",
+  "name": "Cindergrass Cloak",
+  "level": 7,
+  "text": "While wearing this cloak, you have resistance 5 to fire. The cloak's resistance to fire increases to 15 against the triggering effect. If you take at least 5 points of fire damage after applying the fire resistance, the cloak gains the broken condition."
+ },
+ {
+  "id": "cindergrass-poultice",
+  "collection": "items",
+  "name": "Cindergrass Poultice",
+  "level": 6,
+  "text": "Finally, the creature becomes immune to the effects of severe heat for 1 hour."
+ },
+ {
+  "id": "purple-pepper-powder",
+  "collection": "items",
+  "name": "Purple Pepper Powder",
+  "level": 8,
+  "text": "When you eat a meal flavored with this purple pepper powder, you gain resistance 10 to fire and resistance 5 to poison for 1 hour."
+ },
+ {
+  "id": "aurochs-hide-armor",
+  "collection": "items",
+  "name": "Aurochs Hide Armor",
+  "level": 10,
+  "text": "You gain resistance 5 to poison damage."
+ },
+ {
+  "id": "castrovels-beacon",
+  "collection": "items",
+  "name": "Castrovel's Beacon",
+  "level": 14,
+  "text": "The carrier of *Castrovel's Beacon* instinctively knows Castrovel's position in the sky even if it hasn't actually yet risen into view, which grants the wielder a +2 item bonus to Sense Direction when using the stars to orient themself. Creatures with the elf trait are immune to Starlight Burst, and creatures with the demon trait take a –2 item penalty on all Will saves against the effect."
+ },
+ {
+  "id": "pharasmin-visor",
+  "collection": "items",
+  "name": "Pharasmin Visor",
+  "level": 13,
+  "text": "You gain darkvision until you adjust the visors again or until the item is no longer invested by you, whichever comes first. You can see invisible creatures as though they weren't invisible, although their features are blurred, making them concealed and difficult to identify."
+ },
+ {
+  "id": "deathstalk-mushroom",
+  "collection": "items",
+  "name": "Deathstalk Mushroom",
+  "level": 16,
+  "text": "Creatures with the fungus trait are immune to this poison and often find the flavor of a deathstalk mushroom to be rather pleasant."
+ },
+ {
+  "id": "heros-plate",
+  "collection": "items",
+  "name": "Hero's Plate",
+  "level": 10,
+  "text": "You gain resistance 5 to mental damage and a +1 status bonus to saves against fear."
+ },
+ {
+  "id": "greater-heros-plate",
+  "collection": "items",
+  "name": "Greater Hero’s Plate",
+  "level": 18,
+  "text": "You gain resistance 5 to mental damage and a +1 status bonus to saves against fear. 77 Price 22,500 gp The armor is +2 greater resilient full plate, the resistance increases to 10, the status bonus increases to +2, and heroism is heightened to 6th-rank."
+ },
+ {
+  "id": "foxglove-token",
+  "collection": "items",
+  "name": "Foxglove Token",
+  "level": 3,
+  "text": "- **Armor** You gain resistance 2 to poison damage."
+ },
+ {
+  "id": "greater-foxglove-token",
+  "collection": "items",
+  "name": "Greater Foxglove Token",
+  "level": 8,
+  "text": "Armor You gain resistance 2 to poison damage. 78 Price 425 gp Resistance when affixed to armor is 5, extra damage when affixed to a weapon is 1d6, and the spell DC is 24. 78 Price 1,750 gp Resistance when affixed to armor is 10, extra damage when affixed to a weapon is 1d8, and the spell DC is 29."
+ },
+ {
+  "id": "major-foxglove-token",
+  "collection": "items",
+  "name": "Major Foxglove Token",
+  "level": 12,
+  "text": "Armor You gain resistance 2 to poison damage. 78 Price 425 gp Resistance when affixed to armor is 5, extra damage when affixed to a weapon is 1d6, and the spell DC is 24. 78 Price 1,750 gp Resistance when affixed to armor is 10, extra damage when affixed to a weapon is 1d8, and the spell DC is 29."
+ },
+ {
+  "id": "heartmoss",
+  "collection": "items",
+  "name": "Heartmoss",
+  "level": 3,
+  "text": "This burgundy moss grows in heart-shaped clumps and releases a pleasant, calming scent. - **Armor** You gain resistance 2 to mental damage and a +1 item bonus to saving throws against effects with the emotion trait. - **Weapon** After you cast a healing spell by activating the heartmoss, the weapon exudes a soothing scent."
+ },
+ {
+  "id": "greater-heartmoss",
+  "collection": "items",
+  "name": "Greater Heartmoss",
+  "level": 8,
+  "text": "79 Usage affixed to armor or a weapon Bulk L This burgundy moss grows in heart-shaped clumps and releases a pleasant, calming scent. Armor You gain resistance 2 to mental damage and a +1 item bonus to saving throws against effects with the emotion trait. Weapon After you cast a healing spell by activating the heartmoss, the weapon exudes a soothing scent. 79 Price 450 gp Resistance when affixed to armor is 5, stupefied value when affixed to a weapon is 2, and the spell DC is 24. 79 Price 1,750 gp Resistance when affixed to armor is 10, stupefied value wh"
+ },
+ {
+  "id": "major-heartmoss",
+  "collection": "items",
+  "name": "Major Heartmoss",
+  "level": 12,
+  "text": "79 Usage affixed to armor or a weapon Bulk L This burgundy moss grows in heart-shaped clumps and releases a pleasant, calming scent. Armor You gain resistance 2 to mental damage and a +1 item bonus to saving throws against effects with the emotion trait. Weapon After you cast a healing spell by activating the heartmoss, the weapon exudes a soothing scent. 79 Price 450 gp Resistance when affixed to armor is 5, stupefied value when affixed to a weapon is 2, and the spell DC is 24. 79 Price 1,750 gp Resistance when affixed to armor is 10, stupefied value wh"
+ },
+ {
+  "id": "clay-sphere",
+  "collection": "items",
+  "name": "Clay Sphere",
+  "level": 3,
+  "text": "- **Armor** You gain resistance 2 to precision damage and a +1 item bonus to saving throws against effects with the morph or polymorph traits."
+ },
+ {
+  "id": "greater-clay-sphere",
+  "collection": "items",
+  "name": "Greater Clay Sphere",
+  "level": 6,
+  "text": "Armor You gain resistance 2 to precision damage and a +1 item bonus to saving throws against effects with the morph or polymorph traits. 80 Price 225 gp Resistance when affixed to armor is 5, item bonus when affixed to armor is +2, the spell attack roll is +10, and the spell DC is 20. 80 Price 4,200 gp Resistance when affixed to armor is 10, item bonus when affixed to armor is +3, the spell attack roll is +21, and the spell DC is 31."
+ },
+ {
+  "id": "major-clay-sphere",
+  "collection": "items",
+  "name": "Major Clay Sphere",
+  "level": 14,
+  "text": "Armor You gain resistance 2 to precision damage and a +1 item bonus to saving throws against effects with the morph or polymorph traits. 80 Price 225 gp Resistance when affixed to armor is 5, item bonus when affixed to armor is +2, the spell attack roll is +10, and the spell DC is 20. 80 Price 4,200 gp Resistance when affixed to armor is 10, item bonus when affixed to armor is +3, the spell attack roll is +21, and the spell DC is 31."
+ },
+ {
+  "id": "inflamation-flask",
+  "collection": "items",
+  "name": "Inflamation Flask",
+  "level": 2,
+  "text": "On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine D"
+ },
+ {
+  "id": "lesser-inflammation-flask",
+  "collection": "items",
+  "name": "Lesser Inflammation Flask",
+  "level": 2,
+  "text": "On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine D"
+ },
+ {
+  "id": "moderate-inflammation-flask",
+  "collection": "items",
+  "name": "Moderate Inflammation Flask",
+  "level": 4,
+  "text": "On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine D"
+ },
+ {
+  "id": "greater-inflammation-flask",
+  "collection": "items",
+  "name": "Greater Inflammation Flask",
+  "level": 12,
+  "text": "On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine D"
+ },
+ {
+  "id": "major-inflammation-flask",
+  "collection": "items",
+  "name": "Major Inflammation Flask",
+  "level": 18,
+  "text": "On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine D"
+ },
+ {
+  "id": "burglars-rosebud",
+  "collection": "items",
+  "name": "Burglar's Rosebud",
+  "level": 3,
+  "text": "A creature that successfully saves against the burglar's rosebud becomes temporarily immune to the effects for 24 hours."
+ },
+ {
+  "id": "greater-burglars-rosebud",
+  "collection": "items",
+  "name": "Greater Burglar's Rosebud",
+  "level": 8,
+  "text": "A creature that successfully saves against the burglar’s rosebud becomes temporarily immune to the effects for 24 hours."
+ },
+ {
+  "id": "durian-bomb",
+  "collection": "items",
+  "name": "Durian Bomb",
+  "level": 1,
+  "text": "Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they’re immune to the sickened condition caused by other durian bombs for 1 minute."
+ },
+ {
+  "id": "lesser-durian-bomb",
+  "collection": "items",
+  "name": "Lesser Durian Bomb",
+  "level": 1,
+  "text": "Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they’re immune to the sickened condition caused by other durian bombs for 1 minute."
+ },
+ {
+  "id": "moderate-durian-bomb",
+  "collection": "items",
+  "name": "Moderate Durian Bomb",
+  "level": 3,
+  "text": "Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they’re immune to the sickened condition caused by other durian bombs for 1 minute."
+ },
+ {
+  "id": "greater-durian-bomb",
+  "collection": "items",
+  "name": "Greater Durian Bomb",
+  "level": 11,
+  "text": "Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they’re immune to the sickened condition caused by other durian bombs for 1 minute."
+ },
+ {
+  "id": "major-durian-bomb",
+  "collection": "items",
+  "name": "Major Durian Bomb",
+  "level": 17,
+  "text": "Creatures sickened by a durian bomb are unable to smell anything else while the sickened condition lasts, suppressing any scent special sense they might have. Once a creature is sickened by a durian bomb, they’re immune to the sickened condition caused by other durian bombs for 1 minute."
+ },
+ {
+  "id": "irritating-seedpod",
+  "collection": "items",
+  "name": "Irritating Seedpod",
+  "level": 7,
+  "text": "A creature that succeeds at this saving throw becomes temporarily immune to the irritating seedpod's pollen for 10 minutes."
+ },
+ {
+  "id": "lesser-irritating-seedpod",
+  "collection": "items",
+  "name": "Lesser Irritating Seedpod",
+  "level": 3,
+  "text": "A creature that succeeds at this saving throw becomes temporarily immune to the irritating seedpod’s pollen for 10 minutes."
+ },
+ {
+  "id": "greater-irritating-seedpod",
+  "collection": "items",
+  "name": "Greater Irritating Seedpod",
+  "level": 10,
+  "text": "A creature that succeeds at this saving throw becomes temporarily immune to the irritating seedpod’s pollen for 10 minutes."
+ },
+ {
+  "id": "major-irritating-seedpod",
+  "collection": "items",
+  "name": "Major Irritating Seedpod",
+  "level": 14,
+  "text": "A creature that succeeds at this saving throw becomes temporarily immune to the irritating seedpod’s pollen for 10 minutes."
+ },
+ {
+  "id": "stormshard",
+  "collection": "items",
+  "name": "Stormshard",
+  "level": 6,
+  "text": "In addition, you can Demoralize undead creatures, even if those creatures are mindless or otherwise immune to emotion, fear, or mental effects."
+ },
+ {
+  "id": "greater-stormshard",
+  "collection": "items",
+  "name": "Greater Stormshard",
+  "level": 12,
+  "text": "In addition, you can Demoralize undead creatures, even if those creatures are mindless or otherwise immune to emotion, fear, or mental effects."
+ },
+ {
+  "id": "major-stormshard",
+  "collection": "items",
+  "name": "Major Stormshard",
+  "level": 18,
+  "text": "In addition, you can Demoralize undead creatures, even if those creatures are mindless or otherwise immune to emotion, fear, or mental effects."
+ },
+ {
+  "id": "anima-robe-artifact",
+  "collection": "items",
+  "name": "Anima Robe (Artifact)",
+  "level": 20,
+  "text": "72 Usage worn garment Bulk L Perception +33; precise low-light vision and hearing within 30 feet Communication telepathy (partner only) Skills Deception +35, Occultism +34, Performance +35 Int +6, Wis +5, Cha +7 Will +33 The artistic echo of the Ekujae hero Iyalirrin animates the Anima Robe’s stitching to display embroidered reactions to situations experienced by the wearer. The Anima Robe grants a +3 item bonus to Diplomacy checks made to Make an Impression and to all Performance checks, and you gain resistance 15 to mental damage."
+ },
+ {
+  "id": "fiendbreaker-artifact",
+  "collection": "items",
+  "name": "Fiendbreaker (Artifact)",
+  "level": 20,
+  "text": "72 Usage held in 1 hand Bulk 1 Perception +35; precise low-light vision and hearing within 30 feet Communication telepathy (partner only) Skills Demon Lore +33, Diplomacy +34, Religion +35 Int +5, Wis +7, Cha +6 Will +35 The stately echo of Jininsiel, the woman who guided her people through the Darklands to escape the devastation of Earthfall, causes Fiendbreaker to softly shimmer with a silvery radiance equivalent to that of candlelight."
+ },
+ {
+  "id": "guiding-star-orb-artifact",
+  "collection": "items",
+  "name": "Guiding Star Orb (Artifact)",
+  "level": 20,
+  "text": "73 Usage held in 1 hand Bulk L Perception +33; precise low-light vision and hearing within 30 feet Communication telepathy (partner only) Skills Arcana +35, Architecture Lore +35, Society +35 Int +7, Wis +5, Cha +6 Will +33 The stoic echo of Candlaron the Sculptor, architect of the aiudara network, infuses the Guiding Star Orb. That creature must attempt a DC 43 Fortitude save, after which that creature is temporarily immune to Blinding Spark for 24 hours."
+ }
+]

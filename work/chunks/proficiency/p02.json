@@ -1,0 +1,387 @@
+[
+ {
+  "id": "youre-next",
+  "collection": "feats",
+  "name": "You're Next",
+  "level": 1,
+  "text": "If you have legendary proficiency in Intimidation, you can use this as a free action with the same trigger. If you're legendary in Intimidation, you can use this as a free action with the same trigger."
+ },
+ {
+  "id": "diverse-weapon-expert",
+  "collection": "feats",
+  "name": "Diverse Weapon Expert",
+  "level": 12,
+  "text": "Your proficiency ranks for simple weapons and martial weapons increase to expert, and your proficiency rank for advanced weapons increases to trained."
+ },
+ {
+  "id": "master-spotter-ranger",
+  "collection": "feats",
+  "name": "Master Spotter (Ranger)",
+  "level": 12,
+  "text": "Your proficiency rank in Perception increases to master."
+ },
+ {
+  "id": "arcane-sense",
+  "collection": "feats",
+  "name": "Arcane Sense",
+  "level": 1,
+  "text": "If you're a master in Arcana, the spell is heightened to 3rd rank; if you're legendary, it is heightened to 4th rank."
+ },
+ {
+  "id": "assurance",
+  "collection": "feats",
+  "name": "Assurance",
+  "level": 1,
+  "text": "Choose a skill you're trained in. You can forgo rolling a skill check for that skill to instead receive a result of 10 + your proficiency bonus (do not apply any other bonuses, penalties, or modifiers)."
+ },
+ {
+  "id": "battle-cry",
+  "collection": "feats",
+  "name": "Battle Cry",
+  "level": 7,
+  "text": "If you're legendary in Intimidation, you can use a reaction to Demoralize your foe when you critically succeed at an attack roll."
+ },
+ {
+  "id": "battle-medicine",
+  "collection": "feats",
+  "name": "Battle Medicine",
+  "level": 1,
+  "text": "As with Treat Wounds, you can attempt checks against higher DCs if you have the minimum proficiency rank."
+ },
+ {
+  "id": "bonded-animal",
+  "collection": "feats",
+  "name": "Bonded Animal",
+  "level": 2,
+  "text": "The maximum level of creature that can be your minion increases to 3 if you're a master in Nature and to 11 if you're legendary."
+ },
+ {
+  "id": "break-curse",
+  "collection": "feats",
+  "name": "Break Curse",
+  "level": 7,
+  "text": "Break Curse only takes 10 minutes of prayer and rites if you are legendary in Occultism or Religion."
+ },
+ {
+  "id": "cat-fall",
+  "collection": "feats",
+  "name": "Cat Fall",
+  "level": 1,
+  "text": "If you're an expert in Acrobatics, treat falls as 25 feet shorter and 50 feet if you're a master. If you're legendary in Acrobatics, you always land on your feet and don't take damage, regardless of the distance of the fall."
+ },
+ {
+  "id": "communal-crafting",
+  "collection": "feats",
+  "name": "Communal Crafting",
+  "level": 2,
+  "text": "A helper PC rolls a check with a skill in which they're trained. Any helper's roll contributes toward reducing the cost of raw materials using the numbers from the Earn Income table; this uses the ally PC's proficiency rank in the skill and their level – 1 for their level."
+ },
+ {
+  "id": "confabulator",
+  "collection": "feats",
+  "name": "Confabulator",
+  "level": 2,
+  "text": "If you're a master in Deception, reduce the bonus to +1, and if you're legendary, your targets don't get these bonuses at all."
+ },
+ {
+  "id": "expeditious-search",
+  "collection": "feats",
+  "name": "Expeditious Search",
+  "level": 7,
+  "text": "If you're legendary in Perception, you instead Search areas four times as quickly."
+ },
+ {
+  "id": "experienced-smuggler",
+  "collection": "feats",
+  "name": "Experienced Smuggler",
+  "level": 1,
+  "text": "If you're a master in Stealth, the GM uses the number rolled or 15, and if you're legendary in Stealth, you automatically succeed at hiding a small concealed item from passive observers."
+ },
+ {
+  "id": "experienced-tracker",
+  "collection": "feats",
+  "name": "Experienced Tracker",
+  "level": 1,
+  "text": "If you're a master in Survival, you don't take the –5 penalty. If you're legendary in Survival, you no longer need to roll a new Survival check every hour when tracking, though you still need to roll whenever there are significant changes in the trail."
+ },
+ {
+  "id": "fascinating-performance",
+  "collection": "feats",
+  "name": "Fascinating Performance",
+  "level": 1,
+  "text": "If you're an expert in Performance, you can fascinate up to four observers; if you're a master, you can fascinate up to 10 observers; and if you're legendary, you can fascinate any number of observers at the same time."
+ },
+ {
+  "id": "forager",
+  "collection": "feats",
+  "name": "Forager",
+  "level": 1,
+  "text": "Increase the number of additional creatures you feed on a success to eight if you're an expert in Survival, 16 if you're a master, and 32 if you're legendary."
+ },
+ {
+  "id": "group-coercion",
+  "collection": "feats",
+  "name": "Group Coercion",
+  "level": 1,
+  "text": "The number of targets you can Coerce in a single action increases to 10 if you're an expert, 25 if you're a master, and 50 if you're legendary."
+ },
+ {
+  "id": "group-impression",
+  "collection": "feats",
+  "name": "Group Impression",
+  "level": 1,
+  "text": "The number of targets increases to 20 if you're an expert, 50 if you're a master, and 100 if you're legendary."
+ },
+ {
+  "id": "lasting-coercion",
+  "collection": "feats",
+  "name": "Lasting Coercion",
+  "level": 2,
+  "text": "If you're legendary, the maximum increases to a month."
+ },
+ {
+  "id": "multilingual",
+  "collection": "feats",
+  "name": "Multilingual",
+  "level": 1,
+  "text": "You learn an additional language if you are or become a master in Society and again if you are or become legendary."
+ },
+ {
+  "id": "nimble-crawl",
+  "collection": "feats",
+  "name": "Nimble Crawl",
+  "level": 2,
+  "text": "If you're a master in Acrobatics, you can Crawl at full Speed, and if you're legendary, you aren't off-guard while prone."
+ },
+ {
+  "id": "quick-climb",
+  "collection": "feats",
+  "name": "Quick Climb",
+  "level": 7,
+  "text": "If you're legendary in Athletics, you gain a climb Speed equal to your Speed."
+ },
+ {
+  "id": "quick-disguise",
+  "collection": "feats",
+  "name": "Quick Disguise",
+  "level": 2,
+  "text": "If you're a master in Deception, you can create a full disguise and Impersonate as a 3-action activity. If you're legendary, it takes a single action."
+ },
+ {
+  "id": "quick-identification",
+  "collection": "feats",
+  "name": "Quick Identification",
+  "level": 1,
+  "text": "If you're a master, it takes a 3-action activity, and if you're legendary, it takes 1 action."
+ },
+ {
+  "id": "quick-repair",
+  "collection": "feats",
+  "name": "Quick Repair",
+  "level": 1,
+  "text": "If you're a master in Crafting, it takes 3 actions. If you're legendary, it takes 1 action."
+ },
+ {
+  "id": "quick-squeeze",
+  "collection": "feats",
+  "name": "Quick Squeeze",
+  "level": 1,
+  "text": "If you're legendary in Acrobatics, you Squeeze at full Speed."
+ },
+ {
+  "id": "quick-swim",
+  "collection": "feats",
+  "name": "Quick Swim",
+  "level": 7,
+  "text": "If you're legendary in Athletics, you gain a swim Speed equal to your Speed."
+ },
+ {
+  "id": "recognize-spell",
+  "collection": "feats",
+  "name": "Recognize Spell",
+  "level": 1,
+  "text": "--- If you are trained in the appropriate skill for the spell's tradition and it's a common spell of 2nd rank or lower, you automatically identify it (you still roll to attempt to get a critical success, but can't get a worse result than success). The highest rank of spell you automatically identify increases to 4 if you're an expert, 6 if you're a master, and 10 if you're legendary. If you're not trained in the skill, you can't get a result better than failure."
+ },
+ {
+  "id": "titan-wrestler",
+  "collection": "feats",
+  "name": "Titan Wrestler",
+  "level": 1,
+  "text": "You can attempt to Disarm, Grapple, Reposition, Shove, or Trip creatures up to two sizes larger than you, or up to three sizes larger than you if you're legendary in Athletics."
+ },
+ {
+  "id": "train-animal",
+  "collection": "feats",
+  "name": "Train Animal",
+  "level": 1,
+  "text": "If you're expert, master, or legendary in Nature, you might be able to train more unusual creatures, at the GM's discretion."
+ },
+ {
+  "id": "trick-magic-item",
+  "collection": "feats",
+  "name": "Trick Magic Item",
+  "level": 1,
+  "text": "If you activate a magic item that requires a spell attack modifier or spell DC and you don't have proficiency in the relevant statistic, use your level as your proficiency bonus and the highest of your Intelligence, Wisdom, or Charisma modifiers. If you're a master in the appropriate skill for the item's tradition, you instead use the trained proficiency bonus; if you're legendary, you instead use the expert proficiency bonus."
+ },
+ {
+  "id": "unmistakable-lore",
+  "collection": "feats",
+  "name": "Unmistakable Lore",
+  "level": 2,
+  "text": "When you Recall Knowledge using any Lore subcategory in which you're trained, if you roll a critical failure, you get a failure instead. If you're a master in a Lore subcategory, on a critical success, you gain even more information or context than usual."
+ },
+ {
+  "id": "unusual-treatment",
+  "collection": "feats",
+  "name": "Unusual Treatment",
+  "level": 2,
+  "text": "If you are a master in Medicine, add the drained condition to the list of conditions you can remove if you succeed at a DC 30 check. If you are legendary in Medicine, you reduce the chosen condition by 2 instead of by 1."
+ },
+ {
+  "id": "wall-jump",
+  "collection": "feats",
+  "name": "Wall Jump",
+  "level": 7,
+  "text": "You can use Wall Jump only once in a turn, unless you're legendary in Athletics, in which case you can use it as many times as you can use consecutive jump actions in that turn."
+ },
+ {
+  "id": "ward-medic",
+  "collection": "feats",
+  "name": "Ward Medic",
+  "level": 2,
+  "text": "If you're a master in Medicine, you can treat up to four targets, and if you're legendary, you can treat up to eight targets."
+ },
+ {
+  "id": "seasong",
+  "collection": "feats",
+  "name": "Seasong",
+  "level": 1,
+  "text": "You become trained in Performance. If you would automatically become trained in Performance (from your background or class, for example), you instead become trained in a skill of your choice."
+ },
+ {
+  "id": "chorus-companion",
+  "collection": "feats",
+  "name": "Chorus Companion",
+  "level": 12,
+  "text": "Your animal companion becomes trained in Performance (or expert if it was already trained)."
+ },
+ {
+  "id": "lassoing-lash",
+  "collection": "feats",
+  "name": "Lassoing Lash",
+  "level": 4,
+  "text": "--- **Special** If you have the Titan Wrestler feat, you can target a creature up to two sizes larger than you, or up to three sizes larger than you if you're legendary in Athletics."
+ },
+ {
+  "id": "leech-clip",
+  "collection": "feats",
+  "name": "Leech-Clip",
+  "level": 1,
+  "text": "You are trained to capture deserters, or \"leeches.\" Make a melee Strike with weapon from the flail group."
+ },
+ {
+  "id": "fell-rider",
+  "collection": "feats",
+  "name": "Fell Rider",
+  "level": 9,
+  "text": "You have trained with your animal companion to become a terrifying juggernaut on the battlefield. Your animal companion becomes trained in Intimidation."
+ },
+ {
+  "id": "snare-genius",
+  "collection": "feats",
+  "name": "Snare Genius",
+  "level": 5,
+  "text": "Each day during your daily preparations, you can prepare three snares from your formula book for quick deployment (increasing to four snares if you're a master in Crafting and five if you're legendary)."
+ },
+ {
+  "id": "vicious-snares",
+  "collection": "feats",
+  "name": "Vicious Snares",
+  "level": 13,
+  "text": "This increases to 2d6 additional precision damage if you're legendary in Crafting."
+ },
+ {
+  "id": "svetocher",
+  "collection": "feats",
+  "name": "Svetocher",
+  "level": 1,
+  "text": "You're trained in Diplomacy. If you would automatically be trained in it, you instead become trained in a skill of your choice."
+ },
+ {
+  "id": "auspicious-mount",
+  "collection": "feats",
+  "name": "Auspicious Mount",
+  "level": 16,
+  "text": "- Its proficiency rank in Religion increases to expert."
+ },
+ {
+  "id": "alchemical-discoveries",
+  "collection": "feats",
+  "name": "Alchemical Discoveries",
+  "level": 4,
+  "text": "The number of versatile vials you can create each day increases by one if you're an expert in Crafting, two if you're a master, or three if you're legendary."
+ },
+ {
+  "id": "read-disaster",
+  "collection": "feats",
+  "name": "Read Disaster",
+  "level": 8,
+  "text": "You gain the effects of Augury, except you learn only about the dangers ahead; any results of \"good\" are instead \"nothing,\" and results of \"mixed\" are instead \"bad.\" If you are legendary in Religion, you take only 1 minute to Read Disaster."
+ },
+ {
+  "id": "juggernauts-fortitude",
+  "collection": "feats",
+  "name": "Juggernaut's Fortitude",
+  "level": 12,
+  "text": "Your proficiency rank in Fortitude saves increases to master."
+ },
+ {
+  "id": "perfections-path",
+  "collection": "feats",
+  "name": "Perfection's Path",
+  "level": 12,
+  "text": "Choose one saving throw (Fortitude, Reflex, or Will) in which you are an expert. Your proficiency rank in the chosen saving throw increases to master."
+ },
+ {
+  "id": "evasiveness",
+  "collection": "feats",
+  "name": "Evasiveness",
+  "level": 12,
+  "text": "Your proficiency rank for Reflex saves increases to master."
+ },
+ {
+  "id": "beastmaster-dedication",
+  "collection": "feats",
+  "name": "Beastmaster Dedication",
+  "level": 2,
+  "text": "When you gain your first beastmaster focus spell, you become trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "beastmaster-bond",
+  "collection": "feats",
+  "name": "Beastmaster Bond",
+  "level": 10,
+  "text": "If you're legendary in Nature, you can communicate telepathically with your animal companions anywhere on the planet."
+ },
+ {
+  "id": "blessed-one-dedication",
+  "collection": "feats",
+  "name": "Blessed One Dedication",
+  "level": 2,
+  "text": "You become trained in spell attack modifier and spell DC."
+ },
+ {
+  "id": "eldritch-archer-dedication",
+  "collection": "feats",
+  "name": "Eldritch Archer Dedication",
+  "level": 6,
+  "text": "You're trained in spell attack modifier and spell DC."
+ },
+ {
+  "id": "gladiator-dedication",
+  "collection": "feats",
+  "name": "Gladiator Dedication",
+  "level": 2,
+  "text": "If you were already trained in Gladiatorial Lore, you also become trained in a Lore skill of your choice."
+ }
+]

@@ -1,0 +1,387 @@
+[
+ {
+  "id": "divine-will",
+  "collection": "classFeatures",
+  "name": "Divine Will",
+  "level": 11,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "investigator-expertise",
+  "collection": "classFeatures",
+  "name": "Investigator Expertise",
+  "level": 9,
+  "text": "Your proficiency rank for your investigator class DC increases to expert."
+ },
+ {
+  "id": "deductive-improvisation",
+  "collection": "classFeatures",
+  "name": "Deductive Improvisation",
+  "level": 11,
+  "text": "You can attempt any check that requires you to be trained in a skill, even if you're untrained in it; you can attempt any check that requires you to have expert proficiency in a skill so long as you're trained in it; and you can attempt any check that requires you to have master proficiency in a skill as long as you have expert proficiency in it."
+ },
+ {
+  "id": "dogged-will",
+  "collection": "classFeatures",
+  "name": "Dogged Will",
+  "level": 11,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "savvy-reflexes",
+  "collection": "classFeatures",
+  "name": "Savvy Reflexes",
+  "level": 15,
+  "text": "Your proficiency rank for Reflex saves increases to master."
+ },
+ {
+  "id": "greater-dogged-will",
+  "collection": "classFeatures",
+  "name": "Greater Dogged Will",
+  "level": 17,
+  "text": "Your proficiency rank for Will saves increases to legendary."
+ },
+ {
+  "id": "master-detective",
+  "collection": "classFeatures",
+  "name": "Master Detective",
+  "level": 19,
+  "text": "As a master detective, you can solve any case and find all the clues available. Your proficiency rank for your investigator class DC increases to master."
+ },
+ {
+  "id": "path-to-perfection",
+  "collection": "classFeatures",
+  "name": "Path to Perfection",
+  "level": 7,
+  "text": "Your proficiency rank for the chosen saving throw increases to master."
+ },
+ {
+  "id": "monk-expertise",
+  "collection": "classFeatures",
+  "name": "Monk Expertise",
+  "level": 9,
+  "text": "Your proficiency rank for your monk class DC increases to expert. If you have qi spells, your proficiency rank for spell attacks and spell DCs increases to expert."
+ },
+ {
+  "id": "second-path-to-perfection",
+  "collection": "classFeatures",
+  "name": "Second Path to Perfection",
+  "level": 11,
+  "text": "Your proficiency rank for the chosen saving throw increases to master."
+ },
+ {
+  "id": "graceful-mastery",
+  "collection": "classFeatures",
+  "name": "Graceful Mastery",
+  "level": 13,
+  "text": "Your proficiency rank for unarmored defense increases to master."
+ },
+ {
+  "id": "third-path-to-perfection",
+  "collection": "classFeatures",
+  "name": "Third Path to Perfection",
+  "level": 15,
+  "text": "Your proficiency rank for the chosen type of save increases to legendary."
+ },
+ {
+  "id": "graceful-legend",
+  "collection": "classFeatures",
+  "name": "Graceful Legend",
+  "level": 17,
+  "text": "Your proficiency rank for unarmored defense increases to legendary, and your proficiency rank for your monk class DC increases to master. If you have qi spells, your proficiency rank for spell attack modifiers and spell DCs increases to master."
+ },
+ {
+  "id": "mystery",
+  "collection": "classFeatures",
+  "name": "Mystery",
+  "level": 1,
+  "text": "**Mystery Skill** You become trained in the listed skill. A few mysteries make you trained in more than one skill."
+ },
+ {
+  "id": "mysterious-resolve",
+  "collection": "classFeatures",
+  "name": "Mysterious Resolve",
+  "level": 7,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "oracular-senses",
+  "collection": "classFeatures",
+  "name": "Oracular Senses",
+  "level": 11,
+  "text": "Your proficiency rank for Perception increases to expert."
+ },
+ {
+  "id": "greater-mysterious-resolve",
+  "collection": "classFeatures",
+  "name": "Greater Mysterious Resolve",
+  "level": 17,
+  "text": "Your proficiency rank for Will saves increases to legendary."
+ },
+ {
+  "id": "majestic-will",
+  "collection": "classFeatures",
+  "name": "Majestic Will",
+  "level": 17,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "confident-evasion",
+  "collection": "classFeatures",
+  "name": "Confident Evasion",
+  "level": 7,
+  "text": "Your proficiency rank for Reflex saves increases to master."
+ },
+ {
+  "id": "swashbuckler-expertise",
+  "collection": "classFeatures",
+  "name": "Swashbuckler Expertise",
+  "level": 9,
+  "text": "Your proficiency rank for your swashbuckler class DC increases to expert."
+ },
+ {
+  "id": "assured-evasion",
+  "collection": "classFeatures",
+  "name": "Assured Evasion",
+  "level": 13,
+  "text": "Your proficiency rank for Reflex saves increases to legendary."
+ },
+ {
+  "id": "reinforced-ego",
+  "collection": "classFeatures",
+  "name": "Reinforced Ego",
+  "level": 17,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "eternal-confidence",
+  "collection": "classFeatures",
+  "name": "Eternal Confidence",
+  "level": 19,
+  "text": "Your proficiency rank for your swashbuckler class DC increases to master."
+ },
+ {
+  "id": "expert-protections",
+  "collection": "classFeatures",
+  "name": "Expert Protections",
+  "level": 11,
+  "text": "Your proficiency rank for light armor, medium armor, unarmored defense, and Reflex saves increases to expert."
+ },
+ {
+  "id": "master-of-mind-and-spirit",
+  "collection": "classFeatures",
+  "name": "Master of Mind and Spirit",
+  "level": 13,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "root-epithet",
+  "collection": "classFeatures",
+  "name": "Root Epithet",
+  "level": 3,
+  "text": "If you are already trained in the granted skill, you become trained in a different skill of your choice, as normal."
+ },
+ {
+  "id": "spirit-striking",
+  "collection": "classFeatures",
+  "name": "Spirit Striking",
+  "level": 7,
+  "text": "You deal 2 additional spirit damage with weapons and unarmed attacks in which you are an expert. This damage increases to 3 if you're a master, and 4 if you're legendary."
+ },
+ {
+  "id": "unassailable-soul",
+  "collection": "classFeatures",
+  "name": "Unassailable Soul",
+  "level": 7,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "divine-premonition",
+  "collection": "classFeatures",
+  "name": "Divine Premonition",
+  "level": 9,
+  "text": "Your proficiency rank for Reflex saves increases to expert."
+ },
+ {
+  "id": "godly-expertise",
+  "collection": "classFeatures",
+  "name": "Godly Expertise",
+  "level": 9,
+  "text": "Your proficiency rank for your exemplar class DC increases to expert."
+ },
+ {
+  "id": "greater-unassailable-soul",
+  "collection": "classFeatures",
+  "name": "Greater Unassailable Soul ",
+  "level": 13,
+  "text": "Your proficiency rank for Will saves increases to legendary."
+ },
+ {
+  "id": "greater-spirit-striking",
+  "collection": "classFeatures",
+  "name": "Greater Spirit Striking",
+  "level": 15,
+  "text": "Your additional damage from spirit striking increases to 4 with weapons and unarmed attacks in which you're an expert, 6 if you're a master, and 8 if you're legendary."
+ },
+ {
+  "id": "mortality-reforged",
+  "collection": "classFeatures",
+  "name": "Mortality Reforged",
+  "level": 15,
+  "text": "Your proficiency rank for Fortitude saves increases to master."
+ },
+ {
+  "id": "deific-mastery",
+  "collection": "classFeatures",
+  "name": "Deific Mastery",
+  "level": 17,
+  "text": "Your proficiency rank for your exemplar class DC increases to master."
+ },
+ {
+  "id": "military-expertise",
+  "collection": "classFeatures",
+  "name": "Military Expertise",
+  "level": 5,
+  "text": "Your proficiency rank for martial weapons, simple weapons, and unarmed attacks increases to expert. When you critically succeed at an attack roll with a weapon you are at least an expert with, you apply the weapon's critical specialization effect."
+ },
+ {
+  "id": "expert-tactician",
+  "collection": "classFeatures",
+  "name": "Expert Tactician",
+  "level": 7,
+  "text": "Your proficiency rank for your commander class DC increases to expert, and you add two new tactics to your folio; these can be any mobility or offensive tactics you don't already know, or you can choose from expert tactics you have access to. In addition, your proficiency rank in Warfare Lore increases to master."
+ },
+ {
+  "id": "commanding-will",
+  "collection": "classFeatures",
+  "name": "Commanding Will",
+  "level": 11,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "battlefield-intuition",
+  "collection": "classFeatures",
+  "name": "Battlefield Intuition",
+  "level": 15,
+  "text": "Your proficiency rank for Reflex saves increases to master."
+ },
+ {
+  "id": "master-tactician",
+  "collection": "classFeatures",
+  "name": "Master Tactician",
+  "level": 15,
+  "text": "Your proficiency rank for commander class DC increases to master, and you add two new tactics to your folio; these can be any mobility or offensive tactics you don't already have in your folio, or you can choose from expert tactics or master tactics you have access to. In addition, you gain legendary proficiency in Warfare Lore."
+ },
+ {
+  "id": "legendary-tactician",
+  "collection": "classFeatures",
+  "name": "Legendary Tactician",
+  "level": 19,
+  "text": "Your proficiency rank for your commander class DC increases to legendary, and you add two new tactics to your folio; these can be any mobility or offensive tactics you don't already have in your folio, or you can choose from expert tactics, master tactics, or legendary tactics you have access to."
+ },
+ {
+  "id": "unbreakable-expertise",
+  "collection": "classFeatures",
+  "name": "Unbreakable Expertise",
+  "level": 5,
+  "text": "Your proficiency rank with medium armor and heavy armor increases to expert."
+ },
+ {
+  "id": "reaction-time",
+  "collection": "classFeatures",
+  "name": "Reaction Time",
+  "level": 7,
+  "text": "Your proficiency rank for Perception increases to expert."
+ },
+ {
+  "id": "guardian-expertise",
+  "collection": "classFeatures",
+  "name": "Guardian Expertise",
+  "level": 9,
+  "text": "Your proficiency rank for your guardian class DC increases to expert."
+ },
+ {
+  "id": "unbreakable-mastery",
+  "collection": "classFeatures",
+  "name": "Unbreakable Mastery",
+  "level": 11,
+  "text": "Your proficiency rank with medium armor and heavy armor increases to master. Your proficiency rank with light armor and unarmored defense increases to expert."
+ },
+ {
+  "id": "guardian-mastery",
+  "collection": "classFeatures",
+  "name": "Guardian Mastery",
+  "level": 19,
+  "text": "Your proficiency rank for your guardian class DC increases to master."
+ },
+ {
+  "id": "precognitive-reflexes",
+  "collection": "classFeatures",
+  "name": "Precognitive Reflexes",
+  "level": 5,
+  "text": "Your proficiency rank for Reflex saves increases to expert."
+ },
+ {
+  "id": "extrasensory-perception",
+  "collection": "classFeatures",
+  "name": "Extrasensory Perception",
+  "level": 11,
+  "text": "Your proficiency rank for Perception increases to expert."
+ },
+ {
+  "id": "walls-of-will",
+  "collection": "classFeatures",
+  "name": "Walls of Will",
+  "level": 11,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "personal-barrier",
+  "collection": "classFeatures",
+  "name": "Personal Barrier",
+  "level": 13,
+  "text": "Your proficiency rank in unarmored defense increases to expert."
+ },
+ {
+  "id": "fortress-of-will",
+  "collection": "classFeatures",
+  "name": "Fortress of Will",
+  "level": 17,
+  "text": "Your trained mind is as a fortress that none can breach. Your proficiency rank for Will saves increases to legendary."
+ },
+ {
+  "id": "esoteric-lore",
+  "collection": "classFeatures",
+  "name": "Esoteric Lore",
+  "level": 1,
+  "text": "You become trained in Esoteric Lore, a special lore skill that can be used to Recall Knowledge regarding haunts, curses, and creatures of any type, but that can't be used to Recall Knowledge of other topics. At 3rd level, you become an expert in Esoteric Lore; at 7th level, you become a master in Esoteric Lore; and at 15th level, you become legendary in Esoteric Lore."
+ },
+ {
+  "id": "disciplined-mind",
+  "collection": "classFeatures",
+  "name": "Disciplined Mind",
+  "level": 7,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "thaumaturgic-expertise",
+  "collection": "classFeatures",
+  "name": "Thaumaturgic Expertise",
+  "level": 9,
+  "text": "Your proficiency rank for your thaumaturge class DC increases to expert."
+ },
+ {
+  "id": "perfected-mind",
+  "collection": "classFeatures",
+  "name": "Perfected Mind",
+  "level": 13,
+  "text": "Your proficiency rank for Will saves increases to legendary."
+ },
+ {
+  "id": "earned-resilience",
+  "collection": "classFeatures",
+  "name": "Earned Resilience",
+  "level": 15,
+  "text": "Your proficiency rank for Fortitude saves increases to master."
+ }
+]

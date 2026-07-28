@@ -1,0 +1,387 @@
+[
+ {
+  "id": "criminal",
+  "collection": "backgrounds",
+  "name": "Criminal",
+  "level": null,
+  "text": "You're trained in the Stealth skill and the Underworld Lore skill. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Stealth **Lore** Underworld Lore **Skill Feat** Experienced Smuggler"
+ },
+ {
+  "id": "cultist",
+  "collection": "backgrounds",
+  "name": "Cultist",
+  "level": null,
+  "text": "You're trained in the Occultism skill and a Lore skill related to your deity or cult. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Occultism **Skill Feat** Schooled In Secrets"
+ },
+ {
+  "id": "detective",
+  "collection": "backgrounds",
+  "name": "Detective",
+  "level": null,
+  "text": "You're trained in the Society skill and the Underworld Lore skill. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Society **Lore** Underworld Lore **Skill Feat** Streetwise"
+ },
+ {
+  "id": "emissary",
+  "collection": "backgrounds",
+  "name": "Emissary",
+  "level": null,
+  "text": "You're trained in the Society skill and a Lore skill related to one city you've visited often. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Skill Feat** Multilingual"
+ },
+ {
+  "id": "entertainer",
+  "collection": "backgrounds",
+  "name": "Entertainer",
+  "level": null,
+  "text": "You're trained in the Performance skill and the Theater Lore skill. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Performance **Lore** Theatre Lore **Skill Feat** Fascinating Performance"
+ },
+ {
+  "id": "farmhand",
+  "collection": "backgrounds",
+  "name": "Farmhand",
+  "level": null,
+  "text": "You're trained in the Athletics skill and the Farming Lore skill. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Athletics **Lore** Farming Lore"
+ },
+ {
+  "id": "field-medic",
+  "collection": "backgrounds",
+  "name": "Field Medic",
+  "level": null,
+  "text": "You're trained in the Medicine skill and the Warfare Lore skill. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Medicine **Lore** Warfare Lore **Skill Feat** Battle Medicine"
+ },
+ {
+  "id": "fortune-teller",
+  "collection": "backgrounds",
+  "name": "Fortune Teller",
+  "level": null,
+  "text": "You're trained in the Occultism skill and the Fortune-Telling Lore skill. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Occultism **Lore** Fortune Telling Lore **Skill Feat** Oddity Identification"
+ },
+ {
+  "id": "gambler",
+  "collection": "backgrounds",
+  "name": "Gambler",
+  "level": null,
+  "text": "You're trained in the Deception skill and the Games Lore skill. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Deception **Lore** Games Lore **Skill Feat** Lie To Me"
+ },
+ {
+  "id": "gladiator",
+  "collection": "backgrounds",
+  "name": "Gladiator",
+  "level": null,
+  "text": "You're trained in the Performance skill and the Gladiatorial Lore skill. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Performance **Lore** Gladatorial Lore **Skill Feat** Impressive Performance"
+ },
+ {
+  "id": "guard",
+  "collection": "backgrounds",
+  "name": "Guard",
+  "level": null,
+  "text": "You're trained in the Intimidation skill and the Legal Lore or Warfare Lore skill. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Intimidation **Skill Feat** Quick Coercion"
+ },
+ {
+  "id": "herbalist",
+  "collection": "backgrounds",
+  "name": "Herbalist",
+  "level": null,
+  "text": "As a formally trained apothecary or a rural practitioner of folk medicine, you learned the healing properties of various herbs. You're trained in the Nature skill and the Herbalism Lore skill. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Nature **Lore** Herbalism Lore **Skill Feat** Natural Medicine"
+ },
+ {
+  "id": "hermit",
+  "collection": "backgrounds",
+  "name": "Hermit",
+  "level": null,
+  "text": "You're trained in the Nature or Occultism skill, plus a Lore skill related to the terrain you lived in as a hermit (such as Cave Lore or Desert Lore)."
+ },
+ {
+  "id": "hunter",
+  "collection": "backgrounds",
+  "name": "Hunter",
+  "level": null,
+  "text": "You're trained in the Survival skill and the Tanning Lore skill. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Survival **Lore** Tanning Lore **Skill Feat** Survey Wildlife"
+ },
+ {
+  "id": "laborer",
+  "collection": "backgrounds",
+  "name": "Laborer",
+  "level": null,
+  "text": "You're trained in the Athletics skill and the Labor Lore skill. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Labor Lore **Skill Feat** Hefty Hauler"
+ },
+ {
+  "id": "martial-disciple",
+  "collection": "backgrounds",
+  "name": "Martial Disciple",
+  "level": null,
+  "text": "You're trained in your choice of the Acrobatics or Athletics skill. You're also trained in the Warfare Lore skill."
+ },
+ {
+  "id": "merchant",
+  "collection": "backgrounds",
+  "name": "Merchant",
+  "level": null,
+  "text": "You're trained in the Diplomacy skill and the Mercantile Lore skill. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Diplomacy **Lore** Mercantile Lore **Skill Feat** Bargain Hunter"
+ },
+ {
+  "id": "miner",
+  "collection": "backgrounds",
+  "name": "Miner",
+  "level": null,
+  "text": "You're trained in the Survival skill and the Mining Lore skill. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Survival **Lore** Mining Lore **Skill Feat** Terrain Expertise"
+ },
+ {
+  "id": "noble",
+  "collection": "backgrounds",
+  "name": "Noble",
+  "level": null,
+  "text": "You're trained in the Society skill and the Genealogy Lore or Heraldry Lore skill. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Skill Feat** Courtly Graces"
+ },
+ {
+  "id": "nomad",
+  "collection": "backgrounds",
+  "name": "Nomad",
+  "level": null,
+  "text": "You're trained in the Survival skill and a Lore skill related to one terrain you traveled in (such as Desert Lore or Swamp Lore). --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Survival"
+ },
+ {
+  "id": "prisoner",
+  "collection": "backgrounds",
+  "name": "Prisoner",
+  "level": null,
+  "text": "You're trained in the Stealth skill and the Underworld Lore skill. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Stealth **Lore** Underworld Lore **Skill Feat** Experienced Smuggler"
+ },
+ {
+  "id": "raised-by-belief",
+  "collection": "backgrounds",
+  "name": "Raised by Belief",
+  "level": null,
+  "text": "You're trained in the deity's listed Divine Skill and gain the Assurance feat with that skill."
+ },
+ {
+  "id": "sailor",
+  "collection": "backgrounds",
+  "name": "Sailor",
+  "level": null,
+  "text": "You're trained in the Athletics skill and the Sailing Lore skill. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Athletics **Lore** Sailing Lore **Skill Feat** Underwater Marauder"
+ },
+ {
+  "id": "scholar",
+  "collection": "backgrounds",
+  "name": "Scholar",
+  "level": null,
+  "text": "You're trained in your choice of the Arcana, Nature, Occultism, or Religion skill, and gain the Assurance skill feat in your chosen skill. You're also trained in the Academia Lore skill."
+ },
+ {
+  "id": "scout",
+  "collection": "backgrounds",
+  "name": "Scout",
+  "level": null,
+  "text": "You're trained in the Survival skill and a Lore skill related to one terrain you scouted in (such as Forest Lore or Cavern Lore). --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Survival **Skill Feat** Forager"
+ },
+ {
+  "id": "street-urchin",
+  "collection": "backgrounds",
+  "name": "Street Urchin",
+  "level": null,
+  "text": "You're trained in the Thievery skill and a Lore skill for the city you lived in as a street urchin (such as Absalom Lore or Magnimar Lore). --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Thievery **Skill Feat** Pickpocket"
+ },
+ {
+  "id": "teacher",
+  "collection": "backgrounds",
+  "name": "Teacher",
+  "level": null,
+  "text": "You are incredibly knowledgeable, skilled, and perhaps even trained to teach children and adults about the world and its wonders. You're trained in your choice of either the Performance or Society skill, as well as the Academia Lore skill."
+ },
+ {
+  "id": "tinker",
+  "collection": "backgrounds",
+  "name": "Tinker",
+  "level": null,
+  "text": "You're trained in the Crafting skill and the Engineering Lore skill. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Engineering Lore **Skill Feat** Specialty Crafting"
+ },
+ {
+  "id": "warrior",
+  "collection": "backgrounds",
+  "name": "Warrior",
+  "level": null,
+  "text": "You're trained in the Intimidation skill and the Warfare Lore skill. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Intimidation **Lore** Warfare Lore **Skill Feat** Intimidating Glare"
+ },
+ {
+  "id": "mortuarium-survivor",
+  "collection": "backgrounds",
+  "name": "Mortuarium Survivor",
+  "level": null,
+  "text": "You're trained in Arcana and Necromancy Lore. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Arcana **Lore** Necromancy Lore"
+ },
+ {
+  "id": "astrologer",
+  "collection": "backgrounds",
+  "name": "Astrologer",
+  "level": null,
+  "text": "You're trained in Occultism and Astrology Lore. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Occultism **Lore** Astrology Lore **Skill Feat** Oddity Identification"
+ },
+ {
+  "id": "barber",
+  "collection": "backgrounds",
+  "name": "Barber",
+  "level": null,
+  "text": "You're trained in the Medicine skill and the Surgery Lore skill. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Medicine **Lore** Surgery Lore **Skill Feat** Risky Surgery"
+ },
+ {
+  "id": "bookkeeper",
+  "collection": "backgrounds",
+  "name": "Bookkeeper",
+  "level": null,
+  "text": "You're trained in the Society skill and the Accounting Lore skill. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Society **Lore** Accounting Lore **Skill Feat** Eye For Numbers"
+ },
+ {
+  "id": "courier",
+  "collection": "backgrounds",
+  "name": "Courier",
+  "level": null,
+  "text": "You're trained in the Society skill and the Lore skill for the city in which you were raised. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Society **Skill Feat** Glean Contents"
+ },
+ {
+  "id": "insurgent",
+  "collection": "backgrounds",
+  "name": "Insurgent",
+  "level": null,
+  "text": "You're trained in the Deception skill and the Warfare Lore skill. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Deception **Lore** Warfare Lore **Skill Feat** Lengthy Diversion"
+ },
+ {
+  "id": "outrider",
+  "collection": "backgrounds",
+  "name": "Outrider",
+  "level": null,
+  "text": "You're trained in the Nature skill and the Plains Lore skill. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Nature **Lore** Plains Lore **Skill Feat** Express Rider"
+ },
+ {
+  "id": "pilgrim",
+  "collection": "backgrounds",
+  "name": "Pilgrim",
+  "level": null,
+  "text": "You're trained in the Religion skill and the Lore skill for your patron deity. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Religion **Skill Feat** Pilgrim's Token"
+ },
+ {
+  "id": "root-worker",
+  "collection": "backgrounds",
+  "name": "Root Worker",
+  "level": null,
+  "text": "You're trained in the Occultism skill and the Herbalism Lore skill. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Occultism **Lore** Herbalism Lore **Skill Feat** Root Magic"
+ },
+ {
+  "id": "scavenger",
+  "collection": "backgrounds",
+  "name": "Scavenger",
+  "level": null,
+  "text": "You're trained in the Survival skill and the Lore skill for the settlement you grew up scavenging in. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Survival **Skill Feat** Forager"
+ },
+ {
+  "id": "servant",
+  "collection": "backgrounds",
+  "name": "Servant",
+  "level": null,
+  "text": "You're trained in the Society skill and the Labor Lore skill. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Society **Lore** Labor Lore **Skill Feat** Read Lips"
+ },
+ {
+  "id": "squire",
+  "collection": "backgrounds",
+  "name": "Squire",
+  "level": null,
+  "text": "You trained at the feet of a knight, maintaining their gear and supporting them at tourneys and in battle. You're trained in the Athletics skill and your choice of the Heraldry Lore or Warfare Lore skill. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Heraldry Lore Or Warfare **Skill Feat** Armor Assist"
+ },
+ {
+  "id": "tax-collector",
+  "collection": "backgrounds",
+  "name": "Tax Collector",
+  "level": null,
+  "text": "You're trained in the Intimidation skill and the Lore skill for the settlement that employed you. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Intimidation **Skill Feat** Quick Coercion"
+ },
+ {
+  "id": "ward",
+  "collection": "backgrounds",
+  "name": "Ward",
+  "level": null,
+  "text": "You're trained in the Performance skill and the Genealogy Lore skill. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Performance **Lore** Genealogy Lore **Skill Feat** Fascinating Performance"
+ },
+ {
+  "id": "blessed",
+  "collection": "backgrounds",
+  "name": "Blessed",
+  "level": null,
+  "text": "You are trained in a Lore skill associated with the deity who blessed you (such as Shelyn Lore) if you know their identity, or else in a Lore skill of the GM's choice if you don't."
+ },
+ {
+  "id": "cursed",
+  "collection": "backgrounds",
+  "name": "Cursed",
+  "level": null,
+  "text": "You are trained in Occultism and Curse Lore. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Occultism **Lore** Curse Lore"
+ },
+ {
+  "id": "feral-child",
+  "collection": "backgrounds",
+  "name": "Feral Child",
+  "level": null,
+  "text": "You are trained in Nature and Survival. --- ## Background details **Attribute Boosts** Constitution or Dexterity or Strength **Trained Skill** Nature **Skill Feat** Forager"
+ },
+ {
+  "id": "feybound",
+  "collection": "backgrounds",
+  "name": "Feybound",
+  "level": null,
+  "text": "Perhaps you made a purchase at the legendary Witchmarket or partook deeply of fey food and wine. You are trained in Fey Lore and gain the Fey's Fortune free action."
+ },
+ {
+  "id": "haunted",
+  "collection": "backgrounds",
+  "name": "Haunted",
+  "level": null,
+  "text": "You are trained in Occultism and an additional skill in which the haunting entity is well-versed, determined by the GM. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Occultism"
+ },
+ {
+  "id": "royalty",
+  "collection": "backgrounds",
+  "name": "Royalty",
+  "level": null,
+  "text": "You are trained in Society. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Skill Feat** Courtly Graces"
+ },
+ {
+  "id": "acupuncturist",
+  "collection": "backgrounds",
+  "name": "Acupuncturist",
+  "level": null,
+  "text": "You might have encountered a master willing to teach an eager student or felt the relief of its practice on your own body, taking your interest to greater heights. You're trained in Medicine and Acupuncture Lore. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Medicine **Lore** Acupuncture Lore **Skill Feat** Battle Medicine"
+ },
+ {
+  "id": "bachuan-revolutionary",
+  "collection": "backgrounds",
+  "name": "Bachuan Revolutionary",
+  "level": null,
+  "text": "You're trained in Society and Law Lore. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Society **Lore** Law Lore **Skill Feat** Sign Language"
+ },
+ {
+  "id": "gossip",
+  "collection": "backgrounds",
+  "name": "Gossip",
+  "level": null,
+  "text": "You're trained in Diplomacy and a Lore skill of your choice. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Diplomacy **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "jeweler",
+  "collection": "backgrounds",
+  "name": "Jeweler",
+  "level": null,
+  "text": "You're a trained jeweler with an eye for structure and beauty. You're trained in Crafting and Gem Lore. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Crafting **Lore** Gem Lore **Skill Feat** Crafter's Appraisal"
+ },
+ {
+  "id": "ocean-diver",
+  "collection": "backgrounds",
+  "name": "Ocean Diver",
+  "level": null,
+  "text": "You're trained in Athletics and Ocean Lore. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Athletics **Lore** Ocean Lore **Skill Feat** Underwater Marauder"
+ },
+ {
+  "id": "runaway-noble",
+  "collection": "backgrounds",
+  "name": "Runaway Noble",
+  "level": null,
+  "text": "You're trained in Diplomacy, and either Genealogy Lore or Heraldry Lore. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Diplomacy **Skill Feat** Bon Mot"
+ }
+]

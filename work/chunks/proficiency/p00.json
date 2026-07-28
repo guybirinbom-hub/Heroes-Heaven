@@ -1,0 +1,387 @@
+[
+ {
+  "id": "dwarven-weapon-expertise",
+  "collection": "feats",
+  "name": "Dwarven Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency for battle axes, picks, warhammers, and all dwarven weapons in which you are trained."
+ },
+ {
+  "id": "elven-weapon-expertise",
+  "collection": "feats",
+  "name": "Elven Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in longbows, composite longbows, longswords, rapiers, shortbows, composite shortbows, and all elf weapons in which you are trained."
+ },
+ {
+  "id": "gnome-weapon-expertise",
+  "collection": "feats",
+  "name": "Gnome Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the glaive, kukri, and all gnome weapons in which you are trained."
+ },
+ {
+  "id": "goblin-weapon-expertise",
+  "collection": "feats",
+  "name": "Goblin Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the dogslicer, horsechopper, and all goblin weapons in which you are trained."
+ },
+ {
+  "id": "halfling-weapon-expertise",
+  "collection": "feats",
+  "name": "Halfling Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the sling, halfling sling staff, shortsword, and all halfling weapons in which you are trained."
+ },
+ {
+  "id": "orc-weapon-expertise",
+  "collection": "feats",
+  "name": "Orc Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the falchion, the greataxe, and all orc weapons in which you are trained."
+ },
+ {
+  "id": "brawling-focus",
+  "collection": "feats",
+  "name": "Brawling Focus",
+  "level": 2,
+  "text": "If you have Monastic Weaponry, you also gain the critical specialization effects of all monk weapons in which you are trained."
+ },
+ {
+  "id": "snare-specialist",
+  "collection": "feats",
+  "name": "Snare Specialist",
+  "level": 4,
+  "text": "If your proficiency rank in Crafting is expert, you gain the formulas for three common or uncommon snares. If your rank is master, you gain 6. If your rank is legendary, you gain 9. The number of snares increases to six if you have master proficiency in Crafting and eight if you have legendary proficiency in Crafting."
+ },
+ {
+  "id": "minor-magic",
+  "collection": "feats",
+  "name": "Minor Magic",
+  "level": 2,
+  "text": "You gain the Cast a Spell activity, your key spellcasting ability is Charisma, and you're trained in spell attack rolls and DCs for the tradition you chose."
+ },
+ {
+  "id": "eye-of-the-arclords",
+  "collection": "feats",
+  "name": "Eye of the Arclords",
+  "level": 2,
+  "text": "It can remain open for 2 minutes if you're a master in Arcana, or 5 minutes if you're legendary."
+ },
+ {
+  "id": "different-worlds",
+  "collection": "feats",
+  "name": "Different Worlds",
+  "level": 1,
+  "text": "You gain the trained proficiency rank in the Lore skill from the second background you chose (but you don't gain any of the background's other benefits), and you gain a +4 circumstance bonus to Deception checks when making a statement that would be true of your second identity or when disguising yourself as your second identity."
+ },
+ {
+  "id": "sociable",
+  "collection": "feats",
+  "name": "Sociable",
+  "level": 1,
+  "text": "You are trained in Diplomacy (or another skill of your choice if you were already trained in Diplomacy), and you gain the Hobnobber skill feat."
+ },
+ {
+  "id": "eclectic-obsession",
+  "collection": "feats",
+  "name": "Eclectic Obsession",
+  "level": 5,
+  "text": "You reflect on snippets you've learned to temporarily become trained in one Lore skill of your choice. This proficiency lasts for 10 minutes or until you critically fail a check with that skill."
+ },
+ {
+  "id": "innocuous",
+  "collection": "feats",
+  "name": "Innocuous",
+  "level": 1,
+  "text": "You gain the trained proficiency rank in Deception (or another skill of your choice, if you're already trained in Deception)."
+ },
+ {
+  "id": "boasters-challenge",
+  "collection": "feats",
+  "name": "Boaster's Challenge",
+  "level": 6,
+  "text": "If you succeed, you gain a +2 status bonus to damage rolls with your weapon or unarmed Strikes against that foe until the end of your next turn; if you have master proficiency in the skill you used, you gain a +4 status bonus instead, and if you're legendary, you gain a +6 status bonus."
+ },
+ {
+  "id": "invoke-the-crimson-oath",
+  "collection": "feats",
+  "name": "Invoke the Crimson Oath",
+  "level": 8,
+  "text": "Your knight reclaimant focus spells are divine spells; when you gain this feat, you become trained in divine spell attacks and spell DCs."
+ },
+ {
+  "id": "halcyon-spellcasting-adept",
+  "collection": "feats",
+  "name": "Halcyon Spellcasting Adept",
+  "level": 14,
+  "text": "Your proficiency rank in either arcane or primal spell DCs and spell attack rolls advances from trained to expert."
+ },
+ {
+  "id": "halcyon-spellcasting-sage",
+  "collection": "feats",
+  "name": "Halcyon Spellcasting Sage",
+  "level": 18,
+  "text": "Your proficiency rank in either arcane or primal spell DCs and spell attack rolls advances from expert to master."
+ },
+ {
+  "id": "forced-entry",
+  "collection": "feats",
+  "name": "Forced Entry",
+  "level": 6,
+  "text": "You are trained to preserve the archaeological value of your location when entering."
+ },
+ {
+  "id": "lore-seeker",
+  "collection": "feats",
+  "name": "Lore Seeker",
+  "level": 8,
+  "text": "Otherwise, they are arcane spells, you use Intelligence as your spellcasting ability, and you become trained in spell attack rolls and spell DCs for arcane spells."
+ },
+ {
+  "id": "spellmaster-dedication",
+  "collection": "feats",
+  "name": "Spellmaster Dedication",
+  "level": 6,
+  "text": "You gain a +2 circumstance bonus when you Identify Magic with a skill in which you are trained or better."
+ },
+ {
+  "id": "crystal-ward-spells",
+  "collection": "feats",
+  "name": "Crystal Ward Spells",
+  "level": 4,
+  "text": "You gain the Electrified Crystal Ward focus spell, and you are trained in arcane spell attack rolls and spell DCs."
+ },
+ {
+  "id": "know-the-beat",
+  "collection": "feats",
+  "name": "Know the Beat",
+  "level": 3,
+  "text": "You become trained in your choice of Guild Lore, Legal Lore, Mercantile Lore, or Underworld Lore."
+ },
+ {
+  "id": "bless-tonic",
+  "collection": "feats",
+  "name": "Bless Tonic",
+  "level": 7,
+  "text": "When a creature regains Hit Points using a blessed alchemical item, the overflowing energy grants them void resistance 5 for 1 round, or void resistance 10 if you are legendary in Crafting."
+ },
+ {
+  "id": "bless-toxin",
+  "collection": "feats",
+  "name": "Bless Toxin",
+  "level": 7,
+  "text": "When a creature is afflicted with a blessed alchemical poison, for 1 round, any Hit Points it would regain from a vitality effect are reduced by 5, or by 10 if you are legendary in Crafting."
+ },
+ {
+  "id": "mature-trained-companion",
+  "collection": "feats",
+  "name": "Mature Trained Companion",
+  "level": 6,
+  "text": "Increase its proficiency rank in Performance to expert instead of one of the three skill increases for mature."
+ },
+ {
+  "id": "splendid-companion",
+  "collection": "feats",
+  "name": "Splendid Companion",
+  "level": 12,
+  "text": "Increase its proficiency rank in Performance to master instead of Athletics or Acrobatics."
+ },
+ {
+  "id": "specialized-companion",
+  "collection": "feats",
+  "name": "Specialized Companion",
+  "level": 18,
+  "text": "Increase its proficiency rank in Performance to legendary instead of one of the specialization's skill increases."
+ },
+ {
+  "id": "fey-influence",
+  "collection": "feats",
+  "name": "Fey Influence",
+  "level": 5,
+  "text": "You become trained in primal DCs and spell attack rolls."
+ },
+ {
+  "id": "empathetic-plea",
+  "collection": "feats",
+  "name": "Empathetic Plea",
+  "level": 1,
+  "text": "The penalty is -4 if you're an expert in Diplomacy, -6 if you're a master, and -8 if you're legendary."
+ },
+ {
+  "id": "dragon-disciple-dedication",
+  "collection": "feats",
+  "name": "Dragon Disciple Dedication",
+  "level": 2,
+  "text": "You become trained in arcane spell DCs and arcane spell attack rolls."
+ },
+ {
+  "id": "perpetual-scout",
+  "collection": "feats",
+  "name": "Perpetual Scout",
+  "level": 6,
+  "text": "If you're legendary in Survival, you gain these benefits in any terrain."
+ },
+ {
+  "id": "quick-study",
+  "collection": "feats",
+  "name": "Quick Study",
+  "level": 4,
+  "text": "During your daily preparations, you can study a particular subject to gain the trained proficiency rank in one Lore skill of your choice. This proficiency lasts until you prepare again. Since this proficiency is temporary, you can't use it as a prerequisite for a skill increase or a permanent character option like a feat."
+ },
+ {
+  "id": "shadow-magic",
+  "collection": "feats",
+  "name": "Shadow Magic",
+  "level": 10,
+  "text": "You become trained in occult spell attack rolls and spell DCs, and your spellcasting ability for these spells is Charisma."
+ },
+ {
+  "id": "viking-weapon-specialist",
+  "collection": "feats",
+  "name": "Viking Weapon Specialist",
+  "level": 6,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency rank in the above four weapons."
+ },
+ {
+  "id": "shall-not-falter-shall-not-rout",
+  "collection": "feats",
+  "name": "Shall Not Falter, Shall Not Rout",
+  "level": 10,
+  "text": "Your knight reclaimant focus spells are divine spells; when you gain this feat, you become trained in divine spell attacks and spell DCs and your spellcasting ability is Charisma."
+ },
+ {
+  "id": "suns-fury",
+  "collection": "feats",
+  "name": "Sun's Fury",
+  "level": 6,
+  "text": "Your Bright Lion focus spells are divine spells; when you gain this feat, if you aren't already, you become trained in divine spell attacks and spell DCs, using Charisma as your spellcasting ability score."
+ },
+ {
+  "id": "snap-out-of-it-pathfinder-agent",
+  "collection": "feats",
+  "name": "Snap Out of It! (Pathfinder Agent)",
+  "level": 8,
+  "text": "Pathfinders are trained to help each other be safe and successful, and you know how to jolt your allies back to their senses."
+ },
+ {
+  "id": "magic-finder",
+  "collection": "feats",
+  "name": "Magic Finder",
+  "level": 8,
+  "text": "Otherwise, they're arcane spells, you use Intelligence as your spellcasting ability, and you become trained in spell attack rolls and spell DCs for arcane spells."
+ },
+ {
+  "id": "cautious-delver",
+  "collection": "feats",
+  "name": "Cautious Delver",
+  "level": 10,
+  "text": "Otherwise, they're arcane spells, you use Intelligence as your spellcasting ability, and you become trained in spell attack rolls and spell DCs for arcane spells."
+ },
+ {
+  "id": "martial-exercise",
+  "collection": "feats",
+  "name": "Martial Exercise",
+  "level": 10,
+  "text": "Whenever your proficiency rank in any weapon increases to expert or beyond, you also gain that new proficiency rank with both simple and martial weapons of your chosen weapon group."
+ },
+ {
+  "id": "armored-exercise",
+  "collection": "feats",
+  "name": "Armored Exercise",
+  "level": 14,
+  "text": "Your proficiency rank for light, medium, and heavy armor increases to expert for whichever of those you already had the trained proficiency rank in."
+ },
+ {
+  "id": "ghost-hunter-dedication",
+  "collection": "feats",
+  "name": "Ghost Hunter Dedication",
+  "level": 2,
+  "text": "Pick Spirit Lore or Haunt Lore; you become trained in this skill. If you were already trained in both skills, you become trained in a new Lore skill of your choice. You're trained in occult spell attack rolls and spell DCs."
+ },
+ {
+  "id": "idyllkin",
+  "collection": "feats",
+  "name": "Idyllkin",
+  "level": 1,
+  "text": "You gain the trained proficiency rank in Nature. If you would automatically become trained in Nature (from your background or class, for example), you instead become trained in a skill of your choice."
+ },
+ {
+  "id": "ancestral-insight",
+  "collection": "feats",
+  "name": "Ancestral Insight",
+  "level": 1,
+  "text": "You gain the trained proficiency rank in Alghollthu Lore and Azlanti Lore."
+ },
+ {
+  "id": "veil-may",
+  "collection": "feats",
+  "name": "Veil May",
+  "level": 1,
+  "text": "Changing from a disguise used to Impersonate back to your true appearance is a 3-action activity for you; if you're an expert in Deception, it's a 2-action activity, and if you're legendary in Deception, it takes only a single action."
+ },
+ {
+  "id": "ageless-spirit",
+  "collection": "feats",
+  "name": "Ageless Spirit",
+  "level": 1,
+  "text": "During your daily preparations, you can meditate upon fragmentary memories of your past lives to gain the trained proficiency rank in one skill of your choice. This proficiency lasts until you prepare again. Since this proficiency is temporary, you can't use it as a prerequisite for a skill increase or a permanent character option like a feat."
+ },
+ {
+  "id": "consult-the-stars",
+  "collection": "feats",
+  "name": "Consult the Stars",
+  "level": 1,
+  "text": "Once per day, you can spend 10 minutes to draw upon your readings of a recent night's sky to gain the trained proficiency rank in one skill of your choice; the chosen skill's key attribute must be Charisma, Intelligence, or Wisdom. This proficiency lasts until your next daily preparation. Since this proficiency is temporary, you can't use it as a prerequisite for a skill increase or a permanent character option like a feat."
+ },
+ {
+  "id": "mask-of-pain",
+  "collection": "feats",
+  "name": "Mask of Pain",
+  "level": 9,
+  "text": "The creature you successfully Demoralized takes 2d6 damage, or 4d6 damage if you're legendary in Intimidation."
+ },
+ {
+  "id": "beastbrood",
+  "collection": "feats",
+  "name": "Beastbrood",
+  "level": 1,
+  "text": "You're trained in Society. If you're already trained in Society (from your background or class, for example), you instead become trained in a skill of your choice."
+ },
+ {
+  "id": "riftmarked",
+  "collection": "feats",
+  "name": "Riftmarked",
+  "level": 1,
+  "text": "You're trained in Occultism. If you're already trained in Occultism (from your background or class, for example), you instead become trained in a skill of your choice."
+ },
+ {
+  "id": "scorching-disarm",
+  "collection": "feats",
+  "name": "Scorching Disarm",
+  "level": 9,
+  "text": "If you're legendary in Athletics, this increases to 8d6 damage."
+ },
+ {
+  "id": "dustsoul",
+  "collection": "feats",
+  "name": "Dustsoul",
+  "level": 1,
+  "text": "You gain the trained proficiency rank in Survival. If you would automatically become trained in Survival (from your background or class, for example), you instead become trained in a skill of your choice."
+ },
+ {
+  "id": "gemsoul",
+  "collection": "feats",
+  "name": "Gemsoul",
+  "level": 1,
+  "text": "You gain the trained proficiency rank in Performance. If you would automatically become trained in Performance (from your background or class, for example), you instead become trained in a skill of your choice."
+ },
+ {
+  "id": "miresoul",
+  "collection": "feats",
+  "name": "Miresoul",
+  "level": 1,
+  "text": "You gain the trained proficiency rank in Acrobatics. If you would automatically become trained in Acrobatics (from your background or class, for example), you instead become trained in a skill of your choice."
+ }
+]

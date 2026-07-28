@@ -1,0 +1,359 @@
+[
+ {
+  "id": "aon-grisantian-pelt",
+  "collection": "items",
+  "name": "Grisantian Pelt",
+  "level": 12,
+  "text": "This material is immune to fire, and its Hardness is doubled against piercing or slashing damage."
+ },
+ {
+  "id": "aon-grisantian-hide-object-standard-grade",
+  "collection": "items",
+  "name": "Grisantian Hide Object (Standard-Grade)",
+  "level": 12,
+  "text": "This material is immune to fire, and its Hardness is doubled against piercing or slashing damage."
+ },
+ {
+  "id": "aon-grisantian-pelt-armor",
+  "collection": "items",
+  "name": "Grisantian Pelt Armor",
+  "level": 12,
+  "text": "Grisantian pelt armor is immune to fire damage, and its Hardness is doubled against piercing or slashing damage."
+ },
+ {
+  "id": "aon-sisterstone-armor",
+  "collection": "items",
+  "name": "Sisterstone Armor",
+  "level": 5,
+  "text": "The ally gains resistance 2 to all damage dealt by undead creatures for 1 round. The resistance is 3 if your sisterstone armor is standard grade, or resistance 4 if it's high grade."
+ },
+ {
+  "id": "aon-dragonhide",
+  "collection": "items",
+  "name": "Dragonhide",
+  "level": 8,
+  "text": "Dragonhide objects are immune to one damage type, depending on the tradition associated with the dragon."
+ },
+ {
+  "id": "aon-dragonhide-object-standard-grade",
+  "collection": "items",
+  "name": "Dragonhide Object (Standard-Grade)",
+  "level": 8,
+  "text": "Dragonhide objects are immune to one damage type, depending on the tradition associated with the dragon."
+ },
+ {
+  "id": "aon-dragonhide-armor",
+  "collection": "items",
+  "name": "Dragonhide Armor",
+  "level": 12,
+  "text": "Dragonhide armor is immune to one damage type based on the type of dragon it's made from."
+ },
+ {
+  "id": "aon-dragonhide-shield",
+  "collection": "items",
+  "name": "Dragonhide Shield",
+  "level": 8,
+  "text": "Dragonhide shields are each immune to one damage type based on the tradition associated with the dragon."
+ },
+ {
+  "id": "aon-dragonhide-buckler-standard-grade",
+  "collection": "items",
+  "name": "Dragonhide Buckler (Standard-Grade)",
+  "level": 8,
+  "text": "Dragonhide shields are each immune to one damage type based on the tradition associated with the dragon."
+ },
+ {
+  "id": "aon-inflamation-flask",
+  "collection": "items",
+  "name": "Inflamation Flask",
+  "level": 2,
+  "text": "On a hit, the target also gains weakness to acid, fire, and slashing damage for 3 rounds. The target can end the weakness effect by three means: being drenched with water (such as submersion or exposure to an area water effect), being Administered First Aid (whose DC in based on the bomb type), or regaining Hit Points from a single effect equal to twice the inflammation flask’s level. The target gains weakness 1 to acid, fire, and slashing damage, and theMedicine DC is 17. The target gains weakness 2 to acid, fire, and slashing damage, and the Medicine D"
+ },
+ {
+  "id": "aon-draconic-resistance",
+  "collection": "items",
+  "name": "Draconic Resistance",
+  "level": 0,
+  "text": "Draconic Resistance Aspect Dragon You grow scales that guard against draconic attacks. You gain a +1 status bonus to AC against attacks from dragons and resistance to an energy type corresponding to the soul seed's draconic origin (such as fire resistance from a red dragon) equal to half the relic's level (minimum resistance 1)."
+ },
+ {
+  "id": "aon-fascinating",
+  "collection": "items",
+  "name": "Fascinating",
+  "level": 0,
+  "text": "If you critically succeed against an observer, that target doesn't become temporarily immune to this effect."
+ },
+ {
+  "id": "aon-emotion-conduit",
+  "collection": "items",
+  "name": "Emotion Conduit",
+  "level": 0,
+  "text": "The target is temporarily immune to your relic's emotion conduit until you make your next daily preparations."
+ },
+ {
+  "id": "aon-quickening-emotion",
+  "collection": "items",
+  "name": "Quickening Emotion",
+  "level": 0,
+  "text": "You then become temporarily immune to this effect for 1 hour."
+ },
+ {
+  "id": "aon-borrow-time",
+  "collection": "items",
+  "name": "Borrow Time",
+  "level": 0,
+  "text": "After the condition ends, the creature is slowed 1 for 1 round and temporarily immune to this gift until you next perform your daily preparations."
+ },
+ {
+  "id": "aon-living-forge",
+  "collection": "items",
+  "name": "Living Forge",
+  "level": 0,
+  "text": "Forge Speed 30 feet; fire resistance 10, weakness 5 to cold and water; Melee Single Action forgestrike, Damage 1d10 modular; 1d4 persistent fire."
+ },
+ {
+  "id": "aon-beast-senses",
+  "collection": "items",
+  "name": "Beast Senses",
+  "level": 0,
+  "text": "Beast Senses Aspect Beast Prerequisite The relic is a worn item. The relic grants you an animal's acute senses as long as you wear it. You gain low-light vision. If you already have low-light vision, you instead gain darkvision. At 10th level, the relic grants you imprecise scent with a range of 10 feet."
+ },
+ {
+  "id": "aon-death-gaze",
+  "collection": "items",
+  "name": "Death Gaze",
+  "level": 0,
+  "text": "An undead creature or other creature with void healing targeted this way is instead healed 1d6 HP per level of the relic and is temporarily immune to this effect for 10 minutes."
+ },
+ {
+  "id": "aon-pierce-the-veil",
+  "collection": "items",
+  "name": "Pierce the Veil",
+  "level": 0,
+  "text": "In addition, whenever you are healed by a void spell or effect, you gain resistance 5 to all damage (except force, ghost touch , spirit, and vitality) until the start of your next turn."
+ },
+ {
+  "id": "aon-grim-specter",
+  "collection": "items",
+  "name": "Grim Specter",
+  "level": 0,
+  "text": "You are immune to effects that require a physical body, including precision damage as well as exposure to most diseases and poisons. You also have resistance to all damage equal to half the relic's level; force damage, ghost touch attacks, spirit damage, void damage, and vitality damage ignore this resistance, and the resistance doubles against non-magical damage."
+ },
+ {
+  "id": "aon-rolling-geode",
+  "collection": "items",
+  "name": "Rolling Geode",
+  "level": 0,
+  "text": "The geode persists for up to 1 minute or until destroyed or Dismissed; it has AC 5, Hardness 10, and 40 Hit Points, and is immune to critical hits and precision damage."
+ },
+ {
+  "id": "aon-living-statue",
+  "collection": "items",
+  "name": "Living Statue",
+  "level": 0,
+  "text": "As long as you are standing on the earth, your body reflexively petrifies at the moment you are struck, granting you resistance 5 to physical damage (except adamantine)."
+ },
+ {
+  "id": "aon-petal-dance",
+  "collection": "items",
+  "name": "Petal Dance",
+  "level": 0,
+  "text": "This grants you the swarm trait, immunity to falling damage, resistance 5 to bludgeoning and slashing damage, and weakness 5 to area and splash damage. At 13th level, the relic gains a reaction that triggers when you fall or take damage, applying this gift's resistances, weaknesses, and immunity to falling damage to the triggering effect."
+ },
+ {
+  "id": "aon-megaflora",
+  "collection": "items",
+  "name": "Megaflora",
+  "level": 0,
+  "text": "A megaflora appears in an unoccupied 10-foot space within 30 feet and has 50 Hit Points, weakness 5 to fire, AC 37, Reflex +20, and Fortitude +30."
+ },
+ {
+  "id": "aon-obscure",
+  "collection": "items",
+  "name": "Obscure",
+  "level": 0,
+  "text": "As long as you are in dim light in an area of shadows, you can attempt a Stealth check to Hide, even if you aren't concealed against the creature, such as with a creature with darkvision."
+ },
+ {
+  "id": "aon-agathion-raiment",
+  "collection": "items",
+  "name": "Agathion Raiment",
+  "level": 0,
+  "text": "Five Items : In your form of fury, you have darkvision and gain 20 additional temporary Hit Points, but you have weakness 5 to unholy."
+ },
+ {
+  "id": "aon-seer-s-array",
+  "collection": "items",
+  "name": "Seer's Array",
+  "level": 0,
+  "text": "Three Items : Creatures become temporarily immune to the relic's borrow time gift for 1 hour."
+ },
+ {
+  "id": "rite-of-light",
+  "collection": "heritages",
+  "name": "Rite of Light",
+  "level": null,
+  "text": "That ally becomes temporarily immune to all uses of Sunlight Healing for 1 day."
+ },
+ {
+  "id": "enchanting-lily",
+  "collection": "heritages",
+  "name": "Enchanting Lily",
+  "level": null,
+  "text": "You smell ever so sweet—a delicate, floral scent like the intoxicating fragrance of lilies and the soft scent of lilacs."
+ },
+ {
+  "id": "sewer-rat",
+  "collection": "heritages",
+  "name": "Sewer Rat",
+  "level": null,
+  "text": "You are immune to the disease putrid plague."
+ },
+ {
+  "id": "aon-half-elf",
+  "collection": "heritages",
+  "name": "Half-Elf",
+  "level": null,
+  "text": "You gain the elf trait, the half-elf trait, and low-light vision."
+ },
+ {
+  "id": "aon-half-orc",
+  "collection": "heritages",
+  "name": "Half-Orc",
+  "level": null,
+  "text": "You gain the orc trait, the half-orc trait, and low-light vision."
+ },
+ {
+  "id": "fetchling",
+  "collection": "ancestries",
+  "name": "Fetchling",
+  "level": null,
+  "text": "*Once human and now something apart, fetchlings display the Shadow Plane's ancient influence through monochrome complexions, glowing eyes, and the casting of supernatural shadows.* --- ## Ancestry details **Hit Points** 8 **Size** Medium **Speed** 25 feet **Attribute Boosts** Dexterity, one free **Languages** Common, Shadowtongue **Senses** Darkvision"
+ },
+ {
+  "id": "shisk",
+  "collection": "ancestries",
+  "name": "Shisk",
+  "level": null,
+  "text": "Their fascination with collecting and protecting esoteric knowledge is one of the few things that can persuade them to explore the outside world.* --- ## Ancestry details **Hit Points** 8 **Size** Medium **Speed** 25 feet **Attribute Boosts** Intelligence, one free **Languages** Mwangi, Shisk **Senses** Darkvision"
+ },
+ {
+  "id": "poppet",
+  "collection": "ancestries",
+  "name": "Poppet",
+  "level": null,
+  "text": "Elevated beyond mere helpers or playthings, these poppets are free to chart their own destinies.* --- ## Ancestry details **Hit Points** 6 **Size** Small **Speed** 25 feet **Attribute Boosts** Constitution, Charisma, one free **Attribute Flaws** Dexterity **Languages** Common **Senses** Darkvision"
+ },
+ {
+  "id": "dwarf",
+  "collection": "ancestries",
+  "name": "Dwarf",
+  "level": null,
+  "text": "To a stranger, they can seem untrusting and clannish, but to their friends and family, they are warm and caring, their halls filled with the sounds of laughter and hammers hitting anvils.* --- ## Ancestry details **Hit Points** 10 **Size** Medium **Speed** 20 feet **Attribute Boosts** Constitution, Wisdom, one free **Attribute Flaws** Charisma **Languages** Common, Dwarven **Senses** Darkvision"
+ },
+ {
+  "id": "goblin",
+  "collection": "ancestries",
+  "name": "Goblin",
+  "level": null,
+  "text": "To be small, but dream big.* --- ## Ancestry details **Hit Points** 6 **Size** Small **Speed** 25 feet **Attribute Boosts** Charisma, Dexterity, one free **Attribute Flaws** Wisdom **Languages** Common, Goblin **Senses** Darkvision"
+ },
+ {
+  "id": "orc",
+  "collection": "ancestries",
+  "name": "Orc",
+  "level": null,
+  "text": "Many orcs seek glory as soon as they can walk and carry a blade or club, taming wild beasts or hunting deadly monsters.* --- ## Ancestry details **Hit Points** 10 **Size** Medium **Speed** 25 feet **Attribute Boosts** two free **Languages** Common, Orcish **Senses** Darkvision"
+ },
+ {
+  "id": "centaur",
+  "collection": "ancestries",
+  "name": "Centaur",
+  "level": null,
+  "text": "--- ## Ancestry details **Hit Points** 8 **Size** Large **Speed** 30 feet **Attribute Boosts** Strength, Wisdom, one free **Attribute Flaws** Charisma **Languages** Common, Fey **Senses** Darkvision"
+ },
+ {
+  "id": "minotaur",
+  "collection": "ancestries",
+  "name": "Minotaur",
+  "level": null,
+  "text": "--- ## Ancestry details **Hit Points** 10 **Size** Large **Speed** 25 feet **Attribute Boosts** Strength, Constitution, one free **Attribute Flaws** Charisma **Languages** Common, Jotun **Senses** Darkvision"
+ },
+ {
+  "id": "surki",
+  "collection": "ancestries",
+  "name": "Surki",
+  "level": null,
+  "text": "--- ## Ancestry details **Hit Points** 8 **Size** Medium **Speed** 25 feet **Attribute Boosts** Constitution, one free **Languages** Common, Surki **Senses** Darkvision"
+ },
+ {
+  "id": "hobgoblin",
+  "collection": "ancestries",
+  "name": "Hobgoblin",
+  "level": null,
+  "text": "*Taller and stronger than their goblin kin, hobgoblins are equals in strength and size to humans, with broad shoulders and long, powerful arms.* --- ## Ancestry details **Hit Points** 8 **Size** Medium **Speed** 25 feet **Attribute Boosts** Constitution, Intelligence, one free **Attribute Flaws** Wisdom **Languages** Common, Goblin **Senses** Darkvision"
+ },
+ {
+  "id": "kobold",
+  "collection": "ancestries",
+  "name": "Kobold",
+  "level": null,
+  "text": "Kobolds seek out these alliances out of a sense of pragmatism—after all, who would dare bully a kobold who serves an ancient dragon?—but also because kobold eggs incubated near such loci of power take on physical traits (and sometimes abilities) similar to those of the warren's benefactor. However, these reptilian opportunists prove happy to cooperate with other humanoids when it's to their benefit, combining caution and cunning to make their fortunes in the wider world.* --- ## Ancestry details **Hit Points** 6 **Size** Small **Speed** 25 feet **Attribu"
+ },
+ {
+  "id": "wayang",
+  "collection": "ancestries",
+  "name": "Wayang",
+  "level": null,
+  "text": "This idyll collapsed from divine meddling; some say when Abadar sentenced Zon-Kuthon to exile in the Netherworld, the Midnight Lord's deific presence distorted the plane into a nightmarish domain, while others accounts ascribe fiendish sources to this doom.* --- ## Ancestry details **Hit Points** 8 **Size** Small **Speed** 25 feet **Attribute Boosts** Dexterity, Charisma, one free **Attribute Flaws** Constitution **Languages** Common, Shadowtongue, Wayang **Senses** Darkvision"
+ },
+ {
+  "id": "dragonet",
+  "collection": "ancestries",
+  "name": "Dragonet",
+  "level": null,
+  "text": "They can be fiercely independent and proud, at times protective or avaricious, and they delight in the finer things in life.* --- ## Ancestry details **Hit Points** 8 **Size** Tiny **Speed** 20 feet **Attribute Boosts** Dexterity, Charisma, one free **Attribute Flaws** Constitution **Languages** Common, Draconic **Senses** Darkvision"
+ },
+ {
+  "id": "magical-experiment",
+  "collection": "backgrounds",
+  "name": "Magical Experiment",
+  "level": null,
+  "text": "--- - **Enhanced Senses** You gain low-light vision (or darkvision if you already had low-light vision) and an imprecise sense with a range of 30 feet, such as scent, thoughtsense, tremorsense, or wavesense. - **Resistant Skin** The experiments rendered your skin tougher and resilient to a particular type of damage. You gain resistance equal to half your level (minimum resistance 1) against two of the following types of energy damage, one chosen by you and the other chosen by the GM: acid, cold, electricity, fire, or sonic."
+ },
+ {
+  "id": "shade",
+  "collection": "companionSpecializations",
+  "name": "Shade",
+  "level": null,
+  "text": "It gains darkvision, resistance 5 to all damage except force, and in areas of dim light or darkness, it can Step 10 feet instead of 5 feet."
+ },
+ {
+  "id": "nivi-rhombodazzle",
+  "collection": "deities",
+  "name": "Nivi Rhombodazzle",
+  "level": null,
+  "text": "Most of her adventures in the lightless lands are lost to time and history, but she ultimately emerged reborn as a goddess, hailed as the first of the deep gnomes—uncanny underground gnomes with unique magical abilities and immunity to the dread Bleaching, a wasting curse which claims the lives of gnomes who succumb to boredom and ennui."
+ },
+ {
+  "id": "the-lantern-king",
+  "collection": "deities",
+  "name": "The Lantern King",
+  "level": null,
+  "text": "He often adopts alternate shapes to play pranks, and even other Eldest are not immune to his mischievous scheming."
+ },
+ {
+  "id": "the-pale-horse",
+  "collection": "deities",
+  "name": "The Pale Horse",
+  "level": null,
+  "text": "This has been true for eons, though few things are immune to change, and the story of the Pale Horse is no exception."
+ },
+ {
+  "id": "arundhat",
+  "collection": "deities",
+  "name": "Arundhat",
+  "level": null,
+  "text": "Arundhat is a goddess of the Vudran pantheon known as the bringer of blossoms and scent. **Title** The Sacred Perfume **Areas of Concern** Blossoms, diplomacy, scent **Edicts** Offer appropriate flowers to other divinities, practice herbalism, tend to sacred flowers **Anathema** Dispose of waste near flowers, dispose of withered flowers improperly, harvest flowers without offering the proper prayers **Religious Symbol** lamp with flower as flame **Sacred Animal** sunbird **Sacred Colors** pink, white --- ## Divine details **Divine Font** Heal **Divine Sk"
+ }
+]

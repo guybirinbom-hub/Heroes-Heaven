@@ -1,0 +1,387 @@
+[
+ {
+  "id": "perception-mastery",
+  "collection": "classFeatures",
+  "name": "Perception Mastery",
+  "level": 7,
+  "text": "Your proficiency rank for Perception increases to master. Your proficiency rank for Perception increases to master. Your proficiency rank for Perception increases to master. Your proficiency rank for Perception increases to master. Your proficiency rank for Perception increases to master. Your proficiency rank for Perception increases to master."
+ },
+ {
+  "id": "gunslinger-expertise",
+  "collection": "classFeatures",
+  "name": "Gunslinger Expertise",
+  "level": 9,
+  "text": "Your proficiency rank for your gunslinger class DC increases to expert."
+ },
+ {
+  "id": "blast-dodger",
+  "collection": "classFeatures",
+  "name": "Blast Dodger",
+  "level": 11,
+  "text": "Your proficiency rank for Reflex saves increases to master."
+ },
+ {
+  "id": "gunslinging-legend",
+  "collection": "classFeatures",
+  "name": "Gunslinging Legend",
+  "level": 13,
+  "text": "Your proficiency rank increases to legendary with simple and martial firearms and crossbows and to master with advanced firearms and crossbows. Your proficiency rank for simple weapons, martial weapons, and unarmed attacks increases to master."
+ },
+ {
+  "id": "lead-constitution",
+  "collection": "classFeatures",
+  "name": "Lead Constitution",
+  "level": 17,
+  "text": "Your proficiency rank for Fortitude saves increases to master."
+ },
+ {
+  "id": "shootists-edge",
+  "collection": "classFeatures",
+  "name": "Shootist's Edge",
+  "level": 17,
+  "text": "Your proficiency rank for your gunslinger class DC increases to master. When using a ranged weapon in which you have master or greater proficiency, you ignore the penalty for attacking within the weapon's second and third range increments."
+ },
+ {
+  "id": "perception-legend",
+  "collection": "classFeatures",
+  "name": "Perception Legend",
+  "level": 13,
+  "text": "Your proficiency rank for Perception increases to legendary."
+ },
+ {
+  "id": "will-expertise",
+  "collection": "classFeatures",
+  "name": "Will Expertise",
+  "level": 3,
+  "text": "Your proficiency rank for Will saves increases to expert."
+ },
+ {
+  "id": "kinetic-durability",
+  "collection": "classFeatures",
+  "name": "Kinetic Durability",
+  "level": 7,
+  "text": "Your proficiency rank for Fortitude saves increases to master."
+ },
+ {
+  "id": "kinetic-expertise",
+  "collection": "classFeatures",
+  "name": "Kinetic Expertise",
+  "level": 7,
+  "text": "Your proficiency rank for your kineticist class DC increases to expert."
+ },
+ {
+  "id": "perception-expertise",
+  "collection": "classFeatures",
+  "name": "Perception Expertise",
+  "level": 3,
+  "text": "Your proficiency rank for Perception increases to expert."
+ },
+ {
+  "id": "kinetic-quickness",
+  "collection": "classFeatures",
+  "name": "Kinetic Quickness",
+  "level": 11,
+  "text": "Your proficiency rank for Reflex saves increases to master."
+ },
+ {
+  "id": "greater-kinetic-durability",
+  "collection": "classFeatures",
+  "name": "Greater Kinetic Durability",
+  "level": 15,
+  "text": "Your proficiency rank for Fortitude saves increases to legendary."
+ },
+ {
+  "id": "kinetic-mastery",
+  "collection": "classFeatures",
+  "name": "Kinetic Mastery",
+  "level": 15,
+  "text": "Your proficiency rank for your kineticist class DC increases to master."
+ },
+ {
+  "id": "kinetic-legend",
+  "collection": "classFeatures",
+  "name": "Kinetic Legend",
+  "level": 19,
+  "text": "Your proficiency rank for your kineticist class DC increases to legendary."
+ },
+ {
+  "id": "fortitude-expertise",
+  "collection": "classFeatures",
+  "name": "Fortitude Expertise",
+  "level": 3,
+  "text": "Your proficiency rank for Fortitude saves increases to expert. Your proficiency rank for Fortitude saves increases to expert. Your proficiency rank for Fortitude saves increases to expert. Your proficiency rank for Fortitude saves increases to expert."
+ },
+ {
+  "id": "performers-heart",
+  "collection": "classFeatures",
+  "name": "Performer's Heart",
+  "level": 9,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "bard-weapon-expertise",
+  "collection": "classFeatures",
+  "name": "Bard Weapon Expertise",
+  "level": 11,
+  "text": "Your proficiency rank for martial weapons, simple weapons, and unarmed attacks increases to expert."
+ },
+ {
+  "id": "greater-performers-heart",
+  "collection": "classFeatures",
+  "name": "Greater Performer's Heart",
+  "level": 17,
+  "text": "Your proficiency rank for Will saves increases to legendary."
+ },
+ {
+  "id": "resolute-faith",
+  "collection": "classFeatures",
+  "name": "Resolute Faith",
+  "level": 9,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "divine-defense",
+  "collection": "classFeatures",
+  "name": "Divine Defense",
+  "level": 13,
+  "text": "Your proficiency rank in unarmored defense increases to expert."
+ },
+ {
+  "id": "druidic-order",
+  "collection": "classFeatures",
+  "name": "Druidic Order",
+  "level": 1,
+  "text": "Upon becoming a druid, you align yourself with a druidic order, which grants you a class feat, an order spell (see below), and an additional trained skill tied to your order While you'll always be a member of your initial order, it's not unheard of for a druid to request to study with other orders in search of greater understanding of the natural world, and PC druids are among the most likely to blend the powers of different orders. **Order Skill** You become trained in the listed skill. If you're already trained in that skill, you become trained in a di"
+ },
+ {
+  "id": "wild-willpower",
+  "collection": "classFeatures",
+  "name": "Wild Willpower",
+  "level": 11,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "bravery",
+  "collection": "classFeatures",
+  "name": "Bravery",
+  "level": 3,
+  "text": "Your proficiency rank for Will saves increases to expert."
+ },
+ {
+  "id": "fighter-weapon-mastery",
+  "collection": "classFeatures",
+  "name": "Fighter Weapon Mastery",
+  "level": 5,
+  "text": "Your proficiency rank increases to master with the simple weapons, martial weapons, and unarmed attacks in that group, and to expert with the advanced weapons in that group. You gain access to the critical specialization effects of all weapons and unarmed attacks for which you have master proficiency."
+ },
+ {
+  "id": "battlefield-surveyor",
+  "collection": "classFeatures",
+  "name": "Battlefield Surveyor",
+  "level": 7,
+  "text": "Your proficiency rank for Perception increases to master."
+ },
+ {
+  "id": "battle-hardened",
+  "collection": "classFeatures",
+  "name": "Battle Hardened",
+  "level": 9,
+  "text": "Your proficiency rank for Fortitude saves increases to master."
+ },
+ {
+  "id": "fighter-expertise",
+  "collection": "classFeatures",
+  "name": "Fighter Expertise",
+  "level": 11,
+  "text": "Your proficiency rank for your fighter class DC increases to expert."
+ },
+ {
+  "id": "weapon-legend",
+  "collection": "classFeatures",
+  "name": "Weapon Legend",
+  "level": 13,
+  "text": "Your proficiency ranks for simple weapons, martial weapons, and unarmed attacks increase to master. Your proficiency rank for advanced weapons increases to expert. You can select one weapon group and increase your proficiency ranks to legendary for all simple weapons, martial weapons, and unarmed attacks in that weapon group, and to master for all advanced weapons in that weapon group."
+ },
+ {
+  "id": "tempered-reflexes",
+  "collection": "classFeatures",
+  "name": "Tempered Reflexes",
+  "level": 15,
+  "text": "Your proficiency rank for Reflex saves increases to master."
+ },
+ {
+  "id": "versatile-legend",
+  "collection": "classFeatures",
+  "name": "Versatile Legend",
+  "level": 19,
+  "text": "Your proficiency ranks for simple weapons, martial weapons, and unarmed attacks increase to legendary, and your proficiency rank for advanced weapons increases to master. Your proficiency rank for your fighter class DC increases to master."
+ },
+ {
+  "id": "ranger-weapon-expertise",
+  "collection": "classFeatures",
+  "name": "Ranger Weapon Expertise",
+  "level": 5,
+  "text": "Your proficiency rank for martial weapons, simple weapons, and unarmed attacks increases to expert."
+ },
+ {
+  "id": "natural-reflexes",
+  "collection": "classFeatures",
+  "name": "Natural Reflexes",
+  "level": 7,
+  "text": "Your proficiency rank for Reflex saves increases to master."
+ },
+ {
+  "id": "ranger-expertise",
+  "collection": "classFeatures",
+  "name": "Ranger Expertise",
+  "level": 9,
+  "text": "Your proficiency rank for your ranger DC increases to expert. If you have warden spells, your proficiency rank for spell attacks and spell DCs increases to expert."
+ },
+ {
+  "id": "wardens-endurance",
+  "collection": "classFeatures",
+  "name": "Warden's Endurance",
+  "level": 11,
+  "text": "Your proficiency rank for Fortitude saves increases to master."
+ },
+ {
+  "id": "greater-natural-reflexes",
+  "collection": "classFeatures",
+  "name": "Greater Natural Reflexes",
+  "level": 15,
+  "text": "Your proficiency rank for Reflex saves increases to legendary."
+ },
+ {
+  "id": "masterful-hunter",
+  "collection": "classFeatures",
+  "name": "Masterful Hunter",
+  "level": 17,
+  "text": "Your proficiency rank for your ranger class DC increases to master. If you have warden spells, your proficiency rank for spell attacks and spell DCs increases to master. When using a ranged weapon that you have master proficiency in, you can ignore the penalty if attacking your hunted prey within the weapon's second and third range increments. If you have master proficiency in Perception, you gain a +4 circumstance bonus to Perception checks when you Seek your prey, and if you have master proficiency in Survival, you gain a +4 circumstance bonus to Survi"
+ },
+ {
+  "id": "evasive-reflexes",
+  "collection": "classFeatures",
+  "name": "Evasive Reflexes",
+  "level": 7,
+  "text": "Your proficiency rank for Reflex saves increases to master."
+ },
+ {
+  "id": "rogue-resilience",
+  "collection": "classFeatures",
+  "name": "Rogue Resilience",
+  "level": 9,
+  "text": "Your proficiency rank for Fortitude saves increases to expert."
+ },
+ {
+  "id": "rogue-expertise",
+  "collection": "classFeatures",
+  "name": "Rogue Expertise",
+  "level": 11,
+  "text": "Your proficiency rank for your rogue class DC increases to expert."
+ },
+ {
+  "id": "greater-rogue-reflexes",
+  "collection": "classFeatures",
+  "name": "Greater Rogue Reflexes",
+  "level": 13,
+  "text": "Your proficiency rank for Reflex saves increases to legendary."
+ },
+ {
+  "id": "agile-mind",
+  "collection": "classFeatures",
+  "name": "Agile Mind",
+  "level": 17,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "master-strike",
+  "collection": "classFeatures",
+  "name": "Master Strike",
+  "level": 19,
+  "text": "Your proficiency rank for your rogue class DC increases to master. You gain the Master Strike free action."
+ },
+ {
+  "id": "magical-fortitude",
+  "collection": "classFeatures",
+  "name": "Magical Fortitude",
+  "level": 5,
+  "text": "Your proficiency rank for Fortitude saves increases to expert. Your proficiency rank for Fortitude saves increases to expert."
+ },
+ {
+  "id": "will-of-the-pupil",
+  "collection": "classFeatures",
+  "name": "Will of the Pupil",
+  "level": 17,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "prodigious-will",
+  "collection": "classFeatures",
+  "name": "Prodigious Will",
+  "level": 17,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "alchemical-expertise",
+  "collection": "classFeatures",
+  "name": "Alchemical Expertise",
+  "level": 9,
+  "text": "Your proficiency rank for your alchemist class DC increases to expert."
+ },
+ {
+  "id": "chemical-hardiness",
+  "collection": "classFeatures",
+  "name": "Chemical Hardiness",
+  "level": 11,
+  "text": "Your proficiency rank for Fortitude saves increases to master."
+ },
+ {
+  "id": "explosion-dodger",
+  "collection": "classFeatures",
+  "name": "Explosion Dodger",
+  "level": 15,
+  "text": "Your proficiency rank for Reflex saves increases to master."
+ },
+ {
+  "id": "alchemical-mastery",
+  "collection": "classFeatures",
+  "name": "Alchemical Mastery",
+  "level": 17,
+  "text": "Your proficiency rank for your alchemist class DC increases to master."
+ },
+ {
+  "id": "mighty-rage",
+  "collection": "classFeatures",
+  "name": "Mighty Rage",
+  "level": 11,
+  "text": "Your proficiency rank for your barbarian class DC increases to expert."
+ },
+ {
+  "id": "greater-juggernaut",
+  "collection": "classFeatures",
+  "name": "Greater Juggernaut",
+  "level": 13,
+  "text": "Your proficiency rank for Fortitude saves increases to legendary."
+ },
+ {
+  "id": "indomitable-will",
+  "collection": "classFeatures",
+  "name": "Indomitable Will",
+  "level": 15,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "devastator",
+  "collection": "classFeatures",
+  "name": "Devastator",
+  "level": 19,
+  "text": "Your proficiency rank for your barbarian class DC increases to master."
+ },
+ {
+  "id": "sacred-body",
+  "collection": "classFeatures",
+  "name": "Sacred Body",
+  "level": 9,
+  "text": "Your proficiency rank for Fortitude saves increases to master."
+ }
+]

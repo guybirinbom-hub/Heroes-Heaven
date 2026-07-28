@@ -1,0 +1,387 @@
+[
+ {
+  "id": "death-from-above",
+  "collection": "feats",
+  "name": "Death from Above",
+  "level": 8,
+  "text": "Regardless of your result, the target is temporarily immune to your Death from Above for 1 minute."
+ },
+ {
+  "id": "fight-through-oblivion",
+  "collection": "feats",
+  "name": "Fight Through Oblivion",
+  "level": 20,
+  "text": "Until the start of your next turn, you become immune to all damage, but you also can't regain Hit Points in any way except the following. Otherwise, your wounded value increases by 1 and you remain immune to damage and healing."
+ },
+ {
+  "id": "finish-their-story",
+  "collection": "feats",
+  "name": "Finish Their Story!",
+  "level": 20,
+  "text": "After you make this Strike, the target becomes temporarily immune to Finish Their Story!, for 1 hour."
+ },
+ {
+  "id": "kneel-before-the-rightful-heir",
+  "collection": "feats",
+  "name": "Kneel Before the Rightful Heir",
+  "level": 16,
+  "text": "Regardless of the result, a creature is then temporarily immune to Kneel Before the Rightful Heir for 24 hours."
+ },
+ {
+  "id": "cozy-campfire",
+  "collection": "feats",
+  "name": "Cozy Campfire",
+  "level": 6,
+  "text": "If they don't disrupt it, they become temporarily immune to the campfire's effects for 24 hours."
+ },
+ {
+  "id": "pact-of-the-nightblossom",
+  "collection": "feats",
+  "name": "Pact of the Nightblossom",
+  "level": 10,
+  "text": "You're immune to Nightmare."
+ },
+ {
+  "id": "heavens-step-offense",
+  "collection": "feats",
+  "name": "Heaven's Step Offense",
+  "level": 4,
+  "text": "With a theatrical flourish, the Strike becomes nonlethal, and you can Stride up to half your Speed in a straight line toward another enemy. This attention-arresting movement does not provoke reactions from enemies unless they are immune to mental effects."
+ },
+ {
+  "id": "stunt-performer-stance",
+  "collection": "feats",
+  "name": "Stunt Performer Stance",
+  "level": 10,
+  "text": "While in this stance, you gain a +2 circumstance bonus to Reflex saving throws and skill checks to Escape, as well as resistance 2 to all physical damage."
+ },
+ {
+  "id": "in-lightning-life",
+  "collection": "feats",
+  "name": "In Lightning, Life",
+  "level": 4,
+  "text": "A creature that has resistance or immunity to electricity is immune to this ability, and a creature that received temporary Hit Points from In Lightning, Life is temporarily immune to it for 24 hours."
+ },
+ {
+  "id": "oath-of-the-defender",
+  "collection": "feats",
+  "name": "Oath of The Defender",
+  "level": 2,
+  "text": "Allies in your champion's aura, not including you, get resistance 2 to damage dealt by creatures with the chosen trait. If such a creature deals more than one damage type at once, apply this resistance only to the highest amount of damage. The resistance increases to 3 at 7th level, 4 at 12th level, and 5 at 17th level. If a creature with the chosen trait triggers your champion's reaction and your champion's reaction grants resistance against the triggering damage, the resistance increases by 5."
+ },
+ {
+  "id": "sense-holiness",
+  "collection": "feats",
+  "name": "Sense Holiness",
+  "level": 8,
+  "text": "You can sense the presence of creatures with the holy trait within 120 feet. This functions as a vague sense, similar to humans' sense of smell. If the creature succeeds at its Deception check, it is then temporarily immune to your Sense Holiness for 1 day."
+ },
+ {
+  "id": "sense-unholiness",
+  "collection": "feats",
+  "name": "Sense Unholiness",
+  "level": 8,
+  "text": "You sense the truly wicked as a queasy or foreboding feeling. You can sense the presence of creatures with the unholy trait within 120 feet. This functions as a vague sense, similar to humans' sense of smell. If the creature succeeds at its Deception check, it is then temporarily immune to your Sense Unholiness for 1 day."
+ },
+ {
+  "id": "fear-of-god",
+  "collection": "feats",
+  "name": "Fear of God",
+  "level": 14,
+  "text": "During that time, you ignore that creature's temporary immunity to your Demoralize attempts and whenever you successfully Demoralize the triggering enemy, you can instead increase their existing frightened condition by 1 (or 2 on a critical success) to a maximum of Frightened 4."
+ },
+ {
+  "id": "glory-on-high",
+  "collection": "feats",
+  "name": "Glory on High",
+  "level": 18,
+  "text": "Fly straight upward up to your fly Speed and Interact to draw a weapon or to gesture with your hand or a worn holy symbol. Regardless of the result, the target becomes immune to Glory on High for 1 hour."
+ },
+ {
+  "id": "guiding-words",
+  "collection": "feats",
+  "name": "Guiding Words",
+  "level": 18,
+  "text": "Regardless of the result, the target becomes immune to Guiding Words for 10 minutes."
+ },
+ {
+  "id": "marked-for-rebuke",
+  "collection": "feats",
+  "name": "Marked For Rebuke",
+  "level": 18,
+  "text": "A creature marked this way gains weakness 10 to all damage and becomes immune to Marked for Rebuke for 24 hours."
+ },
+ {
+  "id": "enter-divine-realm",
+  "collection": "feats",
+  "name": "Enter Divine Realm",
+  "level": 20,
+  "text": "You and the other targets of the spell always appear in the center of your deity's realm, and you (but not necessarily your allies) are immune to all the realm's harmful conditions (such as toxic air or extreme temperatures) while there."
+ },
+ {
+  "id": "heralds-strike",
+  "collection": "feats",
+  "name": "Herald's Strike",
+  "level": 20,
+  "text": "Regardless of the result, the target becomes immune to Herald's Strike for 10 minutes."
+ },
+ {
+  "id": "a-little-bird-told-me",
+  "collection": "feats",
+  "name": "A Little Bird Told Me...",
+  "level": 8,
+  "text": "Ignore your armor's check penalty and Speed reduction. Fly speed 25 feet. Weakness 5 to physical damage. Low-light vision and imprecise scent 30 feet."
+ },
+ {
+  "id": "caustic-nectar",
+  "collection": "feats",
+  "name": "Caustic Nectar",
+  "level": 1,
+  "text": "You're immune to your own nectar."
+ },
+ {
+  "id": "irradiate",
+  "collection": "feats",
+  "name": "Irradiate",
+  "level": 6,
+  "text": "You're immune to your own radiation."
+ },
+ {
+  "id": "disperse-into-petals",
+  "collection": "feats",
+  "name": "Disperse into Petals",
+  "level": 10,
+  "text": "You gain resistance to physical damage equal to half your level and are immune to precision damage. You gain a fly Speed of 10 feet."
+ },
+ {
+  "id": "spell-survivor",
+  "collection": "feats",
+  "name": "Spell Survivor",
+  "level": 5,
+  "text": "Once you've resisted an opponent's magic, anything else they throw your way becomes less effective. When you attempt a saving throw against a spell using Orc Superstition or Pervasive Superstition and critically succeed, you gain resistance 1 to all damage dealt by that triggering spell's caster until the end of their next turn. At 9th level and every 4 levels thereafter, the resistance increases by 1."
+ },
+ {
+  "id": "commitment-to-equality",
+  "collection": "feats",
+  "name": "Commitment to Equality",
+  "level": 4,
+  "text": "Once you attempt to treat a target's condition, that target is immune to further attempts for 1 hour, regardless of the result."
+ },
+ {
+  "id": "vengful-remnant",
+  "collection": "feats",
+  "name": "Vengful Remnant",
+  "level": 14,
+  "text": "Until the start of your next turn, you gain resistance 10 to all damage except force, ghost touch, spirit, and vitality, doubled if the source of the damage is non-magical. If you slay a significant foe not immune to spirit damage with your spectral dagger while under this effect, its duration increases until the end of your next turn."
+ },
+ {
+  "id": "demon-hunting-companion",
+  "collection": "feats",
+  "name": "Demon-Hunting Companion",
+  "level": 4,
+  "text": "You can choose any common animal companion, which gains scent as an imprecise sense with a range of 30 feet that can be used only to smell fiends. If the animal companion already has scent, it gains a +2 circumstance bonus to Perception when using scent against fiends."
+ },
+ {
+  "id": "fiend-slayer",
+  "collection": "feats",
+  "name": "Fiend Slayer",
+  "level": 16,
+  "text": "Regardless of the results of the saving throw, the target is then temporarily immune to Fiend Slayer for 24 hours."
+ },
+ {
+  "id": "stunning-surprise",
+  "collection": "feats",
+  "name": "Stunning Surprise",
+  "level": 14,
+  "text": "You move up to your Speed then make a melee Strike. Regardless of the save outcome, the creature then becomes immune to your Stunning Surprise for 24 hours."
+ },
+ {
+  "id": "preternatural-polish",
+  "collection": "feats",
+  "name": "Preternatural Polish",
+  "level": 16,
+  "text": "The armor then becomes temporarily immune to this ability until your next daily preparations."
+ },
+ {
+  "id": "sanguine-tenacity",
+  "collection": "feats",
+  "name": "Sanguine Tenacity",
+  "level": 11,
+  "text": "You also gain resistance 5 to persistent bleed damage and reduce the DC of checks to recover from persistent bleed damage to 11, or 6 if you have particularly effective assistance."
+ },
+ {
+  "id": "exsanguinate",
+  "collection": "feats",
+  "name": "Exsanguinate",
+  "level": 6,
+  "text": "**Requirements** On your last action, you dealt damage to a creature that isn't immune to bleed damage and is within 10 feet."
+ },
+ {
+  "id": "banners-inspiration",
+  "collection": "feats",
+  "name": "Banner's Inspiration",
+  "level": 4,
+  "text": "Regardless of the result, any ally that attempts this save is temporarily immune to Banner's Inspiration for 10 minutes."
+ },
+ {
+  "id": "desperate-resuscitation",
+  "collection": "feats",
+  "name": "Desperate Resuscitation",
+  "level": 14,
+  "text": "Whether you succeed or fail, the target is temporarily immune to Desperate Resuscitation for 1 day."
+ },
+ {
+  "id": "confusing-commands",
+  "collection": "feats",
+  "name": "Confusing Commands",
+  "level": 16,
+  "text": "Targets who succeed at their saving throw are temporarily immune to Confusing Commands for 1 day."
+ },
+ {
+  "id": "mercenary-reversal",
+  "collection": "feats",
+  "name": "Mercenary Reversal",
+  "level": 18,
+  "text": "--- **Critical Success** The target is uninterested in joining you and is temporarily immune to further uses of this ability for 24 hours."
+ },
+ {
+  "id": "field-propagandist-dedication",
+  "collection": "feats",
+  "name": "Field Propagandist Dedication",
+  "level": 2,
+  "text": "While you are not immune to propaganda, you are resistant to it."
+ },
+ {
+  "id": "fabricate-truth",
+  "collection": "feats",
+  "name": "Fabricate Truth",
+  "level": 4,
+  "text": "Regardless of your result, the target is temporarily immune to your attempts to Fabricate Truth for 10 minutes."
+ },
+ {
+  "id": "invented-vulnerability",
+  "collection": "feats",
+  "name": "Invented Vulnerability",
+  "level": 6,
+  "text": "**Frequency** once per round --- You list off the potential fears and weaknesses of an enemy you can see or hear, speaking with such certainty that they become real. Regardless of your result, the target is temporarily immune to Invented Vulnerability for 10 minutes. --- **Critical Success** The target gains weakness to the selected type of damage equal to 3 + half your level for 1 round. **Success** The target gains weakness 5 to the selected type of damage for 1 round."
+ },
+ {
+  "id": "invincible-army",
+  "collection": "feats",
+  "name": "Invincible Army",
+  "level": 6,
+  "text": "On a success, the target gains resistance 5 to either bludgeoning, piercing, or slashing damage, chosen when you use this ability; the type of damage resisted is usually tied to the story you tell about the character, such as giving them piercing resistance after telling a story about the time they rushed through a rain of arrows to take on an enemy encampment. You can instead attempt your check against a very hard DC for the target's level to give them resistance to two damage types, adding acid, fire, cold, electricity, and sonic to the damage types yo"
+ },
+ {
+  "id": "orators-fillibuster",
+  "collection": "feats",
+  "name": "Orator's Fillibuster",
+  "level": 8,
+  "text": "Creatures who are familiar with you and your verbal techniques, such as allies you've known for at least several days, are immune to this effect, though newer allies who have not heard one of your speeches before might still be affected."
+ },
+ {
+  "id": "battlefront-sabotage",
+  "collection": "feats",
+  "name": "Battlefront Sabotage",
+  "level": 10,
+  "text": "The creature is then temporarily immune to Battlefront Sabotage of their weapons for 10 minutes."
+ },
+ {
+  "id": "frightful-attrition",
+  "collection": "feats",
+  "name": "Frightful Attrition",
+  "level": 12,
+  "text": "Regardless of the result, each creature is temporarily immune to your Frightful Attrition for 10 minutes."
+ },
+ {
+  "id": "deathblow",
+  "collection": "feats",
+  "name": "Deathblow",
+  "level": 16,
+  "text": "A creature that survives is temporarily immune to the instant death effect of Deathblow for 1 day."
+ },
+ {
+  "id": "necrologist-dedication",
+  "collection": "feats",
+  "name": "Necrologist Dedication",
+  "level": 6,
+  "text": "When raised, your horde is Huge and has a speed of 20 feet. Due to your eldritch connection with your horde, it uses your AC, saves, and other defensive statistics like skill DCs, but is immune to the grabbed, prone, and restrained conditions. The horde has resistance equal to your level to physical damage, but weakness equal to your level to area and splash damage."
+ },
+ {
+  "id": "ghostsong",
+  "collection": "feats",
+  "name": "Ghostsong",
+  "level": 10,
+  "text": "When you do so, your horde gains the incorporeal trait and immunity to disease, poison, and precision damage, and your horde's Mobbing Assault deals void damage."
+ },
+ {
+  "id": "leader-of-all",
+  "collection": "feats",
+  "name": "Leader of All",
+  "level": 4,
+  "text": "Your follower gains the traits, size, Speeds, languages, and other special abilities listed in their ancestry. For example, elf followers have the elf and humanoid traits, a 30-foot speed, low-light vision, and the typical languages for elves."
+ },
+ {
+  "id": "overclock-senses",
+  "collection": "feats",
+  "name": "Overclock Senses",
+  "level": 2,
+  "text": "Your senses speed up to the point that time seems to stand still, allowing you to catch details and incoming attacks. **Awakening** When you use Overclock Senses, you can focus even more on the present moment, allowing you more apparent time to observe and plot at the expense of defense. When you use Overclock Senses, you do so with the benefits of darkvision, or if you are at least 14th level, with the benefits of truesight. Your senses spent, you then do not gain the normal bonuses to AC and Reflex saving throws. **Awakening** You hone your senses even"
+ },
+ {
+  "id": "borrowed-ability",
+  "collection": "feats",
+  "name": "Borrowed Ability",
+  "level": 2,
+  "text": "--- **Critical Success** The target resists your touch completely. **Awakening** Your touch establishes a lingering link through which you can sense what your target does. When you use Borrowed Ability, you gain any special senses—such as darkvision, scent, or tremorsense—that the target possesses. If the target does not have a sense that you normally have (for instance, an ooze that has no vision), you lose those senses as well. Your senses remain altered for the duration of Borrowed Ability."
+ },
+ {
+  "id": "kinetic-dampening",
+  "collection": "feats",
+  "name": "Kinetic Dampening",
+  "level": 6,
+  "text": "Until the beginning of your next turn, you gain resistance 5 to physical damage. At 10th level, and every 4 levels thereafter, the resistance increases by 5. When you use this feat, you also gain resistance to your choice of fire, electricity, or sonic damage."
+ },
+ {
+  "id": "tectonic-stomp",
+  "collection": "feats",
+  "name": "Tectonic Stomp",
+  "level": 10,
+  "text": "They are immune to critical hits and precision damage."
+ },
+ {
+  "id": "dragonet-breath",
+  "collection": "feats",
+  "name": "Dragonet Breath",
+  "level": 1,
+  "text": "It counts as silver for the purpose of weaknesses. Any creature affected by your Dragonet Breath becomes temporarily immune to it for 1 hour."
+ },
+ {
+  "id": "form-a-flock",
+  "collection": "feats",
+  "name": "Form a Flock",
+  "level": 13,
+  "text": "As long as you're surrounded by your flock, you gain weakness 5 to area and splash damage and have a flock aura in a ."
+ },
+ {
+  "id": "dragonet-immunities",
+  "collection": "feats",
+  "name": "Dragonet Immunities",
+  "level": 17,
+  "text": "Your resistances to sleep and paralysis increase, letting you completely ignore such effects, as befits a dragon. You gain immunity to sleep effects and effects that would make you paralyzed."
+ },
+ {
+  "id": "heart-of-earth",
+  "collection": "feats",
+  "name": "Heart of Earth",
+  "level": 13,
+  "text": "You gain a burrow Speed of 15 feet. While burrowing, your tremorsense becomes precise up to 15 feet."
+ },
+ {
+  "id": "frightening-power",
+  "collection": "feats",
+  "name": "Frightening Power",
+  "level": 12,
+  "text": "Regardless of the result of its saving throw, a creature that attempts a save is temporarily immune to your Frightening Power for 24 hours."
+ }
+]

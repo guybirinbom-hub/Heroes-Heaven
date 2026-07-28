@@ -1,0 +1,387 @@
+[
+ {
+  "id": "words-of-unraveling",
+  "collection": "feats",
+  "name": "Words of Unraveling",
+  "level": 12,
+  "text": "If you couldn't already cast occult spells, these spells use Intelligence as your spellcasting ability, and you become trained in spell attack rolls and spell DCs for occult spells; if you could already cast occult spells, your proficiency in spell attack rolls and spell DCs for occult spells increases to expert."
+ },
+ {
+  "id": "entities-from-afar",
+  "collection": "feats",
+  "name": "Entities from Afar",
+  "level": 14,
+  "text": "If you couldn't already cast occult spells, these spells use Intelligence as your spellcasting ability, and you become trained in spell attack rolls and spell DCs for occult spells; if you could already cast occult spells, your proficiency in spell attack rolls and spell DCs for occult spells increases to expert."
+ },
+ {
+  "id": "azarketi-weapon-expertise",
+  "collection": "feats",
+  "name": "Azarketi Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in Crossbows, Hand Crossbows, Longspears, Spears, Tridents, and all azarketi weapons in which you are trained."
+ },
+ {
+  "id": "beneath-notice",
+  "collection": "feats",
+  "name": "Beneath Notice",
+  "level": 10,
+  "text": "In addition, while in a crowd, you can Impersonate a nondescript member of the crowd as a three action activity (one action if you are legendary in Deception)"
+ },
+ {
+  "id": "menacing-prowess",
+  "collection": "feats",
+  "name": "Menacing Prowess",
+  "level": 10,
+  "text": "If you are a master of Intimidation, you can Demoralize up to 4 creatures at once; if you're legendary, you can Demoralize up to 8 creatures at once."
+ },
+ {
+  "id": "web-weaver",
+  "collection": "feats",
+  "name": "Web Weaver",
+  "level": 1,
+  "text": "If you're an expert in Crafting, you can Craft these items in 1 hour; if you're a master, you can Craft them in 10 minutes; if you're legendary, you can Craft them in 1 minute."
+ },
+ {
+  "id": "summoner-dedication",
+  "collection": "feats",
+  "name": "Summoner Dedication",
+  "level": 2,
+  "text": "Your eidolon is trained in unarmed attacks and unarmored defense, and shares your proficiency rank for Perception, saving throws, and skill checks. You become trained in your eidolon's listed skills. For each of those skills that you are already trained in, you become trained in a different skill of your choice."
+ },
+ {
+  "id": "basic-summoner-spellcasting",
+  "collection": "feats",
+  "name": "Basic Summoner Spellcasting",
+  "level": 6,
+  "text": "You become trained in spell attack rolls and spell DCs of that tradition."
+ },
+ {
+  "id": "cathartic-mage-dedication",
+  "collection": "feats",
+  "name": "Cathartic Mage Dedication",
+  "level": 2,
+  "text": "You're trained in spell attack rolls and spell DCs for that tradition."
+ },
+ {
+  "id": "gadget-specialist",
+  "collection": "feats",
+  "name": "Gadget Specialist",
+  "level": 4,
+  "text": "If you're a master in Crafting, you can create three gadgets per day, and you gain three additional common or uncommon gadget formulas. If you're legendary in Crafting, you can create four gadgets per day, and you gain another additional three common or uncommon gadget formulas, for a total of nine."
+ },
+ {
+  "id": "lock-on",
+  "collection": "feats",
+  "name": "Lock On",
+  "level": 10,
+  "text": "If you use 2 actions for the Command, the bonus is instead a +3 circumstance bonus, or a +4 circumstance bonus if you're legendary in Crafting."
+ },
+ {
+  "id": "contingency-gadgets",
+  "collection": "feats",
+  "name": "Contingency Gadgets",
+  "level": 12,
+  "text": "If you're legendary in Crafting, you can leave two contingency gadgets during your daily preparations, instead of just one."
+ },
+ {
+  "id": "master-spotter",
+  "collection": "feats",
+  "name": "Master Spotter",
+  "level": 12,
+  "text": "Your proficiency rank in Perception increases to master."
+ },
+ {
+  "id": "pistoleros-challenge",
+  "collection": "feats",
+  "name": "Pistolero's Challenge",
+  "level": 6,
+  "text": "If you're a master in the skill you used for the check, the status bonus to damage rolls increases to +3, and if you're legendary, it increases to +4."
+ },
+ {
+  "id": "beast-gunner-dedication",
+  "collection": "feats",
+  "name": "Beast Gunner Dedication",
+  "level": 6,
+  "text": "You treat all beast guns as martial firearms when determining your proficiency with them, even beast guns that are normally advanced weapons. Unlocking this ability allows you to master it with other magical firearms. You're trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "blessing-of-the-sun-gods",
+  "collection": "feats",
+  "name": "Blessing of the Sun Gods",
+  "level": 4,
+  "text": "Your Bright Lion focus spells are divine spells; you become trained in divine spell attacks and spell DCs, using Charisma as your spellcasting ability score."
+ },
+ {
+  "id": "megafauna-veterinarian",
+  "collection": "feats",
+  "name": "Megafauna Veterinarian",
+  "level": 6,
+  "text": "You can attempt a Nature check instead of a Medicine check for any of Medicine's trained and untrained uses, provided the subject of your medical care is a megafauna. If you're attempting an action that requires a particular proficiency rank in Medicine (such as Treat Wounds), use your proficiency rank in Nature instead."
+ },
+ {
+  "id": "soul-warden-dedication",
+  "collection": "feats",
+  "name": "Soul Warden Dedication",
+  "level": 2,
+  "text": "You're trained in divine spell attack rolls and spell DCs."
+ },
+ {
+  "id": "prepare-papers",
+  "collection": "feats",
+  "name": "Prepare Papers",
+  "level": 7,
+  "text": "This time is reduced to 10 minutes per page if you're legendary in Society."
+ },
+ {
+  "id": "divine-healing",
+  "collection": "feats",
+  "name": "Divine Healing",
+  "level": 8,
+  "text": "You are trained in divine spell attack rolls and spell DCs."
+ },
+ {
+  "id": "vigilant-benediction",
+  "collection": "feats",
+  "name": "Vigilant Benediction",
+  "level": 12,
+  "text": "You can Cast that Spell once per day as a 4th-rank divine innate spell, and you become trained in spell attack modifiers and DCs. - **Any Deity**: Unfettered Movement, Cleanse Affliction, Resist Energy, Spell Immunity, Status - **Gendowyn**: Oaken Resilience - **Iomedae**: Fire Shield - **Irori**: Mountain Resilience - **Kazutal**: Mystic Armor, Mountain Resilience - **Milani**: Fire Shield, Mystic Armor - **Ragathiel**: Fire Shield - **Sarenrae**: Wall of Fire **Special** You can select this feat a second time at 14th level, gaining a second spell to ca"
+ },
+ {
+  "id": "for-love-for-lightning",
+  "collection": "feats",
+  "name": "For Love, For Lightning",
+  "level": 12,
+  "text": "Your knight reclaimant focus spells are divine spells; when you gain this feat, you become trained in divine spell attacks and spell DCs."
+ },
+ {
+  "id": "triumphant-boast",
+  "collection": "feats",
+  "name": "Triumphant Boast",
+  "level": 2,
+  "text": "If you're a master in Performance, you can choose up to four targets, and if you're legendary, you can choose any number of targets. If your Charisma score is 20 or higher and you're a master in Performance, this bonus increases to +2."
+ },
+ {
+  "id": "thats-not-natural",
+  "collection": "feats",
+  "name": "That's Not Natural!",
+  "level": 4,
+  "text": "If you're master in Survival, this circumstance bonus increases to +2."
+ },
+ {
+  "id": "the-harder-they-fall-ranger",
+  "collection": "feats",
+  "name": "The Harder They Fall (Ranger)",
+  "level": 8,
+  "text": "If you are master in Athletics, the damage increases to 2d8 bludgeoning (or 4d8 bludgeoning on a critical success)."
+ },
+ {
+  "id": "ambush-tactics",
+  "collection": "feats",
+  "name": "Ambush Tactics",
+  "level": 4,
+  "text": "In any combat during which an enemy rolls Stealth to determine initiative, you can choose to roll initiative using a Lore check that's appropriate for the encounter's terrain, if you're trained in the appropriate Lore skill."
+ },
+ {
+  "id": "efficient-explorer",
+  "collection": "feats",
+  "name": "Efficient Explorer",
+  "level": 4,
+  "text": "As long as you're in a hex that is predominantly a terrain in which you are trained in an associated Lore skill, you grant your group one additional hexploration activity."
+ },
+ {
+  "id": "skill-training-kingdom",
+  "collection": "feats",
+  "name": "Skill Training (Kingdom)",
+  "level": 1,
+  "text": "532 Your kingdom receives the trained proficiency rank in a Kingdom skill of your choice."
+ },
+ {
+  "id": "molten-wit",
+  "collection": "feats",
+  "name": "Molten Wit",
+  "level": 1,
+  "text": "You either become trained in Deception and gain the Charming Liar skill feat, or you become trained in Diplomacy and gain the Group Impression skill feat. If you're already trained in one of these skills, you must take the other and can choose from either skill feat. If you're trained in both skills, you become trained in a different skill of your choice instead and can choose from either skill feat."
+ },
+ {
+  "id": "vanara-weapon-familiarity",
+  "collection": "feats",
+  "name": "Vanara Weapon Familiarity",
+  "level": 1,
+  "text": "You gain access to, and are trained with, the bo staff, chakram, katar, panabas, and urumi. For the purpose of determining your proficiency, martial vanara weapons are simple weapons, and advanced vanara weapons are martial weapons."
+ },
+ {
+  "id": "vishkanya-weapon-familiarity",
+  "collection": "feats",
+  "name": "Vishkanya Weapon Familiarity",
+  "level": 1,
+  "text": "You gain access to and are trained with the blowgun, fighting fan, kris, kukri, and shuriken. For the purpose of determining your proficiency, martial vishkanyan weapons are simple weapons and advanced vishkanyan weapons are martial weapons."
+ },
+ {
+  "id": "fey-ascension",
+  "collection": "feats",
+  "name": "Fey Ascension",
+  "level": 9,
+  "text": "- **Anteater** You become an expert in primal DCs and spell attack rolls. - **Gremlin** You become an expert in primal DCs and spell attack rolls. - **Unicorn** You become trained in Medicine, or an expert if you were already trained."
+ },
+ {
+  "id": "first-frost",
+  "collection": "feats",
+  "name": "First Frost",
+  "level": 2,
+  "text": "You're trained in spell attack modifier and spell DC."
+ },
+ {
+  "id": "contract-negotiator",
+  "collection": "feats",
+  "name": "Contract Negotiator",
+  "level": 1,
+  "text": "If you are an expert in Diplomacy, you gain a +1 circumstance bonus to these checks; if you are a master in Diplomacy, this increases to +2, and +3 if you are legendary."
+ },
+ {
+  "id": "unshaken-in-iron",
+  "collection": "feats",
+  "name": "Unshaken in Iron",
+  "level": 8,
+  "text": "If you are trained in medium or heavy armor, you gain the respective armor specialization effect for those armors as well."
+ },
+ {
+  "id": "woodworker",
+  "collection": "feats",
+  "name": "Woodworker",
+  "level": 1,
+  "text": "You gain the trained proficiency rank in Crafting. If you would automatically become trained in Crafting (from your background or class, for example), you instead become trained in a skill of your choice."
+ },
+ {
+  "id": "gildedsoul",
+  "collection": "feats",
+  "name": "Gildedsoul",
+  "level": 1,
+  "text": "This natural luster enhances your charm; you become trained in your choice of Diplomacy or Society. If you would automatically become trained in both these skills (from your background or class, for example), you instead become trained in a skill of your choice. If you're trained in Society, you also gain the Courtly Graces skill feat."
+ },
+ {
+  "id": "quicksoul",
+  "collection": "feats",
+  "name": "Quicksoul",
+  "level": 1,
+  "text": "You gain the trained proficiency rank in Acrobatics. If you would automatically become trained in Acrobatics (from your background or class, for example), you instead become trained in a skill of your choice."
+ },
+ {
+  "id": "worm-form",
+  "collection": "feats",
+  "name": "Worm Form",
+  "level": 14,
+  "text": "You're trained with them."
+ },
+ {
+  "id": "dwarven-reinforcement",
+  "collection": "feats",
+  "name": "Dwarven Reinforcement",
+  "level": 5,
+  "text": "If you're a master in Crafting, the bonus is +2, and if you're legendary, the bonus is +3."
+ },
+ {
+  "id": "ancestral-longevity",
+  "collection": "feats",
+  "name": "Ancestral Longevity",
+  "level": 1,
+  "text": "During your daily preparations, you can reflect upon your life experiences to gain the trained proficiency rank in one skill of your choice. This proficiency lasts until you prepare again. Since this proficiency is temporary, you can't use it as a prerequisite for a skill increase or a permanent character option like a feat."
+ },
+ {
+  "id": "expert-longevity",
+  "collection": "feats",
+  "name": "Expert Longevity",
+  "level": 9,
+  "text": "When you choose a skill in which to become trained with Ancestral Longevity, you can also choose a skill in which you are already trained and become an expert in that skill. When the effects of Ancestral Longevity and Expert Longevity expire, you can retrain one of your skill increases. The skill increase you gain from this retraining must either make you trained in the skill you chose with Ancestral Longevity or make you an expert in the skill you chose with Expert Longevity."
+ },
+ {
+  "id": "vandal",
+  "collection": "feats",
+  "name": "Vandal",
+  "level": 5,
+  "text": "You become trained in Thievery. If you would automatically become trained in Thievery (from your background or class, for example), you instead become trained in a skill of your choice."
+ },
+ {
+  "id": "unconventional-weaponry",
+  "collection": "feats",
+  "name": "Unconventional Weaponry",
+  "level": 1,
+  "text": "You gain access to that weapon, and for the purpose of proficiency, you treat it as a simple weapon. If you are trained in all martial weapons, you can instead choose an uncommon advanced weapon that has an ancestry's trait or is common in another culture. For the purpose of proficiency, you treat it as a martial weapon."
+ },
+ {
+  "id": "hold-mark",
+  "collection": "feats",
+  "name": "Hold Mark",
+  "level": 1,
+  "text": "You are trained in the listed skill and gain a +1 status bonus to saves against spells from the listed tradition."
+ },
+ {
+  "id": "angelkin",
+  "collection": "feats",
+  "name": "Angelkin",
+  "level": 1,
+  "text": "You gain the trained proficiency rank in Society. If you would automatically become trained in Society (from your background or class, for example), you instead become trained in a skill of your choice."
+ },
+ {
+  "id": "hellspawn",
+  "collection": "feats",
+  "name": "Hellspawn",
+  "level": 1,
+  "text": "You are trained in Deception and Legal Lore. If you were already trained in Deception (from your background or class, for example), you instead become trained in a skill of your choice."
+ },
+ {
+  "id": "pitborn",
+  "collection": "feats",
+  "name": "Pitborn",
+  "level": 1,
+  "text": "You are trained in Athletics. If you were already trained in Athletics (from your background or class, for example), you instead become trained in a skill of your choice. You also gain any one common 1st-level skill feat with a prerequisite of trained in Athletics, as reflects the manifestation of your fiendish blood."
+ },
+ {
+  "id": "versatile-performance",
+  "collection": "feats",
+  "name": "Versatile Performance",
+  "level": 1,
+  "text": "In addition, you can use your proficiency rank in Performance to meet the prerequisites of skill feats that require a particular proficiency rank in Deception, Diplomacy, or Intimidation."
+ },
+ {
+  "id": "impossible-polymath",
+  "collection": "feats",
+  "name": "Impossible Polymath",
+  "level": 18,
+  "text": "As long as you're trained in Arcana, you can add arcane spells to your book from Esoteric Polymath; as long as you're trained in Nature, you can add primal spells to your book; and as long as you are trained in Religion, you can add divine spells to your book."
+ },
+ {
+  "id": "verdant-weapon",
+  "collection": "feats",
+  "name": "Verdant Weapon",
+  "level": 1,
+  "text": "You spend 10 minutes focusing primal energy into a seed, imprinting it with the potential of a single level 0 weapon you are trained with and that has no mechanical parts or metal components."
+ },
+ {
+  "id": "wandering-oasis",
+  "collection": "feats",
+  "name": "Wandering Oasis",
+  "level": 12,
+  "text": "If you're legendary in Survival, you and those allies are also protected from extreme environmental heat and cold."
+ },
+ {
+  "id": "stealthy-companion",
+  "collection": "feats",
+  "name": "Stealthy Companion",
+  "level": 14,
+  "text": "You've trained your animal companion to blend in to its surroundings. If your companion is a specialized ambusher, its proficiency rank for Stealth increases to master (or legendary if it was already master)."
+ },
+ {
+  "id": "to-the-ends-of-the-earth",
+  "collection": "feats",
+  "name": "To the Ends of the Earth",
+  "level": 20,
+  "text": "You must be legendary in Nature to track your prey's location across teleportation or planar travel. This feat gains the detection and primal traits if you're legendary in Nature."
+ },
+ {
+  "id": "trap-finder",
+  "collection": "feats",
+  "name": "Trap Finder",
+  "level": 1,
+  "text": "You can disable traps that require a proficiency rank of master in Thievery. If you have master proficiency in Thievery, you can disable traps that require a proficiency rank of legendary instead, and your circumstance bonuses against traps increase to +2."
+ }
+]

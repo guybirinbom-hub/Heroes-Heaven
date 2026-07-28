@@ -1,0 +1,387 @@
+[
+ {
+  "id": "gruesome-strike",
+  "collection": "feats",
+  "name": "Gruesome Strike",
+  "level": 12,
+  "text": "Regardless of the result, the creature is temporarily immune to your Gruesome Strike for 24 hours."
+ },
+ {
+  "id": "aura-of-life",
+  "collection": "feats",
+  "name": "Aura of Life",
+  "level": 14,
+  "text": "You and all allies in your champion's aura gain resistance 5 to void damage and a +1 status bonus to saves against void effects."
+ },
+ {
+  "id": "aura-of-righteousness",
+  "collection": "feats",
+  "name": "Aura of Righteousness",
+  "level": 14,
+  "text": "You and all allies in your champion's aura gain resistance 5 to unholy spells, unholy Strikes, and other unholy effects."
+ },
+ {
+  "id": "auspicious-mount",
+  "collection": "feats",
+  "name": "Auspicious Mount",
+  "level": 16,
+  "text": "If the mount has the celestial trait, the extra HP increase by 5, and the mount gains weakness 5 to unholy. If it has the fiend trait, the extra HP increase by 5, and the mount gains weakness 5 to holy. - It gains wings that grant it a fly Speed equal to its land Speed."
+ },
+ {
+  "id": "sacred-defender",
+  "collection": "feats",
+  "name": "Sacred Defender",
+  "level": 20,
+  "text": "You gain resistance 5 to bludgeoning, piercing, and slashing damage. If you're holy, this resistance increases to 10 against unholy creatures, and if you're unholy it increases to 10 against holy creatures."
+ },
+ {
+  "id": "connect-the-dots",
+  "collection": "feats",
+  "name": "Connect the Dots",
+  "level": 6,
+  "text": "Both targets are then temporarily immune to Connect the Dots for 10 minutes."
+ },
+ {
+  "id": "just-one-more-thing",
+  "collection": "feats",
+  "name": "Just One More Thing",
+  "level": 10,
+  "text": "That creature is temporarily immune to Just One More Thing for 1 day."
+ },
+ {
+  "id": "make-em-sweat",
+  "collection": "feats",
+  "name": "Make 'em Sweat",
+  "level": 12,
+  "text": "This added effect is an emotion and fear effect, but the other effects of Pointed Question still apply even if the target is immune to fear."
+ },
+ {
+  "id": "surgical-shock",
+  "collection": "feats",
+  "name": "Surgical Shock",
+  "level": 12,
+  "text": "The target is then immune to Surgical Shock for 1 hour."
+ },
+ {
+  "id": "ironblood-stance",
+  "collection": "feats",
+  "name": "Ironblood Stance",
+  "level": 8,
+  "text": "While in Ironblood Stance, you gain resistance 2 to all damage. The resistance increases to 3 at 12th level, to 4 at 16th level, and to 5 at 20th level."
+ },
+ {
+  "id": "foretell-harm",
+  "collection": "feats",
+  "name": "Foretell Harm",
+  "level": 1,
+  "text": "The target is then temporarily immune to Foretell Harm for 24 hours."
+ },
+ {
+  "id": "bloodline-mutation",
+  "collection": "feats",
+  "name": "Bloodline Mutation",
+  "level": 20,
+  "text": "You gain low-light vision or darkvision, if one is appropriate for creatures with those traits. - If the creatures associated with your bloodline have the ability to fly, you gain a fly Speed equal to your land Speed. - If the creatures associated with your bloodline are aquatic or amphibious, you become amphibious, able to breathe water and air equally well, and you gain a swim Speed equal to your land Speed. - If creatures associated with your bloodline have a resistance or immunity to acid, cold, electricity, fire, void, or sonic, choose an energy typ"
+ },
+ {
+  "id": "assassinate",
+  "collection": "feats",
+  "name": "Assassinate",
+  "level": 12,
+  "text": "Regardless of the result of its save, the creature is temporarily immune to your Assassinate for 1 day."
+ },
+ {
+  "id": "mesmerizing-gaze",
+  "collection": "feats",
+  "name": "Mesmerizing Gaze",
+  "level": 6,
+  "text": "If the creature succeeds at its save or its fascination ends due to a hostile action, it becomes temporarily immune to your Mesmerizing Gaze for 1 day."
+ },
+ {
+  "id": "distracting-flattery",
+  "collection": "feats",
+  "name": "Distracting Flattery",
+  "level": 4,
+  "text": "Regardless of your result, the target is temporarily immune to your Distracting Flattery for 10 minutes."
+ },
+ {
+  "id": "mutable-familiar",
+  "collection": "feats",
+  "name": "Mutable Familiar",
+  "level": 8,
+  "text": "You can conduct a special 10-minute activity to reselect certain familiar abilities, switching one or more of the following abilities for other abilities on this list: amphibious, burrower, climber, darkvision, fast movement, manual dexterity, resistance, and scent."
+ },
+ {
+  "id": "snap-out-of-it",
+  "collection": "feats",
+  "name": "Snap Out of It!",
+  "level": 4,
+  "text": "Regardless of the result of the save, your ally is temporarily immune to Snap Out of It! for 10 minutes."
+ },
+ {
+  "id": "resuscitate",
+  "collection": "feats",
+  "name": "Resuscitate",
+  "level": 16,
+  "text": "Whether you succeed or fail, the target is temporarily immune to Resuscitate for 1 day."
+ },
+ {
+  "id": "walk-the-plank",
+  "collection": "feats",
+  "name": "Walk the Plank",
+  "level": 8,
+  "text": "On a success, in addition to the normal effects, you can also force the target to Stride up to its Speed immediately. The target then becomes temporarily immune to Walk the Plank for 10 minutes."
+ },
+ {
+  "id": "evangelize",
+  "collection": "feats",
+  "name": "Evangelize",
+  "level": 7,
+  "text": "Attempt a check and compare the result to the Will DC of a single target that can hear you and understands your language; that target is then temporarily immune to Evangelize with respect to your deity or philosophy for 1 day."
+ },
+ {
+  "id": "robust-health",
+  "collection": "feats",
+  "name": "Robust Health",
+  "level": 3,
+  "text": "After you or an ally use Battle Medicine on you, you become temporarily immune to that Battle Medicine for only 1 hour, instead of 1 day."
+ },
+ {
+  "id": "hungry-eyes",
+  "collection": "feats",
+  "name": "Hungry Eyes",
+  "level": 1,
+  "text": "You gain low-light vision, or you gain darkvision if you already have low-light vision. --- **Special** You can select this feat twice, once to gain low-light vision and a second time to gain darkvision."
+ },
+ {
+  "id": "sudden-terror",
+  "collection": "feats",
+  "name": "Sudden Terror",
+  "level": 1,
+  "text": "All creatures that witnessed you use Sudden Terror are then temporarily immune to your Sudden Terror for 24 hours."
+ },
+ {
+  "id": "lifes-blood",
+  "collection": "feats",
+  "name": "Life's Blood",
+  "level": 9,
+  "text": "This damage can't be resisted, prevented, or negated in any way. Creatures you heal in this manner are then temporarily immune to your Life's Blood for 24 hours."
+ },
+ {
+  "id": "warding-jewel",
+  "collection": "feats",
+  "name": "Warding Jewel",
+  "level": 5,
+  "text": "While you possess your head gem, you gain resistance 2 to piercing damage and resistance 1 to slashing damage. The resistance to each type of damage increases by 1 at 9th level and every 4 levels thereafter."
+ },
+ {
+  "id": "dance-of-the-mousedeer",
+  "collection": "feats",
+  "name": "Dance of the Mousedeer",
+  "level": 1,
+  "text": "**Critical Failure** The opponent grasps the movements of your dance, becoming temporarily immune to your Dance of the Mousedeer for 1 day."
+ },
+ {
+  "id": "dance-of-the-tiger",
+  "collection": "feats",
+  "name": "Dance of the Tiger",
+  "level": 9,
+  "text": "Once your connection to its shadow breaks, the enemy is immune to Dance of the Tiger for 1 hour."
+ },
+ {
+  "id": "dissolutions-sight",
+  "collection": "feats",
+  "name": "Dissolution's Sight",
+  "level": 9,
+  "text": "You gain greater darkvision for 1 minute."
+ },
+ {
+  "id": "dance-of-the-jester",
+  "collection": "feats",
+  "name": "Dance of the Jester",
+  "level": 13,
+  "text": "The target is then temporarily immune to your Dance of the Jester for 1 day. **Success** As critical success, except you can take only one action, not two, before your target becomes temporarily immune to your dance, and you cannot move the target into hazardous terrain."
+ },
+ {
+  "id": "twilight-dweller",
+  "collection": "feats",
+  "name": "Twilight Dweller",
+  "level": 1,
+  "text": "You gain low-light vision. If you already have low-light vision, you gain darkvision."
+ },
+ {
+  "id": "unleash-yaoguai-might",
+  "collection": "feats",
+  "name": "Unleash Yaoguai Might",
+  "level": 9,
+  "text": "- **Object** Your skin transmutes partially into an inorganic substance, granting resistance 5 to your choice of bludgeoning, piercing, or slashing."
+ },
+ {
+  "id": "petal-step",
+  "collection": "feats",
+  "name": "Petal Step",
+  "level": 4,
+  "text": "You gain a +1 circumstance bonus to your Stealth checks to Sneak and aren't detectable by tremorsense."
+ },
+ {
+  "id": "close-formation",
+  "collection": "feats",
+  "name": "Close Formation",
+  "level": 10,
+  "text": "You practiced fan dance as a member of a large group, coordinating your moves together to create living art and heightening your sense of spatial awareness. When you wield two fans, each in a different hand, you gain tremorsense as an imprecise sense with a range of 20 feet."
+ },
+ {
+  "id": "peonys-flourish",
+  "collection": "feats",
+  "name": "Peony's Flourish",
+  "level": 14,
+  "text": "**Critical Failure** The creature is unaffected and temporarily immune to further uses of Peony's Flourish for 24 hours."
+ },
+ {
+  "id": "acupuncturist",
+  "collection": "feats",
+  "name": "Acupuncturist",
+  "level": 1,
+  "text": "The ally is then immune to all uses of Acupuncturist for 1 week."
+ },
+ {
+  "id": "energy-fortification",
+  "collection": "feats",
+  "name": "Energy Fortification",
+  "level": 2,
+  "text": "If you do, the medicine also grants the recipient resistance 2 and weakness 2 based on the element you chose. A wood, earth, or water elemental medicine grants resistance to void damage and weakness to vitality damage, and a living recipient loses its immunity to vitality damage for the duration. A fire or metal elemental medicine grants resistance to vitality damage and weakness to void damage, and an undead recipient loses its immunity to void damage for the duration. If you're a master in Occultism, increase the resistance and weakness to 4."
+ },
+ {
+  "id": "geobukseon-retaliation",
+  "collection": "feats",
+  "name": "Geobukseon Retaliation",
+  "level": 10,
+  "text": "--- Your armor has a retractable spike-covered shell reminiscent of Hwanggot's heavily armored geobukseon, or \"turtle ships.\" The shell unfolds across your body, giving you a +4 circumstance bonus to AC and resistance 2 to bludgeoning, piercing, and slashing damage until the end of your next turn."
+ },
+ {
+  "id": "banish-falsehoods-of-flesh",
+  "collection": "feats",
+  "name": "Banish Falsehoods of Flesh",
+  "level": 14,
+  "text": "The target is then temporarily immune to Banish Falsehoods of Flesh for 1 day."
+ },
+ {
+  "id": "eternal-guide",
+  "collection": "feats",
+  "name": "Eternal Guide",
+  "level": 20,
+  "text": "This effectively makes you immune to dying of old age so long as you are not killed by violence less than a week before you would have died of old age."
+ },
+ {
+  "id": "breath-of-vital-ash",
+  "collection": "feats",
+  "name": "Breath of Vital Ash",
+  "level": 10,
+  "text": "Every time you exhale, a tinge of red and a scent of spiced smoke float upon your breath."
+ },
+ {
+  "id": "extract-vow-of-nonviolence",
+  "collection": "feats",
+  "name": "Extract Vow of Nonviolence",
+  "level": 12,
+  "text": "Regardless of the result of the save, the weapon is then temporarily immune to Extract Vow of Nonviolence for 1 day. You gain resistance to all damage dealt by that specific weapon as the weapon attempts to mitigate harm to you. The resistance is equal to half your level and lasts for 10 minutes."
+ },
+ {
+  "id": "slay",
+  "collection": "feats",
+  "name": "Slay",
+  "level": 12,
+  "text": "The creature then becomes temporarily immune to your Slay for 1 day."
+ },
+ {
+  "id": "hematocritical",
+  "collection": "feats",
+  "name": "Hematocritical",
+  "level": 10,
+  "text": "**Requirements** Your last action was a Strike that critically hit a creature that isn't immune to bleed damage."
+ },
+ {
+  "id": "imprison-foe",
+  "collection": "feats",
+  "name": "Imprison Foe",
+  "level": 18,
+  "text": "Regardless of the result, the target is temporarily immune to your Imprison Foe for 24 hours."
+ },
+ {
+  "id": "fiend-eternal",
+  "collection": "feats",
+  "name": "Fiend Eternal",
+  "level": 20,
+  "text": "You gain the fiend and unholy traits and are immune to your realm's damage type."
+ },
+ {
+  "id": "scouring-spark",
+  "collection": "feats",
+  "name": "Scouring Spark",
+  "level": 18,
+  "text": "While Channeling your Divine Spark, you become immune to the confused and frightened conditions."
+ },
+ {
+  "id": "celestial-rebirth",
+  "collection": "feats",
+  "name": "Celestial Rebirth",
+  "level": 20,
+  "text": "You become immune to poison and disease."
+ },
+ {
+  "id": "creature-of-myth",
+  "collection": "feats",
+  "name": "Creature of Myth",
+  "level": 18,
+  "text": "Your united companion becomes immune to your choice of acid, cold, electricity, or fire. Your united companion gains a Fly speed equal to its Speed and it gains the mount special ability. If your united companion already had the mount special ability or a Fly speed equal to its Speed, it instead increases its Speed by 10 feet. By spending a Mythic Point when you Command your united companion, your united companion can, as a two-action activity, Fly up to twice its speed and make a single unarmed melee attack at any point along the way. Its maximum Hit Po"
+ },
+ {
+  "id": "pack-of-the-beast-lord",
+  "collection": "feats",
+  "name": "Pack Of The Beast Lord",
+  "level": 18,
+  "text": "It gains immunity to precision damage, resistance to physical damage equal to half your level, and a weakness to area damage equal to half your level."
+ },
+ {
+  "id": "remember-thy-names",
+  "collection": "feats",
+  "name": "Remember thy Names",
+  "level": 16,
+  "text": "Once you use Remember Their Names on a target, the target is immune to it for 24 hours."
+ },
+ {
+  "id": "stand-firm",
+  "collection": "feats",
+  "name": "Stand Firm",
+  "level": 16,
+  "text": "Once you use Stand Firm on an ally, that ally is immune to it until the beginning of your next turn."
+ },
+ {
+  "id": "liberty-or-death",
+  "collection": "feats",
+  "name": "Liberty or Death",
+  "level": 18,
+  "text": "If the target succeeds, they are immune to this ability for 24 hours."
+ },
+ {
+  "id": "rebellious-existence",
+  "collection": "feats",
+  "name": "Rebellious Existence",
+  "level": 18,
+  "text": "Additionally, you are immune to effects that would imprison your soul (such as Seize Soul, or a Final Blade)."
+ },
+ {
+  "id": "you-cant-kill-an-idea",
+  "collection": "feats",
+  "name": "You Can't Kill an Idea",
+  "level": 20,
+  "text": "You have only 1 Hit Point and can't gain more, but you are immune to all damage; if your dying or doomed condition would increase to a high enough value to kill you, it does not increase, and you are immune to any effect that would instantly kill or destroy you. You are immune to the unconscious condition, yet can take only purely mental actions."
+ },
+ {
+  "id": "immovable-object",
+  "collection": "feats",
+  "name": "Immovable Object",
+  "level": 14,
+  "text": "You plant your feet in a wide stance, resisting all movement not of your own volition. While in this stance and on the ground, you are immune to forced movement and if an effect would knock you prone, you aren't knocked prone and can Step as a free action."
+ }
+]

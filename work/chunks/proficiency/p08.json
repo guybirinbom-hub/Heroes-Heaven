@@ -1,0 +1,387 @@
+[
+ {
+  "id": "spore-order",
+  "collection": "classFeatures",
+  "name": "Spore Order",
+  "level": 1,
+  "text": "You're trained in Intimidation."
+ },
+ {
+  "id": "the-brave",
+  "collection": "classFeatures",
+  "name": "The Brave",
+  "level": 3,
+  "text": "You're trained in Athletics."
+ },
+ {
+  "id": "the-cunning",
+  "collection": "classFeatures",
+  "name": "The Cunning",
+  "level": 3,
+  "text": "You are trained in Deception."
+ },
+ {
+  "id": "the-deft",
+  "collection": "classFeatures",
+  "name": "The Deft",
+  "level": 3,
+  "text": "You are trained in Thievery."
+ },
+ {
+  "id": "the-mournful",
+  "collection": "classFeatures",
+  "name": "The Mournful",
+  "level": 3,
+  "text": "You are trained in Diplomacy."
+ },
+ {
+  "id": "the-proud",
+  "collection": "classFeatures",
+  "name": "The Proud",
+  "level": 3,
+  "text": "You are trained in Intimidation."
+ },
+ {
+  "id": "the-radiant",
+  "collection": "classFeatures",
+  "name": "The Radiant",
+  "level": 3,
+  "text": "You are trained in Diplomacy."
+ },
+ {
+  "id": "thief",
+  "collection": "classFeatures",
+  "name": "Thief",
+  "level": 1,
+  "text": "You are trained in Thievery."
+ },
+ {
+  "id": "true-creed",
+  "collection": "classFeatures",
+  "name": "True Creed",
+  "level": 15,
+  "text": "Your proficiency rank for your class DC increases to master. Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "vindicator",
+  "collection": "classFeatures",
+  "name": "Vindicator",
+  "level": 1,
+  "text": "You have been specially trained to use guile and magic to reveal hidden threats. You are trained in Religion instead of Nature. You are trained in your deity's favored weapon. If your deity's favored weapon is an advanced weapon, your proficiency with it is equal to your proficiency with martial weapons."
+ },
+ {
+  "id": "war-magic",
+  "collection": "classFeatures",
+  "name": "War Magic",
+  "level": 1,
+  "text": "**War Mage Adjustments:** You become trained in light and medium armor. At 11th level, you gain expert proficiency with light and medium armor, as well as unarmored defense. You have familiarity with martial weapons, treating them as simple weapons for the purposes of proficiency."
+ },
+ {
+  "id": "warden-spells",
+  "collection": "classFeatures",
+  "name": "Warden Spells",
+  "level": 1,
+  "text": "When you first gain a warden spell, you become trained in primal spell attacks and spell DCs."
+ },
+ {
+  "id": "warpriest",
+  "collection": "classFeatures",
+  "name": "Warpriest",
+  "level": 1,
+  "text": "You have trained in the more militant doctrine of your church, focusing on both spells and battle. **First Doctrine (1st):** You're trained in light and medium armor, and you have expert proficiency in Fortitude saves. At 13th level, if you gain the Divine Defense class feature, you also gain expert proficiency in light and medium armor. **Second Doctrine (3rd):** You're trained in martial weapons. **Third Doctrine (7th):** You gain expert proficiency with your deity's favored weapon, martial weapons, simple weapons, and unarmed attacks. **Fourth Doctrin"
+ },
+ {
+  "id": "warrior-of-legend",
+  "collection": "classFeatures",
+  "name": "Warrior of Legend",
+  "level": 1,
+  "text": "**Warrior of Legend Adjustments:** You aren't trained in heavy armor. The armor expertise and armor mastery class features only improve your proficiency rank for light armor, medium armor, and unarmored defense. You are trained in both Acrobatics and Athletics, rather than one or the other. Your fighter weapon mastery and weapon legend class features grant you increased proficiency in both spears and polearms, but you can't choose any other weapon group with these class features."
+ },
+ {
+  "id": "wit",
+  "collection": "classFeatures",
+  "name": "Wit",
+  "level": 1,
+  "text": "You are trained in Diplomacy and gain the Bon Mot skill feat."
+ },
+ {
+  "id": "ancestral-echoing",
+  "collection": "items",
+  "name": "Ancestral Echoing",
+  "level": 15,
+  "text": "Your proficiency rank with this weapon is one step higher than normal, to a maximum of the highest proficiency rank you have in any weapon. For instance, if you had master proficieny with martial weapons and expert proficiency with advanced weapons, you would have master proficiency with advanced weapon that had this rune. In addition, while wielding the ancestral echoing weapon, you have expert proficiency in one Lore skill relevant to one or more of the weapon's previous owners."
+ },
+ {
+  "id": "pactmasters-grace",
+  "collection": "items",
+  "name": "Pactmaster's Grace",
+  "level": 14,
+  "text": "While invested, the ring grants a +2 item bonus to saving throws while you are in an urban setting, and this increases to a +3 item bonus if you have legendary proficiency in Guild Lore, Katapesh Lore, Mercantile Lore, or Society. You also gain a +3 item bonus to Mercantile Lore checks while wearing the ring, and you can attempt checks that require a proficiency rank of master in Society."
+ },
+ {
+  "id": "emergency-disguise",
+  "collection": "items",
+  "name": "Emergency Disguise",
+  "level": 1,
+  "text": "**Usage** affixed to armor **Activate** ⟨1⟩ Envision **Requirements** You're trained in Deception --- In Woodsedge Lodge, this thin red ribbon, typically worn around the neck, symbolizes the reach of Galt's soul-trapping guillotines, the infamous final blades."
+ },
+ {
+  "id": "admonishing-band",
+  "collection": "items",
+  "name": "Admonishing Band",
+  "level": 4,
+  "text": "**Usage** affixed to a firearm **Activate** ⟨1⟩ (concentrate) **Requirements** You're trained in Intimidation."
+ },
+ {
+  "id": "energized-cartridge",
+  "collection": "items",
+  "name": "Energized Cartridge",
+  "level": 4,
+  "text": "**Usage** affixed to a firearm or crossbow **Activate** ⟨4⟩ (concentrate) **Trigger** You attempt an attack roll with the affixed firearm or crossbow **Requirements** You're trained in use of the affixed firearm or crossbow."
+ },
+ {
+  "id": "malleable-clay",
+  "collection": "items",
+  "name": "Malleable Clay",
+  "level": 5,
+  "text": "**Activate** ⟨4⟩ envision **Trigger** You Strike with the affixed weapon **Requirements** You're trained in the affixed weapon."
+ },
+ {
+  "id": "merciful-charm",
+  "collection": "items",
+  "name": "Merciful Charm",
+  "level": 3,
+  "text": "**Activate** ⟨4⟩ envision **Trigger** You Strike with the affixed weapon **Requirements** You're trained in the affixed weapon."
+ },
+ {
+  "id": "lovers-knot",
+  "collection": "items",
+  "name": "Lover's Knot",
+  "level": 2,
+  "text": "**Activate** ⟨1⟩ envision; **Requirement** You are trained in Medicine."
+ },
+ {
+  "id": "weapon-weird-oil",
+  "collection": "items",
+  "name": "Weapon-Weird Oil",
+  "level": 7,
+  "text": "You must have proficiency with the original weapon to benefit from the oil; however, you use your proficiency rank with the oil's keyed group instead of the weapon's original group."
+ },
+ {
+  "id": "pilferers-gloves",
+  "collection": "items",
+  "name": "Pilferer's Gloves",
+  "level": 17,
+  "text": "As long as you're trained in Thievery while wearing these gloves, you're always considered one skill rank higher than your actual rank. If you possess a Legendary skill rank in Thievery, you gain a +2 item bonus to Thievery checks instead."
+ },
+ {
+  "id": "fiddle-of-the-maestro",
+  "collection": "items",
+  "name": "Fiddle of the Maestro",
+  "level": 16,
+  "text": "If you're a master in Performance, while playing it you also gain a +1 status bonus to Reflex saves and a +1 item bonus to Dexterity-based skill checks. If you're legendary in Performance, the bonuses are +2."
+ },
+ {
+  "id": "phantom-piano",
+  "collection": "items",
+  "name": "Phantom Piano",
+  "level": 12,
+  "text": "If you accept, the piano asks only that you practice with it and perform for increasingly refined and august audiences, requiring a successful Performance check appropriate to your proficiency level. The piano also provides access to composition spells based on your Performance proficiency rank, as if you had the corresponding feat. **Trained:** Courageous Anthem, Uplifting Overture **Expert:** Hymn of Healing, Rallying Anthem **Master:** Symphony of the Unfettered Heart **Legendary:** Soothing Ballad A *phantom piano* has the following activations."
+ },
+ {
+  "id": "the-trader",
+  "collection": "items",
+  "name": "The Trader",
+  "level": 20,
+  "text": "Your proficiency rank with those two skills swaps for 1 hour. For example, if you were a master in Athletics and untrained in Crafting, you would become untrained in Athletics and a master in Crafting."
+ },
+ {
+  "id": "mycoweave-shield",
+  "collection": "items",
+  "name": "Mycoweave Shield",
+  "level": 2,
+  "text": "Craft Requirements You are trained in Nature, and can cast a fungus spell or are fungus."
+ },
+ {
+  "id": "mycoweave-shield-lesser",
+  "collection": "items",
+  "name": "Mycoweave Shield (Lesser)",
+  "level": 2,
+  "text": "--- **Craft Requirements** You are trained in Nature, and can cast a fungus spell or are fungus."
+ },
+ {
+  "id": "mycoweave-shield-greater",
+  "collection": "items",
+  "name": "Mycoweave Shield (Greater)",
+  "level": 8,
+  "text": "--- **Craft Requirements** You are trained in Nature, and can cast a fungus spell or are fungus."
+ },
+ {
+  "id": "mycoweave-shield-major",
+  "collection": "items",
+  "name": "Mycoweave Shield (Major)",
+  "level": 16,
+  "text": "--- **Craft Requirements** You are trained in Nature, and can cast a fungus spell or are fungus."
+ },
+ {
+  "id": "barding",
+  "collection": "items",
+  "name": "Barding",
+  "level": 0,
+  "text": "All animals have a trained proficiency rank in light barding, and combat-trained animals are trained in heavy barding."
+ },
+ {
+  "id": "barding-light-small-or-medium",
+  "collection": "items",
+  "name": "Barding (Light; Small or Medium)",
+  "level": 0,
+  "text": "All animals have a trained proficiency rank in light barding, and combat-trained animals are trained in heavy barding."
+ },
+ {
+  "id": "barding-light-large",
+  "collection": "items",
+  "name": "Barding (Light; Large)",
+  "level": 0,
+  "text": "All animals have a trained proficiency rank in light barding, and combat-trained animals are trained in heavy barding."
+ },
+ {
+  "id": "barding-heavy-small-or-medium",
+  "collection": "items",
+  "name": "Barding (Heavy; Small or Medium)",
+  "level": 2,
+  "text": "All animals have a trained proficiency rank in light barding, and combat-trained animals are trained in heavy barding."
+ },
+ {
+  "id": "barding-heavy-large",
+  "collection": "items",
+  "name": "Barding (Heavy; Large)",
+  "level": 3,
+  "text": "All animals have a trained proficiency rank in light barding, and combat-trained animals are trained in heavy barding."
+ },
+ {
+  "id": "armor-potency",
+  "collection": "items",
+  "name": "Armor Potency",
+  "level": 5,
+  "text": "581 Price 160 gp Craft Requirements You're an expert in Crafting. Craft Requirements You're a master in Crafting. Craft Requirements You're legendary in Crafting."
+ },
+ {
+  "id": "weapon-potency",
+  "collection": "items",
+  "name": "Weapon Potency",
+  "level": 2,
+  "text": "581 Price 35 gp Craft Requirements You are an expert in Crafting. Craft Requirements You are a master in Crafting. Craft Requirements You are legendary in Crafting."
+ },
+ {
+  "id": "weapon-potency-3",
+  "collection": "items",
+  "name": "Weapon Potency (+3)",
+  "level": 16,
+  "text": "**Craft Requirements** You are legendary in Crafting."
+ },
+ {
+  "id": "dragon-turtle-scale",
+  "collection": "items",
+  "name": "Dragon Turtle Scale",
+  "level": 4,
+  "text": "**Activate** ⟨1⟩ (concentrate) **Requirements** You're trained in Athletics --- This shimmering green scale is usually attached to a golden clasp or chain."
+ },
+ {
+  "id": "dragon-turtle-scale-greater",
+  "collection": "items",
+  "name": "Dragon Turtle Scale (Greater)",
+  "level": 8,
+  "text": "**Activate** ⟨1⟩ (concentrate) **Requirements** You're trained in Athletics --- This shimmering green scale is usually attached to a golden clasp or chain."
+ },
+ {
+  "id": "effervescent-ampoule",
+  "collection": "items",
+  "name": "Effervescent Ampoule",
+  "level": 2,
+  "text": "**Activate** ⟨1⟩ (manipulate) **Requirements** You're trained in Acrobatics --- Light spring water fizzes and bubbles within this small glass globe, spilling onto the affixed armor when activated."
+ },
+ {
+  "id": "emerald-grasshopper",
+  "collection": "items",
+  "name": "Emerald Grasshopper",
+  "level": 5,
+  "text": "**Activate** ⟨1⟩ (concentrate) **Requirements** You're trained in Athletics --- This metal grasshopper studded with emeralds is usually clasped to the legs of a suit of armor."
+ },
+ {
+  "id": "emerald-grasshopper-greater",
+  "collection": "items",
+  "name": "Emerald Grasshopper (Greater)",
+  "level": 9,
+  "text": "**Activate** ⟨1⟩ (concentrate) **Requirements** You're trained in Athletics --- This metal grasshopper studded with emeralds is usually clasped to the legs of a suit of armor."
+ },
+ {
+  "id": "fade-band",
+  "collection": "items",
+  "name": "Fade Band",
+  "level": 12,
+  "text": "**Activate** ⟨5⟩ (concentrate) **Trigger** An attack misses you **Requirements** You are trained in Stealth --- This thin, silvery wire wraps around your armor."
+ },
+ {
+  "id": "feather-step-stone",
+  "collection": "items",
+  "name": "Feather Step Stone",
+  "level": 3,
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You Stride or Step **Requirements** You are trained in Acrobatics --- This stone, usually shaped as a cabochon, is a small chunk of amber with a bit of feather or a flying insect caught within it."
+ },
+ {
+  "id": "ghost-dust",
+  "collection": "items",
+  "name": "Ghost Dust",
+  "level": 16,
+  "text": "**Activate** ⟨1⟩ (concentrate) **Requirements** You are trained in Stealth --- This small vial is filled with a grayish-green dust rendered from dried ectoplasm."
+ },
+ {
+  "id": "jade-cat",
+  "collection": "items",
+  "name": "Jade Cat",
+  "level": 2,
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You fall or attempt an Acrobatics check to Balance **Requirements** You are trained in Acrobatics --- A thumb-sized feline carved of rare stone, the *jade cat* is typically worn as a pendant upon a suit of armor."
+ },
+ {
+  "id": "mending-lattice",
+  "collection": "items",
+  "name": "Mending Lattice",
+  "level": 13,
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** The affixed item would take damage **Requirements** You are trained in Crafting --- This lattice of reinforced iron is shaped into a perfect octagon."
+ },
+ {
+  "id": "sneaky-key",
+  "collection": "items",
+  "name": "Sneaky Key",
+  "level": 5,
+  "text": "**Activate** ⟨1⟩ (manipulate) **Requirements** You are trained in Thievery --- This small silver skeleton key can be pinned to armor or a sleeve."
+ },
+ {
+  "id": "vanishing-coin",
+  "collection": "items",
+  "name": "Vanishing Coin",
+  "level": 10,
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You attempt a Stealth check for initiative, but you haven't rolled yet **Requirements** You are trained in Stealth --- This copper coin dangles from a leather strip strung through a hole drilled in the center."
+ },
+ {
+  "id": "daredevil-boots",
+  "collection": "items",
+  "name": "Daredevil Boots",
+  "level": 10,
+  "text": "You treat falls as 10 feet shorter or, if you have the Cat Fall feat, treat your proficiency rank in Acrobatics as one degree better to determine the benefits of that feat. If you have Cat Fall and are already legendary in Acrobatics, you can choose the speed of your fall, from 60 feet per round up to normal falling speed."
+ },
+ {
+  "id": "daredevil-boots-greater",
+  "collection": "items",
+  "name": "Daredevil Boots (Greater)",
+  "level": 17,
+  "text": "You treat falls as 10 feet shorter or, if you have the Cat Fall feat, treat your proficiency rank in Acrobatics as one degree better to determine the benefits of that feat. If you have Cat Fall and are already legendary in Acrobatics, you can choose the speed of your fall, from 60 feet per round up to normal falling speed."
+ },
+ {
+  "id": "inexplicable-apparatus",
+  "collection": "items",
+  "name": "Inexplicable Apparatus",
+  "level": 18,
+  "text": "If you succeed at your Crafting check and spend more downtime to continue work on the item after the minimum number of days, each day you spend reduces the remaining raw material cost by an amount based on your level + 1 and your proficiency rank in Crafting; on a critical success, each day reduces the remaining raw material cost by an amount based on your level + 2 and your proficiency rank. If you are 20th level, on a critical success your progress is 50 gp, 100 gp, 200 gp, or 350 gp for trained, expert, master, or legendary proficiency, respectively."
+ }
+]

@@ -1,0 +1,387 @@
+[
+ {
+  "id": "stargazers-eyes",
+  "collection": "feats",
+  "name": "Stargazer's Eyes",
+  "level": 4,
+  "text": "Long hours in darkened observatories have sharpened your senses. If you don't have low-light vision or darkvision, you gain low-light vision, or if you already have low-light vision, you gain darkvision. **Special** You can take this feat a second time, upgrading your low-light vision to darkvision."
+ },
+ {
+  "id": "starlight-armor",
+  "collection": "feats",
+  "name": "Starlight Armor",
+  "level": 14,
+  "text": "The armor grants you resistance 7 to piercing, bludgeoning, and slashing damage. Regardless of the result of the save, the attacker is temporarily immune until the end of its next turn. When you reach 17th level, the resistance increases to 10."
+ },
+ {
+  "id": "spirit-guide-form",
+  "collection": "feats",
+  "name": "Spirit Guide Form",
+  "level": 14,
+  "text": "- You gain resistance 10 to all damage (except force, ghost touch, or spirit; double resistance vs. - Darkvision."
+ },
+ {
+  "id": "disarming-smile",
+  "collection": "feats",
+  "name": "Disarming Smile",
+  "level": 6,
+  "text": "After you use Disarming Smile, all creatures who witnessed you use it are temporarily immune to your Disarming Smile for the next 24 hours."
+ },
+ {
+  "id": "avenging-runelord-dedication",
+  "collection": "feats",
+  "name": "Avenging Runelord Dedication",
+  "level": 12,
+  "text": "This spell must be chosen from the following list: Darkvision, Mystic Armor, Runic Body, Runic Weapon, See the Unseen, Sending, or Truesight; alternatively, you can choose any spell of 6th rank or lower from the sin spells listed for your chosen sin."
+ },
+ {
+  "id": "shining-runes",
+  "collection": "feats",
+  "name": "Shining Runes",
+  "level": 14,
+  "text": "They may blaze brightly, leave lingering fog, create discordant noise, or fill the air with an overwhelming scent, such that their presence obfuscates you from onlookers."
+ },
+ {
+  "id": "subjugation",
+  "collection": "feats",
+  "name": "Subjugation",
+  "level": 16,
+  "text": "You attempt to send your runelord's influence into the mind of a creature you can sense within 30 feet. Regardless of the result, the target is temporarily immune to this ability for 24 hours once the Subjugation ends. You gain awareness of its abilities and weaknesses as if you achieved a critical success on a Recall Knowledge check to identify the creature. You gain awareness of its abilities and weaknesses as success."
+ },
+ {
+  "id": "craft-runewell",
+  "collection": "feats",
+  "name": "Craft Runewell",
+  "level": 20,
+  "text": "As long as it does so and you are on the same plane as the anima focus, you do not age and are immune to effects that rob you of your mental abilities (such as the never mind spell or the confused and stupefied conditions)."
+ },
+ {
+  "id": "momentary-respite",
+  "collection": "feats",
+  "name": "Momentary Respite",
+  "level": 16,
+  "text": "Your sense of destiny manifests as rapid physical healing. Until the end of your next turn, you're immune to persistent damage (though you would take any other effects of an attack or spell that would also give you persistent damage)."
+ },
+ {
+  "id": "eternal-hero",
+  "collection": "feats",
+  "name": "Eternal Hero",
+  "level": 20,
+  "text": "The first time each day you would be reduced to 0 Hit Points or outright killed by magical means, you instead remain at 1 Hit Point and become immune to all damage until the end of your next turn."
+ },
+ {
+  "id": "live-off-borrowed-time",
+  "collection": "feats",
+  "name": "Live Off Borrowed Time",
+  "level": 14,
+  "text": "At the end of your turn, you become Slowed 1 and are immune to the quickened condition until the end of your next turn."
+ },
+ {
+  "id": "timelessness",
+  "collection": "feats",
+  "name": "Timelessness",
+  "level": 20,
+  "text": "You're immune to hostile spells and effects related to time or aging, as well as the slowed condition (except for when you gain the slowed condition through this mythic destiny)."
+ },
+ {
+  "id": "reincarnated-ridiculer",
+  "collection": "feats",
+  "name": "Reincarnated Ridiculer",
+  "level": 5,
+  "text": "When you Demoralize an opponent, the target doesn't become temporarily immune to your attempts to Demoralize it unless you critically fail the check."
+ },
+ {
+  "id": "thoughtform-summoning",
+  "collection": "feats",
+  "name": "Thoughtform Summoning",
+  "level": 4,
+  "text": "This grants it resistance to physical damage equal to half its level, weakness 5 to force and mental damage, and the ability to pass through enemies' spaces without needing to Tumble Through (though it can't end its turn in an occupied space)."
+ },
+ {
+  "id": "thoughtsense",
+  "collection": "feats",
+  "name": "Thoughtsense",
+  "level": 8,
+  "text": "You gain as a vague sense that has a range of 30 feet-like all vague senses, it's only about as precise as an average human's sense of smell, meaning you generally can predict only if a creature is present. Your thoughtsense detects only thinking creatures, so a creature that is unthinking or otherwise immune to mental effects (such as many constructs and oozes) can't be perceived using your thoughtsense, regardless of how precise it is. While your Psyche is Unleashed, your thoughtsense upgrades to an imprecise sense, letting you use it to Seek out creat"
+ },
+ {
+  "id": "whispering-steps",
+  "collection": "feats",
+  "name": "Whispering Steps",
+  "level": 8,
+  "text": "If that enemy fails its save or the spell hits it, you whisper in the creature's mind, forcing it to Stride up to half its Speed in a direction of your choosing; as this is forced movement, you can't force the creature to move into hazardous terrain, off a ledge, or the like. After it moves, the creature becomes temporarily immune to this amp for 24 hours."
+ },
+ {
+  "id": "become-thought",
+  "collection": "feats",
+  "name": "Become Thought",
+  "level": 20,
+  "text": "- You gain resistance 10 to physical damage but weakness 5 to mental damage."
+ },
+ {
+  "id": "dormant-eruption",
+  "collection": "feats",
+  "name": "Dormant Eruption",
+  "level": 14,
+  "text": "You're hot to the touch, gaining resistance 5 to cold and fire."
+ },
+ {
+  "id": "infiltrate-dream",
+  "collection": "feats",
+  "name": "Infiltrate Dream",
+  "level": 6,
+  "text": "Your target becomes temporarily immune to Infiltrate Dream for 1 week."
+ },
+ {
+  "id": "oppurtune-trickster",
+  "collection": "feats",
+  "name": "Oppurtune Trickster",
+  "level": 6,
+  "text": "Regardless of the result, the target is temporarily immune to your attempts to use Opportune Trickster for the next 10 minutes."
+ },
+ {
+  "id": "conjure-hell",
+  "collection": "feats",
+  "name": "Conjure Hell",
+  "level": 12,
+  "text": "This fire damage ignores an amount of fire resistance equal to your level, but not immunity to fire."
+ },
+ {
+  "id": "uncanny-prediction",
+  "collection": "feats",
+  "name": "Uncanny Prediction",
+  "level": 8,
+  "text": "Regardless of the result, the target becomes temporarily immune to your Uncanny Prediction for 1 hour."
+ },
+ {
+  "id": "perplex",
+  "collection": "feats",
+  "name": "Perplex",
+  "level": 14,
+  "text": "The creature is then immune to Perplex for 24 hours."
+ },
+ {
+  "id": "frightening-indignation",
+  "collection": "feats",
+  "name": "Frightening Indignation",
+  "level": 16,
+  "text": "--- **Critical Success** The creature is unaffected and becomes temporarily immune to your Frightening Indignation for 1 minute."
+ },
+ {
+  "id": "feign-innocence",
+  "collection": "feats",
+  "name": "Feign Innocence",
+  "level": 12,
+  "text": "The target is then temporarily immune to Feign Innocence for 1 hour."
+ },
+ {
+  "id": "such-a-disgrace",
+  "collection": "feats",
+  "name": "Such a Disgrace!",
+  "level": 4,
+  "text": "Regardless of the result of the save, your ally is temporarily immune to Such a Disgrace! for 10 minutes."
+ },
+ {
+  "id": "flower-street-infamy",
+  "collection": "feats",
+  "name": "Flower Street Infamy",
+  "level": 11,
+  "text": "Regardless of your result, the target is temporarily immune to your Flower Street Infamy for 24 hours."
+ },
+ {
+  "id": "do-you-know-who-i-am",
+  "collection": "feats",
+  "name": "Do You Know Who I Am?",
+  "level": 12,
+  "text": "The target is then temporarily immune to your Do You Know Who I Am? for 24 hours."
+ },
+ {
+  "id": "godless-healing",
+  "collection": "feats",
+  "name": "Godless Healing",
+  "level": 2,
+  "text": "After you or an ally use Battle Medicine on you, you become temporarily immune to that Battle Medicine for only 1 hour, instead of 1 day."
+ },
+ {
+  "id": "edict-of-mortality",
+  "collection": "feats",
+  "name": "Edict of Mortality",
+  "level": 8,
+  "text": "Targets are then temporarily immune to your use of this ability for 24 hours."
+ },
+ {
+  "id": "barricade-snare",
+  "collection": "feats",
+  "name": "Barricade Snare",
+  "level": 6,
+  "text": "The barricade occupies the same space as the snare and is 5 feet high; it provides standard cover, can be Climbed with a successful check, has an AC of 10, Hardness 5, and 20 Hit Points, and is immune to critical hits and precision damage."
+ },
+ {
+  "id": "wall-of-roses",
+  "collection": "feats",
+  "name": "Wall of Roses",
+  "level": 8,
+  "text": "The wall is immune to fire and the piercing damage its thorns deal counts as silver for the purposes of resistances."
+ },
+ {
+  "id": "face-your-fears",
+  "collection": "feats",
+  "name": "Face Your Fears",
+  "level": 4,
+  "text": "Although you aren't immune to it, you can subdue the emotion to such an extent that many believe it doesn't affect you."
+ },
+ {
+  "id": "patronize-the-arts",
+  "collection": "feats",
+  "name": "Patronize the Arts",
+  "level": 4,
+  "text": "The ally is then immune to this ability for 1 day."
+ },
+ {
+  "id": "stoic-as-hell",
+  "collection": "feats",
+  "name": "Stoic as Hell",
+  "level": 6,
+  "text": "If the effect originated from a creature, you can demoralize that creature once as a free action on your next turn; if the creature was temporarily immune to your attempts to Demoralize it, it loses that immunity."
+ },
+ {
+  "id": "drowning-mist",
+  "collection": "feats",
+  "name": "Drowning Mist",
+  "level": 12,
+  "text": "While in this stance, your aura is difficult terrain for any creature that doesn't have a swim Speed. You're immune to the effects of your own Drowning Mist. --- **Critical Success** The creature is unaffected and becomes temporarily immune to the effects of this impulse for 24 hours."
+ },
+ {
+  "id": "improvise-strategy",
+  "collection": "feats",
+  "name": "Improvise Strategy",
+  "level": 7,
+  "text": "Attempt a check against the Perception DC of a creature within 30 feet, after which the target becomes temporarily immune to further uses of Improvise Strategy for 1 hour. In addition, the target isn't temporarily immune to further uses of Improvise Strategy. **Success** As critical success, but the target is temporarily immune to further uses of Improvise Strategy."
+ },
+ {
+  "id": "seasoned-command",
+  "collection": "feats",
+  "name": "Seasoned Command",
+  "level": 7,
+  "text": "Regardless of your result, the ally is then temporarily immune to your further uses of Seasoned Command for 1 minute."
+ },
+ {
+  "id": "friend-of-the-sea",
+  "collection": "feats",
+  "name": "Friend of the Sea",
+  "level": 1,
+  "text": "Your pet must be aquatic, and it gains the darkvision and tough abilities in addition to the two abilities you normally choose for a pet."
+ },
+ {
+  "id": "heartless-debilitations",
+  "collection": "feats",
+  "name": "Heartless Debilitations",
+  "level": 10,
+  "text": "Debilitation The target gains weakness 5 to bleed and poison damage."
+ },
+ {
+  "id": "remember-their-names",
+  "collection": "feats",
+  "name": "Remember Their Names",
+  "level": 16,
+  "text": "Once you use Remember Their Names on a target, the target is immune to it for 24 hours."
+ },
+ {
+  "id": "orators-filibuster",
+  "collection": "feats",
+  "name": "Orator's Filibuster",
+  "level": 8,
+  "text": "Creatures who are familiar with you and your verbal techniques, such as allies you've known for at least several days, are immune to this effect, though newer allies who have not heard one of your speeches before might still be affected."
+ },
+ {
+  "id": "opportune-trickster",
+  "collection": "feats",
+  "name": "Opportune Trickster",
+  "level": 6,
+  "text": "Regardless of the result, the target is temporarily immune to your attempts to use Opportune Trickster for the next 10 minutes."
+ },
+ {
+  "id": "snap-out-of-it-marshal",
+  "collection": "feats",
+  "name": "Snap Out of It! (Marshal)",
+  "level": 4,
+  "text": "Regardless of the result of the save, your ally is temporarily immune to Snap Out of It! for 10 minutes."
+ },
+ {
+  "id": "vengeful-remnant",
+  "collection": "feats",
+  "name": "Vengeful Remnant",
+  "level": 14,
+  "text": "Until the start of your next turn, you gain resistance 10 to all damage except force, ghost touch, spirit, and vitality, doubled if the source of the damage is non-magical. If you slay a significant foe not immune to spirit damage with your Spectral Dagger while under this effect, its duration increases until the end of your next turn."
+ },
+ {
+  "id": "aon-celestial-mount",
+  "collection": "feats",
+  "name": "Celestial Mount",
+  "level": 20,
+  "text": "It gains darkvision, its maximum Hit Points increase by 40, and it gains weakness 10 to unholy. Additionally, it grows wings appropriate to a servitor of your deity (such as metallic wings for an archon), granting it a fly Speed equal to its Speed."
+ },
+ {
+  "id": "aon-fiendish-mount",
+  "collection": "feats",
+  "name": "Fiendish Mount",
+  "level": 20,
+  "text": "It gains darkvision, its maximum Hit Points increase by 40, and it gains weakness 10 to holy. Additionally, it grows wings appropriate for a servitor of your deity (such as bat wings for a devil), granting it a fly Speed equal to its Speed."
+ },
+ {
+  "id": "aon-remember-thy-names",
+  "collection": "feats",
+  "name": "Remember thy Names",
+  "level": 16,
+  "text": "Once you use Remember Their Names on a target, the target is immune to it for 24 hours."
+ },
+ {
+  "id": "aon-vengful-remnant",
+  "collection": "feats",
+  "name": "Vengful Remnant",
+  "level": 14,
+  "text": "Until the start of your next turn, you gain resistance 10 to all damage except force, ghost touch, spirit, and vitality, doubled if the source of the damage is non-magical. If you slay a significant foe not immune to spirit damage with your spectral dagger while under this effect, its duration increases until the end of your next turn."
+ },
+ {
+  "id": "aon-orator-s-fillibuster",
+  "collection": "feats",
+  "name": "Orator's Fillibuster",
+  "level": 8,
+  "text": "Creatures who are familiar with you and your verbal techniques, such as allies you've known for at least several days, are immune to this effect, though newer allies who have not heard one of your speeches before might still be affected."
+ },
+ {
+  "id": "aon-oppurtune-trickster",
+  "collection": "feats",
+  "name": "Oppurtune Trickster",
+  "level": 6,
+  "text": "Regardless of the result, the target is temporarily immune to your attempts to use Opportune Trickster for the next 10 minutes."
+ },
+ {
+  "id": "aon-dad-joke",
+  "collection": "feats",
+  "name": "Dad Joke",
+  "level": 1,
+  "text": "The target is then immune to your Dad Jokes for 1 hour."
+ },
+ {
+  "id": "spellstrike",
+  "collection": "classFeatures",
+  "name": "Spellstrike",
+  "level": 1,
+  "text": "Invalid or Immune Target: If the target you hit wouldn't be a valid target for the spell, the spell is still expended but doesn't affect the target. If the target is immune to your attack but not the spell, it can still be affected by the spell."
+ },
+ {
+  "id": "studious-spells",
+  "collection": "classFeatures",
+  "name": "Studious Spells",
+  "level": 7,
+  "text": "**Aloof Firmament** 7th: Water Walk; 11th: Wall of Wind; 13th: Variable Gravity **Inexorable Iron** 7th: Enlarge; 11th: Earthbind; 13th: Planar Tether **Laughing Shadow** 7th: Blur; 11th: Time Jump; 13th: Translocate **Sparkling Targe** 7th: Resist Energy; 11th: Warding Aggression; 13th: Mountain Resilience **Starlit Span** 7th: Darkvision; 11th: Wall of Wind; 13th: Unfettered Movement **Twisting Tree** 7th: Embed Message; 11th: Slow; 13th: Flicker **Unfurling Brocade** 7th: Web; 11th: Whirling Scarves; 13th: Planar Tether **Resurgent Maelstrom** 7th: Wa"
+ },
+ {
+  "id": "revolutionary-innovation",
+  "collection": "classFeatures",
+  "name": "Revolutionary Innovation",
+  "level": 15,
+  "text": "While wearing your armor, you gain resistance to all energy damage (acid, cold, electricity, fire, force, sonic, vitality, and void damage) equal to 2 + half your level. - **Incredible Resistance:** You've improved upon your breakthrough modification's ability to resist damage. Increase the resistance you gain from that modification to be equal to your level, instead of half your level. - **Multisensory Mask (subterfuge suit only):** You've built a multisensory mask over your armor that protects you by distorting your figure from all senses, leaving behi"
+ }
+]

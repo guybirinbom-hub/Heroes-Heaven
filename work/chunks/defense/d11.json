@@ -1,0 +1,387 @@
+[
+ {
+  "id": "olfactory-stimulators",
+  "collection": "items",
+  "name": "Olfactory Stimulators",
+  "level": 1,
+  "text": "This cluster of sensitive wire whiskers fits over the nose or snout to provide sensory information as it reacts to nearby odors and other scents. A creature wearing olfactory stimulators gains a sense of smell, which is as precise as an average member of its species, as well as the scent special ability if members of its species typically have that ability."
+ },
+ {
+  "id": "olfactory-stimulators-bloodhound",
+  "collection": "items",
+  "name": "Olfactory Stimulators (Bloodhound)",
+  "level": 5,
+  "text": "105 Usage worn This cluster of sensitive wire whiskers fits over the nose or snout to provide sensory information as it reacts to nearby odors and other scents. A creature wearing olfactory stimulators gains a sense of smell, which is as precise as an average member of its species, as well as the scent special ability if members of its species typically have that ability. 105 Price 136 gp Bulk L These olfactory stimulators can be enhanced to better localize scents. You gain imprecise scent with a range of 30 feet for 1 minute."
+ },
+ {
+  "id": "magical-prosthetic-eye",
+  "collection": "items",
+  "name": "Magical Prosthetic Eye",
+  "level": 1,
+  "text": "As the wearer's mind must process the telepathic signal in the same way as it would a nerve impulse, the acuity and other abilities related to the vision provided by the magical prosthetic eye matches that of other members of your ancestry (for instance, a goblin with a magical prosthetic eye would be able to see in darkvision, while a human wearing the same prosthetic would need illumination)."
+ },
+ {
+  "id": "tremorsensors",
+  "collection": "items",
+  "name": "Tremorsensors",
+  "level": 4,
+  "text": "**Activate** ⟨4⟩ (manipulate) **Frequency** once per day --- **Effect** You stomp a foot, clap your hands, or create some other source of sound, gaining tremorsense as an imprecise sense with a range of 20 feet for the next 10 minutes."
+ },
+ {
+  "id": "illuminated-folio",
+  "collection": "items",
+  "name": "Illuminated Folio",
+  "level": 14,
+  "text": "These summoned creatures appear as living illustrations, granting them resistance to physical damage equal to half their level and weakness 5 to fire and to any ability with the water trait."
+ },
+ {
+  "id": "battle-medics-baton",
+  "collection": "items",
+  "name": "Battle Medic's Baton",
+  "level": 3,
+  "text": "The target is temporarily immune to your Battle Medicine for 1 hour instead of 1 day."
+ },
+ {
+  "id": "fortunes-coin",
+  "collection": "items",
+  "name": "Fortune's Coin",
+  "level": 8,
+  "text": "Either way, you're temporarily immune to fortune's coin for 1 hour."
+ },
+ {
+  "id": "fortunes-coin-platinum",
+  "collection": "items",
+  "name": "Fortune's Coin (Platinum)",
+  "level": 14,
+  "text": "Either way, you're temporarily immune to fortune's coin for 1 hour."
+ },
+ {
+  "id": "horrid-figurine",
+  "collection": "items",
+  "name": "Horrid Figurine",
+  "level": 8,
+  "text": "You're immune to this effect. You're immune to this effect."
+ },
+ {
+  "id": "bewitching-bloom",
+  "collection": "items",
+  "name": "Bewitching Bloom",
+  "level": 2,
+  "text": "119 Price 600 gp A glow envelops your ally as a sense of enlightened peace ripples out from within. If the save succeeds or the effect ends, the target is temporarily immune to being fascinated by any magnolia bewitching bloom for 24 hours. 119 Price 80 gp A sense of peace overwhelms the ally."
+ },
+ {
+  "id": "bewitching-bloom-magnolia",
+  "collection": "items",
+  "name": "Bewitching Bloom (Magnolia)",
+  "level": 6,
+  "text": "If the save succeeds or the effect ends, the target is temporarily immune to being fascinated by any *magnolia bewitching bloom* for 24 hours."
+ },
+ {
+  "id": "eye-slash",
+  "collection": "items",
+  "name": "Eye Slash",
+  "level": 1,
+  "text": "If you have darkvision, you can see blood in color."
+ },
+ {
+  "id": "eye-slash-greater",
+  "collection": "items",
+  "name": "Eye Slash (Greater)",
+  "level": 4,
+  "text": "If you have darkvision, you can see blood in color."
+ },
+ {
+  "id": "eye-slash-major",
+  "collection": "items",
+  "name": "Eye Slash (Major)",
+  "level": 9,
+  "text": "If you have darkvision, you can see blood in color."
+ },
+ {
+  "id": "eye-slash-true",
+  "collection": "items",
+  "name": "Eye Slash (True)",
+  "level": 17,
+  "text": "If you have darkvision, you can see blood in color."
+ },
+ {
+  "id": "wyrms-wingspan",
+  "collection": "items",
+  "name": "Wyrm's Wingspan",
+  "level": 9,
+  "text": "You gain resistance 5 to the damage type matching the tradition of the dragon your tattoo depicts."
+ },
+ {
+  "id": "ghostcallers-planchette",
+  "collection": "items",
+  "name": "Ghostcaller's Planchette",
+  "level": 12,
+  "text": "- **Armor** After you cast a spell by activating the planchette, you gain resistance 5 to all physical damage (except Ghost Touch) until the start of your next turn."
+ },
+ {
+  "id": "jolt-coil",
+  "collection": "items",
+  "name": "Jolt Coil",
+  "level": 3,
+  "text": "- **Armor** You gain resistance 2 to electricity."
+ },
+ {
+  "id": "jolt-coil-greater",
+  "collection": "items",
+  "name": "Jolt Coil (Greater)",
+  "level": 8,
+  "text": "- **Armor** You gain resistance 3 to electricity."
+ },
+ {
+  "id": "jolt-coil-major",
+  "collection": "items",
+  "name": "Jolt Coil (Major)",
+  "level": 12,
+  "text": "- **Armor** You gain resistance 5 to electricity."
+ },
+ {
+  "id": "phantasmal-doorknob-greater",
+  "collection": "items",
+  "name": "Phantasmal Doorknob (Greater)",
+  "level": 10,
+  "text": "The creature is then temporarily immune to being blinded in this way for 24 hours."
+ },
+ {
+  "id": "phantasmal-doorknob-major",
+  "collection": "items",
+  "name": "Phantasmal Doorknob (Major)",
+  "level": 15,
+  "text": "The creature is then temporarily immune to being blinded in this way for 24 hours."
+ },
+ {
+  "id": "resonating-fork",
+  "collection": "items",
+  "name": "Resonating Fork",
+  "level": 5,
+  "text": "- **Armor** You gain resistance 2 to sonic damage and a +1 item bonus to saving throws against effects with the auditory or sonic trait."
+ },
+ {
+  "id": "resonating-fork-greater",
+  "collection": "items",
+  "name": "Resonating Fork (Greater)",
+  "level": 7,
+  "text": "- **Armor** You gain resistance 5 to sonic damage and a +2 item bonus to saving throws against effects with the auditory or sonic trait."
+ },
+ {
+  "id": "rime-crystal",
+  "collection": "items",
+  "name": "Rime Crystal",
+  "level": 3,
+  "text": "- **Armor** You gain resistance 2 to cold."
+ },
+ {
+  "id": "rime-crystal-greater",
+  "collection": "items",
+  "name": "Rime Crystal (Greater)",
+  "level": 8,
+  "text": "- **Armor** You gain resistance 5 to cold."
+ },
+ {
+  "id": "sanguine-fang",
+  "collection": "items",
+  "name": "Sanguine Fang",
+  "level": 9,
+  "text": "- **Armor** You gain resistance 3 to persistent bleed damage and a +2 item bonus on saving throws against effects with the void trait."
+ },
+ {
+  "id": "sanguine-fang-greater",
+  "collection": "items",
+  "name": "Sanguine Fang (Greater)",
+  "level": 12,
+  "text": "- **Armor** You gain resistance 5 to persistent bleed damage and a +2 item bonus on saving throws against effects with the void trait."
+ },
+ {
+  "id": "saurian-spike",
+  "collection": "items",
+  "name": "Saurian Spike",
+  "level": 9,
+  "text": "- **Armor** You gain imprecise scent with a range of 30 feet."
+ },
+ {
+  "id": "saurian-spike-greater",
+  "collection": "items",
+  "name": "Saurian Spike (Greater)",
+  "level": 11,
+  "text": "- **Armor** You gain imprecise scent with a range of 60 feet."
+ },
+ {
+  "id": "saurian-spike-major",
+  "collection": "items",
+  "name": "Saurian Spike (Major)",
+  "level": 15,
+  "text": "- **Armor** You gain precise scent with a range of 60 feet."
+ },
+ {
+  "id": "warding-statuette",
+  "collection": "items",
+  "name": "Warding Statuette",
+  "level": 7,
+  "text": "- **Armor** You gain resistance 1 against ranged weapon attacks."
+ },
+ {
+  "id": "warding-statuette-greater",
+  "collection": "items",
+  "name": "Warding Statuette (Greater)",
+  "level": 13,
+  "text": "- **Armor** You gain resistance 5 against ranged weapon attacks."
+ },
+ {
+  "id": "wyrm-spindle",
+  "collection": "items",
+  "name": "Wyrm Spindle",
+  "level": 12,
+  "text": "- **Armor** After you cast a non-cantrip spell by activating the spindle, you gain resistance 5 to fire, force, mental, and spirit for 1 minute."
+ },
+ {
+  "id": "hell-staff",
+  "collection": "items",
+  "name": "Hell Staff",
+  "level": 17,
+  "text": "- **Cantrip** Divine Lance - **1st** Protection, Summon Lesser Servitor - **2nd** Darkvision, Summon Lesser Servitor - **3rd** Chilling Darkness, Darkvision, Summon Lesser Servitor - **4th** Divine Wrath, Summon Lesser Servitor - **5th** Darkvision, Divine Immolation, Summon Fiend - **6th** Devil Form, Summon Fiend - **7th** Divine Decree, Summon Fiend --- **Craft Requirements** You're unholy."
+ },
+ {
+  "id": "staff-of-water",
+  "collection": "items",
+  "name": "Staff of Water",
+  "level": 3,
+  "text": "While wielding a *staff of water*, you have resistance 2 to fire."
+ },
+ {
+  "id": "staff-of-water-greater",
+  "collection": "items",
+  "name": "Staff of Water (Greater)",
+  "level": 8,
+  "text": "While wielding a *staff of water*, you have resistance 5 to fire."
+ },
+ {
+  "id": "wand-of-noisome-acid-2nd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (2nd-Rank Spell)",
+  "level": 6,
+  "text": "61 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in hand."
+ },
+ {
+  "id": "wand-of-noisome-acid-4th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (4th-Rank Spell)",
+  "level": 10,
+  "text": "61 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in hand."
+ },
+ {
+  "id": "wand-of-noisome-acid-6th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (6th-Rank Spell)",
+  "level": 14,
+  "text": "61 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in hand."
+ },
+ {
+  "id": "wand-of-noisome-acid-8th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (8th-Rank Spell)",
+  "level": 18,
+  "text": "61 Usage held in 1 hand Bulk L This greasy stick emits a stomach-churning scent when held in hand."
+ },
+ {
+  "id": "bracers-of-devotion",
+  "collection": "items",
+  "name": "Bracers of Devotion",
+  "level": 11,
+  "text": "- **Blessed Shield** While raised, the shield grants you resistance 10 to unholy if you're holy, resistance 10 to holy if you're unholy, or resistance 5 to holy and unholy if you're neither. - **Blessed Swiftness** The bonus to Speed is +10 feet."
+ },
+ {
+  "id": "goz-mask-major",
+  "collection": "items",
+  "name": "Goz Mask (Major)",
+  "level": 12,
+  "text": "--- **Activate** ⟨1⟩ Interact **Frequency** once per day **Effect** The mask gives you darkvision and allows you to ignore all Concealment from any environmental effects for 1 hour."
+ },
+ {
+  "id": "caydens-tankard",
+  "collection": "items",
+  "name": "Cayden's Tankard",
+  "level": 25,
+  "text": "Imbued with Cayden Cailean's courage, you are immune to fear effects. --- **Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per hour **Effect** You drink from the tankard, ending the controlled, grabbed, immobilized, paralyzed, restrained, and slowed conditions on yourself and creatures of your choice within 120 feet of you, as well as anything giving such targets a circumstance penalty to Speed."
+ },
+ {
+  "id": "elder-seed",
+  "collection": "items",
+  "name": "Elder Seed",
+  "level": 11,
+  "text": "You gain resistance to bludgeoning damage and piercing damage equal to your level, and you have tremorsense out to a range of 30 feet. --- **Stage 2 (1 Month)** You gain low-light vision and fluency in Arboreal. You become Clumsy 1, take a –1 status penalty to initiative rolls, and gain a weakness to fire damage equal to half your level, and you take the same amount of additional damage from axes. Your weakness to fire and vulnerability to axes equals your level."
+ },
+ {
+  "id": "heartblood-ring",
+  "collection": "items",
+  "name": "Heartblood Ring",
+  "level": 15,
+  "text": "(Non-adults who drink *heartblood* change only in apparent vigor, not age.) You have fast healing equal to half your level, as well as resistance to void damage and poison damage equal to half your level. --- **Stage 2 (1 Month)** You gain low-light vision, or you gain darkvision if your ancestry already has low-light vision. The controlling vampire senses you and guides you to them via psychic link. --- **Stage 3 (1 Month)** You gain darkvision and now have fast healing equal to your level."
+ },
+ {
+  "id": "phoenix-cinder",
+  "collection": "items",
+  "name": "Phoenix Cinder",
+  "level": 16,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- An incandescent, multipronged crystal the color of dying fire, a phoenix cinder gives off pleasant warmth and a sense of peace. For 3 days after taking in the cinder, you are immune to fire. While in this stage or higher, you have fast healing equal to half your level, as well as resistance to fire damage equal to half your level. Reduce your current and maximum Hit Points by 2 × your level, and you have a weakness to cold damage equal to half your level. Also, you have a weakness to cold damage equal to your level and a"
+ },
+ {
+  "id": "tattletale-orb",
+  "collection": "items",
+  "name": "Tattletale Orb",
+  "level": 14,
+  "text": "193 Bulk 1 The target is temporarily immune to the orb’s see the unseen for 24 hours and can choose to be invisible to the orb’s scrying during that time. 193 Bulk 1 The target is temporarily immune to the orb's mind reading for 24 hours and can use mind reading against you instead, as if the target used the orb. 193 Bulk 1 The target is temporarily immune to the orb’s truesight for 24 hours."
+ },
+ {
+  "id": "tattletale-orb-selenite",
+  "collection": "items",
+  "name": "Tattletale Orb (Selenite)",
+  "level": 15,
+  "text": "The target is temporarily immune to the orb's see invisibility for 24 hours and can choose to be invisible to the orb's scrying during that time."
+ },
+ {
+  "id": "tattletale-orb-moonstone",
+  "collection": "items",
+  "name": "Tattletale Orb (Moonstone)",
+  "level": 16,
+  "text": "The target is temporarily immune to the orb's mind reading for 24 hours and can use mind reading against you instead, as if the target used the orb."
+ },
+ {
+  "id": "tattletale-orb-obsidian",
+  "collection": "items",
+  "name": "Tattletale Orb (Obsidian)",
+  "level": 19,
+  "text": "The target is temporarily immune to the orb's true seeing for 24 hours."
+ },
+ {
+  "id": "arboreal-staff",
+  "collection": "items",
+  "name": "Arboreal Staff",
+  "level": 12,
+  "text": "**Perception** +25; precise vision (low-light) 60 feet, imprecise hearing 30 feet, imprecise tremorsense 30 feet (only when touching the ground) **Communication** speech (Arboreal, Common, Fey; *speak with plants*) **Skills** Diplomacy +22, Forest Lore +25, Nature +25 **Int** +4, **Wis** +6, **Cha** +4 **Will** +27 --- Rather than passing on when they feel their death approaching, a rare few elderly arboreals undergo a ritual of preservation."
+ },
+ {
+  "id": "faerie-queens-bower",
+  "collection": "items",
+  "name": "Faerie Queen's Bower",
+  "level": 13,
+  "text": "**Perception** +23; precise vision (darkvision) 60 feet, imprecise hearing 30 feet **Communication** telepathy (Celestial, Common) **Skills** Diplomacy +25, Religion +25 **Int** +4, **Wis** +4, **Cha** +6 **Will** +25 --- A suit of Autumn's Embrace armor can gain sapience when lovingly crafted by a fey monarch of sufficient power; a suit of faerie queen's bower is one such example."
+ },
+ {
+  "id": "toshigami-blossom",
+  "collection": "items",
+  "name": "Toshigami Blossom",
+  "level": 15,
+  "text": "**Perception** +30; precise vision (darkvision) 30 feet, imprecise hearing 30 feet **Communication** telepathy (Common and two other common languages; speak with plants) **Skills** Diplomacy +28, Medicine +32, Nature +32 **Int** +6, **Wis** +10, **Cha** +5 **Will** +32 --- An encounter with a toshigami, the enigmatic kami who protect cherry trees, is rare, though often sought after and treasured by those who achieve such an encounter."
+ },
+ {
+  "id": "clinging-bubbles",
+  "collection": "items",
+  "name": "Clinging Bubbles",
+  "level": 3,
+  "text": "The bubbles are thick and sticky, and any creature who enters the same space as the bubble cloud becomes shrouded in them, taking a –5-foot circumstance penalty to its Speed. The cloud of bubbles has AC 5, 20 Hit Points, and weakness 5 to piercing and slashing."
+ }
+]

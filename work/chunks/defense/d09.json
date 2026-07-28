@@ -1,0 +1,387 @@
+[
+ {
+  "id": "siccatite-buckler-high-grade",
+  "collection": "items",
+  "name": "Siccatite Buckler (High-Grade)",
+  "level": 16,
+  "text": "Standard-grade siccatite shields have resistance 10 to the corresponding energy type: fire damage for a hot siccatite shield or cold damage for a cold siccatite shield, as it takes even more extreme temperatures to affect them. They also provide some resistance to opposing temperatures because of their own extreme temperature, which extends to you when you Raise the Shield. The shield has resistance 5 to the opposing damage type (cold damage for a hot siccatite shield or fire damage for a cold siccatite shield), and while you have a siccatite shield Rais"
+ },
+ {
+  "id": "siccatite-shield-high-grade",
+  "collection": "items",
+  "name": "Siccatite Shield (High-Grade)",
+  "level": 16,
+  "text": "Standard-grade siccatite shields have resistance 10 to the corresponding energy type: fire damage for a hot siccatite shield or cold damage for a cold siccatite shield, as it takes even more extreme temperatures to affect them. They also provide some resistance to opposing temperatures because of their own extreme temperature, which extends to you when you Raise the Shield. The shield has resistance 5 to the opposing damage type (cold damage for a hot siccatite shield or fire damage for a cold siccatite shield), and while you have a siccatite shield Rais"
+ },
+ {
+  "id": "fanged-greater",
+  "collection": "items",
+  "name": "Fanged (Greater)",
+  "level": 8,
+  "text": "In animal form, you gain low-light vision and a +5-foot item bonus to your Speed."
+ },
+ {
+  "id": "fanged-major",
+  "collection": "items",
+  "name": "Fanged (Major)",
+  "level": 15,
+  "text": "In animal form, you gain low-light vision, imprecise scent to a range of 30 feet, and a +10-foot item bonus to your Speed."
+ },
+ {
+  "id": "crown-of-the-fire-eater",
+  "collection": "items",
+  "name": "Crown of the Fire Eater",
+  "level": 8,
+  "text": "You gain resistance 5 to fire. Increase your fire resistance from the crown from 5 to 15. Just after taking any remaining fire damage, you regain a number of Hit Points equal to 15 or the fire damage dealt by the triggering attack before damage resistance, whichever is less."
+ },
+ {
+  "id": "grisantian-pelt",
+  "collection": "items",
+  "name": "Grisantian Pelt",
+  "level": 12,
+  "text": "This material is immune to fire, and its Hardness is doubled against piercing or slashing damage."
+ },
+ {
+  "id": "grisantian-hide-object-standard-grade",
+  "collection": "items",
+  "name": "Grisantian Hide Object (Standard-Grade)",
+  "level": 12,
+  "text": "This material is immune to fire, and its Hardness is doubled against piercing or slashing damage."
+ },
+ {
+  "id": "grisantian-hide-object-high-grade",
+  "collection": "items",
+  "name": "Grisantian Hide Object (High-Grade)",
+  "level": 18,
+  "text": "This material is immune to fire, and its Hardness is doubled against piercing or slashing damage."
+ },
+ {
+  "id": "grisantian-pelt-armor",
+  "collection": "items",
+  "name": "Grisantian Pelt Armor",
+  "level": 12,
+  "text": "35 Usage worn armor Bulk varies by armor Base Material Grisantian Pelt Grisantian pelt armor is immune to fire damage, and its Hardness is doubled against piercing or slashing damage."
+ },
+ {
+  "id": "grisantian-pelt-armor-standard-grade",
+  "collection": "items",
+  "name": "Grisantian Pelt Armor (Standard-Grade)",
+  "level": 12,
+  "text": "35 Usage worn armor Bulk varies by armor Base Material Grisantian Pelt Grisantian pelt armor is immune to fire damage, and its Hardness is doubled against piercing or slashing damage."
+ },
+ {
+  "id": "grisantian-pelt-armor-high-grade",
+  "collection": "items",
+  "name": "Grisantian Pelt Armor (High-Grade)",
+  "level": 19,
+  "text": "35 Usage worn armor Bulk varies by armor Base Material Grisantian Pelt Grisantian pelt armor is immune to fire damage, and its Hardness is doubled against piercing or slashing damage."
+ },
+ {
+  "id": "mantle-of-the-grogrisant",
+  "collection": "items",
+  "name": "Mantle of the Grogrisant",
+  "level": 18,
+  "text": "The *Mantle of the Grogrisant* grants you fire resistance 15 and physical resistance 5 (except bludgeoning)."
+ },
+ {
+  "id": "golden-rod-memento",
+  "collection": "items",
+  "name": "Golden Rod Memento",
+  "level": 20,
+  "text": "As long as you wear it, it grants you weakness 5 to bludgeoning damage, and you still can't remove it."
+ },
+ {
+  "id": "appetizing-flavor-snare",
+  "collection": "items",
+  "name": "Appetizing Flavor Snare",
+  "level": 1,
+  "text": "You construct this snare around a sealed bladder containing substances that local predators find delicious, such as scent glands from prey animals or fresh carrion. For 1 hour, animals attracted to the flavor (such as most predators, at the GM's discretion) can smell the creature from double the usual distance of their scent and are likely to approach to investigate the smell."
+ },
+ {
+  "id": "dream-pollen-snare",
+  "collection": "items",
+  "name": "Dream Pollen Snare",
+  "level": 3,
+  "text": "Undead creatures and creatures that don't breathe are immune to dream pollen."
+ },
+ {
+  "id": "dawnlight-greater",
+  "collection": "items",
+  "name": "Dawnlight (Greater)",
+  "level": 7,
+  "text": "Creatures with darkvision in the area of the light spell or targeted by it must succeed at a or be dazzled for 1 round."
+ },
+ {
+  "id": "dawnlight-major",
+  "collection": "items",
+  "name": "Dawnlight (Major)",
+  "level": 11,
+  "text": "Creatures with darkvision in the area of the light spell or targeted by it must succeed at a or be dazzled for 1 round."
+ },
+ {
+  "id": "thunder-helm",
+  "collection": "items",
+  "name": "Thunder Helm",
+  "level": 5,
+  "text": "When determining a creature's resistance or immunity to this damage, use the weaker of the target's resistance or immunity to piercing or bludgeoning."
+ },
+ {
+  "id": "blast-suit",
+  "collection": "items",
+  "name": "Blast Suit",
+  "level": 9,
+  "text": "You become immobilized, gain a +2 circumstance bonus to your Reflex save against area effects, and gain resistance 5 to all damage you would normally take from area effects and scatter splash damage (this doesn't damage the *blast suit*)."
+ },
+ {
+  "id": "mutagenic-renovator",
+  "collection": "items",
+  "name": "Mutagenic Renovator",
+  "level": 10,
+  "text": "For 1 hour after you imbibe the potion, your skin warps and mutates to grant you resistance 5 to one type of energy damage. The potion starts by granting you resistance against this type of damage. Each time you take damage from one of these listed energy types other than the one you currently resist, your skin mutates, causing you to lose the energy resistance previously granted by this potion and gain resistance to the type of energy by which you were most recently damaged, and the potion's duration decreases by 10 minutes. The resistance shifts only a"
+ },
+ {
+  "id": "curled-cure-gel",
+  "collection": "items",
+  "name": "Curled Cure Gel",
+  "level": 7,
+  "text": "The target of your Treat Wounds is then temporarily immune to curled cure gel for 24 hours, whether or not your attempt to Treat Wounds was successful."
+ },
+ {
+  "id": "drowsy-sun-eye-drops",
+  "collection": "items",
+  "name": "Drowsy Sun Eye Drops",
+  "level": 3,
+  "text": "**Activate** Seek --- These drops are made from luminescent mushrooms and refined into eye drops, which simulates a creature's natural night vision. When you attempt a Perception check to Seek, you can draw and apply a dose of drowsy sun to your eyes as part of the same action, which grants you darkvision to a range of 30 feet for 1 round."
+ },
+ {
+  "id": "umbral-wings",
+  "collection": "items",
+  "name": "Umbral Wings",
+  "level": 8,
+  "text": "While wearing the cloak, you gain low-light vision and a +1 item bonus to Seek creatures. **Activate** ⟨1⟩ envision **Frequency** once per hour --- **Effect** You gain a fly Speed equal to your Speed until the end of your next turn."
+ },
+ {
+  "id": "sisterstone-armor",
+  "collection": "items",
+  "name": "Sisterstone Armor",
+  "level": 5,
+  "text": "The ally gains resistance 2 to all damage dealt by undead creatures for 1 round. The resistance is 3 if your sisterstone armor is standard grade, or resistance 4 if it's high grade."
+ },
+ {
+  "id": "sisterstone-armor-low-grade",
+  "collection": "items",
+  "name": "Sisterstone Armor (Low-Grade)",
+  "level": 5,
+  "text": "The ally gains resistance 2 to all damage dealt by undead creatures for 1 round. The resistance is 3 if your sisterstone armor is standard grade, or resistance 4 if it's high grade."
+ },
+ {
+  "id": "sisterstone-armor-standard-grade",
+  "collection": "items",
+  "name": "Sisterstone Armor (Standard-Grade)",
+  "level": 10,
+  "text": "The ally gains resistance 2 to all damage dealt by undead creatures for 1 round. The resistance is 3 if your sisterstone armor is standard grade, or resistance 4 if it's high grade."
+ },
+ {
+  "id": "sisterstone-armor-high-grade",
+  "collection": "items",
+  "name": "Sisterstone Armor (High-Grade)",
+  "level": 18,
+  "text": "The ally gains resistance 2 to all damage dealt by undead creatures for 1 round. The resistance is 3 if your sisterstone armor is standard grade, or resistance 4 if it's high grade."
+ },
+ {
+  "id": "azarim",
+  "collection": "items",
+  "name": "Azarim",
+  "level": 7,
+  "text": "**Perception**: +12; darkvision 30 feet, hearing 30 feet (imprecise) **Communication** telepath (Celestial, Common, Dwarven, Sakvroth) **Skills** Alcohol Lore +13, Deception +15, Diplomacy +13, Religion +13, Society +15 **Int** +2, **Wis** +2, **Cha** +4 **Will** +15 --- In life, the dwarven rogue Azarim was always something of an outsider among her people for her fast and loose relationship with dwarven tradition. To wielders she doesn't approve of, she works to convince them to either change their ways or to hand her over to someone who she can work wi"
+ },
+ {
+  "id": "drazmorgs-staff-of-all-sight",
+  "collection": "items",
+  "name": "Drazmorg's Staff of All-Sight",
+  "level": 10,
+  "text": "- **Cantrip** Read Aura - **1st** Sure Strike - **2nd** Darkvision, Floating Flame (creates what appears to be a large eye made of fire), See the Unseen - **3rd** Organsight, Web of Eyes - **4th** , Countless Eyes, Detect Scrying --- **Craft Requirements** Supply one casting of all listed levels of all listed spells."
+ },
+ {
+  "id": "ring-of-torag",
+  "collection": "items",
+  "name": "Ring of Torag",
+  "level": 3,
+  "text": "--- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** You're targeted by a fire effect **Effect** The ring's red gemstone flashes with light, granting you resistance 5 against fire and a +1 status bonus on your AC or saving throw against the fire effect targeting you; these benefits end as soon as the fire effect is resolved."
+ },
+ {
+  "id": "tallowheart-mass",
+  "collection": "items",
+  "name": "Tallowheart Mass",
+  "level": 8,
+  "text": "While some create *tallowheart masses* that are connected via lengths of scented cord or even fine chain, the mass of tallow is always off-putting in texture, scent, and appearance. --- **Activate** ⟨1⟩ Interact **Effect** If you rub a portion on your body, it melts into your worn gear and flesh and grants you resistance 10 to fire damage for 1 minute."
+ },
+ {
+  "id": "briar",
+  "collection": "items",
+  "name": "Briar",
+  "level": 20,
+  "text": "**Perception** +32, normal vision, darkvision, and hearing within 60 feet **Communication** speech (Aklo, Common, and Sylvan) **Skills** First World Lore +32, Nature +30 Int +2, Wis +2, Cha +5 +32 **Activate** ⟨1⟩ (command) **Frequency** three times per day **Effect** *Briar* casts a 4th-rank Oaken Resilience on its partner. **Perception** +34, normal vision, darkvision, and hearing within 120 feet Communication speech and telepathy (Aklo, Common, and Sylvan) **Skills** First World Lore +34, Nature +32 Int +4, Wis +4, Cha +7 +34 **Activate** ⟨1⟩ (command"
+ },
+ {
+  "id": "moon-radish-soup",
+  "collection": "items",
+  "name": "Moon Radish Soup",
+  "level": 2,
+  "text": "After eating a serving of moon radish soup, you gain temporary immunity to its effects for 24 hours."
+ },
+ {
+  "id": "oculus-of-abaddon",
+  "collection": "items",
+  "name": "Oculus of Abaddon",
+  "level": 15,
+  "text": "Once placed, an oculus grants you constant Darkvision. Creatures hear the telepathic suggestion in their native language, and creatures that are 7th level or higher can attempt a save to resist the effect. It has weakness 10 to bludgeoning damage and weakness 30 to holy."
+ },
+ {
+  "id": "ring-of-bestial-friendship",
+  "collection": "items",
+  "name": "Ring of Bestial Friendship",
+  "level": 9,
+  "text": "If you fail to affect the creature with this *charm*, or once the *charm* ends (such as if it is counteracted, or its duration expires), the creature becomes enraged and is immune to the ring's *charm* from that point on."
+ },
+ {
+  "id": "mindrender-baton",
+  "collection": "items",
+  "name": "Mindrender Baton",
+  "level": 15,
+  "text": "Another character can attempt a (master) or (master) check against the effect's DC of 31 to remove this effect before then, but if this attempt fails, the commanded creature becomes temporarily immune to that character's attempts to remove the effect via skills for 24 hours."
+ },
+ {
+  "id": "feyfoul",
+  "collection": "items",
+  "name": "Feyfoul",
+  "level": 1,
+  "text": "35 Usage held in 1 hand Bulk L Activate Interact To creatures other than fey, the scent of feyfoul seems to be a faint but non-obnoxious odor of cinnamon, but fey find that the stuff interferes with their ability to manipulate a creature's mind."
+ },
+ {
+  "id": "feyfoul-lesser",
+  "collection": "items",
+  "name": "Feyfoul (Lesser)",
+  "level": 1,
+  "text": "**Activate** ⟨1⟩ Interact --- To creatures other than fey, the scent of feyfoul seems to be a faint but non-obnoxious odor of cinnamon, but fey find that the stuff interferes with their ability to manipulate a creature's mind."
+ },
+ {
+  "id": "feyfoul-moderate",
+  "collection": "items",
+  "name": "Feyfoul (Moderate)",
+  "level": 8,
+  "text": "**Activate** ⟨1⟩ Interact --- To creatures other than fey, the scent of feyfoul seems to be a faint but non-obnoxious odor of cinnamon, but fey find that the stuff interferes with their ability to manipulate a creature's mind."
+ },
+ {
+  "id": "feyfoul-greater",
+  "collection": "items",
+  "name": "Feyfoul (Greater)",
+  "level": 14,
+  "text": "**Activate** ⟨1⟩ Interact --- To creatures other than fey, the scent of feyfoul seems to be a faint but non-obnoxious odor of cinnamon, but fey find that the stuff interferes with their ability to manipulate a creature's mind."
+ },
+ {
+  "id": "admirers-bouquet",
+  "collection": "items",
+  "name": "Admirer's Bouquet",
+  "level": 7,
+  "text": "An admirer's bouquet appears to be a colorful silken handkerchief that exudes a pleasant floral scent until it's picked up, at which point a dozen vibrantly colored long- stemmed flowers appear in the carrier's hand, the stems wrapped in the silk. **Activate** ⟨1⟩ Interact **Frequency** once per minute --- **Effect** By taking a deep sniff of the pleasant-smelling flowers, you can speed your recovery from nausea and reduce your sickened value by 1."
+ },
+ {
+  "id": "alkenstar-ice-wine",
+  "collection": "items",
+  "name": "Alkenstar Ice Wine",
+  "level": 5,
+  "text": "Made exclusively from grapes frozen in the Mana Wastes' erratic surge storms, Alkenstar ice wine finds a ready market among Geb, though undead are still immune to the drug's listed effects."
+ },
+ {
+  "id": "redsand-hourglass",
+  "collection": "items",
+  "name": "Redsand Hourglass",
+  "level": 23,
+  "text": "While the hourglass is in your possession, you're immune to the paralyzed, slowed, and stunned conditions."
+ },
+ {
+  "id": "energy-adaptive",
+  "collection": "items",
+  "name": "Energy Adaptive",
+  "level": 13,
+  "text": "**Activate**⟨5⟩ (concentrate) **Frequency** once per hour **Trigger** You take acid, cold, electricity, or fire damage --- **Effect** You gain resistance 5 to the triggering damage type. This resistance lasts until you Activate this rune again or the armor is no longer invested by you."
+ },
+ {
+  "id": "arachnid-harness",
+  "collection": "items",
+  "name": "Arachnid Harness",
+  "level": 7,
+  "text": "The armor grants you resistance 2 to poison damage. For 1 minute, you gain a climb Speed equal to half your land Speed and have your limbs free as you climb. If you use all your free limbs to help you Climb, your climb Speed equals your land Speed."
+ },
+ {
+  "id": "arachnid-harness-greater",
+  "collection": "items",
+  "name": "Arachnid Harness (Greater)",
+  "level": 9,
+  "text": "The armor grants you resistance 5 to poison damage. For 1 minute, you gain a climb Speed equal to half your land Speed and have your limbs free as you climb. If you use all your free limbs to help you Climb, your climb Speed equals your land Speed."
+ },
+ {
+  "id": "ouroboros-buckles",
+  "collection": "items",
+  "name": "Ouroboros Buckles",
+  "level": 19,
+  "text": "This ominous-looking *+3 greater resilient greater acid-resistant buckle armor* is deep red in color, favored by assassins who worship Norgorber or Asmodeus, and if unfastened, the many belts and buckles writhe like living snakes. When you're a swarm of snakes, you gain low-light vision, imprecise scent (30 feet), a Speed of 20 feet, a climb Speed of 20 feet, and a swim Speed of 20 feet. You have an AC of 16 + your level and ignore your armor's check penalty and Speed reduction. Also, you gain resistance 5 to physical damage and weakness 5 to area damage"
+ },
+ {
+  "id": "impossible",
+  "collection": "items",
+  "name": "Impossible",
+  "level": 20,
+  "text": "The etched weapon is immune to Dispel Magic and similar effects that could counteract its magic."
+ },
+ {
+  "id": "dragonscale-bo-staff",
+  "collection": "items",
+  "name": "Dragonscale Bo Staff",
+  "level": 6,
+  "text": "When benefiting from the circumstance bonus to AC granted by the bo staff's parry trait, you also gain a +1 circumstance bonus to saving throws against magical effects of the tradition matching the dragon who provided the scales, plus resistance 5 to a damage type determined by that tradition: force for arcane, spirit for divine, mental for occult, or fire for primal. For instance, a *dragonscale bo staff* made with scales taken from an omen dragon would provide a +1 circumstance bonus to saves against occult effects and resistance 5 to mental damage."
+ },
+ {
+  "id": "ghoul-stiletto",
+  "collection": "items",
+  "name": "Ghoul Stiletto",
+  "level": 3,
+  "text": "A creature that succeeds at its save is temporarily immune to all stench auras for 1 minute."
+ },
+ {
+  "id": "skunk-bomb",
+  "collection": "items",
+  "name": "Skunk Bomb",
+  "level": 1,
+  "text": "While the odor lasts, creatures within 30 feet can smell the target, enabling even those with a weak sense of smell to detect its presence, and all creatures gain a +1 item bonus to Track the affected creature for as long as it has the odor. A creature that has imprecise or precise scent doubles the range at which it can detect the target using this scent."
+ },
+ {
+  "id": "skunk-bomb-lesser",
+  "collection": "items",
+  "name": "Skunk Bomb (Lesser)",
+  "level": 1,
+  "text": "While the odor lasts, creatures within 30 feet can smell the target, enabling even those with a weak sense of smell to detect its presence, and all creatures gain a +1 item bonus to Track the affected creature for as long as it has the odor. A creature that has imprecise or precise scent doubles the range at which it can detect the target using this scent."
+ },
+ {
+  "id": "skunk-bomb-moderate",
+  "collection": "items",
+  "name": "Skunk Bomb (Moderate)",
+  "level": 3,
+  "text": "While the odor lasts, creatures within 30 feet can smell the target, enabling even those with a weak sense of smell to detect its presence, and all creatures gain a +1 item bonus to Track the affected creature for as long as it has the odor. A creature that has imprecise or precise scent doubles the range at which it can detect the target using this scent."
+ },
+ {
+  "id": "skunk-bomb-greater",
+  "collection": "items",
+  "name": "Skunk Bomb (Greater)",
+  "level": 11,
+  "text": "While the odor lasts, creatures within 30 feet can smell the target, enabling even those with a weak sense of smell to detect its presence, and all creatures gain a +1 item bonus to Track the affected creature for as long as it has the odor. A creature that has imprecise or precise scent doubles the range at which it can detect the target using this scent."
+ },
+ {
+  "id": "skunk-bomb-major",
+  "collection": "items",
+  "name": "Skunk Bomb (Major)",
+  "level": 17,
+  "text": "While the odor lasts, creatures within 30 feet can smell the target, enabling even those with a weak sense of smell to detect its presence, and all creatures gain a +1 item bonus to Track the affected creature for as long as it has the odor. A creature that has imprecise or precise scent doubles the range at which it can detect the target using this scent."
+ }
+]

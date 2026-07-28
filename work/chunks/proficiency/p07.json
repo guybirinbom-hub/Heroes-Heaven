@@ -1,0 +1,387 @@
+[
+ {
+  "id": "thaumaturgic-mastery",
+  "collection": "classFeatures",
+  "name": "Thaumaturgic Mastery",
+  "level": 17,
+  "text": "You've become a master in paranormal phenomena, and your esoterica grow in power. Your proficiency rank for your thaumaturge class DC increases to master."
+ },
+ {
+  "id": "adept-benefit-regalia",
+  "collection": "classFeatures",
+  "name": "Adept Benefit (Regalia)",
+  "level": 7,
+  "text": "The circumstance bonus you gain to Deception, Diplomacy, and Intimidation increases to +2, as long as you have master proficiency in each skill. When others use Follow the Expert to follow you, you grant them a +2 circumstance bonus if you are trained, +3 if you have expert proficiency, or +4 if you have master or legendary proficiency."
+ },
+ {
+  "id": "alchemical-sciences-methodology",
+  "collection": "classFeatures",
+  "name": "Alchemical Sciences Methodology",
+  "level": 1,
+  "text": "You're trained in Crafting and gain the Alchemical Crafting skill feat."
+ },
+ {
+  "id": "anvils-hardness",
+  "collection": "classFeatures",
+  "name": "Anvil's Hardness",
+  "level": 17,
+  "text": "Your proficiency rank for Fortitude saves increases to master."
+ },
+ {
+  "id": "avenger",
+  "collection": "classFeatures",
+  "name": "Avenger",
+  "level": 1,
+  "text": "Trained far from watching eyes, you use stealth, intimidation, and deadly bladework to root out threats to your church. You are trained in Intimidation, Religion, Stealth, the divine skill granted by your racket, and a number of additional skills equal to 3 plus your Intelligence modifier, instead of your normal starting skill proficiencies. ## Avenger Racket Trained to be a precise but brutal weapon by the priests of your faith, you eschew complex trickery for swift and deadly efficiency. You are trained in your deity's favored weapon. Whenever you gain"
+ },
+ {
+  "id": "battle-creed",
+  "collection": "classFeatures",
+  "name": "Battle Creed",
+  "level": 1,
+  "text": "Initial Creed (1st): You're trained in light and medium armor, and you have expert proficiency in Fortitude saves. You're trained in martial weapons. At 13th level when you gain the Divine Defense class feature, you also gain expert proficiency in light and medium armor. Lesser Creed (5th): You gain expert proficiency with your deity's favored weapon, martial weapons, simple weapons, and unarmed attacks. Your proficiency rank for your class DC increases to expert. Greater Creed (11th): Your proficiency ranks for the spell attack modifier and spell DC sta"
+ },
+ {
+  "id": "battledancer",
+  "collection": "classFeatures",
+  "name": "Battledancer",
+  "level": 1,
+  "text": "You are trained in Performance and gain the Fascinating Performance skill feat."
+ },
+ {
+  "id": "bloodline-spells",
+  "collection": "classFeatures",
+  "name": "Bloodline Spells",
+  "level": 1,
+  "text": "**Tradition** You use this magical tradition and spell list **Bloodline Skills** You become trained in the listed skills."
+ },
+ {
+  "id": "bloodrager",
+  "collection": "classFeatures",
+  "name": "Bloodrager",
+  "level": 1,
+  "text": "**Bloodrager Adjustments:** You are trained in Athletics, Medicine, and a number of additional skills equal to 2 plus your Intelligence modifier, instead of your normal starting skill proficiencies."
+ },
+ {
+  "id": "braggart",
+  "collection": "classFeatures",
+  "name": "Braggart",
+  "level": 1,
+  "text": "You are trained in Intimidation."
+ },
+ {
+  "id": "chirurgeon",
+  "collection": "classFeatures",
+  "name": "Chirurgeon",
+  "level": 1,
+  "text": "**Field Benefit** You can use your proficiency rank in Crafting for anything that requires a proficiency rank in Medicine (such as prerequisites) and use your Crafting modifier in place of your Medicine modifier for all Medicine checks."
+ },
+ {
+  "id": "churning-mind",
+  "collection": "classFeatures",
+  "name": "Churning Mind",
+  "level": 11,
+  "text": "Your proficiency rank for Will saves increases to master."
+ },
+ {
+  "id": "cloistered-cleric",
+  "collection": "classFeatures",
+  "name": "Cloistered Cleric",
+  "level": 1,
+  "text": "**Second Doctrine (3rd):** Your proficiency rank for Fortitude saves increases to expert. **Third Doctrine (7th):** Your proficiency ranks for the spell attack modifier and spell DC statistics increase to expert. **Fourth Doctrine (11th):** You gain expert proficiency with your deity's favored weapon, simple weapons, and unarmed attacks. **Fifth Doctrine (15th):** Your proficiency ranks for the spell attack modifier and spell DC statistics increase to master. **Final Doctrine (19th):** Your proficiency ranks for the spell attack modifier and spell DC sta"
+ },
+ {
+  "id": "cobyslarni",
+  "collection": "classFeatures",
+  "name": "Cobyslarni",
+  "level": 1,
+  "text": "When you Cast or Sustain a hex, your familiar can attempt a check to Recall Knowledge as a free action with any skill in which you are trained or better, using your bonus, and psychically transmit the information to you."
+ },
+ {
+  "id": "construct-innovation",
+  "collection": "classFeatures",
+  "name": "Construct Innovation",
+  "level": 1,
+  "text": "Your innovation becomes trained in Intimidation, Stealth, and Survival."
+ },
+ {
+  "id": "cultivation-order",
+  "collection": "classFeatures",
+  "name": "Cultivation Order",
+  "level": 1,
+  "text": "You're trained in Crafting."
+ },
+ {
+  "id": "deity-champion",
+  "collection": "classFeatures",
+  "name": "Deity (Champion)",
+  "level": 1,
+  "text": "## Skill You become trained in the divine skill listed for your deity. As normal, if you're already trained in that skill, you become trained in a different skill of your choice."
+ },
+ {
+  "id": "deity-cleric",
+  "collection": "classFeatures",
+  "name": "Deity (Cleric)",
+  "level": 1,
+  "text": "Your deity grants you the trained proficiency rank in one skill and with the deity's favored weapon."
+ },
+ {
+  "id": "empiricism-methodology",
+  "collection": "classFeatures",
+  "name": "Empiricism Methodology",
+  "level": 1,
+  "text": "You are trained in one Intelligence-based skill of your choice."
+ },
+ {
+  "id": "evasion",
+  "collection": "classFeatures",
+  "name": "Evasion",
+  "level": 7,
+  "text": "Your proficiency rank for Reflex saves increases to master."
+ },
+ {
+  "id": "fencer",
+  "collection": "classFeatures",
+  "name": "Fencer",
+  "level": 1,
+  "text": "You are trained in Deception."
+ },
+ {
+  "id": "fifth-doctrine-warpriest",
+  "collection": "classFeatures",
+  "name": "Fifth Doctrine (Warpriest)",
+  "level": 15,
+  "text": "Your proficiency rank for Fortitude saves increases to master."
+ },
+ {
+  "id": "final-creed",
+  "collection": "classFeatures",
+  "name": "Final Creed",
+  "level": 19,
+  "text": "Your proficiency ranks for light and medium armor, as well as for unarmed defense, increase to master. Your proficiency rank for your class DC increases to legendary."
+ },
+ {
+  "id": "first-doctrine-warpriest",
+  "collection": "classFeatures",
+  "name": "First Doctrine (Warpriest)",
+  "level": 1,
+  "text": "You're trained in light and medium armor, and you have expert proficiency in Fortitude saves. At 13th level, if you gain the Divine Defense class feature, you also gain expert proficiency in light and medium armor."
+ },
+ {
+  "id": "focus-spells",
+  "collection": "classFeatures",
+  "name": "Focus Spells",
+  "level": 1,
+  "text": "302** If you get focus spells from a class or other source that doesn't grant spellcasting ability (for example, if you're a Monk with the Qi Spells feat), the ability that gives you focus spells also provides your proficiency rank for spell attack rolls and spell DCs, as well as the magical tradition of your focus spells."
+ },
+ {
+  "id": "forensic-medicine-methodology",
+  "collection": "classFeatures",
+  "name": "Forensic Medicine Methodology",
+  "level": 1,
+  "text": "You're trained in Medicine and gain the Forensic Acumen and Battle Medicine skill feats."
+ },
+ {
+  "id": "gate-junction",
+  "collection": "classFeatures",
+  "name": "Gate Junction",
+  "level": 5,
+  "text": "- A **skill junction** makes you trained in the listed skill and grants you the listed skill feat. If you were already trained in the listed skill, you instead become trained in a skill of your choice."
+ },
+ {
+  "id": "greater-resolve",
+  "collection": "classFeatures",
+  "name": "Greater Resolve",
+  "level": 17,
+  "text": "Your proficiency rank for Will saves increases to legendary."
+ },
+ {
+  "id": "greater-weapon-specialization-barbarian",
+  "collection": "classFeatures",
+  "name": "Greater Weapon Specialization (Barbarian)",
+  "level": 15,
+  "text": "Your damage from weapon specialization increases to 4 with weapons and unarmed attacks in which you're an expert, 6 if you're a master, and 8 if you're legendary."
+ },
+ {
+  "id": "gymnast",
+  "collection": "classFeatures",
+  "name": "Gymnast",
+  "level": 1,
+  "text": "You are trained in Athletics."
+ },
+ {
+  "id": "heightened-senses",
+  "collection": "classFeatures",
+  "name": "Heightened Senses",
+  "level": 17,
+  "text": "Your proficiency rank for Perception increases to master."
+ },
+ {
+  "id": "hyper-boosters",
+  "collection": "classFeatures",
+  "name": "Hyper Boosters",
+  "level": 7,
+  "text": "If you're legendary in Crafting, it instead increases to a +30-foot status bonus when you're in Overdrive."
+ },
+ {
+  "id": "improved-evasion",
+  "collection": "classFeatures",
+  "name": "Improved Evasion",
+  "level": 13,
+  "text": "Your proficiency rank for Reflex saves increases to legendary."
+ },
+ {
+  "id": "initial-creed",
+  "collection": "classFeatures",
+  "name": "Initial Creed",
+  "level": 1,
+  "text": "You're trained in light and medium armor, and you have expert proficiency in Fortitude saves. You're trained in martial weapons. At 13th level when you gain the Divine Defense class feature, you also gain expert proficiency in light and medium armor."
+ },
+ {
+  "id": "interrogation-methodology",
+  "collection": "classFeatures",
+  "name": "Interrogation Methodology",
+  "level": 1,
+  "text": "You are trained in Diplomacy."
+ },
+ {
+  "id": "iron-will",
+  "collection": "classFeatures",
+  "name": "Iron Will",
+  "level": 3,
+  "text": "Your proficiency rank for Will saves increases to expert. Your proficiency rank for Will saves increases to expert."
+ },
+ {
+  "id": "ki-spells",
+  "collection": "classFeatures",
+  "name": "Ki Spells",
+  "level": 1,
+  "text": "You become trained in spell attacks and spell DCs of that tradition and your key spellcasting ability is Wisdom."
+ },
+ {
+  "id": "lesser-creed",
+  "collection": "classFeatures",
+  "name": "Lesser Creed",
+  "level": 5,
+  "text": "You gain expert proficiency with your deity's favored weapon, martial weapons, simple weapons, and unarmed attacks. Your proficiency rank for your class DC increases to expert."
+ },
+ {
+  "id": "light-mortar-innovation",
+  "collection": "classFeatures",
+  "name": "Light Mortar Innovation",
+  "level": 1,
+  "text": "**Munitions Master Adjustments:** Instead of choosing an innovation from the options listed in the inventor class, you have the light mortar innovation, as well as the following changes to the class features listed on the following pages. You must select Munitions Master Dedication as your 2nd-level class feat. It has trained proficiency in Reflex and Fortitude saves, using your Intelligence modifier to calculate these bonuses. At 10th level it increases to 15 and its proficiency rank in Reflex and Fortitude saves increases to expert. At 15th level, its "
+ },
+ {
+  "id": "major-creed",
+  "collection": "classFeatures",
+  "name": "Major Creed",
+  "level": 13,
+  "text": "You gain master proficiency with your deity's favored weapon. Your proficiency rank for Fortitude saves increases to master."
+ },
+ {
+  "id": "mastermind",
+  "collection": "classFeatures",
+  "name": "Mastermind",
+  "level": 1,
+  "text": "You're trained in Society and one of the following skills of your choice: Arcana, Nature, Occultism, or Religion."
+ },
+ {
+  "id": "bookkeepers-calling",
+  "collection": "classFeatures",
+  "name": "Bookkeeper's Calling",
+  "level": 1,
+  "text": "When you attempt a check to Recall Knowledge or Earn Income using a Lore skill you're trained in, you can spend a Mythic Point to attempt the check at mythic proficiency."
+ },
+ {
+  "id": "palatine-detective",
+  "collection": "classFeatures",
+  "name": "Palatine Detective",
+  "level": 1,
+  "text": "## Esoterica Methodology You become trained in Occultism or Religion, and you gain the Quick Identification skill feat. You become trained in the spell attack modifier and spell DCs statistics."
+ },
+ {
+  "id": "paragon-benefit-regalia",
+  "collection": "classFeatures",
+  "name": "Paragon Benefit (Regalia)",
+  "level": 17,
+  "text": "When others use Follow the Expert to follow you, you grant them a +3 circumstance bonus if you are trained or +4 if you are an expert or above."
+ },
+ {
+  "id": "paragon-benefit-tome",
+  "collection": "classFeatures",
+  "name": "Paragon Benefit (Tome)",
+  "level": 17,
+  "text": "Lastly, when you gain temporary skill proficiencies, both are legendary."
+ },
+ {
+  "id": "patron-theme",
+  "collection": "classFeatures",
+  "name": "Patron Theme",
+  "level": 1,
+  "text": "**Patron Skill** You become trained in the skill associated with your patron's magical tradition."
+ },
+ {
+  "id": "premonition-reflexes",
+  "collection": "classFeatures",
+  "name": "Premonition Reflexes",
+  "level": 13,
+  "text": "Your proficiency rank for Reflex saves increases to expert."
+ },
+ {
+  "id": "psychic-weapon-expertise",
+  "collection": "classFeatures",
+  "name": "Psychic Weapon Expertise",
+  "level": 11,
+  "text": "Your proficiency rank for simple weapons and unarmed attacks increases to expert."
+ },
+ {
+  "id": "psychic-weapon-specialization",
+  "collection": "classFeatures",
+  "name": "Psychic Weapon Specialization",
+  "level": 13,
+  "text": "You deal 2 additional Damage with weapons and unarmed attacks in which you are an expert. This damage increases to 3 if you're a master, and 4 if you're legendary."
+ },
+ {
+  "id": "rascal",
+  "collection": "classFeatures",
+  "name": "Rascal",
+  "level": 1,
+  "text": "You are trained in Thievery and gain the Dirty Trick general feat."
+ },
+ {
+  "id": "ruffian",
+  "collection": "classFeatures",
+  "name": "Ruffian",
+  "level": 1,
+  "text": "You're trained in Intimidation and medium armor. When you gain light armor expertise, you also gain expert proficiency in medium armor, and when you gain light armor mastery, you also gain master proficiency in medium armor."
+ },
+ {
+  "id": "runelord",
+  "collection": "classFeatures",
+  "name": "Runelord",
+  "level": 1,
+  "text": "**Runelord Adjustments:** You become trained in martial polearms and spears. When your proficiency for simple weapons increases, your proficiencies in these weapons increases as well."
+ },
+ {
+  "id": "scoundrel",
+  "collection": "classFeatures",
+  "name": "Scoundrel",
+  "level": 1,
+  "text": "You're trained in Deception and Diplomacy."
+ },
+ {
+  "id": "second-doctrine-cloistered-cleric",
+  "collection": "classFeatures",
+  "name": "Second Doctrine (Cloistered Cleric)",
+  "level": 3,
+  "text": "Your proficiency rank for Fortitude saves increases to expert."
+ },
+ {
+  "id": "second-doctrine-warpriest",
+  "collection": "classFeatures",
+  "name": "Second Doctrine (Warpriest)",
+  "level": 3,
+  "text": "You're trained in martial weapons."
+ }
+]

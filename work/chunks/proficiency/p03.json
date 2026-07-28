@@ -1,0 +1,387 @@
+[
+ {
+  "id": "crude-communication",
+  "collection": "feats",
+  "name": "Crude Communication",
+  "level": 8,
+  "text": "If you're legendary in Society, you can communicate instantly without needing to attempt a Society check; even if you didn't know the medium of communication the creature uses (speech, sign language, and so on), you intuit this information as soon as they try to communicate."
+ },
+ {
+  "id": "resourceful-ritualist",
+  "collection": "feats",
+  "name": "Resourceful Ritualist",
+  "level": 6,
+  "text": "You can attempt checks to cast a ritual that requires expert proficiency if you are trained, master proficiency if you are an expert, or legendary proficiency if you are a master."
+ },
+ {
+  "id": "snarecrafter-dedication",
+  "collection": "feats",
+  "name": "Snarecrafter Dedication",
+  "level": 2,
+  "text": "Each day during your daily preparations, you can prepare four snares from your formula book for quick deployment (increasing to six snares if you're a master in Crafting and eight if you're legendary). When you increase your proficiency rank in Crafting to expert, master, or legendary, add three additional snare formulas to your formula book."
+ },
+ {
+  "id": "talisman-dabbler-dedication",
+  "collection": "feats",
+  "name": "Talisman Dabbler Dedication",
+  "level": 2,
+  "text": "You are trained in the use of talismans and similar magical paraphernalia."
+ },
+ {
+  "id": "safe-house",
+  "collection": "feats",
+  "name": "Safe House",
+  "level": 4,
+  "text": "The size of the safe house expands to four 10-foot cubes if you're an expert in Deception, eight cubes if you're a master, and 16 cubes if you're legendary."
+ },
+ {
+  "id": "quick-change",
+  "collection": "feats",
+  "name": "Quick Change",
+  "level": 7,
+  "text": "If you are legendary in Deception, you can perform this change as a single action."
+ },
+ {
+  "id": "acrobatic-performer",
+  "collection": "feats",
+  "name": "Acrobatic Performer",
+  "level": 1,
+  "text": "If you are trained in both Acrobatics and Performance, you gain a +1 circumstances bonus on Acrobatics checks made to Perform."
+ },
+ {
+  "id": "aerobatics-mastery",
+  "collection": "feats",
+  "name": "Aerobatics Mastery",
+  "level": 7,
+  "text": "If you're legendary in Acrobatics, you can combine three such maneuvers into a single action; the DC of the Acrobatics check is equal to the DC of the most difficult maneuver + 10."
+ },
+ {
+  "id": "armored-stealth",
+  "collection": "feats",
+  "name": "Armored Stealth",
+  "level": 2,
+  "text": "When you wear non-noisy armor with which you are trained, your penalty to Stealth checks is reduced by 1 (to a minimum penalty of 0). If you're a master in Stealth, reduce the penalty by 2, and if you're legendary, reduce the penalty by 3."
+ },
+ {
+  "id": "backup-disguise",
+  "collection": "feats",
+  "name": "Backup Disguise",
+  "level": 2,
+  "text": "If you are a master in Deception, it is instead a 2-action activity, and if you are legendary in Deception, it is a single action."
+ },
+ {
+  "id": "consult-the-spirits",
+  "collection": "feats",
+  "name": "Consult the Spirits",
+  "level": 7,
+  "text": "If you're legendary in the chosen skill, you can use this feat once per hour, instead of only once per day, but you can't use it again on any area that overlaps a previous area. --- **Special** You can select this feat multiple times, each time picking a different skill in which you have the master proficiency rank. You can use this feat with each skill once per day (or once per hour, if you're legendary)."
+ },
+ {
+  "id": "disturbing-knowledge",
+  "collection": "feats",
+  "name": "Disturbing Knowledge",
+  "level": 7,
+  "text": "Attempt an check and compare the result to the Will DC of an enemy within 30 feet, or to the Will DCs of any number of enemies within 30 feet if you are legendary in Occultism."
+ },
+ {
+  "id": "environmental-guide",
+  "collection": "feats",
+  "name": "Environmental Guide",
+  "level": 7,
+  "text": "If you're legendary in Survival, you may protect yourself and up to five allies, and you treat temperature effects as two steps less severe."
+ },
+ {
+  "id": "eyes-of-the-city",
+  "collection": "feats",
+  "name": "Eyes of the City",
+  "level": 2,
+  "text": "You can use Diplomacy or Society, whichever you're trained in, to Track creatures in settlements."
+ },
+ {
+  "id": "influence-nature",
+  "collection": "feats",
+  "name": "Influence Nature",
+  "level": 7,
+  "text": "If you're legendary in Nature, you can elicit these same adjustments to animal behavior in the area by spending only 10 minutes."
+ },
+ {
+  "id": "rapid-affixture",
+  "collection": "feats",
+  "name": "Rapid Affixture",
+  "level": 7,
+  "text": "If you're legendary in Crafting, you can Affix a Talisman as a 3-action activity."
+ },
+ {
+  "id": "rolling-landing",
+  "collection": "feats",
+  "name": "Rolling Landing",
+  "level": 2,
+  "text": "If you are an expert in Acrobatics, you can use your reaction to Step or Stride up to half your Speed. If you're a master in Acrobatics, you can use your reaction to Step or Stride up to your full Speed. If you're legendary in Acrobatics, you don't trigger reactions triggered by movement when you Stride in this way."
+ },
+ {
+  "id": "root-magic",
+  "collection": "feats",
+  "name": "Root Magic",
+  "level": 1,
+  "text": "This bonus increases to +2 if you're an expert in Occultism or +3 if you're legendary."
+ },
+ {
+  "id": "sanctify-water",
+  "collection": "feats",
+  "name": "Sanctify Water",
+  "level": 2,
+  "text": "If you're a master in Religion, you can sanctify two containers when you take this action, and if you're legendary, you can sanctify three."
+ },
+ {
+  "id": "shadow-mark",
+  "collection": "feats",
+  "name": "Shadow Mark",
+  "level": 2,
+  "text": "If you have master proficiency in Stealth, the penalty is -3 or -4 if you're legendary."
+ },
+ {
+  "id": "slippery-prey",
+  "collection": "feats",
+  "name": "Slippery Prey",
+  "level": 2,
+  "text": "When you attempt to Escape using Acrobatics or Athletics, you reduce the multiple attack penalty for repeated attempts to –4 and –8 if you're trained in the skill. The penalty becomes –3 and –6 if you're a master in the appropriate skill. If you're legendary in the skill, you don't take penalties for multiple Escape attempts in the same turn."
+ },
+ {
+  "id": "water-sprint",
+  "collection": "feats",
+  "name": "Water Sprint",
+  "level": 7,
+  "text": "Experience and training have taught you that water has just enough surface tension for a master sprinter to traverse the surface. If you're legendary in Athletics, as long as you start on solid ground, any part of your Stride can cross the water's surface, even if you aren't moving a straight line, though you still fall into the water if you don't end your movement on solid ground."
+ },
+ {
+  "id": "basic-red-mantis-magic",
+  "collection": "feats",
+  "name": "Basic Red Mantis Magic",
+  "level": 4,
+  "text": "You're trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "memory-of-skill",
+  "collection": "feats",
+  "name": "Memory of Skill",
+  "level": 9,
+  "text": "You temporarily increase your proficiency rank with that skill by one step for 1 minute (from untrained to trained, trained to expert, and expert to master). This temporary increase adjusts your proficiency bonus and allows you to use skill actions based on this increased proficiency as normal. Memory of Skill can't increase a skill's proficiency rank beyond master."
+ },
+ {
+  "id": "special-sentinel-technique",
+  "collection": "feats",
+  "name": "Special Sentinel Technique",
+  "level": 4,
+  "text": "You become trained in spell attack modifier and spell DC, and your spellcasting ability for these spells is Charisma."
+ },
+ {
+  "id": "fluttering-distraction",
+  "collection": "feats",
+  "name": "Fluttering Distraction",
+  "level": 10,
+  "text": "--- You're trained in snapping and fluttering your fans to draw the eyes of observers around you."
+ },
+ {
+  "id": "food-preservation",
+  "collection": "feats",
+  "name": "Food Preservation",
+  "level": 6,
+  "text": "The number of items you can preserve during your daily preparation and the maximum number of items you can have preserved before spoiling older items increases to two if you're an expert in Crafting or Cooking Lore, to three if you're a master, and to five if you're legendary."
+ },
+ {
+  "id": "energy-fortification",
+  "collection": "feats",
+  "name": "Energy Fortification",
+  "level": 2,
+  "text": "If you're a master in Occultism, increase the resistance and weakness to 4. If you're legendary, instead increase them to 8."
+ },
+ {
+  "id": "pei-zing-adept",
+  "collection": "feats",
+  "name": "Pei Zing Adept",
+  "level": 2,
+  "text": "If you're a master in one of the prerequisite skills, you can administer to up to four recipients, and if you're legendary, you can administer to up to eight."
+ },
+ {
+  "id": "battleblooded",
+  "collection": "feats",
+  "name": "Battleblooded",
+  "level": 1,
+  "text": "You descend from those whose lives were touched by legendary einherjars, who were crafted from the souls of mighty warriors slain in battle and chosen by valkyries to serve as foot soldiers to many gods. You are trained in Intimidation. If you were already trained in Intimidation (from your background or class, for example), you instead become trained in a skill of your choice."
+ },
+ {
+  "id": "animist-dedication",
+  "collection": "feats",
+  "name": "Animist Dedication",
+  "level": 2,
+  "text": "You become bound to that apparition and can attune to it each day during your daily preparations to become trained in its apparition skills. If you are 8th level, you are expert in its apparition skills while attuned to it, and if you are 16th level, you are a master in its apparition skills while attuned to it. You're trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "death-from-above",
+  "collection": "feats",
+  "name": "Death from Above",
+  "level": 8,
+  "text": "This additional damage increases to 2d6 if you are a master in Athletics, and to 3d6 if you are legendary in Athletics."
+ },
+ {
+  "id": "godling-dedication",
+  "collection": "feats",
+  "name": "Godling Dedication",
+  "level": 12,
+  "text": "If your hierophant is not trained in spell attack modifier and spell DC, they become trained for as long as they are your designated hierophant. You gain expert proficiency in spell modifier and spell DC, and your spellcasting ability for these spells is your choice of Wisdom or Charisma, decided when you gain this feat. Your hierophant uses their own spellcasting proficiency in spell modifier and spell DC when casting a spell in this way, and they use their own Wisdom or Charisma modifier (matching your choice). If your hierophant has mythic power, they"
+ },
+ {
+  "id": "assume-godhood",
+  "collection": "feats",
+  "name": "Assume Godhood",
+  "level": 20,
+  "text": "In addition, you can choose one skill you are legendary in to act as your divine skill, and your divine attributes include your key attribute and one other attribute of your choosing."
+ },
+ {
+  "id": "listeners-boon",
+  "collection": "feats",
+  "name": "Listener's Boon",
+  "level": 4,
+  "text": "You gain the trained proficiency rank in spell attack modifier and spell DC, increasing to expert at 11th level."
+ },
+ {
+  "id": "raging-stories",
+  "collection": "feats",
+  "name": "Raging Stories",
+  "level": 4,
+  "text": "The fire damage increases to 4 if you are a master of Religion and 6 if you are legendary."
+ },
+ {
+  "id": "illuminating-stories",
+  "collection": "feats",
+  "name": "Illuminating Stories",
+  "level": 6,
+  "text": "The bonus increases to +2 if you are a master of Religion and +3 if you are legendary."
+ },
+ {
+  "id": "artery-map",
+  "collection": "feats",
+  "name": "Artery Map",
+  "level": 6,
+  "text": "The damage increases to 1d10 when you are legendary in Medicine."
+ },
+ {
+  "id": "domain-embodiment",
+  "collection": "feats",
+  "name": "Domain Embodiment",
+  "level": 14,
+  "text": "If you were not already, you become trained in spell attacks and spell DCs."
+ },
+ {
+  "id": "rivethun-devotion",
+  "collection": "feats",
+  "name": "Rivethun Devotion",
+  "level": 8,
+  "text": "If you're a master in Religion, *spirit link* is heightened to 3rd rank. If you're legendary in Religion, *spirit link* is heightened to 4th rank."
+ },
+ {
+  "id": "rivethun-adept",
+  "collection": "feats",
+  "name": "Rivethun Adept",
+  "level": 16,
+  "text": "If you're legendary in Religion, *spiritual guardian* is heightened to 7th rank."
+ },
+ {
+  "id": "leverage-anguish",
+  "collection": "feats",
+  "name": "Leverage Anguish",
+  "level": 6,
+  "text": "If you're a master in Athletics, you regain 4d8 Hit Points instead. If you're legendary in Athletics, you regain 6d8 Hit Points instead."
+ },
+ {
+  "id": "virtuosic-dancer",
+  "collection": "feats",
+  "name": "Virtuosic Dancer",
+  "level": 12,
+  "text": "If you're legendary in Acrobatics, this increases to a +2 circumstance bonus."
+ },
+ {
+  "id": "commitment-to-equality",
+  "collection": "feats",
+  "name": "Commitment to Equality",
+  "level": 4,
+  "text": "When you're a master in Diplomacy, add clumsy and enfeebled to the list of conditions. When you're legendary in Diplomacy, add stunned to the list of conditions; if the stunned condition has a duration instead of a value, you can't use Commitment to Equality to reduce it. You can't treat a condition that came from an artifact or effect above 20th level unless you're legendary in Diplomacy; even if you can, the counteract DC increases by 10."
+ },
+ {
+  "id": "stir-allies",
+  "collection": "feats",
+  "name": "Stir Allies",
+  "level": 10,
+  "text": "If you're legendary in Diplomacy, they can instead Stride."
+ },
+ {
+  "id": "haunting-memories",
+  "collection": "feats",
+  "name": "Haunting Memories",
+  "level": 8,
+  "text": "When you make your daily preparations, you can either gain the expert proficiency rank in one skill in which you're untrained or raise your proficiency rank to master in one skill in which you're trained or better. This proficiency and feat last until you make your daily preparations again. Since the proficiency is temporary, you can't use it as a prerequisite for any permanent character option."
+ },
+ {
+  "id": "klingegeist",
+  "collection": "feats",
+  "name": "Klingegeist",
+  "level": 10,
+  "text": "You're trained in the use of the weapon, unless your proficiency was already better, and you can make Strike actions with the weapon as if you were wielding it."
+ },
+ {
+  "id": "free-heart",
+  "collection": "feats",
+  "name": "Free Heart",
+  "level": 1,
+  "text": "Choose a common background that relates to a passion you've pursued; you're trained in the skills and gain the skill feat associated with that background in addition to those in your normal background. As usual for backgrounds, if you would gain the trained proficiency rank for one of these skill from your class at 1st level, you instead become trained in another skill of your choice."
+ },
+ {
+  "id": "inspiring-recitation",
+  "collection": "feats",
+  "name": "Inspiring Recitation",
+  "level": 4,
+  "text": "If you're an expert in Performance, the bonus increases to +2. If you're a master in Performance, the bonus is +3, and if you're legendary, the bonus is +4."
+ },
+ {
+  "id": "adept-storyteller",
+  "collection": "feats",
+  "name": "Adept Storyteller",
+  "level": 12,
+  "text": "You can use your proficiency rank in any skill that can be used to Recall Knowledge to meet the requirements of skill feats that require a particular rank in Performance."
+ },
+ {
+  "id": "i-knew-the-heroes",
+  "collection": "feats",
+  "name": "I knew the Heroes",
+  "level": 18,
+  "text": "When you use Uzunjati Recollection, if you're legendary in the skill you use to Recall Knowledge, you gain a +1 circumstance bonus to the Recall Knowledge check, and the circumstance bonus to Uzunjati Storytelling increases to +2."
+ },
+ {
+  "id": "vasodilation",
+  "collection": "feats",
+  "name": "Vasodilation",
+  "level": 2,
+  "text": "You gain a +1 item bonus when performing these actions using your blood, which increases to +2 if you're a master in Medicine and +3 if you're legendary."
+ },
+ {
+  "id": "deceptive-tactics",
+  "collection": "feats",
+  "name": "Deceptive Tactics",
+  "level": 1,
+  "text": "You can use your Warfare Lore modifier in place of your Deception modifier for Deception checks to create-a-diversion skill=warfare-lore or feint skill=warfare-lore, and can use your proficiency rank in Warfare Lore instead of your proficiency rank in Deception to meet the prerequisites of feats that modify the Create a Diversion or Feint actions (such as Lengthy Diversion)."
+ },
+ {
+  "id": "punishing-shove",
+  "collection": "feats",
+  "name": "Punishing Shove",
+  "level": 1,
+  "text": "This damage increases by 2 when you become an expert in Athletics, 6 when you become a master, and 12 when you become legendary."
+ },
+ {
+  "id": "ironclad-fortitude",
+  "collection": "feats",
+  "name": "Ironclad Fortitude",
+  "level": 12,
+  "text": "Your proficiency rank in Fortitude saves increases to master."
+ }
+]

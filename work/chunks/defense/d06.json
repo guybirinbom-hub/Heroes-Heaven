@@ -1,0 +1,387 @@
+[
+ {
+  "id": "exemplary-finisher",
+  "collection": "classFeatures",
+  "name": "Exemplary Finisher",
+  "level": 9,
+  "text": "- **Braggart** If the foe was temporarily immune to your Demoralize, their temporary immunity ends. - **Rascal** The foe takes a -10 circumstance penalty to its speed until the start of your next turn."
+ },
+ {
+  "id": "adept-benefit-amulet",
+  "collection": "classFeatures",
+  "name": "Adept Benefit (Amulet)",
+  "level": 7,
+  "text": "When you use Amulet's Abeyance, you or your ally chooses one type of damage dealt by the triggering attack and gains resistance 5 against that damage type until the start of your next turn. At 15th level, this lingering resistance increases from 5 to 10."
+ },
+ {
+  "id": "adept-benefit-mirror",
+  "collection": "classFeatures",
+  "name": "Adept Benefit (Mirror)",
+  "level": 7,
+  "text": "You're immune to this damage."
+ },
+ {
+  "id": "angel-eidolon",
+  "collection": "classFeatures",
+  "name": "Angel Eidolon",
+  "level": 1,
+  "text": "**Tradition** divine **Traits** angel, celestial, eidolon **Alignment** must be good, usually neutral good **Home Plane** Nirvana (if NG), Elysium (if CG), or Heaven (if LG) --- **Size** Medium or Small **Suggested Attacks** fist (bludgeoning), wing (bludgeoning), unarmed attacks shaped like a weapon **Angelic Avenger** Str 18, Dex 14, Con 16, Int 8, Wis 12, Cha 10; +2 AC (+3 Dex cap) **Angelic Emissary** Str 12, Dex 18, Con 12, Int 10, Wis 12, Cha 14; +1 AC (+4 Dex cap) **Skills** Diplomacy, Religion **Senses** darkvision **Language** Celestial **Speed*"
+ },
+ {
+  "id": "anger-phantom-eidolon",
+  "collection": "classFeatures",
+  "name": "Anger Phantom Eidolon",
+  "level": 1,
+  "text": "**Tradition** occult **Traits** eidolon, ethereal, phantom **Home Plane** Ethereal Plane --- **Size** Medium or Small **Suggested Attacks** fist (bludgeoning), tendril (bludgeoning), unarmed attacks shaped like a weapon **Wrathful Berserker** Str 18, Dex 14, Con 16, Int 8, Wis 10, Cha 12; +2 AC (+3 Dex cap) **Enraged Assassin** Str 14, Dex 18, Con 16, Int 10, Wis 8, Cha 12; +1 AC (+4 Dex cap) **Skills** Intimidation, Occultism **Senses** darkvision **Language** one common mortal language the eidolon spoke in life **Speed** 25 feet --- **Eidolon Abilities"
+ },
+ {
+  "id": "beast-eidolon",
+  "collection": "classFeatures",
+  "name": "Beast Eidolon",
+  "level": 1,
+  "text": "**Tradition** primal **Traits** beast, eidolon **Home Plane** Material Plane --- **Size** Medium **Suggested Attacks** claw (slashing), jaws (piercing), fangs (piercing), hoof (bludgeoning), horn (piercing) **Wrathful Berserker** Str 18, Dex 14, Con 16, Int 8, Wis 12, Cha 10; +2 AC (+3 Dex cap) **Enraged Assassin** Str 14, Dex 18, Con 16, Int 8, Wis 12, Cha 10; +1 AC (+4 Dex cap) **Skills** Intimidation, Nature **Senses** low-light vision **Language** Sylvan **Speed** 25 feet --- **Eidolon Abilities** *Initial* beast's charge; *Symbiosis* primal roar; *T"
+ },
+ {
+  "id": "construct-eidolon",
+  "collection": "classFeatures",
+  "name": "Construct Eidolon",
+  "level": 1,
+  "text": "**Tradition** arcane **Traits** astral, construct, eidolon **Home Plane** Astral Plane --- **Size** Medium **Suggested Attacks** fist (bludgeoning) **Warrior Construct** Str 18, Dex 14, Con 16, Int 12, Wis 10, Cha 8; +2 AC (+3 Dex cap) **Scout Construct** Str 14, Dex 18, Con 16, Int 12, Wis 10, Cha 8; +1 AC (+4 Dex cap) **Skills** Arcana, Crafting **Senses** darkvision **Language** one common mortal language **Speed** 25 feet --- **Eidolon Abilities** *Initial* construct heart; *Symbiosis* reconfigured evolution; *Transcendence* ultimate reconfiguration "
+ },
+ {
+  "id": "construct-innovation",
+  "collection": "classFeatures",
+  "name": "Construct Innovation",
+  "level": 1,
+  "text": "Your innovation's Speed increases to 40 feet. Your innovation gains a swim Speed of 25 feet. - **Sensory Array** Additional sensory devices give your innovation low-light vision and darkvision, as well as imprecise tremorsense out to a range of 30 feet."
+ },
+ {
+  "id": "curse-of-creeping-ashes",
+  "collection": "classFeatures",
+  "name": "Curse of Creeping Ashes",
+  "level": 1,
+  "text": "**Cursebound 1** You gain weakness 2 to fire damage. Any immunity or resistance you have to fire is suppressed. **Cursebound 3** Your weakness to fire damage is equal to 5 + your level. **Cursebound 4** You take a –10-foot status penalty to all your Speeds as your limbs begin to crumble like ash."
+ },
+ {
+  "id": "curse-of-inclement-headwinds",
+  "collection": "classFeatures",
+  "name": "Curse of Inclement Headwinds",
+  "level": 1,
+  "text": "You gain electricity weakness 2 and electricity spells or effects that have additional effects for a creature wearing or holding metal treat you as though you were wearing metal. Any immunity or resistance you have to such spells and effects is suppressed. **Cursebound 3** Your weakness to electricity is equal to 5 + your level. **Cursebound 4** The raging winds push you back, imposing a -10-foot status penalty to all your Speeds."
+ },
+ {
+  "id": "curse-of-inevitable-rot",
+  "collection": "classFeatures",
+  "name": "Curse of Inevitable Rot",
+  "level": 1,
+  "text": "**Cursebound 1** You gain weakness 2 to acid and poison damage. **Cursebound 3** Your weakness to acid and poison damage increases to twice your level."
+ },
+ {
+  "id": "curse-of-the-living-death",
+  "collection": "classFeatures",
+  "name": "Curse of the Living Death",
+  "level": 1,
+  "text": "**Cursebound 1** You gain weakness 2 to vitality and void damage. Any immunity or resistance you have to vitality or void is suppressed. **Cursebound 3** Your weakness to vitality and void damage is equal to 5 + your level."
+ },
+ {
+  "id": "curse-of-the-mortal-warrior",
+  "collection": "classFeatures",
+  "name": "Curse of the Mortal Warrior",
+  "level": 1,
+  "text": "You smell faintly of steel and blood no matter how you try to remove or mask the scent, you appear more imposing and muscular than you actually are, and you hear the faint clash and clamor of battle in the distance at all times. You gain weakness 2 to any damage dealt by a spell. Any immunity or resistance you have to spells is suppressed. **Cursebound 3** Your weakness to spells is equal to your level."
+ },
+ {
+  "id": "demon-eidolon",
+  "collection": "classFeatures",
+  "name": "Demon Eidolon",
+  "level": 1,
+  "text": "**Tradition** divine **Traits** demon, eidolon, fiend **Alignment** must be chaotic evil **Home Plane** The Abyss --- **Size** Medium or Small **Suggested Attacks** claw (slashing), jaws (piercing), horn (piercing), tail (bludgeoning), tentacle (bludgeoning), wing (bludgeoning) **Wrecker Demon** Str 18, Dex 14, Con 16, Int 10, Wis 8, Cha 12; +2 AC (+3 Dex cap) **Tempter Demon** Str 12, Dex 18, Con 12, Int 10, Wis 10, Cha 16; +1 AC (+4 Dex cap) **Skills** Intimidation, Religion **Senses** darkvision **Language** Abyssal **Speed** 25 feet --- **Eidolon Abi"
+ },
+ {
+  "id": "devotion-phantom-eidolon",
+  "collection": "classFeatures",
+  "name": "Devotion Phantom Eidolon",
+  "level": 1,
+  "text": "Your eidolon is a lost soul, unable to escape the mortal world due to a strong sense of duty, an undying devotion, or a need to complete an important task. **Tradition** occult **Traits** eidolon, ethereal, phantom **Home Plane** Ethereal Plane --- **Size** Medium or Small **Suggested Attacks** fist (bludgeoning), tendril (bludgeoning), unarmed attacks shaped like a weapon **Stalwart Guardian** Str 18, Dex 14, Con 16, Int 10, Wis 10, Cha 10; +2 AC (+3 Dex cap) **Swift Protector** Str 14, Dex 18, Con 16, Int 10, Wis 10, Cha 10; +1 AC (+4 Dex cap) **Skills"
+ },
+ {
+  "id": "dragon-eidolon",
+  "collection": "classFeatures",
+  "name": "Dragon Eidolon",
+  "level": 1,
+  "text": "**Tradition** arcane **Traits** astral, dragon, eidolon, and one more (see Breath Weapon below) **Home Plane** Astral Plane --- **Size** Medium **Suggested Attacks** claw (slashing), jaws (piercing), horn (piercing), tail (bludgeoning), wing (bludgeoning) **Marauding Dragon** Str 18, Dex 14, Con 16, Int 10, Wis 10, Cha 10; +2 AC (+3 Dex cap) **Cunning Dragon** Str 12, Dex 18, Con 12, Int 14, Wis 10, Cha 12; +1 AC (+4 Dex cap) **Skills** Arcana, Intimidation **Senses** darkvision **Language** Draconic **Speed** 25 feet --- **Eidolon Abilities** *Initial *"
+ },
+ {
+  "id": "elemental-eidolon",
+  "collection": "classFeatures",
+  "name": "Elemental Eidolon",
+  "level": 1,
+  "text": "**Tradition** primal **Traits** eidolon, elemental, and one more (see Elemental Core, below) **Home Plane**: elemental plane matching their Elemental Core --- **Size** Medium **Suggested Attacks** branch (bludgeoning), fist (bludgeoning), spike (piercing), tendril (bludgeoning), wave (bludgeoning) **Adaptable Elemental** Str +1, Dex +4, Con +3, Int +0, Wis +1, Cha +0; +1 AC (+4 Dex cap) **Primordial Elemental** Str +4, Dex +2, Con +3, Int –1, Wis +1, Cha +0; +2 AC (+3 Dex cap) **Skills** Nature, Survival **Senses** darkvision **Language** s Sussuran (air"
+ },
+ {
+  "id": "energetic-meltdown",
+  "collection": "classFeatures",
+  "name": "Energetic Meltdown",
+  "level": 1,
+  "text": "After taking the damage, you gain weakness to the energy type of your backlash until your next daily preparations. The weakness is equal to one-third of your level. You also lose immunity to the energy type if you had it, until your next daily preparations."
+ },
+ {
+  "id": "fey-eidolon",
+  "collection": "classFeatures",
+  "name": "Fey Eidolon",
+  "level": 1,
+  "text": "**Tradition** primal (but see Fey Gift Spells below) **Traits** eidolon, fey **Home Plane** First World --- **Size** Small or Medium **Suggested Attacks** fist (bludgeoning), wing (bludgeoning), attacks shaped like a weapon **Skirmisher Fey** Str 14, Dex 18, Con 14, Int 10, Wis 10, Cha 12; +1 AC (+4 Dex cap) **Trickster Fey** Str 12, Dex 18, Con 12, Int 12, Wis 8, Cha 16; +1 AC (+4 Dex cap) **Skills** Deception, Nature **Senses** low-light vision **Language** Sylvan **Speed** 25 feet --- **Eidolon Abilities** *Initial *fey gift spells*; Symbiosis *fey mi"
+ },
+ {
+  "id": "fire-gate",
+  "collection": "classFeatures",
+  "name": "Fire Gate",
+  "level": 1,
+  "text": "| | **Elemental Resistance** cold, fire | | **Impulse Junction** Increase the damage die size of fire damage dealt by the impulse by one step. | | **Aura Junction** Enemies in your kinetic aura gain weakness to fire from your fire impulses. The weakness is equal to half your level (minimum weakness 1)."
+ },
+ {
+  "id": "gate-junction",
+  "collection": "classFeatures",
+  "name": "Gate Junction",
+  "level": 5,
+  "text": "- An **elemental resistance** grants you resistance to damage while your kinetic aura is active. This resistance is equal to your level, and it applies to damage of any listed type or that comes from a creature or effect that has any of the listed traits. At 17th level, you gain immunity to effects with any of the listed traits. This doesn't make you immune to creatures with such a trait. You can voluntarily forgo this resistance, immunity, or both if you want an effect to work on you."
+ },
+ {
+  "id": "hands-of-the-wildling",
+  "collection": "classFeatures",
+  "name": "Hands of the Wildling",
+  "level": 1,
+  "text": "You are immune to this splash damage."
+ },
+ {
+  "id": "peerless-under-heaven",
+  "collection": "classFeatures",
+  "name": "Peerless under Heaven",
+  "level": 7,
+  "text": "That creature is then temporarily immune to this effect for 10 minutes."
+ },
+ {
+  "id": "perfect-fortification",
+  "collection": "classFeatures",
+  "name": "Perfect Fortification",
+  "level": 15,
+  "text": "Additionally, you gain resistance 2 + half your level against precision damage."
+ },
+ {
+  "id": "perpetual-infusions-chirurgeon",
+  "collection": "classFeatures",
+  "name": "Perpetual Infusions (Chirurgeon)",
+  "level": 7,
+  "text": "If a creature heals Hit Points from a perpetual infusion, that creature is temporarily immune to healing Hit Points from subsequent perpetual infusions for 10 minutes (but not immune to any other effects of those infusions)."
+ },
+ {
+  "id": "plant-eidolon",
+  "collection": "classFeatures",
+  "name": "Plant Eidolon",
+  "level": 1,
+  "text": "**Tradition** primal **Traits** eidolon, plant **Home Plane** Material Plane --- **Size** Medium **Suggested Attacks** vine (bludgeoning), branch (bludgeoning), root (bludgeoning) **Guardian Plant** Str 18, Dex 14, Con 16, Int 8, Wis 12, Cha 10; +2 AC (+3 Dex cap) **Creeping Plant** Str 12, Dex 18, Con 16, Int 8, Wis 14, Cha 10; +1 AC (+4 Dex cap) **Skills** Nature, Survival **Senses** low-light vision **Language** Sylvan **Speed** 25 feet --- **Eidolon Abilities** *Initial *tendril strike*; Symbiosis *growing vines*; Transcendence *field of roots ## Ten"
+ },
+ {
+  "id": "psychopomp-eidolon",
+  "collection": "classFeatures",
+  "name": "Psychopomp Eidolon",
+  "level": 1,
+  "text": "**Tradition** divine **Traits** eidolon, monitor, psychopomp **Alignment** must be true neutral **Home Plane** The Boneyard --- **Size** Medium **Suggested Attacks** beak (piercing), claw (slashing), fist (bludgeoning), jaws (piercing), unarmed attacks shaped like a weapon **Soul Guardian** Str 18, Dex 14, Con 16, Int 10, Wis 12, Cha 8; +2 AC (+3 Dex cap) **Scribe of the Dead** Str 12, Dex 18, Con 12, Int 14, Wis 12, Cha 10; +1 AC (+4 Dex cap) **Skills** Intimidation, Religion **Senses** darkvision **Language** Requian **Speed** 25 feet --- **Eidolon Abi"
+ },
+ {
+  "id": "school-of-thassilonian-rune-magic",
+  "collection": "classFeatures",
+  "name": "School of Thassilonian Rune Magic",
+  "level": 1,
+  "text": "**Curriculum** - **cantrips:** Detect Magic, Sigil - **1st:** Mystic Armor, Runic Body, Runic Weapon, Sure Strike - **2nd:** Darkvision, See the Unseen - **3rd:** , Veil of Privacy - **4th:** , Fly - **5th:** Mind Probe, Sending - **6th:** Scrying, Truesight - **7th:** Contingency, Spell Riposte - **8th:** Unrelenting Observation, Hidden Mind - **9th:** Foresight **Advanced School Spell** Personal Runewell --- - **Envy** - **Gluttony** - **Greed** - **Lust** - **Pride** - **Sloth** - **Wrath**"
+ },
+ {
+  "id": "shaman",
+  "collection": "classFeatures",
+  "name": "Shaman",
+  "level": 1,
+  "text": "It gains immunity to precision damage and resistance to physical damage (except damage from Strikes with the Ghost Touch property rune) equal to half your level (double against non-magical damage) but weakness to force damage equal to half your level."
+ },
+ {
+  "id": "swarm-eidolon",
+  "collection": "classFeatures",
+  "name": "Swarm Eidolon",
+  "level": 1,
+  "text": "**Tradition** primal **Traits** animal, eidolon, swarm **Home Plane** the Universe --- **Size** Medium (condensed) and Large (dispersed) **Suggested Attacks** beaks (piercing), claws (slashing), jaws (piercing), talons (slashing) **Brazen Swarm** *Str* +4, *Dex* +2, *Con* +3, *Int* +0, *Wis* +0, *Cha* +0; +2 AC (+3 Dex cap) **Slinking Swarm** *Str* +2, *Dex* +4, *Con* +3, *Int* +0, *Wis* +1, *Cha* –1; +1 AC (+4 Dex cap) **Skills** Nature, Survival **Senses** low-light vision **Languages** Common **Speed** 25 feet --- **Eidolon Abilities** *Initial *swarm"
+ },
+ {
+  "id": "the-infinite-eye",
+  "collection": "classFeatures",
+  "name": "The Infinite Eye",
+  "level": 1,
+  "text": "To grow your experiences—and with them, your power—you devote yourself to observing as much as possible, casting your senses through space and time with clairvoyance and precognition. **Granted Spells** - 1st: Sure Strike - 2nd: Augury - 3rd: Locate - 4th: - 5th: Scouting Eye - 6th: Truesight - 7th: True Target - 8th: Unrelenting Observation - 9th: Foresight **Standard Psi Cantrips** Detect Magic You have the kind of fine control over your magical senses that other spellcasters can only dream of. **Amp** Your pulse of detection magic helps you gain a sen"
+ },
+ {
+  "id": "the-silent-whisper",
+  "collection": "classFeatures",
+  "name": "The Silent Whisper",
+  "level": 1,
+  "text": "If the target fails its Will save, until the end of its next turn, it gains weakness 1 to mental damage and takes a –1 status penalty to Will saves. On a critical failure, the weakness is 3 (in addition to the target being Stunned 1). The weakness applies before daze deals damage. **Amp Heightened (+2)** The spell's damage increases by 2d10, and the weakness on a failure or critical failure increases by 1. **Unique Psi Cantrips** surface: Forbidden Thought **Amp** Your telepathic push is particularly shocking to those who resist it."
+ },
+ {
+  "id": "titans-breaker",
+  "collection": "classFeatures",
+  "name": "Titan's Breaker",
+  "level": 1,
+  "text": "Constructs and objects are not immune to this spirit damage, and this spirit damage automatically bypasses an amount of their Hardness equal to your level."
+ },
+ {
+  "id": "toxicologist",
+  "collection": "classFeatures",
+  "name": "Toxicologist",
+  "level": 1,
+  "text": "Your infused items with the poison trait can affect creatures immune to poison. A creature takes acid damage instead of poison damage from such items if either the creature is immune to poison or that would be more detrimental to the creature (as determined by the GM). You gain poison resistance equal to half your level."
+ },
+ {
+  "id": "undead-eidolon",
+  "collection": "classFeatures",
+  "name": "Undead Eidolon",
+  "level": 1,
+  "text": "**Tradition** divine **Traits** eidolon, undead **Home Plane** Ethereal Plane or Negative Energy Plane --- **Size** Medium or Small **Suggested Attacks** claw (slashing), fist (bludgeoning), jaws (piercing) **Undead Brute** Str 18, Dex 14, Con 16, Int 8, Wis 10, Cha 12 **Undead Stalker** Str 14, Dex 18, Con 16, Int 8, Wis 12, Cha 10 **Skills** Intimidation, Religion **Senses** darkvision **Language** Necril **Speed** 25 feet --- **Eidolon Abilities** *Initial *negative essence*; Symbiosis *drain life*; Transcendence *rejuvenation ## Negative Essence Your"
+ },
+ {
+  "id": "whisper-of-wings",
+  "collection": "classFeatures",
+  "name": "Whisper of Wings",
+  "level": 1,
+  "text": "The wings might have been radiantly feathered, jeweled like a dragonfly's, strangely mechanical, or leathery with the scent of sulfur, but the controlled chaos of their movements contained countless teachings."
+ },
+ {
+  "id": "wilding-steward",
+  "collection": "classFeatures",
+  "name": "Wilding Steward",
+  "level": 1,
+  "text": "**Familiar of Keen Senses** Your familiar has glinting eyes, twitching ears, or some other sign of a beast's powerful senses. When you Cast or Sustain a hex, your familiar gains your choice of an imprecise scent, tremorsense, or wavesense, with a range of 60 feet until the start of your next turn, and it can immediately Point Out as a free action."
+ },
+ {
+  "id": "witness-to-ancient-battles",
+  "collection": "classFeatures",
+  "name": "Witness to Ancient Battles",
+  "level": 1,
+  "text": "--- **Apparition Skills** Battlegrounds Lore, Heraldry Lore **Apparition Spells** - **Cantrip** Shield - **1st** Sure Strike - **2nd** Enlarge - **3rd** Ghostly Weapon - **4th** Weapon Storm - **5th** Invoke Spirits - **6th** Phantasmal Calamity - **7th** True Target - **8th** Canticle of Everlasting Grief - **9th** Weapon of Judgment **Vessel Spell** Embodiment of Battle **Avatar** *General of Endless Battle* Speed 70 feet, immune to immobilized **Melee** ⟨1⟩ final strike (agile, fatal d12, reach 15 feet), Damage 6d8+6"
+ },
+ {
+  "id": "cry-havoc",
+  "collection": "classFeatures",
+  "name": "Cry Havoc!",
+  "level": 1,
+  "text": "All squadmates can Stride up to twice their Speed directly toward the target as a reaction, yelling and trampling. Regardless of the outcome, the enemy is then temporarily immune to any further damage from Cry Havoc! for 24 hours."
+ },
+ {
+  "id": "sanguine-revitalization",
+  "collection": "classFeatures",
+  "name": "Sanguine Revitalization",
+  "level": 1,
+  "text": "Those allies can Stride up to half their Speed as a free action. Once all Strikes are completed, if the target took damage and is not immune to bleed damage, it must succeed at a saving throw against your class DC or take 10 points of persistent bleed damage."
+ },
+ {
+  "id": "brandish-the-gorgons-gaze",
+  "collection": "classFeatures",
+  "name": "Brandish the Gorgon's Gaze",
+  "level": 1,
+  "text": "Regardless of the outcome, that creature is temporarily immune to this effect for 24 hours."
+ },
+ {
+  "id": "break-the-suns-legs",
+  "collection": "classFeatures",
+  "name": "Break the Sun's Legs",
+  "level": 1,
+  "text": "The stolen light is channeled to your eyes, granting you greater darkvision for the duration of the effect."
+ },
+ {
+  "id": "skirt-the-underworld",
+  "collection": "classFeatures",
+  "name": "Skirt the Underworld",
+  "level": 1,
+  "text": "You skirt into the world of the dead, becoming invisible for 1 round, then Fly up to your Speed. Undead and other creatures with strong ties to the world of the dead, such as psychopomps, are immune to this effect."
+ },
+ {
+  "id": "tangle-in-riddle",
+  "collection": "classFeatures",
+  "name": "Tangle in Riddle",
+  "level": 1,
+  "text": "It's then immune to this ability for 1 hour."
+ },
+ {
+  "id": "grim-swagger",
+  "collection": "classFeatures",
+  "name": "Grim Swagger",
+  "level": 1,
+  "text": "Regardless of whether you succeed or fail, each subject is temporarily immune to your Grim Swagger for 10 minutes."
+ },
+ {
+  "id": "nudging-whisper",
+  "collection": "classFeatures",
+  "name": "Nudging Whisper",
+  "level": 1,
+  "text": "If you critically fail at either check, the target and anyone who witnessed you fail becomes immune to your Nudging Whisper for one day, though this doesn't necessarily let them know that you attempted to charm them."
+ },
+ {
+  "id": "inspired-stratagem",
+  "collection": "classFeatures",
+  "name": "Inspired Stratagem",
+  "level": 1,
+  "text": "That ally then becomes temporarily immune to your Inspired Stratagem until your next daily preparations."
+ },
+ {
+  "id": "glimpse-vulnerability",
+  "collection": "classFeatures",
+  "name": "Glimpse Vulnerability",
+  "level": 1,
+  "text": "Until you Glimpse Vulnerability again, that target gains weakness 2 against your unarmed and weapon Strikes."
+ },
+ {
+  "id": "lucky-coin",
+  "collection": "items",
+  "name": "Lucky Coin",
+  "level": 2,
+  "text": "Either way, you're temporarily immune to Guarded Fortune for 1 hour."
+ },
+ {
+  "id": "lucky-coin-lucky-copper",
+  "collection": "items",
+  "name": "Lucky Coin (Lucky Copper)",
+  "level": 2,
+  "text": "Either way, you're temporarily immune to Guarded Fortune for 1 hour."
+ },
+ {
+  "id": "lucky-coin-lucky-silver",
+  "collection": "items",
+  "name": "Lucky Coin (Lucky Silver)",
+  "level": 5,
+  "text": "Either way, you're temporarily immune to Guarded Fortune for 1 hour."
+ },
+ {
+  "id": "lucky-coin-lucky-gold",
+  "collection": "items",
+  "name": "Lucky Coin (Lucky Gold)",
+  "level": 8,
+  "text": "Either way, you're temporarily immune to Guarded Fortune for 1 hour."
+ },
+ {
+  "id": "the-eye-of-the-slumberer",
+  "collection": "items",
+  "name": "The Eye of the Slumberer",
+  "level": 21,
+  "text": "Each time a creature with the aquatic, amphibious, or water trait falls asleep or otherwise passes the night within 1 mile of the *Eye of the Slumberer*, it dreams fitfully of the artifact; creatures that don't dream are immune to this effect."
+ },
+ {
+  "id": "winged-terror",
+  "collection": "items",
+  "name": "Winged Terror",
+  "level": 16,
+  "text": "The wearer gains resistance 5 to physical damage dealt by frightened creatures."
+ },
+ {
+  "id": "coral-aspect",
+  "collection": "items",
+  "name": "Coral Aspect",
+  "level": 4,
+  "text": "Allies that share your space gain a +2 circumstance bonus to their AC, and you gain resistance 5 to any damage caused by a creature sharing the same space as you."
+ }
+]

@@ -1,0 +1,121 @@
+[
+ {
+  "id": "wish-for-riches",
+  "collection": "backgrounds",
+  "name": "Wish for Riches",
+  "level": null,
+  "text": "You're trained in the Thievery skill and the Games Lore skill. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Thievery **Lore** Games Lore **Skill Feat** Subtle Theft"
+ },
+ {
+  "id": "historical-reenactor",
+  "collection": "backgrounds",
+  "name": "Historical Reenactor",
+  "level": null,
+  "text": "You're trained in either the Performance skill or the Society skill, and you're trained in the Dwarf Lore skill."
+ },
+ {
+  "id": "reclaimer-investigator",
+  "collection": "backgrounds",
+  "name": "Reclaimer Investigator",
+  "level": null,
+  "text": "You're trained in the Occultism skill and the Crimson Reclaimers Lore skill. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Occultism **Lore** Crimson Reclaimers Lore **Skill Feat** Oddity Identification"
+ },
+ {
+  "id": "refugee-fall-of-plaguestone",
+  "collection": "backgrounds",
+  "name": "Refugee (Fall of Plaguestone)",
+  "level": null,
+  "text": "You're trained in the Survival skill and the Hunting Lore skill. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Survival **Lore** Hunting Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "refugee-pc2",
+  "collection": "backgrounds",
+  "name": "Refugee (PC2)",
+  "level": null,
+  "text": "You're trained in the Society skill and a Lore skill related to the settlement you came from. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Society **Skill Feat** Streetwise"
+ },
+ {
+  "id": "aon-post-guard-of-all-trade",
+  "collection": "backgrounds",
+  "name": "Post Guard of All Trade",
+  "level": null,
+  "text": "You're trained in the Performance skill, a Lore skill of your choice, and you gain a bonus language."
+ },
+ {
+  "id": "aon-reclaimed-investigator",
+  "collection": "backgrounds",
+  "name": "Reclaimed Investigator",
+  "level": null,
+  "text": "You're trained in the Occultism skill, and the Crimson Reclaimers Lore skill."
+ },
+ {
+  "id": "aon-muesello-s-student",
+  "collection": "backgrounds",
+  "name": "Muesello's Student",
+  "level": null,
+  "text": "You trained under Venture-Captain Muesello of the Oppara Lodge in Taldor. You're trained in the Crafting skill and the Engineering Lore skill."
+ },
+ {
+  "id": "aon-historical-reeanactor",
+  "collection": "backgrounds",
+  "name": "Historical Reeanactor",
+  "level": null,
+  "text": "You're trained in either the Performance skill or the Society skill, and you're trained in the Dwarf Lore skill."
+ },
+ {
+  "id": "aon-wishes-for-riches",
+  "collection": "backgrounds",
+  "name": "Wishes for Riches",
+  "level": null,
+  "text": "You're trained in the Thievery skill, and the Games Lore skill."
+ },
+ {
+  "id": "ambusher",
+  "collection": "companionSpecializations",
+  "name": "Ambusher",
+  "level": null,
+  "text": "Its proficiency rank in Stealth increases to expert (or master if it was already an expert from its type), and its Dexterity modifier increases by 1. Its proficiency rank for unarmored defense increases to expert."
+ },
+ {
+  "id": "daredevil",
+  "collection": "companionSpecializations",
+  "name": "Daredevil",
+  "level": null,
+  "text": "Its proficiency rank in Acrobatics increases to master, and its Dexterity modifier increases by 1. Its proficiency rank in unarmored defense increases to expert."
+ },
+ {
+  "id": "tracker",
+  "collection": "companionSpecializations",
+  "name": "Tracker",
+  "level": null,
+  "text": "Its proficiency rank in Survival increases to expert (or master if it was already an expert from its type), and its Wisdom modifier increases by 1."
+ },
+ {
+  "id": "wind-chaser",
+  "collection": "companionSpecializations",
+  "name": "Wind Chaser",
+  "level": null,
+  "text": "Its proficiency in Acrobatics increases to master and its Dexterity modifier increases by 1. Its proficiency rank increases to legendary for Reflex saves and to expert for unarmored defense."
+ },
+ {
+  "id": "shade",
+  "collection": "companionSpecializations",
+  "name": "Shade",
+  "level": null,
+  "text": "Its proficiency rank in unarmored defense increases to expert. Nethys Note: The Shade animal companion specialization was affected by the Core Rulebook 3rd printing errata that reduced the nimble animal companion's proficiency with unarmored defense."
+ },
+ {
+  "id": "deep-diver",
+  "collection": "companionSpecializations",
+  "name": "Deep Diver",
+  "level": null,
+  "text": "Its proficiency rank for Athletics increases to master and for barding increases to expert."
+ },
+ {
+  "id": "wildfire-scorcher",
+  "collection": "companionSpecializations",
+  "name": "Wildfire Scorcher",
+  "level": null,
+  "text": "Its Dexterity modifier increases by 1 and its proficiency rank increases to legendary for Reflex saves and to expert for unarmored defense."
+ }
+]

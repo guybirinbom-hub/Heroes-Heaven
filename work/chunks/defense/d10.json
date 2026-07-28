@@ -1,0 +1,387 @@
+[
+ {
+  "id": "arbor-wine",
+  "collection": "items",
+  "name": "Arbor Wine",
+  "level": 9,
+  "text": "For 1 minute after drinking a glass of arbor wine, you have tremorsense at a range of 30 feet."
+ },
+ {
+  "id": "arbor-wine-aged",
+  "collection": "items",
+  "name": "Arbor Wine (Aged)",
+  "level": 12,
+  "text": "For 1 minute after drinking a glass of arbor wine, you have tremorsense at a range of 30 feet."
+ },
+ {
+  "id": "cinnamon-seers",
+  "collection": "items",
+  "name": "Cinnamon Seers",
+  "level": 4,
+  "text": "You become temporarily immune to cinnamon seers until the next time you make your daily preparations."
+ },
+ {
+  "id": "fury-cocktail",
+  "collection": "items",
+  "name": "Fury Cocktail",
+  "level": 4,
+  "text": "You gain resistance 1 to physical damage. The resistance increases to 2 for a moderate fury cocktail or 5 for a greater fury cocktail. You gain resistance 1 to void damage, or resistance 1 to vitality damage if you have the void healing ability. The resistance increases to 5 for a moderate fury cocktail or 10 for a greater fury cocktail. You gain resistance 1 to acid, cold, electricity, fire, and poison damage. The resistance increases to 5 for a moderate fury cocktail or 10 for a greater fury cocktail."
+ },
+ {
+  "id": "fury-cocktail-lesser",
+  "collection": "items",
+  "name": "Fury Cocktail (Lesser)",
+  "level": 4,
+  "text": "You gain resistance 1 to physical damage. You gain resistance 1 to void damage, or resistance 1 to vitality damage if you have the void healing ability. You gain resistance 1 to acid, cold, electricity, fire, and poison damage."
+ },
+ {
+  "id": "fury-cocktail-moderate",
+  "collection": "items",
+  "name": "Fury Cocktail (Moderate)",
+  "level": 12,
+  "text": "You gain resistance 2 to physical damage. You gain resistance 5 to void damage, or resistance 5 to vitality damage if you have the void healing ability. You gain resistance 5 to acid, cold, electricity, fire, and poison damage."
+ },
+ {
+  "id": "fury-cocktail-greater",
+  "collection": "items",
+  "name": "Fury Cocktail (Greater)",
+  "level": 18,
+  "text": "You gain resistance 5 to physical damage. You gain resistance 10 to void damage, or resistance 10 to vitality damage if you have the void healing ability. You gain resistance 10 to acid, cold, electricity, fire, and poison damage."
+ },
+ {
+  "id": "galvanic-chew",
+  "collection": "items",
+  "name": "Galvanic Chew",
+  "level": 8,
+  "text": "For up to 1 hour, you have resistance 5 to electricity. You're then temporarily immune to galvanic chews for 24 hours or until the next time you make your daily preparations."
+ },
+ {
+  "id": "journeybread",
+  "collection": "items",
+  "name": "Journeybread",
+  "level": 1,
+  "text": "If you subsist on nothing else for a week, you become temporarily immune to journeybread until you eat real food and drink water normally for 24 hours."
+ },
+ {
+  "id": "journeybread-power",
+  "collection": "items",
+  "name": "Journeybread (Power)",
+  "level": 4,
+  "text": "If you subsist on nothing else for a week, you become temporarily immune to journeybread until you eat real food and drink water normally for 24 hours."
+ },
+ {
+  "id": "owl-screech-egg",
+  "collection": "items",
+  "name": "Owl Screech Egg",
+  "level": 7,
+  "text": "Regardless of the result, creatures in the area are temporarily immune to this screech for 1 minute."
+ },
+ {
+  "id": "poison-fizz",
+  "collection": "items",
+  "name": "Poison Fizz",
+  "level": 8,
+  "text": "A creature that critically fails is also blinded until the end of your next turn and is then temporarily immune to being blinded by poison fizz for 1 hour."
+ },
+ {
+  "id": "poison-fizz-lesser",
+  "collection": "items",
+  "name": "Poison Fizz (Lesser)",
+  "level": 8,
+  "text": "A creature that critically fails is also blinded until the end of your next turn and is then temporarily immune to being blinded by poison fizz for 1 hour."
+ },
+ {
+  "id": "poison-fizz-moderate",
+  "collection": "items",
+  "name": "Poison Fizz (Moderate)",
+  "level": 12,
+  "text": "A creature that critically fails is also blinded until the end of your next turn and is then temporarily immune to being blinded by poison fizz for 1 hour."
+ },
+ {
+  "id": "poison-fizz-greater",
+  "collection": "items",
+  "name": "Poison Fizz (Greater)",
+  "level": 15,
+  "text": "A creature that critically fails is also blinded until the end of your next turn and is then temporarily immune to being blinded by poison fizz for 1 hour."
+ },
+ {
+  "id": "scholars-drop",
+  "collection": "items",
+  "name": "Scholar's Drop",
+  "level": 6,
+  "text": "The drop's other effects end for you, and when the 10 minutes are up, you're temporarily immune to scholar's drops for 1 hour. If you use this effect three times in a single day, you become temporarily immune to scholar's drops entirely until you get a full night's rest."
+ },
+ {
+  "id": "witchs-finger",
+  "collection": "items",
+  "name": "Witch's Finger",
+  "level": 3,
+  "text": "For 1 hour, you have cold resistance 3, and for 8 hours, the treat negates the damage you would take from severe environmental cold and reduces the damage you take from extreme cold to that of severe cold."
+ },
+ {
+  "id": "kraken-bottle",
+  "collection": "items",
+  "name": "Kraken Bottle",
+  "level": 18,
+  "text": "Creatures inside the cloud are undetected, can't use their sense of smell, and are exposed to kraken ink poison. Krakens are immune to this poison."
+ },
+ {
+  "id": "blood-booster-lesser",
+  "collection": "items",
+  "name": "Blood Booster (Lesser)",
+  "level": 3,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This elixir bolsters your body's natural defenses and ability to resist maladies that travel through or affect blood. For 10 minutes you receive resistance 5 to persistent bleed and persistent poison damage, and you lower the DC for any flat checks to end persistent bleed or persistent poison damage as if you received particularly appropriate aid."
+ },
+ {
+  "id": "chromatic-jellyfish-oil",
+  "collection": "items",
+  "name": "Chromatic Jellyfish Oil",
+  "level": 9,
+  "text": "For 10 minutes after consuming chromatic jellyfish oil, you gain resistance to precision damage and extra damage from critical hits according to the jellyfish oil's type. You can also Crawl at half your Speed. 59 Price 120 gp Bulk L The oil grants resistance 5. 59 Price 800 gp Bulk L The oil grants resistance 10. 59 Price 5,200 gp Bulk L The oil grants resistance 15."
+ },
+ {
+  "id": "chromatic-jellyfish-oil-lesser",
+  "collection": "items",
+  "name": "Chromatic Jellyfish Oil (Lesser)",
+  "level": 9,
+  "text": "For 10 minutes after consuming chromatic jellyfish oil, you gain resistance 5 to precision damage and extra damage from critical hits. You can also Crawl at half your Speed."
+ },
+ {
+  "id": "contagion-metabolizer",
+  "collection": "items",
+  "name": "Contagion Metabolizer",
+  "level": 5,
+  "text": "After drinking, you become temporarily immune to contagion metabolizers for 1 hour."
+ },
+ {
+  "id": "contagion-metabolizer-lesser",
+  "collection": "items",
+  "name": "Contagion Metabolizer (Lesser)",
+  "level": 5,
+  "text": "After drinking, you become temporarily immune to contagion metabolizers for 1 hour."
+ },
+ {
+  "id": "contagion-metabolizer-moderate",
+  "collection": "items",
+  "name": "Contagion Metabolizer (Moderate)",
+  "level": 11,
+  "text": "After drinking, you become temporarily immune to contagion metabolizers for 1 hour."
+ },
+ {
+  "id": "contagion-metabolizer-greater",
+  "collection": "items",
+  "name": "Contagion Metabolizer (Greater)",
+  "level": 19,
+  "text": "After drinking, you become temporarily immune to contagion metabolizers for 1 hour."
+ },
+ {
+  "id": "energy-mutagen-lesser",
+  "collection": "items",
+  "name": "Energy Mutagen (Lesser)",
+  "level": 1,
+  "text": "**Benefit** You gain resistance 5 to the attuned energy type. **Drawback** You gain weakness 5 to the other three energy types."
+ },
+ {
+  "id": "energy-mutagen-moderate",
+  "collection": "items",
+  "name": "Energy Mutagen (Moderate)",
+  "level": 3,
+  "text": "**Benefit** You gain resistance 10 to the attuned energy type. **Drawback** You gain weakness 5 to the other three energy types."
+ },
+ {
+  "id": "energy-mutagen-greater",
+  "collection": "items",
+  "name": "Energy Mutagen (Greater)",
+  "level": 11,
+  "text": "**Benefit** You gain resistance 15 to the attuned energy type. **Drawback** You gain weakness 5 to the other three energy types."
+ },
+ {
+  "id": "energy-mutagen-major",
+  "collection": "items",
+  "name": "Energy Mutagen (Major)",
+  "level": 17,
+  "text": "**Benefit** You gain resistance 20 to the attuned energy type. **Drawback** You gain weakness 5 to the other three energy types."
+ },
+ {
+  "id": "stone-body-mutagen-lesser",
+  "collection": "items",
+  "name": "Stone Body Mutagen (Lesser)",
+  "level": 5,
+  "text": "**Benefit** You gain resistance 5 to physical damage (except bludgeoning). **Drawback** Your speeds are reduced by 10 feet (minimum 5 feet) and you take a -2 penalty to Reflex saves."
+ },
+ {
+  "id": "stone-body-mutagen-moderate",
+  "collection": "items",
+  "name": "Stone Body Mutagen (Moderate)",
+  "level": 12,
+  "text": "**Benefit** You gain resistance 5 to physical damage (except bludgeoning). **Drawback** Your speeds are reduced by 10 feet (minimum 5 feet) and you take a -2 penalty to Reflex saves."
+ },
+ {
+  "id": "vaccine-minor",
+  "collection": "items",
+  "name": "Vaccine (Minor)",
+  "level": 1,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A vaccine grants a creature immunity to a specific strain of disease of a level equal to or less than the vaccine's level, and a +2 item bonus on all saving throws against other strains of the same disease. For example, a vaccine could grant immunity to putrid plague inflicted by harpies, but would only grant a +2 saving throw bonus against putrid plague inflicted by a giant rat."
+ },
+ {
+  "id": "vaccine-lesser",
+  "collection": "items",
+  "name": "Vaccine (Lesser)",
+  "level": 3,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A vaccine grants a creature immunity to a specific strain of disease of a level equal to or less than the vaccine's level, and a +2 item bonus on all saving throws against other strains of the same disease. For example, a vaccine could grant immunity to putrid plague inflicted by harpies, but would only grant a +2 saving throw bonus against putrid plague inflicted by a giant rat."
+ },
+ {
+  "id": "vaccine-moderate",
+  "collection": "items",
+  "name": "Vaccine (Moderate)",
+  "level": 6,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A vaccine grants a creature immunity to a specific strain of disease of a level equal to or less than the vaccine's level, and a +2 item bonus on all saving throws against other strains of the same disease. For example, a vaccine could grant immunity to putrid plague inflicted by harpies, but would only grant a +2 saving throw bonus against putrid plague inflicted by a giant rat."
+ },
+ {
+  "id": "vaccine-greater",
+  "collection": "items",
+  "name": "Vaccine (Greater)",
+  "level": 12,
+  "text": "**Activate** ⟨1⟩ Interact --- A vaccine grants a creature immunity to a specific strain of disease of a level equal to or less than the vaccine's level, and a +2 item bonus on all saving throws against other strains of the same disease. For example, a vaccine could grant immunity to putrid plague inflicted by harpies, but would only grant a +2 saving throw bonus against putrid plague inflicted by a giant rat."
+ },
+ {
+  "id": "vaccine-major",
+  "collection": "items",
+  "name": "Vaccine (Major)",
+  "level": 18,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A vaccine grants a creature immunity to a specific strain of disease of a level equal to or less than the vaccine's level, and a +2 item bonus on all saving throws against other strains of the same disease. For example, a vaccine could grant immunity to putrid plague inflicted by harpies, but would only grant a +2 saving throw bonus against putrid plague inflicted by a giant rat."
+ },
+ {
+  "id": "blisterwort",
+  "collection": "items",
+  "name": "Blisterwort",
+  "level": 11,
+  "text": "**Saving Throw** **Maximum Duration** 6 rounds **Stage 1** 4d6 damage and weakness 2 to physical and force damage **Stage 2** 5d6 damage and weakness 4 to physical and force damage **Stage 3** 7d6 damage and weakness 6 to physical and force damage"
+ },
+ {
+  "id": "breathtaking-vapor",
+  "collection": "items",
+  "name": "Breathtaking Vapor",
+  "level": 17,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- This colorless mist has a mild, waxy scent that precedes acute shortness of breath. Creatures that don't need to breathe can still take the poison's damage but are immune to its other effects."
+ },
+ {
+  "id": "pale-fade",
+  "collection": "items",
+  "name": "Pale Fade",
+  "level": 19,
+  "text": "**Activate** ⟨2⟩ (manipulate) --- Pale fade is a white ointment with a sharp, earthy scent."
+ },
+ {
+  "id": "nevercold",
+  "collection": "items",
+  "name": "Nevercold",
+  "level": 10,
+  "text": "If you use nevercold to cast Fire Shield, the spell's duration increases to 5 minutes, the cold resistance you gain from it lasts 1 hour, and you're immune to minor and severe cold for 8 hours."
+ },
+ {
+  "id": "nevercold-compressed",
+  "collection": "items",
+  "name": "Nevercold (Compressed)",
+  "level": 14,
+  "text": "If you use nevercold to cast Fire Shield, the spell's duration increases to 5 minutes, the cold resistance you gain from it lasts 1 hour, and you're immune to minor and severe cold for 8 hours. The catalyst affects 6th-rank or lower *fire shield*, and the immunity from minor and severe cold lasts 24 hours."
+ },
+ {
+  "id": "nevercold-refined",
+  "collection": "items",
+  "name": "Nevercold (Refined)",
+  "level": 18,
+  "text": "If you use nevercold to cast Fire Shield, the spell's duration increases to 5 minutes, the cold resistance you gain from it lasts 1 hour, and you're immune to minor and severe cold for 8 hours. The catalyst affects 8th-rank or lower *fire shield*, and the immunity from minor and severe cold lasts 24 hours."
+ },
+ {
+  "id": "anathema-fulu",
+  "collection": "items",
+  "name": "Anathema Fulu",
+  "level": 11,
+  "text": "On a critical success, the creature becomes temporarily immune to any anathema fulus for 1 hour."
+ },
+ {
+  "id": "heartening-missive",
+  "collection": "items",
+  "name": "Heartening Missive",
+  "level": 5,
+  "text": "Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours. 85 Price 50 gp Folded into a bull, this missive grants the recipient a sense of solidity. 85 Price 25 gp Folded into a delicate butterfly, this missive grants the recipient a sense of grace and poise. 85 Price 50 gp Folded into a rabbit sitting o"
+ },
+ {
+  "id": "heartening-missive-bull",
+  "collection": "items",
+  "name": "Heartening Missive (Bull)",
+  "level": 6,
+  "text": "Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. Folded into a bull, this missive grants the recipient a sense of solidity."
+ },
+ {
+  "id": "heartening-missive-butterfly",
+  "collection": "items",
+  "name": "Heartening Missive (Butterfly)",
+  "level": 5,
+  "text": "Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. Folded into a delicate butterfly, this missive grants the recipient a sense of grace and poise."
+ },
+ {
+  "id": "heartening-missive-rabbit",
+  "collection": "items",
+  "name": "Heartening Missive (Rabbit)",
+  "level": 6,
+  "text": "Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. Folded into a rabbit sitting on its haunches, this missive grants the recipient a sense of mischief and agili"
+ },
+ {
+  "id": "heartening-missive-turtle",
+  "collection": "items",
+  "name": "Heartening Missive (Turtle)",
+  "level": 6,
+  "text": "Once you finish composing the missive, it folds itself into the shape of an animal and Flies at a speed of 45 feet (about 15 miles per hour) toward the location for up to 24 hours. After Activating the missive, the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours If the missive fails to reach its recipient in 24 hours, it returns to its sender at the same pace, becoming non-magical when it arrives. Folded into a square-shelled turtle, this missive grants the recipient a firm sense of self and serenity."
+ },
+ {
+  "id": "cloning-potion",
+  "collection": "items",
+  "name": "Cloning Potion",
+  "level": 18,
+  "text": "As an action that has the concentrate trait, you can sense through your clone. You can Dismiss this sense-sharing effect. You become temporarily immune to cloning potion for 1d4 days."
+ },
+ {
+  "id": "starsong-nectar",
+  "collection": "items",
+  "name": "Starsong Nectar",
+  "level": 20,
+  "text": "You are temporarily immune to this potion for 24 hours once its effects end."
+ },
+ {
+  "id": "dragonclaw-scutcheon",
+  "collection": "items",
+  "name": "Dragonclaw Scutcheon",
+  "level": 16,
+  "text": "When you Activate the scutcheon, you and all of your carried, wielded, or worn items gain immunity to all damage of that type until the end of your next turn."
+ },
+ {
+  "id": "beguiling-crown",
+  "collection": "items",
+  "name": "Beguiling Crown",
+  "level": 20,
+  "text": "If they critically succeed they're immune to this effect for 1 year."
+ },
+ {
+  "id": "breastplate-of-the-mountain",
+  "collection": "items",
+  "name": "Breastplate of the Mountain",
+  "level": 20,
+  "text": "--- **Activate** ⟨1⟩ (manipulate) **Frequency** once per day --- **Effect** With a single tap, you gain immunity to poison for 1 minute."
+ },
+ {
+  "id": "mantle-of-amazing-health",
+  "collection": "items",
+  "name": "Mantle of Amazing Health",
+  "level": 19,
+  "text": "Furthermore, you gain immunity to that poison or disease for 24 hours."
+ },
+ {
+  "id": "whispering-staff",
+  "collection": "items",
+  "name": "Whispering Staff",
+  "level": 20,
+  "text": "When the staff is activated, the faces begin to whisper a variety of languages in sibilant tones, creating what seems to be nonsense to all but the staff's wielder or those they choose to affect. - **Cantrip** Detect Magic - **1st** Sure Strike - **2nd** Darkvision, See the Unseen, Translate - **3rd** Darkvision, Mind Reading - **4th** , Detect Scrying, Telepathy - **5th** Mind Probe, Scouting Eye - **6th** Telepathy, Truesight"
+ }
+]

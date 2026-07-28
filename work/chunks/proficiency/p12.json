@@ -1,0 +1,387 @@
+[
+ {
+  "id": "finadar-leshy",
+  "collection": "backgrounds",
+  "name": "Finadar Leshy",
+  "level": null,
+  "text": "You're trained in the Intimidation skill and the Abyssal Lore skill. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Intimidation **Lore** Abyssal Lore **Skill Feat** Intimidating Glare"
+ },
+ {
+  "id": "dreamer-of-the-verdant-moon",
+  "collection": "backgrounds",
+  "name": "Dreamer of the Verdant Moon",
+  "level": null,
+  "text": "You're trained in the Survival skill and the Zevgavizeb Lore skill. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Survival **Lore** Zevgavizeb Lore **Skill Feat** Ravening's Desperation"
+ },
+ {
+  "id": "iolite-trainee-hobgoblin",
+  "collection": "backgrounds",
+  "name": "Iolite Trainee Hobgoblin",
+  "level": null,
+  "text": "You're trained in the Society skill and the Warfare Lore skill. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Society **Lore** Warfare Lore **Skill Feat** Sign Language"
+ },
+ {
+  "id": "early-explorer",
+  "collection": "backgrounds",
+  "name": "Early Explorer",
+  "level": null,
+  "text": "You're trained in the Survival skill and the Pathfinder Society Lore skill. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Survival **Lore** Pathfinder Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "shadow-war-survivor",
+  "collection": "backgrounds",
+  "name": "Shadow War Survivor",
+  "level": null,
+  "text": "You're trained in the Society skill and the Absalom Lore skill. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Society **Lore** Absalom Lore **Skill Feat** Streetwise"
+ },
+ {
+  "id": "shadow-lodge-defector",
+  "collection": "backgrounds",
+  "name": "Shadow Lodge Defector",
+  "level": null,
+  "text": "You're trained in the Deception skill and the Underworld Lore skill. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Deception **Lore** Underworld Lore **Skill Feat** Lie To Me"
+ },
+ {
+  "id": "ruby-phoenix-enthusiast",
+  "collection": "backgrounds",
+  "name": "Ruby Phoenix Enthusiast",
+  "level": null,
+  "text": "Named for the legendary sorcerer Hao Jin, the Ruby Phoenix Tournament occurs once every 10 years in Goka and attracts extraordinary talent from across the world. You're trained in the Athletics skill and the Gladiatorial Lore skill. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Athletics **Lore** Gladatorial Lore **Skill Feat** Combat Climber"
+ },
+ {
+  "id": "thassilonian-delver",
+  "collection": "backgrounds",
+  "name": "Thassilonian Delver",
+  "level": null,
+  "text": "You're trained in the Arcana skill and the Thassilonian History Lore skill. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Arcana **Lore** Thassilonian History Lore **Skill Feat** Arcane Sense"
+ },
+ {
+  "id": "demon-slayer",
+  "collection": "backgrounds",
+  "name": "Demon Slayer",
+  "level": null,
+  "text": "You're trained in the Religion skill and the Demon Lore skill. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Religion **Lore** Demon Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "scholar-of-the-sky-key",
+  "collection": "backgrounds",
+  "name": "Scholar of the Sky Key",
+  "level": null,
+  "text": "You're trained in the Crafting skill and the Engineering Lore skill. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Crafting **Lore** Engineering Lore **Skill Feat** Quick Repair"
+ },
+ {
+  "id": "former-aspis-agent",
+  "collection": "backgrounds",
+  "name": "Former Aspis Agent",
+  "level": null,
+  "text": "You're trained in the Intimidation skill and the Aspis Consortium Lore skill. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Intimidation **Lore** Aspis Consortium Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "savior-of-air",
+  "collection": "backgrounds",
+  "name": "Savior of Air",
+  "level": null,
+  "text": "You're trained in the Acrobatics skill, plus either Elemental Lords Lore or a Lore skill related either to one of the Elemental Planes (such as Plane of Air Lore). --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Acrobatics **Skill Feat** Cat Fall"
+ },
+ {
+  "id": "faction-opportunist",
+  "collection": "backgrounds",
+  "name": "Faction Opportunist",
+  "level": null,
+  "text": "You're trained in the Diplomacy skill, plus either Guild Lore, Heraldry Lore, or Mercantile Lore. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Diplomacy **Lore** Guild Lore **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "tapestry-refugee",
+  "collection": "backgrounds",
+  "name": "Tapestry Refugee",
+  "level": null,
+  "text": "You're trained in the Medicine or Stealth skill, plus a Lore skill related to the terrain you lived in while on the demiplane (such as Cave Lore or Desert Lore). You gain the Assurance skill feat with the skill you chose to become trained in (Medicine or Stealth)."
+ },
+ {
+  "id": "ex-con-token-guard",
+  "collection": "backgrounds",
+  "name": "Ex-Con Token Guard",
+  "level": null,
+  "text": "You're trained in the Thievery skill and your choice of Legal Lore or Underworld Lore. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Thievery **Lore** Legal Lore Or Underworld **Skill Feat** Pickpocket"
+ },
+ {
+  "id": "godless-graycloak",
+  "collection": "backgrounds",
+  "name": "Godless Graycloak",
+  "level": null,
+  "text": "You're trained in the Religion skill and your choice of a specific religion Lore skill (such as Iomedae Lore or Norgorber Lore). --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Religion **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "grizzled-muckrucker",
+  "collection": "backgrounds",
+  "name": "Grizzled Muckrucker",
+  "level": null,
+  "text": "You're trained in the Survival skill, as well as either Labor Lore or Underworld Lore. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Survival **Lore** Labor Lore Or Underworld **Skill Feat** Experienced Tracker"
+ },
+ {
+  "id": "harbor-guard-moonlighter",
+  "collection": "backgrounds",
+  "name": "Harbor Guard Moonlighter",
+  "level": null,
+  "text": "You're trained in the Athletics skill and your choice of Sailing Lore or Hunting Lore. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Sailing Lore Or Hunting **Skill Feat** Quick Jump"
+ },
+ {
+  "id": "learned-guard-prodigy",
+  "collection": "backgrounds",
+  "name": "Learned Guard Prodigy",
+  "level": null,
+  "text": "You're trained in your choice of the Arcana or Occultism skill, as well as Legal Lore."
+ },
+ {
+  "id": "political-scion",
+  "collection": "backgrounds",
+  "name": "Political Scion",
+  "level": null,
+  "text": "You're trained in the Diplomacy skill and Legal Lore. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Diplomacy **Lore** Legal Lore **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "sally-guard-neophyte",
+  "collection": "backgrounds",
+  "name": "Sally Guard Neophyte",
+  "level": null,
+  "text": "You're trained in the Nature skill and your choice of Hunting Lore or Stabling Lore. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Nature **Lore** Hunting Lore Or Stabling"
+ },
+ {
+  "id": "sleepless-suns-star",
+  "collection": "backgrounds",
+  "name": "Sleepless Suns Star",
+  "level": null,
+  "text": "You're trained in the Society, plus either Gladiatorial Lore or Genealogy Lore. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Society **Lore** Gladatorial Lore Or Genealogy **Skill Feat** Multilingual"
+ },
+ {
+  "id": "undercover-lotus-guard",
+  "collection": "backgrounds",
+  "name": "Undercover Lotus Guard",
+  "level": null,
+  "text": "You're trained in the Deception skill, Art Lore, **and** Underworld Lore. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Deception **Lore** Art Lore And Underworld **Skill Feat** Charming Liar"
+ },
+ {
+  "id": "harrow-led",
+  "collection": "backgrounds",
+  "name": "Harrow-Led",
+  "level": null,
+  "text": "You're trained in your choice of the Occultism, Performance, or Society skill and the Harrow Lore skill."
+ },
+ {
+  "id": "archaeologist",
+  "collection": "backgrounds",
+  "name": "Archaeologist",
+  "level": null,
+  "text": "You're trained in the Society skill and the Architecture Lore skill. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Society **Lore** Architecture Lore **Skill Feat** Additional Lore"
+ },
+ {
+  "id": "pathfinder-recruiter",
+  "collection": "backgrounds",
+  "name": "Pathfinder Recruiter",
+  "level": null,
+  "text": "Whether you're professionally trained to encourage new recruits or the Society's own scouts identified your potential and raised you from childhood, you're committed to expanding the Society's roster. You're trained in the Diplomacy skill and a Lore skill related to one city you've visited often. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Diplomacy **Skill Feat** Group Impression"
+ },
+ {
+  "id": "spell-seeker",
+  "collection": "backgrounds",
+  "name": "Spell Seeker",
+  "level": null,
+  "text": "You're trained in either the Arcana skill or Occult skill, as well as the Library Lore skill."
+ },
+ {
+  "id": "trailblazer",
+  "collection": "backgrounds",
+  "name": "Trailblazer",
+  "level": null,
+  "text": "You're trained in the Survival skill and the Cartography Lore skill. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Survival **Lore** Cartography Lore **Skill Feat** Terrain Expertise"
+ },
+ {
+  "id": "translator",
+  "collection": "backgrounds",
+  "name": "Translator",
+  "level": null,
+  "text": "You're trained in the Society skill and the Scribing Lore skill. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Lore** Scribing Lore **Skill Feat** Multilingual"
+ },
+ {
+  "id": "sewer-dragon",
+  "collection": "backgrounds",
+  "name": "Sewer Dragon",
+  "level": null,
+  "text": "You're trained in the Crafting skill and the Kobold Lore skill. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Kobold Lore **Skill Feat** Snare Crafting"
+ },
+ {
+  "id": "hookclaw-digger",
+  "collection": "backgrounds",
+  "name": "Hookclaw Digger",
+  "level": null,
+  "text": "You're trained in the Crafting skill, the Mining Lore skill, and the Engineering Lore skill. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Crafting **Lore** Mining Lore **Skill Feat** Improvise Tool"
+ },
+ {
+  "id": "bibliophile",
+  "collection": "backgrounds",
+  "name": "Bibliophile",
+  "level": null,
+  "text": "You're trained in the Arcana skill and the Library Lore skill. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Arcana **Lore** Library Lore **Skill Feat** Arcane Sense"
+ },
+ {
+  "id": "eldritch-anatomist",
+  "collection": "backgrounds",
+  "name": "Eldritch Anatomist",
+  "level": null,
+  "text": "You're a trained physician who can ably tend wounds of many kinds. You're trained in the Medicine skill and the Fleshwarp Lore skill. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Medicine **Lore** Fleshwarp Lore"
+ },
+ {
+  "id": "fogfen-tale-teller",
+  "collection": "backgrounds",
+  "name": "Fogfen Tale-Teller",
+  "level": null,
+  "text": "You're trained in Athletics and the Swamp Lore skill. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Athletics **Lore** Swamp Lore **Skill Feat** Titan Wrestler"
+ },
+ {
+  "id": "market-runner",
+  "collection": "backgrounds",
+  "name": "Market Runner",
+  "level": null,
+  "text": "You're trained in the Diplomacy skill and the Otari Lore skill. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Diplomacy **Lore** Otari Lore **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "ruin-delver",
+  "collection": "backgrounds",
+  "name": "Ruin Delver",
+  "level": null,
+  "text": "You're trained in Acrobatics and the Roseguard Lore skill. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Acrobatics **Lore** Roseguard Lore **Skill Feat** Cat Fall"
+ },
+ {
+  "id": "starwatcher",
+  "collection": "backgrounds",
+  "name": "Starwatcher",
+  "level": null,
+  "text": "You're trained in the Occultism skill and the Astrology Lore skill. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Occultism **Lore** Astrology Lore **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "witchlight-follower",
+  "collection": "backgrounds",
+  "name": "Witchlight Follower",
+  "level": null,
+  "text": "You're trained in Survival and the Wisp Lore skill. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Survival **Lore** Wisp Lore"
+ },
+ {
+  "id": "abadars-avenger",
+  "collection": "backgrounds",
+  "name": "Abadar's Avenger",
+  "level": null,
+  "text": "As if that weren't enough, she also sets up a contest to give away her most powerful treasures to anyone who can throw a punch! Abadar hasn't directly told you as much, per se, but surely this kind of hubris can't sit well with your beloved deity, regardless of Hao Jin's own supposed ties to the Master of the First Vault. You're trained in Religion and the Goka Lore skill. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Religion **Lore** Goka Lore"
+ },
+ {
+  "id": "attention-addict",
+  "collection": "backgrounds",
+  "name": "Attention Addict",
+  "level": null,
+  "text": "You're trained in Performance and the Gladiatorial Lore skill. You gain the Impressive Performance skill feat --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Performance **Lore** Gladiatorial Lore **Skill Feat** Impressive Performance"
+ },
+ {
+  "id": "newcomer-in-need",
+  "collection": "backgrounds",
+  "name": "Newcomer in Need",
+  "level": null,
+  "text": "You're trained in Society and the Goka Lore skill. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Society **Lore** Goka Lore **Skill Feat** Streetwise"
+ },
+ {
+  "id": "ruby-phoenix-fanatic",
+  "collection": "backgrounds",
+  "name": "Ruby Phoenix Fanatic",
+  "level": null,
+  "text": "You've also trained your body to prove yourself a worthy champion. You're trained in the Axis Lore, Gladiatorial Lore, and Goka Lore skills."
+ },
+ {
+  "id": "second-chance-champion",
+  "collection": "backgrounds",
+  "name": "Second Chance Champion",
+  "level": null,
+  "text": "You're trained in Acrobatics and the Gladiatorial Lore skill. You gain the Cat Fall skill feat --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Acrobatics **Lore** Gladiatorial Lore **Skill Feat** Cat Fall"
+ },
+ {
+  "id": "undercover-contender",
+  "collection": "backgrounds",
+  "name": "Undercover Contender",
+  "level": null,
+  "text": "You're trained in Deception and the Underworld Lore skill. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Deception **Lore** Underworld Lore **Skill Feat** Lengthy Diversion"
+ },
+ {
+  "id": "sponsored-by-family",
+  "collection": "backgrounds",
+  "name": "Sponsored by Family",
+  "level": null,
+  "text": "You're trained in your choice of the Diplomacy or Society skill. You're also trained in Magaambya Lore."
+ },
+ {
+  "id": "sponsored-by-teacher-ot",
+  "collection": "backgrounds",
+  "name": "Sponsored by Teacher Ot",
+  "level": null,
+  "text": "You're trained in your choice of the Survival or Performance skill. You're also trained in Nantambu Lore."
+ },
+ {
+  "id": "sponsored-by-a-stranger",
+  "collection": "backgrounds",
+  "name": "Sponsored by a Stranger",
+  "level": null,
+  "text": "You're trained in your choice of the Occultism or Nature skill. You're also trained in Insect Lore."
+ },
+ {
+  "id": "sponsored-by-a-village",
+  "collection": "backgrounds",
+  "name": "Sponsored by a Village",
+  "level": null,
+  "text": "You're trained in your choice of the Crafting or Survival skill. You're also trained in the Lore skill appropriate for the terrain around your community (such as Forest Lore or Jungle Lore)."
+ },
+ {
+  "id": "unsponsored",
+  "collection": "backgrounds",
+  "name": "Unsponsored",
+  "level": null,
+  "text": "You're trained in your choice of the Diplomacy or Intimidation skill. You're also trained in Academia Lore."
+ },
+ {
+  "id": "academy-dropout",
+  "collection": "backgrounds",
+  "name": "Academy Dropout",
+  "level": null,
+  "text": "You're trained in Arcana and Academia Lore. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Arcana **Lore** Academia Lore **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "eidolon-contact",
+  "collection": "backgrounds",
+  "name": "Eidolon Contact",
+  "level": null,
+  "text": "You're trained in your choice of Arcana, Nature, Occultism, or Religion, and a Lore skill for the creature associated with your contacted eidolon (such as Angel Lore or Dragon Lore)."
+ },
+ {
+  "id": "false-medium",
+  "collection": "backgrounds",
+  "name": "False Medium",
+  "level": null,
+  "text": "You're trained in Occultism and Fortune-Telling Lore. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Occultism **Lore** Fortune Telling Lore **Skill Feat** Deceptive Worship"
+ },
+ {
+  "id": "magical-merchant",
+  "collection": "backgrounds",
+  "name": "Magical Merchant",
+  "level": null,
+  "text": "You've developed knowledge of expert handiwork to ensure you don't fall for a scam, since buying a single counterfeit item can lead to bankruptcy. You're trained in Crafting and Mercantile Lore. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Crafting **Lore** Mercantile Lore **Skill Feat** Crafter's Appraisal"
+ },
+ {
+  "id": "magical-misfit",
+  "collection": "backgrounds",
+  "name": "Magical Misfit",
+  "level": null,
+  "text": "You're trained in Arcana and Underworld Lore. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Arcana **Lore** Underworld Lore **Skill Feat** Trick Magic Item"
+ },
+ {
+  "id": "musical-prodigy",
+  "collection": "backgrounds",
+  "name": "Musical Prodigy",
+  "level": null,
+  "text": "You're trained in Performance and Music Lore. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Performance **Lore** Music Lore **Skill Feat** Virtuosic Performer"
+ }
+]
