@@ -6,6 +6,8 @@ import {
   deriveAnimalCompanion,
   deriveEidolon,
   deriveFamiliar,
+  MATURITIES,
+  COMPANION_FORMULA,
   EIDOLON_PRIMARY_OPTIONS,
   type AnimalCompanionBlock,
   type EidolonBlock,
@@ -913,8 +915,20 @@ function CompanionInventory({ cfg, content, onPlay, onAdd, bulkMax }: { cfg: Com
 
 /* ============================ Edit · choices panel ============================ */
 
-const MATURITIES = ['young', 'mature', 'nimble', 'savage', 'specialized', 'specialized-savage'];
-const MATURITY_LABEL: Record<string, string> = { 'specialized': 'Specialized (nimble)', 'specialized-savage': 'Specialized (savage)' };
+/** Labels for the maturity buttons. The LIST itself comes from the rules module (MATURITIES) — this
+ *  file used to keep its own hardcoded copy, which is why adding a rung to the engine didn't make it
+ *  selectable. Nimble/savage are the Player Core pair; indomitable (megafauna), genie-touched and
+ *  unseen are alternatives taken from the same feat, so they sit on the same rung. */
+const MATURITY_LABEL: Record<string, string> = {
+  'genie-touched': 'Genie-touched',
+  specialized: 'Specialized (nimble)',
+  'specialized-savage': 'Specialized (savage)',
+  'specialized-indomitable': 'Specialized (indomitable)',
+  'specialized-genie-touched': 'Specialized (genie-touched)',
+  'specialized-unseen': 'Specialized (unseen)',
+};
+/** True for any specialized rung — these are the ones that also pick a specialization. */
+const isSpecialized = (m?: string) => !!m && m.startsWith('specialized');
 /** An eidolon's unarmed attack damage type is its form's physical type (GM may allow others). */
 const EID_DMG_TYPES: DamageType[] = ['bludgeoning', 'piercing', 'slashing'];
 
@@ -958,7 +972,16 @@ function EditChoices({ cfg, content, onPlay, onAbilities, onSpecialization }: { 
             </div>
           </div>
           <div className="cmp-note">Advance your companion's maturity as you gain the feats that grant it.</div>
-          {(cfg.maturity === 'specialized' || cfg.maturity === 'specialized-savage') && (
+          {/* Parts of an advancement the engine can't model (barding proficiency, elemental
+            * resistance, precision damage, the genie element choice) — shown rather than dropped, so
+            * the player knows to apply them by hand. */}
+          {COMPANION_FORMULA.maturities[(cfg.maturity ?? 'young') as keyof typeof COMPANION_FORMULA.maturities]?.note && (
+            <div className="cmp-note cmp-note-warn">
+              <i className="ti ti-info-circle" aria-hidden="true" />{' '}
+              {COMPANION_FORMULA.maturities[(cfg.maturity ?? 'young') as keyof typeof COMPANION_FORMULA.maturities].note}
+            </div>
+          )}
+          {isSpecialized(cfg.maturity) && (
             <div className="cmp-crow">
               <span className="cmp-lbl">Specialization</span>
               <button className={'cmp-chip' + (spec ? ' filled' : ' empty')} onClick={onSpecialization}>

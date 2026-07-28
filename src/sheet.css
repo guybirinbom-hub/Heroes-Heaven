@@ -5064,6 +5064,16 @@ button.strike-name:hover {
   align-items: center;
   gap: 6px;
 }
+/* Rules an advancement grants that the engine can't model (barding, resistances, precision damage). */
+.cmp-note-warn {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  padding: 7px 9px;
+  border-radius: var(--app-radius-sm);
+  background: color-mix(in srgb, var(--app-warn, #e0a63a) 12%, transparent);
+  border: var(--app-bw) solid color-mix(in srgb, var(--app-warn, #e0a63a) 40%, transparent);
+}
 /* "N more from books you haven't enabled" note at the top of the Add-companion picker. */
 .cmp-add-hidden {
   display: flex;

@@ -38,7 +38,22 @@ import type {
 /** A save's defining ability → the save name a mode targets (modes match saves by name, not ability). */
 const SAVE_NAME: Partial<Record<AbilityId, string>> = { con: 'fortitude', dex: 'reflex', wis: 'will' };
 
-export type Maturity = 'young' | 'mature' | 'nimble' | 'savage' | 'specialized' | 'specialized-savage';
+/** young → mature → one of the four advancements → its specialized form. Nimble and savage are the
+ *  Player Core pair; indomitable (megafauna), genie-touched and unseen (cryptid) are taken INSTEAD of
+ *  them, from the same feat, and are sourced from Lost Omens World Guide / Legends / Dark Archives. */
+export type Maturity =
+  | 'young'
+  | 'mature'
+  | 'nimble'
+  | 'savage'
+  | 'indomitable'
+  | 'genie-touched'
+  | 'unseen'
+  | 'specialized'
+  | 'specialized-savage'
+  | 'specialized-indomitable'
+  | 'specialized-genie-touched'
+  | 'specialized-unseen';
 
 interface MaturityRow {
   ranks: {
@@ -50,6 +65,14 @@ interface MaturityRow {
     otherSkills: ProficiencyRank;
   };
   speedBonus: number;
+  /** Named skills this advancement raises, beyond the signature skill — nimble raises Acrobatics to
+   *  expert, savage raises Athletics, unseen raises Stealth. These were previously unmodelled: every
+   *  non-signature skill was pinned at `otherSkills` (trained), so a nimble companion's Acrobatics
+   *  was a rank too low. Cumulative — a specialized companion keeps the one from its path. */
+  skillUpgrades?: Partial<Record<SkillId, ProficiencyRank>>;
+  /** Rules text the engine can't model (barding proficiency, elemental resistances, precision
+   *  damage). Surfaced on the companion card so the player isn't silently short-changed. */
+  note?: string;
   /** Cumulative ability-modifier boosts from young, applied at this maturity. */
   abilityBoosts: Partial<Record<AbilityId, number>>;
   /** Number of weapon damage dice (young 1 → mature/nimble/savage 2 → specialized 3). */
@@ -82,30 +105,90 @@ export const COMPANION_FORMULA: {
       ranks: { ac: 'trained', saves: 'expert', perception: 'expert', attack: 'trained', signatureSkills: 'expert', otherSkills: 'trained' },
       speedBonus: 0, abilityBoosts: { str: 1, dex: 1, con: 1, wis: 1 }, damageDice: 2, flatDamage: 0,
     },
+    // Player Core p211: "Increase its Dexterity modifier by 2 and its Strength, Constitution, and
+    // Wisdom modifiers by 1. Increase its proficiency ranks in Acrobatics to expert."
     nimble: {
       ranks: { ac: 'trained', saves: 'expert', perception: 'expert', attack: 'trained', signatureSkills: 'expert', otherSkills: 'trained' },
       // No inherent Speed bonus — a Speed increase comes only from the Racer specialization (+10 ft).
       speedBonus: 0, abilityBoosts: { str: 2, dex: 3, con: 2, wis: 2 }, damageDice: 2, flatDamage: 2,
+      skillUpgrades: { acrobatics: 'expert' },
     },
+    // Player Core p211: Str +2, Dex/Con/Wis +1, Athletics to expert, grows one size if Medium or smaller.
     savage: {
       ranks: { ac: 'trained', saves: 'expert', perception: 'expert', attack: 'trained', signatureSkills: 'expert', otherSkills: 'trained' },
       speedBonus: 0, abilityBoosts: { str: 3, dex: 2, con: 2, wis: 2 }, damageDice: 2, flatDamage: 3,
+      skillUpgrades: { athletics: 'expert' },
+    },
+    // --- Alternative advancements: taken INSTEAD of nimble/savage, from the same feat. Ability
+    //     boosts below are cumulative from young (mature already gave +1 to Str/Dex/Con/Wis).
+    // Lost Omens World Guide p117 (megafauna): Con +2, Str/Dex/Wis +1, Athletics AND barding to
+    // expert, +3 damage, grows one size.
+    indomitable: {
+      ranks: { ac: 'trained', saves: 'expert', perception: 'expert', attack: 'trained', signatureSkills: 'expert', otherSkills: 'trained' },
+      speedBonus: 0, abilityBoosts: { str: 2, dex: 2, con: 3, wis: 2 }, damageDice: 2, flatDamage: 3,
+      skillUpgrades: { athletics: 'expert' },
+      note: 'Megafauna: barding proficiency is also expert, and the companion grows one size if Medium or smaller. The app has no barding-proficiency track, so apply that by hand.',
+    },
+    // Lost Omens Legends p123: Wis +2, Str/Dex/Con +1, +3 damage, resistance 5, and a skill that
+    // depends on the chosen genie — Acrobatics for djinni/efreeti, Athletics for marid/shaitan.
+    // Both are granted here because the element choice isn't modelled; see the note.
+    'genie-touched': {
+      ranks: { ac: 'trained', saves: 'expert', perception: 'expert', attack: 'trained', signatureSkills: 'expert', otherSkills: 'trained' },
+      speedBonus: 0, abilityBoosts: { str: 2, dex: 2, con: 2, wis: 3 }, damageDice: 2, flatDamage: 3,
+      skillUpgrades: { acrobatics: 'expert', athletics: 'expert' },
+      note: 'Choose a genie: djinni (air), efreeti (fire), marid (water) or shaitan (earth). It grants resistance 5 (acid for djinni, fire for efreeti/marid, electricity for shaitan) and its elemental trait. Only ONE skill actually goes to expert — Acrobatics for djinni/efreeti, Athletics for marid/shaitan — but the element isn’t tracked yet, so both are shown; ignore the one that doesn’t apply.',
+    },
+    // Dark Archives (Remastered) p65 (cryptid): Wis +2, Str/Dex/Con +1, Stealth to expert, +3 damage
+    // and an extra 1d4 precision vs off-guard targets.
+    unseen: {
+      ranks: { ac: 'trained', saves: 'expert', perception: 'expert', attack: 'trained', signatureSkills: 'expert', otherSkills: 'trained' },
+      speedBonus: 0, abilityBoosts: { str: 2, dex: 2, con: 2, wis: 3 }, damageDice: 2, flatDamage: 3,
+      skillUpgrades: { stealth: 'expert' },
+      note: 'Cryptid: also deals an extra 1d4 precision damage against off-guard targets (combine with any precision damage the companion already has, e.g. a cat’s).',
     },
     // Specialized on the NIMBLE path (cumulative: mature +1 all, nimble Dex+2, specialized Dex+1/Int+2).
+    // Keeps the path's skill upgrade — specializing never undoes Acrobatics/Athletics expert.
     specialized: {
       ranks: { ac: 'trained', saves: 'master', perception: 'master', attack: 'expert', signatureSkills: 'master', otherSkills: 'trained' },
       speedBonus: 0, abilityBoosts: { str: 2, dex: 4, con: 2, wis: 2, int: 2 }, damageDice: 3, flatDamage: 4,
+      skillUpgrades: { acrobatics: 'expert' },
     },
     // Specialized on the SAVAGE path (savage Str+2 & +3 dmg, specialized Dex+1/Int+2 & dmg 3→6). Str is one
     // higher / Dex one lower than the nimble path, and flat unarmed damage is +6 rather than +4.
     'specialized-savage': {
       ranks: { ac: 'trained', saves: 'master', perception: 'master', attack: 'expert', signatureSkills: 'master', otherSkills: 'trained' },
       speedBonus: 0, abilityBoosts: { str: 3, dex: 3, con: 2, wis: 2, int: 2 }, damageDice: 3, flatDamage: 6,
+      skillUpgrades: { athletics: 'expert' },
+    },
+    // Specialized on each ALTERNATIVE path. Same specialized delta as above (Dex+1/Int+2, attack →
+    // expert, saves/Perception/signature → master, 3 damage dice) applied to that path's base, and
+    // each keeps its own skill upgrade + note.
+    'specialized-indomitable': {
+      ranks: { ac: 'trained', saves: 'master', perception: 'master', attack: 'expert', signatureSkills: 'master', otherSkills: 'trained' },
+      speedBonus: 0, abilityBoosts: { str: 2, dex: 3, con: 3, wis: 2, int: 2 }, damageDice: 3, flatDamage: 6,
+      skillUpgrades: { athletics: 'expert' },
+      note: 'Megafauna: barding proficiency is also expert. The app has no barding-proficiency track, so apply that by hand.',
+    },
+    'specialized-genie-touched': {
+      ranks: { ac: 'trained', saves: 'master', perception: 'master', attack: 'expert', signatureSkills: 'master', otherSkills: 'trained' },
+      speedBonus: 0, abilityBoosts: { str: 2, dex: 3, con: 2, wis: 3, int: 2 }, damageDice: 3, flatDamage: 6,
+      skillUpgrades: { acrobatics: 'expert', athletics: 'expert' },
+      note: 'Only ONE of Acrobatics / Athletics is actually expert — Acrobatics for djinni/efreeti, Athletics for marid/shaitan. The element isn’t tracked yet, so both are shown; ignore the one that doesn’t apply. Resistance 5 and the elemental trait also apply.',
+    },
+    'specialized-unseen': {
+      ranks: { ac: 'trained', saves: 'master', perception: 'master', attack: 'expert', signatureSkills: 'master', otherSkills: 'trained' },
+      speedBonus: 0, abilityBoosts: { str: 2, dex: 3, con: 2, wis: 3, int: 2 }, damageDice: 3, flatDamage: 6,
+      skillUpgrades: { stealth: 'expert' },
+      note: 'Cryptid: also deals an extra 1d4 precision damage against off-guard targets.',
     },
   },
 };
 
-export const MATURITIES: Maturity[] = ['young', 'mature', 'nimble', 'savage', 'specialized', 'specialized-savage'];
+export const MATURITIES: Maturity[] = [
+  'young', 'mature',
+  'nimble', 'savage', 'indomitable', 'genie-touched', 'unseen',
+  'specialized', 'specialized-savage', 'specialized-indomitable', 'specialized-genie-touched', 'specialized-unseen',
+];
 
 /** Skills every animal companion is trained in, beyond its type's signature skills. */
 const UNIVERSAL_SKILLS: SkillId[] = ['acrobatics', 'athletics'];
@@ -247,7 +330,15 @@ export function deriveAnimalCompanion(
 ): AnimalCompanionBlock {
   // Upgrade feats (Advanced/Incredible/Paragon Companion) raise the maturity FLOOR — in this engine a
   // "paragon companion" is the specialized rung of the same ladder, so the feat can only improve it.
-  const MATURITY_RANK: Record<Maturity, number> = { young: 0, mature: 1, nimble: 2, savage: 2, specialized: 3, 'specialized-savage': 3 };
+  // All four advancements sit on the same rung (they're alternatives taken from the same feat), and
+  // all their specialized forms on the next — so an upgrade feat can raise a companion to specialized
+  // without ever switching which PATH the player chose.
+  const MATURITY_RANK: Record<Maturity, number> = {
+    young: 0,
+    mature: 1,
+    nimble: 2, savage: 2, indomitable: 2, 'genie-touched': 2, unseen: 2,
+    specialized: 3, 'specialized-savage': 3, 'specialized-indomitable': 3, 'specialized-genie-touched': 3, 'specialized-unseen': 3,
+  };
   let maturity = (cfg.maturity as Maturity) || 'young';
   if (ownerFeatIds) {
     for (const [slug, mod] of Object.entries(COMPANION_MODS)) {
@@ -339,11 +430,16 @@ export function deriveAnimalCompanion(
     }
   }
   const extraSpecSkills = (spec?.skills ?? []).map((s) => s.skill).filter((s) => !sig.has(s) && !UNIVERSAL_SKILLS.includes(s));
-  const skillList = [...new Set<SkillId>([...UNIVERSAL_SKILLS, ...type.skills, ...extraSpecSkills, ...modSkill.keys()])];
+  // An advancement's named skill must be LISTED, not just ranked — unseen raises Stealth to expert,
+  // and a companion whose signature skill isn't Stealth wouldn't otherwise show the row at all.
+  const maturitySkills = Object.keys(m.skillUpgrades ?? {}) as SkillId[];
+  const skillList = [...new Set<SkillId>([...UNIVERSAL_SKILLS, ...type.skills, ...extraSpecSkills, ...modSkill.keys(), ...maturitySkills])];
   const skills: StatMod[] = skillList.map((sk) => {
     // Only the companion's SIGNATURE skill advances with maturity; the universal Acrobatics/Athletics
     // (and any other non-signature skill) stay trained (otherSkills rank).
     let rank = sig.has(sk) ? m.ranks.signatureSkills : m.ranks.otherSkills;
+    // The advancement's own named skill (nimble → Acrobatics, savage → Athletics, unseen → Stealth).
+    if (m.skillUpgrades?.[sk]) rank = rankMax(rank, m.skillUpgrades[sk]);
     if (specSkill.has(sk)) rank = rankMax(rank, specSkill.get(sk));
     if (modSkill.has(sk)) rank = rankMax(rank, modSkill.get(sk));
     const ability = SKILL_ABILITY[sk];
