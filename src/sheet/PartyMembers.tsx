@@ -103,9 +103,14 @@ export function PartyMembers({
   const [error, setError] = useState('');
   const [myId, setMyId] = useState<string | null>(null);
   const [reload, setReload] = useState(0);
+  // `myId` is null both BEFORE the auth check resolves and when genuinely signed out, so track the
+  // resolution separately — otherwise the signed-out notice below flashes for a signed-in user.
+  const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
-    void currentUserId().then(setMyId);
+    void currentUserId()
+      .then(setMyId)
+      .finally(() => setAuthChecked(true));
   }, []);
 
   useEffect(() => {
@@ -155,6 +160,11 @@ export function PartyMembers({
       {error && <p className="login-error" role="alert">{error}</p>}
       {shown === null && !error ? (
         <div className="party-loading"><span className="app-loading-spin" aria-hidden="true" /> Loading party…</div>
+      ) : shown && shown.length === 0 && !localMembers && authChecked && myId === null ? (
+        // The party lives on the server and its row-level security only answers signed-in users, so
+        // a signed-out session ("use offline") gets an empty list rather than an error. Say that,
+        // instead of implying nobody has shared a character.
+        <div className="party-empty">Sign in to see this campaign’s party — the member list is stored on the server.</div>
       ) : shown && shown.length === 0 ? (
         <div className="party-empty">No one has shared a character with this campaign yet. Characters appear here once a member attaches one (Builder → Setup → Campaigns) and their app syncs.</div>
       ) : (
