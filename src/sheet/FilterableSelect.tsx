@@ -8,6 +8,11 @@ import { DescriptionModal } from './DescriptionModal';
 import { useEscapeClose } from './useEscapeClose';
 import type { DescNode } from './descref';
 
+/** An internal sentinel smuggled into a game-data string list (convention: a `__` prefix), never a
+ *  real PF2e trait. Markers belong in dedicated fields (see `Item.catalogKind`) — this is the safety
+ *  net that keeps one from ever rendering as a literal "__siege" pill if it slips in anyway. */
+export const isInternalTrait = (t: string): boolean => t.startsWith('__');
+
 /** Build a description node for a content entry, or null when it has nothing to show.
  *  Used by picker rows: clicking a row's body opens this in a DescriptionModal. `key` is the
  *  originating content-map name ('feats'/'spells'/…), threaded into the pin identity. */
@@ -806,10 +811,12 @@ function TraitPicker<T>({
     const m = new Map<string, number>();
     for (const it of items) for (const t of field.accessor(it)) m.set(t, (m.get(t) ?? 0) + 1);
     // Drop traits that duplicate a dedicated facet, but never hide one the user has already picked
-    // (it would vanish from the grid while still filtering the results).
+    // (it would vanish from the grid while still filtering the results). `__`-prefixed entries are
+    // internal sentinels and are ALWAYS dropped — a belt-and-braces guard so a marker that sneaks
+    // into a traits array can never surface as a literal pill (see Item.catalogKind).
     const picked = new Set([...value.inc, ...value.exc]);
     return [...m.entries()]
-      .filter(([t]) => picked.has(t) || !hide?.has(t.toLowerCase()))
+      .filter(([t]) => !isInternalTrait(t) && (picked.has(t) || !hide?.has(t.toLowerCase())))
       .sort((a, b) => b[1] - a[1])
       .map(([t]) => t);
   }, [items, field, hide, value.inc, value.exc]);

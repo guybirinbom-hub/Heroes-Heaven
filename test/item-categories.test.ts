@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { content } from './_content';
 import { ITEM_SPEC } from '../src/sheet/filterSpecs';
+import { isInternalTrait } from '../src/sheet/FilterableSelect';
 import type { Item } from '../src/rules/types';
 
 const c = content();
@@ -73,5 +74,38 @@ describe('Add-Items picker Category filter', () => {
         expect(item.traits, item.name).toContain('alchemical');
       }
     }
+  });
+
+  // Regression: synthetic Add-Items rows (services / vehicles / siege weapons) used to be tagged by
+  // PUSHING a fake '__service'/'__vehicle'/'__siege' string into the item's `traits`. Because traits
+  // are rendered all over the app, that surfaced as a literal "__siege" pill in the Traits filter.
+  // The marker now lives in the internal `catalogKind` field instead.
+  describe('synthetic catalog rows are marked without polluting game data', () => {
+    const mk = (catalogKind: Item['catalogKind'], traits: string[] = []): Item =>
+      ({ id: 'x', name: 'X', level: 0, itemType: 'equipment', bulk: 0, rarity: 'common', traits, description: '', catalogKind }) as Item;
+
+    it('routes by catalogKind, not by a fake trait', () => {
+      expect(categoryField.accessor(mk('service')) as string[]).toContain('services');
+      expect(categoryField.accessor(mk('vehicle')) as string[]).toContain('vehicles');
+      expect(categoryField.accessor(mk('siege')) as string[]).toContain('siege-weapons');
+      // A catalog row is NOT also swept into Adventuring Gear.
+      expect(categoryField.accessor(mk('vehicle')) as string[]).not.toContain('adventuring-gear');
+      // The old sentinel string no longer routes anything.
+      expect(categoryField.accessor(mk(undefined, ['__siege'])) as string[]).not.toContain('siege-weapons');
+    });
+
+    it('no shipped item carries an internal "__" marker in its traits', () => {
+      for (const item of Object.values(c.items) as Item[]) {
+        const leaked = (item.traits ?? []).filter((t) => isInternalTrait(t));
+        expect(leaked, item.name).toEqual([]);
+      }
+    });
+
+    it('isInternalTrait recognises the sentinel convention', () => {
+      expect(isInternalTrait('__siege')).toBe(true);
+      expect(isInternalTrait('__vehicle')).toBe(true);
+      expect(isInternalTrait('siege')).toBe(false);
+      expect(isInternalTrait('magical')).toBe(false);
+    });
   });
 });

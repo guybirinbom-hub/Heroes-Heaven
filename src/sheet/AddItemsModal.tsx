@@ -3,7 +3,7 @@ import type { Coins, ContentDatabase, Item } from '../rules/types';
 import { canAfford } from '../rules/play';
 import { formatPrice, parsePrice } from '../rules/wealth';
 import { FilterableSelect, descNodeOf } from './FilterableSelect';
-import { ITEM_SPEC, SERVICE_MARK, VEHICLE_MARK, SIEGE_MARK } from './filterSpecs';
+import { ITEM_SPEC } from './filterSpecs';
 
 /** A vehicle/siege catalog pick routed to the companion system. `kind` selects the catalog map;
  *  `typeId` is the vehicle/siege id. */
@@ -66,8 +66,10 @@ export function AddItemsModal({
           name: s.name,
           level: s.level ?? 0,
           itemType: 'equipment',
-          // Tag with the sentinel so itemCategories routes these to the "Services" chip.
-          traits: [...(s.traits ?? []), SERVICE_MARK],
+          // Marked via `catalogKind` (an internal field), NOT a fake trait — itemCategories routes
+          // these to the "Services" chip. Anything put in `traits` is user-visible somewhere.
+          catalogKind: 'service',
+          traits: s.traits ?? [],
           rarity: 'common',
           bulk: 0,
           price: undefined,
@@ -83,7 +85,8 @@ export function AddItemsModal({
                 name: v.name,
                 level: v.level,
                 itemType: 'equipment',
-                traits: [...(v.traits ?? []), VEHICLE_MARK],
+                catalogKind: 'vehicle',
+                traits: v.traits ?? [],
                 rarity: 'common',
                 bulk: 0,
                 price: parsePrice(v.price),
@@ -97,7 +100,8 @@ export function AddItemsModal({
                 name: s.name,
                 level: s.level,
                 itemType: 'equipment',
-                traits: [...(s.traits ?? []), SIEGE_MARK],
+                catalogKind: 'siege',
+                traits: s.traits ?? [],
                 rarity: 'common',
                 bulk: 0,
                 price: parsePrice(s.price),

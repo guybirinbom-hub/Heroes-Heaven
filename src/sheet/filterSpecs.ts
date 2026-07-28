@@ -81,16 +81,14 @@ export const SPELL_SPEC_BUILDER: FilterSpec<Spell> = {
   fields: SPELL_SPEC.fields.filter((f) => f.id !== 'tradition'),
 };
 
-/** Sentinel trait pushed onto Service catalog entries (which are shaped as `equipment` Items) in
- *  AddItemsModal so itemCategories can route them to the "Services" chip. */
-export const SERVICE_MARK = '__service';
-
-/** Sentinels pushed onto Vehicle / Siege-Weapon catalog entries (shaped as `equipment` Items) in
- *  AddItemsModal. These entries live in the COMPANION catalog, not content.items — they're surfaced
- *  in the Add-Items picker as reference/buyable rows and route to the companion-add path. The marks
- *  let itemCategories route them to the "Vehicles" / "Siege Weapons" chips. */
-export const VEHICLE_MARK = '__vehicle';
-export const SIEGE_MARK = '__siege';
+/* Service / Vehicle / Siege-Weapon catalog entries are shaped as `equipment` Items in AddItemsModal
+ * (they live in the services + companion catalogs, not content.items) and surface in the Add-Items
+ * picker as reference/buyable rows. They are tagged with the INTERNAL `Item.catalogKind` field so
+ * itemCategories can route them to the "Services" / "Vehicles" / "Siege Weapons" chips.
+ *
+ * These were previously fake traits ('__service' / '__vehicle' / '__siege') pushed into the item's
+ * `traits` array — which leaked straight into the Traits filter as a literal "__siege" pill. Never
+ * put a synthetic marker in a game-data field; `traits` is rendered to the user in many places. */
 
 /** The full AoN "Category" tokens for one item — an item can belong to several (a magic staff is
  *  Staves + Held Items; a precious weapon is Weapons + Materials). Every AoN equipment category is
@@ -148,11 +146,11 @@ function itemCategories(i: Item): string[] {
   if (/^affixed-or-held/.test(u) || /\bbanner\b/i.test(name)) c.push('banners');
   // Assistive Items (prosthetics and other assistive gear) — matched by name (no trait exists).
   if (/\bprosthe|prosthesis\b/i.test(name)) c.push('assistive');
-  // Services (reference-only catalog rows tagged with the sentinel in AddItemsModal).
-  if (has(SERVICE_MARK)) c.push('services');
-  // Vehicles / Siege Weapons (companion-catalog rows tagged with a sentinel in AddItemsModal).
-  if (has(VEHICLE_MARK)) c.push('vehicles');
-  if (has(SIEGE_MARK)) c.push('siege-weapons');
+  // Services / Vehicles / Siege Weapons — reference-only catalog rows, tagged via the internal
+  // `catalogKind` field in AddItemsModal (see the note above).
+  if (i.catalogKind === 'service') c.push('services');
+  if (i.catalogKind === 'vehicle') c.push('vehicles');
+  if (i.catalogKind === 'siege') c.push('siege-weapons');
 
   // Adventuring Gear: mundane general equipment/consumables not otherwise magical or categorized.
   // (worn/held generic gear, tools, kits, mundane consumables — anything without a magical signal.)
@@ -164,9 +162,7 @@ function itemCategories(i: Item): string[] {
     !has('relic') &&
     !has('cursed') &&
     !has('intelligent') &&
-    !has(SERVICE_MARK) &&
-    !has(VEHICLE_MARK) &&
-    !has(SIEGE_MARK)
+    !i.catalogKind
   ) {
     c.push('adventuring-gear');
   }

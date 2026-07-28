@@ -840,6 +840,12 @@ interface ItemBase extends ContentBase {
   effectChoices?: EffectChoice[];
   /** Sheet-visible warning that this item's effect references missing (legacy) content. */
   dataWarning?: string;
+  /** INTERNAL, never rendered: marks a synthetic Add-Items row that isn't a real inventory item but a
+   *  reference/buyable entry routed elsewhere (services, and the vehicle/siege companion catalogs).
+   *  This used to be smuggled in as a fake `__service`/`__vehicle`/`__siege` TRAIT, which then showed
+   *  up as a literal "__siege" pill in the Traits filter. Keep synthetic markers OUT of game-data
+   *  fields — anything in `traits` is user-visible somewhere. */
+  catalogKind?: 'service' | 'vehicle' | 'siege';
 }
 
 /** A static descriptor of one trackable pool/ability on an item definition. */
