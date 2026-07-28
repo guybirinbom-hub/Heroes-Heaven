@@ -1832,6 +1832,9 @@ export interface Customization {
   // --- migrated device options (now per-character, with a global default) ---
   /** Replace HP Damage/Heal buttons + temp box with one quick-entry command field. */
   hpCommandEntry?: boolean;
+  /** Subtract the shield's Hardness from damage entered in the rail's shield box, so you type the hit
+   *  you took instead of doing the math yourself (default true). Your own HP is never touched. */
+  shieldAutoHardness?: boolean;
   /** Render the Actions list as compact chips (default true). */
   compactActions?: boolean;
   /** Show an available/total slot badge on each spell rank tab, phone Spells page (default true). */

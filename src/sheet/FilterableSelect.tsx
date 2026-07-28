@@ -363,6 +363,16 @@ export function FilterableSelect<T>({
     setState((s) => ({ ...s, [f.id]: defaultState({ fields: [f] }, effStops)[f.id] }));
 
   const presence = useMemo(() => computePresence(spec, items), [spec, items]);
+  // Option ids already offered by a DEDICATED facet (Rarity, Category, School…). PF2e models several
+  // of those as traits too, so without this the Traits grid repeats "rare"/"uncommon"/"unique"
+  // alongside the Rarity filter — two controls for one thing. The traits facet drops them.
+  const siblingOptionIds = useMemo(() => {
+    const out = new Set<string>();
+    for (const f of spec.fields) {
+      if (f.kind === 'chips' || f.kind === 'chipsToggle') for (const o of f.options) out.add(o.id.toLowerCase());
+    }
+    return out;
+  }, [spec]);
   // The searchable text of each field's individual options (chip labels, the trait vocabulary, the
   // cast-time chips), so the "find a filter" box also matches an option's name — e.g. "uncommon" or
   // "fire" — not just the section heading. Present options only, lowercased.
@@ -399,9 +409,12 @@ export function FilterableSelect<T>({
     [items, liveFields, state, effStops],
   );
 
-  // "Hide ineligible" — an opt-in eligibility filter (feat pickers). The ineligible set is computed
-  // once per items/predicate identity so keystrokes don't re-run prerequisite checks over the list.
-  const [hideInel, setHideInel] = useState(false);
+  // "Hide ineligible" — ON by default (feat pickers): options you don't qualify for are REMOVED from
+  // the list, not greyed out, so the list only offers things you can actually take. The always-visible
+  // "Show ineligible · N" toggle brings them back (that's also how Overrides' "Take anyway" is
+  // reached). The ineligible set is computed once per items/predicate identity so keystrokes don't
+  // re-run prerequisite checks over the list.
+  const [hideInel, setHideInel] = useState(true);
   const inelKeys = useMemo(() => {
     if (!ineligible) return null;
     const s = new Set<string>();
@@ -564,6 +577,7 @@ export function FilterableSelect<T>({
                         present={presence[f.id].opts}
                         stops={stopsOf(f, effStops)}
                         query={mq}
+                        siblingOptionIds={siblingOptionIds}
                       />
                     </div>
                   );
@@ -595,7 +609,10 @@ export function FilterableSelect<T>({
                   onClick={() => setHideInel((v) => !v)}
                   title={hideInel ? 'Show options whose prerequisites you don’t meet' : 'Hide options whose prerequisites you don’t meet'}
                 >
-                  <i className="ti ti-eye-off" aria-hidden="true" /> Hide ineligible{!hideInel && inelCount > 0 ? ` · ${inelCount}` : ''}
+                  {/* The label names the ACTION. Ineligible options are hidden by default, so the
+                    * button normally offers to reveal them (with how many are being held back). */}
+                  <i className={'ti ' + (hideInel ? 'ti-eye' : 'ti-eye-off')} aria-hidden="true" />{' '}
+                  {hideInel ? `Show ineligible${inelCount > 0 ? ` · ${inelCount}` : ''}` : 'Hide ineligible'}
                 </button>
               )}
             </div>
@@ -640,6 +657,7 @@ function FieldControl<T>({
   present,
   stops,
   query,
+  siblingOptionIds,
 }: {
   field: FilterField<T>;
   value: unknown;
@@ -651,6 +669,8 @@ function FieldControl<T>({
   stops?: SliderStop[];
   /** The active "find a filter" query — options matching it are emphasized. */
   query?: string;
+  /** Ids already covered by another facet — the traits grid hides these (see the parent). */
+  siblingOptionIds?: Set<string>;
 }) {
   const q = (query ?? '').trim().toLowerCase();
   const chipMatch = (label: string, id: string) => !!q && (label.toLowerCase().includes(q) || id.toLowerCase().includes(q));
@@ -761,7 +781,7 @@ function FieldControl<T>({
   }
 
   // traits — searchable multi-select over the vocabulary present in the dataset.
-  return <TraitPicker field={field} value={asMulti(value)} onChange={onChange} items={items} query={query} />;
+  return <TraitPicker field={field} value={asMulti(value)} onChange={onChange} items={items} query={query} hide={siblingOptionIds} />;
 }
 
 function TraitPicker<T>({
@@ -770,6 +790,7 @@ function TraitPicker<T>({
   onChange,
   items,
   query,
+  hide,
 }: {
   field: Extract<FilterField<T>, { kind: 'traits' }>;
   value: MultiState;
@@ -777,13 +798,21 @@ function TraitPicker<T>({
   items: T[];
   /** The "search filters" query — used to surface matching traits before the user types here. */
   query?: string;
+  /** Trait ids that another facet already covers (e.g. "rare" ↔ the Rarity filter) — not shown here. */
+  hide?: Set<string>;
 }) {
   const [q, setQ] = useState('');
   const vocab = useMemo(() => {
     const m = new Map<string, number>();
     for (const it of items) for (const t of field.accessor(it)) m.set(t, (m.get(t) ?? 0) + 1);
-    return [...m.entries()].sort((a, b) => b[1] - a[1]).map(([t]) => t);
-  }, [items, field]);
+    // Drop traits that duplicate a dedicated facet, but never hide one the user has already picked
+    // (it would vanish from the grid while still filtering the results).
+    const picked = new Set([...value.inc, ...value.exc]);
+    return [...m.entries()]
+      .filter(([t]) => picked.has(t) || !hide?.has(t.toLowerCase()))
+      .sort((a, b) => b[1] - a[1])
+      .map(([t]) => t);
+  }, [items, field, hide, value.inc, value.exc]);
   // Show EVERY trait as a tap-to-cycle pill (the user sees their options — no hunting via search). The
   // grid scrolls when long; a search narrows the VISIBLE pills (the trait's own box, or the global
   // "search filters" query), but chosen (include/exclude) traits always stay shown.

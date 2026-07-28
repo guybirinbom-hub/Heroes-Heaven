@@ -1851,9 +1851,21 @@ body {
 /* The HP stepper / read-out sits on the same line as the name, pushed to the right. Kept
    compact (tight gap + button padding) so the shield name keeps as much room as possible. */
 .shield-line .sh-step,
+.shield-line .sh-hp-read,
 .shield-line .sh-hp {
   margin-left: auto;
   flex: none;
+}
+/* Current / max read-out on the shield line (the ±1 stepper was replaced by the HP-style
+   Repair / amount / Damage row below, so this is now just the value). */
+.shield-line .sh-hp-read {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+/* The shield's damage/repair row reuses the HP row's layout verbatim. */
+.sh-edit {
+  margin-top: 6px;
 }
 .shield-line .sh-step {
   gap: 3px;
@@ -9371,8 +9383,11 @@ button.strike-name:hover {
 .fsel-chip-cost::before { display: none; }
 .fsel-chip-cost .pf2-action { color: inherit; font-size: 1.25em; }
 
-/* traits shown as a visible tap-to-cycle pill grid (scrolls when long); search narrows the visible pills */
-.fsel-traitgrid { max-height: 172px; overflow-y: auto; padding-right: 2px; align-content: flex-start; }
+/* Traits shown as a visible tap-to-cycle pill grid; search narrows the visible pills. It used to be
+ * capped at a hard 172px with its own scrollbar, which left a big dead band of unused panel below
+ * the pills (and a confusing nested scroll). Instead let the grid grow to its content and stretch to
+ * fill whatever height the panel has left — the panel itself (.fsel-fields) is the single scroller. */
+.fsel-traitgrid { padding-right: 2px; align-content: flex-start; }
 .fsel-trait-search { margin-bottom: 4px; }
 
 /* tri-state trait tags (include = accent, exclude = red "not X"); label & ✕ are separate buttons */
@@ -9945,6 +9960,7 @@ button.strike-name:hover {
   /* Shield block on the mobile HP card. */
   .shield-block .sh-step button { min-width: 34px; min-height: 34px; padding: 6px; }
   .shield-block .sh-hp-input { width: 44px; min-height: 32px; }
+  .sh-edit .hp-heal, .sh-edit .hp-dmg { min-height: 36px; }
 
   /* Inventory item-card controls + coins onto their own row. */
   .inv-act { min-height: 40px; padding: 8px 12px; font-size: 13px; }

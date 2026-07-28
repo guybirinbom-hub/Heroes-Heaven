@@ -100,7 +100,9 @@ export function VitalsRail({
   // Shield-HP draft (null = show the live value): a controlled number input that wrote on every keystroke
   // snapped the shield to full HP the moment you cleared it to retype — buffer + commit on blur/Enter.
   const [shDraft, setShDraft] = useState<string | null>(null);
-  const { hpCommandEntry, showSaveDCs, railOrder, railHidden } = useCustomization();
+  /** Damage/repair amount for the shield's own HP row (separate from the character's hpAmt). */
+  const [shAmt, setShAmt] = useState('');
+  const { hpCommandEntry, shieldAutoHardness, showSaveDCs, railOrder, railHidden } = useCustomization();
   const [condOpen, setCondOpen] = useState(false);
   const [shieldDetailOpen, setShieldDetailOpen] = useState(false);
   const [shieldEditOpen, setShieldEditOpen] = useState(false);
@@ -188,6 +190,24 @@ export function VitalsRail({
     const n = hpNum();
     if (onPlay && n) onPlay((p) => applyHeal(p, n, hpMax));
     setHpAmt('');
+  };
+  // Shield damage/repair, mirroring the HP row. Damage is reduced by the shield's Hardness when the
+  // "Auto-subtract shield Hardness" customization is on (PF2e: a shield prevents damage up to its
+  // Hardness). This deliberately affects ONLY the shield — the player's own HP is entered separately.
+  const shNum = () => Math.abs(parseInt(shAmt, 10)) || 0;
+  const shieldDamageBy = () => {
+    const raw = shNum();
+    setShAmt('');
+    if (!onPlay || !raw || !shield) return;
+    const applied = shieldAutoHardness ? Math.max(0, raw - shield.hardness) : raw;
+    if (!applied) return; // fully absorbed by Hardness
+    onPlay((p) => setShieldDamage(p, (p.shieldDamage ?? 0) + applied, shield.hp), 'shield-hp');
+  };
+  const shieldRepair = () => {
+    const n = shNum();
+    setShAmt('');
+    if (!onPlay || !n || !shield) return;
+    onPlay((p) => setShieldDamage(p, (p.shieldDamage ?? 0) - n, shield.hp), 'shield-hp');
   };
   // Quick-HP-entry command field (Settings → Customization): "N" = damage, "-N" = heal, "tN" = temp HP.
   const runHpCommand = () => {
@@ -376,13 +396,7 @@ export function VitalsRail({
                 <span className="sh-broken">{shield.current <= 0 ? 'Destroyed' : 'Broken'}</span>
               )}
               {onPlay ? (
-                <span className="res-step sh-step" title="Shield HP — − for damage taken, + to repair">
-                  <button
-                    aria-label="Shield takes 1 damage"
-                    onClick={() => onPlay((p) => setShieldDamage(p, (character.shieldDamage ?? 0) + 1, shield.hp), 'shield-hp')}
-                  >
-                    <i className="ti ti-minus" aria-hidden="true" />
-                  </button>
+                <span className="sh-hp-read" title="Shield HP">
                   <input
                     className="sh-hp-input"
                     type="number"
@@ -403,12 +417,6 @@ export function VitalsRail({
                     }}
                   />
                   <span className="sh-hp-max">/ {shield.hp}</span>
-                  <button
-                    aria-label="Repair shield 1"
-                    onClick={() => onPlay((p) => setShieldDamage(p, (character.shieldDamage ?? 0) - 1, shield.hp), 'shield-hp')}
-                  >
-                    <i className="ti ti-plus" aria-hidden="true" />
-                  </button>
                 </span>
               ) : (
                 <span className="sh-hp">
@@ -422,6 +430,38 @@ export function VitalsRail({
                 Hardness {shield.hardness} · BT {shield.brokenThreshold}
               </span>
             </div>
+            {onPlay && (
+              /* Same Damage / amount / Repair shape as the character's own HP row, instead of the old
+               * ±1 stepper. With "Auto-subtract shield Hardness" on (Customize), the number you type is
+               * the INCOMING hit and the shield loses damage − Hardness; your own HP is never touched. */
+              <div className="hp-edit sh-edit">
+                <button className="hp-heal" onClick={shieldRepair} title="Repair shield">
+                  <i className="ti ti-plus" aria-hidden="true" /> Repair
+                </button>
+                <input
+                  type="number"
+                  className="hp-amt"
+                  value={shAmt}
+                  placeholder="HP"
+                  aria-label="Amount to damage or repair the shield"
+                  onChange={(e) => setShAmt(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') shieldDamageBy();
+                  }}
+                />
+                <button
+                  className="hp-dmg"
+                  onClick={shieldDamageBy}
+                  title={
+                    shieldAutoHardness
+                      ? `Shield takes the hit — Hardness ${shield.hardness} is subtracted automatically`
+                      : 'Shield takes this much damage (Hardness not applied)'
+                  }
+                >
+                  <i className="ti ti-droplet" aria-hidden="true" /> Damage
+                </button>
+              </div>
+            )}
             {shieldDetailOpen && shieldEntry && shieldItem && (
               <ItemDetail
                 inv={shieldEntry.inv}

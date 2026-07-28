@@ -1709,9 +1709,23 @@ export function Builder({
                         : 'Prerequisites not met.'
                       : undefined
                   }
-                  onSelect={() => {
+                  onSelect={async () => {
                     if (unmet && !allowed) {
                       if (!canOverride) return;
+                      // Taking a feat you don't qualify for is a deliberate rule-break — confirm it,
+                      // and say exactly which prerequisite is being ignored.
+                      const why = dedBlocked
+                        ? 'You need two feats from your current archetype before taking another dedication.'
+                        : pre.unmet.length
+                          ? `Unmet: ${pre.unmet.join('; ')}`
+                          : "You don't meet this feat's prerequisites.";
+                      const ok = await confirmDialog({
+                        title: `Take ${f.name} anyway?`,
+                        message: `${why}\n\nThis records a deliberate override for this feat only. You can undo with Ctrl+Z.`,
+                        confirmLabel: 'Take anyway',
+                        danger: true,
+                      });
+                      if (!ok) return;
                       actions.patch({
                         overrides: { ...build.overrides, allowedFeats: [...(build.overrides?.allowedFeats ?? []), f.id] },
                       });

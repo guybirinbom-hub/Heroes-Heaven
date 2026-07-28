@@ -25,6 +25,7 @@ export const DEFAULT_CUSTOMIZATION: Customization = {
   showSaveDCs: false,
   autoHideEmpty: false,
   hpCommandEntry: false,
+  shieldAutoHardness: true,
   compactActions: true,
   showSlotBadges: true,
   consumableHighlight: true,
@@ -154,7 +155,7 @@ function migrateFromPrefs(): Customization {
     const raw = localStorage.getItem('pf2e-codex.prefs');
     if (!raw) return out;
     const p = JSON.parse(raw) as Record<string, unknown>;
-    for (const k of ['hpCommandEntry', 'compactActions', 'showSlotBadges', 'consumableHighlight', 'scrollbarAccent'] as const) {
+    for (const k of ['hpCommandEntry', 'shieldAutoHardness', 'compactActions', 'showSlotBadges', 'consumableHighlight', 'scrollbarAccent'] as const) {
       if (typeof p[k] === 'boolean') out[k] = p[k] as boolean;
     }
     if (typeof p.consumableColor === 'string') out.consumableColor = p.consumableColor;

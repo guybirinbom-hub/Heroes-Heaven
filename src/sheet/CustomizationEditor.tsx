@@ -26,6 +26,7 @@ type BoolKey =
   | 'showSaveDCs'
   | 'autoHideEmpty'
   | 'hpCommandEntry'
+  | 'shieldAutoHardness'
   | 'compactActions'
   | 'showSlotBadges'
   | 'consumableHighlight'
@@ -274,6 +275,14 @@ export function CustomizationEditor({
       <p className="settings-desc" style={{ marginTop: 0 }}>
         Replaces the Damage / Heal buttons with one field: a number damages, <strong>-N</strong> heals, <strong>tN</strong>{' '}
         sets temp HP.
+      </p>
+
+      <div className="menu-label">Shield</div>
+      <div className="menu-row">{boolChip('shieldAutoHardness', 'Auto-subtract Hardness')}</div>
+      <p className="settings-desc" style={{ marginTop: 0 }}>
+        In the side rail, the number you type into the shield's Damage box is the hit the shield took — its{' '}
+        <strong>Hardness</strong> is subtracted automatically. Off = the shield loses exactly what you type. Your own HP is
+        never changed either way.
       </p>
 
       <div className="menu-label">Actions list</div>
