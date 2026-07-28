@@ -1,0 +1,843 @@
+[
+ {
+  "id": "obsidian-goggles-greater",
+  "name": "Obsidian Goggles (Greater)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "to Perception checks that involve sight (nothing for hearing, scent, or other non-visual senses)",
+    "targetKind": "perception"
+   }
+  ],
+  "evidence": "\"While wearing the goggles, you gain a +2 item bonus to Perception checks involving sight.\" — same sight-only restriction as the base item (Foundry predicate: 'visual').",
+  "corrections": [
+   {
+    "problem": "Same as the base goggles. passiveEffects is {\"perception\":2} in core.json, applied flat by passiveItemBonus() to every Perception check regardless of sense, so the sight-only restriction is currently ignored by the maths. The engineNote asserts the bonus cannot be shown until the lookup reads items, when it is in fact already inside the printed Perception modifier.",
+    "correction": "Keep situational true, +2 item, perception, sight-only. Correct the engineNote as for obsidian-goggles: the +2 is already unconditionally in the total via passiveEffects.perception, ItemPassiveEffects has no predicate field, and needsEngineWork should be true."
+   }
+  ]
+ },
+ {
+  "id": "obsidian-goggles-major",
+  "name": "Obsidian Goggles (Major)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+3 item",
+    "when": "to Perception checks that involve sight (nothing for hearing, scent, or other non-visual senses)",
+    "targetKind": "perception"
+   }
+  ],
+  "evidence": "\"While wearing the goggles, you gain a +3 item bonus to Perception checks involving sight.\" — sight-only, as with the lesser versions.",
+  "corrections": [
+   {
+    "problem": "Same as the base goggles. passiveEffects is {\"perception\":3}, folded flat into all Perception checks by passiveItemBonus(); the engineNote's claim that the bonus cannot display without a lookup change is false and it omits that non-visual Perception is currently over-counted by 3.",
+    "correction": "Keep situational true, +3 item, perception, sight-only. Correct the engineNote as for obsidian-goggles and set needsEngineWork true."
+   }
+  ]
+ },
+ {
+  "id": "persona-mask",
+  "name": "Persona Mask",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "to Performance checks while acting, orating, performing comedy, or singing (not dance, instruments, or other performance types)",
+    "targetKind": "skill",
+    "skill": "performance"
+   }
+  ],
+  "evidence": "\"Wearing the mask grants a +1 item bonus to Performance checks while acting, orating, performing comedy, or singing.\" — four named performance types only; a dance, an instrumental piece, or Performance used to Impersonate gains nothing. Foundry predicates the performance FlatModifier on {or: acting, orating, performing-comedy, singing}.",
+  "corrections": [
+   {
+    "problem": "The situational:true call is right (Foundry predicate {or: acting, orating, performing-comedy, singing}), but the engineNote is wrong in the same load-bearing way as the goggles: core.json already carries passiveEffects {\"skills\":{\"performance\":1}}, which passiveItemBonus() adds to Performance unconditionally. A dance, an instrumental piece, or Performance used to Impersonate currently gets the +1 it should not get.",
+    "correction": "Keep situational true, +1 item, skill/performance, restricted to acting, orating, performing comedy, or singing. Replace the engineNote: the +1 is already unconditionally in the Performance total via passiveEffects.skills.performance, so this record needs the passive gated or removed at the same time as the star is added; ItemPassiveEffects has no predicate field, so needsEngineWork is true, not false."
+   }
+  ]
+ },
+ {
+  "id": "persona-mask-greater",
+  "name": "Persona Mask (Greater)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "to Performance checks while acting, orating, performing comedy, or singing (not dance, instruments, or other performance types)",
+    "targetKind": "skill",
+    "skill": "performance"
+   }
+  ],
+  "evidence": "\"Wearing the mask grants a +2 item bonus to Performance checks while acting, orating, performing comedy, or singing.\" — same four-type restriction as the base mask.",
+  "corrections": [
+   {
+    "problem": "Same as the base mask. passiveEffects is {\"skills\":{\"performance\":2}} and is applied flat to every Performance check, so the four-type restriction is not honoured by the maths. The engineNote claims the bonus merely 'needs the lookup to read worn/invested items'.",
+    "correction": "Keep situational true, +2 item, skill/performance, same four-type restriction. Correct the engineNote as for persona-mask and set needsEngineWork true. (The fortune reroll is correctly excluded — its trigger, 'You fail a Performance check that benefits from the mask's bonus', confirms the bonus is the restricted one.)"
+   }
+  ]
+ },
+ {
+  "id": "shining-symbol",
+  "name": "Shining Symbol",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"You gain a +1 item bonus to Religion.\" — stated as its own sentence with no condition. The preceding \"If you worship a deity, this golden amulet transforms into your deity's religious symbol when you invest it\" governs the symbol's APPEARANCE, not the bonus; Foundry gives an unpredicated FlatModifier on 'religion'.",
+  "corrections": [
+   {
+    "problem": "The reasonIfNot misquotes the record. It says the Spiritual Light activation 'imposes a -1 status penalty on OTHER creatures' Deception and Stealth checks — that is a penalty on enemies'. The record says: 'Creatures in the light receive a –1 status penalty to Deception and Stealth checks.' There is no 'other' and no 'enemies' in that clause; the wearer, standing inside their own light, is a creature in the light. The greater and major versions prove the wording is deliberate — the same sentence says 'Creatures in the light receive a –N status penalty' but 'your enemies in the light gain weakness N to spirit damage'. The spec's broadening is used to dismiss the effect entirely, and it also asserts 'the app has no target-side modifier surface for it' as the reason to drop it, which does not apply to a self-penalty.",
+    "correction": "The +1 item bonus to Religion is correctly unconditional (Foundry: unpredicated FlatModifier on 'religion'; core.json passiveEffects {\"skills\":{\"religion\":1}}) — that part stands. But the dismissal of the activation is unsound: RAW the wearer takes a –1 status penalty to Deception and Stealth for the 10 minutes their own Spiritual Light is active. The registry already carries self-penalties in exactly this shape (barbarian-dedication: targets [{kind:'ac'}], when 'while raging', bonus '-1 (penalty)' at src/rules/situationalBonuses.ts:69), so it is in scope. Set needsHumanDecision true with the question: should a self-inflicted penalty from your own once-per-day activated light be starred on Deception and Stealth, or treated as a Mode? Do not assert it lands only on enemies. Side note for the app owner: this record's light radius is missing in core.json ('The symbol casts dim light in a .'); Foundry's TokenLight gives dim 20 ft."
+   }
+  ]
+ },
+ {
+  "id": "shining-symbol-greater",
+  "name": "Shining Symbol (Greater)",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"You gain a +2 item bonus to Religion.\" — no condition attached to the bonus itself.",
+  "corrections": [
+   {
+    "problem": "Same misquote as the base item. The reasonIfNot says 'The activation's -2 status penalty to Deception/Stealth and weakness 5 to spirit damage land on creatures in the light, not on you' — but the record distinguishes the two halves explicitly: 'Creatures in the light receive a –2 status penalty to Deception and Stealth checks, and while it's active your enemies in the light gain weakness 5 to spirit damage.' Only the weakness is limited to enemies; the penalty is not, so 'not on you' is not supported by the text.",
+    "correction": "The +2 item bonus to Religion is correctly unconditional and belongs in the Religion total. Correct the reasonIfNot to reflect that the –2 status penalty to Deception and Stealth applies to all creatures in the light, including the wearer, and set needsHumanDecision true with the same question as shining-symbol (star the self-penalty vs. model it as a Mode)."
+   }
+  ]
+ },
+ {
+  "id": "shining-symbol-major",
+  "name": "Shining Symbol (Major)",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"You gain a +3 item bonus to Religion.\" — no condition attached to the bonus itself.",
+  "corrections": [
+   {
+    "problem": "Same misquote as the base item. The reasonIfNot claims the activation 'affects other creatures in the light (-3 status to Deception/Stealth, weakness 10 to spirit), not your own stats', but the record reads 'Creatures in the light receive a –3 status penalty to Deception and Stealth checks, and while it's active your enemies in the light gain weakness 10 to spirit damage' — the enemy restriction attaches only to the weakness.",
+    "correction": "The +3 item bonus to Religion is correctly unconditional. Correct the reasonIfNot to reflect that the –3 status penalty to Deception and Stealth applies to all creatures in the light, the wearer included, and set needsHumanDecision true with the same question as shining-symbol."
+   }
+  ]
+ },
+ {
+  "id": "serithtial",
+  "name": "Serithtial",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2d6 damage",
+    "when": "you Strike a worshipper of Zon-Kuthon with Serithtial",
+    "targetKind": "strikeDamage"
+   },
+   {
+    "bonus": "+4 status",
+    "when": "while wielding Serithtial, on saves against death and void effects created by followers of Zon-Kuthon",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"Strikes with Serithtial deal an additional 2d6 damage against creatures that are worshippers of Zon-Kuthon. While wielding Serithtial, against effects created by followers of Zon-Kuthon you gain the benefit of Unfettered Movement, a +4 status bonus to saves against death and void effects\".",
+  "corrections": [
+   {
+    "problem": "The two bonus entries are correct, but the engineNote is factually wrong about the record's text and would produce a real over-buff if acted on. It says: \"The '+4 major striking holy' runes, void resistance 10, Unfettered Movement and the doomed suppression are unconditional-while-wielding effects and belong in the maths / effects\". The record reads: \"While wielding Serithtial, AGAINST EFFECTS CREATED BY FOLLOWERS OF ZON-KUTHON you gain the benefit of Unfettered Movement, a +4 status bonus to saves against death and void effects, void resistance 10, and suppress the doomed condition.\" The 'against effects created by followers of Zon-Kuthon' clause governs the whole list, not just the +4. Only the +4 major striking holy runes are genuinely unconditional.",
+    "correction": "Keep both authored bonuses as-is (strikeDamage +2d6 vs Zon-Kuthon worshippers; save/all +4 status vs death and void effects created by followers of Zon-Kuthon). Rewrite the engineNote: only the '+4 major striking holy' runes (and the cold-iron/silver material treatment) are unconditional while wielding and belong in the maths. Unfettered Movement, void resistance 10 and the doomed suppression are ALL conditional on the effect having been created by a follower of Zon-Kuthon — they must NOT be folded into the character's permanent effects/resistances (a permanent void resistance 10 and permanent freedom-of-movement at level 23 would be a significant, wrong buff). They carry no typed bonus so they still get no registry entry, but the note must not instruct the engine to apply them flat."
+   }
+  ]
+ },
+ {
+  "id": "forgefathers-seal",
+  "name": "Forgefather's Seal",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"if the armor is light or medium, increase its item bonus to AC by 1\"; the only conditional bonus is on the Stalwart Sacrifice activation — \"The chosen creatures also gain a +4 status bonus to AC and saving throws\".",
+  "corrections": [
+   {
+    "problem": "needsEngineWork is set false (implicitly — the field is omitted) on the grounds that the +4 status to AC/saves is 'unusable by the wearer by definition, so I did not flag it as engine work'. That is inconsistent with how the identical gap was handled elsewhere in this same chunk: whip-tongue-sling (allies within 25 feet gain +1 status vs fear) and hippogriff-feather (bonus to a spell-conjured hand) were both flagged needsEngineWork true for exactly the same missing capability — a bonus a character grants to something other than themselves. Petrifying the activator changes who benefits, not whether the app can represent the grant.",
+    "correction": "Set needsEngineWork true with the same engine note used for whip-tongue-sling: no target kind exists for a bonus conferred on OTHER creatures' AC/saves (party-buff target). Separately, the reasonIfNot's claim that the +1 to the armour's item bonus to AC 'belongs in the maths' is correct as a classification but is not currently true of the data — this record's passiveEffects contains only fire resistance 40, so the light/medium +1 AC is modelled nowhere. Worth calling out so it is not lost: it is an unconditional-maths gap, not a star."
+   }
+  ]
+ },
+ {
+  "id": "dragonhide-armor",
+  "name": "Dragonhide Armor",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "against attacks and spells that deal the damage type of the dragon your armour is made from",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+1 circumstance",
+    "when": "on saves against attacks and spells that deal the damage type of the dragon your armour is made from",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"Wearing armor made from dragonhide also grants you a +1 circumstance bonus to your AC and saving throws against attacks and spells that deal the corresponding damage type.\"",
+  "corrections": [
+   {
+    "problem": "The classification (+1 circumstance to AC and to saves vs the corresponding damage type, situational, no hard-coded damage type) is correct, but the engineNote's factual claim about core.json is not: \"core.json's copy of the damage table is mangled by the AoN scrape (tradition/damage pairs run together: arcane→force, divine→spirit, occult→mental, primal→poison)\". The table in the record is newline-separated but the pairs are intact and read correctly (Arcane/Force, Divine/Spirit, Occult/Mental, Primal/Poison) — nothing is run together or lost.",
+    "correction": "Drop the 'mangled scrape' claim. The correct reason for not hard-coding a damage type is the rules reason the spec also gives: the type depends on which dragon the hide came from, and the app has nowhere to record that choice, so the condition text must defer to the player. Same note is inherited by dragonhide-armor-standard-grade and dragonhide-armor-high-grade, whose descriptions are byte-identical blobs of the same base-material text."
+   }
+  ]
+ },
+ {
+  "id": "holy-chain",
+  "name": "Holy Chain",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "to AC against fiends",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+1 circumstance",
+    "when": "to Fortitude saves against fiends",
+    "targetKind": "save",
+    "save": "fortitude"
+   },
+   {
+    "bonus": "+1 circumstance",
+    "when": "to Reflex saves against fiends",
+    "targetKind": "save",
+    "save": "reflex"
+   },
+   {
+    "bonus": "+1 circumstance",
+    "when": "to Will saves against fiends",
+    "targetKind": "save",
+    "save": "will"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "to Diplomacy against any creature that isn't a fiend",
+    "targetKind": "skill",
+    "skill": "diplomacy"
+   }
+  ],
+  "evidence": "\"You gain a +1 circumstance bonus to AC and saving throws against fiends.\" Also: \"+2 item bonus to Diplomacy checks against all creatures except fiends.\"",
+  "corrections": [
+   {
+    "problem": "Two defects, both in the Diplomacy half. (1) INVENTED CONDITION ON ANOTHER RECORD: the needsHumanDecision question states \"Same pattern on Warleader's Bulwark.\" That is false. Warleader's Bulwark reads \"You gain a +2 item bonus to Diplomacy checks, but you take a -2 item penalty to Stealth checks to Hide and Sneak and Deception checks to Impersonate\" — there is NO creature-type exception anywhere in that record (nor in the Greater, which is identical at +3/-3). Holy Chain is the only 'unconditional-except-for-X' case in this chunk, so the question broadens a condition onto a record whose text does not have one. (2) DOUBLE-COUNT RISK: the +2 item Diplomacy is listed as a starred bonus while the same record carries passiveEffects.skills.diplomacy = 2 (verified in core.json), and the spec itself says so. Applied verbatim, the player sees a star reading '+2 item to Diplomacy against any creature that isn't a fiend' next to a Diplomacy total that already contains that +2 — reading it as an extra bonus inflates the check. The AC/saves half is correct and should stand.",
+    "correction": "Keep the four entries derived from \"You gain a +1 circumstance bonus to AC and saving throws against fiends.\" exactly as written (+1 circumstance to AC and to Fortitude/Reflex/Will vs fiends) — none of that is in passiveEffects, so the star is the only place it can surface. Remove the +2 item Diplomacy entry from `bonuses`, or rewrite it as a caveat rather than a bonus, e.g. when: 'the +2 item bonus already in your Diplomacy total does NOT apply against fiends' (a subtraction, not an addition). Reword the question to name Holy Chain only: 'This record's +2 item Diplomacy is already in the maths but the text excludes fiends — should unconditional-except-for-X bonuses also be starred as a caveat, or only bonuses absent from the total?' Drop the Warleader's Bulwark sentence; those two records' Diplomacy bonuses are flatly unconditional and are correctly excluded from their own specs."
+   }
+  ]
+ },
+ {
+  "id": "cheetahs-elixir-lesser",
+  "name": "Cheetah's Elixir (Lesser)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+5 feet status",
+    "when": "to your Speed, for 1 minute after you drink this elixir",
+    "targetKind": "speed"
+   }
+  ],
+  "evidence": "\"You gain a +5 foot status bonus to your Speed for 1 minute.\"",
+  "corrections": [
+   {
+    "problem": "The bonus itself is right (\"You gain a +5 foot status bonus to your Speed for 1 minute\"), but needsEngineWork is FALSE and it targets kind 'speed' — which the app does not support anywhere. targetMatches() in C:\\trying ai 2\\pf2e codex\\src\\rules\\situationalBonuses.ts (line ~373) only has cases for skill/save/perception/ac/attack and returns false in `default`, so a 'speed' target can never match. explainStat's `case 'speed'` (C:\\trying ai 2\\pf2e codex\\src\\rules\\explain.ts line 562-611) is the only breakdown that never builds a `situational` array, and Speed is not among the starred defense tiles in VitalsRail.tsx. The entry would be silently dead data.",
+    "correction": "Keep bonus '+5 status', when 'to your Speed, for 1 minute after you drink this elixir', targetKind 'speed', but set needsEngineWork TRUE with the note: situationalBonuses.targetMatches needs a `case 'speed': return ref.kind === 'speed'` branch, explain.ts `case 'speed'` must build `situational` (modeAdjust + featSituationalStrings) and return it, and the Speed display needs a SituationalStar hook — none of the three exist today."
+   }
+  ]
+ },
+ {
+  "id": "cheetahs-elixir-moderate",
+  "name": "Cheetah's Elixir (Moderate)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+10 feet status",
+    "when": "to your Speed, for 10 minutes after you drink this elixir",
+    "targetKind": "speed"
+   }
+  ],
+  "evidence": "\"You gain a +10 foot status bonus to your Speed for 10 minutes.\"",
+  "corrections": [
+   {
+    "problem": "Same defect: '+10 foot status bonus to your Speed for 10 minutes' is quoted correctly, but needsEngineWork:false is wrong — targetKind 'speed' has no matcher branch and the Speed breakdown never emits situational lines.",
+    "correction": "Set needsEngineWork TRUE with the same missing-'speed'-support note (targetMatches branch + explain.ts speed situational array + Speed star)."
+   }
+  ]
+ },
+ {
+  "id": "cheetahs-elixir-greater",
+  "name": "Cheetah's Elixir (Greater)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+10 feet status",
+    "when": "to your Speed, for 1 hour after you drink this elixir",
+    "targetKind": "speed"
+   }
+  ],
+  "evidence": "\"You gain a +10 foot status bonus to your Speed for 1 hour.\"",
+  "corrections": [
+   {
+    "problem": "Same defect: '+10 foot status bonus to your Speed for 1 hour' is correct, but needsEngineWork:false is wrong for the unsupported 'speed' target kind.",
+    "correction": "Set needsEngineWork TRUE with the same missing-'speed'-support note."
+   }
+  ]
+ },
+ {
+  "id": "cognitive-mutagen",
+  "name": "Cognitive Mutagen",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 to +4 item (by grade: lesser/moderate/greater/major)",
+    "when": "on Arcana checks, while the mutagen is active",
+    "targetKind": "skill",
+    "skill": "arcana"
+   },
+   {
+    "bonus": "+1 to +4 item (by grade)",
+    "when": "on Crafting checks, while the mutagen is active",
+    "targetKind": "skill",
+    "skill": "crafting"
+   },
+   {
+    "bonus": "+1 to +4 item (by grade)",
+    "when": "on Lore checks (any Lore), while the mutagen is active",
+    "targetKind": "skill",
+    "skill": "lore"
+   },
+   {
+    "bonus": "+1 to +4 item (by grade)",
+    "when": "on Occultism checks, while the mutagen is active",
+    "targetKind": "skill",
+    "skill": "occultism"
+   },
+   {
+    "bonus": "+1 to +4 item (by grade)",
+    "when": "on Society checks, while the mutagen is active",
+    "targetKind": "skill",
+    "skill": "society"
+   },
+   {
+    "bonus": "+1 to +4 item (by grade)",
+    "when": "on ANY skill check to Recall Knowledge, while the mutagen is active (critical failures on Recall Knowledge become failures)",
+    "targetKind": "skill",
+    "skill": "all"
+   },
+   {
+    "bonus": "-2 untyped (drawback)",
+    "when": "on weapon and unarmed attack rolls, while the mutagen is active",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "-2 untyped (drawback)",
+    "when": "on Athletics checks, while the mutagen is active",
+    "targetKind": "skill",
+    "skill": "athletics"
+   },
+   {
+    "bonus": "-2 untyped (drawback)",
+    "when": "on Acrobatics checks, while the mutagen is active",
+    "targetKind": "skill",
+    "skill": "acrobatics"
+   }
+  ],
+  "evidence": "\"Benefit You gain an item bonus to Arcana, Crafting, Lore, Occultism, and Society checks and all checks to Recall Knowledge... Drawback You take a –2 penalty to weapon and unarmed attack rolls, Athletics checks, and Acrobatics checks.\"",
+  "corrections": [
+   {
+    "problem": "The Lore line uses `skill: 'lore'`, which is not a valid key. Lore proficiencies are keyed `lore:<subject>` (see skillLabel/skillAbilityOf in C:\\trying ai 2\\pf2e codex\\src\\rules\\explain.ts lines 109 and 120), and targetMatches only accepts exact equality or the literal 'all'. `detail: 'lore'` therefore matches nothing — dead data. No existing entry in situationalBonuses.ts uses a lore key, so there is no precedent that makes it work. (The spec's own engineNote half-spots this but still ships the invalid value and leaves needsEngineWork false.)",
+    "correction": "Drop the standalone Lore entry — the record's other entry, `skill: 'all'` for \"all checks to Recall Knowledge\", already stars every Lore skill — OR expand it to one entry per `lore:*` key the character actually has, OR set needsEngineWork TRUE requesting prefix matching (`t.detail === 'lore' && ref.skill.startsWith('lore:')`) in targetMatches. Do not emit `skill: 'lore'` as-is."
+   }
+  ]
+ },
+ {
+  "id": "cognitive-mutagen-lesser",
+  "name": "Cognitive Mutagen (Lesser)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "on Arcana checks, for 1 minute after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "arcana"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "on Crafting checks, for 1 minute after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "crafting"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "on Lore checks (any Lore), for 1 minute after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "lore"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "on Occultism checks, for 1 minute after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "occultism"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "on Society checks, for 1 minute after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "society"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "on ANY skill check to Recall Knowledge, while the mutagen is active (critical failures on Recall Knowledge become failures)",
+    "targetKind": "skill",
+    "skill": "all"
+   },
+   {
+    "bonus": "-2 untyped (drawback)",
+    "when": "on weapon and unarmed attack rolls, while the mutagen is active",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "-2 untyped (drawback)",
+    "when": "on Athletics checks, while the mutagen is active",
+    "targetKind": "skill",
+    "skill": "athletics"
+   },
+   {
+    "bonus": "-2 untyped (drawback)",
+    "when": "on Acrobatics checks, while the mutagen is active",
+    "targetKind": "skill",
+    "skill": "acrobatics"
+   }
+  ],
+  "evidence": "\"**Benefit** You gain a +1 item bonus to Arcana, Crafting, Lore, Occultism, and Society checks and all checks to Recall Knowledge... **Drawback** You take a -2 penalty to weapon and unarmed attack rolls, Athletics checks, and acrobatics checks. **Duration** 1 minute.\"",
+  "corrections": [
+   {
+    "problem": "Same invalid key: `{bonus:'+1 item', skill:'lore'}` can never match, because character Lore skills are keyed `lore:<subject>` and targetMatches does exact-match-or-'all'. Unlike the umbrella record this spec does not even mention the problem and sets needsEngineWork:false. Everything else (+1 item to Arcana/Crafting/Occultism/Society, all Recall Knowledge, -2 to attacks/Athletics/Acrobatics, 1 minute) matches the record text.",
+    "correction": "Remove the `skill:'lore'` entry (covered by the `skill:'all'` Recall Knowledge entry), or expand to `lore:*` keys, or set needsEngineWork TRUE asking for lore-prefix matching in targetMatches."
+   }
+  ]
+ },
+ {
+  "id": "cognitive-mutagen-moderate",
+  "name": "Cognitive Mutagen (Moderate)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "on Arcana checks, for 10 minutes after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "arcana"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "on Crafting checks, for 10 minutes after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "crafting"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "on Lore checks (any Lore), for 10 minutes after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "lore"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "on Occultism checks, for 10 minutes after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "occultism"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "on Society checks, for 10 minutes after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "society"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "on ANY skill check to Recall Knowledge, while the mutagen is active (critical failures on Recall Knowledge become failures)",
+    "targetKind": "skill",
+    "skill": "all"
+   },
+   {
+    "bonus": "-2 untyped (drawback)",
+    "when": "on weapon and unarmed attack rolls, while the mutagen is active",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "-2 untyped (drawback)",
+    "when": "on Athletics checks, while the mutagen is active",
+    "targetKind": "skill",
+    "skill": "athletics"
+   },
+   {
+    "bonus": "-2 untyped (drawback)",
+    "when": "on Acrobatics checks, while the mutagen is active",
+    "targetKind": "skill",
+    "skill": "acrobatics"
+   }
+  ],
+  "evidence": "\"You gain a +2 item bonus to Arcana, Crafting, Lore, Occultism, and Society checks and all checks to Recall Knowledge... **Duration** 10 minutes.\"",
+  "corrections": [
+   {
+    "problem": "Same invalid `skill: 'lore'` key with needsEngineWork:false; the +2/10-minute values themselves match the record.",
+    "correction": "Same fix: drop the lore entry, expand to `lore:*`, or flag needsEngineWork for prefix matching."
+   }
+  ]
+ },
+ {
+  "id": "cognitive-mutagen-greater",
+  "name": "Cognitive Mutagen (Greater)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+3 item",
+    "when": "on Arcana checks, for 1 hour after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "arcana"
+   },
+   {
+    "bonus": "+3 item",
+    "when": "on Crafting checks, for 1 hour after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "crafting"
+   },
+   {
+    "bonus": "+3 item",
+    "when": "on Lore checks (any Lore), for 1 hour after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "lore"
+   },
+   {
+    "bonus": "+3 item",
+    "when": "on Occultism checks, for 1 hour after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "occultism"
+   },
+   {
+    "bonus": "+3 item",
+    "when": "on Society checks, for 1 hour after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "society"
+   },
+   {
+    "bonus": "+3 item",
+    "when": "on ANY skill check to Recall Knowledge, while the mutagen is active (critical failures on Recall Knowledge become failures)",
+    "targetKind": "skill",
+    "skill": "all"
+   },
+   {
+    "bonus": "-2 untyped (drawback)",
+    "when": "on weapon and unarmed attack rolls, while the mutagen is active",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "-2 untyped (drawback)",
+    "when": "on Athletics checks, while the mutagen is active",
+    "targetKind": "skill",
+    "skill": "athletics"
+   },
+   {
+    "bonus": "-2 untyped (drawback)",
+    "when": "on Acrobatics checks, while the mutagen is active",
+    "targetKind": "skill",
+    "skill": "acrobatics"
+   }
+  ],
+  "evidence": "\"You gain a +3 item bonus to Arcana, Crafting, Lore, Occultism, and Society checks and all checks to Recall Knowledge... You become trained in one Intelligence-based skill [Arcana, Crafting, Lore, Occultism, Society], chosen at creation.\"",
+  "corrections": [
+   {
+    "problem": "Same invalid `skill: 'lore'` key with needsEngineWork:false; the +3/1-hour values and the 'trained in one Intelligence-based skill' exclusion are correct.",
+    "correction": "Same fix: drop the lore entry, expand to `lore:*`, or flag needsEngineWork for prefix matching."
+   }
+  ]
+ },
+ {
+  "id": "cognitive-mutagen-major",
+  "name": "Cognitive Mutagen (Major)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+4 item",
+    "when": "on Arcana checks, for 1 hour after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "arcana"
+   },
+   {
+    "bonus": "+4 item",
+    "when": "on Crafting checks, for 1 hour after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "crafting"
+   },
+   {
+    "bonus": "+4 item",
+    "when": "on Lore checks (any Lore), for 1 hour after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "lore"
+   },
+   {
+    "bonus": "+4 item",
+    "when": "on Occultism checks, for 1 hour after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "occultism"
+   },
+   {
+    "bonus": "+4 item",
+    "when": "on Society checks, for 1 hour after drinking the mutagen",
+    "targetKind": "skill",
+    "skill": "society"
+   },
+   {
+    "bonus": "+4 item",
+    "when": "on ANY skill check to Recall Knowledge, while the mutagen is active (critical failures on Recall Knowledge become failures)",
+    "targetKind": "skill",
+    "skill": "all"
+   },
+   {
+    "bonus": "-2 untyped (drawback)",
+    "when": "on weapon and unarmed attack rolls, while the mutagen is active",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "-2 untyped (drawback)",
+    "when": "on Athletics checks, while the mutagen is active",
+    "targetKind": "skill",
+    "skill": "athletics"
+   },
+   {
+    "bonus": "-2 untyped (drawback)",
+    "when": "on Acrobatics checks, while the mutagen is active",
+    "targetKind": "skill",
+    "skill": "acrobatics"
+   }
+  ],
+  "evidence": "\"You gain a +4 item bonus to Arcana, Crafting, Lore, Occultism, and Society checks and all checks to Recall Knowledge... You become trained in one skill, chosen at creation.\"",
+  "corrections": [
+   {
+    "problem": "Same invalid `skill: 'lore'` key with needsEngineWork:false; the +4/1-hour values and the 'trained in one skill' exclusion are correct.",
+    "correction": "Same fix: drop the lore entry, expand to `lore:*`, or flag needsEngineWork for prefix matching."
+   }
+  ]
+ },
+ {
+  "id": "miniaturization-module",
+  "name": "Miniaturization Module",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "to Escape (Acrobatics option)",
+    "targetKind": "skill",
+    "skill": "acrobatics"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "to Escape (Athletics option)",
+    "targetKind": "skill",
+    "skill": "athletics"
+   },
+   {
+    "bonus": "+4 circumstance",
+    "when": "on the Escape attempt from Miraculous Escape, when you become grabbed, immobilized or restrained (once per hour) - Acrobatics option",
+    "targetKind": "skill",
+    "skill": "acrobatics"
+   },
+   {
+    "bonus": "+4 circumstance",
+    "when": "on the Escape attempt from Miraculous Escape, when you become grabbed, immobilized or restrained (once per hour) - Athletics option",
+    "targetKind": "skill",
+    "skill": "athletics"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "to Escape using your unarmed attack modifier",
+    "targetKind": "strikeAttack"
+   }
+  ],
+  "evidence": "\"While wearing a miniaturization module, you gain a +1 item bonus to checks to Escape\"; Miraculous Escape: \"gaining a +4 circumstance bonus to this check\"",
+  "corrections": [
+   {
+    "problem": "The 5th entry puts the Escape bonus on targetKind 'strikeAttack', and justifies it by claiming this \"matches existing entries such as 'musetouched' and 'amorphous-aspect' which list acrobatics + athletics\". That justification is false: both of those entries in src/rules/situationalBonuses.ts contain ONLY acrobatics + athletics and no attack target at all (line 218: \"musetouched\": targets acrobatics, athletics, when \"to Escape\"; line 53: \"amorphous-aspect\": targets acrobatics, athletics, when \"to Escape or Squeeze\"). 'strikeAttack' in the allowed list means Strike attack rolls, and this bonus never applies to a Strike - it applies to an Escape check that happens to use the unarmed attack modifier, so it would star the character's attack line for a bonus that never touches an attack. The spec is also internally inconsistent: it adds the unarmed-option entry for the always-on +1 but not for the +4 circumstance Miraculous Escape bonus, which is the same check and has the same three roll options.",
+    "correction": "Drop the 5th entry (bonus '+1 item', targetKind 'strikeAttack'). Keep only the four skill entries, matching the established musetouched/amorphous-aspect precedent for Escape. If the app owner instead wants the unarmed-attack option represented, it must be added to BOTH the +1 item and the +4 circumstance bonuses, and it belongs on a new Escape/unarmed target kind rather than 'strikeAttack' - flag that as needsEngineWork/needsHumanDecision rather than reusing strikeAttack. Verified text: \"While wearing a miniaturization module, you gain a +1 item bonus to checks to Escape\" and Miraculous Escape \"attempt to Escape the triggering effect, gaining a +4 circumstance bonus to this check\"."
+   }
+  ]
+ },
+ {
+  "id": "major-dawnfire-beacon",
+  "name": "Major Dawnfire Beacon",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status",
+    "when": "on saves against unholy effects while within the banner's aura",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"This magical banner also grants a +1 status bonus to saving throws against unholy effects to all creatures within the banner's aura.\"",
+  "corrections": [
+   {
+    "problem": "The engineNote broadens a condition beyond the text: it states \"The aura is 'suppressed when you aren't holding the banner or wielding the weapon it is affixed to', which is a further gate the app cannot detect.\" In the record the suppression sentence belongs to the LIGHT effect and is quoted out of position - the base paragraph reads \"This magical banner exudes bright light in the banner's aura (and dim light in an area equal to twice the banner's aura). This effect is suppressed when you aren't holding the banner or wielding the weapon it is affixed to.\" \"This effect\" refers to the light. The Major tier's save bonus is a separate, later sentence (\"This magical banner also grants a +1 status bonus to saving throws against unholy effects to all creatures within the banner's aura\") and the text never says the save bonus is suppressed.",
+    "correction": "Rewrite the engineNote to say the suppression clause applies to the banner's LIGHT effect, not demonstrably to the unholy-save bonus; the only stated gate on the save bonus is being within the banner's aura. Everything else in this spec is right and should stand: situational true, +1 status, targetKind save, save 'all' (text says \"saving throws\", unqualified), and the warning that only the MAJOR tier grants it - the base 'dawnfire-beacon' record I read is light-only and must get no save entry."
+   }
+  ]
+ },
+ {
+  "id": "ulfen-shieldbreaker",
+  "name": "Ulfen Shieldbreaker",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "on the Battering Blow Trip check, only if your Strike destroyed the enemy's shield outright",
+    "targetKind": "skill",
+    "skill": "athletics"
+   }
+  ],
+  "evidence": "Battering Blow: \"Attempt an Athletics check to Trip the target... If your attack was powerful enough to destroy the shield outright, you gain a +2 circumstance bonus to the roll.\"",
+  "corrections": [
+   {
+    "problem": "The engineNote calls Battering Blow \"reaction-triggered\". The record shows it is a FREE action with a trigger, not a reaction: the description reads \"**Activate-Battering Blow** ⟨4⟩\" (glyph 4 = free action) and the record's own field is \"activationCost\": { \"type\": \"free\" }. The record also has no frequency/counters entry for it, so the note's framing as a limited reaction is doubly off.",
+    "correction": "Change \"reaction-triggered\" to \"free action with a trigger (your melee Strike reduces an enemy's shield below its Broken Threshold), no frequency limit\". The bonus itself is correct and should stand unchanged: +2 circumstance, targetKind skill/athletics, applying only to the Battering Blow Trip check and only in the sub-case \"If your attack was powerful enough to destroy the shield outright\"."
+   }
+  ]
+ },
+ {
+  "id": "flickering",
+  "name": "Flickering",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"A flickering weapon adds its item bonus from its potency rune to the DC against attempts to Disarm or Steal it.\"",
+  "corrections": [
+   {
+    "problem": "Marked situational:false with needsEngineWork, on the claim that \"none of the allowed target kinds fits\" the DC it boosts. That analysis is wrong. The text is \"A flickering weapon adds its item bonus from its potency rune to the DC against attempts to Disarm or Steal it.\" Per core.json's own action records, Disarm is \"Attempt an Athletics check against the target's Reflex DC\" and Steal's \"DC is usually the Perception DC of the creature wearing the object\" — i.e. the DCs being raised are the WIELDER'S Reflex DC and Perception DC, both of which are existing target kinds. The spec also claims the derived magnitude is unrepresentable, but the live registry already carries exactly this shape: disarming-intercept uses bonus \"item bonus equal to your armor's potency rune\".",
+    "correction": "situational: true. Two entries on the weapon's id: {bonus: \"item bonus equal to the weapon's potency rune\", when: \"to your Reflex DC against attempts to Disarm this weapon from you\", target: {kind: 'save', save: 'reflex'}} and {bonus: \"item bonus equal to the weapon's potency rune\", when: \"to your Perception DC against attempts to Steal this weapon\", target: {kind: 'perception'}}. Drop needsEngineWork. Set needsHumanDecision instead, question: \"This bonus lands on the DC side (your Reflex/Perception DC that an enemy rolls against), not on a roll you make. Every current registry entry marks a stat the player rolls. Should DC-side bonuses get a star on Reflex/Perception, or does that mislead?\" The Dazzled-on-crit rider is correctly excluded."
+   }
+  ]
+ },
+ {
+  "id": "bellows-pipes",
+  "name": "Bellows Pipes",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "on Performance checks made by playing music with this instrument",
+    "targetKind": "skill",
+    "skill": "performance"
+   }
+  ],
+  "evidence": "\"This bagpipe grants you a +1 item bonus to Performance checks while playing music with the instrument.\"",
+  "corrections": [
+   {
+    "problem": "MISSING BONUS (coverage), and inconsistent with sibling records. The spec authors only the Performance half and dismisses the Hand Chords activation in engineNote as 'a duration-limited activated buff, not authored here'. But the record's own text is self-inclusive: 'You and all allies within a gain a +1 status bonus to the next attack roll, Perception check, saving throw, or skill check you attempt before the end of your next turn.' That is exactly the same shape as fife-of-the-faithful's Call to Arms and warpipes' Inspirational Salute, both of which the SAME batch DID author as situational entries (and for fife it even raised the human-decision question 'this is exactly the Fort/Reflex says nothing case the user reported, so it may be wanted'). Deciding the identical rules question three different ways in one batch is a bug in its own right, and here it silently drops a bonus that reaches the wearer.",
+    "correction": "Either author the Hand Chords buff on bellows-pipes the way fife/warpipes were authored — '+1 status', when: 'on your next attack roll, Perception check, saving throw or skill check before the end of your next turn, after you Activate Hand Chords (1/day); choose which roll before rolling' across targetKind save (save:'all'), perception, skill ('all') and strikeAttack, with needsEngineWork true (the printed 'attack roll' is broader than strikeAttack, and it also lands on allies) — or set needsHumanDecision true here with the same question fife-of-the-faithful asks, so one answer covers all three. Do not leave it silently unrepresented while its siblings are represented."
+   }
+  ]
+ },
+ {
+  "id": "vine-baton",
+  "name": "Vine Baton",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 status",
+    "when": "on your initiative roll, if you enter an encounter during the extra hour of Hustle granted by Forward March! (Activate, 1/day; also applies to allies within 120 feet)",
+    "targetKind": "perception"
+   }
+  ],
+  "evidence": "\"If you enter an encounter during this time period, the effect ends, but you receive a +2 status bonus to your initiative rolls for that encounter.\"",
+  "corrections": [
+   {
+    "problem": "CONDITION BROADENED BEYOND THE TEXT. The authored 'when' says the initiative bonus '...also applies to allies within 120 feet'. The record says: 'You and your allies within 120 feet can Hustle for 1 additional hour. If you enter an encounter during this time period, the effect ends, but you receive a +2 status bonus to your initiative rolls for that encounter.' The 120-foot ally clause governs the extra hour of Hustle only; the bonus sentence is 'you receive', singular and unqualified. Extending it to allies is an invention, and it goes straight into player-facing display text.",
+    "correction": "Drop the ally clause from the 'when'. Use: '+2 status', when: 'on your initiative roll, if you enter an encounter during the extra hour of Hustle granted by Forward March! (Activate, 1/day)'. Keep needsEngineWork true for the missing initiative statistic (the perception mapping follows the existing ambush-awareness / all-this-has-happened-before convention and is fine), but move the ally question — whether the ally Hustle clause is meant to carry the initiative bonus too — into engineNote as an ambiguity rather than asserting it, or raise it as needsHumanDecision."
+   }
+  ]
+ },
+ {
+  "id": "golden-greaves",
+  "name": "Golden Greaves",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "to your Fortitude DC against forced movement effects (an enemy Shoving or Repositioning you)",
+    "targetKind": "save",
+    "save": "fortitude"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "to your Reflex DC against effects that would knock you prone (an enemy Tripping you)",
+    "targetKind": "save",
+    "save": "reflex"
+   }
+  ],
+  "evidence": "\"you gain a +1 item bonus to your Fortitude DC against forced movement effects and to your Reflex DC against effects that would knock you prone\"",
+  "corrections": [
+   {
+    "problem": "WRONG TARGET, and needsHumanDecision is set to false on a call that is not the classifier's to make. The record grants ONLY a defence DC bonus: 'you gain a +1 item bonus to your Fortitude DC against forced movement effects and to your Reflex DC against effects that would knock you prone.' The wearer never gets a bonus to a Fortitude or Reflex saving throw they roll. Authoring it under targetKind 'save' puts a star on the Fortitude and Reflex rows — the two numbers the player rolls — for a bonus that applies to neither. The spec's own engineNote admits 'the display text must say DC, otherwise players will add it to a save they roll', which is a description of the bug, not a fix: the star is on the wrong statistic regardless of the caption. Contrast boots-of-the-dead, where the text grants saves AND DCs, so the save entry there is legitimately correct.",
+    "correction": "Set needsHumanDecision true and ask the owner: 'Should a bonus to a defence DC (Fortitude DC vs Shove/Reposition, Reflex DC vs Trip) be shown as a star on the Fortitude/Reflex save rows, or does it need a separate defence-DC display?' Until that is answered, report bonuses: [] with needsEngineWork true and the note 'no target kind for Fortitude DC / Reflex DC (the number an opponent rolls against)'. If the owner does want it on the save rows, keep the two entries but the 'when' must lead with the word DC, e.g. 'to your Fortitude DC (not your Fortitude save) against forced movement effects — an enemy Shoving or Repositioning you'."
+   }
+  ]
+ },
+ {
+  "id": "storied-skin",
+  "name": "Storied Skin",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "to Recall Knowledge with the Lore skill chosen when you got the tattoo, when you take the extra visual step of studying your tattoos",
+    "targetKind": "skill",
+    "skill": "lore:*"
+   }
+  ],
+  "evidence": "\"You can add the visual trait to the Recall Knowledge action in order to study your tattoos, granting you a +1 item bonus to your check using the chosen Lore skill.\"",
+  "corrections": [
+   {
+    "problem": "The target is authored as skill \"lore:*\". That literal never matches anything: `targetMatches` in src/rules/situationalBonuses.ts:373 compares the detail by exact string equality — `return ref.kind === 'skill' && (t.detail === 'all' || t.detail === ref.skill)`. The only wildcard the engine understands is `all`; a character's lore ref carries a concrete key (e.g. `lore:warfare`). So this entry would be silently inert — the star would never appear on any Lore skill, which is exactly the coverage bug this pass exists to fix. (The classification itself is right: the record does say \"granting you a +1 item bonus to your check using the chosen Lore skill\", and it is conditional on adding the visual trait to Recall Knowledge to study the tattoos.)",
+    "correction": "Author it as `targets: [{ kind: 'skill', detail: 'all' }]` with the condition text carrying the restriction — e.g. when: \"to Recall Knowledge with the Lore skill you chose when the tattoo was applied, when you add the visual trait to study your tattoos\", bonus: \"+1 item\". Keep needsEngineWork true for the real fix (a per-item Lore choice, or wildcard support for a `lore:*` detail in targetMatches)."
+   }
+  ]
+ },
+ {
+  "id": "drumish-pearl-token",
+  "name": "Drumish Pearl Token",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "to Diplomacy checks to Make an Impression",
+    "targetKind": "skill",
+    "skill": "diplomacy"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "to your Perception DC when someone attempts to Lie to you (this raises the DC they roll against — it is not a bonus to your own Perception check)",
+    "targetKind": "perception"
+   }
+  ],
+  "evidence": "\"The wearer of a *Drumish pearl token* benefits from a +2 item bonus to Diplomacy checks to Make an Impression and to their Perception DC when someone attempts to Lie to them.\"",
+  "corrections": [
+   {
+    "problem": "The second entry hangs a DC-only bonus on kind 'perception' with bonus string \"+2 item\". The record says \"+2 item bonus to Diplomacy checks to Make an Impression and to their Perception DC when someone attempts to Lie to them\" — the bonus is to the DC an opponent rolls against, never to the wearer's own Perception check. The sheet renders the `bonus` field verbatim next to the stat, so a player opening Perception reads \"+2 item\" and can reasonably add it to a Perception roll. Burying the correction in the `when` prose does not undo the misleading number. (The first entry, +2 item to Diplomacy to Make an Impression, is correct.)",
+    "correction": "Move the qualifier into the `bonus` field so the rendered number can't be misread — e.g. bonus: \"+2 item to your Perception DC (not to your Perception check)\", when: \"when someone attempts to Lie to you\". Keep needsEngineWork true until a Perception-DC target exists; if the owner prefers, suppress the entry entirely rather than show a non-additive number on the Perception line."
+   }
+  ]
+ },
+ {
+  "id": "cleft-head-marking",
+  "name": "Cleft Head Marking",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "to Feint (tattoo must be invested)",
+    "targetKind": "skill",
+    "skill": "deception"
+   }
+  ],
+  "evidence": "\"The tattoo's grim appearance can help mask your true motivations. You gain a +1 item bonus to Deception checks to Feint.\"",
+  "corrections": [
+   {
+    "problem": "Inconsistent treatment of activation-gated Strike-damage riders inside the same batch, asserted at confidence 'high' with needsHumanDecision:false on both sides. clay-sphere/greater-clay-sphere/major-clay-sphere each list a strikeDamage entry for \"Until the end of your next turn, Strikes with the affixed weapon have their damage dice increase by one step\" — which is itself gated behind \"After you cast a morph or polymorph spell by activating the clay sphere\". cleft-head-marking/lesser-cleft-head-marking/greater-cleft-head-marking drop the structurally identical \"Activate—Unexpected Strike (concentrate) Frequency once per day; Trigger You Strike a creature that has the off-guard condition with a weapon attack; Effect You deal an extra 1d6 precision damage\" (2d6 at greater) as \"a triggered rider, not a stat bonus\". Both are Activate-gated, time/frequency-limited, and modify the character's own Strike damage; one is starred and the other is not.",
+    "correction": "Pick one rule and apply it to both. Either (a) add a strikeDamage entry to all three cleft-head records — bonus: '1d6 precision damage' (2d6 for greater-cleft-head-marking), when: 'once per day, when you Activate Unexpected Strike after Striking an off-guard creature with a weapon (tattoo must be invested)' — or (b) drop the strikeDamage entry from the three clay-sphere records too, on the grounds that Activate effects are surfaced by the item's activation list rather than by a stat star. Set needsHumanDecision:true with that question for the app owner, since it decides whether every activation-granted damage rider in the collection gets a star. Everything else in these six specs is verified correct: +1 item to Deception to Feint (+2 at greater, \"The item bonus is +2\"), the invested trait is genuinely on all three tattoos, and clay sphere's save bonus is +1/+2/+3 item vs morph or polymorph while affixed to armor."
+   }
+  ]
+ }
+]

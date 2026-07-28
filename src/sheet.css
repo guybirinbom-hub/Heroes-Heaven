@@ -10347,3 +10347,15 @@ button.strike-name:hover {
   flex: 0 0 auto;
   margin-top: 1px;
 }
+/* Free-text daily pick (Quick Study's Lore subject, Call Gun's bonded weapon). */
+.daily-text {
+  width: 100%;
+  max-width: 320px;
+  padding: 4px 8px;
+  font: inherit;
+  font-size: 12px;
+  color: inherit;
+  background: transparent;
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: 6px;
+}

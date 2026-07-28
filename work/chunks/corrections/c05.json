@@ -1,0 +1,727 @@
+[
+ {
+  "id": "clarity-goggles-greater",
+  "name": "Clarity Goggles (Greater)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+3 item",
+    "when": "to visual Perception checks only (not hearing, scent or other senses), while wearing the goggles",
+    "targetKind": "perception"
+   }
+  ],
+  "evidence": "\"While wearing the goggles, you gain a +3 item bonus to visual Perception checks.\"",
+  "corrections": [
+   {
+    "problem": "Same mis-flag: needsEngineWork true; nothing missing from the target-kind list.",
+    "correction": "needsEngineWork false, needsHumanDecision true. Verified: '+3 item bonus to visual Perception checks', passiveEffects.perception=3, level 19."
+   }
+  ]
+ },
+ {
+  "id": "mirror-goggles",
+  "name": "Mirror Goggles",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "to visual Perception checks only (not hearing, scent or other senses), while wearing the goggles",
+    "targetKind": "perception"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "against visual effects",
+    "targetKind": "save",
+    "save": "fortitude"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "against visual effects",
+    "targetKind": "save",
+    "save": "reflex"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "against visual effects",
+    "targetKind": "save",
+    "save": "will"
+   }
+  ],
+  "evidence": "\"you gain a +1 item bonus to visual Perception checks and to saving throws against visual effects\"",
+  "corrections": [
+   {
+    "problem": "Same mis-flag: needsEngineWork true, but both halves are representable — perception for the visual Perception bonus and save for the visual-effects saves. Only the passiveEffects.perception=1 double-count question is genuinely open.",
+    "correction": "needsEngineWork false, needsHumanDecision true. Bonuses verified as item type on BOTH halves ('a +1 item bonus to visual Perception checks and to saving throws against visual effects'); the three save rows can collapse to save/'all', which the registry does support (see FEAT_SITUATIONAL 'adaptive-vision')."
+   }
+  ]
+ },
+ {
+  "id": "mirror-goggles-lesser",
+  "name": "Mirror Goggles (Lesser)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "to visual Perception checks only (not hearing, scent or other senses), while wearing the goggles",
+    "targetKind": "perception"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "against visual effects",
+    "targetKind": "save",
+    "save": "fortitude"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "against visual effects",
+    "targetKind": "save",
+    "save": "reflex"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "against visual effects",
+    "targetKind": "save",
+    "save": "will"
+   }
+  ],
+  "evidence": "\"you gain a +1 item bonus to visual Perception checks and to saving throws against visual effects\"",
+  "corrections": [
+   {
+    "problem": "Same mis-flag: needsEngineWork true with no missing target kind.",
+    "correction": "needsEngineWork false, needsHumanDecision true. Verified: +1 item, both halves, passiveEffects.perception=1, level 5."
+   }
+  ]
+ },
+ {
+  "id": "mirror-goggles-moderate",
+  "name": "Mirror Goggles (Moderate)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "to visual Perception checks only (not hearing, scent or other senses), while wearing the goggles",
+    "targetKind": "perception"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "against visual effects",
+    "targetKind": "save",
+    "save": "fortitude"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "against visual effects",
+    "targetKind": "save",
+    "save": "reflex"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "against visual effects",
+    "targetKind": "save",
+    "save": "will"
+   }
+  ],
+  "evidence": "\"you gain a +2 item bonus to visual Perception checks and to saving throws against visual effects\"",
+  "corrections": [
+   {
+    "problem": "Same mis-flag: needsEngineWork true with no missing target kind.",
+    "correction": "needsEngineWork false, needsHumanDecision true. Verified: +2 item, both halves, passiveEffects.perception=2, level 11."
+   }
+  ]
+ },
+ {
+  "id": "mirror-goggles-greater",
+  "name": "Mirror Goggles (Greater)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+3 item",
+    "when": "to visual Perception checks only (not hearing, scent or other senses), while wearing the goggles",
+    "targetKind": "perception"
+   },
+   {
+    "bonus": "+3 item",
+    "when": "against visual effects",
+    "targetKind": "save",
+    "save": "fortitude"
+   },
+   {
+    "bonus": "+3 item",
+    "when": "against visual effects",
+    "targetKind": "save",
+    "save": "reflex"
+   },
+   {
+    "bonus": "+3 item",
+    "when": "against visual effects",
+    "targetKind": "save",
+    "save": "will"
+   }
+  ],
+  "evidence": "\"you gain a +3 item bonus to visual Perception checks and to saving throws against visual effects\"",
+  "corrections": [
+   {
+    "problem": "Same mis-flag: needsEngineWork true with no missing target kind.",
+    "correction": "needsEngineWork false, needsHumanDecision true. Verified: +3 item, both halves, passiveEffects.perception=3, level 18."
+   }
+  ]
+ },
+ {
+  "id": "spectacles-of-piercing-sight",
+  "name": "Spectacles of Piercing Sight",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+3 item",
+    "when": "to visual Perception checks only (not hearing, scent or other senses), while wearing the spectacles",
+    "targetKind": "perception"
+   }
+  ],
+  "evidence": "\"spectacles of piercing sight grant you a +3 item bonus to visual Perception checks\"",
+  "corrections": [
+   {
+    "problem": "Same mis-flag: needsEngineWork true although targetKind 'perception' covers it; the open item is only the passiveEffects.perception=3 conflict.",
+    "correction": "needsEngineWork false, needsHumanDecision true. Text and maths verified ('+3 item bonus to visual Perception checks', passiveEffects.perception=3), and the spec's contrast with spectacles-of-inquiry is right — that item's +2 explicitly covers hearing too ('the earpieces accentuate sounds around you'), so it is genuinely unconditional."
+   }
+  ]
+ },
+ {
+  "id": "drums-of-war",
+  "name": "Drums of War",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "while playing the drums, on Performance checks",
+    "targetKind": "skill",
+    "skill": "performance"
+   },
+   {
+    "bonus": "+5-foot status",
+    "when": "while playing the drums (which requires both hands on the instrument)",
+    "targetKind": "speed"
+   }
+  ],
+  "evidence": "\"While playing the drums, you gain a +1 item bonus to Performance checks and a +5-foot status bonus to your Speed.\"",
+  "corrections": [
+   {
+    "problem": "needsEngineWork is set to false, but targetKind 'speed' cannot be expressed by the registry today. src/rules/situationalBonuses.ts declares `kind: 'skill' | 'save' | 'perception' | 'ac' | 'attack'` and its targetMatches() switch has no 'speed' case (it falls through to `default: return false`). A speed entry would be silently inert — no star would ever appear for the +5-foot bonus. Separately, the player-facing `when` text invents a condition: it says 'which requires both hands on the instrument', but the record says only 'This handheld snare drum ... While playing the drums' — nothing about two hands.",
+    "correction": "Set needsEngineWork true with the note: 'speed' is not in SituationalTarget['kind'] and has no case in targetMatches(); a 'speed' kind (and a StatRef 'speed' hookup) must be added before this half can be stored. The +1 item Performance half is correct as written and can go in today. Change the Speed condition to the text's own wording: 'while playing the drums'."
+   }
+  ]
+ },
+ {
+  "id": "drums-of-war-greater",
+  "name": "Drums of War (Greater)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "while playing the drums, on Performance checks",
+    "targetKind": "skill",
+    "skill": "performance"
+   },
+   {
+    "bonus": "+5-foot status",
+    "when": "while playing the drums (which requires both hands on the instrument)",
+    "targetKind": "speed"
+   }
+  ],
+  "evidence": "\"While playing the drums, you gain a +1 item bonus to Performance checks and a +5-foot status bonus to your Speed.\"",
+  "corrections": [
+   {
+    "problem": "Same two defects as the base record: needsEngineWork false despite targetKind 'speed' being unsupported by targetMatches() in src/rules/situationalBonuses.ts, and the invented 'which requires both hands on the instrument' clause. Verified text: 'While playing the drums, you gain a +1 item bonus to Performance checks and a +5-foot status bonus to your Speed.'",
+    "correction": "needsEngineWork true (missing 'speed' target kind); Speed condition should read 'while playing the drums'. Bonus values (+1 item Performance, +5-foot status Speed) are correct."
+   }
+  ]
+ },
+ {
+  "id": "warding-statuette",
+  "name": "Warding Statuette",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"- **Armor** You gain resistance 1 against ranged weapon attacks. - **Weapon** ... you can choose a creature adjacent to the creature that was hit. That creature gains a +1 status bonus to AC until the start of your next turn.\"",
+  "corrections": [
+   {
+    "problem": "The evidence and reasoning are paraphrased beyond the record. The text reads 'you can choose a creature adjacent to the creature that was hit. That creature gains a +1 status bonus to AC until the start of your next turn' — it never says ALLY. Since you are a creature and are adjacent to your target after a melee Strike, the wielder can legitimately choose themselves, so this is not unambiguously an other-creature-only buff the way Guardian Staff ('choose an ally within 10 feet') is. Ruling it flatly non-situational with no star may hide a real self-applicable +1 status AC.",
+    "correction": "Keep the resistance-1 half excluded (correct), but set needsHumanDecision true with the question: 'The text says any creature adjacent to the one you hit, not an ally — after a melee Strike the wielder qualifies. Should this be a situational +1 status AC on the wielder (condition: after you hit with the affixed weapon, if you are adjacent to the target, until the start of your next turn, max one creature per turn), or stay ally-only pending the ally-buff engine work?' Also strike the word 'ally' from the evidence/reason; it is not in the record."
+   }
+  ]
+ },
+ {
+  "id": "warding-statuette-greater",
+  "name": "Warding Statuette (Greater)",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"- **Armor** You gain resistance 5 against ranged weapon attacks. - **Weapon** ... That creature gains a +1 status bonus to AC until the start of your next turn.\"",
+  "corrections": [
+   {
+    "problem": "Same paraphrase error: reasonIfNot says the +1 status AC 'goes to an adjacent ally', but the verified text is 'you can choose a creature adjacent to the creature that was hit' with no ally restriction, so the wielder can be the chosen creature after a melee Strike.",
+    "correction": "Same as the base statuette: keep resistance 5 excluded, drop the invented 'ally' wording, and set needsHumanDecision true asking whether a self-chosen +1 status AC should be starred (condition: after you hit with the affixed weapon while adjacent to the target, until the start of your next turn, one creature per turn)."
+   }
+  ]
+ },
+ {
+  "id": "theatrical-mutagen, theatrical-mutagen-lesser, theatrical-mutagen-moderate, theatrical-mutagen-greater, theatrical-mutagen-major",
+  "currentBonuses": [],
+  "evidence": "",
+  "corrections": [
+   {
+    "problem": "needsEngineWork is set to false, but each of these five specs contains a Speed entry with targetKind 'speed'. The live registry cannot carry it: src/rules/situationalBonuses.ts declares `kind: 'skill' | 'save' | 'perception' | 'ac' | 'attack'` and there is no 'speed' (nor 'hp'/'strikeDamage') member anywhere in its 330 keys. Authored as-is, the '+5/+10 feet status bonus to your Speed' entries either fail to type-check or get silently dropped, so the very bonus that is hardest for a player to remember (a temporary Speed boost from a mutagen) never reaches a star. The bonus values themselves are correct (verified: lesser +1/+5 ft/1 min, moderate +2/+5 ft/1 min, greater +3/+10 ft/10 min, major +4/+10 ft/1 hr, all with the -1 untyped Perception and Will penalties).",
+    "correction": "Set needsEngineWork true on all five, with the note: 'targetKind speed does not exist in SituationalTarget (kinds are skill|save|perception|ac|attack) — the Speed entry needs the union extended before it can be authored.' The same check applies elsewhere in this chunk and was handled correctly there: oil-of-skating (speed) and execution-powder (hp + strikeDamage) already set needsEngineWork true. Note that magnetic-shot's 'strikeAttack' is NOT affected — it maps onto the existing 'attack' kind (precedent: perfect-clarity, you-seem-somewhat-familiar), so needsEngineWork false is right for those four."
+   }
+  ]
+ },
+ {
+  "id": "heartening-missive",
+  "name": "Heartening Missive",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "for 24 hours after receiving a Heartening Missive (Bull)",
+    "targetKind": "save",
+    "save": "fortitude"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "for 24 hours after receiving a Heartening Missive (Rabbit)",
+    "targetKind": "save",
+    "save": "reflex"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "for 24 hours after receiving a Heartening Missive (Turtle)",
+    "targetKind": "save",
+    "save": "will"
+   }
+  ],
+  "evidence": "\"Heartening Missive (Bull) ... The recipient gains a +1 item bonus to Fortitude saves for the next 24 hours.\" / \"(Rabbit) ... +1 item bonus to Reflex saves\" / \"(Turtle) ... +1 item bonus to Will saves\"",
+  "corrections": [
+   {
+    "problem": "The umbrella record is registered with THREE simultaneous bonus entries (+1 item Fortitude, +1 item Reflex, +1 item Will). These are four mutually exclusive purchasable variants printed in one book entry — Bull, Butterfly, Rabbit, Turtle (I confirmed all four in the umbrella text, and heartening-missive-butterfly exists as its own id in core.json even though it is not in this chunk). A character can only ever receive one, and only one at a time (the text: '...the recipient gets its benefit and becomes temporarily immune to all heartening missives for 24 hours'). As written, one record lights up all three save stars at once. The spec's own engineNote calls this 'misleading' and then authors it anyway.",
+    "correction": "Either drop the bonuses from the umbrella entirely (situational:false, 'book-entry aggregate; the three graded ids carry the real bonuses'), or collapse to a single entry whose `when` makes the exclusivity explicit — e.g. targets [save/fortitude, save/reflex, save/will] with when: 'for 24 hours after receiving a heartening missive — Bull grants Fortitude, Rabbit Reflex, Turtle Will (only one applies, and only the variant you received)'. The three graded specs (bull/rabbit/turtle) are correct as authored and are the ones a real roster will hit. Same umbrella question already flagged for theatrical-mutagen, magnetic-shot, poison-concentrator and black-tendril-shot — it needs one answer applied consistently."
+   }
+  ]
+ },
+ {
+  "id": "sextant-of-the-night",
+  "name": "Sextant of the Night",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "on Survival checks made while using the sextant",
+    "targetKind": "skill",
+    "skill": "survival"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "instead of +1, when you use the sextant to Sense Direction",
+    "targetKind": "skill",
+    "skill": "survival"
+   }
+  ],
+  "evidence": "\"When you use the sextant, you gain a +1 item bonus to Survival checks, which increases to a +2 item bonus when you Sense Direction.\"",
+  "corrections": [
+   {
+    "problem": "The spec makes the base \"+1 item bonus to Survival checks\" a situational entry. That number is ALREADY in the maths: the record carries `passiveEffects: { skills: { survival: 1 } }` (authored deliberately in scripts/data/effect-backfill.json), and derive.ts `passiveItemBonus()` applies it whenever the item is `worn || invested || equipped` (`equipped` = held/wielded per types.ts:1500). Starring it double-reports a bonus already inside the displayed Survival total. The spec is also internally inconsistent: it called the same 'while you hold/use it' shape unconditional for battle-medic's-baton and standard-of-the-primeval-howl.",
+    "correction": "Drop the first entry. Keep only: { bonus: '+2 item', when: 'instead of +1, when you use the sextant to Sense Direction', target: { kind: 'skill', skill: 'survival' } }. situational stays true for that upgrade tier only."
+   }
+  ]
+ },
+ {
+  "id": "violin-of-the-waves",
+  "name": "Violin of the Waves",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "on Performance checks made using the violin",
+    "targetKind": "skill",
+    "skill": "performance"
+   },
+   {
+    "bonus": "+3 item",
+    "when": "instead of +2, when performing with the violin aboard a ship, walking on the ocean, or immediately adjacent to ocean water",
+    "targetKind": "skill",
+    "skill": "performance"
+   }
+  ],
+  "evidence": "\"When you make a Performance check using the violin of the waves, you gain a +2 item bonus to the check. This bonus increases to +3 if the performer is currently aboard a ship, walking on the ocean, or otherwise immediately adjacent to ocean water.\"",
+  "corrections": [
+   {
+    "problem": "Same double-report as the sextant. The base \"+2 item bonus\" for Performance checks made with the violin is already folded into the maths: `passiveEffects: { skills: { performance: 2 } }` on the record (from effect-backfill.json). The spec emits it as a situational star as well.",
+    "correction": "Drop the +2 entry. Keep only: { bonus: '+3 item', when: 'instead of +2, when performing with the violin aboard a ship, walking on the ocean, or immediately adjacent to ocean water', target: { kind: 'skill', skill: 'performance' } }. (If the owner instead decides 'made with this instrument' is a real condition, the fix is to REMOVE passiveEffects from the record — but it cannot be both.)"
+   }
+  ]
+ },
+ {
+  "id": "laurel-of-the-empath",
+  "name": "Laurel of the Empath",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+4 item",
+    "when": "on Perception checks concerning the one creature you spent 10 minutes talking with (once per day activation); lasts one month",
+    "targetKind": "perception"
+   },
+   {
+    "bonus": "roll twice, take the higher (fortune)",
+    "when": "when you roll Perception for initiative, while the laurel is invested and worn",
+    "targetKind": "perception"
+   }
+  ],
+  "evidence": "\"you gain a +4 item bonus to all Perception checks made concerning the target for one month\" and \"when you roll Perception for initiative, you can roll twice and take the higher result\"",
+  "corrections": [
+   {
+    "problem": "The engine note claims the initiative reroll is \"scoped to initiative - the app has no initiative target, so mapping it onto Perception is an approximation that over-reports if the character rolls initiative with a skill\". The record's text is narrower than that: \"while wearing it, when you roll Perception for initiative, you can roll twice and take the higher result\". It is scoped to PERCEPTION-for-initiative, so perception is the exact target and it cannot over-report — a character rolling Stealth for initiative simply doesn't meet the stated condition. This is also the registry's established convention (ambush-awareness: \"on Perception checks rolled for initiative\").",
+    "correction": "Keep both bonus entries as written, but fix the justification: the reroll needs no engine work. needsEngineWork should stand only on reason (2) — the +4 item bonus is per-creature and lasts one month, which the registry has no target/duration slot for."
+   }
+  ]
+ },
+ {
+  "id": "whispering-staff",
+  "name": "Whispering Staff",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+3 item",
+    "when": "to Decipher Writing, Identify Magic and Recall Knowledge with any skill, while using the staff",
+    "targetKind": "skill",
+    "skill": "all"
+   }
+  ],
+  "evidence": "\"While using the staff, you gain a +3 item bonus to Decipher Writing, Identify Magic, and Recall Knowledge checks, regardless of the skill.\"",
+  "corrections": [
+   {
+    "problem": "Incomplete, and inconsistent with the same batch's own standard. The spec excludes the once-per-day activation as \"not a bonus\", but its text benefits the OWNER: \"Whenever you and your affected allies attempt to Recall Knowledge or attempt a saving throw against a mental effect, you roll twice and take the better result. This is a fortune effect.\" The spec recorded exactly this kind of owner-facing fortune reroll as an entry for laurel-of-the-empath, so omitting it here is arbitrary.",
+    "correction": "Keep the +3 item / skill 'all' entry, and add two fortune entries for the once-per-day activation (1 minute): { bonus: 'roll twice, take the better (fortune)', when: 'to Recall Knowledge, for 1 minute after the staff\\'s once-per-day activation', target: { kind: 'skill', skill: 'all' } } and the same phrasing with when: 'on saving throws against mental effects, for 1 minute after the staff\\'s once-per-day activation', target: { kind: 'save', save: 'all' }. The ally half and the enemy –2 penalty stay out (other creatures)."
+   }
+  ]
+ },
+ {
+  "id": "starsong-nectar",
+  "name": "Starsong Nectar",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+3 status",
+    "when": "for 10 minutes after drinking, while you keep acting boldly (the effect ends early if you show too much caution)",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "+3 status",
+    "when": "for 10 minutes after drinking, while you keep acting boldly",
+    "targetKind": "perception"
+   },
+   {
+    "bonus": "+3 status",
+    "when": "for 10 minutes after drinking, while you keep acting boldly",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+3 status",
+    "when": "for 10 minutes after drinking, while you keep acting boldly",
+    "targetKind": "skill",
+    "skill": "all"
+   }
+  ],
+  "evidence": "\"you gain a +3 status bonus to attack rolls, initiative rolls, Perception checks, saving throws, and skill checks\" for 10 minutes, but \"if you show too much caution at any point during this time (GM's discretion), you must succeed at a [save] or the potion's effects end\"",
+  "corrections": [
+   {
+    "problem": "Two gaps. (a) The text says \"+3 status bonus to attack rolls\" without restriction, but the spec records only targetKind 'strikeAttack' — spell attack rolls get the bonus too and have their own target kind ('spell') in the allowed list. (b) The once-per-round activation is dismissed in the engine note, yet it is an owner-facing fortune effect exactly like the laurel reroll the spec did record: \"roll two d20s for any attack rolls, Perception checks, saving throws, and skill checks you make and take the higher result.\"",
+    "correction": "Add a 5th entry mirroring the strikeAttack one with targetKind 'spell' (same +3 status, same condition), and add the once-per-round fortune as its own entry/entries: { bonus: 'roll two d20s and take the higher (fortune)', when: 'until the start of your next turn, after the nectar\\'s once-per-round activation (attack rolls, Perception, saves and skill checks)' } across strikeAttack/perception/save 'all'/skill 'all'. Leave needsEngineWork true for the initiative half."
+   }
+  ]
+ },
+ {
+  "id": "draxies-recipe-book",
+  "name": "Draxie's Recipe Book",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "to Grapple (or Grab) a creature covered in the recipe book's spicy powder, until it washes off",
+    "targetKind": "skill",
+    "skill": "athletics"
+   },
+   {
+    "bonus": "+2 circumstance",
+    "when": "instead of +1, if you Grapple/Grab the powdered creature with a jaws or similar mouth-based attack",
+    "targetKind": "skill",
+    "skill": "athletics"
+   }
+  ],
+  "evidence": "\"Any attempt to grab or grapple a creature affected in this way... gains a +1 circumstance bonus to the attempt, or a +2 circumstance bonus if the attempt is made using a jaws or similar mouth-based attack\"",
+  "corrections": [
+   {
+    "problem": "Two problems. (a) The spec's own note says \"a permanent star on the carrier's Athletics would misrepresent it\" — the powder sits on the TARGET and helps whoever grapples it, allies and enemies alike — yet it neither sets needsHumanDecision nor needsEngineWork, while the batch DID flag the structurally identical architects-pattern-book. (b) The condition is trimmed and the target over-generalised: the record says \"Any attempt to grab or grapple a creature affected in this way, or to swallow such a creature whole\", and only the Grapple half is an Athletics check — Grab and Swallow Whole are monster/companion abilities, not the character's Athletics check.",
+    "correction": "Set needsHumanDecision: true with the question \"the bonus attaches to the powdered creature and applies to anyone (including enemies) attempting to grab/grapple/swallow it — should it be starred on the book carrier's sheet at all?\", and reword the conditions to quote the full trigger, e.g. when: 'to Grapple a creature covered in the recipe book\\'s spicy powder (also aids Grab and Swallow Whole attempts, which are not Athletics checks); ends when the target cleans off'."
+   }
+  ]
+ },
+ {
+  "id": "the-empty-throne",
+  "name": "The Empty Throne",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item (+3 at 17th level)",
+    "when": "to Recall Knowledge about individuals who are no longer alive (a historical founder, not a living monarch)",
+    "targetKind": "skill",
+    "skill": "society"
+   },
+   {
+    "bonus": "+2 item (+3 at 17th level)",
+    "when": "to Recall Knowledge about individuals who are no longer alive, using any Lore skill",
+    "targetKind": "skill",
+    "skill": "lore"
+   }
+  ],
+  "evidence": "\"+2 item bonus to Society and Lore checks made to Recall Knowledge regarding individuals who are no longer alive\" — explicitly excludes living subjects.",
+  "corrections": [
+   {
+    "problem": "The second bonus entry uses skill key \"lore\" (bare). Verified against the registry contract: SituationalTarget.detail for kind 'skill' is documented as \"a skill key (e.g. `intimidation`), a `lore:*` key, or `all`\", and targetMatches() in src/rules/situationalBonuses.ts compares with strict equality (`t.detail === ref.skill`). Real lore proficiency keys are `lore:<subject>` (skillLabel() in explain.ts slices `key.slice(5)`), so a bare 'lore' matches NOTHING — the entry is silently dead data, never raising a star. It is also inconsistent with the same engineer's own handling of watch-of-lost-ages, where the identical \"any Lore\" gap was handled by omitting the entry and flagging it. The card text itself is quoted correctly (\"+2 item bonus to Society and Lore checks made to Recall Knowledge regarding individuals who are no longer alive ... increases to a +3 item bonus if you are at least 17th level\"), so the Society entry, the +2/+3 sizing, the item type and the condition are all right.",
+    "correction": "Drop the `skill: \"lore\"` entry (keep the Society one) and leave needsEngineWork true with the note that an \"any Lore\" wildcard is required — matching the watch-of-lost-ages treatment. If a wildcard is added first, author it as `lore:*` (the docstring's own wording) AND extend targetMatches to honour it: `t.detail === 'lore:*' && ref.skill?.startsWith('lore:')`. As currently written the entry ships a key that can never match."
+   }
+  ]
+ },
+ {
+  "id": "canary",
+  "name": "Canary",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "to Gather Information about the person, locale, rumor or troop movement a basic canary informant was hired for",
+    "targetKind": "skill",
+    "skill": "diplomacy"
+   },
+   {
+    "bonus": "+2 circumstance",
+    "when": "to Gather Information on that subject if you paid for advanced informant services",
+    "targetKind": "skill",
+    "skill": "diplomacy"
+   },
+   {
+    "bonus": "+1 circumstance per week hired (max +4)",
+    "when": "to Gather Information on the movements and mannerisms of a person a canary tail has been following",
+    "targetKind": "skill",
+    "skill": "diplomacy"
+   }
+  ],
+  "evidence": "\"A canary informant automatically Aids you on attempts to Gather Information … granting you a +1 circumstance bonus\"; advanced informants give +2; tails give +1 per week \"up to a maximum of four weeks for a +4 bonus\".",
+  "corrections": [
+   {
+    "problem": "needsEngineWork is set to false on all six canary records (canary, canary-informant-basic-services, canary-informant-advanced-services, canary-tail-first-week/second/third/fourth), but the entries can never fire. characterSituationalIds() in src/rules/explain.ts only admits an inventory row when `inv.equipped || inv.worn || inv.invested` (\"An ITEM only counts while it is actually in use\"). A canary is a purchased hireling service — the record has no `usage` field at all (confirmed: usage undefined, price 2/5/10/20/40/80 gp, listed as \"Ammunition per target, per day\" / \"per week\"), so it is never equipped, worn or invested. The bonus text itself is quoted accurately and the Gather Information → Diplomacy mapping and the +1/+2 circumstance types are correct.",
+    "correction": "Set needsEngineWork true on all six canary records with the note: hireling/service items have no equipped/worn/invested state, so the current item gating in characterSituationalIds() will never surface them; they need either a \"service is active\" flag on the inventory row or a separate non-item lane. This also makes the existing needsHumanDecision question concrete — today the answer is moot because nothing would display either way."
+   }
+  ]
+ },
+ {
+  "id": "the-publican",
+  "name": "The Publican",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"treat critically failed checks made to Aid as regular failures instead. If you are at least 14th level, the circumstance bonus you provide … increases by 1.\"",
+  "corrections": [
+   {
+    "problem": "situational is true while bonuses is an empty array — a self-contradicting shape. The record text is quoted correctly and the reasoning is right (\"treat critically failed checks made to Aid as regular failures instead\" is a degree-of-success shift with no numeric modifier, and \"the circumstance bonus you provide for succeeding or critically succeeding at checks to Aid increases by 1\" boosts what ANOTHER creature receives), but a downstream applier that keys off `situational === true` will emit `'the-publican': []`, an entry that stars nothing and reads as an authoring mistake later.",
+    "correction": "Either set situational false with the existing explanation moved into reasonIfNot (nothing on this card is a bonus to one of your own stats), or keep situational true only if the project's convention is \"situational but unrepresentable\" — and state that convention explicitly. Keep needsEngineWork true and the human-decision question either way; do not leave true + empty as-is."
+   }
+  ]
+ },
+ {
+  "id": "the-rabbit-prince",
+  "name": "The Rabbit Prince",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status",
+    "when": "on attack rolls you make as a readied action",
+    "targetKind": "strikeAttack"
+   }
+  ],
+  "evidence": "\"grants you a +1 status bonus to attack rolls you make as a readied action\" — only on readied attacks.",
+  "corrections": [
+   {
+    "problem": "Under-coverage. The standing bonus is captured correctly (\"grants you a +1 status bonus to attack rolls you make as a readied action\" → strikeAttack, +1 status), but the activation was dismissed as \"a fortune effect, not a standing bonus\". The record's Effect reads \"Reroll the triggering Strike with a +1 status bonus\" — the fortune part is the reroll; the +1 status is a separate, genuinely situational typed bonus to an attack roll under a stated condition (Trigger: \"You miss a creature with a melee weapon Strike\", Frequency once per day), which is exactly what this registry is for.",
+    "correction": "Add a second entry: bonus \"+1 status\", targetKind strikeAttack, when \"on the once-per-day reroll after you miss a creature with a melee weapon Strike (Activate, reaction)\". Low impact — the card already stars strikeAttack via the readied-action entry, so no star is lost, only the popup line."
+   }
+  ]
+ },
+ {
+  "id": "hexing-jar",
+  "name": "Hexing Jar",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status",
+    "when": "until the start of your next turn after Activating the jar (5 actions, once per hour) — triggered by a critical success on an attack roll with a witch spell, or a target critically failing its save against your witch spell or hex",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "until the start of your next turn after that same activation",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+2 status",
+    "when": "against mental effects, until the start of your next turn after that same activation",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "5-action activation, \"Trigger You roll a critical success on an attack roll with a witch spell, or your target rolls a critical failure on its saving throw against a witch spell or hex you cast\" → \"granting you and your familiar a +1 status bonus to AC and saving throws and a +2 status bonus against mental effects\" until the start of your next turn.",
+  "corrections": [
+   {
+    "problem": "The `when` text and the evidence both call the triggered activation a \"5-action activation\" / \"5 actions\". In core.json the description reads `**Activate** ⟨5⟩ (concentrate)` and `src/sheet/widgets.tsx` maps glyph char \"5\" to a REACTION (char \"4\" = free action, only 1-3 are literal action counts). A 5-action cost is impossible in PF2e, and this string is printed to the player at the table. Secondary: the text is \"a +1 status bonus to AC and saving throws and a +2 status bonus against mental effects\" — the +2 is parallel to \"AC and saving throws\", so restricting it to saves only is a narrowing the sentence does not support.",
+    "correction": "Reword both `when` strings to \"until the start of your next turn after Activating the jar (reaction, once per hour) — triggered by a critical success on an attack roll with a witch spell, or a target critically failing its save against your witch spell or hex\". Consider adding a fourth entry `{bonus:'+2 status', when:'against mental effects, until the start of your next turn after that activation', targetKind:'ac'}` alongside the save entry, or flag the AC/save scope of the +2 as needsHumanDecision. Everything else in this spec is confirmed: the trigger wording, the +1 status AC/saves, the unconditional +2 item bonus to the patron skill (hexing-jar has NO passiveEffects/dynamicSkillBonus in core.json, so that gap is real), and the unrepresentable familiar half."
+   }
+  ]
+ },
+ {
+  "id": "whisperer-of-souls",
+  "name": "Whisperer of Souls",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+4 item",
+    "when": "on an Occultism check to Decipher Writing, Identify Magic, Learn a Spell, or Recall Knowledge, if you spend the glaive's 4-action activation to listen to it",
+    "targetKind": "skill",
+    "skill": "occultism"
+   }
+  ],
+  "evidence": "Activation (4 actions, concentrate), \"Trigger You attempt an Occultism check to Decipher Writing, Identify Magic, Learn a Spell, or Recall Knowledge\" → \"gaining a +4 item bonus to the triggering check.\"",
+  "corrections": [
+   {
+    "problem": "`when` says \"if you spend the glaive's 4-action activation to listen to it\". The record reads `**Activate** ⟨4⟩ (concentrate)` and glyph \"4\" is a FREE ACTION per src/sheet/widgets.tsx, not four actions. It also has a Trigger, which confirms it is not a 4-action activity.",
+    "correction": "Change `when` to \"on an Occultism check to Decipher Writing, Identify Magic, Learn a Spell, or Recall Knowledge, if you Activate the glaive (free action) to listen to it\". The +4 item bonus, the target (skill/occultism), and the four listed uses are all confirmed correct."
+   }
+  ]
+ },
+ {
+  "id": "corruption-cassock",
+  "name": "Corruption Cassock",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "only if you worship the cassock's true unholy deity — while you remain loyal to any other deity the bonus does not exist (the GM secretly negates it)",
+    "targetKind": "skill",
+    "skill": "religion"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "to the divine skill of the cassock's deity, and only if you worship that true unholy deity — otherwise the bonus does not exist",
+    "targetKind": "skill",
+    "skill": "all"
+   }
+  ],
+  "evidence": "\"While you remain loyal to another deity, you believe the cassock grants you a +2 item bonus to Religion checks and a +1 item bonus to the divine skill of the deity to whom you believe the cassock is dedicated. It does neither… If you convert to following the cassock's true unholy deity, however, these bonuses function normally for you.\"",
+  "corrections": [
+   {
+    "problem": "Marked situational:true, but the deity clause is exactly the same all-or-nothing eligibility gate this same engineer correctly classified as situational:false on cloister-robe (\"The robe doesn't grant any benefits to a wearer who doesn't worship the deity tied to the robe\"). The cassock text is \"While you remain loyal to another deity, you believe the cassock grants you a +2 item bonus... It does neither... If you convert to following the cassock's true unholy deity, however, these bonuses function normally for you.\" There are only two states: bonus absent entirely, or bonus permanent and unconditional. Neither is a per-check circumstance. Worse, flagging it situational makes the sheet print the condition text \"only if you worship the cassock's true unholy deity\" by default — which spoils the GM's secret, the very thing the spec's own needsHumanDecision asks about.",
+    "correction": "Set situational:false with reasonIfNot \"once you worship the cassock's true unholy deity the +2 item to Religion / +1 item to that deity's divine skill are permanent; while you worship anyone else they do not exist at all. Item-level eligibility gate, not a per-roll condition.\" Keep needsHumanDecision (cursed-item display policy) and keep the engineNote about the suppression rule and the dynamic divine skill — both are accurate. Note core.json already has a `dynamicSkillBonus: {source: 'bloodline'|'deity', value}` lane wired into src/rules/derive.ts line 244, which is the natural home for the deity-skill half."
+   }
+  ]
+ },
+ {
+  "id": "druids-crown",
+  "name": "Druid's Crown",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"The crown grants you a +1 item bonus to a skill, and can be activated to cast a spell, both depending on the material used to build the crown\" (Antlers→Intimidation, Flowers→Diplomacy, Leaves→Stealth); \"If you invest and wear living mantle along with the crown, the crown's item bonus increases by 1\".",
+  "corrections": [
+   {
+    "problem": "The needsHumanDecision question rests on a false premise. It asks whether the crown \"should carry a player-facing material picker (like the Doubling Rings rune-copy picker) that drives a real item bonus, or stay display-only text\". The core.json record ALREADY has `effectChoices: [{id:'crown-material', prompt:\"Choose the crown's material (+1 item bonus)\", options: antlers→intimidation 1 / flowers→diplomacy 1 / leaves→stealth 1}]`, i.e. the picker exists and already grants a real passive item bonus. Asking the owner to decide something already built wastes a decision cycle, and the question omits the part that IS unmodelled.",
+    "correction": "Drop the picker question. The classification (situational:false) is correct and should stand. Replace the question with the real gap: the three effectChoices options hard-code +1, but the text says \"If you invest and wear living mantle along with the crown, the crown's item bonus increases by 1\" — living-mantle exists in core.json as its own invested item and nothing escalates the crown to +2 when both are invested. Also keep the druid-only investiture gate note (\"You can invest this item only if you're a druid\")."
+   }
+  ]
+ },
+ {
+  "id": "unfathomable-stargazer",
+  "name": "Unfathomable Stargazer",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "on checks to observe the night sky through the telescope (which use Occultism in place of Perception or Astronomy Lore)",
+    "targetKind": "skill",
+    "skill": "occultism"
+   },
+   {
+    "bonus": "-4 circumstance",
+    "when": "to Survival checks to Sense Direction or navigate, once the telescope has fused to you",
+    "targetKind": "skill",
+    "skill": "survival"
+   }
+  ],
+  "evidence": "\"You use Occultism instead of Perception or Astronomy Lore when observing the skies with this item, and gain a +2 item bonus on all checks to do so.\" And: \"The telescope imposes a –4 circumstance penalty to Survival checks to Sense Direction or navigate.\"",
+  "corrections": [
+   {
+    "problem": "The penalty entry's `when` reads \"to Survival checks to Sense Direction or navigate, once the telescope has fused to you\". The record says flatly \"The telescope imposes a –4 circumstance penalty to Survival checks to Sense Direction or navigate.\" — there is no \"once fused\" qualifier on that sentence. Fusing is described in the preceding sentence about using another device to observe stars (\"Once you use it, it fuses to you, and you must succeed at a save to use another device to observe the stars\"), and the spec has carried that qualifier across into an unrelated clause. This is a condition invented beyond the text, and it materially understates the curse (a player who has not yet activated it would think they are unaffected).",
+    "correction": "Change `when` to \"to Survival checks to Sense Direction or navigate, while you have the telescope\" (no fusion gate). Keep the needsHumanDecision about whether penalties belong in this bonus registry — that question is legitimate. The +2 item entry (skill/occultism, on checks to observe the night sky) and the note that the Occultism-for-Perception substitution is unrepresentable are both confirmed correct."
+   }
+  ]
+ },
+ {
+  "id": "the-hidden-truth",
+  "name": "The Hidden Truth",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item (+3 at 17th level)",
+    "when": "to Recall Knowledge with a Lore skill",
+    "targetKind": "skill",
+    "skill": "lore"
+   },
+   {
+    "bonus": "+2 item (+3 at 17th level)",
+    "when": "on any check made to Research (Gamemastery Guide Research subsystem)",
+    "targetKind": "skill",
+    "skill": "all"
+   }
+  ],
+  "evidence": "\"As long as this card is invested, you gain a +2 item bonus to Lore checks made to Recall Knowledge, and to all checks made to Research while using the Research subsystem from the Gamemastery Guide. This increases to a +3 bonus if you are at least 17th level.\"",
+  "corrections": [
+   {
+    "problem": "Invalid target detail. The spec emits `targetKind: \"skill\", skill: \"lore\"`, but `lore` is not a value the registry can resolve. The real contract in src/rules/situationalBonuses.ts documents `SituationalTarget.detail` for kind `skill` as \"a skill key (e.g. `intimidation`), a `lore:*` key, or `all` (any skill)\" — there is no bare `lore` skill. The engineNote also claims \"existing registry precedent uses detail 'lore:*'\"; that is false — I scanned all 416 lines and NO entry uses a `lore:` detail (it exists only in the doc comment). As written this entry would silently match nothing, so the star never appears — the exact bug this whole effort is meant to fix.",
+    "correction": "Keep situational: true and the +2/+3 item bonus (text confirmed verbatim: \"you gain a +2 item bonus to Lore checks made to Recall Knowledge ... This increases to a +3 bonus if you are at least 17th level\"). Change the first entry's target to a resolvable one — either fan out to one entry per Lore the character actually has (`skill`/`lore:<name>`), or use `skill`/`all` with the condition text carrying the restriction: when = \"to Recall Knowledge, but only with a Lore skill\". Do not leave `skill: \"lore\"`."
+   }
+  ]
+ },
+ {
+  "id": "sash-of-books",
+  "name": "Sash of Books",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance (+2 if you critically succeeded the Recall Knowledge)",
+    "when": "for 1 minute, on Strikes against the creature you studied with the 1-action activation",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "+1 circumstance (+2 if you critically succeeded the Recall Knowledge)",
+    "when": "for 1 minute, against attacks from the creature you studied",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+1 circumstance (+2 if you critically succeeded the Recall Knowledge)",
+    "when": "for 1 minute, against effects from the creature you studied",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "Unconditional part: \"You gain a +3 item bonus to Society checks.\" Situational part (⟨1⟩ envision, once per minute): \"you gain a +1 circumstance bonus to attack rolls against the creature and to your AC and saving throws against attacks and effects from the creature for 1 minute. This bonus increases to +2 if you critically succeeded your check to Recall Knowledge.\"",
+  "corrections": [
+   {
+    "problem": "Missing a target. The record says the activation grants \"a +1 circumstance bonus to attack rolls against the creature and to your AC and saving throws against attacks and effects from the creature\". \"Attack rolls\" in PF2e includes SPELL attack rolls, not just Strikes. The spec emits only strikeAttack, ac and save/all — so a caster (the exact character who wears an Intelligence apex item and studies a foe) gets no marker on the one stat they actually roll. The prompt's target list includes `spell`, so no invention is required.",
+    "correction": "Add a fourth entry: { bonus: \"+1 circumstance (+2 if you critically succeeded the Recall Knowledge)\", when: \"for 1 minute, on spell attack rolls against the creature you studied with the 1-action activation\", targetKind: \"spell\" }. Everything else in this spec is confirmed correct, including that the +3 item bonus to Society is unconditional (passiveEffects.skills.society = 3 verified) and must not be starred."
+   }
+  ]
+ }
+]

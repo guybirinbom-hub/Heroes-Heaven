@@ -69,6 +69,27 @@ describe('daily-preparation choices', () => {
     expect(after.damage).toBe(0);
   });
 
+  it('free-text daily picks are offered too (they were silently skipped at first)', () => {
+    // dailyChoicesFor originally accepted kind 'array' only, so Quick Study and Call Gun — whose
+    // option sets are open-ended — were wired in the data but could never appear at rest.
+    const found = dailyChoicesFor(withFeat('quick-study'), c);
+    const q = found.find((f) => f.recordId === 'quick-study');
+    expect(q, 'Quick Study should offer a daily choice').toBeTruthy();
+    expect(q!.kind).toBe('text');
+    expect(q!.options).toHaveLength(0);
+    // Free text is its own label — there is no option list to resolve it against.
+    expect(dailyChoiceLabel(q!, { [q!.key]: 'Sailing Lore' })).toBe('Sailing Lore');
+  });
+
+  it('the kitsune chain offers exactly the three spells its text prints', () => {
+    const found = dailyChoicesFor(withFeat('kitsune-spell-familiarity'), c);
+    const k = found.find((f) => f.recordId === 'kitsune-spell-familiarity')!;
+    expect(k.kind).toBe('array');
+    expect(k.options.map((o) => o.value).sort()).toEqual(['daze', 'forbidding-ward', 'ghost-sound']);
+    // Each option must name a spell that actually exists, or the pick grants nothing.
+    for (const o of k.options) expect(c.spells[o.value], `${o.value} missing`).toBeTruthy();
+  });
+
   it('an item only asks while it is actually in use', () => {
     const base = withFeat('environmental-adaptability');
     // Sanity: the feat-sourced choice is present regardless of inventory state.

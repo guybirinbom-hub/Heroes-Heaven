@@ -1,0 +1,636 @@
+[
+ {
+  "id": "fixer-basic-councelor",
+  "name": "Fixer (Basic Councelor)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "while this counselor is hired, to Impersonate or Lie with people inside their location",
+    "targetKind": "skill",
+    "skill": "deception"
+   },
+   {
+    "bonus": "+1 circumstance",
+    "when": "while this counselor is hired, to Make an Impression or Request with people inside their location",
+    "targetKind": "skill",
+    "skill": "diplomacy"
+   }
+  ],
+  "evidence": "A counselor automatically Aids you on attempts to Impersonate, Lie, Make an Impression, and Request when speaking with individuals within the location of the counselor's expertise.",
+  "corrections": [
+   {
+    "problem": "The evidence quoted does not contain the bonus size claimed. The quoted sentence is \"A counselor automatically Aids you on attempts to Impersonate, Lie, Make an Impression, and Request when speaking with individuals within the location of the counselor's expertise\" — it names no number. Verified against the record: the words '+1 circumstance bonus' appear ONLY in the informant paragraph ('An informant automatically Aids you... granting you a +1 circumstance bonus to such checks'); the counselor paragraph gives a number only for the EXPERT counselor (+2). The engineNote's claim that '+1 comes from the shared Fixer text' is therefore an inference from Aid's default success result, not a quote, yet the spec is filed confidence:'high', needsHumanDecision:false.",
+    "correction": "Keep the +1 circumstance value (it is Aid's printed success result and is consistent with the expert's +2), but stop presenting it as quoted. Either widen the evidence to include the informant sentence and say explicitly 'value inferred from Aid's success entry / the parallel informant clause', or drop confidence to medium. No change to the targets: Impersonate + Lie = deception, Make an Impression + Request = diplomacy, both verified correct."
+   }
+  ]
+ },
+ {
+  "id": "skeptics-elixir-lesser / skeptics-elixir-moderate / skeptics-elixir-greater (also ichthyosis-mutagen, fungal-walk-musk)",
+  "currentBonuses": [],
+  "evidence": "",
+  "corrections": [
+   {
+    "problem": "The batch answers its own open question inconsistently. skeptics-elixir sets needsHumanDecision:true asking whether an undrunk consumable should light a star, and explicitly says 'This decides skeptics-elixir, ichthyosis-mutagen, fungal-walk-musk and every other consumable in this batch' — yet all five of those records are filed needsHumanDecision:false. All are verified consumables in core.json (itemType 'consumable' with uses {current:1,max:1} for skeptics-elixir-*, ichthyosis-mutagen and fungal-walk-musk), so the same unresolved policy governs them.",
+    "correction": "Propagate needsHumanDecision:true (with the same question text) to every consumable record in the batch, or resolve the policy once and set it false everywhere. The bonus values themselves need no change. Note that the Will-save half of the elixir carries no condition beyond the duration — if the app ever models drunk consumables as an active effect/Mode, that half must move out of the star registry into the maths for its duration, and the star must not be left behind or it will double-count."
+   }
+  ]
+ },
+ {
+  "id": "fulcrum-lenses",
+  "name": "Fulcrum Lenses",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "Crimson Fulcrum Lens invested, against fear effects",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+4 item (instead of the usual +2)",
+    "when": "Crimson Fulcrum Lens invested and the melee Strike is a jaws attack",
+    "targetKind": "strikeDamage"
+   },
+   {
+    "bonus": "+2 status",
+    "when": "Ochre Fulcrum Lens invested, against emotion effects",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "for 1 round after the Emerald Fulcrum Lens's 1/day healing activation, against magic",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+4 status",
+    "when": "Emerald Fulcrum Lens invested, to the Hit Points harm spells restore to you",
+    "targetKind": "hp"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "for 1 minute after spending an Ebon Fulcrum Lens glimmer (or for 24 hours after rejuvenating with one)",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "for 1 minute after spending an Ebon Fulcrum Lens glimmer (or for 24 hours after rejuvenating with one)",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "for 1 minute after spending an Ebon Fulcrum Lens glimmer (or for 24 hours after rejuvenating with one)",
+    "targetKind": "classDc"
+   }
+  ],
+  "evidence": "Crimson: \"You gain a +2 item bonus to saving throws against fear effects\"; Ochre: \"You gain resistance 10 to mental damage and a +2 status bonus to saves against emotion effects\"; Ebon: \"you gain a +1 item bonus to attack rolls, saving throws, and DCs\"; Emerald: \"gain a +2 item bonus to saving throws against magic for 1 round\".",
+  "corrections": [
+   {
+    "problem": "Two target-precision defects. (a) The Ebon lens grants '+1 item bonus to attack rolls, saving throws, and DCs' (verified in both the umbrella and ebon-fulcrum-lens). The spec maps 'DCs' to classDc only and relegates the spell DC to a prose note — but 'spell' is an available target kind, so the second half is simply omitted rather than unrepresentable. (b) The Emerald entry '+4 status ... to the Hit Points harm spells restore to you' is filed against targetKind 'hp'. Verified text: 'harm spells gain a +4 status bonus to the Hit Points they restore to you' — that is a bonus to healing RECEIVED, not to the Hit Points stat; starring the HP tile implies a bigger HP pool.",
+    "correction": "(a) Add a parallel entry { bonus: '+1 item', when: '<same Ebon glimmer condition>', targetKind: 'spell' } alongside the classDc entry. (b) Keep the hp entry only if the engineNote names the gap explicitly — there is no 'healing received' lane, so hp is an approximation, and the 'when' must lead with 'to the Hit Points a Harm spell restores to you' so no reader mistakes it for extra max HP. Everything else on this record checks out, including the deliberate exclusions (Crimson's flat +2 melee Strike damage, Ochre's resistance 10 mental, Ebon's incorporeal/drained 2, Emerald's void healing) and the crimson-fulcrum-lens observation that core.json types the existing strikeDamage entry 'untyped' while the text says ITEM bonus — that data discrepancy is real and worth a separate fix ticket."
+   }
+  ]
+ },
+ {
+  "id": "spellcutter",
+  "name": "Spellcutter",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+4 status",
+    "when": "against a spell that targets you, when you spend the reaction while wielding Spellcutter",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+4 status",
+    "when": "against a spell that targets you, when you spend the reaction while wielding Spellcutter",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"**Trigger** You're targeted by a spell while wielding *Spellcutter* **Effect** *Spellcutter* attempts to absorb the magic of the triggering spell, giving you a +4 status bonus to your AC and saves against the effect.\"",
+  "corrections": [
+   {
+    "problem": "The spec discards the item's defining mechanic — \"an ancient restriction on the blade prevents it from harming living creatures; attacks against living beings deal no damage\" — with the reason \"that is a damage nullification, not a typed penalty, so it has no target kind.\" That reason is factually wrong about the registry. src/rules/situationalBonuses.ts documents the bonus field as \"The modifier, e.g. '+1 circumstance', or a short effect phrase\", and already ships non-numeric and NEGATIVE entries: line 69 \"barbarian-dedication\": bonus \"-1 (penalty)\"; line 329 \"terrain-scout\": bonus \"ally benefit (no roll bonus)\". strikeDamage is exactly the right target kind, and this is a conditional, per-Strike effect on the character's own damage. Dropping it means a player wielding a cursed unique weapon gets no marker for the one thing that will most surprise them mid-combat.",
+    "correction": "Add a third entry to spellcutter alongside the two +4 status ones: { bonus: 'no damage (cursed)', when: 'on Strikes against living creatures — the blade deals no damage to them; dhampirs and creatures with Void Healing are exempt and take damage normally', target: { kind: 'strikeDamage' } }. Keep situational:true and drop the \"has no target kind\" claim from the engineNote."
+   }
+  ]
+ },
+ {
+  "id": "noqual-armor",
+  "name": "Noqual Armor",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "against spell attack rolls, while wearing the noqual armor",
+    "targetKind": "ac"
+   }
+  ],
+  "evidence": "\"While wearing noqual armor, you gain a +1 circumstance bonus to AC against spell attack rolls.\"",
+  "corrections": [
+   {
+    "problem": "Two problems, both silent decisions that were not escalated. (1) The spec asserts \"The +4 material save (from the parent 'noqual' record) is not restated here, so it is not claimed on this record\" — yet the record's own text does say \"Base Material Noqual\", and a suit of noqual armor is by definition an object made of noqual. Meanwhile the SAME batch claims that +4 on noqual-chunk, noqual-ingot and both noqual-object grades and escalates the question there. The result is backwards: a lump of ore in your backpack gets a starred save, and the armor you are actually wearing (the only noqual object a 'save to protect the item from magic' will realistically ever be rolled for) does not. (2) The DC 5 flat-check drawback is dismissed as having no target kind, on the same mistaken premise as spellcutter.",
+    "correction": "(1) Either escalate the +4 owner-protection save on the equippable noqual records too, or — better, and my recommendation — invert the current split: put the +4 on noqual-armor / noqual-armor-standard-grade / noqual-armor-high-grade / noqual-shield family / noqual-weapon family, and drop it from noqual-chunk, noqual-ingot, noqual-object-standard-grade, noqual-object-high-grade (raw stock you never make a save to protect). Whatever is chosen must be applied to all nine records consistently. (2) Add { bonus: 'DC 5 flat check or the spell fails', when: 'whenever you Cast a Spell while wearing noqual armor', target: { kind: 'spell' } } — the registry's prose/penalty precedent (barbarian-dedication line 69) supports it, and a caster in noqual armor needs that flag more than the +1 AC. Applies identically to noqual-armor-standard-grade and noqual-armor-high-grade."
+   }
+  ]
+ },
+ {
+  "id": "noqual-buckler-high-grade",
+  "name": "Noqual Buckler (High-Grade)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "against spells that target you, while this noqual buckler is Raised",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"When you have a noqual shield Raised, you gain its circumstance bonus to saving throws against spells that target you (as well as AC).\"",
+  "corrections": [
+   {
+    "problem": "The spec hard-codes bonus \"+1 circumstance\" and correctly admits \"the record itself never prints a number ('its circumstance bonus')\", then escalates it as a human decision. But the decision is already settled by existing practice in the file the spec is matching: src/rules/situationalBonuses.ts line 221 \"necromantic-deflection\" uses exactly this construction — bonus: \"shield's circumstance bonus\" — for the identical rules pattern (raised shield lending its AC bonus to saves). Inventing a number the source text does not print, when the registry has a precedent for not doing so, is the avoidable error here.",
+    "correction": "Replace the hard-coded number with the prose form used elsewhere in the registry: bonus: \"buckler's circumstance bonus\" (or \"shield's circumstance bonus\" to match necromantic-deflection verbatim), keep when: \"against spells that target you, while this noqual buckler is Raised\", target { kind: 'save', save: 'all' }. Set needsHumanDecision false and cite situationalBonuses.ts:221 as the precedent."
+   }
+  ]
+ },
+ {
+  "id": "noqual-shield-high-grade",
+  "name": "Noqual Shield (High-Grade)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "against spells that target you, while this noqual shield is Raised",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"When you have a noqual shield Raised, you gain its circumstance bonus to saving throws against spells that target you (as well as AC).\"",
+  "corrections": [
+   {
+    "problem": "Same defect as noqual-buckler-high-grade: bonus is hard-coded \"+2 circumstance\" while the spec concedes the record \"never prints a number\", and the question is escalated even though situationalBonuses.ts:221 (\"necromantic-deflection\": bonus \"shield's circumstance bonus\") already answers it. Hard-coding also silently assumes the underlying shield is a standard +2 shield, but 'Noqual Shield' is a base-MATERIAL record applicable to any shield the character actually equips.",
+    "correction": "Use bonus: \"shield's circumstance bonus\" rather than \"+2 circumstance\"; keep when: \"against spells that target you, while this noqual shield is Raised\", target { kind: 'save', save: 'all' }. Set needsHumanDecision false, referencing situationalBonuses.ts:221. Note the umbrella noqual-shield record already uses a prose form and is fine as-is."
+   }
+  ]
+ },
+ {
+  "id": "exploration-lens-investigating",
+  "name": "Exploration Lens (Investigating)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "on Recall Knowledge checks made while using the Investigate exploration activity, with the lens activated",
+    "targetKind": "skill",
+    "skill": "all"
+   }
+  ],
+  "evidence": "\"While activated, the lens grants you a +1 item bonus to skill checks to Recall Knowledge while Investigating\"",
+  "corrections": [
+   {
+    "problem": "needsEngineWork is set to true, but nothing on this record needs engine work for the situational-bonus feature. The spec's own engineNote concedes \"The +1 itself maps cleanly to skills\" and that the blocker is the clause \"you can always roll a Recall Knowledge skill check appropriate to the investigation for initiative\" — then adds \"it also isn't a bonus\". Per the task's own definition, needsEngineWork is for a BONUS whose target the app cannot express. An initiative-roll SUBSTITUTION is a permission, not a bonus, so nothing here is blocked. Leaving the flag true puts this record on an engine-work backlog it does not belong on (a false positive is as costly as a miss when the list is used to scope work).",
+    "correction": "Set needsEngineWork false. Keep the single bonus entry unchanged (+1 item, when: 'on Recall Knowledge checks made while using the Investigate exploration activity, with the lens activated', target { kind: 'skill', skill: 'all' }), and demote the initiative-substitution clause to a prose/engineNote observation rather than a blocking flag."
+   }
+  ]
+ },
+ {
+  "id": "containment-contraption",
+  "name": "Containment Contraption",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "on saves against inhaled toxins while wearing the suit",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+2 circumstance (replaces the +1)",
+    "when": "on saves against inhaled toxins for 1 hour after the 1/day activation",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+2 circumstance",
+    "when": "on saves against olfactory effects for 1 hour after the 1/day activation",
+    "targetKind": "save",
+    "save": "olfactory-only"
+   }
+  ],
+  "evidence": "\"protection against inhaled toxins—you gain a +1 circumstance bonus to all saving throws made against such effects\"; activated: \"increases to +2, and you also gain a +2 circumstance bonus to saves against olfactory effects\"",
+  "corrections": [
+   {
+    "problem": "The third bonus entry sets save: 'olfactory-only', which is not a legal value — the schema allows fortitude|reflex|will|all. The spec's own engineNote admits the mistake and asks the reader to mentally substitute 'all', but the delivered spec is invalid as written and would be copied verbatim into the registry.",
+    "correction": "Set the third entry to targetKind 'save', save 'all', with the condition carrying the meaning: bonus '+2 circumstance', when 'on saves against olfactory effects for 1 hour after the 1/day activation'. Text confirmed: \"you also gain a +2 circumstance bonus to saves against olfactory effects\". The other two entries (+1 circumstance vs inhaled toxins while worn, rising to +2 for 1 hour when activated) are correct as written, including the 'This effect ends immediately if the containment contraption becomes broken' caveat."
+   }
+  ]
+ },
+ {
+  "id": "sure-step-crampons",
+  "name": "Sure-Step Crampons",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "after you spend 1 action to dig in (until you move): vs attempts to Shove or Trip you, and on saves vs effects that move you or knock you prone",
+    "targetKind": "save",
+    "save": "fortitude"
+   },
+   {
+    "bonus": "+2 circumstance",
+    "when": "after you spend 1 action to dig in (until you move): vs attempts to Shove or Trip you, and on saves vs effects that move you or knock you prone",
+    "targetKind": "save",
+    "save": "reflex"
+   }
+  ],
+  "evidence": "\"+2 circumstance bonus to your Fortitude and Reflex DCs against attempts to Shove or Trip you… also applies to saving throws against spells or effects that attempt to move you or knock you prone\"",
+  "corrections": [
+   {
+    "problem": "The condition drops the activation's Requirements clause, broadening it. The record reads \"**Requirements** You're standing on an earthen, icy, or wooden surface\" — a player standing on stone, sand, or metal cannot get the bonus at all, but the spec's condition (\"after you spend 1 action to dig in (until you move)\") implies it is always available.",
+    "correction": "Reword both entries' 'when' to: 'after you spend 1 action to dig the crampons in while standing on an earthen, icy or wooden surface, until you move — vs attempts to Shove or Trip you, and on saves vs effects that move you or knock you prone'. Everything else is correct: +2 circumstance, Fortitude and Reflex, and the engineNote about the bonus also applying to the Fort/Ref DCs is accurate to the text."
+   }
+  ]
+ },
+ {
+  "id": "metronomic-hammer",
+  "name": "Metronomic Hammer",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item (rising to +2, then +3, on repeat Trips against the same target this turn)",
+    "when": "on Athletics checks to Trip with the hammer, after using its free-triggered activation; resets to +1 if you succeed, critically fail, or your turn ends",
+    "targetKind": "skill",
+    "skill": "athletics"
+   }
+  ],
+  "evidence": "\"you gain a +1 item bonus to your Athletics check to Trip the target… increases by 1 with every subsequent Trip attempt… to a maximum of +3\"",
+  "corrections": [
+   {
+    "problem": "The player-facing condition calls the activation a \"free-triggered activation\". It is a REACTION, not a free action: the record has activationCost {type:'reaction'} and the description shows the reaction glyph (\"**Activate** ⟨5⟩ envision\"). Telling a player at the table that it costs nothing is an action-economy error — it consumes their reaction for the round, which usually means they only get one Trip bonus per round from it, not one per Trip attempt. (The same engineer labelled metuaks-pendant's identical ⟨5⟩ activation correctly as 'the pendant's reaction'.)",
+    "correction": "Change the 'when' to: 'on Athletics checks to Trip with the hammer, after spending your reaction to envision its metronome; rises to +2 then +3 on repeat Trips against the same target this turn, and resets to +1 if you succeed, critically fail, or your turn ends'. The +1/+2/+3 ladder, the item type, and the athletics target are all correct."
+   }
+  ]
+ },
+ {
+  "id": "spiderfoot-brew",
+  "name": "Spiderfoot Brew",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "to Athletics checks to Climb, while the brew lasts (lesser: 1 minute)",
+    "targetKind": "skill",
+    "skill": "athletics"
+   }
+  ],
+  "evidence": "\"granting you a climb Speed and an item bonus to Athletics checks made to Climb for the listed duration\" — Lesser: \"the climb Speed is 15 feet, the item bonus is +1, and the duration is 1 minute.\"",
+  "corrections": [
+   {
+    "problem": "The spec's whole basis is false. It claims \"this record is the AoN family/stub entry ... level 3 matches the Lesser, so I specified +1\". core.json ALSO contains spiderfoot-brew-lesser (lvl 3, 12 gp, \"a climb Speed of 15 feet and a +1 item bonus to athletics checks made to climb for 1 minute\"), spiderfoot-brew-moderate (lvl 9, 150 gp, +2/10 min) and spiderfoot-brew-greater (lvl 17, 2500 gp, +3/1 hour). So the bare `spiderfoot-brew` record is NOT the Lesser grade — it is a pure family/summary record whose text bundles all three grades, and its level 3 is just the family's minimum level. Pinning it to +1 is a guess presented as a grade match, and it silently under-reports the Moderate/Greater cases.",
+    "correction": "Keep situational:true and the target (skill/athletics, item bonus, \"to Athletics checks made to Climb while the brew lasts\"), but the family record's bonus is grade-dependent: phrase it \"+1 to +3 item (varies by grade)\" — or, better, drop the family record from the registry entirely and register the three real graded records instead: spiderfoot-brew-lesser +1 item (1 minute), spiderfoot-brew-moderate +2 item (10 minutes), spiderfoot-brew-greater +3 item (1 hour). The spec's engineNote caveat (1) should be deleted, not asked as an open question — the graded records exist and answer it. The climb-Speed note and the consumable needsHumanDecision question are both fine."
+   }
+  ]
+ },
+ {
+  "id": "tallow-bomb",
+  "name": "Tallow Bomb",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"Many types of tallow bombs grant an item bonus to attack rolls.\" — but the grade this record represents, \"Tallow Bomb (Lesser) ... Price 3 gp ... The bomb deals 1d4 persistent fire damage and 1 fire splash damage\", grants none.",
+  "corrections": [
+   {
+    "problem": "Invented fact in evidence/reason: \"the grade this record represents, Tallow Bomb (Lesser) ... grants none\" and \"Family/stub record at the Lesser grade\". core.json has a SEPARATE tallow-bomb-lesser record (lvl 1, 3 gp, itemType weapon, its own Lesser-only text with no item bonus). The bare `tallow-bomb` record is a pure family/summary record covering all four grades — its own text explicitly reads \"Many types of tallow bombs grant an item bonus to attack rolls\" and then lists Moderate +1 / Greater +2 / Major +3 inline. It does not \"represent the Lesser grade\".",
+    "correction": "Verdict situational:false is still right, but for a different reason — rewrite it: this is a family/summary record that bundles every grade; the item bonus it describes is unconditional for that bomb's own Strike at whichever grade you own, so it is strike maths, not a star. The Lesser grade lives at its own id (tallow-bomb-lesser) and genuinely has no bonus. Same for the engineNote's \"cannot be Struck with at all\" observation — accurate for this stub record (itemType 'equipment', no damage/range/price), but the player-facing fix is to point at the graded ids, which do exist."
+   }
+  ]
+ },
+ {
+  "id": "twigjack-sack",
+  "name": "Twigjack Sack",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"Many types of twigjack sacks grant an item bonus to attack rolls.\" — the grade this record represents, \"Twigjack Sack (Lesser) ... Price 3 gp\", grants none.",
+  "corrections": [
+   {
+    "problem": "Same invented fact: \"the grade this record represents, Twigjack Sack (Lesser)\" / \"Family/stub record at the Lesser grade\". twigjack-sack-lesser exists as its own record (lvl 1, 3 gp, itemType weapon, damage 1d6 piercing). The bare `twigjack-sack` record is a family/summary record whose text covers Lesser through Major and states \"Many types of twigjack sacks grant an item bonus to attack rolls\".",
+    "correction": "Keep situational:false; replace the reason with: family/summary record bundling all grades; the graded +1/+2/+3 item bonuses it mentions are unconditional for that bomb's own Strike (strike maths, not a star). Do not claim this record IS the Lesser grade — twigjack-sack-lesser is a separate id."
+   }
+  ]
+ },
+ {
+  "id": "mud-bomb",
+  "name": "Mud Bomb",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"Many types grant an item bonus to attack rolls.\" — the grade this record represents, \"Mud Bomb (Lesser) ... Price 3 gp ... The bomb deals 1d6 bludgeoning damage and 1 bludgeoning splash damage\", grants none.",
+  "corrections": [
+   {
+    "problem": "Same invented fact: \"the grade this record represents, Mud Bomb (Lesser) ... grants none\" / \"Family/stub record at the Lesser grade\". mud-bomb-lesser exists separately (lvl 1, 3 gp, itemType weapon, 1d6 bludgeoning, no item bonus). The bare `mud-bomb` record is the all-grades family record (\"Many types grant an item bonus to attack rolls\", then Lesser/Moderate/Greater/Major inline).",
+    "correction": "Keep situational:false; rewrite the reason as: all-grades family/summary record; the +1/+2/+3 it lists are unconditional per-grade strike maths, held on mud-bomb-moderate/-greater/-major. Remove the claim that this record is the Lesser grade."
+   }
+  ]
+ },
+ {
+  "id": "pernicious-spore-bomb",
+  "name": "Pernicious Spore Bomb",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"Many types grant an item bonus to attack rolls.\" — the Lesser grade this record represents (\"Price 3 gp ... The bomb deals 1 poison damage, 1d4 persistent piercing damage, and 1 poison splash damage\") grants none.",
+  "corrections": [
+   {
+    "problem": "Same invented fact: \"the Lesser grade this record represents\". pernicious-spore-bomb-lesser exists as its own record (lvl 1, 3 gp, itemType weapon). The bare `pernicious-spore-bomb` record is the family/summary record for all four grades.",
+    "correction": "Keep situational:false; rewrite the reason as: family/summary record bundling all grades; the graded +1/+2/+3 item bonuses are unconditional strike maths on the separate -moderate/-greater/-major records. Drop the Lesser-grade claim."
+   }
+  ]
+ },
+ {
+  "id": "water-bomb",
+  "name": "Water Bomb",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"Many types grant an item bonus to attack rolls, and some types extinguish wider areas of fire.\" — the Lesser grade this record represents (\"Price 3 gp ... The bomb deals 1 nonlethal bludgeoning damage and 1 nonlethal bludgeoning splash damage\") grants none.",
+  "corrections": [
+   {
+    "problem": "Same invented fact: \"the Lesser grade this record represents ... grants none\". water-bomb-lesser exists as its own record (lvl 1, 3 gp, itemType weapon). The bare `water-bomb` record is the family/summary record (\"Many types grant an item bonus to attack rolls, and some types extinguish wider areas of fire\") covering Lesser through Major.",
+    "correction": "Keep situational:false; rewrite the reason as: family/summary record bundling all grades; the +1/+2/+3 live on water-bomb-moderate/-greater/-major (all verified present, itemType weapon) and are unconditional strike maths. The flat-check DC 15→10 note is correct and correctly excluded."
+   }
+  ]
+ },
+ {
+  "id": "ridill",
+  "name": "Ridill",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "while wielding Ridill, on saves against fear effects",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+4 circumstance",
+    "when": "while wielding Ridill, on saves against fear effects created by a dragon",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"While wielding Ridill, you gain a +2 circumstance bonus to saves against fear. This increases to +4 if the effect is from a dragon.\"",
+  "corrections": [
+   {
+    "problem": "needsHumanDecision:true with the question \"Does the situational registry's `save` target accept 'all', or must every save bonus be pinned to fortitude/reflex/will?\" — that question is already answered in the code the spec was matching. src/rules/situationalBonuses.ts documents SituationalTarget.detail as \"For `save`: `fortitude` | `reflex` | `will` | `all`\", and targetMatches() implements `t.detail === 'all'` as a wildcard. Raising it as a blocker sends the app owner a decision that does not exist.",
+    "correction": "Keep the bonuses exactly as specified (+2 circumstance to saves vs fear while wielding Ridill; +4 if the fear effect is from a dragon — both verified verbatim in the record) with save 'all', and set needsHumanDecision:false. The same spurious doubt is echoed in the grisantian-pelt-armor engineNote ('same save: all caveat as Ridill') and should be dropped there too — save 'all' is a first-class value, already used by affliction-resistance, adaptive-vision, aegis-of-the-dissolution and others."
+   }
+  ]
+ },
+ {
+  "id": "stags-helm",
+  "name": "Stag's Helm",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"While worn, it grants a +1 item bonus to Perception checks.\"",
+  "corrections": [
+   {
+    "problem": "engineNote/needsEngineWork is factually wrong. It claims the record 'Needs the (currently missing) item->stat pipeline for unconditional worn/invested item bonuses'. That pipeline exists AND this exact item is already wired: core.json stags-helm carries \"passiveEffects\": { \"perception\": 1 }, and passiveItemBonus (src/rules/derive.ts:205) reads pe.perception for every worn/invested/equipped item. Nothing is missing.",
+    "correction": "Keep situational:false and the reasoning ('While worn, it grants a +1 item bonus to Perception checks' is unconditional -> maths, not a star). Set needsEngineWork:false and replace the engineNote with: 'Already handled — core.json passiveEffects.perception:1 is consumed by passiveItemBonus (src/rules/derive.ts:205). No action needed.' The off-guard activation note is correct and can stay."
+   }
+  ]
+ },
+ {
+  "id": "vengeful-arm",
+  "name": "Vengeful Arm",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"This tattoo of a coiled viper provides a +1 item bonus to Society checks.\"",
+  "corrections": [
+   {
+    "problem": "engineNote lists two gaps, the first of which does not exist: 'the unconditional item->Society bonus' is already implemented — core.json has \"passiveEffects\": { \"skills\": { \"society\": 1 } } and passiveItemBonus applies it.",
+    "correction": "Keep situational:false. Reduce the engineNote to the one real gap: the ⟨1⟩ activation turns the tattoo into a Retribution Axe that can take fundamental runes and should appear as a wieldable Strike — the app has no item->granted-weapon lane. needsEngineWork can stay true, but ONLY for the weapon-transform, not for the Society bonus."
+   }
+  ]
+ },
+ {
+  "id": "open-mind",
+  "name": "Open Mind",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"This tattoo of a stylized eye provides a +1 item bonus to Lore checks.\"",
+  "corrections": [
+   {
+    "problem": "engineNote says it 'Requires applying an item bonus across every lore:* skill ..., which the current item pipeline cannot do.' The pipeline can and does: ItemPassiveEffects has a loreBonus field, passiveItemBonus applies it to any skillKey starting 'lore:' (src/rules/derive.ts:217), and brooch-of-inspiration already ships passiveEffects.loreBonus:1. Open Mind is simply missing the data.",
+    "correction": "Keep situational:false ('This tattoo of a stylized eye provides a +1 item bonus to Lore checks' is unconditional). Reclassify the gap as DATA, not engine: core.json open-mind lacks \"passiveEffects\": { \"loreBonus\": 1 } — add it and the bonus works everywhere, including Lores gained later. The needsHumanDecision about the truncated activation ('you gain the effects of .') is confirmed against the record and should stay."
+   }
+  ]
+ },
+ {
+  "id": "crown-of-the-kobold-king",
+  "name": "Crown of the Kobold King",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "on saving throws against fear effects, while the crown is worn and invested",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after the crown's 2-action activation (once per day)",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after the crown's 2-action activation (once per day)",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after the crown's 2-action activation (once per day) — Charisma-based skills only",
+    "targetKind": "skill",
+    "skill": "deception"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after the crown's 2-action activation (once per day) — Charisma-based skills only",
+    "targetKind": "skill",
+    "skill": "diplomacy"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after the crown's 2-action activation (once per day) — Charisma-based skills only",
+    "targetKind": "skill",
+    "skill": "intimidation"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after the crown's 2-action activation (once per day) — Charisma-based skills only",
+    "targetKind": "skill",
+    "skill": "performance"
+   }
+  ],
+  "evidence": "\"Wearing the crown grants you a +2 item bonus to Intimidation checks and a +1 item bonus to saving throws against fear effects\"; activation: \"granting you a +1 status bonus to attack rolls, saving throws, and Charisma-based skill checks for 1 minute\"",
+  "corrections": [
+   {
+    "problem": "Incomplete target coverage on the activation. The record grants '+1 status bonus to attack rolls, saving throws, and Charisma-based skill checks for 1 minute'. 'Attack rolls' is unqualified and so includes SPELL attack rolls, but the spec maps it only to strikeAttack, so a caster wearing the crown would see no marker on their spell attack.",
+    "correction": "Add one more entry alongside the strikeAttack one: bonus '+1 status', when 'for 1 minute after the crown's 2-action activation (once per day)', targetKind 'spell'. The rest of this spec is verified correct, including the important call that the +2 item Intimidation is unconditional and must NOT be starred — core.json already encodes it as passiveEffects.skills.intimidation:2, so double-listing it would visibly duplicate the bonus."
+   }
+  ]
+ },
+ {
+  "id": "sprite-apple",
+  "name": "Sprite Apple",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "while in the apple's bright light (10 minutes) — Chartreuse apple only",
+    "targetKind": "skill",
+    "skill": "nature"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "to Diplomacy checks against animals or plants, while in the apple's bright light — Chartreuse apple only, and only if you have Animal Empathy, Plant Empathy, or a similar ability",
+    "targetKind": "skill",
+    "skill": "diplomacy"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "while in the apple's bright light (10 minutes) — Pink apple only",
+    "targetKind": "skill",
+    "skill": "performance"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "on saves against fear effects, while in the apple's bright light (10 minutes) — Teal apple only",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"Creatures in the bright light are subject to another effect, depending on the type of apple… **Chartreuse** … gaining a +1 item bonus to Nature checks and to Diplomacy checks attempted against animals or plants… **Pink** … a +1 item bonus to Performance checks… **Teal** … a +1 item bonus to saving throws against fear effects.\"",
+  "corrections": [
+   {
+    "problem": "The engineNote's central factual claim is false: \"the apple colour is fixed at crafting and the app has no per-item variant selection, so all colours are listed with the colour named\". core.json DOES carry the colours as separate item records — sprite-apple-chartreuse (lvl 5), sprite-apple-golden (lvl 3), sprite-apple-pink (lvl 4), sprite-apple-teal (lvl 6) — each with its own printed effect paragraph (verified: chartreuse = '+1 item bonus to Nature checks and to Diplomacy checks attempted against animals or plants', pink = '+1 item bonus to Performance checks', teal = '+1 item bonus to saving throws against fear effects'). So this is a variant PARENT exactly like crackling-bubble-gum / poison-fizz / silver-crescent, which the same engineer correctly labelled 'variant-parent record'. Treating it as an unresolvable crafting choice is inconsistent and pushes a 'ignore three of the four lines' caveat onto the player for no reason.",
+    "correction": "Keep the four bonuses on the parent (as with the other variant parents) but rewrite the engineNote: 'Variant-parent record whose scraped text lists all four colours; the per-colour bonuses belong on the child ids sprite-apple-chartreuse / -pink / -teal, where no colour caveat is needed (sprite-apple-golden grants no bonus to the eater — its –1 item penalty applies to OTHER creatures' Will DCs against Diplomacy, and there is no target kind for that).' Drop gap (1) from the note; keep gap (2) (emanation affects allies/enemies too) and keep the needsHumanDecision question. The remaining real reason for needsEngineWork is the emanation, not variant selection."
+   }
+  ]
+ },
+ {
+  "id": "trueshape-bomb",
+  "name": "Trueshape Bomb",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"These bombs grant a +2 item bonus to attack rolls and deal 3d6 poison damage… If the primary target is under the effects of a morph or polymorph effect, it must succeed at a saving throw\"",
+  "corrections": [
+   {
+    "problem": "needsEngineWork is set false on the strength of 'the bomb's own +2 item bonus to attack rolls … belongs in the strike maths (weapon item bonus)'. Verified in code: derive.ts:1188 computes the strike attack item bonus as Math.max(abpOn(c) ? abpAttack(c.level) : runes?.potency ?? 0, mpRef?.attack ?? 0) — i.e. only potency runes, ABP, or a Monster-Parts refine. The core.json record has no field carrying the printed item bonus (only damage/dice/range/group), so the +2 is currently dropped entirely rather than 'in the maths'. The skunk-bomb specs in the same chunk flagged this same gap as needsEngineWork true, so the two bomb families are classified inconsistently.",
+    "correction": "situational stays false and bonuses stays empty (the classification is right — the bonus is unconditional for this bomb's Strike), but set needsEngineWork true with: 'Alchemical bomb item bonuses to attack rolls have no home in the engine — derive.ts sources the strike attack item bonus only from potency runes / ABP / Monster-Parts, and core.json bomb records carry no field for the printed +2. Needs an item-level attack-item-bonus field, not a situational star.'"
+   }
+  ]
+ },
+ {
+  "id": "trueshape-bomb-greater",
+  "name": "Trueshape Bomb (Greater)",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"These bombs grant a +3 item bonus to attack rolls and deal 4d6 poison damage… Targets taking persistent poison damage from this bomb must succeed at another Fortitude saving throw\"",
+  "corrections": [
+   {
+    "problem": "Same as trueshape-bomb: needsEngineWork false while asserting the +3 item bonus to attack rolls 'belongs in the strike maths'. It does not reach the maths — derive.ts:1188 only reads potency runes / ABP / Monster-Parts, and the record has no field for the printed bonus.",
+    "correction": "Keep situational false / bonuses empty, but set needsEngineWork true with the same note: the bomb's printed +3 item bonus to attack rolls needs an engine field (item-level attack item bonus); it is not a situational star and it is not currently applied anywhere."
+   }
+  ]
+ },
+ {
+  "id": "egg-cream-fizz",
+  "name": "Egg Cream Fizz",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+5 feet item",
+    "when": "to all your Speeds for 10 minutes after drinking (no further condition — this one is scope-unconditional while the elixir lasts)",
+    "targetKind": "speed"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "to Balance, Maneuver in Flight, and Squeeze — only if the fizz was made with Chocolate syrup",
+    "targetKind": "skill",
+    "skill": "acrobatics"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "to Climb, Leap, and Swim — only if the fizz was made with Strawberry syrup",
+    "targetKind": "skill",
+    "skill": "athletics"
+   }
+  ],
+  "evidence": "\"gaining a +5-foot item bonus to your Speed for 10 minutes… **Chocolate** You gain a +1 item bonus to Acrobatics checks to Balance, Maneuver in Flight, and Squeeze. **Strawberry** You gain a +1 item bonus to Athletics checks to Climb, Leap, and Swim.\"",
+  "corrections": [
+   {
+    "problem": "The Speed entry's condition broadens the text. The record says 'gaining a +5-foot item bonus to your Speed for 10 minutes'; the spec renders it as 'to all your Speeds for 10 minutes after drinking'. In PF2e a bonus to 'your Speed' is the land Speed unless it says 'all your Speeds', so this would wrongly buff fly/swim/burrow Speeds.",
+    "correction": "Change the Speed entry's when to 'to your Speed (land Speed only — the text says \"your Speed\", not \"all your Speeds\") for 10 minutes after drinking'. The two syrup entries (Acrobatics to Balance/Maneuver in Flight/Squeeze for Chocolate; Athletics to Climb/Leap/Swim for Strawberry), the needsEngineWork flag and the human-decision question are all correct as written and should stand."
+   }
+  ]
+ },
+ {
+  "id": "clarity-goggles",
+  "name": "Clarity Goggles",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "to visual Perception checks only (not hearing, scent or other senses), while wearing the goggles",
+    "targetKind": "perception"
+   }
+  ],
+  "evidence": "\"While wearing the goggles, you gain a +1 item bonus to visual Perception checks.\"",
+  "corrections": [
+   {
+    "problem": "needsEngineWork is set true, but nothing here is unrepresentable: 'perception' is an existing target kind in SituationalTarget and the sheet already stars Perception. The real blocker is the passiveEffects.perception=1 conflict, which the spec already (correctly) raises via needsHumanDecision. Flagging it as engine work misroutes a data/decision item into the engine backlog.",
+    "correction": "Set needsEngineWork false; keep needsHumanDecision true with the same question. Bonus rows, size (+1 item), type (item) and the visual-only condition are all confirmed correct against the record text and passiveEffects."
+   }
+  ]
+ },
+ {
+  "id": "clarity-goggles-lesser",
+  "name": "Clarity Goggles (Lesser)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "to visual Perception checks only (not hearing, scent or other senses), while wearing the goggles",
+    "targetKind": "perception"
+   }
+  ],
+  "evidence": "\"While wearing the goggles, you gain a +1 item bonus to visual Perception checks.\"",
+  "corrections": [
+   {
+    "problem": "Same mis-flag: needsEngineWork true although perception is a supported target kind and no new engine concept is required — the only open item is whether passiveEffects.perception=1 stays in the maths.",
+    "correction": "needsEngineWork false, needsHumanDecision true. Everything else verified: text is '+1 item bonus to visual Perception checks', passiveEffects.perception=1, level 8."
+   }
+  ]
+ },
+ {
+  "id": "clarity-goggles-moderate",
+  "name": "Clarity Goggles (Moderate)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "to visual Perception checks only (not hearing, scent or other senses), while wearing the goggles",
+    "targetKind": "perception"
+   }
+  ],
+  "evidence": "\"While wearing the goggles, you gain a +2 item bonus to visual Perception checks.\"",
+  "corrections": [
+   {
+    "problem": "Same mis-flag: needsEngineWork true; the +2 visual Perception bonus is fully expressible as targetKind 'perception' with the condition in `when`.",
+    "correction": "needsEngineWork false, needsHumanDecision true. Verified: '+2 item bonus to visual Perception checks', passiveEffects.perception=2, level 13."
+   }
+  ]
+ }
+]

@@ -1,0 +1,581 @@
+[
+ {
+  "id": "silent-sting",
+  "name": "Silent Sting",
+  "collection": "feats",
+  "currentBonuses": [],
+  "evidence": "\"Your Stealth check is compared to the Perception DC of all creatures within 30 feet that can see you... The target of your Strike gains a +4 circumstance bonus to their Perception DC for this check.\"",
+  "corrections": [
+   {
+    "problem": "situational:true with an empty bonuses array and no reasonIfNot — internally contradictory and schema-invalid. The spec's own engineNote says \"Nothing here should light up a star on the player's sheet as written\", which is the definition of situational:false. Record text confirms the only typed bonus goes to the enemy: \"The target of your Strike gains a +4 circumstance bonus to their Perception DC for this check.\" An apply script consuming situational:true would register the feat as having situational bonuses while supplying none.",
+    "correction": "situational: false, reasonIfNot: \"The feat's only typed bonus (+4 circumstance) is granted to the Strike's TARGET, raising their Perception DC and making the character's own Stealth check harder. No bonus to any stat the character rolls, so no registry entry.\" Drop the bonuses key; needsEngineWork can stay true only as a note that another creature's DC has no representable target."
+   }
+  ]
+ },
+ {
+  "id": "never",
+  "name": "Never!",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+4 circumstance",
+    "when": "on the extra save Never! grants each time you would attack an ally while confused or controlled",
+    "targetKind": "save",
+    "save": "will"
+   }
+  ],
+  "evidence": "\"you can attempt another saving throw against the effect that caused you to be confused or controlled with a +4 circumstance bonus to the save\"",
+  "corrections": [
+   {
+    "problem": "The engineNote's justification for encoding save 'will' is wrong on the facts. It cites \"the existing file already puts control-resistance on will (see 'alghollthu-bound', 'ancestral-suspicion')\", but situationalBonuses.ts:55 reads: \"ancestral-suspicion\": [{ targets: [{ kind: 'save', detail: 'all' }, { kind: 'perception' }], when: \"against effects that would make you controlled (e.g. Dominate)\", bonus: \"+2 circumstance\" }] — that is save 'all', not will. So the file's closest analogue (same trigger wording: effects that make you controlled) uses 'all', and the cited precedent actually argues against the spec's own choice.",
+    "correction": "Feat text confirmed verbatim: \"you can attempt another saving throw against the effect that caused you to be confused or controlled with a +4 circumstance bonus to the save\" — the save type is inherited from the originating effect and is never named. Change the entry to save 'all' (targets: [{ kind: 'save', detail: 'all' }]), matching ancestral-suspicion, with when: \"on the extra save Never! grants each time you would attack an ally while confused or controlled\". Keep needsHumanDecision:true and the question as written, but fix the cited precedent: only 'alghollthu-bound' (line 48) uses will, and it does so because its own text names a specific effect category; 'ancestral-suspicion' (line 55) uses 'all'."
+   }
+  ]
+ },
+ {
+  "id": "ocean-wariness",
+  "name": "Ocean Wariness",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "to your Perception DC when a creature uses Deception, Diplomacy, Intimidation, or Performance against you (e.g. Lie, Create a Diversion)",
+    "targetKind": "perception"
+   },
+   {
+    "bonus": "+1 circumstance",
+    "when": "to your Will DC when a creature uses Deception, Diplomacy, Intimidation, or Performance against you (e.g. Demoralize, Make an Impression)",
+    "targetKind": "save",
+    "save": "will"
+   }
+  ],
+  "evidence": "\"You gain a +1 circumstance bonus to your defenses against Deception, Diplomacy, Intimidation, and Performance checks.\"",
+  "corrections": [
+   {
+    "problem": "The two split entries are correct in target, but each one's condition is broadened to all four skills, which introduces a rules error the record does not contain. The record says only \"You gain a +1 circumstance bonus to your defenses against Deception, Diplomacy, Intimidation, and Performance checks\" — it names no DCs. The spec's inference that Deception is opposed by Perception DC and Diplomacy/Intimidation/Performance by Will DC is right, but it then repeats the full four-skill list on BOTH entries. A player reading \"to your Perception DC when a creature uses ... Intimidation ... against you\" would conclude Demoralize targets Perception DC, and \"to your Will DC when a creature uses Deception ... against you\" would suggest Lie targets Will DC. Neither is true.",
+    "correction": "Keep both entries, both +1 circumstance, needsEngineWork true (it is a DC bonus, not a roll bonus — the app has no DC kind). Narrow each `when` to the actions that actually oppose that DC: perception entry → \"to your Perception DC when a creature uses Deception against you (Lie, Feint, Create a Diversion, Impersonate)\"; save/will entry → \"to your Will DC when a creature uses Diplomacy, Intimidation, or Performance against you (Make an Impression, Request, Demoralize, Perform)\". Keep confidence medium and keep the existing note that the record names no DCs, so the split is an inference the app owner should confirm."
+   }
+  ]
+ },
+ {
+  "id": "wind-seeker",
+  "name": "Wind Seeker",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status",
+    "when": "while polymorphed by your aerial form into a form that sets a specific Acrobatics modifier",
+    "skill": "acrobatics",
+    "targetKind": "skill"
+   }
+  ],
+  "evidence": "\"Whenever you use *aerial form* to gain a form that grants you a specific Acrobatics modifier, you gain a +1 status bonus to Acrobatics checks.\"",
+  "corrections": [
+   {
+    "problem": "The bonus entry itself is right (+1 status, Acrobatics, while in an aerial form that sets a specific Acrobatics modifier), but the engineNote invents a restriction the text does not contain: \"Only applies on top of the form's replacement Acrobatics modifier, not on top of the character's own.\" The feat says only \"Whenever you use *aerial form* to gain a form that grants you a specific Acrobatics modifier, you gain a +1 status bonus to Acrobatics checks\" — it never conditions the bonus on which modifier you end up rolling. Aerial Form's own text in core.json reads \"Acrobatics modifiers of +16, unless your own modifier is higher\", so a high-Acrobatics character keeps their own modifier and still gets the +1. Baking the invented caveat into the condition text would tell a player at the table not to apply a bonus they actually have.",
+    "correction": "Drop the engineNote's second clause. Keep the entry as: targets [{kind:'skill', detail:'acrobatics'}], bonus '+1 status', when 'while polymorphed by *aerial form* into a form that grants a specific Acrobatics modifier' — with no claim about whose modifier is used."
+   }
+  ]
+ },
+ {
+  "id": "indomitable-shot",
+  "name": "Indomitable Shot",
+  "collection": "feats",
+  "currentBonuses": [],
+  "evidence": "\"For each range increment beyond the first, a creature gains a cumulative +2 circumstance bonus to their Reflex save.\"",
+  "corrections": [
+   {
+    "problem": "needsEngineWork is set to true, but the engineNote itself correctly concludes that nothing should ever appear on this character's sheet: the record's only bonus (\"For each range increment beyond the first, a creature gains a cumulative +2 circumstance bonus to their Reflex save\") is granted to the CREATURES YOU SHOOT and is a drawback baked into the ability, not an ally/self stat the app is missing. Flagging engine work puts a phantom item on the 'features the engine still needs' backlog.",
+    "correction": "Set needsEngineWork false (and situational false — there is no situational bonus to this character at all), keeping the engineNote text explaining that the +2 Reflex bonus belongs to the targets and is part of the ability's own resolution."
+   }
+  ]
+ },
+ {
+  "id": "rose-warden-dedication",
+  "name": "Rose Warden Dedication",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "to your Fortitude DC against a figure of authority you critically succeeded at Lying to, for 24 hours",
+    "targetKind": "save",
+    "save": "fortitude"
+   },
+   {
+    "bonus": "+1 circumstance",
+    "when": "to saving throws against being confused, controlled, grabbed, immobilized, or restrained by that same figure of authority, for 24 hours",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "When you get a critical success to Lie to a figure of authority, you gain a +1 circumstance bonus to your Fortitude DC and saving throws against being confused, controlled, grabbed, immobilized, or restrained by that figure of authority for 24 hours.",
+  "corrections": [
+   {
+    "problem": "The first bonus entry broadens the condition beyond the text. core.json reads: \"you gain a +1 circumstance bonus to your Fortitude DC and saving throws against being confused, controlled, grabbed, immobilized, or restrained by that figure of authority for 24 hours\". The phrase \"against being confused, controlled, grabbed, immobilized, or restrained\" governs BOTH \"your Fortitude DC\" and \"saving throws\" — it is a single prepositional phrase attached to the compound noun. The spec's entry 1 drops it entirely and reads \"to your Fortitude DC against a figure of authority you critically succeeded at Lying to, for 24 hours\", which a player would apply to every Fortitude DC against that person — Disarm, Trip, Shove, any Athletics maneuver — when RAW only covers the listed conditions. That is an invented broadening of exactly the kind flagged.",
+    "correction": "Entry 1 'when' should be: \"to your Fortitude DC against attempts by that figure of authority to make you grabbed, immobilized, or restrained, for 24 hours after you critically succeed at Lying to them\" (save/fortitude, +1 circumstance — type and size are correct). Entry 2 is correct as written. This also answers the spec's own needsHumanDecision question: 'all' is right for entry 2 and needsHumanDecision should be false — the condition list is not a save-type list to be guessed at, it is the shared qualifier on both halves of the sentence, and it deliberately spans Will (confused/controlled) and Fort/Reflex (grabbed/immobilized/restrained). Narrowing entry 2 to Will would drop the grabbed/immobilized/restrained cases the text names explicitly."
+   }
+  ]
+ },
+ {
+  "id": "golden-legion-epaulet",
+  "name": "Golden Legion Epaulet",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status",
+    "when": "after activating the epaulet (1/day), while you follow the order you issued, until the start of your next turn",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "after activating the epaulet (1/day), while you follow the order you issued, until the start of your next turn",
+    "targetKind": "strikeDamage"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "on saving throws against fear, after activating the epaulet (1/day), until the start of your next turn",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"You and each ally within 60 feet who follows that order gain a +1 status bonus to attack rolls, damage rolls, and saving throws against fear until the beginning of your next turn.\"",
+  "corrections": [
+   {
+    "problem": "Invented/narrowed condition on the wearer's own bonus. The spec gates all three entries on \"while you follow the order you issued\". The record says: \"Issue an order as part of the command. You and each ally within 60 feet who follows that order gain a +1 status bonus to attack rolls, damage rolls, and saving throws against fear until the beginning of your next turn.\" The restrictive clause \"who follows that order\" attaches to \"each ally within 60 feet\", not to \"You\" — the wearer, who issued the order, gains the bonus from the activation itself. Adding a follow-your-own-order requirement is a condition the text does not impose, and it would make a player think the star sometimes doesn't apply to them. Everything else in this spec is right: +1 status is the correct size/type, the ⟨1⟩ Command / once-per-day activation matches, and the \"against fear\" restriction on the saves half only (attack and damage unrestricted) is the correct reading — it mirrors the Inspire Courage wording. The needsEngineWork flag for the ally half and the needsHumanDecision question are both legitimate.",
+    "correction": "Reword all three `when` fields to drop the follow-the-order clause, e.g. attack/damage: \"for 1 round after you activate the epaulet (1/day) — until the beginning of your next turn\"; save: \"on saving throws against fear, for 1 round after you activate the epaulet (1/day) — until the beginning of your next turn\". Keep situational true, +1 status, targets strikeAttack / strikeDamage / save(all), and keep needsEngineWork true for the 60-foot ally half."
+   }
+  ]
+ },
+ {
+  "id": "cloak-of-repute (and -greater, -major)",
+  "currentBonuses": [],
+  "evidence": "",
+  "corrections": [
+   {
+    "problem": "Incomplete, and internally inconsistent with how the same engineer treated acrobats-staff. All three cloak records carry an activated effect on a Diplomacy check that the spec omits entirely: \"You wield your great stature to make a Request of a creature. If you roll a success on the check, you get a critical success instead.\" (major adds: \"If you roll a critical failure on your Diplomacy check when you activate the cloak, you get a failure instead.\"), once/twice/three times per day respectively. For acrobats-staff the engineer DID list a non-numeric effect (the fortune reroll) as a registry entry and raised a human decision about it; here the equivalent non-numeric Diplomacy effect was silently dropped. The rest of the cloak specs is verified correct: +1/+2/+3 item to Diplomacy to Make an Impression, situational true, no passiveEffects on any of the three records so there is no double-count, and the reciprocal Gather-Information half genuinely has no representable target.",
+    "correction": "Decide the non-numeric policy once and apply it to both items. If degree-shift/fortune effects belong in the registry (the acrobats-staff treatment), add a Diplomacy entry to each cloak: bonus \"success becomes a critical success\", when \"once per day (twice for greater, three times for major), when you activate the cloak to make a Request\" — and on cloak-of-repute-major only, add \"a critical failure becomes a failure instead\". If they do not belong, drop the acrobats-staff reroll entry instead. Fold this into the human-decision question already raised on acrobats-staff rather than answering it differently per item."
+   }
+  ]
+ },
+ {
+  "id": "aeon-stone-polished-pebble",
+  "name": "Aeon Stone (Polished Pebble)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "on saves (and your Fortitude DC) against attempts to Grapple or swallow you",
+    "targetKind": "save",
+    "save": "fortitude"
+   }
+  ],
+  "evidence": "\"granting a +1 item bonus to saves and DCs against attempts to grapple or swallow you\"",
+  "corrections": [
+   {
+    "problem": "The save target is narrowed to Fortitude, a restriction the text does not make. The record reads: \"A polished pebble aeon stone imbues you with the strength of the earth, granting a +1 item bonus to saves and DCs against attempts to grapple or swallow you.\" It says \"saves\" and \"DCs\" plainly, with no save named. The spec's engineNote justifies the narrowing with \"Grapple and Swallow Whole are resolved against your Fortitude DC rather than a save you roll\" — but that reasoning only covers the DC half, and it invents a Fortitude-only restriction on the save half. Plenty of grab/swallow attempts arrive as spells or monster abilities that call for a Reflex or Will save, and those would silently lose the marker. The Foundry rule element for this exact item confirms the broad reading: selector [\"saving-throw\",\"fortitude-dc\",\"reflex-dc\",\"will-dc\"], type item, value 1, predicated only on action:grapple / action:swallow-whole — i.e. ALL saves and ALL three save DCs, not Fortitude alone.",
+    "correction": "Keep situational: true and the +1 item size, but change the target from save/fortitude to save/'all' (the registry's existing convention for \"saves against X\", as used by affliction-resistance, adaptive-vision, crown-of-the-master and this same engineer's staff-of-the-magi and olivine-pendeloque entries). Suggested entry: { bonus: '+1 item', when: 'on saves (and on your save DCs) against attempts to Grapple or Swallow you', target: { kind: 'save', save: 'all' } }. Leave needsEngineWork true — the DC half still has no target kind — and the needsHumanDecision question about \"saves and DCs\" anchoring is legitimate and should stand."
+   }
+  ]
+ },
+ {
+  "id": "classFeatures/masterful-hunter",
+  "currentBonuses": [],
+  "evidence": "",
+  "corrections": [
+   {
+    "problem": "needsEngineWork is set to FALSE, but the spec's own engineNote lists three gates it cannot express, and every one of the six bonuses is scoped to a specific creature (\"against your hunted prey\" / \"when you Seek your prey\"). The prompt names per-creature scope as an explicit needsEngineWork trigger, and the SAME reviewer correctly set needsEngineWork TRUE for amulet (\"+2 status bonus to AC and saves against the target of your Exploit Vulnerability\") and for adept-benefit-tome (\"your next attack roll against that creature\") for exactly this reason. Marked false, an engine consumer will render six unqualified stars (+4 Perception, +4 Survival, +4 Deception/Intimidation/Stealth, +2 AC) with no mechanism to scope them to the prey, to the Outwit edge, or to the per-skill master-proficiency gate. Separately, the spec enumerates what it deliberately left out (\"Flurry's reduced multiple attack penalty and Precision's extra 1d8/2d8 precision damage are NOT typed bonuses and are correctly absent\") but silently drops a third clause that IS a conditional modifier to a tracked stat: \"When using a ranged weapon that you have master proficiency in, you can ignore the penalty if attacking your hunted prey within the weapon's second and third range increments.\" Ignoring the range-increment penalty is worth an effective +2/+4 on the attack roll and belongs on strikeAttack (the registry's `bonus` field explicitly permits \"a short effect phrase\").",
+    "correction": "Set needsEngineWork TRUE, with the engineNote naming what is missing: (a) per-creature scoping — no way to say \"only against your hunted prey\"; (b) hunter's-edge gating — the last four entries apply only to Outwit and cannot be derived from this record's id; (c) per-skill/per-armor master-proficiency gating on each entry. All six bonus values themselves are CORRECT and confirmed: outwit's base is \"+1 circumstance bonus to AC against your prey's attacks and a +2 circumstance bonus to Deception checks, Intimidation checks, Stealth checks, and any checks to Recall Knowledge about the prey\", so the +2->+4 and +1->+2 upgrades are right, as is the replace-not-stack note. Add a seventh entry: { bonus: 'ignore the range increment penalty', when: 'when attacking your hunted prey within your ranged weapon's second or third range increment, if you have master proficiency in that weapon', targetKind: 'strikeAttack' } — or, if the app owner prefers to keep penalty-waivers out of the registry, say so explicitly in engineNote the way Flurry and Precision were handled, rather than omitting it silently."
+   }
+  ]
+ },
+ {
+  "id": "the-infinite-eye",
+  "name": "The Infinite Eye",
+  "collection": "classFeatures",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status (+2 when the amp is heightened to 7th)",
+    "when": "for 3 rounds, against magic from an enemy or hazard whose magic you detected with an amped detect magic",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+1 circumstance (+2/+3/+4 if you then succeed, critically succeed, or critically succeed with legendary spell attack proficiency on the Aid you prepared)",
+    "when": "against the creature you scanned with an amped omnidirectional scan; you and allies within 30 feet",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "+1 circumstance (+2/+3/+4 as above)",
+    "when": "against the creature you scanned with an amped omnidirectional scan; you and allies within 30 feet",
+    "targetKind": "strikeDamage"
+   }
+  ],
+  "evidence": "Amped detect magic: \"you gain a +1 status bonus to saves against magic originating from that enemy or hazard for 3 rounds\"",
+  "corrections": [
+   {
+    "problem": "The omnidirectional-scan escalation is broadened beyond the text. The record says the +1 circumstance bonus \"increase[s] to +2 ON THE ATTACK YOU'RE AIDING\" (and +3/+4 on a critical success) — Aid always targets another creature's check, so the +2/+3/+4 can never apply to the character's own attack or damage. The spec's bonus string ('+1 circumstance (+2/+3/+4 if you then succeed…)') tells the player they may get +4 on their own roll.",
+    "correction": "For the character's own sheet the omnidirectional-scan entries are a flat '+1 circumstance', when: 'against the creature you scanned with an amped omnidirectional scan, until the scan ends'. Move the +2/+3/+4 Aid escalation into the engineNote as an ally-facing effect. The detect-magic entry (+1 status to saves vs that source's magic for 3 rounds, +2 when the amp is heightened to 7th) is verified correct."
+   }
+  ]
+ },
+ {
+  "id": "fire-gate",
+  "name": "Fire Gate",
+  "collection": "classFeatures",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status (+2 at 10th, +3 at 17th)",
+    "when": "if you took the fire skill junction: while your kinetic aura is active",
+    "targetKind": "skill",
+    "skill": "intimidation"
+   }
+  ],
+  "evidence": "\"Skill Junction Intimidation, Intimidating Glare\" (gate-junction rules: \"+1 status bonus to the listed skill\" while your kinetic aura is active)",
+  "corrections": [
+   {
+    "problem": "The engineNote's premise is false, so the needsHumanDecision is moot. fire-gate DOES carry an effectChoices picker in core.json (id 'fire-gate-junction', options elemental-resistance / skill-junction / critical-blast / impulse-junction / aura-junction), and src/rules/build.ts explicitly records junction picks: \"Record the pick even when the option carries no grant (a kineticist gate junction…)\" into effectPicks. The app therefore already knows whether the Intimidation skill junction was taken.",
+    "correction": "Drop the 'star an unselected junction with a caveat?' question for fire-gate and gate the entry on the recorded pick (effectPicks recordId 'fire-gate', choiceId 'fire-gate-junction', value 'skill-junction'). The bonus itself is right and is confirmed by the option's own note in core.json: \"a +1 status bonus to Intimidation while your kinetic aura is active (+2 at 10th, +3 at 17th)\"."
+   }
+  ]
+ },
+ {
+  "id": "metal-gate",
+  "name": "Metal Gate",
+  "collection": "classFeatures",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status (+2 at 10th, +3 at 17th)",
+    "when": "if you took the metal skill junction: while your kinetic aura is active",
+    "targetKind": "skill",
+    "skill": "crafting"
+   }
+  ],
+  "evidence": "\"Skill Junction Crafting, Quick Repair\" (gate-junction rules: \"+1 status bonus to the listed skill\" while your kinetic aura is active)",
+  "corrections": [
+   {
+    "problem": "Inherits earth-gate's false premise via \"Same as earth-gate\". Junction picks ARE tracked by the engine (build.ts effectPicks); metal-gate simply has no effectChoices block in core.json, unlike fire-gate.",
+    "correction": "Keep the +1 status (+2/+3) Crafting entry as written, but restate the open item as a DATA gap: add a 'metal-gate-junction' effectChoices picker mirroring fire-gate's, then gate the entry on the recorded pick. Note also that the metal impulse junction (reactive damage) is automatic for a single-gate metal kineticist and fires on a 2+ action metal impulse."
+   }
+  ]
+ },
+ {
+  "id": "shield",
+  "name": "Shield",
+  "collection": "classFeatures",
+  "currentBonuses": [
+   {
+    "bonus": "+status equal to your shield's circumstance AC bonus (usually +2)",
+    "when": "against spells and other magical effects, while your shield implement is raised",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "-1 circumstance (a penalty)",
+    "when": "while your shield implement is at 1 Hit Point: its Raise a Shield bonus to AC is 1 lower until repaired",
+    "targetKind": "ac"
+   }
+  ],
+  "evidence": "Adept Benefit: \"you gain a status bonus to your saves against spells and other magic effects equal to your circumstance bonus to AC from your shield\"",
+  "corrections": [
+   {
+    "problem": "Both bonuses on this record are verbatim duplicates of separate features the same character also has. The Adept save bonus text is word-for-word identical to adept-benefit-shield (\"you gain a status bonus to your saves against spells and other magic effects equal to your circumstance bonus to AC from your shield\"), and the -1 AC-at-1-HP penalty is word-for-word initiate-benefit-shield, which is specced separately in this same chunk. As specced, a shield thaumaturge gets two stars on AC and a redundant one on saves.",
+    "correction": "Register nothing on the 'shield' implement record itself (its Intensify Vulnerability text — shield HP regain / +Cha Hardness / ally sharing — contains no character-stat bonus). Put the status save bonus on adept-benefit-shield only, and the -1 circumstance AC penalty on initiate-benefit-shield only. The bonus TYPES are right and worth preserving: 'shield' adept is a STATUS bonus to saves, whereas sparkling-targe's is a CIRCUMSTANCE bonus — do not unify them."
+   }
+  ]
+ },
+ {
+  "id": "fulu-of-the-drunken-monkey",
+  "name": "Fulu of the Drunken Monkey",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 status",
+    "when": "on the triggering Fortitude save against an ingested poison, and against that same poison for 1 minute (consumed on use)",
+    "save": "fortitude",
+    "targetKind": "save"
+   },
+   {
+    "bonus": "+4 status",
+    "when": "instead, if the triggering poison was ordinary alcohol — you auto-succeed at the triggering save and get +4 against alcohol for 1 minute",
+    "save": "fortitude",
+    "targetKind": "save"
+   }
+  ],
+  "evidence": "\"you gain a +2 status bonus on the triggering Fortitude save and on Fortitude saves against the same poison for the next minute. If the triggering poison was normal Alcohol, you instead automatically succeed... and gain a +4 status bonus on saves against alcohol for 1 minute.\"",
+  "corrections": [
+   {
+    "problem": "The SECOND bonus is narrowed to Fortitude, which the text does not say. The record reads: \"If the triggering poison was normal Alcohol, you instead automatically succeed at the triggering save and gain a +4 status bonus on saves against alcohol for 1 minute.\" — unqualified \"saves\", not \"Fortitude saves\". (The FIRST bonus is correctly Fortitude: that sentence does say \"on the triggering Fortitude save and on Fortitude saves against the same poison\".) This is also self-inconsistent with the same engineer's own venomous-cure-fulu note, which deliberately used save 'all' for exactly this reason — the trigger there names no save, so neither should this follow-on clause.",
+    "correction": "Change the +4 entry's save from 'fortitude' to 'all', keeping when: \"instead, if the triggering poison was ordinary alcohol — you auto-succeed at the triggering save and get +4 against alcohol for 1 minute\". Leave the +2 entry as save 'fortitude'. Add an engineNote mirroring venomous-cure-fulu: alcohol's own save is Fortitude in practice, so a Fortitude-only flag would cover the common case but is narrower than the printed text."
+   }
+  ]
+ },
+ {
+  "id": "restful-sleep-fulu",
+  "name": "Restful Sleep Fulu",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 status",
+    "when": "against mental effects that occur in your dreams (e.g. Nightmare), during the fulu's 1-hour duration",
+    "save": "all",
+    "targetKind": "save"
+   },
+   {
+    "bonus": "double Hit Points regained from resting",
+    "when": "if you fall asleep within the fulu's 1-hour duration",
+    "targetKind": "hp"
+   }
+  ],
+  "evidence": "\"If you fall asleep within the fulu's duration, you regain double the amount of Hit Points you usually gain from resting. You also gain a +2 status bonus to saves against mental effects that occur in your dreams, such as the Nightmare spell.\"",
+  "corrections": [
+   {
+    "problem": "The second listed bonus — { bonus: \"double Hit Points regained from resting\", targetKind: \"hp\" } — is not a typed bonus to any stat and should not be a registry entry at all. Emitting it puts a star on the character's max-HP tile for something that multiplies overnight rest recovery. The spec is self-contradictory: it lists the entry and then says in engineNote \"should be dropped rather than starred on max HP\". A registry entry that the spec itself says to drop will still get written by anyone consuming the bonuses array.",
+    "correction": "Delete that entry from bonuses. Keep only the +2 status save entry (which is correct: text says \"a +2 status bonus to saves against mental effects that occur in your dreams\", unqualified, so save 'all' is right). Keep needsEngineWork true and move the rest-recovery text entirely into engineNote as a capability gap (\"nightly rest recovery has no stat surface\"), so nothing renders for it."
+   }
+  ]
+ },
+ {
+  "id": "oath-of-the-devoted",
+  "name": "Oath of the Devoted",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after Activating the oath (⟨1⟩ command, once per day)",
+    "save": "will",
+    "targetKind": "save"
+   },
+   {
+    "bonus": "+1d6 damage (untyped)",
+    "when": "for 1 minute after Activating the oath, on the one weapon or unarmed Strike you chose",
+    "targetKind": "strikeDamage"
+   }
+  ],
+  "evidence": "\"You gain a +1 status bonus to Will saves. Choose a weapon or an unarmed Strike; your chosen attack deals an extra 1d6 damage for the next 1 minute.\" Both come only from the ⟨1⟩ command activation, once per day.",
+  "corrections": [
+   {
+    "problem": "The Will-save entry's condition asserts a 1-minute duration the text does not grant. The record reads: \"You gain a +1 status bonus to Will saves. Choose a weapon or an unarmed Strike; your chosen attack deals an extra 1d6 damage for the next 1 minute.\" The clause \"for the next 1 minute\" is attached to the extra damage sentence; the Will bonus sentence carries no duration. The spec's when text (\"for 1 minute after Activating the oath\") reads a duration into the record.",
+    "correction": "Reword the Will entry's when to what the text supports, e.g. \"after Activating the oath (⟨1⟩ command, once per day) — the printed text states no duration for the Will bonus\", and set needsHumanDecision true with the question: \"Oath of the Devoted prints the +1 status Will bonus with no duration; only the extra 1d6 is explicitly 'for the next 1 minute'. Should the app display the Will bonus as also lasting 1 minute (the common reading), or as untimed?\" The strikeDamage entry's 1-minute duration is correct and needs no change."
+   }
+  ]
+ },
+ {
+  "id": "endless-grimoire, endless-grimoire-greater, endless-grimoire-major, endless-grimoire-true",
+  "currentBonuses": [],
+  "evidence": "",
+  "corrections": [
+   {
+    "problem": "All four pin the Learn a Spell bonus to skill 'arcana', but none of the four records names any skill — each says only \"grants you a +N item bonus to checks to Learn a Spell if you do so by transcribing the spell into the grimoire\", and the preparation clause is generic (\"if you use the grimoire during your daily preparations and are capable of preparing spells of the appropriate rank\"). Learn a Spell is rolled with the skill matching the SPELL'S tradition, so the target is caster-dependent, not fixed. The spec flags this in engineNote and sets confidence 'medium' but leaves needsHumanDecision false, which is the wrong disposition for a target the text does not support.",
+    "correction": "Keep skill 'arcana' as the pragmatic default (grimoires are arcane prepared-caster gear, so it is right for the overwhelmingly common case, and skill 'all' would star every skill — strictly worse), but set needsHumanDecision true on all four with the question: \"Endless Grimoire's Learn a Spell bonus names no skill; Learn a Spell uses the spell's tradition skill. Should the entry stay hard-coded to Arcana, or follow the character's spellcasting-tradition skill?\" Bonus values themselves are all verified correct (+1 / +2 / +2 / +3)."
+   }
+  ]
+ },
+ {
+  "id": "south-winds-scorch-song",
+  "name": "South Wind's Scorch Song",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 status (+3 with greater striking, +4 with major striking)",
+    "when": "on Strikes with this scimitar that deal fire damage, while you have a status bonus to at least one of your Speeds",
+    "targetKind": "strikeDamage"
+   },
+   {
+    "bonus": "+10 feet status",
+    "when": "until the end of your next turn, after your spell deals fire damage to a creature (free-action activation)",
+    "targetKind": "speed"
+   }
+  ],
+  "evidence": "\"While you have a status bonus to at least one of your Speeds, your Strikes with this scimitar that deal fire damage gain a +2 status bonus to their fire damage.\"",
+  "corrections": [
+   {
+    "problem": "The bonus is scoped too broadly. The record says: \"your Strikes with this scimitar that deal fire damage gain a +2 status bonus to their FIRE damage\" — the +2/+3/+4 applies only to the fire component of the Strike, not to the Strike's whole damage. The spec's bonus field reads \"+2 status\" with a `when` of \"on Strikes with this scimitar that deal fire damage\", which a player at the table will read as +2 to the Strike's total damage. A flaming scimitar deals slashing plus a separate 1d6 fire, so the two are not the same number.",
+    "correction": "Restate the first entry as bonus: \"+2 status to the fire damage (+3 with greater striking, +4 with major striking)\", when: \"on the fire damage of Strikes with this scimitar, while you have a status bonus to at least one of your Speeds\". Everything else in this spec is confirmed: targetKind strikeDamage, the Speed-status precondition, and the second entry (+10-foot status bonus to Speed until the end of your next turn, triggered when your spell deals fire damage) — activationCost is {\"type\":\"free\"}, so \"free-action activation\" is right, and there is no frequency limit on that activation."
+   }
+  ]
+ },
+ {
+  "id": "thousand-blade-thesis",
+  "name": "Thousand-Blade Thesis",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"Consulting the thesis grants a +2 item bonus to Warfare Lore checks. Like most scholarly compendiums, this usage requires holding the thesis in one hand.\"",
+  "corrections": [
+   {
+    "problem": "The reasonIfNot misquotes the gate and the chunk is internally inconsistent. The record says \"CONSULTING the thesis grants a +2 item bonus to Warfare Lore checks. Like most scholarly compendiums, this usage requires holding the thesis in one hand.\" The spec claims \"The only stated condition is holding the thesis in one hand\" — but holding is the requirement OF consulting; the gating verb is the act of consulting the book, which is exactly the same class of \"restricted to some uses of the skill\" that the SAME engineer marked situational:true and raised as needsHumanDecision on violet-ray (Medicine limited to four actions) and nosoi-charm (Performance limited to instrument/orate/sing). Three near-identical patterns got two different verdicts.",
+    "correction": "Do not assert unconditional on the strength of \"only holding is required\". Either (a) keep situational:false but set needsHumanDecision:true with the same question already asked on nosoi-charm/violet-ray — \"does a bonus gated on actively consulting/using the item stay flat in passiveEffects, or come out of the maths?\" — and quote \"Consulting the thesis\" as the evidence; or (b) if the answer to that question is \"pull it out\", this record must move with them. Confirmed facts: passiveEffects.skills['lore:warfare'] = 2, usage held-in-one-hand, traits [extradimensional, invested, magical], and the once-per-day 1-action unfurl grants no check bonus."
+   }
+  ]
+ },
+ {
+  "id": "dragons-blood-pudding-lesser",
+  "name": "Dragon's Blood Pudding (Lesser)",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"Dragon's Blood Pudding (Lesser) ... The pudding has a +6 counteract modifier.\" — the lesser grade grants only the counteract check, with no quickened action and no Intimidation bonus.",
+  "corrections": [
+   {
+    "problem": "The engineNote reverses the two records: it claims \"An unsuffixed 'dragons-blood-pudding' umbrella record also exists\" and that -lesser is merely contaminated. In core.json it is the opposite. `dragons-blood-pudding-lesser` (level 2, 5 gp, NO `usage` field, no consumableType/uses) IS the family blob — its description is the whole Grand Bazaar entry, all four grades, ending with the +2/+3/+4 Intimidation lines. The unsuffixed `dragons-blood-pudding` is the CLEAN single-grade record: level 2, 5 gp, usage held-in-one-hand, consumableType + uses fields, text reading \"attempts a counteract check with a +6 counteract modifier\" and containing no quickened clause and no Intimidation bonus. The evidence gloss \"the lesser grade this record covers\" is also wrong — this record covers all four grades. This matters because it points the umbrella-record policy decision at the wrong id: skipping the unsuffixed record here would delete the only clean lesser-grade entry, while the actually-contaminated -lesser record would be kept.",
+    "correction": "Verdict stays situational:false (correct — the lesser grade only grants a counteract check, no character-stat bonus). Rewrite the note: `dragons-blood-pudding-lesser` is the family blob (no usage field, all four grades in one description); the unsuffixed `dragons-blood-pudding` is the clean, priced, single-grade record and is the one to keep. Note that this family's blob/clean split is INVERTED relative to sulfur-bomb, vexing-vapor and malleable-mixture, where the unsuffixed id is the blob — so any 'skip unsuffixed ids' rule would be wrong here."
+   }
+  ]
+ },
+ {
+  "id": "amaranthine-pavise",
+  "name": "Amaranthine Pavise",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "while this shield is raised, on saves against demons' innate spells and special abilities",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+4 circumstance (instead of the usual +2)",
+    "when": "to AC while you Raise this tower shield and Take Cover behind it",
+    "targetKind": "ac"
+   }
+  ],
+  "evidence": "\"While you have the shield raised, you gain a +2 circumstance bonus to saving throws against the innate spells and special abilities of demons.\"",
+  "corrections": [
+   {
+    "problem": "The second bonus entry (\"+4 circumstance to AC while you Raise this tower shield and Take Cover behind it\", targetKind ac) should not be in the list, and its condition is broadened. The record's own line is \"AC increases to +4 if you are using the Take Cover action\" — it conditions on Take Cover only, not on \"while you Raise this shield\", and it is the boilerplate tower-shield line reprinted in every tower shield's stat block, not a property of this magic item. core.json already models the shield mechanically (itemType 'shield', acBonus 2, hardness 9, hp 54, bt 27), so the +4 is the generic greater-cover result that REPLACES the shield's +2 (both circumstance, they do not stack) — the spec's \"instead of the usual +2\" is right on that point, but attaching it as an item-specific star would put an AC marker on this one shield while every other tower shield shows none.",
+    "correction": "Drop the AC entry; keep only the demon-saves entry: +2 circumstance, targetKind save, save 'all', when 'while this shield is raised, on saves against demons' innate spells and special abilities' (that clause is verbatim in the record and correctly typed as circumstance). If the owner wants Take Cover surfaced at all, it belongs in the tower-shield/shield engine as a universal rule, not in the per-item situational registry. The ally-cover clause is correctly left unencoded (no target kind for another character's saves)."
+   }
+  ]
+ },
+ {
+  "id": "vexing-vapor",
+  "name": "Vexing Vapor",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"Vexing Vapor (Lesser) ... The bomb deals 1d6 mental damage and 1 mental splash damage.\" — the lesser grade this record covers grants no item bonus at all.",
+  "corrections": [
+   {
+    "problem": "Minor evidence defect, same class as the pudding one: the gloss says \"the lesser grade this record covers grants no item bonus at all\". This record is the umbrella blob and covers ALL four grades — its text contains \"You gain a +1 item bonus to attack rolls\", \"+2\" and \"+3\" for the moderate/greater/major sections. Confirmed: level 1, no price, no usage field, description is the full Grand Bazaar family entry.",
+    "correction": "Verdict situational:false is still correct and the reasonIfNot is accurate. Fix the evidence gloss to say the record is the whole family blob and the graded +1/+2/+3 item bonuses inside it are unconditional Strike bonuses that live on the priced graded siblings — not that the record only covers the lesser grade. (The parallel sulfur-bomb evidence is fine as written.)"
+   }
+  ]
+ },
+ {
+  "id": "astrolabe-standard",
+  "name": "Astrolabe (Standard)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "on checks to identify celestial bodies (held in two hands; functions only on steady ground)",
+    "targetKind": "skill",
+    "skill": "all"
+   }
+  ],
+  "evidence": "\"An astrolabe also grants a +1 item bonus on checks to identify celestial bodies. A standard astrolabe only functions on steady ground.\"",
+  "corrections": [
+   {
+    "problem": "Same misreading as the parent record: the engineNote/question rest on the claim that the Survival requirement belongs only to the Calculate activity. This record's own text reads \"To use an astrolabe, the holder must be trained in Survival... An astrolabe also grants a +1 item bonus on checks to identify celestial bodies. A standard astrolabe only functions on steady ground.\" — an unrestricted usage requirement.",
+    "correction": "Bonus, type and steady-ground condition are all correct as specified. Correct the engineNote to say the record gates all use of the astrolabe on Survival training, and re-frame the open question accordingly (survival vs. a Lore vs. skill 'all')."
+   }
+  ]
+ },
+ {
+  "id": "astrolabe-mariners",
+  "name": "Astrolabe (Mariner's)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "on checks to identify celestial bodies (held in two hands; this model also works on moving surfaces such as a ship's deck)",
+    "targetKind": "skill",
+    "skill": "all"
+   }
+  ],
+  "evidence": "\"An astrolabe also grants a +1 item bonus on checks to identify celestial bodies... A mariner's astrolabe contains additional stabilizers that make it suitable for use on moving surfaces, such as the deck of a ship.\"",
+  "corrections": [
+   {
+    "problem": "Same misreading as the other two astrolabe records — the record carries the identical shared block, including \"To use an astrolabe, the holder must be trained in Survival.\" with no scoping to the Calculate activity.",
+    "correction": "Bonus (+1 item, unchanged by grade) and the moving-surfaces condition are correct. Fix the engineNote's Survival claim and re-frame the skill-binding question as for the parent record."
+   }
+  ]
+ },
+ {
+  "id": "sixfingers-elixir",
+  "name": "Sixfingers Elixir",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "to your Reflex DC to keep from being Disarmed, while the sixfingers elixir lasts (this raises the DC opponents roll against, not your Reflex save roll)",
+    "targetKind": "save",
+    "save": "reflex"
+   }
+  ],
+  "evidence": "\"You gain a +2 item bonus to your Reflex DC to keep from being Disarmed and a climb Speed of 20 feet for the listed duration.\"",
+  "corrections": [
+   {
+    "problem": "Wrong target. The record grants \"a +2 item bonus to your Reflex DC to keep from being Disarmed\" — a DEFENCE DC that opponents roll their Athletics check against. Registering it as targetKind 'save' / save 'reflex' will, at runtime, put a star on the Reflex save row (targetMatches in src/rules/situationalBonuses.ts matches kind 'save' + detail 'reflex' directly), advertising a bonus that never applies to any Reflex save the character rolls. The spec's own engineNote calls this \"a category error\" and then registers it anyway; the explanatory when-string does not stop the star appearing on a stat the item does not improve.",
+    "correction": "Set bonuses to none for now: situational true but needsEngineWork true with NO target, engineNote \"the app has no Reflex-DC (defence DC) readout; the +2 item bonus applies to the DC opponents roll against to Disarm you, never to a Reflex save you roll\". Only attach it to the Reflex save row if the app owner explicitly approves that convention — that is the right needsHumanDecision question, and it should block registration rather than accompany it. The rest of the spec is accurate: +2 item at every grade, only duration varies, and the 20-foot Climb Speed is correctly excluded as a new movement type rather than a Speed bonus."
+   }
+  ]
+ },
+ {
+  "id": "sixfingers-elixir-lesser",
+  "name": "Sixfingers Elixir (Lesser)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "to your Reflex DC to keep from being Disarmed, for 10 minutes after drinking (this raises the DC opponents roll against, not your Reflex save roll)",
+    "targetKind": "save",
+    "save": "reflex"
+   }
+  ],
+  "evidence": "\"You gain a +2 item bonus to your Reflex DC to keep from being Disarmed and a Climb Speed of 20 feet for the listed duration. ... **Duration** 10 minutes.\"",
+  "corrections": [
+   {
+    "problem": "Same wrong target as the parent record: \"+2 item bonus to your Reflex DC to keep from being Disarmed\" (Duration 10 minutes) registered against the Reflex SAVE, which will star a stat the elixir never affects.",
+    "correction": "Drop the save/reflex target; keep situational true with needsEngineWork true and no target until a Reflex-DC (defence DC) display exists. Bonus size (+2 item) and duration (10 minutes) are correct; record level is 5."
+   }
+  ]
+ },
+ {
+  "id": "sixfingers-elixir-moderate",
+  "name": "Sixfingers Elixir (Moderate)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "to your Reflex DC to keep from being Disarmed, for 1 hour after drinking (this raises the DC opponents roll against, not your Reflex save roll)",
+    "targetKind": "save",
+    "save": "reflex"
+   }
+  ],
+  "evidence": "\"You gain a +2 item bonus to your Reflex DC to keep from being Disarmed and a Climb Speed of 20 feet for the listed duration. ... **Duration** 1 hour.\"",
+  "corrections": [
+   {
+    "problem": "Same wrong target: a Reflex DC bonus registered on the Reflex save row.",
+    "correction": "Drop the save/reflex target pending an owner decision / a Reflex-DC readout. +2 item and the 1-hour duration are correct; record level is 11 (not stated in the spec, no error)."
+   }
+  ]
+ },
+ {
+  "id": "sixfingers-elixir-greater",
+  "name": "Sixfingers Elixir (Greater)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "to your Reflex DC to keep from being Disarmed, for 8 hours after drinking (this raises the DC opponents roll against, not your Reflex save roll)",
+    "targetKind": "save",
+    "save": "reflex"
+   }
+  ],
+  "evidence": "\"You gain a +2 item bonus to your Reflex DC to keep from being Disarmed and a Climb Speed of 20 feet for the listed duration. ... **Duration** 8 hours.\"",
+  "corrections": [
+   {
+    "problem": "Same wrong target: a Reflex DC bonus registered on the Reflex save row.",
+    "correction": "Drop the save/reflex target pending an owner decision / a Reflex-DC readout. +2 item and the 8-hour duration are correct; record level is 17."
+   }
+  ]
+ }
+]

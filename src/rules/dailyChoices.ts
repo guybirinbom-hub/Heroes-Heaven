@@ -19,6 +19,9 @@ export interface DailyChoice {
   recordId: string;
   recordName: string;
   prompt: string;
+  /** 'array' renders option chips; 'text' renders a field — Quick Study's Lore subject and Call Gun's
+   *  bonded weapon have no closed option set, so chips would misrepresent them. */
+  kind: 'array' | 'text';
   options: { value: string; label: string; description?: string }[];
 }
 
@@ -52,13 +55,15 @@ export function dailyChoicesFor(c: Character, db: ContentDatabase): DailyChoice[
   for (const rec of ownedRecords(c, db)) {
     const def = rec.choice;
     if (!def?.daily) continue;
-    // Only fixed option lists can be offered at rest; 'domains'/'skills' resolve at build time.
+    // 'domains'/'skills' resolve against the BUILD, not the morning, so they never belong at rest.
+    if (def.kind !== 'array' && def.kind !== 'text') continue;
     const options = def.kind === 'array' ? (def.options ?? []) : [];
-    if (!options.length) continue;
+    // An 'array' choice with no options is malformed data — skip it rather than render an empty row.
+    if (def.kind === 'array' && !options.length) continue;
     const key = dailyChoiceKey(rec.id, def.flag);
     if (seen.has(key)) continue;
     seen.add(key);
-    out.push({ key, recordId: rec.id, recordName: rec.name, prompt: def.prompt, options });
+    out.push({ key, recordId: rec.id, recordName: rec.name, prompt: def.prompt, kind: def.kind, options });
   }
   return out;
 }
@@ -72,6 +77,8 @@ export function unansweredDailyChoices(choices: DailyChoice[], stored: Record<st
 export function dailyChoiceLabel(choice: DailyChoice, stored: Record<string, string> | undefined): string | null {
   const value = stored?.[choice.key];
   if (!value) return null;
+  // Free text is its own label — there is no option list to look it up in.
+  if (choice.kind === 'text') return value;
   // A stored value can go stale if the record's options change; show nothing rather than a raw slug.
   return choice.options.find((o) => o.value === value)?.label ?? null;
 }

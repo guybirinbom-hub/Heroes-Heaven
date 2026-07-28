@@ -1,0 +1,680 @@
+[
+ {
+  "id": "raise-symbol",
+  "name": "Raise Symbol",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "until the start of your next turn after you use Raise Symbol, while wielding a religious symbol",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"You gain a +2 circumstance bonus to saving throws until the start of your next turn. While it's raised, if you roll a success at a saving throw against a vitality or void effect, you get a critical success instead.\"",
+  "corrections": [
+   {
+    "problem": "INCOMPLETE — a second situational bonus in the same record is dropped. core.json continues past the quoted evidence: \"If the religious symbol you're raising is a shield, such as with Emblazon Armaments, you gain the effects of Raise a Shield when you use this action and the effects of this action when you Raise a Shield.\" That is a conditional AC gain (the shield's circumstance bonus to AC, obtained from an action that otherwise gives none). The same engineer recorded exactly this shape as an 'ac' entry for reactive-shield, so omitting it here is internally inconsistent as well as under-covering the record.",
+    "correction": "Add a second bonus: { bonus: '+circumstance equal to your shield's AC bonus (normally +2)', when: 'until the start of your next turn, if the religious symbol you Raise is a shield (e.g. via Emblazon Armament) — Raise Symbol and Raise a Shield each trigger the other', targetKind: 'ac' }. Bonus size is dynamic (read from the equipped shield), so keep needsEngineWork/dynamic-size note as on reactive-shield."
+   }
+  ]
+ },
+ {
+  "id": "deimatic-display",
+  "name": "Deimatic Display",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "on the Intimidation check to Demoralize made with Deimatic Display, against animal, fungus, and plant creatures",
+    "targetKind": "skill",
+    "skill": "intimidation"
+   },
+   {
+    "bonus": "-2 circumstance (penalty)",
+    "when": "on the Intimidation check to Demoralize made with Deimatic Display, against any creature that is not an animal, fungus, or plant",
+    "targetKind": "skill",
+    "skill": "intimidation"
+   }
+  ],
+  "evidence": "\"You gain a +2 circumstance bonus to the check against animal, fungus, and plant creatures and take a –2 circumstance penalty against other creatures.\"",
+  "corrections": [
+   {
+    "problem": "INCOMPLETE — a third clause on the same check is dropped: \"This attempt has the visual trait, loses the auditory trait, and you don't take a penalty if the creature doesn't understand your language.\" Verified against the Demoralize action (.import-src/pf2e/packs/pf2e/actions/skill/demoralize.json): \"If the target doesn't understand the language you are speaking... you take a –4 circumstance penalty to the check.\" So Deimatic Display removes a –4 circumstance penalty on the very Intimidation check the spec already covers. The same engineer DID record a penalty-removal entry for point-blank-stance (volley trait), so the omission is inconsistent.",
+    "correction": "Add a third intimidation entry: { bonus: 'ignore Demoralize's –4 circumstance language penalty', when: 'on the Intimidation check to Demoralize made with Deimatic Display, against a creature that does not understand your language', targetKind: 'skill', skill: 'intimidation' } — and, like point-blank-stance, note that the bonus field carries a phrase, not a number."
+   }
+  ]
+ },
+ {
+  "id": "leshy-familiar-secrets",
+  "name": "Leshy Familiar Secrets",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "while you are within your familiar's Purify Air aura (and only if you selected Purify Air today), on saves against inhaled poison, olfactory effects, or other effects that rely on breathing",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"**Purify Air** ... Creatures within a of the leshy gain a +2 circumstance bonus to their saving throws against inhaled poison effects, olfactory effects, or other effects that rely on breathing (such as toxic cloud), at the GM's discretion.\"",
+  "corrections": [
+   {
+    "problem": "OVER-ESCALATED QUESTION. Part (1) of the needsHumanDecision (\"what radius should the condition string state?\") is not an owner decision — it is answerable from this repo. The corruption in core.json is real (\"Creatures within a of the leshy\" — confirmed), but the source text at C:\\trying ai 2\\pf2e codex\\.import-src\\pf2e\\packs\\pf2e\\feats\\class\\druid\\level-4\\leshy-familiar-secrets.json reads \"Creatures within a @Template[emanation|distance:15] of the leshy gain a +2 circumstance bonus...\". The importer dropped the @Template token, taking the number with it.",
+    "correction": "State the radius as a 15-foot emanation in the `when` string (\"while you are within the 15-foot emanation of your familiar's Purify Air\"). Reduce needsHumanDecision to part (2) only — whether the star shows unconditionally with an \"if you selected Purify Air today\" caveat or only when the daily familiar-ability choice is recorded. Separately worth raising as a core.json data bug: the @Template stripper eats the distance."
+   }
+  ]
+ },
+ {
+  "id": "soul-flare",
+  "name": "Soul Flare",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status",
+    "when": "reaction, on the triggering attack roll made with your manifested soulforged weapon",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "reaction, against the triggering attack, while wearing manifested soulforged armor or with your soulforged shield raised",
+    "targetKind": "ac"
+   }
+  ],
+  "evidence": "You gain a +1 status bonus to your attack roll if making an attack or to your AC if you were hit.",
+  "corrections": [
+   {
+    "problem": "The strikeAttack condition is narrowed beyond the record. The trigger reads \"An attack you made with a soulforged weapon or shield misses a creature\", but the spec's `when` says only \"made with your manifested soulforged weapon\" — a missed shield bash also triggers the feat and gets the +1.",
+    "correction": "strikeAttack when → \"reaction, on the triggering attack roll you made with your manifested soulforged weapon or shield (Requirements: your soulforged armament is manifested)\". The AC entry and the +1 status type are both correct as written."
+   },
+   {
+    "problem": "The strikeAttack condition is narrower than the record. The trigger reads: 'An attack you made with a soulforged weapon or shield misses a creature, or a creature hits you with an attack while you're either wearing manifested soulforged armor or have your soulforged shield raised.' The spec's when says only '...made with your manifested soulforged weapon', dropping the shield. A player wielding a soulforged shield would be told the bonus doesn't apply to them.",
+    "correction": "when: 'reaction, on the triggering attack roll you made with your manifested soulforged weapon or shield'. The AC half is correctly worded. (The record's own text is also damaged — 'attempt a .' — the check type link was stripped, so the exact check for the Dismiss cost is not recoverable from core.json.)"
+   }
+  ]
+ },
+ {
+  "id": "explosive-entry",
+  "name": "Explosive Entry",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "item bonus equal to the bomb's item bonus to attack rolls",
+    "when": "on the Engineering Lore check to Force Open a door, window, container or heavy gate you Set Explosives on",
+    "targetKind": "skill",
+    "skill": "lore:engineering"
+   }
+  ],
+  "evidence": "you can attempt an Engineering Lore check to Force Open the target. If a bomb would add an item bonus to attack rolls, add that item bonus to your Engineering Lore check.",
+  "corrections": [
+   {
+    "problem": "needsHumanDecision is set true for a question that is already answered by the codebase, which would send a resolved item back to the app owner.",
+    "correction": "Set needsHumanDecision:false. HH's lore key convention is confirmed as `lore:<slug>`, and `lore:engineering` is the exact key already in use (src/rules/featGrantsAuto.ts: 'demolitionist-dedication' → conditionalSkills { 'lore:engineering': ... }, and 'in-the-vault' → skills { 'lore:engineering': 'trained' }). The rest of the entry (item bonus, variable value, Force Open condition) is correct."
+   },
+   {
+    "problem": "needsHumanDecision:true asks the app owner to confirm the Engineering Lore key. That escalation is unnecessary — the answer is in the codebase. src/builder/shared.tsx:3061-3069 canonicalises lore keys as `lore:<slug>` (loreKey), shared.tsx:3051-3053 renders `lore:warfare` as 'Warfare Lore', and situationalBonuses.ts:19 documents 'a `lore:*` key' as a valid skill detail.",
+    "correction": "Drop needsHumanDecision. skill: 'lore:engineering' is correct. Worth flagging separately that no existing entry in situationalBonuses.ts uses a lore:* key yet, so this would be the first — verify the star actually renders on a Lore row before shipping it."
+   }
+  ]
+ },
+ {
+  "id": "pistoleros-challenge",
+  "name": "Pistolero's Challenge",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+2 status (+3 if master, +4 if legendary in the Deception or Intimidation skill you used)",
+    "when": "on damage rolls with Strikes against the opponent you successfully challenged; only one challenge at a time, lasting until one of you is defeated, flees, or the encounter ends",
+    "targetKind": "strikeDamage"
+   }
+  ],
+  "evidence": "Both you and the opponent gain a +2 status bonus to damage rolls with Strikes made against each other. If you're a master in the skill you used for the check, the status bonus to damage rolls increases to +3, and if you're legendary, it increases to +4.",
+  "corrections": [
+   {
+    "problem": "The bonus text asserts \"the Deception or Intimidation skill you used\", but that is not in the record. core.json's description has the skill links stripped: \"make your choice of a  or  check against the target's Will DC\". The named skills come from outside the record, which breaks the grounding rule (and the same stripped-link defect means the value can't be verified in-app).",
+    "correction": "Phrase from the record only: bonus → \"+2 status (+3 if you're a master, +4 if legendary in the skill you used for the check)\", and add a data-defect note that this record's description has empty skill references (\"a  or  check\") that should be repaired from the source before the wording is finalised. Target (strikeDamage), type (status) and the duel duration are all correct."
+   },
+   {
+    "problem": "The bonus/type/target/duration are all verbatim-correct, but the when text names 'the Deception or Intimidation skill you used' and that is not in the record. The record's own text is damaged: 'make your choice of a or check against the target's Will DC' — both skill links were stripped in import. The spec's evidence block also silently omits the crit-failure lockout clause.",
+    "correction": "Either phrase the when purely from the record ('...if you're master/legendary in the skill you used for the check') or mark the record as carrying a text defect that needs repair before authoring from it. Full crit-failure text is 'You become Frightened 1 and can't use this ability again for 1 minute' — the spec's engineNote gives only the frightened half."
+   }
+  ]
+ },
+ {
+  "id": "big-debut",
+  "name": "Big Debut",
+  "collection": "feats",
+  "currentBonuses": [],
+  "evidence": "\"You don't roll initiative. Instead, you voluntarily go last. Enemies who can see you must attempt a saving throw against your class DC or spell DC, whichever is higher.\"",
+  "corrections": [
+   {
+    "problem": "Marked situational:false with the claim \"grants no bonus of any type to any of your statistics\" — that is factually wrong. The record's last sentence reads: \"As your first action on your first turn, you can Interact to draw or stow an item of light Bulk as a free action; if this item is a small garment or accessory, such as a fan, a pair of gloves, or a wine glass, you gain a +1 circumstance bonus on Charisma-based skill checks until the end of your turn.\" The reviewer only read the initiative/Stunned half of the text. A real, conditional, self-targeting bonus is being dropped.",
+    "correction": "situational: true, confidence high. Four entries, each bonus '+1 circumstance', when: 'until the end of your turn, if your first action on your first turn is to Interact to draw or stow a small garment or accessory (once per day, after Big Debut)', targetKind 'skill' with skill 'deception', 'diplomacy', 'intimidation' and 'performance' respectively (the four Charisma-based skills; the app has no 'Charisma-based' grouping, so it must be enumerated — do NOT use skill:'all', which would wrongly star Athletics/Stealth/etc.). needsEngineWork stays false. The initiative/class-DC-save half of the feat is correctly non-bonus and needs no entry."
+   },
+   {
+    "problem": "Marked situational:false with the claim \"Big Debut grants no bonus of any type to any of your statistics.\" That is false — the spec's evidence quote stops halfway through the description. The full text ends: \"As your first action on your first turn, you can Interact to draw or stow an item of light Bulk as a free action; if this item is a small garment or accessory, such as a fan, a pair of gloves, or a wine glass, you gain a +1 circumstance bonus on Charisma-based skill checks until the end of your turn.\" This is a real, conditional, typed bonus that would never get a star under the submitted spec.",
+    "correction": "situational: true. One bonus: bonus \"+1 circumstance\", when \"until the end of your turn, if you spent your first action of your first turn Interacting to draw or stow a small garment or accessory (a fan, gloves, a wine glass) after Big Debut\", targets = the four Charisma-based skills: {kind:'skill', detail:'deception'}, {kind:'skill', detail:'diplomacy'}, {kind:'skill', detail:'intimidation'}, {kind:'skill', detail:'performance'}. (Enumerate the four rather than using detail:'all' — the text says \"Charisma-based skill checks\", not all skills.) The rest of the spec's reasoning stands: the initiative change and the enemy save vs your class/spell DC are correctly not bonuses, and needsEngineWork can stay false for the starred part."
+   }
+  ]
+ },
+ {
+  "id": "harrow-casting",
+  "name": "Harrow Casting",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status (+2 if your harrow omen is Keys)",
+    "when": "until the start of your next turn, if you draw a Key when you Harrow Cast",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+1 status (+2 if your harrow omen is Keys)",
+    "when": "until the start of your next turn, if you draw a Key when you Harrow Cast",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+2 status",
+    "when": "on the free Recall Knowledge roll (made with your spell attack roll) after drawing a Book, if Books is your harrow omen",
+    "targetKind": "spell"
+   },
+   {
+    "bonus": "+2 status",
+    "when": "if you draw a Star with Stars as your harrow omen and the single-target spell's willing subject is you",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"**Key** Some of the magic remains behind, infusing your defenses. Until the start of your next turn, you gain a +1 status bonus to your AC and all saving throws. If your harrow omen is Keys, this increases to a +2 status bonus.\"",
+  "corrections": [
+   {
+    "problem": "Incomplete — one typed bonus to the character's own stat is missing. The Crown suit reads: \"If your harrow omen is Crowns, you gain a +2 status bonus to your Fortune-Telling Lore check.\" That is a +2 status bonus to a Lore SKILL check this character rolls, exactly the kind of thing the star exists for, and it is absent from the four listed bonuses.",
+    "correction": "Add a fifth entry: bonus '+2 status', when: 'on the Fortune-Telling Lore check to hide your spellcasting after drawing a Crown, if Crowns is your harrow omen', targetKind 'skill', skill 'lore:fortune-telling' (build.ts:2207 slugifies a Lore subject by stripping the trailing \" lore\" and hyphenating, so that is the correct key shape). The other four entries (Key AC, Key saves, Book spell-attack Recall Knowledge, Star saves) are accurate as written; Hammer (force damage) and Shield (healing) correctly carry no typed bonus."
+   }
+  ]
+ },
+ {
+  "id": "robust-recovery",
+  "name": "Robust Recovery",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+4 circumstance (instead of the usual +2)",
+    "when": "on saves against a disease or poison after you Treat a Disease/Poison, or someone with this feat treats you",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"increase the circumstance bonus granted on a success to +4, and if the result of the patient's saving throw is a success, the patient gets a critical success\"",
+  "corrections": [
+   {
+    "problem": "The condition is invented and mis-attributed. The record says: \"When you Treat a Disease or a Poison, or someone else uses one of these actions on you, increase the circumstance bonus granted on a success to +4\". The spec's `when` reads \"...or someone with this feat treats you\" — the text imposes NO requirement that the treater have the feat (the feat is yours; any treater's success gives you +4). The other half is also wrong on your own sheet: when YOU Treat a Disease/Poison on an ally, the improved +2→+4 goes to the PATIENT, not to you, so \"after you Treat a Disease/Poison\" should not appear as a condition on your own save unless you treated yourself. Confirmed identical wording in the AoN mirror (feat-5207.json / feat-836.json).",
+    "correction": "Keep situational: true, targetKind save / save 'all', bonus \"+4 circumstance (instead of the usual +2)\", but rewrite `when` to: \"on your save against a disease or poison after anyone Treats that Disease or Poison for you — your feat raises the treatment's success bonus from +2 to +4\". Add an engineNote: when you use Treat a Disease/Poison on an ALLY, the improved bonus lands on the ally and is not representable; the success→critical success upgrade is a degree-of-success change with no representation."
+   },
+   {
+    "problem": "The condition is misstated in a way that inverts who needs the feat, and it silently merges a branch that does not apply to you. The record reads: \"When you Treat a Disease or a Poison, or someone else uses one of these actions on you, increase the circumstance bonus granted on a success to +4\". The spec's `when` says \"...or someone with this feat treats you\" — the text imposes no such requirement on the treater. YOUR feat upgrades the bonus YOU receive from anyone's treatment. Conversely, the other branch (\"when you Treat a Disease or a Poison\") upgrades the bonus for the PATIENT you treated, i.e. another character — so it is not self-applicable at all and must not be part of the condition on your own save star.",
+    "correction": "Keep situational:true, one entry, targetKind 'save', save 'all', bonus \"+4 circumstance (instead of the usual +2)\". Replace the `when` with: \"on saves against a disease or poison you were Treated for — whenever anyone uses Treat a Disease or Treat a Poison on you (your feat raises the bonus from +2 to +4)\". Add to the engineNote that the mirror-image branch — the +4 you confer on someone else when YOU Treat a Disease/Poison — targets another character's save and is not representable, in addition to the existing (correct) note that the success→critical success upgrade is a degree-of-success change with no representation."
+   }
+  ]
+ },
+ {
+  "id": "favored-terrain",
+  "name": "Favored Terrain",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+10-foot status",
+    "when": "while in your chosen favored terrain, if you have the unimpeded journey class feature — swim Speed (aquatic), climb Speed (forest/mountain/underground), land Speed (plains), or fly Speed (sky)",
+    "targetKind": "speed"
+   }
+  ],
+  "evidence": "\"you instead gain a +10-foot status bonus to your swim Speed\" … \"Plains You gain a +10-foot status bonus to your land Speed.\"",
+  "corrections": [
+   {
+    "problem": "The condition is broadened beyond the text. The record gives the +10-foot status bonus only in specific, gated cases: \"Aquatic You gain a swim Speed equal to your Speed. If you already had a swim Speed, you instead gain a +10-foot status bonus to your swim Speed\"; the same 'if you already had a climb Speed' gate for Forest/Mountain/Underground; and \"Sky You gain a +10-foot status bonus to your fly Speed, if you have one.\" The spec's `when` (\"swim Speed (aquatic), climb Speed (forest/mountain/underground), land Speed (plains), or fly Speed (sky)\") reads as if the +10 always applies in those terrains — it does not. Only Plains grants the +10 unconditionally while in terrain. Verified against the AoN Player Core entry (feat-4866.json).",
+    "correction": "Keep situational: true / targetKind speed, but rewrite `when` to: \"while in your chosen favored terrain, if you have the unimpeded journey class feature — +10 ft to swim Speed (aquatic) or climb Speed (forest/mountain/underground) ONLY if you already had that Speed, +10 ft to land Speed (plains), +10 ft to fly Speed (sky) only if you have a fly Speed\". The existing engineNote (gaining a swim/climb Speed you lacked is a grant, not a bonus) is correct and should stay; the needsHumanDecision about per-choice keying is also legitimate."
+   }
+  ]
+ },
+ {
+  "id": "knowledge-is-power",
+  "name": "Knowledge is Power",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "on your next attack roll against a creature you critically identified with Recall Knowledge (ends after 1 minute if unused)",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "+1 circumstance",
+    "when": "to your AC against that creature's next attack roll (ends after 1 minute if unused)",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+1 circumstance",
+    "when": "on your save against that creature's next effect requiring a save (ends after 1 minute if unused)",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"you gain a +1 circumstance bonus to your next attack roll against the creature, to your AC against its next attack roll, and to your save against its next effect requiring a save\"",
+  "corrections": [
+   {
+    "problem": "Under-covers the record and silently drops half of it. The magus record says the +1 circumstance bonus applies \"to your next attack roll against the creature\" — in PF2e an attack roll includes a spell attack roll, which matters precisely because this is the magus feat (Spellstrike). The spec lists only strikeAttack and buries the omission in an engineNote (\"unclear whether the 'spell' target kind means spell attack roll or spell DC\") without setting needsHumanDecision, so a magus would never see the marker on the stat they most often attack with.",
+    "correction": "Either add a fourth entry { bonus: '+1 circumstance', when: 'on your next spell attack roll against a creature you critically identified with Recall Knowledge (ends after 1 minute if unused)', targetKind: 'spell' }, or set needsHumanDecision: true with the question \"Does target.kind 'spell' mean the spell attack roll or the spell DC? If it is the attack roll, feats that buff 'your next attack roll' need a spell entry alongside strikeAttack.\" The rest of the entry (AC, save 'all', the magus-vs-knowledge-is-power-wizard note) is confirmed correct — both records exist."
+   }
+  ]
+ },
+ {
+  "id": "pass-vengeful-judgement",
+  "name": "Pass Vengeful Judgement",
+  "collection": "feats",
+  "currentBonuses": [],
+  "evidence": "\"you can then Pass Vengeful Judgment on the target, calling down a scouring pillar of divine energy that deals 20d10 spirit damage with a basic Fortitude save.\"",
+  "corrections": [
+   {
+    "problem": "MISSED BONUS — spec says situational:false with reasonIfNot \"It grants no bonus or penalty to any stat, so there is nothing to star.\" That is false: the engineer only read the first paragraph. The record's Mythic-Point paragraph reads \"For the next month, you and your hierophant gain a +2 status bonus to Intimidation checks against creatures in the area.\" (the area being the 10-mile radius that witnessed the detonation). The character is explicitly included (\"you and your hierophant\").",
+    "correction": "situational: true, confidence high. One bonus: { bonus: '+2 status', when: 'for 1 month after you spend a Mythic Point on Pass Vengeful Judgement, on Intimidation checks against creatures that were within the 10-mile radius at that moment (your hierophant gets it too)', targetKind: 'skill', skill: 'intimidation' }. The rest of the feat (20d10 spirit damage, basic Fortitude, domain damage-type swap, Font of Life or Death vitality/void option) really is not a bonus — the reasonIfNot is only correct about the base action."
+   }
+  ]
+ },
+ {
+  "id": "bloc-tactics",
+  "name": "Bloc Tactics",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+4 status",
+    "when": "while wearing the disguise from your daily Bloc Tactics preparation, on Deception checks to keep others from seeing through it (you also add your level even if untrained)",
+    "targetKind": "skill",
+    "skill": "deception"
+   },
+   {
+    "bonus": "+3 status",
+    "when": "while wearing your Bloc Tactics disguise, on saves against smoke, fumes, and inhaled substances",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"You disguise the targets to hide their identities, which gives them a +4 status bonus to Deception checks to prevent others from seeing through their disguises... giving the targets a +3 status bonus to saving throws against them [smoke, fumes, and inhaled substances].\"",
+  "corrections": [
+   {
+    "problem": "UNNECESSARY needsHumanDecision — the question \"Can the character be one of their own Bloc Tactics targets... or is the feat allies-only?\" is answered by the record's own opening sentence, which the quoted evidence omits: \"You have experience in undertaking direct action and know how to protect the identity and health of you and your allies when doing so.\" Nothing in the text restricts the half-your-level targets to other creatures, and the framing names you first.",
+    "correction": "Drop needsHumanDecision (or downgrade to a note); raise confidence to high. Both bonuses stand as written on the character: +4 status to Deception vs seeing through the disguise (plus adding your level even if untrained) and +3 status to saves vs smoke, fumes and inhaled substances, both conditional on wearing the disguise you prepared during daily preparations. Worth adding a note that the OTHER selected targets are allies and would still need the ally channel if one ever ships — but that does not make this record needsEngineWork, because the owning character does benefit."
+   },
+   {
+    "problem": "needsHumanDecision is set asking whether the character can be one of their own Bloc Tactics targets, but the record's own first sentence answers it: \"You have experience in undertaking direct action and know how to protect the identity and health of you and your allies when doing so.\" The feat is explicitly framed as protecting you as well as your allies, so the character is among the selectable targets and both bonuses do reach this sheet. The two bonus entries and their sizes/types are otherwise verified correct against the text (\"+4 status bonus to Deception checks to prevent others from seeing through their disguises, and lets them add their level even if untrained\" and \"a +3 status bonus to saving throws against them\" for smoke/fumes/inhaled substances).",
+    "correction": "Drop needsHumanDecision and the question; raise confidence to high. Keep both bonuses as specified, and cite the opening line as the evidence for self-inclusion: \"know how to protect the identity and health of you and your allies\". No needsEngineWork required."
+   }
+  ]
+ },
+ {
+  "id": "swordmaster-dedication",
+  "name": "Swordmaster Dedication",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "to your Reflex DC when a foe attempts to Disarm you",
+    "targetKind": "save",
+    "save": "reflex"
+   },
+   {
+    "bonus": "+2 circumstance (instead of Deft Cooperation's +1)",
+    "when": "the first attack roll after you critically succeed at Aiding an ally's attack roll (requires Deft Cooperation)",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "+2 circumstance (instead of Deft Cooperation's +1)",
+    "when": "the first skill check after you critically succeed at Aiding an ally's skill check (requires Deft Cooperation)",
+    "targetKind": "strikeAttack"
+   }
+  ],
+  "evidence": "\"You gain a +2 circumstance bonus to your Reflex DC when foes attempt to Disarm you. If you have the Deft Cooperation feat and critically succeed on a check to Aid an ally's attack roll or skill check, you gain a +2 circumstance bonus from Deft Cooperation (instead of a +1 bonus)\"",
+  "corrections": [
+   {
+    "problem": "Third bonus is recorded with targetKind 'strikeAttack' but the text is explicitly a SKILL-check bonus: \"you gain a +2 circumstance bonus from Deft Cooperation (instead of a +1 bonus) the first time you attempt an attack roll or attempt a skill check where the bonus would apply.\" As written the registry would put a strike-attack star on the sheet twice and never mark any skill. The spec's own question admits this but it was still submitted wrong.",
+    "correction": "Re-target entry 3 to { targetKind: 'skill', skill: 'all' } (nothing prevents mixed target kinds inside one record's entry list — the existing registry already does this, e.g. 'ageless-patience' targets perception AND skill/all in a single entry). Keep the when text: 'the first skill check after you critically succeed at Aiding an ally's skill check (requires Deft Cooperation)'. Entries 1 (save/reflex, Reflex DC vs Disarm) and 2 (strikeAttack) are correct as written; Reflex DC = 10 + the Reflex save modifier, so starring Reflex is faithful and the needsEngineWork flag for it is over-cautious rather than wrong."
+   },
+   {
+    "problem": "The third bonus is filed with targetKind \"strikeAttack\" but the record's text makes it a SKILL bonus: \"you gain a +2 circumstance bonus from Deft Cooperation (instead of a +1 bonus) the first time you attempt an attack roll or attempt a skill check where the bonus would apply.\" The author flagged this himself in his own question and then shipped it anyway, so the registry would end up with two identical strikeAttack entries and no skill marker at all — the exact 'wrong target' failure mode. (Verified: attack + skill are the two branches; there is no second attack branch.)",
+    "correction": "Re-target entry 3 to { kind: 'skill', detail: 'all' } (file shape) / targetKind 'skill', skill 'all'. Entries 1 (save/reflex, Reflex DC vs Disarm) and 2 (strikeAttack) are confirmed correct. Note the registry shape actually in src/rules/situationalBonuses.ts is { targets: SituationalTarget[], when, bonus } with kind ∈ skill|save|perception|ac|attack and a `detail` field — one record CAN carry several targets in one entry, so the author's stated reason for reusing strikeAttack ('a single record's entries share no way to say skill: all alongside') is factually wrong."
+   }
+  ]
+ },
+ {
+  "id": "rain-of-embers-stance",
+  "name": "Rain of Embers Stance",
+  "collection": "feats",
+  "currentBonuses": [],
+  "evidence": "\"While in Rain of Embers Stance, you gain a +1 status bonus to AC and fire resistance equal to half your level (minimum 1).\" — and the stances collection entry already carries \"acBonus\":{\"value\":1,\"type\":\"status\"}.",
+  "corrections": [
+   {
+    "problem": "A conditional bonus is recorded as situational:false. The text is \"While in Rain of Embers Stance, you gain a +1 status bonus to AC\" with \"**Requirements** You are unarmored\" — that is two live conditions, not an unconditional bonus. The reasonIfNot argues from a different fact (the stances record carries acBonus:{value:1,type:'status'}, which I confirmed), i.e. 'don't register it because it's already displayed', which is not what the situational flag means. It also contradicts the same engineer's own treatment of fast-movement, which is likewise toggle-gated (\"While you are raging\") and was marked situational:true.",
+    "correction": "Set situational:true, one bonus: +1 status, targetKind 'ac', when 'while in Rain of Embers Stance (requires being unarmored)'. Move the double-display concern to engineNote or to a separate suppress/alreadyModelled flag — the situational boolean must describe the RULE, not the app's current display state. Keep the human question, but reword it as 'should already-modelled toggles be suppressed at render time', which is a display policy, not a classification. Also worth carrying forward: the stance record models the +1 AC but not the unarmored requirement, so a player who toggles the stance while armoured gets a wrong AC today."
+   },
+   {
+    "problem": "situational:false is a mis-classification. The record says \"**Requirements** You are unarmored ... While in Rain of Embers Stance, you gain a +1 status bonus to AC and fire resistance equal to half your level\" — that is unambiguously conditional. The author used the `situational` flag to mean 'the app already models it' rather than 'the bonus is unconditional'. Any consumer that reads situational:false as the prompt defines it ('an unconditional bonus belongs in the maths') would fold a permanent +1 status AC into every Rain of Embers character. The engineering conclusion is right (I confirmed content.stances['rain-of-embers-stance'] carries acBonus:{value:1,type:'status'}, applied at src/rules/derive.ts:439 and shown in the breakdown at src/rules/explain.ts:434-435), but it is the wrong field to express it in.",
+    "correction": "Set situational:true (bonus: '+1 status', when: 'while in Rain of Embers Stance', target ac) and record the exclusion separately — e.g. alreadyModelled:true / excludeFromRegistry:true with the reason 'applied by the stance toggle; starring it would double-count'. Keep the author's policy question, it is the right one to ask. Also worth carrying forward: the stance data does NOT enforce the 'You are unarmored' requirement or the fire resistance, so an armored character can currently toggle the stance and keep the +1."
+   }
+  ]
+ },
+ {
+  "id": "magic-warrior-dedication",
+  "name": "Magic Warrior Dedication",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "against divination effects, while you wear your magic warrior mask",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"You hide your identity behind a mask ... You gain a +1 circumstance bonus to saves against divination effects, though sometimes refusing to remove your mask can cause issues\"",
+  "corrections": [
+   {
+    "problem": "Invented condition. The when says '+1 circumstance ... against divination effects, WHILE YOU WEAR YOUR MAGIC WARRIOR MASK'. The record's text does not gate the bonus on wearing the mask: \"You hide your identity behind a mask representing an animal of your choice... You gain a +1 circumstance bonus to saves against divination effects, though sometimes refusing to remove your mask can cause issues in areas that don't respect or understand the magic warrior tradition.\" The mask clause is flavour plus a social drawback; the only stated gate on the bonus is the effect type. (The archetype's real gate is the taboo — you lose the archetype's abilities if another creature learns your true face or name — which is not a per-roll condition either.)",
+    "correction": "when: 'against divination effects'. Everything else in the entry (+1 circumstance, save/'all') is correct."
+   },
+   {
+    "problem": "Condition broadened beyond the text. The record reads: \"You hide your identity behind a mask representing an animal of your choice ... You gain a +1 circumstance bonus to saves against divination effects, though sometimes refusing to remove your mask can cause issues in areas that don't respect or understand the magic warrior tradition.\" The bonus sentence is not gated on wearing the mask — the mask clause is flavor plus a social drawback. The spec's when-text ('while you wear your magic warrior mask') invents a gate a player would reasonably act on (taking the mask off does not cost you the bonus).",
+    "correction": "when: 'against divination effects'. Everything else (+1, circumstance, save/'all', situational:true) is confirmed correct. The archetype's real mask gate is the separate clause 'if another creature ever learns your true face or name, you lose your abilities from this archetype', which is an archetype-loss rule, not a per-save condition."
+   }
+  ]
+ },
+ {
+  "id": "entourage",
+  "name": "Entourage",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "to Gather Information using your admirers, while in a civilized settlement (they will not follow you into danger)",
+    "targetKind": "skill",
+    "skill": "diplomacy"
+   }
+  ],
+  "evidence": "\"When you Gather Information, you can use your admirers to assist you, granting a +1 circumstance bonus to your Diplomacy check and reducing the time it takes\"",
+  "corrections": [
+   {
+    "problem": "Incomplete — one bonus is missing. The spec captured only the Gather Information half. The text continues: \"If you have the Sow Rumor feat, you can have your admirers assist you, with the same benefits as Gather Information.\" Sow Rumor is resolved with a secret Deception check (its own record: \"the GM rolls a secret Deception check\"), so the same +1 circumstance applies to a Deception check there, not Diplomacy.",
+    "correction": "Add a second entry: bonus '+1 circumstance', targetKind 'skill', skill 'deception', when 'when your admirers assist you to Sow Rumor, while in a civilized settlement (requires the Sow Rumor feat)'. Confidence medium — the feat says 'the same benefits' rather than naming the skill. The existing Diplomacy entry is correct as written."
+   },
+   {
+    "problem": "A second bonus in the record is missing. Full text: \"When you Gather Information, you can use your admirers to assist you, granting a +1 circumstance bonus to your Diplomacy check and reducing the time it takes ... If you have the Sow Rumor feat, you can have your admirers assist you, with the same benefits as Gather Information.\" I checked the sow-rumor record: it resolves on \"a secret Deception check against a DC they set\", so 'the same benefits' means a +1 circumstance bonus on a Deception check too. The spec files only the Diplomacy entry, so a character with both feats sees no marker on Deception.",
+    "correction": "Add a second entry: bonus '+1 circumstance', when 'to a Sow Rumor check using your admirers, while in a civilized settlement (requires the Sow Rumor feat)', target { kind: 'skill', detail: 'deception' }. If 'the same benefits' is judged too loose to act on, mark it needsHumanDecision rather than dropping it silently — but do not leave the record with only one of its two bonuses."
+   }
+  ]
+ },
+ {
+  "id": "deft-cooperation",
+  "name": "Deft Cooperation",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "against an enemy whose attack roll you successfully Aided, until the end of your next turn",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "+1 circumstance",
+    "when": "against an enemy whose AC you successfully Aided, until the end of your next turn",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+1 circumstance",
+    "when": "on your next turn, when you repeat the exact same skill check you successfully Aided",
+    "targetKind": "skill",
+    "skill": "all"
+   }
+  ],
+  "evidence": "\"When you successfully Aid an attack roll or AC, you gain a +1 circumstance bonus to attack rolls or AC against that enemy until the end of your next turn, whichever you granted to your ally. When you successfully Aid a skill check, if you attempt the exact same skill check ... you gain a +1 circumstance bonus to your skill check.\"",
+  "corrections": [
+   {
+    "problem": "The engineNote is inaccurate in a way that would produce a display bug: 'Swordmaster Dedication upgrades this to +2 on a critical Aid' is stated for the whole feat, but Swordmaster Dedication's text limits the upgrade to \"the first time you attempt an attack roll or attempt a skill check where the bonus would apply\" — the AC branch of Deft Cooperation is NOT upgraded. Applying the suggested '+1 (+2 on a critical Aid)' string to all three entries would over-state the AC bonus.",
+    "correction": "Restrict the note to the strikeAttack and skill entries: 'Swordmaster Dedication raises the attack-roll and skill-check bonuses to +2 on a critical Aid; the AC branch stays +1.' The three bonus entries themselves (strikeAttack, ac, skill/all) are correctly targeted and correctly typed."
+   }
+  ]
+ },
+ {
+  "id": "don-thy-fervor",
+  "name": "Don thy Fervor",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance (+3 at 18th level)",
+    "when": "for 1 minute after you activate Don thy Fervor",
+    "skill": "deception",
+    "targetKind": "skill"
+   },
+   {
+    "bonus": "+2 circumstance (+3 at 18th level)",
+    "when": "for 1 minute after you activate Don thy Fervor",
+    "skill": "diplomacy",
+    "targetKind": "skill"
+   },
+   {
+    "bonus": "+2 circumstance (+3 at 18th level)",
+    "when": "for 1 minute after you activate Don thy Fervor",
+    "skill": "intimidation",
+    "targetKind": "skill"
+   },
+   {
+    "bonus": "+2 circumstance (+3 at 18th level)",
+    "when": "on counteract checks, for 1 minute after you activate Don thy Fervor",
+    "targetKind": "spell"
+   }
+  ],
+  "evidence": "\"For the next minute, you gain a +2 circumstance bonus to Deception, Diplomacy, and Intimidation skill checks. In addition, you gain a +2 circumstance bonus to counteract checks. At 18th level, these circumstance bonuses increase to +3.\"",
+  "corrections": [
+   {
+    "problem": "WRONG TARGET on the 4th entry. The record's text is: \"you gain a +2 circumstance bonus to Deception, Diplomacy, and Intimidation skill checks. In addition, you gain a +2 circumstance bonus to counteract checks.\" The spec parks the counteract bonus on targetKind 'spell' and calls it \"an approximation\". This feat grants NO bonus to spell attack rolls and NO bonus to spell DC, so whichever of those the 'spell' target resolves to, the sheet will display a +2/+3 the character does not have — the exact failure mode the brief calls out (\"a +1 to Athletics to Climb recorded as a generic bonus\"). The brief also says: when the app has no stat for a bonus, set needsEngineWork and say what is missing — not to attach it to the nearest wrong stat. (The three skill entries are exact and should stay.)",
+    "correction": "Drop the 'spell' entry from bonuses. Keep only skill/deception, skill/diplomacy, skill/intimidation, each \"+2 circumstance (+3 at 18th level)\" / when \"for 1 minute after you activate Don thy Fervor\". Keep needsEngineWork true with the note: \"counteract checks have no stat in the app; the +2/+3 circumstance bonus to counteract checks cannot be represented and is deliberately not attached to any existing target.\" Note this is the opposite call from cardinal-guardians, where the text really does say \"spell attack modifier\" — that one legitimately belongs on a spell-attack target once attack-vs-DC is separated."
+   }
+  ]
+ },
+ {
+  "id": "acupuncturist",
+  "name": "Acupuncturist",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance (+2 on a critical success; –1 penalty to all downtime skill checks on a critical failure)",
+    "when": "one downtime activity skill check within the next week, for the ally you spent a day treating",
+    "skill": "all",
+    "targetKind": "skill"
+   },
+   {
+    "bonus": "roll twice and use the higher result (fortune)",
+    "when": "critical success only — the ally's next saving throw against an affliction within the next week",
+    "save": "all",
+    "targetKind": "save"
+   }
+  ],
+  "evidence": "\"You grant your ally a +1 circumstance bonus to one downtime activity skill check within the next week.\" / crit success \"+2 circumstance bonus to one downtime activity skill check ... or the ability to roll twice on their next saving throw ... against an affliction\".",
+  "corrections": [
+   {
+    "problem": "CONDITION BROADENED (minor). The record says the critical success grants \"your ally the choice of a +2 circumstance bonus to one downtime activity skill check within the next week, OR the ability to roll twice on their next saving throw ... against an affliction\". The spec's two entries read as if a critical success grants both: entry 1 says \"+2 on a critical success\" and entry 2 says \"critical success only\" with no indication they are mutually exclusive.",
+    "correction": "Add the exclusivity to entry 2's condition, e.g. when: \"critical success only, and only if the ally chooses this instead of the +2 downtime bonus — their next saving throw against an affliction within the next week\". Everything else in this spec is accurate: all effects land on the ally (\"You spend a day studying an ally\"), so needsEngineWork true and no star on the feat holder's own stats is the right call."
+   }
+  ]
+ },
+ {
+  "id": "spell-parry",
+  "name": "Spell Parry",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "until the start of your next turn after using Spell Parry, as long as you keep a hand free",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+1 circumstance",
+    "when": "against spells that target you, until the start of your next turn after using Spell Parry, as long as you keep a hand free",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"You raise your guard, gaining a +1 circumstance bonus to AC and to saving throws against spells that target you until the start of your next turn, as long as you continue to meet the requirements.\" (Requirements: one or more hands free)",
+  "corrections": [
+   {
+    "problem": "The AC condition is broadened past what the text supports, and it is marked confidence:high / needsHumanDecision:false. The record reads \"gaining a +1 circumstance bonus to AC and to saving throws against spells that target you\" — the trailing clause \"against spells that target you\" can grammatically attach to BOTH the AC and the saves, and its own successor feat (Preternatural Parry, which lists Spell Parry as a prerequisite) restricts both halves to the triggering effect. The spec asserts the AC half \"applies to everything while the guard is up\", which is one reading, not the text.",
+    "correction": "Keep both entries but set needsHumanDecision:true with the question: \"Does Spell Parry's +1 circumstance AC apply against all attacks, or only against spells that target you? The clause placement is ambiguous and the app owner should pick the ruling.\" Until then phrase the AC `when` as \"until the start of your next turn after using Spell Parry, as long as you keep a hand free (GM call whether the AC half is limited to spells that target you)\". Downgrade confidence to medium."
+   }
+  ]
+ },
+ {
+  "id": "bloodletting-claws",
+  "name": "Bloodletting Claws",
+  "collection": "feats",
+  "currentBonuses": [],
+  "evidence": "\"If your eidolon critically hits with a melee unarmed Strike that deals slashing or piercing damage, its target takes 1d6 [persistent bleed]. Your eidolon gains an item bonus to this bleed damage equal to the unarmed attack's item bonus to attack rolls. This is a critical specialization effect.\"",
+  "corrections": [
+   {
+    "problem": "The evidence is not the record's text. The spec quotes \"its target takes 1d6 [persistent bleed]\", but core.json actually reads \"its target takes 1d6.\" — the damage type is missing entirely from the stored description. The engineer silently repaired the record while quoting it, which breaks the 'ground it in the record's own text' rule and hides a genuine data defect.",
+    "correction": "Verdict (situational:false, no tracked-stat bonus) is correct and stands. Replace the evidence with the literal string \"its target takes 1d6. Your eidolon gains an item bonus to this bleed damage equal to the unarmed attack's item bonus to attack rolls. This is a critical specialization effect.\" and add to the engineNote: core.json's Bloodletting Claws description is truncated — the printed feat is 1d6 persistent bleed damage, so this record needs a data fix in the importer/description lane (separate from, and in addition to, the missing critSpec flag the spec already noted)."
+   },
+   {
+    "problem": "The `evidence` is not the record's text. core.json actually reads \"...its target takes 1d6. Your eidolon gains an item bonus to this bleed damage equal to the unarmed attack's item bonus to attack rolls. This is a critical specialization effect.\" — the damage type is MISSING entirely (\"takes 1d6.\"); the spec silently supplied it as \"1d6 [persistent bleed]\". The task's ground-in-the-record rule was broken, and the real finding (an importer data defect in core.json) was masked as a normal quote.",
+    "correction": "Classification stands (situational: false — a crit-spec persistent-damage rider, no bonus to a tracked stat), and the spec's observation that the record lacks a critSpec flag is CONFIRMED (it goes source → prerequisites → actionCost → edition, unlike lavasoul which does carry critSpec:true plus grantedStrikes). Fix the evidence to the literal text and raise a separate data bug: bloodletting-claws' description lost its \"persistent bleed\" damage type in core.json."
+   }
+  ]
+ },
+ {
+  "id": "emergency-targe",
+  "name": "Emergency Targe",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "your shield's circumstance bonus (+1 or +2)",
+    "when": "as a reaction, against the triggering melee Strike or melee spell attack roll — the shield bonus applies retroactively to that attack",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "your shield's circumstance bonus (+1 or +2)",
+    "when": "as a reaction, against the enemy spell you failed a save against — the shield bonus applies retroactively to that save",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"You immediately Raise a Shield or cast *shield*. The circumstance bonus applies to your defenses when determining the outcome of the triggering attack or spell.\"",
+  "corrections": [
+   {
+    "problem": "The needsHumanDecision question states the bonus is \"+1 or +2, higher with a tower shield\". That is wrong: core.json gives tower-shield acBonus 2, identical to steel-shield (buckler is 1). The tower shield's +4 is only reached via the separate Take Cover action (\"AC increases to +4 if you are using the Take Cover action\"), which this reaction does not grant, so a tower shield never yields more than +2 here.",
+    "correction": "Fix the question text to: \"The bonus size is not printed on the feat — it is whatever the raised shield or the shield spell grants (+1 for a buckler or the shield spell, +2 for most shields including a tower shield). Should the display string stay generic or resolve from the equipped shield?\" The two entries (ac + save:'all') and the classification are otherwise correct."
+   }
+  ]
+ },
+ {
+  "id": "nosois-mask",
+  "name": "Nosoi's Mask",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "while wearing a splendid psychopomp mask (the 50 gp version you can make with this feat)",
+    "targetKind": "skill",
+    "skill": "intimidation"
+   }
+  ],
+  "evidence": "\"If you instead pay 50 gp for a splendid psychopomp mask, the mask grants you a +1 item bonus to Intimidation while you are wearing it. Its usage is worn (mask).\"",
+  "corrections": [
+   {
+    "problem": "The needsHumanDecision question offers \"attach it to the splendid psychopomp mask item record once the item lane is wired up\" as if that were a safe deferral. It is not, and the spec did not check: the item exists in core.json as items/splendid-pyschopomp-mask (id misspelled 'pyschopomp'), and its description is an EMPTY string — it carries no mention of the +1 item bonus to Intimidation. The feat also has no descRef pointing to it (unlike skull-creeper, which does descRef items/splendid-skull-mask, and that item's text does state the bonus).",
+    "correction": "Keep situational:true and the single +1 item / intimidation entry, but restate the question: \"The +1 item bonus comes from a worn (mask) item. Register on the feat, or on the item? Note that items/splendid-pyschopomp-mask has an empty description and a misspelled id, and the feat carries no descRef to it — so deferring to the item lane would drop this bonus entirely until that item record is repaired. Skull Creeper's equivalent item (items/splendid-skull-mask) IS populated, so the two feats cannot be deferred symmetrically today.\""
+   }
+  ]
+ },
+ {
+  "id": "cobra-stance",
+  "name": "Cobra Stance",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "while you are in Cobra Stance (also applies to your Fortitude DC); Cobra Envenom raises this to +2",
+    "targetKind": "save",
+    "save": "fortitude"
+   }
+  ],
+  "evidence": "\"While in Cobra Stance, you gain a +1 circumstance bonus to Fortitude saves and your Fortitude DC\" — gated on being in the stance (duration: until you leave the stance).",
+  "corrections": [
+   {
+    "problem": "The +1 circumstance bonus to Fortitude saves is ALREADY folded into the computed total by the engine, so a feat-keyed situational entry double-reports it. core.json stances['cobra-stance'] carries saves.fortitude {value:1,type:'circumstance'}, and derive.ts:172-173 reads it (\"The active stance/form may grant a save bonus (Cobra Stance: +1 Fortitude), typed so it pools\") whenever the stance is active. The spec's own engineNote spots the stance data but then concludes the star \"covers it in practice\" — it does not: the player would see +1 already inside the Fortitude number AND a star claiming +1, and because the registry is keyed on the FEAT id the star would light merely because the feat is owned, even out of stance.",
+    "correction": "Do not author the Fortitude-save leg here at all — it is already in the maths via the stance lane. The only genuine uncovered part is the Fortitude DC (\"+1 circumstance bonus to Fortitude saves and your Fortitude DC\"), for which no target kind exists; record that as needsEngineWork with the save-DC gap and leave the save itself to the stance lane. The poison resistance (half your level) is likewise already carried by the stance record's resistances field."
+   }
+  ]
+ },
+ {
+  "id": "cobra-envenom",
+  "name": "Cobra Envenom",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance (upgraded from Cobra Stance's +1)",
+    "when": "while you are in Cobra Stance (also applies to your Fortitude DC)",
+    "targetKind": "save",
+    "save": "fortitude"
+   }
+  ],
+  "evidence": "\"**Special** If you have this feat, the circumstance bonus to Fortitude saves and Fortitude DC granted by Cobra Stance increases from +1 to +2.\"",
+  "corrections": [
+   {
+    "problem": "Mis-shaped as a registry entry. The text is \"the circumstance bonus to Fortitude saves and Fortitude DC granted by Cobra Stance increases from +1 to +2\" — an in-place upgrade of a number the engine already computes from stances['cobra-stance'].saves.fortitude. Authoring it as a save/fortitude situational bonus alongside the cobra-stance entry gives a character who owns both a computed Fortitude that still says +1 plus two contradictory stars (+1 and +2).",
+    "correction": "This is a DATA/engine fix, not a situational entry: stances['cobra-stance'].saves.fortitude must become 2 when the character owns cobra-envenom (nothing in src/ currently references 'cobra-envenom', so the upgrade is entirely unimplemented and a Cobra Envenom monk gets +1 today). Set situational false with needsEngineWork true describing that upgrade, plus the same Fortitude-DC gap noted on cobra-stance."
+   }
+  ]
+ },
+ {
+  "id": "dragon-roar",
+  "name": "Dragon Roar",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+4 circumstance",
+    "when": "on your first attack that hits a creature frightened by your Dragon Roar, before the end of your next turn (requires Dragon Stance)",
+    "targetKind": "strikeDamage"
+   }
+  ],
+  "evidence": "\"Your first attack that hits a frightened creature after you roar and before the end of your next turn gains a +4 circumstance bonus to damage.\"",
+  "corrections": [
+   {
+    "problem": "The condition is narrower than the text. core.json reads \"Your first attack that hits a frightened creature after you roar and before the end of your next turn gains a +4 circumstance bonus to damage\" — ANY frightened creature. The spec's `when` says \"against a creature frightened by your Dragon Roar\", which would tell a player at the table they lose the bonus against a creature frightened by an ally's Demoralize, when in fact they get it.",
+    "correction": "Rephrase to: \"on your first attack that hits a frightened creature after you Dragon Roar, before the end of your next turn (requires Dragon Stance; the effect ends immediately if you leave Dragon Stance)\". Bonus (+4 circumstance) and target (strikeDamage) are correct."
+   },
+   {
+    "problem": "CONDITION NARROWED beyond the text. The record says: \"Your first attack that hits a frightened creature after you roar and before the end of your next turn gains a +4 circumstance bonus to damage.\" It says A FRIGHTENED CREATURE — any frightened creature. The spec's `when` restricts it to \"a creature frightened by your Dragon Roar\", which is an invented narrowing. A player reading the app's condition would wrongly forgo the +4 against a foe frightened by an ally's Demoralize, by Dread Marshal Stance, by a spell, or by an earlier roar's lingering frightened value.",
+    "correction": "Keep situational:true, targetKind strikeDamage, +4 circumstance. Rewrite the condition to: \"on the first attack that hits a frightened creature (any source of frightened) after you Roar, before the end of your next turn; requires Dragon Stance, and the effect ends immediately if you leave Dragon Stance\". The stance-exit clause (\"Its effects end immediately if you leave Dragon Stance\") is also missing from the spec and is worth keeping in the player-facing text."
+   }
+  ]
+ },
+ {
+  "id": "guardians-deflection",
+  "name": "Guardian's Deflection",
+  "collection": "feats",
+  "currentBonuses": [],
+  "evidence": "\"granting a +2 circumstance bonus to their AC against the triggering attack\" — \"their\" is the ally who was hit, not you.",
+  "corrections": [
+   {
+    "problem": "The classification (ally's AC, nothing to star) is correct, but the engineNote misstates the data. It claims 'guardians-deflection' has \"no level field\" — the record has \"level\": 4. It also says there are exactly two near-duplicate records; there are three records named Guardian's Deflection, and the third, `guardians-deflection-fighter` (level 6, edition remaster), is a DIFFERENT feat (the Fighter version), so \"applied to both\" is ambiguous and risks sweeping it in.",
+    "correction": "Correct the note to: 'guardians-deflection' (level 4, edition remaster, raw AoN-style text block) is the live record; `guardians-deflection-swashbuckler` (level 4) is edition \"superseded\", so the app's existing edition algorithm already hides it and no manual suppression is needed; `guardians-deflection-fighter` (level 6) is a separate Fighter feat and must be classified on its own."
+   }
+  ]
+ },
+ {
+  "id": "snap-out-of-it",
+  "name": "Snap Out of It!",
+  "collection": "feats",
+  "currentBonuses": [],
+  "evidence": "\"That ally can immediately attempt a Will save with a +1 circumstance bonus against the effect's DC\" — the save is the ally's.",
+  "corrections": [
+   {
+    "problem": "The classification (ally's Will save, nothing to star) is correct, but the engineNote misstates the data the same way: it claims two near-duplicates, \"one raw AoN-style text block with no level field\". The record 'snap-out-of-it' does have \"level\": 4. There are three records with that name, and the third is not a duplicate.",
+    "correction": "Correct the note to: 'snap-out-of-it' (level 4, category archetype, edition remaster) is the live record; `snap-out-of-it-marshal` (level 4) is edition \"superseded\" and already hidden by the edition algorithm; `snap-out-of-it-pathfinder-agent` (level 8, category skill, edition neutral) is a distinct feat needing its own classification."
+   }
+  ]
+ }
+]

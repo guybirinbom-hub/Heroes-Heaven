@@ -710,19 +710,31 @@ export function CharacterSheet({
                         {ch.prompt}
                         <span className="daily-pick-src">{ch.recordName}</span>
                       </div>
-                      <div className="daily-pick-opts">
-                        {ch.options.map((o) => (
-                          <button
-                            key={o.value}
-                            type="button"
-                            className={'daily-opt' + (dailyAnswer(ch.key) === o.value ? ' on' : '')}
-                            title={o.description}
-                            onClick={() => setDailyDraft((d) => ({ ...d, [ch.key]: o.value }))}
-                          >
-                            {o.label}
-                          </button>
-                        ))}
-                      </div>
+                      {ch.kind === 'text' ? (
+                        // Quick Study's Lore subject and Call Gun's bonded weapon have no closed
+                        // option set, so chips would misrepresent them — the player types it.
+                        <input
+                          className="daily-text"
+                          type="text"
+                          placeholder={`${ch.prompt}…`}
+                          value={dailyAnswer(ch.key)}
+                          onChange={(e) => setDailyDraft((d) => ({ ...d, [ch.key]: e.target.value }))}
+                        />
+                      ) : (
+                        <div className="daily-pick-opts">
+                          {ch.options.map((o) => (
+                            <button
+                              key={o.value}
+                              type="button"
+                              className={'daily-opt' + (dailyAnswer(ch.key) === o.value ? ' on' : '')}
+                              title={o.description}
+                              onClick={() => setDailyDraft((d) => ({ ...d, [ch.key]: o.value }))}
+                            >
+                              {o.label}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>

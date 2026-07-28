@@ -1,0 +1,469 @@
+[
+ {
+  "id": "the-midwife",
+  "name": "The Midwife",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"As long as you have The Midwife invested, it grants a +2 item bonus to Medicine checks. This increases to a +3 bonus if you are at least 17th level.\"",
+  "corrections": [
+   {
+    "problem": "The classification (situational: false) is CORRECT and should stand — but the stated justification is factually wrong and should not be relied on. The spec says \"The record already carries passiveEffects.skills.medicine = 3, so the engine folds it in.\" The record's text is \"+2 item bonus to Medicine checks. This increases to a +3 bonus if you are at least 17th level\", yet passiveEffects hardcodes a flat 3 with no level gate. A character below 17th level holding this artifact gets +3 where the rules give +2 — the engine does NOT fold it in correctly, it over-grants. (Verified this is unique among the unconditional items in this batch: bangles-of-crowns/intimidation:3, bracers-of-hammers/athletics:3, coronet-of-stars/medicine:3, cowl-of-keys/stealth:3, sash-of-books/society:3 are all flat +3 in their own text and so are correct; only the-midwife scales by level. passiveEffects demonstrably supports level formulas — the-cricket uses \"10 + 10*floor(@actor.level/19)\".)",
+    "correction": "Keep situational: false. Drop the claim that the engine handles it, and instead flag the underlying data bug: passiveEffects.skills.medicine should be a level-gated formula (e.g. 2 + floor(@actor.level/17) style, matching the-cricket's pattern) rather than the constant 3. Same latent risk applies to the-dance and the-eclipse, which the spec correctly notes carry NO passiveEffects block at all (confirmed) and so currently grant nothing."
+   }
+  ]
+ },
+ {
+  "id": "shadow",
+  "name": "Shadow",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"You gain a +1 item bonus to Stealth checks while wearing the armor.\" — the only condition is wearing the armor the rune is etched on.",
+  "corrections": [
+   {
+    "problem": "The classification (situational false — \"+1 item bonus to Stealth checks while wearing the armor\" is unconditional) is CORRECT, but the spec's engineNote is factually wrong: it claims \"The record already carries passiveEffects.skills.stealth: 1, so the engine folds it into the maths\" and sets needsEngineWork false. It does not. Shadow is a PROPERTY rune. planRune() in src/rules/attachments.ts returns `{ ok: true, action: 'etch', ..., consume: true }` and stores only the rune id in `hostInv.runes.property` (line 128) while consuming the rune's inventory entry. passiveItemBonus() in src/rules/derive.ts (lines 205-226) — and the resolvedItemPassives lane at line 223 — iterate `c.inventory` only (`for (const inv of c.inventory) { if (!(inv.worn || inv.invested || inv.equipped)) continue; read(db.items[inv.itemId]?.passiveEffects); }`), so an etched rune id is never resolved back to its item definition. The ONLY consumers of `runes.property` anywhere in src/ are the damage-rider lanes (derive.ts lines 1236 and 1443, companions.ts line 730). Result: the shadow rune's +1 item bonus to Stealth is silently dropped from the Stealth total. Note the contrast the spec missed: potency/striking/resilient/reinforcing are stored as TYPED fields on inv.runes and ARE read (acItem at derive.ts line 419, resilientSaveBonus at line 158), which is why the armor-potency and resilient specs' engine claims are correct while this one is not.",
+    "correction": "Keep situational: false (it is unconditional and belongs in the maths, not on a star). Change needsEngineWork to true with the note: GAP — passiveEffects on a PROPERTY rune are unreachable. Etching consumes the rune item (attachments.ts planRune, consume: true) and keeps only its id in inv.runes.property, but passiveItemBonus (derive.ts ~line 205) reads passiveEffects from inventory items only, so shadow's +1 item Stealth never lands. Fix: have derive.ts resolve each `(worn.inv.runes as ArmorRunes).property` id through db.items[...].passiveEffects and feed it into the same passiveItemBonus pool (still highest-wins, since item bonuses don't stack). The same lane is what any other passiveEffects-bearing property rune would need."
+   }
+  ]
+ },
+ {
+  "id": "resonant-guitar",
+  "name": "Resonant Guitar",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 status",
+    "when": "to AC against the triggering melee attack, if you spend the Chord of Protection reaction (once per day; the target may be you or an ally)",
+    "targetKind": "ac"
+   }
+  ],
+  "evidence": "\"The target gains a +2 status bonus to AC against the triggering attack.\" (Chord of Protection, trigger: a creature within 30 feet targets you or an ally with a melee attack)",
+  "corrections": [
+   {
+    "problem": "Marked situational:false for the Performance bonus, with the reasoning that '+2 item bonus to Performance checks attempted while using it' is UNCONDITIONAL and 'must NOT also be starred'. That is the inflating-error direction. The clause 'attempted while using it' is a per-check condition, not an equipment state: a bard who Performs by singing, dancing, acting or oratory while the guitar hangs on their back gets nothing. Confirmed against the pristine AoN text too ('a virtuoso handheld musical instrument that grants a +2 item bonus to Performance checks attempted while using it'). Worse, core.json already carries passiveEffects.skills.performance = 2, and src/rules/derive.ts:220-224 applies passiveEffects.skills to EVERY check of that skill for any item that is merely worn/invested/equipped — so today the app adds +2 to all Performance checks, including ones made with no instrument at all.",
+    "correction": "Keep the Chord of Protection AC entry as written (+2 status to AC vs the triggering melee attack, reaction, once per day — AoN confirms the once-per-day frequency). ADD a second entry for the instrument bonus instead of suppressing it: { bonus: '+2 item', when: 'on Performance checks made while actually playing the guitar (held in two hands) — not on Performance checks that do not use the instrument', targetKind: 'skill', skill: 'performance' }, and set needsEngineWork/needsHumanDecision so the owner decides whether to strip passiveEffects.skills.performance from the item record. Leaving it in the flat maths is the bug the mandate is trying to avoid. Same reasoning would apply to any other 'virtuoso instrument' record folded into passiveEffects."
+   }
+  ]
+ },
+ {
+  "id": "curious-teardrop",
+  "name": "Curious Teardrop",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+4 status",
+    "when": "on the saving throw against an emotion or metal effect that targets you, if you use the teardrop's Reflect Emotions reaction (once per day)",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"You receive a +4 status bonus to your saving throw against the triggering effect.\" (Reflect Emotions, trigger: \"You're targeted by an emotion or metal effect\")",
+  "corrections": [
+   {
+    "problem": "The 'when' string invents a frequency: '...if you use the teardrop's Reflect Emotions reaction (once per day)'. The record's own description puts 'Frequency once per day' under the FIRST activation (Request a Spell) only; Reflect Emotions lists a Trigger and nothing else. The pristine AoN text (aon-2e-archive equipment-2612.json) confirms: 'Activate—Reflect Emotions Reaction (concentrate) Trigger You're targeted by an emotion or metal effect; Effect You receive a +4 status bonus...' — no Frequency line. The single frequency object on the core.json record belongs to the 2-action Request a Spell activation (activationCost.value 2), not to the reaction.",
+    "correction": "Drop the '(once per day)' clause. when: 'on the saving throw against an emotion or metal effect that targets you, if you spend the teardrop's Reflect Emotions reaction'. Everything else in this spec is correct: +4 status, save 'all' because the triggering effect picks the save, and the Perception +26 / Diplomacy +24 / Alchemy Lore +26 / Metal Lore +26 / Society +24 / Will +26 / Int +6 / Wis +2 / Cha +4 block is the intelligent item's own stat block and must not be imported (note the spec wrote 'Lore +26' — the record actually lists two Lores, Alchemy and Metal)."
+   }
+  ]
+ },
+ {
+  "id": "keep-stone-shield",
+  "name": "Keep Stone Shield",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance (the shield's own AC bonus)",
+    "when": "on saving throws against spells that target you, while the shield is Raised",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"When you have a keep stone shield Raised, you gain its circumstance bonus to saving throws against spells that target you\"",
+  "corrections": [
+   {
+    "problem": "Two flaws, both in how the size is expressed (the situational/target/type calls themselves are right). (1) The bonus field literally reads '+2 circumstance (the shield's own AC bonus)' — a player with a buckler would be shown +2 when the shield actually grants +1, which is exactly the 'wrong bonus size' failure the star is supposed to prevent; the note admits the size is variable but the displayed string still asserts +2. (2) The engineNote's worked example is factually wrong: it says '+3 for a tower shield behind cover'. A tower shield's circumstance bonus to AC is +2 raised, and Take Cover while it is raised increases that circumstance bonus to +4. There is no +3 case.",
+    "correction": "Set bonus to a non-numeric formula string, e.g. 'equal to the raised shield's circumstance bonus to AC (+1 buckler, +2 most shields, +4 tower shield with Take Cover)', and have the display read the equipped shield's AC bonus rather than a literal. Fix the engineNote figure from +3 to +4 for a tower shield with Take Cover. The identical text and identical correction apply to keep-stone-shield-high-grade, whose description is byte-identical (it adds only Hardness 11 / HP 46 / BT 23 and the 13,200 gp price). The rest stands: save 'all' vs spells that target you while Raised, the '(as well as AC)' half is the ordinary Raise a Shield bonus and correctly not double-listed, and Shield Block vs spell damage is a capability not a bonus."
+   }
+  ]
+ },
+ {
+  "id": "retribution-axe",
+  "name": "Retribution Axe",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "on your next damage roll with this axe against the creature that most recently damaged you with an attack, before the end of your next turn",
+    "targetKind": "strikeDamage"
+   }
+  ],
+  "evidence": "\"Whenever a creature damages you with an attack... You gain a +2 circumstance bonus to your next damage roll against that creature before the end of your next turn.\" and \"you get the additional damage only if you attack the creature that damaged you most recently.\"",
+  "corrections": [
+   {
+    "problem": "The condition is NARROWED beyond the printed text. The record says: \"Whenever a creature damages you with an attack, the skull changes its appearance to look like the face of that creature. You gain a +2 circumstance bonus to your next damage roll against that creature before the end of your next turn.\" — there is no clause limiting that damage roll to Strikes made WITH the axe. The spec's `when` reads \"on your next damage roll with this axe against the creature that most recently damaged you\", adding a restriction the text never states. A player reading the tooltip would wrongly conclude a Strike with a second weapon (or a spell's damage roll) is excluded.",
+    "correction": "Word the trigger as printed: `when: \"on your next damage roll against the creature that most recently damaged you with an attack, before the end of your next turn (while wielding the axe)\"`. Keep bonus \"+2 circumstance\", targetKind strikeDamage, needsEngineWork true. If the app owner wants the axe-only reading enforced, that is a rules call, not something the text supports — set needsHumanDecision true with the question \"Does the Retribution Axe's +2 circumstance damage bonus apply to any damage roll against that creature, or only to Strikes made with the axe?\""
+   }
+  ]
+ },
+ {
+  "id": "acid-flask",
+  "name": "Acid Flask",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"Many types grant an item bonus to attack rolls.\" — Moderate: \"You gain a +1 item bonus to attack rolls.\" (Greater +2, Major +3; Lesser grants none)",
+  "corrections": [
+   {
+    "problem": "Inconsistent needsEngineWork across four records that are the SAME case. acid-flask is marked needsEngineWork true (\"the item bonus must be applied to the thrown bomb's own Strike, and it varies by grade\"), but alchemists-fire, dread-ampoule and glue-bomb — verified identical in structure (each graded id is itemType \"weapon\", group \"bomb\", range 20, with \"You gain a +1/+2/+3 item bonus to attack rolls\" on moderate/greater/major and nothing on lesser) — are all marked needsEngineWork false. Any downstream pass that filters on needsEngineWork will pick up 1 of the 4 identical gaps and silently drop the other 3.",
+    "correction": "Set the same flag and the same engineNote on all four catalog parents (acid-flask, alchemists-fire, dread-ampoule, glue-bomb) — either needsEngineWork true on all four (\"per-bomb item bonus to attack rolls must be applied to that bomb's own Strike; Lesser +0, Moderate +1, Greater +2, Major +3\") or false on all four if the strike engine already reads the graded records. The situational=false classification itself is correct for all four and should not change."
+   }
+  ]
+ },
+ {
+  "id": "staff-of-healing",
+  "name": "Staff of Healing",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "to the Hit Points restored when you cast heal (from your own slots or the staff's charges), while wielding the staff",
+    "targetKind": "spell"
+   }
+  ],
+  "evidence": "\"A staff of healing grants a +1 item bonus to the Hit Points you restore anytime you cast the heal spell using your own spell slots or charges from the staff.\"",
+  "corrections": [
+   {
+    "problem": "INVENTED CONDITION. The spec's `when` is \"...while wielding the staff\", but the record's text contains no wielding requirement: \"A *staff of healing* grants a +1 item bonus to the Hit Points you restore anytime you cast the *heal* spell using your own spell slots or charges from the staff.\" The word \"wield\"/\"hold\" never appears in this record (unlike every other staff in this chunk, which all print an explicit \"While wielding the staff\" clause — the contrast is deliberate, since the bonus is meant to apply to heal cast from your OWN slots). Adding the clause narrows the bonus to a state the text does not require and will tell a player at the table they lose it when the staff is stowed.",
+    "correction": "Drop \"while wielding the staff\". `when`: \"to the Hit Points restored whenever you cast heal using your own spell slots or the staff's charges\". If the app owner wants a holding requirement it is a rules interpretation, not something the record says — raise it as needsHumanDecision, do not bake it into the condition. Separately: targetKind 'spell' should carry needsHumanDecision true as well, because 'spell' stars the spell attack/DC, a stat this item does not modify at all — a wrong star is worse than no star until a heal-amount target kind exists."
+   }
+  ]
+ },
+ {
+  "id": "staff-of-healing-greater",
+  "name": "Staff of Healing (Greater)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "to the Hit Points restored when you cast heal (from your own slots or the staff's charges), while wielding the staff",
+    "targetKind": "spell"
+   }
+  ],
+  "evidence": "\"A staff of healing grants a +2 item bonus to the Hit Points you restore anytime you cast the heal spell using your own spell slots or charges from the staff.\"",
+  "corrections": [
+   {
+    "problem": "Same invented \"while wielding the staff\" condition. Record text: \"A *staff of healing* grants a +2 item bonus to the Hit Points you restore anytime you cast the *heal* spell using your own spell slots or charges from the staff.\" No wielding/holding clause anywhere in the description.",
+    "correction": "`when`: \"to the Hit Points restored whenever you cast heal using your own spell slots or the staff's charges\" (+2 item). Same needsHumanDecision note on the 'spell' placeholder target as the base staff."
+   }
+  ]
+ },
+ {
+  "id": "staff-of-healing-major",
+  "name": "Staff of Healing (Major)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+3 item",
+    "when": "to the Hit Points restored when you cast heal (from your own slots or the staff's charges), while wielding the staff",
+    "targetKind": "spell"
+   }
+  ],
+  "evidence": "\"A staff of healing grants a +3 item bonus to the Hit Points you restore anytime you cast the heal spell using your own spell slots or charges from the staff.\"",
+  "corrections": [
+   {
+    "problem": "Same invented \"while wielding the staff\" condition. Record text: \"...grants a +3 item bonus to the Hit Points you restore anytime you cast the *heal* spell using your own spell slots or charges from the staff.\" No wielding/holding clause.",
+    "correction": "`when`: \"to the Hit Points restored whenever you cast heal using your own spell slots or the staff's charges\" (+3 item). Same needsHumanDecision note on the 'spell' placeholder target."
+   }
+  ]
+ },
+ {
+  "id": "staff-of-healing-true",
+  "name": "Staff of Healing (True)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+4 item",
+    "when": "to the Hit Points restored when you cast heal (from your own slots or the staff's charges), while wielding the staff",
+    "targetKind": "spell"
+   }
+  ],
+  "evidence": "\"A staff of healing grants a +4 item bonus to the Hit Points you restore anytime you cast the heal spell using your own spell slots or charges from the staff.\"",
+  "corrections": [
+   {
+    "problem": "Same invented \"while wielding the staff\" condition. Record text: \"...grants a +4 item bonus to the Hit Points you restore anytime you cast the *heal* spell using your own spell slots or charges from the staff.\" No wielding/holding clause.",
+    "correction": "`when`: \"to the Hit Points restored whenever you cast heal using your own spell slots or the staff's charges\" (+4 item). Same needsHumanDecision note on the 'spell' placeholder target."
+   }
+  ]
+ },
+ {
+  "id": "aeon-stone",
+  "name": "Aeon Stone",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "The record is the generic parent entry - \"There are various types of aeon stones, each with a different appearance and magical effect\" - and its own text grants no bonus; the description merely concatenates every variant's write-up (Amplifying, Delaying, Peering, Formulating, Repairing, Flickering, ...).",
+  "corrections": [
+   {
+    "problem": "The situational:false call and its reasoning are correct (the generic record's own text is boilerplate plus a concatenated dump of every variant), but the human-decision QUESTION states a false premise: it offers \"split into the missing per-variant records first\". No variants are missing. core.json already carries a separate item record for every variant named in the question and more: aeon-stone-amplifying, -consumed, -delaying, -envisioning, -peering, -nourishing, -preserving, -smoothing, -sprouting, -formulating, -repairing, -crescent, -vital-amplification, -flickering, plus the whole legacy colour-named set (aeon-stone-dusty-rose-prism, -pale-lavender-ellipsoid, etc.). Asking the owner about non-existent work wastes a decision and could trigger a pointless data task.",
+    "correction": "Keep situational:false and the exclusion rationale. Rewrite the question to the real one: \"Every aeon stone variant already exists as its own item record (aeon-stone-amplifying, -smoothing, -flickering, ... plus the legacy colour-named set), so the generic 'aeon-stone' parent should simply be excluded from the situational registry — confirm the aggregate record is never the one a character actually owns.\""
+   }
+  ]
+ },
+ {
+  "id": "iron-medallion",
+  "name": "Iron Medallion",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 status",
+    "when": "on the triggering Will save against fear and other saves against fear for 1 minute (activate as a reaction before rolling)",
+    "targetKind": "save",
+    "save": "will"
+   }
+  ],
+  "evidence": "\"you gain a +2 status bonus to the triggering save and other saves against fear for 1 minute.\" Trigger: \"You attempt a Will save against a fear effect but haven't rolled yet\".",
+  "corrections": [
+   {
+    "problem": "The condition text invents an action type: \"(activate as a reaction before rolling)\". The record's activation is \"**Activate** ⟨4⟩ (concentrate)\" and its structured field is \"activationCost\": {\"type\": \"free\"}. In this app's own glyph mapping (src/sheet/RichText.tsx: '4': 'Free action'; src/sheet/widgets.tsx Glyph char=\"4\" title=\"Free action'; AstRenderer.tsx 'free action': '4', reaction: '5'), ⟨4⟩ is a FREE action, not a reaction. Everything else in the spec (target save/will, +2 status, the 1-minute tail, excluding the degree-of-success upgrade) checks out.",
+    "correction": "Change the when text to: \"on the triggering Will save against fear and other saves against fear for 1 minute (free action, triggered when you attempt a Will save against a fear effect but haven't rolled yet)\". Same caution applies to the sibling ⟨4⟩ talismans in this chunk (savior-spike, potency-crystal x3) — their spec text happens not to name an action type, so leave those alone, but do not later relabel them 'reaction' either."
+   }
+  ]
+ },
+ {
+  "id": "alacritous-horsehoes",
+  "name": "Alacritous Horsehoes",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance (base) / +3 (greater)",
+    "when": "on the animal companion's Athletics checks to High Jump and Long Jump, while it has the horseshoes invested",
+    "targetKind": "skill",
+    "skill": "athletics"
+   }
+  ],
+  "evidence": "\"that creature gains a +5-foot item bonus to its land Speed and a +2 circumstance bonus to Athletics checks to High Jump and Long Jump\" (Greater: \"the bonus to Athletics checks is +3\").",
+  "corrections": [
+   {
+    "problem": "The engineNote's dedupe claim is incomplete and therefore misleading. It says this is \"a misspelled duplicate of 'alacritous-horseshoes' ... whichever id the registry keys off, the other should be suppressed\" — but core.json actually holds FOUR records for this item line: 'alacritous-horsehoes' (the misspelled variant-family record), 'alacritous-horseshoes' (base), 'alacritous-horseshoes-greater', and a third copy of the base, 'aon-alacritous-horsehoes' (also misspelled, empty price, no usage/edition fields). Suppressing only one of the two spares still leaves a duplicate star.",
+    "correction": "Amend the note to name all three base-item records ('alacritous-horsehoes', 'alacritous-horseshoes', 'aon-alacritous-horsehoes') and state that the registry should key off the clean, priced record 'alacritous-horseshoes' with the other two suppressed. The bonus content itself (+2 circumstance to Athletics for High Jump and Long Jump, greater = +3) is verified correct against the text."
+   }
+  ]
+ },
+ {
+  "id": "alacritous-horseshoes",
+  "name": "Alacritous Horseshoes",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "on the animal companion's Athletics checks to High Jump and Long Jump, while it has the horseshoes invested",
+    "targetKind": "skill",
+    "skill": "athletics"
+   }
+  ],
+  "evidence": "\"a +5-foot item bonus to its land Speed and a +2 circumstance bonus to Athletics checks to High Jump and Long Jump.\"",
+  "corrections": [
+   {
+    "problem": "The engineNote treats the Speed half as settled correct maths — \"The +5-foot land Speed is unconditional and already in passiveEffects.speedBonus\" (the same sentence appears on 'alacritous-horsehoes' and 'alacritous-horseshoes-greater'). It is unconditional, but it is mis-scoped in exactly the way the note flags for Athletics: the record reads \"When you affix these ... to the hooves of an ordinary horse or a quadrupedal animal companion and the animal companion invests them, THAT CREATURE gains a +5-foot item bonus to its land Speed\". passiveEffects.speedBonus = 5 (10 on the greater) applies it to the player character, so a PC carrying the shoes gets +5 ft Speed they are not entitled to. Marking that half 'already handled' will stop anyone from fixing it.",
+    "correction": "Rewrite the note: \"The +5-foot land Speed is unconditional but belongs to the COMPANION. core.json currently exposes it as passiveEffects.speedBonus = 5 (10 on the greater), which the engine applies to the PC — that is an inflated flat bonus, not correct maths. Both halves of this item (Speed and the Athletics jump bonus) need companion scoping.\" Apply the same correction to the notes on 'alacritous-horsehoes' and 'alacritous-horseshoes-greater'."
+   }
+  ]
+ },
+ {
+  "id": "clandestine-cloak",
+  "name": "Clandestine Cloak",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "while the cloak's hood is up (Interact action to raise it)",
+    "targetKind": "skill",
+    "skill": "stealth"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "while the hood is up, to Impersonate a forgettable background character (a servant, a porter, etc.)",
+    "targetKind": "skill",
+    "skill": "deception"
+   },
+   {
+    "bonus": "-1 item (penalty)",
+    "when": "while the cloak's hood is up",
+    "targetKind": "skill",
+    "skill": "diplomacy"
+   },
+   {
+    "bonus": "-1 item (penalty)",
+    "when": "while the cloak's hood is up",
+    "targetKind": "skill",
+    "skill": "intimidation"
+   },
+   {
+    "bonus": "Veil of Privacy (1 hour)",
+    "when": "after you Activate Cloak Identity (2 actions, once per day); ends early if you lower the hood",
+    "targetKind": "skill",
+    "skill": "deception"
+   }
+  ],
+  "evidence": "\"When you pull up the hood of this nondescript gray cloak (an Interact action), you become drab and uninteresting, gaining a +1 item bonus to Stealth checks and to Deception checks to Impersonate a forgettable background character, such as a servant, but also taking a -1 item penalty to Diplomacy and Intimidation checks.\"",
+  "corrections": [
+   {
+    "problem": "The 5th listed bonus — {bonus: \"Veil of Privacy (1 hour)\", targetKind: \"skill\", skill: \"deception\"} — is invented. I read spells['veil-of-privacy'] in core.json: \"You erect protective wards that make the target difficult to detect via magic. Veil of privacy attempts to counteract all detection, revelation, and scrying effects used against the target or the target's gear throughout the duration\". It grants NO bonus to Deception or to any other stat, and it is not a typed bonus at all — the `bonus` field is a duration string, not a modifier. Starring Deception for it would tell a player they roll better on Deception during Cloak Identity, which is false. (The greater cloak spec correctly omits this entry, so the two are inconsistent with each other.)",
+    "correction": "Delete the 5th entry entirely. Keep only the four hood-up modifiers, all of which check out against the record text and against the item having no passiveEffects: +1 item Stealth, +1 item Deception restricted to Impersonating a forgettable background character, -1 item Diplomacy, -1 item Intimidation. Cloak Identity belongs to the activation/spell-effect lane (like Puff of Smoke on charlatan's-cape), not the situational-bonus registry. Note for the record that the base cloak's Veil of Privacy lasts 1 hour while the greater's is a 5th-rank version lasting 8 hours."
+   }
+  ]
+ },
+ {
+  "id": "crown-of-witchcraft",
+  "name": "Crown of Witchcraft",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"You gain a +1 item bonus to Intimidation checks, and if you're a witch, you gain a +2 item bonus to your patron skill.\"",
+  "corrections": [
+   {
+    "problem": "The classification (situational false for both the +1 Intimidation and the +2 patron-skill bonus) is right, but the engineNote is factually wrong where it says the engine \"needs a patron→granted-skill resolution (nothing in src/ references crown-of-witchcraft or a patron-skill lookup today)\". The patron→skill mapping already exists in both data and code: core.json classes.witch.subclass.options[].grants.skills carries it for all 16 patrons (baba-yaga→occultism, choir-politic→society, faiths-flamekeeper→religion, the-inscribed-one→arcana, etc.), and src/rules/build.ts:1245-1247 already consumes subclass grant skills (\"Subclass-/choice-granted skills (druid order, rogue racket, witch patron, eidolon)\"). Only the crown-of-witchcraft reference is genuinely absent.",
+    "correction": "Rewrite the engineNote: the missing piece is item-side only — passiveEffects has no way to say \"+2 item to whichever skill this character's witch patron granted\". The resolution itself is a one-liner off classes.witch.subclass.options[].grants.skills[0] for the character's chosen subclassId, gated on classId === 'witch'. Useful safety fact while implementing: no patron grants Intimidation (all 16 grant arcana/nature/occultism/religion/society), so the crown's two item bonuses can never land on the same skill and the non-stacking-item-bonus case does not arise."
+   }
+  ]
+ },
+ {
+  "id": "crown-of-witchcraft-greater",
+  "name": "Crown of Witchcraft (Greater)",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"You gain a +2 item bonus to Intimidation checks, and if you're a witch, you gain a +3 item bonus to your patron skill.\"",
+  "corrections": [
+   {
+    "problem": "Same defect as the base crown: the engineNote asserts a missing patron→skill lookup (\"the +3 must resolve to the character's witch patron skill; the item cannot name it\") as though the mapping were unavailable. It is available — classes.witch.subclass.options[].grants.skills in core.json, already read by src/rules/build.ts:1245.",
+    "correction": "Same correction as crown-of-witchcraft: the gap is an item-side expression for \"your patron skill\" in passiveEffects, not a patron-skill resolution. Classification (situational false, +2 Intimidation unconditional and already in passiveEffects, +3 patron-skill class-gated therefore maths not a star) stands."
+   }
+  ]
+ },
+ {
+  "id": "doubling-rings",
+  "name": "Doubling Rings",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"the weapon's fundamental runes are replicated onto any melee weapon you wield in the hand wearing the iron ring... The replication functions only if you wear both rings, and it ends as soon as you cease wielding a melee weapon in one of your hands.\"",
+  "corrections": [
+   {
+    "problem": "The reasonIfNot describes the engine as \"effectiveWeaponRunes() (copies potency/striking onto the target weapon)\", presenting the maths as already correct for this item. It is not: src/rules/derive.ts:924-928 returns `property: [...new Set([...(own?.property ?? []), ...(src.property ?? [])])]` unconditionally — the BASE rings copy property runes too, even though this record says only \"the weapon's fundamental runes are replicated onto any melee weapon you wield in the hand wearing the iron ring\" and reserves property-rune replication for the greater version (\"The rings also replicate property runes...\"). So the justification for 'no star needed, the maths already handles it' rests on a description of the code that is wrong in the player's favour.",
+    "correction": "Keep situational: false (this is variable rune replication, not a fixed typed bonus — correct call). Fix the engineNote to state two engine defects, not one: (1) effectiveWeaponRunes does not gate the property-rune union on rings.greater, so base doubling rings over-grant property runes; (2) the same-weapon-group requirement enforced at derive.ts:919 for the base rings appears nowhere in either record's printed text — I re-read both descriptions and neither mentions weapon groups. The greater-rings spec's observation that the two property-rune provisos ('meets all the prerequisites for a given rune', 'is not a specific weapon') are unchecked is confirmed correct."
+   }
+  ]
+ },
+ {
+  "id": "items/sanitizing-pin",
+  "currentBonuses": [],
+  "evidence": "",
+  "corrections": [
+   {
+    "problem": "The engineNote asserts a data defect that does not exist: \"the record's activationCost is 'free' while the description shows the reaction glyph — worth checking the importer separately.\" The glyph in the description is ⟨4⟩, which is the FREE-ACTION glyph, not the reaction glyph. Inferred across the whole items collection: ⟨4⟩ maps to activationCost.type 'free' in 300 records and ⟨5⟩ maps to 'reaction' in 267 (e.g. sparkwarden 'Activate ⟨5⟩ envision' -> reaction; lionfish-spear 'Lionfish Poison ⟨5⟩' -> reaction). The record is internally consistent and matches the printed free-action talisman activation.",
+    "correction": "Drop the importer aside entirely. The classification itself is right and unchanged: situational true, one row, +2 status, targetKind 'save', save 'fortitude', when 'on the Fortitude save against the INITIAL exposure to a disease or poison, when you activate the pin affixed to your armor (single use; a critical failure on the triggering roll becomes a failure)'. Keep needsHumanDecision for the consumable policy."
+   }
+  ]
+ },
+ {
+  "id": "items/prey-mutagen",
+  "currentBonuses": [],
+  "evidence": "",
+  "corrections": [
+   {
+    "problem": "The +10/+20/+30/+40 status bonus to Speed is dropped with no row on the grounds that it is \"UNCONDITIONAL for the mutagen's duration — a timed effect for the maths/Modes lane\". That is inconsistent with the same engineer's own treatment of identical shapes in this chunk: demons-knot's \"+2 status bonus to Intimidation ... for 1 minute\" after an activation IS authored as situational, and therapeutic-snap-peas' \"+2 item bonus to all saves ... for 1 minute\" IS authored as situational. A bonus that exists only while a consumed elixir is running is conditional by the same standard. Nothing in the app applies it either: there is no consumable-duration lane in derive.ts, and Modes are hand-authored by the user, so the item's largest and most player-visible number is invisible everywhere.",
+    "correction": "Add a second row to the family record: bonus '+10 to +40 status (lesser/moderate/greater/major)', targetKind 'speed', when 'while the Prey Mutagen is active (1 minute to 1 hour by grade)'. Separately, the AC row's bonus string '+1 to +4 circumstance (lesser/moderate/greater/major)' is not a parseable modifier for a single record — on the family/summary record state the range in `when` and keep `bonus` to a single value or mark the record summary-only. Fold the Speed bonus into the consumable-policy question rather than silently dropping it."
+   }
+  ]
+ },
+ {
+  "id": "items/prey-mutagen-lesser",
+  "currentBonuses": [],
+  "evidence": "",
+  "corrections": [
+   {
+    "problem": "Same omission at grade level: \"You gain a +10 status bonus to your speed\" (verified verbatim in the record) is dropped as \"unconditional for the duration\", while the AC row from the same one-shot elixir is authored. The app has a 'speed' target kind available and no other lane that applies a consumed mutagen's timed Speed bonus.",
+    "correction": "Add a row: bonus '+10 status', targetKind 'speed', when 'while the lesser prey mutagen is active (1 minute)'. Keep the existing +1 circumstance AC row unchanged."
+   }
+  ]
+ },
+ {
+  "id": "items/prey-mutagen-moderate",
+  "currentBonuses": [],
+  "evidence": "",
+  "corrections": [
+   {
+    "problem": "Same omission: \"You gain a +20 status bonus to your speed\" is dropped while the +2 circumstance AC row from the same elixir is kept.",
+    "correction": "Add a row: bonus '+20 status', targetKind 'speed', when 'while the moderate prey mutagen is active (10 minutes)'."
+   }
+  ]
+ },
+ {
+  "id": "items/prey-mutagen-greater",
+  "currentBonuses": [],
+  "evidence": "",
+  "corrections": [
+   {
+    "problem": "Same omission: \"You gain a +30 status bonus to your speed\" is dropped while the +3 circumstance AC row from the same elixir is kept.",
+    "correction": "Add a row: bonus '+30 status', targetKind 'speed', when 'while the greater prey mutagen is active (1 hour)'."
+   }
+  ]
+ },
+ {
+  "id": "items/prey-mutagen-major",
+  "currentBonuses": [],
+  "evidence": "",
+  "corrections": [
+   {
+    "problem": "Same omission: \"You gain a +40 status bonus to your speed\" is dropped while the +4 circumstance AC row from the same elixir is kept.",
+    "correction": "Add a row: bonus '+40 status', targetKind 'speed', when 'while the major prey mutagen is active (1 hour)'."
+   }
+  ]
+ },
+ {
+  "id": "items/kraken-figurehead",
+  "currentBonuses": [],
+  "evidence": "",
+  "corrections": [
+   {
+    "problem": "Two faults. (1) The engineNote claims \"No authorable rows\", but one clause is authorable and lands on the PC: \"Creatures in the aura and in the same body of water as the ship take a -2 circumstance penalty to Athletics checks to Swim.\" The Lash Out! aura is centred on YOUR OWN ship (emanation equal to the ship's length), so a PC or ally swimming beside their own ship is inside it. The note's claim that the Swim penalty lands \"on arbitrary creatures in the aura ... not on the item's owner\" is an overstatement — the aura does not exclude your own crew. The registry already accepts penalties (two negative entries exist). (2) The row is under-specified: situational is set to true but the object carries neither a `bonuses` array nor a `reasonIfNot`, so it asserts a situational bonus exists while yielding nothing to display and no stated reason.",
+    "correction": "Keep needsEngineWork true for the Board check (skill genuinely unnamed) and the piloting penalties (no stat), but add one authorable row: bonus '-2 circumstance', targetKind 'skill', skill 'athletics', when 'to Athletics checks to Swim while you are in the water inside your ship's Lash Out! tentacle aura (emanation equal to the ship's length, 10 minutes)'. Correct the engineNote to say the Swim penalty CAN hit the owner and their party. If the intent was that nothing is authorable, the row must carry reasonIfNot rather than a bare situational:true."
+   }
+  ]
+ },
+ {
+  "id": "items/kraken-figurehead-wracking",
+  "currentBonuses": [],
+  "evidence": "",
+  "corrections": [
+   {
+    "problem": "Identical to the base figurehead, whose text this record repeats verbatim: the -2 circumstance penalty to Athletics checks to Swim inside the Lash Out! aura is authorable and can land on the PC (the aura is on your own ship), so \"Same gap as kraken-figurehead\" / no authorable rows is wrong; and the row sets situational:true with neither a `bonuses` array nor a `reasonIfNot`.",
+    "correction": "Same as the base record: add bonus '-2 circumstance', targetKind 'skill', skill 'athletics', when 'to Athletics checks to Swim while you are in the water inside your ship's Lash Out! tentacle aura'. Keep needsEngineWork true for the Board check and piloting penalties only. (The rest of the spec is accurate: this grade differs only by 7d10 hull damage and the DC 31 break-free check.)"
+   }
+  ]
+ },
+ {
+  "id": "items/spore-shepherds-staff-major",
+  "currentBonuses": [],
+  "evidence": "",
+  "corrections": [
+   {
+    "problem": "The engineNote misquotes the record: \"the Nethys note says the printed values are wrong-looking\". The record's actual text is \"Nethys Note: The level and price of this are as printed in the source.\" — Nethys is confirming a faithful transcription, not flagging the values as suspect. The note also appears in the shared family dump inside all three staff records (base, greater and major), so attributing it to the Major record specifically is inaccurate.",
+    "correction": "Restate the aside as: the Major record carries level 4 / price 100 gp while Greater carries level 8 / 475 gp (both verified), and the shared description text notes only that these are as printed in the source. The situational classification (+2 circumstance, skill/nature, 'to Nature checks to identify fungus, while wielding the staff') is correct and unchanged for all three grades."
+   }
+  ]
+ },
+ {
+  "id": "obsidian-goggles",
+  "name": "Obsidian Goggles",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "to Perception checks that involve sight (nothing for hearing, scent, or other non-visual senses)",
+    "targetKind": "perception"
+   }
+  ],
+  "evidence": "\"While wearing the goggles, you gain a +1 item bonus to Perception checks involving sight.\" — restricted to sight-based Perception, so it does nothing for hearing, scent, or a Perception check made in darkness you cannot see through. Foundry predicates the perception FlatModifier on 'visual'.",
+  "corrections": [
+   {
+    "problem": "The situational:true call is right (Foundry predicates 'visual'), but the engineNote is wrong about what the app does today and hides a live inflation bug. core.json ALREADY carries passiveEffects {\"perception\":1} on this record, and passiveItemBonus() in src/rules/derive.ts (line 205, read at line 222) folds that into the Perception total for any worn/invested/equipped item with NO condition check. So the sight-only bonus is currently added to hearing and scent Perception checks too. The note claims only that the bonus 'needs the lookup to read worn/invested items' — i.e. that it cannot display at all — which is the opposite of the truth: it is already displaying, as part of the printed number.",
+    "correction": "Keep situational true, +1 item, target perception, condition 'to Perception checks that involve sight'. Replace the engineNote with: the +1 is already applied unconditionally via passiveEffects.perception; starring it without also gating or removing that passive would either double-advertise it or leave every non-visual Perception check inflated by 1. ItemPassiveEffects (src/rules/types.ts, ~line 842) has no predicate/condition field at all, so this needs a real engine change (a conditional item-passive lane), not just extending the lookup past feats. Set needsEngineWork true."
+   }
+  ]
+ }
+]

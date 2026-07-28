@@ -1,0 +1,490 @@
+[
+ {
+  "id": "born-of-animal",
+  "name": "Born of Animal",
+  "collection": "heritages",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "to Intimidate animals and beasts (and no penalty for lacking a shared language)",
+    "targetKind": "skill",
+    "skill": "intimidation"
+   },
+   {
+    "bonus": "Speed becomes 30 feet (replacement value, untyped)",
+    "when": "in Yaoguai Form, while both your hands are free and you run on all fours",
+    "targetKind": "speed"
+   }
+  ],
+  "evidence": "\"You gain a +1 circumstance bonus to Intimidation checks against animals and beasts\" (Humanoid Form); \"If you have both hands free, you can increase your Speed to 30 feet as you run on all fours\" (Yaoguai Form)",
+  "corrections": [
+   {
+    "problem": "The Intimidation entry's `when` drops the form gate. The record reads \"- **Humanoid Form** Animals can sense the power of your presence. You gain a +1 circumstance bonus to Intimidation checks against animals and beasts...\" — the bonus exists only in Humanoid Form, but the spec's `when` is just 'to Intimidate animals and beasts (and no penalty for lacking a shared language)'. The same spec correctly writes 'in Yaoguai Form' on its second entry, and born-of-celestial and born-of-item both correctly carry 'Humanoid Form', so this is an internal inconsistency, not a deliberate reading.",
+    "correction": "when: 'while in Humanoid Form, to Intimidate animals and beasts (and you take no penalty for lacking a shared language)'."
+   }
+  ]
+ },
+ {
+  "id": "born-of-elements",
+  "name": "Born of Elements",
+  "collection": "heritages",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "to Sense Direction (and you ignore the no-compass penalty)",
+    "targetKind": "skill",
+    "skill": "survival"
+   }
+  ],
+  "evidence": "\"You gain a +1 circumstance bonus to Survival checks to Sense Direction, and you don't take a penalty if you don't have a compass.\"",
+  "corrections": [
+   {
+    "problem": "Same dropped form gate. The record reads \"- **Humanoid Form** You remain attuned to the natural world. You gain a +1 circumstance bonus to Survival checks to Sense Direction, and you don't take a penalty if you don't have a compass.\" The spec's `when` ('to Sense Direction (and you ignore the no-compass penalty)') omits Humanoid Form, so a player reading the star would think it applies in yaoguai form too.",
+    "correction": "when: 'while in Humanoid Form, to Sense Direction (and you ignore the no-compass penalty)'."
+   }
+  ]
+ },
+ {
+  "id": "born-of-vegetation",
+  "name": "Born of Vegetation",
+  "collection": "heritages",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "to Administer First Aid",
+    "targetKind": "skill",
+    "skill": "medicine"
+   }
+  ],
+  "evidence": "\"You gain a +1 circumstance bonus to Medicine checks to Administer First Aid\"; \"the creature attempting the check gains a +1 circumstance bonus if you have the plant trait and are in bright light, or the fungus trait and are in darkness\"",
+  "corrections": [
+   {
+    "problem": "Same dropped form gate. The record reads \"- **Humanoid Form** With fresh vegetation, you can better aid those in need. You gain a +1 circumstance bonus to Medicine checks to Administer First Aid.\" The spec's `when` is bare 'to Administer First Aid'. (The rest of this spec is right — the Yaoguai Form clause genuinely buffs someone else's Medicine check to Treat your Wounds and correctly has no entry.)",
+    "correction": "when: 'while in Humanoid Form, to Administer First Aid'."
+   }
+  ]
+ },
+ {
+  "id": "aon-fulcrum-lenses",
+  "name": "Fulcrum Lenses",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "on saves against fear effects, while the Crimson Fulcrum Lens is invested",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+2 item (+4 on jaws Strikes)",
+    "when": "on melee Strike damage, while the Crimson Fulcrum Lens is invested",
+    "targetKind": "strikeDamage"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "for 24 hours after you rejuvenate, or for 1 minute after activating it (Ebon Fulcrum Lens, spends a glimmer)",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "for 24 hours after you rejuvenate, or for 1 minute after activating it (Ebon Fulcrum Lens, spends a glimmer)",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "for 24 hours after you rejuvenate, or for 1 minute after activating it (Ebon Fulcrum Lens, spends a glimmer)",
+    "targetKind": "classDc"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "for 24 hours after you rejuvenate, or for 1 minute after activating it (Ebon Fulcrum Lens, spends a glimmer)",
+    "targetKind": "spell"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "on saves against magic for 1 round after activating the Emerald Fulcrum Lens (once per day)",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+2 status",
+    "when": "on saves against emotion effects, while the Ochre Fulcrum Lens is invested",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"You gain a +2 item bonus to saving throws against fear effects and a +2 item bonus to your melee Strike damage (this increases to a +4 item bonus to damage if the melee Strike is a jaws attack).\" (Crimson lens)",
+  "corrections": [
+   {
+    "problem": "Condition invented / unconditional bonus marked situational, and internally inconsistent with the same author's own bomb rulings. The Crimson lens entry \"+2 item (+4 on jaws Strikes) ... on melee Strike damage, while the Crimson Fulcrum Lens is invested\" is starred as situational, but the record states no condition: \"While you have the Crimson Fulcrum Lens invested ... You gain a +2 item bonus to saving throws against fear effects and a +2 item bonus to your melee Strike damage (this increases to a +4 item bonus to damage if the melee Strike is a jaws attack).\" Every melee Strike gets it; 'melee' and 'jaws' are weapon scopes, not situations — exactly the reasoning the same specs used to declare the tenderizer grenades' flat '+2 item bonus to attack rolls' UNCONDITIONAL and 'part of that weapon's attack maths'. Starring it means the player sees a conditional marker on a bonus that always applies to their melee damage.",
+    "correction": "Drop the strikeDamage entry from the situational list for the Crimson lens: classify it as unconditional-while-invested (+2 item to melee Strike damage, +4 item on jaws Strikes) and route it to the melee strike-damage maths, with needsEngineWork true because derive.ts has no lane for an invested item granting an item bonus to melee damage (grep of derive.ts shows damage item bonuses come only from runes/ABP/Monster Parts). Keep the other seven entries as authored — the fear-save +2 item (Crimson), the four Ebon +1 item entries, the Emerald +2 item vs magic for 1 round, and the Ochre +2 status vs emotion are all genuinely condition- or duration-gated and were verified word-for-word against the record."
+   }
+  ]
+ },
+ {
+  "id": "aon-noqual-armor",
+  "name": "Noqual Armor",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "to AC against spell attack rolls, while wearing this armor",
+    "targetKind": "ac"
+   }
+  ],
+  "evidence": "\"While wearing noqual armor, you gain a +1 circumstance bonus to AC against spell attack rolls.\"",
+  "corrections": [
+   {
+    "problem": "needsEngineWork is set to false, which is wrong and directly contradicts the same batch's ruling on aon-inubrix-armor. The bonus itself is right (\"While wearing noqual armor, you gain a +1 circumstance bonus to AC against spell attack rolls\"), but this record is a precious-MATERIAL template, not a wearable suit: acBonus 0, no category, no group, price {}. A real character wears 'noqual half plate' — a base armor with the material applied — so an item lane that fires on 'the character has aon-noqual-armor equipped' will never trigger for a legitimate build, and if someone does equip the template it contributes 0 AC. The identical record aon-inubrix-armor was correctly flagged 'This is a precious-material template record (acBonus 0), not a wearable suit.'",
+    "correction": "Keep the bonus ({+1 circumstance, to AC against spell attack rolls, while wearing this armor, targetKind ac}) but set needsEngineWork true with the note: material-template record — the marker must key off the base armor having the noqual material applied, which the item lane cannot currently express (same material lane already demanded for aon-inubrix-armor / aon-inubrix-weapon)."
+   }
+  ]
+ },
+ {
+  "id": "aon-sovereign-steel-armor",
+  "name": "Sovereign Steel Armor",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "to AC against spell attack rolls, while wearing this armor",
+    "targetKind": "ac"
+   }
+  ],
+  "evidence": "\"granting you a +1 circumstance bonus to AC against spell attack rolls\"",
+  "corrections": [
+   {
+    "problem": "Same defect as aon-noqual-armor: needsEngineWork false. The +1 circumstance to AC against spell attack rolls is correctly read from the text, but the record is a material template — acBonus 0, no category, no group, price {} (level 13) — describing what happens to armor 'crafted from' sovereign steel, not a suit a character can wear. The marker as specified can never fire on a real build, and the batch's own aon-inubrix-armor entry applies exactly this reasoning.",
+    "correction": "Keep the bonus entry unchanged and set needsEngineWork true: 'precious-material template record — needs a material lane that applies sovereign steel to a base armor; the item lane cannot key a marker off a template the character never actually equips.'"
+   }
+  ]
+ },
+ {
+  "id": "the-kardosian-fragments",
+  "name": "The Kardosian Fragments",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+3 item",
+    "when": "to Recall Knowledge checks on subjects covered by the book (necromancy, Thassilonian rune magic, Runelord Zutha), while holding it",
+    "targetKind": "skill",
+    "skill": "all"
+   }
+  ],
+  "evidence": "\"If the Kardosian Fragments are referenced as part of any attempt to Recall Knowledge on subjects associated with its contents, it grants a +3 item bonus to the skill check.\"",
+  "corrections": [
+   {
+    "problem": "The condition is broadened beyond the record. The spec's 'when' reads 'on Recall Knowledge checks on subjects covered by the book (necromancy, Thassilonian rune magic, Runelord Zutha), while holding it'. The record says only: 'If the Kardosian Fragments are referenced as part of any attempt to Recall Knowledge on subjects associated with its contents, it grants a +3 item bonus to the skill check.' None of the three parenthetical subjects appears in that sentence, and 'while holding it' is a requirement of the separate Embrace the Void activation ('you're holding the Kardosian Fragments'), not of the Recall Knowledge bonus, which only requires the book to be 'referenced as part of' the attempt. Player-facing text that names subjects the book never claims to cover invites arguments at the table.",
+    "correction": "Reword the condition to the record's own wording: when = 'when you reference the book as part of a Recall Knowledge attempt on a subject associated with its contents'. Bonus (+3 item), targetKind skill, skill 'all', situational true, and the temp-HP note are all correct as authored and should be kept."
+   }
+  ]
+ },
+ {
+  "id": "aon-astrolabe",
+  "name": "Astrolabe",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "on checks to identify celestial bodies (standard astrolabe works only on steady ground)",
+    "targetKind": "skill",
+    "skill": "survival"
+   }
+  ],
+  "evidence": "\"An astrolabe also grants a +1 item bonus on checks to identify celestial bodies.\"",
+  "corrections": [
+   {
+    "problem": "The target is a guess the record does not support, and it contradicts how the same batch handled every other Recall Knowledge bonus. The record says the holder 'must be trained in Survival' to USE the astrolabe (for latitude/date/time), then separately: 'An astrolabe also grants a +1 item bonus on checks to identify celestial bodies.' Identifying a celestial body is a Recall Knowledge check, which uses whichever knowledge skill or Lore fits — the very reason the-kardosian-fragments and aon-fixer were both keyed skill:'all'. Pinning it to Survival would star the wrong stat for a character who identifies the body with Nature or Astronomy Lore, and would star Survival for a use the text never grants.",
+    "correction": "Change targetKind skill / skill 'survival' to skill 'all', keeping bonus '+1 item' and when = 'on checks to identify celestial bodies (a standard astrolabe only functions on steady ground; you must be trained in Survival to use it)'. Keep needsHumanDecision true with the same question, but restate it as 'confirm whether the +1 should be narrowed to Nature / a lore:astronomy key' rather than defaulting to Survival."
+   }
+  ]
+ },
+ {
+  "id": "hopeful-athamaru",
+  "name": "Hopeful Athamaru",
+  "collection": "heritages",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "granted to ALLIES inside your 10-foot aura, against fear (emotion, mental)",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"You have a 10-foot aura that grants any ally in it a +1 circumstance bonus to saving throws against fear; this is an emotion and mental effect.\"",
+  "corrections": [
+   {
+    "problem": "The spec emits a populated bonuses[] entry (+1 circumstance, save:'all') while its own engineNote states that registering it would be a false positive on the athamaru's own saves. Anything downstream that ingests `bonuses` will star this character's Fort/Ref/Will for a bonus they provably never receive: the text reads \"a 10-foot aura that grants any ALLY in it a +1 circumstance bonus to saving throws against fear\" — allies only, never self.",
+    "correction": "Set bonuses to an empty array (keep situational true only if the pipeline needs the record retained for the human decision, otherwise situational:false). The record grants zero modifiers to this character's own numbers; the ally aura must not be expressible as a registry entry until an ally-facing surface exists. Keep needsEngineWork/needsHumanDecision as authored — the question itself is the right one."
+   }
+  ]
+ },
+ {
+  "id": "root-leshy",
+  "name": "Root Leshy",
+  "collection": "heritages",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "to your Fortitude DC against attempts to Reposition, Shove, or Trip you, and to Fortitude saves against effects that would move you or knock you prone",
+    "targetKind": "save",
+    "save": "fortitude"
+   },
+   {
+    "bonus": "+2 circumstance",
+    "when": "to your Reflex DC against attempts to Reposition, Shove, or Trip you, and to Reflex saves against effects that would move you or knock you prone",
+    "targetKind": "save",
+    "save": "reflex"
+   }
+  ],
+  "evidence": "\"You gain a +2 circumstance bonus to your Fortitude or Reflex DC against attempts to Reposition, Shove, or Trip you. This bonus also applies to saving throws against spells or effects that attempt to move you or knock you prone.\"",
+  "corrections": [
+   {
+    "problem": "The condition text is narrowed beyond the record. Core.json reads: \"You gain a +2 circumstance bonus to your Fortitude or Reflex DC against attempts to Reposition, Shove, or Trip you. This bonus also applies to saving throws against spells or effects that attempt to move you or knock you prone.\" The second sentence names no defence, but the spec folds it into the Fortitude-only and Reflex-only entries, so a Will save against, e.g., a mental effect that knocks the leshy prone would show no marker.",
+    "correction": "Keep the two DC entries but restrict their `when` text to the Reposition/Shove/Trip DC clause, and add a third entry: bonus '+2 circumstance', save 'all', when 'against spells or effects that try to move you or knock you prone'. That matches how the registry already keys unqualified \"saving throws against X\" wording (grave-orc, sewer-rat, chrysanthemum-leshy all use save:'all')."
+   }
+  ]
+ },
+ {
+  "id": "courageous-tanuki",
+  "name": "Courageous Tanuki",
+  "collection": "heritages",
+  "currentBonuses": [
+   {
+    "bonus": "+10 feet circumstance",
+    "when": "to all your Speeds while you have the fleeing condition",
+    "targetKind": "speed"
+   }
+  ],
+  "evidence": "\"Whenever you gain the fleeing condition, you also gain a +10-foot circumstance bonus to your Speeds that lasts as long as you're fleeing.\"",
+  "corrections": [
+   {
+    "problem": "needsEngineWork is set false, but the entry uses targetKind 'speed', which does not exist in the shipped registry. SituationalTarget in src/rules/situationalBonuses.ts declares kind: 'skill' | 'save' | 'perception' | 'ac' | 'attack', and all 419 existing target objects in that file use only those five (skill 199, save 141, perception 42, ac 35, attack 2). The entry cannot be written to the registry as specified.",
+    "correction": "Set needsEngineWork true with the note: 'the +10-foot circumstance bonus to all Speeds while fleeing needs a `speed` target kind added to SituationalTarget (and a Speed row on the sheet that can carry a star); no existing kind fits.' The classification itself is right — it is conditional on holding the fleeing condition, so it must NOT be folded into the printed Speed."
+   }
+  ]
+ },
+ {
+  "id": "tsukumogami-poppet",
+  "name": "Tsukumogami Poppet",
+  "collection": "heritages",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance (+3 with Helpful Poppet)",
+    "when": "to Aid using the tool Lore you chose for this heritage",
+    "targetKind": "skill",
+    "skill": "lore"
+   }
+  ],
+  "evidence": "\"You're trained in this skill, and you gain a +2 circumstance bonus to checks to Aid with this skill. If you take the Helpful Poppet feat, the bonus increases to +3.\"",
+  "corrections": [
+   {
+    "problem": "The engineNote misstates the record: \"the record carries `loreChoices`-style freedom but no effectChoices block naming the Lore, so the chosen value may not even be recorded.\" The record carries no `loreChoices` field at all, and its only effectChoices block is `poppet-material` (fire/electricity/cold weakness). Contrast half-moon-sarangay in the same chunk, which really does carry `loreChoices: 2`.",
+    "correction": "Reword to the verified fact: 'the record has no loreChoices field and no effectChoices naming the Lore (its only effectChoices block is poppet-material), so the player\\'s chosen Lore is definitively not stored anywhere — the star has nothing to attach to until the heritage records its Lore grant.' The +2/+3 Helpful Poppet observation and the human-decision question are both correct and should stay."
+   }
+  ]
+ },
+ {
+  "id": "whisper-elf",
+  "name": "Whisper Elf",
+  "collection": "heritages",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "when you Seek to find a hidden or undetected creature within 30 feet (only if you can hear it and it can make sound)",
+    "targetKind": "perception"
+   }
+  ],
+  "evidence": "\"You gain a +2 circumstance bonus when using the Seek action to find hidden or undetected creatures within 30 feet of you.\"",
+  "corrections": [
+   {
+    "problem": "The engineNote describes the second rider as lowering \"the flat check to notice a concealed target to DC 3 / a hidden one to DC 9\". The record says the opposite direction of use: \"When you TARGET an opponent that is concealed from you or hidden from you, reduce the DC of the flat check to 3 for a concealed target or 9 for a hidden one.\" It is the flat check to successfully affect a concealed/hidden target (normally DC 5 / DC 11), not a check to notice one.",
+    "correction": "Reword the note to 'when you target a concealed opponent the flat check drops from DC 5 to DC 3, and from DC 11 to DC 9 for a hidden one'. The registry entry itself (+2 circumstance, perception, Seek within 30 feet, only if you can hear and the creature can make sound) is correct and needs no change."
+   }
+  ]
+ },
+ {
+  "id": "hunting-catfolk",
+  "name": "Hunting Catfolk",
+  "collection": "heritages",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "to Track a creature or object you have smelled before",
+    "targetKind": "skill",
+    "skill": "survival"
+   }
+  ],
+  "evidence": "\"you gain a +2 circumstance bonus to Track a creature or object if you've smelled it before.\"",
+  "corrections": [
+   {
+    "problem": "The engineNote claims Track is 'a Survival activity (verified against core.json\\'s actions entry)'. That verification did not happen: core.json's actions.track record has no `skill` field, and its description has the skill reference stripped (it reads \"using the rules\" where the Survival link was). Nothing in core.json states the skill.",
+    "correction": "The conclusion is right — Track is a Survival exploration activity in PF2e, so the star belongs on Survival — but the note must not cite core.json as the source. Say 'Track is a Survival activity per the PF2e rules; core.json\\'s actions.track carries no skill field, so the mapping is rules knowledge, not data.' Worth flagging separately that actions.track has a stripped skill reference."
+   }
+  ]
+ },
+ {
+  "id": "orc-warmask",
+  "name": "Orc Warmask",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"You can spend 1 hour performing a ceremony that costs 50 gp to attune yourself more deeply with your *warmask*. If you do, you gain a +1 item bonus to the associated skill whenever you wear the *warmask*.\"",
+  "corrections": [
+   {
+    "problem": "The classification (situational:false) is right, but the engineNote is factually wrong about the app: it says the +1 \"needs a stored choice plus an attuned flag before it can enter the maths\", implying the choice mechanism does not exist. It already does. core.json has an `effectChoices` field used by 29 items, and it is wired end-to-end (src/rules/types.ts documents it, src/rules/build.ts resolves it into `chosenEffects` / `resolvedItemPassives` for worn items, src/builder/Builder.tsx + shared.tsx render the picker). `druids-crown` and `eidolon-cape` are exactly this pattern — pick one of N, each option granting `passive.skills.<skill> = N`.",
+    "correction": "Keep situational:false. Rewrite the note to: orc-warmask simply has no authored `effectChoices` block; it needs one choice with the four sources mapping to passive.skills religion / nature / arcana / occultism = 1 (The Gods / The Land / Magic / The Unknown). Only the 50 gp attunement GATE is unmodelled — express it inside the same block (either a 5th \"chosen but not attuned\" option, or 8 options = 4 skills x attuned/not), since a bare 4-option block would hand the +1 to a character who never paid for the ceremony. Narrow the human-decision question to just the attunement representation; do not ask whether a per-item choice lane should be built."
+   }
+  ]
+ },
+ {
+  "id": "heros-plate-greater",
+  "name": "Hero's Plate (Greater)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 status",
+    "when": "against fear effects, while wearing the hero's plate",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"You gain resistance 10 to mental damage and a +2 status bonus to saves against fear.\"",
+  "corrections": [
+   {
+    "problem": "The engineNote names only one missing unconditional piece — \"the armor's built-in *+2 greater resilient* runes, whose +2 item bonus to ALL saves is unconditional and is NOT represented anywhere in the record's fields\". It misses that the potency half of the same rune string is missing too: the record's acBonus is 6, dexCap 0, checkPenalty -3, speedPenalty -10, strength 4, which is byte-for-byte the BASE full-plate record (d.items['full-plate'] = acBonus 6, dexCap 0, cp -3, sp -10, str 4). So the \"+2\" potency rune's +2 item bonus to AC is absent as well.",
+    "correction": "Note BOTH gaps: the +2 potency (item bonus to AC) and the greater resilient (+2 item bonus to saves) are unrepresented. Also widen the scope note — this is systemic, not per-item: 93 armor records name built-in runes in their prose and none carry them in any field (there is no runes/potency/resilient field in the item schema at all). Classification of the +2 status vs fear as situational is correct and unaffected."
+   }
+  ]
+ },
+ {
+  "id": "plate-armor-of-the-deep",
+  "name": "Plate Armor of the Deep",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "to Athletics checks to Swim",
+    "targetKind": "skill",
+    "skill": "athletics"
+   }
+  ],
+  "evidence": "\"you take no Speed reduction or check penalty from armor when Swimming, gain a +2 item bonus to Athletics checks to Swim, can breathe underwater\"",
+  "corrections": [
+   {
+    "problem": "Same omission as hero's plate. The note says only \"the base *+2 greater resilient* runes' unconditional +2 item bonus to saves is also absent from the record's fields\". The record is acBonus 6 / dexCap 0 / checkPenalty -3 / speedPenalty -10 / strength 4 — identical to base full-plate — so the +2 potency item bonus to AC is missing too, and passiveEffects contains only grantsLanguages: ['thalassic'].",
+    "correction": "State that both the +2 AC potency and the +2 save resilient are missing from the fields. The +2 item bonus to Athletics to Swim as the only situational entry is correct."
+   }
+  ]
+ },
+ {
+  "id": "signifers-mask",
+  "name": "Signifer's Mask",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "to Deception checks to Lie",
+    "targetKind": "skill",
+    "skill": "deception"
+   },
+   {
+    "bonus": "+1 circumstance",
+    "when": "to your Deception DC against a creature using Sense Motive on you",
+    "targetKind": "skill",
+    "skill": "deception"
+   },
+   {
+    "bonus": "+1 circumstance",
+    "when": "to Intimidation checks to Coerce",
+    "targetKind": "skill",
+    "skill": "intimidation"
+   }
+  ],
+  "evidence": "\"you gain a +1 circumstance bonus to Deception checks to lie, Intimidation checks to coerce, and Deception DCs against sense-motive\"",
+  "corrections": [
+   {
+    "problem": "needsHumanDecision is set to false even though the spec's own engineNote says entry 2 (\"to your Deception DC against a creature using Sense Motive on you\") is \"a DC-side bonus rather than a check bonus — same display gap as Olfactory Obfuscator\". The identical situation on olfactory-obfuscator-lesser was flagged needsHumanDecision:true with a question about whether DC-only bonuses get a star. The same unanswered question decides whether this entry may be written at all, so the flag contradicts the note.",
+    "correction": "Set needsHumanDecision:true with the same question (\"Should DC-only bonuses be shown as a star on the related skill with DC-only wording, or suppressed until the sheet can display skill DCs?\"), so the owner's single ruling is recorded against every record it governs. The two check-side entries (+1 circumstance Deception to Lie, +1 circumstance Intimidation to Coerce) are correct and can ship regardless of the ruling."
+   }
+  ]
+ },
+ {
+  "id": "inflammation-flask-greater",
+  "name": "Inflammation Flask (Greater)",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"You gain a +2 item bonus to attack rolls.\" — stated flatly, with no condition beyond using the bomb",
+  "corrections": [
+   {
+    "problem": "The engineNote's supporting citation is misleading: \"core.json carries no field for an alchemical bomb's item bonus to attack (compare alchemists-fire-lesser, which has none to carry)\". alchemists-fire-lesser's text grants no attack bonus at ALL (\"deals 1d8 fire damage, 1 persistent fire damage, and 1 fire splash damage\" — full stop), so it demonstrates nothing about whether the schema could carry one.",
+    "correction": "The underlying claim is right — I enumerated every field name across d.items and there is no attackBonus/itemBonus field anywhere (fields are: acBonus, activationCost, apexAttribute, baseItem, brokenThreshold, bulk, capacity, category, checkPenalty, consumableType, counters, damage, descRefs, description, dexCap, dynamicSkillBonus, edition, effectChoices, frequency, grantedStrikes, grantsFeats, group, hands, hardness, heldSpells, hp, id, ignoredBulk, innateSpells, itemType, level, material, maxHpBonus, name, negativeHealing, passiveEffects, price, range, rarity, reload, source, speedPenalty, spellSlot, strength, strikeDamage, traits, usage, uses, value). Swap the citation to alchemists-fire-moderate/greater, which DO print \"+1/+2 item bonus to attack rolls\" in prose and still carry no field — that is the actual proof, and it shows the gap spans the whole bomb catalogue, not just these 10 records."
+   }
+  ]
+ },
+ {
+  "id": "lastwall-soup-greater",
+  "name": "Lastwall Soup (Greater)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+3 item",
+    "when": "to Stealth checks and Stealth DCs against undead (1 hour after eating)",
+    "targetKind": "skill",
+    "skill": "stealth"
+   }
+  ],
+  "evidence": "\"For 1 hour after consuming a bowl of improved Lastwall soup, you gain a +3 item bonus to Stealth checks and DCs against undead.\"",
+  "corrections": [
+   {
+    "problem": "The spec is faithful to the record, but its engineNote (\"Identical bonus to the Greater version; this one simply lacks the temporary Hit Points\" / the greater's +3) launders what looks like a data defect instead of flagging it. The level-18 Greater record's own text reads \"For 1 hour after consuming a bowl of improved Lastwall soup, you gain a +3 item bonus\" — it names the IMPROVED soup, and grants the same +3 as the level-10 lastwall-soup-improved, while the level-1 base lastwall-soup grants +2. A three-grade line reading +2 / +3 / +3 with the top grade quoting the middle grade's name is almost certainly a copy-paste in core.json.",
+    "correction": "Keep the +3 (the record's own text is the authority for this pass) and keep the entry situational with skill/stealth, but add needsHumanDecision:true or a data flag: \"lastwall-soup-greater's description names the *improved* soup and repeats its +3; re-check the printed value against AoN before the registry hard-codes +3 for both grades.\" Everything else in both soup specs (item type, 1-hour window, temp HP correctly excluded from an 'hp' entry) is correct."
+   }
+  ]
+ },
+ {
+  "id": "aon-submersible-helm",
+  "name": "Submersible Helm",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item (+2 for the greater helm)",
+    "when": "on Athletics checks to Swim, while wearing the helmet with the visor down",
+    "targetKind": "skill",
+    "skill": "athletics"
+   }
+  ],
+  "evidence": "\"You also have a +1 item bonus to Athletics checks to Swim.\" / \"The helm grants a +2 item bonus.\" (greater version)",
+  "corrections": [
+   {
+    "problem": "Condition narrowed beyond the record's own text. The spec's when reads \"on Athletics checks to Swim, while wearing the helmet with the visor down\", but the visor-down clause belongs to the PRECEDING sentence (\"While wearing the helmet with the visor down, you can see, hear, and speak clearly underwater.\"); the Swim bonus is its own sentence — \"You also have a +1 item bonus to Athletics checks to Swim.\" Foundry's submersible-helmet.json backs this up: the FlatModifier is predicated only on [\"action:swim\"], with no visor gate. Minor, but it is an added condition a player could be told they fail to meet.",
+    "correction": "when: \"on Athletics checks to Swim (+2 with the greater helm)\" — drop \"with the visor down\". Everything else in this spec (item type, athletics target, +1/+2 scaling) is correct."
+   }
+  ]
+ },
+ {
+  "id": "aon-keep-stone-armor",
+  "name": "Keep Stone Armor",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item (on top of the armor's normal item bonus)",
+    "when": "against spells",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+1 item (on top of the armor's resilient-rune bonus)",
+    "when": "on saving throws against spells",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"While wearing keep stone armor, the item bonus it provides to AC and saving throws increases by 1 against spells\"",
+  "corrections": [
+   {
+    "problem": "The engineNote states a contested rules reading as settled fact: \"The saves half only does anything if the armor also has a resilient rune (that's the item bonus being increased).\" The record only says \"the item bonus it provides to AC and saving throws increases by 1 against spells\" — it does not say a resilient rune is a prerequisite, and the opposite reading (0 + 1 = a +1 item bonus to saves vs spells even with no resilient rune) is equally available. Acting on the note would hide a bonus a player may be entitled to. The two emitted bonus entries themselves are correct under either reading.",
+    "correction": "Keep both bonus entries as authored, but soften the note to an ambiguity and raise it rather than resolve it: set needsHumanDecision:true with the question \"Does keep stone armor's +1 to saves vs spells require an existing item bonus to saves (a resilient rune) to increase, or does it stand alone? The text only says the item bonus 'increases by 1'.\" Do not gate the display on the armor having a resilient rune."
+   }
+  ]
+ }
+]

@@ -1,0 +1,881 @@
+[
+ {
+  "id": "viridian-crown",
+  "name": "Viridian Crown",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+3 item",
+    "when": "on your skill check when you cast the Fortifying Brew or Resurrect ritual, as primary or secondary caster",
+    "targetKind": "skill",
+    "skill": "all"
+   },
+   {
+    "bonus": "+3 status",
+    "when": "while you Sustain Elven Hope, against mental effects (you and allies in the emanation)",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"When you cast either of these [rituals] ... you gain a +3 item bonus to your skill check\" and \"+3 status bonus to saving throws against mental effects\"",
+  "corrections": [
+   {
+    "problem": "Condition broadened beyond the text. The engineNote says \"Requires being the anointed ruler of Kyonin or having their permission — a fiction gate, not a roll condition\", presented as governing the record. In the record's own description that clause is scoped to the apex paragraph only: \"If you are the properly anointed ruler of Kyonin, or if that ruler has given you permission to wear the crown for a time, as long as you have the Viridian Crown invested, choose either Charisma or Wisdom.\" Both situational bonuses sit in later paragraphs gated only on investment — \"As long as you have the crown invested, it imparts knowledge of the Fortifying Brew and Resurrect rituals. When you cast either of these ... you gain a +3 item bonus to your skill check\", and the Elven Hope activation, which states no rulership requirement. The two bonus entries' own when strings are correct; only the note attaches a gate the text does not.",
+    "correction": "Restrict the rulership gate to the apex attribute increase in the engineNote (\"the Cha-or-Wis apex boost — and only that — requires being Kyonin's anointed ruler or having their permission\"). Leave both bonus entries as written; they are correctly conditioned on investment / on Sustaining Elven Hope. Separately worth recording in the note: core.json hard-codes apexAttribute: \"cha\" although the item lets you choose Charisma or Wisdom and re-choose every 24 hours."
+   }
+  ]
+ },
+ {
+  "id": "serene-mutagen",
+  "name": "Serene Mutagen",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 to +4 item (by grade)",
+    "when": "while a serene mutagen is active (lesser +1 / moderate +2 / greater +3 / major +4)",
+    "targetKind": "save",
+    "save": "will"
+   },
+   {
+    "bonus": "+2 to +4 item (by grade)",
+    "when": "on Will saves against mental effects the bonus improves (lesser +2 / moderate +3 / greater +4; major stays +4)",
+    "targetKind": "save",
+    "save": "will"
+   },
+   {
+    "bonus": "+1 to +4 item (by grade)",
+    "when": "while a serene mutagen is active",
+    "targetKind": "perception"
+   },
+   {
+    "bonus": "+1 to +4 item (by grade)",
+    "when": "while a serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "medicine"
+   },
+   {
+    "bonus": "+1 to +4 item (by grade)",
+    "when": "while a serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "nature"
+   },
+   {
+    "bonus": "+1 to +4 item (by grade)",
+    "when": "while a serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "religion"
+   },
+   {
+    "bonus": "+1 to +4 item (by grade)",
+    "when": "while a serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "survival"
+   },
+   {
+    "bonus": "-1 untyped",
+    "when": "drawback - to attack rolls and save DCs of offensive spells while a serene mutagen is active",
+    "targetKind": "spell"
+   },
+   {
+    "bonus": "-1 untyped per damage die",
+    "when": "drawback - to all weapon, unarmed attack and spell damage while a serene mutagen is active",
+    "targetKind": "strikeDamage"
+   }
+  ],
+  "evidence": "\"Benefit You gain an item bonus to Will saves and Perception, Medicine, Nature, Religion, and Survival checks. This bonus improves when you attempt Will saves against mental effects.\" / \"Drawback You take a -1 penalty to attack rolls and save DCs of offensive spells, and a -1 penalty per damage die to all weapon, unarmed attack, and spell damage.\" - generic parent record.",
+  "corrections": [
+   {
+    "problem": "The drawback \"-1 penalty to attack rolls and save DCs of offensive spells\" is filed ONLY under targetKind 'spell', and needsHumanDecision is set false. On the plain reading only the *save DCs* are qualified \"of offensive spells\"; the attack-roll penalty is unrestricted - corroborated by the very next clause, which penalises \"all weapon, unarmed attack, and spell damage\" (the spec itself files that one under strikeDamage). As specced, a martial character drinking a serene mutagen sees a -1 marker on nothing but spells while their Strikes silently keep the penalty.",
+    "correction": "Add a row: bonus \"-1 untyped\", when \"drawback - to all attack rolls (weapon, unarmed and spell) while a serene mutagen is active\", targetKind \"strikeAttack\"; keep the existing 'spell' row but narrow its `when` to \"to the save DCs of offensive spells\". If the app owner prefers the narrow spell-only reading, set needsHumanDecision true with the question \"does 'a -1 penalty to attack rolls and save DCs of offensive spells' restrict the attack-roll penalty to spell attacks, or to all attack rolls?\" rather than resolving it silently."
+   }
+  ]
+ },
+ {
+  "id": "serene-mutagen-lesser",
+  "name": "Serene Mutagen (Lesser)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "while the lesser serene mutagen is active (1 minute)",
+    "targetKind": "save",
+    "save": "will"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "on Will saves against mental effects while the lesser serene mutagen is active (replaces the +1)",
+    "targetKind": "save",
+    "save": "will"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "while the lesser serene mutagen is active",
+    "targetKind": "perception"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "while the lesser serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "medicine"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "while the lesser serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "nature"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "while the lesser serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "religion"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "while the lesser serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "survival"
+   },
+   {
+    "bonus": "-1 untyped",
+    "when": "drawback - to attack rolls and save DCs of offensive spells while the lesser serene mutagen is active",
+    "targetKind": "spell"
+   },
+   {
+    "bonus": "-1 untyped per damage die",
+    "when": "drawback - to all weapon, unarmed attack and spell damage while the lesser serene mutagen is active",
+    "targetKind": "strikeDamage"
+   }
+  ],
+  "evidence": "\"**Benefit** You gain a +1 item bonus to Will saves and Perception, Medicine, Nature, Religion, and Survival checks. This bonus improves to +2 when you attempt Will saves against mental effects.\" / \"**Drawback** You take a -1 penalty to attack rolls and save DCs of offensive spells, and a -1 penalty per damage die...\" / \"**Duration** 1 minute.\"",
+  "corrections": [
+   {
+    "problem": "Same as the parent record: the -1 attack-roll penalty is filed only under 'spell'. Record text: \"**Drawback** You take a -1 penalty to attack rolls and save DCs of offensive spells, and a -1 penalty per damage die to all weapon, unarmed attack, and spell damage.\" Weapon/unarmed Strikes get no marker even though the damage half of the same sentence explicitly covers them.",
+    "correction": "Add \"-1 untyped\" / when \"drawback - to all attack rolls while the lesser serene mutagen is active\" / targetKind \"strikeAttack\"; restrict the existing 'spell' row's `when` to \"to the save DCs of offensive spells\". Otherwise set needsHumanDecision true with the scope question."
+   }
+  ]
+ },
+ {
+  "id": "serene-mutagen-moderate",
+  "name": "Serene Mutagen (Moderate)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "while the moderate serene mutagen is active (10 minutes)",
+    "targetKind": "save",
+    "save": "will"
+   },
+   {
+    "bonus": "+3 item",
+    "when": "on Will saves against mental effects while the moderate serene mutagen is active (replaces the +2)",
+    "targetKind": "save",
+    "save": "will"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "while the moderate serene mutagen is active",
+    "targetKind": "perception"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "while the moderate serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "medicine"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "while the moderate serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "nature"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "while the moderate serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "religion"
+   },
+   {
+    "bonus": "+2 item",
+    "when": "while the moderate serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "survival"
+   },
+   {
+    "bonus": "-1 untyped",
+    "when": "drawback - to attack rolls and save DCs of offensive spells while the moderate serene mutagen is active",
+    "targetKind": "spell"
+   },
+   {
+    "bonus": "-1 untyped per damage die",
+    "when": "drawback - to all weapon, unarmed attack and spell damage while the moderate serene mutagen is active",
+    "targetKind": "strikeDamage"
+   }
+  ],
+  "evidence": "\"**Benefit** You gain a +2 item bonus to Will saves and Perception, Medicine, Nature, Religion, and Survival checks. This bonus improves to +3 when you attempt Will saves against mental effects.\" / \"**Drawback** You take a -1 penalty to attack rolls and save DCs of offensive spells, and a -1 penalty per damage die...\" / \"**Duration** 10 minutes.\"",
+  "corrections": [
+   {
+    "problem": "Same defect: \"-1 penalty to attack rolls and save DCs of offensive spells\" recorded only as targetKind 'spell', so no attack-roll marker exists for a weapon user.",
+    "correction": "Add \"-1 untyped\" / when \"drawback - to all attack rolls while the moderate serene mutagen is active\" / targetKind \"strikeAttack\"; narrow the 'spell' row to the save DCs of offensive spells, or flag needsHumanDecision."
+   }
+  ]
+ },
+ {
+  "id": "serene-mutagen-greater",
+  "name": "Serene Mutagen (Greater)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+3 item",
+    "when": "while the greater serene mutagen is active (1 hour)",
+    "targetKind": "save",
+    "save": "will"
+   },
+   {
+    "bonus": "+4 item",
+    "when": "on Will saves against mental effects while the greater serene mutagen is active (replaces the +3); a success becomes a critical success",
+    "targetKind": "save",
+    "save": "will"
+   },
+   {
+    "bonus": "+3 item",
+    "when": "while the greater serene mutagen is active",
+    "targetKind": "perception"
+   },
+   {
+    "bonus": "+3 item",
+    "when": "while the greater serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "medicine"
+   },
+   {
+    "bonus": "+3 item",
+    "when": "while the greater serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "nature"
+   },
+   {
+    "bonus": "+3 item",
+    "when": "while the greater serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "religion"
+   },
+   {
+    "bonus": "+3 item",
+    "when": "while the greater serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "survival"
+   },
+   {
+    "bonus": "-1 untyped",
+    "when": "drawback - to attack rolls and save DCs of offensive spells while the greater serene mutagen is active",
+    "targetKind": "spell"
+   },
+   {
+    "bonus": "-1 untyped per damage die",
+    "when": "drawback - to all weapon, unarmed attack and spell damage while the greater serene mutagen is active",
+    "targetKind": "strikeDamage"
+   }
+  ],
+  "evidence": "\"**Benefit** You gain a +3 item bonus to Will saves and Perception, Medicine, Nature, Religion, and Survival checks. This bonus improves to +4 when you attempt Will saves against mental effects. When you roll a success on a Will save against a mental effect, you get a critical success instead.\"",
+  "corrections": [
+   {
+    "problem": "Same defect: the attack-roll half of the drawback is dropped into the 'spell' row only.",
+    "correction": "Add \"-1 untyped\" / when \"drawback - to all attack rolls while the greater serene mutagen is active\" / targetKind \"strikeAttack\"; narrow the 'spell' row to the save DCs of offensive spells, or flag needsHumanDecision."
+   }
+  ]
+ },
+ {
+  "id": "serene-mutagen-major",
+  "name": "Serene Mutagen (Major)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+4 item",
+    "when": "while the major serene mutagen is active (1 hour)",
+    "targetKind": "save",
+    "save": "will"
+   },
+   {
+    "bonus": "+4 item",
+    "when": "on Will saves against mental effects while the major serene mutagen is active a success becomes a critical success and a critical failure becomes a failure (the bonus itself stays +4 at this grade)",
+    "targetKind": "save",
+    "save": "will"
+   },
+   {
+    "bonus": "+4 item",
+    "when": "while the major serene mutagen is active",
+    "targetKind": "perception"
+   },
+   {
+    "bonus": "+4 item",
+    "when": "while the major serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "medicine"
+   },
+   {
+    "bonus": "+4 item",
+    "when": "while the major serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "nature"
+   },
+   {
+    "bonus": "+4 item",
+    "when": "while the major serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "religion"
+   },
+   {
+    "bonus": "+4 item",
+    "when": "while the major serene mutagen is active",
+    "targetKind": "skill",
+    "skill": "survival"
+   },
+   {
+    "bonus": "-1 untyped",
+    "when": "drawback - to attack rolls and save DCs of offensive spells while the major serene mutagen is active",
+    "targetKind": "spell"
+   },
+   {
+    "bonus": "-1 untyped per damage die",
+    "when": "drawback - to all weapon, unarmed attack and spell damage while the major serene mutagen is active",
+    "targetKind": "strikeDamage"
+   }
+  ],
+  "evidence": "\"**Benefit** You gain a +4 item bonus to Will saves and Perception, Medicine, Nature, Religion, and Survival checks. When you roll a success on a Will save against a mental effect, you get a critical success instead, and your critical failures on Will saves against mental effects become failures instead.\"",
+  "corrections": [
+   {
+    "problem": "Same defect: the attack-roll half of the drawback is dropped into the 'spell' row only.",
+    "correction": "Add \"-1 untyped\" / when \"drawback - to all attack rolls while the major serene mutagen is active\" / targetKind \"strikeAttack\"; narrow the 'spell' row to the save DCs of offensive spells, or flag needsHumanDecision."
+   }
+  ]
+ },
+ {
+  "id": "covenant-tea",
+  "name": "Covenant Tea",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "for 10 minutes after you drink it (1 hour if brewed with the Tea Ceremony activation), to Diplomacy checks",
+    "targetKind": "skill",
+    "skill": "diplomacy"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "for 10 minutes after you drink it (1 hour with the Tea Ceremony), to your Perception DC only — not to Perception checks",
+    "targetKind": "perception"
+   }
+  ],
+  "evidence": "\"when you drink it, you gain a +1 item bonus to Diplomacy checks and to your Perception DC for 10 minutes\" (\"The duration increases to 1 hour\" with the Tea Ceremony activation).",
+  "corrections": [
+   {
+    "problem": "The second bonus is attached to targetKind 'perception'. The record's own text is: \"you gain a +1 item bonus to Diplomacy checks and to your Perception DC for 10 minutes\". A Perception DC is the number OTHERS roll against — it is never added to any Perception check you make. Putting it on the perception target makes the sheet star Perception and tell the player they have a bonus on a roll that in fact gets nothing. That is the exact 'misleading marker' failure the brief warns about, and needsEngineWork alone does not neutralise it because the marker still renders on the wrong stat.",
+    "correction": "Keep only the Diplomacy entry: { bonus: '+1 item', when: 'for 10 minutes after you drink it (1 hour if brewed with the Tea Ceremony), to Diplomacy checks', target: { kind: 'skill', skill: 'diplomacy' } }. Drop the perception entry from the registry and record the Perception-DC clause as needsEngineWork prose only (the app has no Perception DC stat), or set needsHumanDecision asking the owner whether a Perception DC display should be added. Everything else in this spec (situational true, +1 item, durations 10 minutes / 1 hour with the Tea Ceremony) is confirmed correct."
+   }
+  ]
+ },
+ {
+  "id": "lesser-elixir-of-the-peaks",
+  "name": "Lesser Elixir of the Peaks",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "for 1 hour after you drink it, while in mountainous terrain, to Athletics checks to Climb, High Jump, or Long Jump",
+    "targetKind": "skill",
+    "skill": "athletics"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "for 1 hour after you drink it, while in mountainous terrain, against the effects of high altitude",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"drinking this elixir while in mountainous terrain protects you from the effects of severe cold and grants you an item bonus to Athletics checks made to Climb, High Jump, or Long Jump, as well as to saving throws against the effects of high altitude\" / \"The bonus is +1, and the elixir lasts for 1 hour.\"",
+  "corrections": [
+   {
+    "problem": "Low severity, but unflagged: the condition 'while in mountainous terrain' is stated as an ONGOING requirement with confidence 'high'. The record's text reads \"For the listed duration, drinking this elixir while in mountainous terrain protects you from the effects of severe cold and grants you an item bonus to Athletics checks made to Climb, High Jump, or Long Jump\" — grammatically the terrain qualifies the act of DRINKING, not the whole duration. Under the printed wording, drinking it in the Kodars and then descending arguably keeps the bonus; under the spec's wording it is lost. The same sentence (and the same spec wording) appears verbatim in moderate-elixir-of-the-peaks, greater-elixir-of-the-peaks and major-elixir-of-the-peaks, so the same correction applies to all four.",
+    "correction": "Either phrase the condition to mirror the text — when: 'for 1 hour after drinking it in mountainous terrain, to Athletics checks to Climb, High Jump, or Long Jump' — or keep the current wording but drop confidence to medium and set needsHumanDecision: 'Does the mountainous-terrain clause gate only the moment of drinking, or the whole duration?'. Everything else in the four elixir specs is confirmed against the record: +1/1 hour (lesser), +2/one day (moderate), +3/1 day (greater), +3/7 days (major), item type, Athletics target, and the high-altitude save clause with no printed save type."
+   }
+  ]
+ },
+ {
+  "id": "emotion-surge",
+  "name": "Emotion Surge",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after activating the relic (once per hour) — if the relic's emotion is Anger",
+    "targetKind": "skill",
+    "skill": "athletics"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after activating the relic (once per hour) — if the relic's emotion is Awe",
+    "targetKind": "skill",
+    "skill": "performance"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after activating the relic (once per hour), to Recall Knowledge — if the relic's emotion is Dedication",
+    "targetKind": "skill",
+    "skill": "all"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after activating the relic (once per hour) — if the relic's emotion is Fear",
+    "targetKind": "skill",
+    "skill": "stealth"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after activating the relic (once per hour) — if the relic's emotion is Hatred",
+    "targetKind": "skill",
+    "skill": "intimidation"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after activating the relic (once per hour) — if the relic's emotion is Joy",
+    "targetKind": "skill",
+    "skill": "diplomacy"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after activating the relic (once per hour) — if the relic's emotion is Love",
+    "targetKind": "skill",
+    "skill": "medicine"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after activating the relic (once per hour) — if the relic's emotion is Misery",
+    "targetKind": "skill",
+    "skill": "survival"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after activating the relic (once per hour) — if the relic's emotion is Pride",
+    "targetKind": "skill",
+    "skill": "society"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "for 1 minute after activating the relic (once per hour) — if the relic's emotion is Remorse",
+    "targetKind": "skill",
+    "skill": "deception"
+   }
+  ],
+  "evidence": "'A surge of emotion emanates from your relic, granting a +1 status bonus to skill checks determined by the relic's emotion. This bonus lasts for 1 minute.' followed by the emotion→skill table (Anger Athletics, Awe Performance, Dedication Recall Knowledge, Fear Stealth, Hatred Intimidation, Joy Diplomacy, Love Medicine, Misery Survival, Pride Society, Remorse Deception).",
+  "corrections": [
+   {
+    "problem": "Emits ten separate skill entries (athletics, performance, skill:'all' for Recall Knowledge, stealth, intimidation, diplomacy, medicine, survival, society, deception) for a record where the printed text grants exactly ONE of them: 'granting a +1 status bonus to skill checks determined by the relic's emotion'. Since core.json carries no effectChoices for the relic's emotion (I confirmed the record has none), the registry would put a star on ten skills at once for any character with this gift — the exact 'misleads the player' failure the marker is supposed to avoid. It is also internally inconsistent with how the same engineer handled the identical unknown-choice problem two records earlier: stone-of-unrivaled-skill ('the skill you chose for your contract') got ONE skill:'all' entry with the constraint in the condition text.",
+    "correction": "Replace the ten entries with a single entry: bonus '+1 status', targetKind 'skill', skill 'all', when 'for 1 minute after activating the relic (once per hour), to checks with the one skill set by the relic's emotion — Anger Athletics, Awe Performance, Dedication Recall Knowledge, Fear Stealth, Hatred Intimidation, Joy Diplomacy, Love Medicine, Misery Survival, Pride Society, Remorse Deception'. Keep needsEngineWork true with the same note (an effectChoices block keyed on the relic's emotion would collapse this to one accurate marker). Bonus size, type (status) and duration in the spec are all correct."
+   }
+  ]
+ },
+ {
+  "id": "draconic-resistance",
+  "name": "Draconic Resistance",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status",
+    "when": "to AC against attacks made by dragons",
+    "targetKind": "ac"
+   }
+  ],
+  "evidence": "'You gain a +1 status bonus to AC against attacks from dragons and resistance to an energy type corresponding to the soul seed's draconic origin'.",
+  "corrections": [
+   {
+    "problem": "needsEngineWork is set to true, but nothing here is missing from the engine: the target is 'ac', which is in the supported list, and the reason given ('the condition is a creature type, which the app cannot evaluate') is the normal case for this display-only registry, not a gap. The same engineer marked needsEngineWork false for identical creature-type conditions in the same batch (token-of-salt-and-earth 'from creatures with the unholy trait', conrasu-coin-arbiter '+3 on a creature with the aeon trait', scrap-shot 'if the target is wearing metal armor'). The secondary reason offered — that relic gifts may not be attachable to a character — applies equally to scrap-shot, feather-steps, wind-barrier and enhancing-circuitry, all of which the same batch marked needsEngineWork false, so it cannot justify a different flag here.",
+    "correction": "Set needsEngineWork false and drop the creature-type sentence from the engineNote. Keep the bonus entry exactly as written (+1 status, targetKind 'ac', 'to AC against attacks made by dragons') — that part matches the text verbatim. If the relic-gift reachability question is worth raising, raise it once as a batch-level note covering all eight relic-gift records (draconic-resistance, cleanse-soul, muse, emotion-surge, work-harden, enhancing-circuitry, scrap-shot, feather-steps, wind-barrier, track-of-the-beast), not on this one record. Worth adding to the note instead: this record is edition 'legacy-era', so the edition toggle may hide it regardless."
+   }
+  ]
+ },
+ {
+  "id": "sailors-collar",
+  "name": "Sailor's Collar",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"When wearing the sailor's collar, you gain a +1 item bonus to Athletics checks\" — no qualifier; it applies to every Athletics check.",
+  "corrections": [
+   {
+    "problem": "engineNote claims 'Needs the worn/invested item lane to add a flat +1 item bonus to Athletics'. The record already has passiveEffects: { skills: { athletics: 1 } } and the lane already consumes it.",
+    "correction": "situational:false is right; set needsEngineWork:false and drop the engineNote."
+   }
+  ]
+ },
+ {
+  "id": "greater-sailors-collar",
+  "name": "Greater Sailor’s Collar",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"You gain a +2 item bonus to Athletics checks\" — the greater version raises the base collar's bonus, still with no condition.",
+  "corrections": [
+   {
+    "problem": "engineNote claims the worn/invested item lane is needed for the flat +2 to Athletics. The record already has passiveEffects: { skills: { athletics: 2 } } (correctly the greater value replacing, not stacking with, the base +1).",
+    "correction": "situational:false is right; set needsEngineWork:false and drop the engineNote. The 10-foot swim Speed observation is fine."
+   }
+  ]
+ },
+ {
+  "id": "tasset-of-flexibility",
+  "name": "Tasset of Flexibility",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"While wearing the tasset of flexibility, you gain a +1 item bonus to Acrobatics checks\" — unqualified, every Acrobatics check.",
+  "corrections": [
+   {
+    "problem": "engineNote claims 'Needs the worn/invested item lane for the flat +1 item bonus to Acrobatics'. The record already has passiveEffects: { skills: { acrobatics: 1 } }.",
+    "correction": "situational:false is right; set needsEngineWork:false and drop the engineNote."
+   }
+  ]
+ },
+ {
+  "id": "elixir-of-the-peaks",
+  "name": "Elixir of the Peaks",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 to +3 item (lesser +1 / moderate +2 / greater +3 / major +3)",
+    "when": "to Athletics checks to Climb, High Jump, or Long Jump, for the elixir's duration after drinking it in mountainous terrain",
+    "targetKind": "skill",
+    "skill": "athletics"
+   },
+   {
+    "bonus": "+1 to +3 item (lesser +1 / moderate +2 / greater +3 / major +3)",
+    "when": "against the effects of high altitude, for the elixir's duration after drinking it in mountainous terrain",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"drinking this elixir while in mountainous terrain ... grants you an item bonus to Athletics checks made to Climb, High Jump, or Long Jump, as well as to saving throws against the effects of high altitude\" — terrain-gated, action-gated and duration-limited.",
+  "corrections": [
+   {
+    "problem": "The needsHumanDecision question says the concrete tiers are 'not in this chunk', implying they cannot be registered. They exist in core.json — twice: elixir-of-the-peaks-lesser / -moderate / -greater / -major carry clean per-tier text ('grants you a +1 item bonus to Athletics checks made to Climb, High Jump, or Long Jump'), while lesser-/moderate-/greater-/major-elixir-of-the-peaks duplicate the whole container blob.",
+    "correction": "Keep situational:true and the two targets (skill/athletics for Climb/High Jump/Long Jump, save/all vs high altitude). Rephrase the question to name the real ids and note the duplicate-id pair, so the owner can choose the elixir-of-the-peaks-<tier> records (clean text, +1/+2/+3/+3 with 1 hour / 1 day / 1 day / 7 days) and skip the container."
+   }
+  ]
+ },
+ {
+  "id": "banner-of-the-restful-greater",
+  "name": "Banner of the Restful (Greater)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "while you are within the banner's aura (it also covers allies)",
+    "targetKind": "perception"
+   }
+  ],
+  "evidence": "\"You and allies within the banner's aura gain a +2 item bonus to Perception DCs and protection from severe cold and heat.\"",
+  "corrections": [
+   {
+    "problem": "WRONG TARGET. The record says \"You and allies within the banner's aura gain a +2 item bonus to Perception DCs\" — a bonus to the Perception DC (the number a creature Sneaking/Hiding rolls against), NOT to Perception checks. The spec's engineNote diagnoses this correctly but then emits a bonus with targetKind 'perception' anyway. Any consumer that reads `bonuses` and ignores the prose will star the character's Perception and a player will add +2 to Perception ROLLS near the banner — the exact inflation the brief warns about.",
+    "correction": "Emit NO bonus entry. Keep situational true, bonuses empty, needsEngineWork true with the note: 'bonus is to the Perception DC; the sheet has no Perception-DC stat (SituationalTarget kinds are skill/save/perception/ac/attack, and `perception` means Perception checks). Also a deployed party aura, so it is positional and covers allies.' Do not use targetKind 'perception' for a DC."
+   }
+  ]
+ },
+ {
+  "id": "banner-of-the-restful-major",
+  "name": "Banner of the Restful (Major)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+3 item",
+    "when": "while you are within the banner's aura (it also covers allies)",
+    "targetKind": "perception"
+   }
+  ],
+  "evidence": "\"You and allies within the banner's aura gain a +3 item bonus to Perception DCs and protection from severe cold and heat.\"",
+  "corrections": [
+   {
+    "problem": "WRONG TARGET, same defect at +3. Record text: \"You and allies within the banner's aura gain a +3 item bonus to Perception DCs and protection from severe cold and heat.\" Emitting targetKind 'perception' turns a defence number into a bonus on the player's Perception checks.",
+    "correction": "Emit NO bonus entry; situational true with bonuses empty and needsEngineWork true ('+3 item to Perception DC — no Perception-DC stat exists; aura/positional and party-wide'). Handle identically to the greater version."
+   }
+  ]
+ },
+ {
+  "id": "anti-dragon-barding-greater",
+  "name": "Anti-Dragon Barding (Greater)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+4 item",
+    "when": "on the animal companion's Fortitude DC against attempts to Grapple, Reposition, Shove, or Trip it",
+    "targetKind": "save",
+    "save": "fortitude"
+   },
+   {
+    "bonus": "+4 item",
+    "when": "on the animal companion's Reflex DC against attempts to Grapple, Reposition, Shove, or Trip it",
+    "targetKind": "save",
+    "save": "reflex"
+   }
+  ],
+  "evidence": "\"An animal companion wearing anti-dragon barding gains a +4 item bonus to its Fortitude DC and Reflex DC against attempts to grapple, reposition, shove, or trip it\"",
+  "corrections": [
+   {
+    "problem": "WRONG TARGET, twice over. Record: \"An animal companion wearing anti-dragon barding gains a +4 item bonus to its Fortitude DC and Reflex DC against attempts to grapple, reposition, shove, or trip it.\" (1) These are DCs an attacker's Athletics check is rolled against, not saving throws; (2) they belong to the ANIMAL COMPANION, not the character. The spec nevertheless emits two entries with targetKind 'save' (fortitude and reflex), which would put a star on the PLAYER's Fortitude and Reflex saves reading '+4 item vs attempts to Grapple/Reposition/Shove/Trip' — a bonus the player does not have on a roll they do not make.",
+    "correction": "Emit NO bonus entries. situational true, bonuses empty, needsEngineWork true: 'targets the animal companion's Fortitude DC and Reflex DC — the registry has neither a save-DC stat nor a companion-stat target; do not map a DC onto save/fortitude or save/reflex.' The 3d4 damage to a successful Grappler is correctly excluded."
+   }
+  ]
+ },
+ {
+  "id": "monks-attire",
+  "name": "Monk's Attire",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 status",
+    "when": "for 10 minutes after dominant emotion or emotion conduit counteracts an effect on you (requires three set items, one of 13th... in fact one of 17th level or higher)",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"...the target regains 5d10+5 Hit Points and gains a +2 status bonus to saving throws against mental effects for 10 minutes.\"",
+  "corrections": [
+   {
+    "problem": "CONDITION WRONG / GARBLED. The record's gate is \"Three Items (one 17th-level or higher item): If dominant emotion or emotion conduit counteract an effect, the target regains 5d10+5 Hit Points and gains a +2 status bonus to saving throws against mental effects for 10 minutes.\" The spec's player-facing `when` reads \"...(requires three set items, one of 13th... in fact one of 17th level or higher)\" — it states the wrong threshold, then self-corrects inside the string. 13th level belongs to different features (the Emotion Conduit gift and the recovery-check collective feature), so the text as written both misinforms and is unreadable at the table.",
+    "correction": "when: 'for 10 minutes after dominant emotion or emotion conduit counteracts an effect — while you bear three or more Monk's Attire items, one of them 17th level or higher'. Bonus (+2 status), targetKind save with save 'all', and the caveat that \"the target\" may be an ally rather than the wearer are all correct as filed."
+   }
+  ]
+ },
+ {
+  "id": "busine-of-divine-reinforcements",
+  "name": "Busine of Divine Reinforcements",
+  "collection": "items",
+  "currentBonuses": [],
+  "evidence": "\"When played as an instrument, the busine generates powerful and harmonious notes and grants a +2 item bonus to Performance checks.\"",
+  "corrections": [
+   {
+    "problem": "CONDITIONAL BONUS MARKED UNCONDITIONAL. The record says \"When played as an instrument, the busine ... grants a +2 item bonus to Performance checks\" — an explicit usage gate. The spec sets situational false because passiveEffects.skills.performance = 2 already folds it into the maths (I confirmed that field). That means a bard doing an oratory, dance or singing Performance without the trumpet in hand still gets +2: a conditional bonus inflating every roll. The spec's own reasonIfNot concedes this, and it marked Battle Lute — identical wording — situational, so the chunk is internally inconsistent.",
+    "correction": "Mark situational true: bonus '+2 item', when 'on Performance checks made while playing the busine as an instrument', targetKind 'skill', skill 'performance' — and flag that passiveEffects.skills.performance must be removed if the star is added, so the +2 is not counted twice. Keep the needsHumanDecision question, but note that whichever rule the owner picks must be applied to Busine and Battle Lute together (and to every other instrument item with this wording)."
+   }
+  ]
+ },
+ {
+  "id": "scavenger-strix",
+  "name": "Scavenger Strix",
+  "collection": "heritages",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "to Subsist",
+    "targetKind": "skill",
+    "skill": "survival"
+   }
+  ],
+  "evidence": "\"Your thoroughness when gathering food provides you a +1 circumstance bonus to Survival checks to Subsist.\"",
+  "corrections": [
+   {
+    "problem": "The bonus itself is correct (+1 circumstance to Survival to Subsist), but the engineNote makes a factual claim about core.json that is false: \"Trained Survival and the Forager feat are unconditional grants already covered by effectChoices.\" The record's only effectChoices entry is the trained-skill picker (prompt: \"Choose a skill to become trained in (Survival by default...)\"); the record has NO feat-grant field of any kind (keys are id,name,ancestryId,versatile,traits,rarity,description,descRefs,source,edition,effectChoices). An implementer reading that note would assume Forager is already handled when it is not.",
+    "correction": "Keep the bonus entry unchanged. Reword the engineNote to: \"Trained Survival is unconditional and already handled by the record's effectChoices. The Forager skill feat ('You gain the Forager skill feat as a bonus feat') is an unconditional grant that is NOT modelled anywhere on this record — separate work, not a situational bonus.\""
+   }
+  ]
+ },
+ {
+  "id": "strong-oak",
+  "name": "Strong Oak",
+  "collection": "heritages",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "to your Fortitude DC against attempts to Grapple or Trip you, and to Fortitude saves against effects that would Grab you, Restrain you, or knock you prone",
+    "targetKind": "save",
+    "save": "fortitude"
+   },
+   {
+    "bonus": "+2 circumstance",
+    "when": "to your Reflex DC against attempts to Grapple or Trip you, and to Reflex saves against effects that would Grab you, Restrain you, or knock you prone",
+    "targetKind": "save",
+    "save": "reflex"
+   },
+   {
+    "bonus": "+2 circumstance",
+    "when": "to Acrobatics checks to Balance",
+    "targetKind": "skill",
+    "skill": "acrobatics"
+   }
+  ],
+  "evidence": "\"You gain a +2 circumstance bonus on your Fortitude or Reflex DC against attempts to Grapple or Trip you. This bonus also applies to saving throws against effects that would Grab you, Restrain you, or knock you prone. You also gain a +2 circumstance bonus on Acrobatics checks to Balance.\"",
+  "corrections": [
+   {
+    "problem": "Condition wording broadened past the rules on the split entries. The text is \"a +2 circumstance bonus on your Fortitude or Reflex DC against attempts to Grapple or Trip you\" — i.e. whichever DC the maneuver actually targets. The spec repeats BOTH maneuvers on BOTH entries, so the Fortitude marker reads \"to your Fortitude DC against attempts to Grapple or Trip you\" — but Trip targets the Reflex DC, never the Fortitude DC (and Grapple targets Fortitude DC, never Reflex). A player reading the Fortitude star is told something the rules do not grant. (Bonus size, type, targets and the Acrobatics/Balance entry are all correct.)",
+    "correction": "Split the maneuvers to match which DC each targets: Fortitude entry when = \"to your Fortitude DC against attempts to Grapple you, and to Fortitude saves against effects that would Grab you, Restrain you, or knock you prone\"; Reflex entry when = \"to your Reflex DC against attempts to Trip you, and to Reflex saves against effects that would Grab you, Restrain you, or knock you prone\". Leave the Acrobatics (Balance) entry as authored."
+   }
+  ]
+ },
+ {
+  "id": "sacred-nagaji",
+  "name": "Sacred Nagaji",
+  "collection": "heritages",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "to your Fortitude DC against attempts to Grapple or Trip you, and to Fortitude saves against effects that would Grab you, Restrain you, or knock you prone",
+    "targetKind": "save",
+    "save": "fortitude"
+   },
+   {
+    "bonus": "+2 circumstance",
+    "when": "to your Reflex DC against attempts to Grapple or Trip you, and to Reflex saves against effects that would Grab you, Restrain you, or knock you prone",
+    "targetKind": "save",
+    "save": "reflex"
+   }
+  ],
+  "evidence": "\"You gain a +2 circumstance bonus to your Fortitude or Reflex DC against attempts to Grapple or Trip you. This bonus also applies to saving throws against effects that would Grab you, Restrain you, or knock you prone.\"",
+  "corrections": [
+   {
+    "problem": "Same broadening as strong-oak. Text: \"a +2 circumstance bonus to your Fortitude or Reflex DC against attempts to Grapple or Trip you.\" The spec's Fortitude entry claims the bonus applies to your Fortitude DC against Trip attempts, and the Reflex entry claims it applies to your Reflex DC against Grapple attempts; Grapple checks are made against Fortitude DC and Trip against Reflex DC, so each entry names one maneuver it cannot apply to. Everything else (situational, +2 circumstance, the save half, the grantedStrikes note about the tail) verified correct against the record.",
+    "correction": "Fortitude entry when = \"to your Fortitude DC against attempts to Grapple you, and to Fortitude saves against effects that would Grab you, Restrain you, or knock you prone\"; Reflex entry when = \"to your Reflex DC against attempts to Trip you, and to Reflex saves against effects that would Grab you, Restrain you, or knock you prone\"."
+   }
+  ]
+ },
+ {
+  "id": "rock-dwarf",
+  "name": "Rock Dwarf",
+  "collection": "heritages",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "to your Fortitude DC against attempts to Reposition, Shove or Trip you, and to Fortitude saves against effects that would force you to move or knock you prone",
+    "targetKind": "save",
+    "save": "fortitude"
+   },
+   {
+    "bonus": "+2 circumstance",
+    "when": "to your Reflex DC against attempts to Reposition, Shove or Trip you, and to Reflex saves against effects that would force you to move or knock you prone",
+    "targetKind": "save",
+    "save": "reflex"
+   }
+  ],
+  "evidence": "\"You gain a +2 circumstance bonus to your Fortitude or Reflex DC against attempts to Reposition, Shove, or Trip you. This bonus also applies to saving throws against spells or effects that attempt to force you to move or knock you prone.\"",
+  "corrections": [
+   {
+    "problem": "Same broadening. Text: \"a +2 circumstance bonus to your Fortitude or Reflex DC against attempts to Reposition, Shove, or Trip you.\" Reposition and Shove are made against the Fortitude DC; Trip against the Reflex DC. The spec puts all three maneuvers on both the Fortitude and the Reflex entry, so each marker overstates its coverage. The +2 circumstance value, the save-bonus half (\"This bonus also applies to saving throws against spells or effects that attempt to force you to move or knock you prone\") and the forced-movement-halving engineNote are all correct.",
+    "correction": "Fortitude entry when = \"to your Fortitude DC against attempts to Reposition or Shove you, and to Fortitude saves against effects that would force you to move or knock you prone\"; Reflex entry when = \"to your Reflex DC against attempts to Trip you, and to Reflex saves against effects that would force you to move or knock you prone\"."
+   }
+  ]
+ },
+ {
+  "id": "enhanced-hearing-aids",
+  "name": "Enhanced Hearing Aids",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "on hearing-based Perception checks, for 10 minutes after you Activate the aids (once per day, and only while your hearing aids are on)",
+    "targetKind": "perception"
+   }
+  ],
+  "evidence": "\"You mentally increase the input of your hearing aids. You gain a +1 item bonus to all hearing-based Perception checks for 10 minutes.\"",
+  "corrections": [
+   {
+    "problem": "The engineNote asserts an importer defect: \"the record's activationCost is stored as 'free' although the description prints a reaction-style '⟨4⟩ envision' activation\". That is false. In this app ⟨4⟩ IS the free-action glyph — src/sheet/widgets.tsx, ActionGlyph: case 'free' returns <Glyph char=\"4\" title=\"Free action\" /> and case 'reaction' returns char=\"5\". So activationCost {type:'free'} matches the printed ⟨4⟩ exactly; there is nothing to raise with the importer, and the note would send someone chasing a non-bug (the same ⟨4⟩/free pairing appears on cleft-head-marking-* and fate-tempters-ring, and ⟨5⟩/reaction on the flowing-water tattoos, all consistent).",
+    "correction": "Drop the engineNote's importer claim. The bonus classification itself is correct and should stand as authored: +1 item, targetKind 'perception', when = \"on hearing-based Perception checks, for 10 minutes after you Activate the aids (free action, once per day; requires your hearing aids to be currently on)\"."
+   }
+  ]
+ },
+ {
+  "id": "dawnfire-beacon-major",
+  "name": "Dawnfire Beacon (Major)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status",
+    "when": "against unholy effects, while you are inside the banner's aura",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"This magical banner also grants a +1 status bonus to saving throws against unholy effects to all creatures within the banner's aura.\"",
+  "corrections": [
+   {
+    "problem": "The engineNote says \"the aura's radius is not stated in this record (it is a property of the banner the beacon is attached to)\". Both halves are wrong. The record's own first line is \"The warm, caring light of the sun glows from the center of this magical banner\" — the Dawnfire Beacon IS the banner; its usage is 'affixed-or-held-in-one-hand', i.e. affixed to a WEAPON or held, never attached to some other banner. And the radius is knowable: the Foundry record models it as an Aura rule element with radius 30 (the standard Battlecry! banner aura). The condition also drops a requirement the record does print: \"This effect is suppressed when you aren't holding the banner or wielding the weapon it is affixed to.\"",
+    "correction": "Keep the entry (+1 status, targetKind 'save', save 'all') and keep needsEngineWork true for the ally/aura gap only. Rewrite the condition to \"against unholy effects, while you're holding the banner (or wielding the weapon it's affixed to) and within its 30-foot aura\", and replace the engineNote's radius claim with: radius is 30 feet per the banner aura. Flag needsHumanDecision on one point the text leaves genuinely ambiguous: the suppression sentence grammatically attaches to the LIGHT paragraph, and Foundry's Aura carries no holding predicate — so whether the save bonus is also suppressed when the banner isn't held is the owner's call."
+   }
+  ]
+ },
+ {
+  "id": "ghast-stiletto",
+  "name": "Ghast Stiletto",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status",
+    "when": "against paralysis, while wielding the ghast stiletto",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"While you wield the dagger, you gain a +1 status bonus to all saves against Paralysis.\"",
+  "corrections": [
+   {
+    "problem": "The engineNote claims the activation's \"-2 circumstance penalty to saves against disease and to recover from sickened\" \"falls on creatures caught in the emanation (enemies), not on you — do not author it as a penalty on the wielder\". The record does not say that. Its text is \"the target creature, as well as any creatures within a [emanation], must succeed at a save... While within the emanation, the creature takes a –2 circumstance penalty to saves against disease and to recover from the sickened condition\" — any creature, with no ally/enemy carve-out. core.json has dropped the emanation size (the text reads \"within a , must succeed\"); the Foundry source gives @Template[emanation|distance:10], a 10-foot emanation centred on the creature you just stabbed — which a melee wielder of a 10-ft-thrown dagger is normally standing inside. The stated reason for omitting it is therefore invalid.",
+    "correction": "Keep the +1 status save-vs-paralysis entry as authored. Either add a second entry — bonus \"-2 circumstance (penalty)\", targetKind 'save', save 'all', when \"on saves against disease and to recover from sickened, while you're within 10 feet of a creature struck by the activated ghast stiletto (1 minute)\" — matching how the earplugs and feather-of-unfounded-bravado specs already carry penalties, or omit it and say so honestly (\"self-inflicted edge case, owner chose not to surface it\"). Also note as a data defect that the emanation distance is missing from the core.json description."
+   }
+  ]
+ },
+ {
+  "id": "dream-hunters-lodge",
+  "name": "Dream Hunter's Lodge",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+3 item",
+    "when": "on the NEXT Recall Knowledge check about a creature with the dream trait within 24 hours, after spending 10 minutes studying the lodge's trophies",
+    "targetKind": "skill",
+    "skill": "all"
+   }
+  ],
+  "evidence": "\"If a creature inside the lodge spends 10 minutes studying these trophies, they gain a +3 item bonus to the next skill check they make in the next 24 hours to Recall Knowledge about any creature with the dream trait.\"",
+  "corrections": [
+   {
+    "problem": "needsEngineWork is left false while the engineNote itself lists two things the app cannot represent: \"it is a ONE-SHOT bonus consumed by the next qualifying check, and it also benefits every other creature inside the lodge (allies)\". The ally-facing half is exactly the reason the spec-writer set needsEngineWork true on dawnfire-beacon-major, so the two records are flagged inconsistently — and the one-shot-consumption behaviour is a gap no other entry in this chunk has, since a starred stat would keep advertising a +3 that was already spent.",
+    "correction": "Set needsEngineWork true. Bonus/target/condition as authored (+3 item, targetKind 'skill', skill 'all', \"on the NEXT Recall Knowledge check about a creature with the dream trait within 24 hours, after spending 10 minutes studying the lodge's trophies\"). Missing engine support: (a) one-shot bonuses that are consumed by the next qualifying check, and (b) bonuses that also apply to other party members' sheets."
+   }
+  ]
+ },
+ {
+  "id": "commandants-scabbard",
+  "name": "Commandant's Scabbard",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+4 status",
+    "when": "for 1 round after you draw that weapon from the commandant's scabbard (one melee weapon of 1 Bulk or lighter)",
+    "targetKind": "strikeDamage"
+   }
+  ],
+  "evidence": "\"Whenever a weapon is drawn from the scabbard, it gains a +4 status bonus to damage for 1 round.\"",
+  "corrections": [
+   {
+    "problem": "needsEngineWork is left false (absent) although the engineNote states the blocking gap outright: \"The +4 status damage applies only to the specific weapon sheathed in the scabbard, which the app does not track per-weapon.\" The clay-sphere specs set needsEngineWork true for the same class of problem (a bonus that depends on which item the gear is attached to), so this record is flagged inconsistently and the gap would be lost when the flags are triaged.",
+    "correction": "Set needsEngineWork true. The entry itself is right and should stand (+4 status, targetKind 'strikeDamage', \"for 1 round after you draw that weapon from the commandant's scabbard (one melee weapon of 1 Bulk or lighter)\"), as is the call to leave the +3 item Athletics and the apex Strength out of the registry — both are confirmed present as passiveEffects.skills.athletics = 3 and apexAttribute 'str'. Missing engine support: recording which single weapon is sheathed in the scabbard so the marker lands on that weapon's strike only."
+   }
+  ]
+ },
+ {
+  "id": "close-ties",
+  "name": "Close Ties",
+  "collection": "backgrounds",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status",
+    "when": "only if you took the Bickering family adjustment: until the end of your next turn after you witness your sibling PC critically fail a significant skill check or attack roll",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "Base background grants no typed bonus (Diplomacy, Tea Lore, Specialty Crafting, friendly NPC). The only typed bonus in the record is the shared adjustment block: \"**Bickering:** ... Whenever your sibling(s) critically fail a significant skill check or attack roll and you witness their failure, you gain a +1 status bonus to your saving throws until the end of your next turn\"",
+  "corrections": [
+   {
+    "problem": "Emits a +1 status bonus to all saves that the background does not grant. The bonus comes from the 'Bickering' option inside the Family adjustment block, and that block's own opening line in the record is \"You can add one of the following two adjustments to ANY background\" — it is opt-in, it replaces the background's skill feat, and it is available to every background, not these four. The same boilerplate is byte-identical in folklore-enthusiast, northridge-scholar and outskirt-dweller (I diffed all four). Writing it into the registry under a background id would star Fortitude/Reflex/Will for every character who picked one of these four backgrounds, including the overwhelming majority who never took the Family adjustment — a permanent false positive. It also triggers on ANOTHER PC's critical failure, which nothing in the app can observe. The spec author identified all of this in the engineNote and then emitted the bonus anyway.",
+    "correction": "For all four Willowshore backgrounds (close-ties, folklore-enthusiast, northridge-scholar, outskirt-dweller): set bonuses to an empty array, situational:false with reasonIfNot 'the background itself grants no typed bonus', and keep needsHumanDecision:true. Bickering's +1 status to saves (and Close-Knit's DC-5 reduction) belong to a separate opt-in 'background adjustment' choice available to any background, not to these four ids."
+   }
+  ]
+ }
+]

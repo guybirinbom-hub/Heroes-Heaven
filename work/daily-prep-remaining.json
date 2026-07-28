@@ -1,0 +1,257 @@
+{
+ "incidental": [
+  "spell-mastery",
+  "firework-technician-dedication",
+  "domain-initiate",
+  "deeper-dabbler",
+  "wandering-chef-dedication",
+  "link-spells",
+  "composition-spells",
+  "hex-spells",
+  "devotion-spells",
+  "psi-cantrips-and-amps",
+  "bloodline-spells"
+ ],
+ "real": [
+  {
+   "id": "universal-versatility",
+   "name": "Universal Versatility"
+  },
+  {
+   "id": "foolproof-instructions",
+   "name": "Foolproof Instructions"
+  },
+  {
+   "id": "flexible-transmogrification",
+   "name": "Flexible Transmogrification"
+  },
+  {
+   "id": "contingency-gadgets",
+   "name": "Contingency Gadgets"
+  },
+  {
+   "id": "ubiquitous-overdrive",
+   "name": "Ubiquitous Overdrive"
+  },
+  {
+   "id": "beast-gunner-dedication",
+   "name": "Beast Gunner Dedication"
+  },
+  {
+   "id": "illusory-identity",
+   "name": "Illusory Identity"
+  },
+  {
+   "id": "esoteric-polymath",
+   "name": "Esoteric Polymath"
+  },
+  {
+   "id": "eclectic-polymath",
+   "name": "Eclectic Polymath"
+  },
+  {
+   "id": "witchs-broom",
+   "name": "Witch’s Broom"
+  },
+  {
+   "id": "radiant-armament",
+   "name": "Radiant Armament"
+  },
+  {
+   "id": "tricksters-ace",
+   "name": "Trickster's Ace"
+  },
+  {
+   "id": "nudge-the-scales",
+   "name": "Nudge the Scales"
+  },
+  {
+   "id": "paradoxical-mystery",
+   "name": "Paradoxical Mystery"
+  },
+  {
+   "id": "arcane-evolution",
+   "name": "Arcane Evolution"
+  },
+  {
+   "id": "inherit-the-dreaming-heirloom",
+   "name": "Inherit the Dreaming Heirloom"
+  },
+  {
+   "id": "natural-mutagen",
+   "name": "Natural Mutagen"
+  },
+  {
+   "id": "heaven-earth-encompassing-sleeves",
+   "name": "Heaven-Earth Encompassing Sleeves"
+  },
+  {
+   "id": "spirit-familiar-animist",
+   "name": "Spirit Familiar (Animist)"
+  },
+  {
+   "id": "cutting-without-blade",
+   "name": "Cutting Without Blade"
+  },
+  {
+   "id": "animist-dedication",
+   "name": "Animist Dedication"
+  },
+  {
+   "id": "patron-reborn",
+   "name": "Patron Reborn"
+  },
+  {
+   "id": "celestial-armaments",
+   "name": "Celestial Armaments"
+  },
+  {
+   "id": "chosen-ward",
+   "name": "Chosen Ward"
+  },
+  {
+   "id": "bloc-tactics",
+   "name": "Bloc Tactics"
+  },
+  {
+   "id": "eternal-legend-dedication",
+   "name": "Eternal Legend Dedication"
+  },
+  {
+   "id": "claim-cardinal-domains",
+   "name": "Claim Cardinal Domains"
+  },
+  {
+   "id": "sanctified-relic",
+   "name": "Sanctified Relic"
+  },
+  {
+   "id": "orichalcum-bond",
+   "name": "Orichalcum Bond"
+  },
+  {
+   "id": "harbingers-armament",
+   "name": "Harbinger's Armament"
+  },
+  {
+   "id": "oath-of-the-defender",
+   "name": "Oath of The Defender"
+  },
+  {
+   "id": "oath-of-the-slayer",
+   "name": "Oath of The Slayer"
+  },
+  {
+   "id": "demon-hunter",
+   "name": "Demon Hunter"
+  },
+  {
+   "id": "planar-resilience",
+   "name": "Planar Resilience"
+  },
+  {
+   "id": "bodyguard",
+   "name": "Bodyguard"
+  },
+  {
+   "id": "spellshield",
+   "name": "Spellshield"
+  },
+  {
+   "id": "acclimated-mount",
+   "name": "Acclimated Mount"
+  },
+  {
+   "id": "ive-been-here-before",
+   "name": "I've Been Here Before"
+  },
+  {
+   "id": "warshard-warrior-dedication",
+   "name": "Warshard Warrior Dedication"
+  },
+  {
+   "id": "warshard-rune",
+   "name": "Warshard Rune"
+  },
+  {
+   "id": "malleable-mental-forge",
+   "name": "Malleable Mental Forge"
+  },
+  {
+   "id": "runic-mind-smithing",
+   "name": "Runic Mind Smithing"
+  },
+  {
+   "id": "advanced-runic-mind-smithing",
+   "name": "Advanced Runic Mind-Smithing"
+  },
+  {
+   "id": "starstone-aspirant-dedication",
+   "name": "Starstone Aspirant Dedication"
+  },
+  {
+   "id": "arodens-innovation",
+   "name": "Aroden's Innovation"
+  },
+  {
+   "id": "library-robes",
+   "name": "Library Robes"
+  },
+  {
+   "id": "library-robes-greater",
+   "name": "Library Robes (Greater)"
+  },
+  {
+   "id": "library-robes-major",
+   "name": "Library Robes (Major)"
+  },
+  {
+   "id": "library-robes-true",
+   "name": "Library Robes (True)"
+  },
+  {
+   "id": "the-queen-mother",
+   "name": "The Queen Mother"
+  },
+  {
+   "id": "blessing-of-the-devoted",
+   "name": "Blessing of the Devoted"
+  },
+  {
+   "id": "apparition-attunement",
+   "name": "Apparition Attunement"
+  },
+  {
+   "id": "third-apparition",
+   "name": "Third Apparition"
+  },
+  {
+   "id": "fourth-apparition",
+   "name": "Fourth Apparition"
+  },
+  {
+   "id": "blessed-armament",
+   "name": "Blessed Armament"
+  },
+  {
+   "id": "dragon-deviant-classification",
+   "name": "Dragon Deviant Classification"
+  },
+  {
+   "id": "fey-eidolon",
+   "name": "Fey Eidolon"
+  },
+  {
+   "id": "flexible-spell-preparation",
+   "name": "Flexible Spell Preparation"
+  },
+  {
+   "id": "horn-of-plenty",
+   "name": "Horn of Plenty"
+  },
+  {
+   "id": "pelt-of-the-beast",
+   "name": "Pelt of the Beast"
+  }
+ ]
+}

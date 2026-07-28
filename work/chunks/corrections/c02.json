@@ -1,0 +1,734 @@
+[
+ {
+  "id": "axe-of-the-dwarven-lords",
+  "name": "Axe of the Dwarven Lords",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+4 item",
+    "when": "while the axe is in your possession, when Crafting armor, jewelry, metalwork, stonemasonry, snares, traps, or weapons",
+    "targetKind": "skill",
+    "skill": "crafting"
+   },
+   {
+    "bonus": "+1d6 damage (untyped)",
+    "when": "on Strikes with the axe against orcs",
+    "targetKind": "strikeDamage"
+   }
+  ],
+  "evidence": "\"you gain a +4 item bonus when Crafting armor, jewelry, metalworking, stonemasonry, snares, traps, and weapons\" — limited to that list of Craft subjects; and \"Strikes with the axe deal an additional 1d6 damage to orcs\".",
+  "corrections": [
+   {
+    "problem": "The classification (+4 item to the listed Craft subjects, +1d6 vs orcs) is correct and the engineNote rightly calls out that passiveEffects.skills.crafting = 4 over-applies a subject-restricted bonus to every Crafting check. But it misses a second, identical over-application in the same record: passiveEffects.senses grants \"greater darkvision\" unconditionally, while the text says \"If you are a dwarf, you gain greater darkvision while holding the axe. If you are not a dwarf, you are Stupefied 4 while holding the axe\" — so a non-dwarf carrying the axe currently gets free greater darkvision and none of the penalties.",
+    "correction": "Extend the engineNote to cover the sense: greater darkvision is gated on being a dwarf AND holding the axe, and the non-dwarf/orc penalties (stupefied 4, drained 4, enfeebled 4) are unmodelled. Neither is expressible with the listed target kinds, so this is an engine/data note, not a new bonus entry."
+   }
+  ]
+ },
+ {
+  "id": "glorious-banner",
+  "name": "Glorious Banner",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status",
+    "when": "to AC while your commander's banner is up and you're in its aura",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "to Fortitude saves while your commander's banner is up and you're in its aura",
+    "targetKind": "save",
+    "save": "fortitude"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "to Reflex saves while your commander's banner is up and you're in its aura",
+    "targetKind": "save",
+    "save": "reflex"
+   }
+  ],
+  "evidence": "\"you and affected allies gain a +1 status bonus to AC, Fortitude saves, and Reflex saves\"",
+  "corrections": [
+   {
+    "problem": "The engineNote states as settled fact that the Will-vs-fear increase is 'granted to your allies' and therefore out of reach for this sheet. That is only one reading. The base class feature it modifies (classFeatures/commanders-banner) says the aura 'gives you and all allies in a a +1 status bonus to Will saves and DCs against fear effects' — the commander explicitly DOES receive the base +1. Whether Glorious Banner raises the commander's own bonus to +2 is genuinely ambiguous (the same sentence's next clause switches to 'you and affected allies', which cuts the other way), so it should not be closed off with needsHumanDecision:false. The three marked bonuses (+1 status to AC / Fortitude / Reflex) are correct.",
+    "correction": "Keep the three AC/Fort/Reflex entries as-is, but set needsHumanDecision:true with the question: 'Commander's Banner gives the +1 status vs fear to \"you and all allies\"; does Glorious Banner's increase to +2 apply to the commander's own Will saves/DCs vs fear, or literally only to allies?' Also worth recording in the note that the commander's own baseline +1 status to Will saves vs fear lives on classFeatures/commanders-banner, which the feats-only lookup can never reach."
+   }
+  ]
+ },
+ {
+  "id": "siege-ritualist",
+  "name": "Siege Ritualist",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "to Warfare Lore checks made as one of the casters of a ritual",
+    "targetKind": "skill",
+    "skill": "lore:warfare"
+   }
+  ],
+  "evidence": "\"When you attempt a Warfare Lore check as one of the casters of a ritual, you gain a +2 circumstance bonus to the check.\"",
+  "corrections": [
+   {
+    "problem": "The engineNote's factual claim is false: 'this archetype's own dedication does not necessarily grant it [Warfare Lore]'. war-mage-dedication (this feat's own listed prerequisite) reads 'You also gain the Additional Lore general feat for Warfare Lore. If you were already trained in Warfare Lore, you become trained in a Lore skill of your choice.' — so every character who can take Siege Ritualist is guaranteed to have Warfare Lore. The classification (+2 circumstance, skill lore:warfare, situational) and the lore:warfare key form are both correct.",
+    "correction": "Replace the engineNote's second sentence with: 'Warfare Lore is always present — War Mage Dedication, the prerequisite, grants the Additional Lore feat for Warfare Lore — so the star will always render once the app models that grant.'"
+   }
+  ]
+ },
+ {
+  "id": "guiding-shot",
+  "name": "Guiding Shot",
+  "collection": "feats",
+  "currentBonuses": [],
+  "evidence": "\"If the Strike hits, the next creature other than you to attack the same target before the start of your next turn gains a +1 circumstance bonus to their roll, or a +2 circumstance bonus if your Strike was a critical hit.\"",
+  "corrections": [
+   {
+    "problem": "The engineNote's factual claim is false: 'there are two records with this id text in core.json (Player Core and Battlecry! printings) with identical wording'. There is exactly one record keyed guiding-shot, source 'Pathfinder Battlecry!' — no duplicate exists in any collection. The classification (situational:false, ally-only, 'the next creature other than you') is correct.",
+    "correction": "Drop the duplicate-record sentence from the engineNote; keep only the ally-targeted-buff-lane gap."
+   },
+   {
+    "problem": "The classification is right but the engineNote is factually wrong: it claims \"there are two records with this id text in core.json (Player Core and Battlecry! printings) with identical wording\". core.json contains exactly ONE record with id \"guiding-shot\" (verified: a single match for the literal `\"id\":\"guiding-shot\"`, and a single occurrence of the sentence \"Your ranged attack helps guide your allies into striking your enemy's weak point\"). Acting on the note would send an implementer hunting for a duplicate key that does not exist.",
+    "correction": "The second, near-identically-worded record is a DIFFERENT feat: `assisting-shot` — \"Assisting Shot\", level 2, category class, traits [\"fighter\",\"press\"], source Pathfinder Player Core, sharing the tail \"If the Strike hits, the next creature other than you to attack the same target before the start of your next turn gains a +1 circumstance bonus to their roll, or a +2 circumstance bonus if your Strike was a critical hit.\" `guiding-shot` itself is level 2, traits [\"commander\",\"flourish\"], source Pathfinder Battlecry!, edition remaster-era. Replace the duplicate-id sentence with: \"The fighter feat `assisting-shot` shares this wording and is likewise ally-only (situational:false) — it needs the same ally-targeted buff lane.\""
+   }
+  ]
+ },
+ {
+  "id": "great-shield-mastery",
+  "name": "Great Shield Mastery",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+4 circumstance (the shield's Take Cover value) instead of the usual +2",
+    "when": "to AC whenever you have a tower shield, fortress shield, or similar raised — you get the Take Cover benefit for free",
+    "targetKind": "ac"
+   }
+  ],
+  "evidence": "\"You continually benefit from Take Cover without needing to spend an action, as long as you have a shield raised and it's a tower shield, fortress shield, or other shield that grants a higher circumstance bonus to AC when you Take Cover behind it.\"",
+  "corrections": [
+   {
+    "problem": "The bonus string '+4 circumstance (the shield's Take Cover value) instead of the usual +2' hard-codes a baseline that is only right for a tower shield. In core.json tower-shield has acBonus 2 (description: 'AC increases to +4 if you are using the Take Cover action') but fortress-shield has acBonus 3, and its description gives no number at all ('Getting the higher bonus for this shield requires using the Take Cover action while the shield is raised'). The feat text itself never states any number, so 'the usual +2' is an invented constant for one of the two shields the feat names.",
+    "correction": "Phrase the magnitude shield-relative, e.g. bonus: 'your raised shield's higher Take Cover AC value (tower shield: +4 instead of +2)' with the engineNote already-correct point that the number must be read off the equipped shield and REPLACES rather than stacks with the raised-shield circumstance bonus."
+   },
+   {
+    "problem": "Under-reports the benefit and closes the question it should have left open. The feat text is confirmed — \"You continually benefit from Take Cover without needing to spend an action, as long as you have a shield raised and it's a tower shield, fortress shield, or other shield that grants a higher circumstance bonus to AC when you Take Cover behind it\" — but the spec records AC only, with needsHumanDecision:false. core.json's own `take-cover` action record says the benefit is not AC-only: \"If you would have standard cover, you instead gain greater cover, which provides a +4 circumstance bonus to AC; to Reflex saves against area effects; and to Stealth checks to hide, sneak, or otherwise avoid detection. Otherwise, you gain standard cover (a +2 circumstance bonus instead).\" A permanently-on Take Cover therefore plausibly also boosts Reflex-vs-area and Stealth, and neither is mentioned.",
+    "correction": "Keep situational:true and the AC entry, but set needsHumanDecision:true with the question: \"Great Shield Mastery grants continual Take Cover. core.json's Take Cover record gives a circumstance bonus to AC, to Reflex saves against area effects, and to Stealth to Hide/Sneak, whereas the Tower Shield item record only says 'AC increases to +4 if you are using the Take Cover action'. Does a raised tower/fortress shield confer the full cover package (add save/reflex and skill/stealth entries) or only the shield's AC increase?\" Also correct the bonus string's provenance: the '+4' is read off the tower-shield item, and the '+2' it is contrasted with is the standard-cover value from the Take Cover record — not, as the note implies, purely the raised-shield bonus; the magnitude still has to come from the equipped shield, which the fixed-string shape cannot express."
+   }
+  ]
+ },
+ {
+  "id": "plasma-hype",
+  "name": "Plasma Hype",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+10-foot status",
+    "when": "while Stage 1 of plasma hype is active (1 round after you Interact to take it)",
+    "targetKind": "speed"
+   }
+  ],
+  "evidence": "\"**Stage 1** +10-foot status bonus to speed, quickened and can use the additional action to Step, Stride, Climb, or Swim (1 round)\"",
+  "corrections": [
+   {
+    "problem": "needsEngineWork is set true on the grounds that \"'speed' is not in the current SituationalTarget union\". Per the target schema I was given, 'speed' IS a permitted target kind, so this is a false engine-work flag on an otherwise correct entry (the record does say \"+10-foot status bonus to speed\" at Stage 1). Everything else — value, status type, Stage-1 gating — checks out.",
+    "correction": "Set needsEngineWork false and drop the union complaint from engineNote (keep the note that quickened / Drained 2 / Stupefied 2 are conditions, not bonuses). Separately, reword the 'when': \"(1 round after you Interact to take it)\" reads as a 1-round delay; the record has NO Onset line — the 1 round is the duration of Stage 1. Use \"while Stage 1 is active (1 round; maximum duration 1 minute)\"."
+   },
+   {
+    "problem": "The condition string misstates the timing: \"while Stage 1 of plasma hype is active (1 round after you Interact to take it)\" reads as a one-round delay before the bonus arrives. The record lists no Onset (unlike grolna, which explicitly has \"**Onset** 1 minute\"); the \"(1 round)\" in \"**Stage 1** +10-foot status bonus to speed, quickened... (1 round)\" is the DURATION of stage 1, which begins immediately. A player reading the star would wait a round for a bonus they already had, and would not know it expires when stage 2 begins.",
+    "correction": "Keep situational true, targetKind 'speed', \"+10-foot status\" (all correct per the text). Rephrase when to: \"while Stage 1 of plasma hype lasts — 1 round, starting immediately when you Interact to take it; Stage 2 drops the Speed bonus and keeps only quickened\". Everything else in the spec (status type, the quickened/Drained 2/Stupefied 2 riders being conditions rather than bonuses) checks out."
+   }
+  ]
+ },
+ {
+  "id": "applereed-mutagen",
+  "name": "Applereed Mutagen",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 / +3 / +4 item (lesser / moderate / greater)",
+    "when": "to Athletics checks while the applereed mutagen is active",
+    "targetKind": "skill",
+    "skill": "athletics"
+   },
+   {
+    "bonus": "+10 / +15 / +20-foot status (lesser / moderate / greater)",
+    "when": "to your Speed while the applereed mutagen is active",
+    "targetKind": "speed"
+   }
+  ],
+  "evidence": "\"**Benefit** You gain an item bonus to Athletics checks and you gain the listed status bonus to your Speed... **Drawback** You take a –1 penalty to AC and a –2 penalty to Reflex saves.\"",
+  "corrections": [
+   {
+    "problem": "Same false engine-work flag: needsEngineWork true because \"'speed' is not yet in the SituationalTarget union\". 'speed' is a permitted kind in the schema. The bonus data itself is right — the umbrella record does say \"You gain an item bonus to Athletics checks and you gain the listed status bonus to your Speed\" with +2/+3/+4 and +10/+15/+20 ft in the graded blocks, and item-vs-status types are correctly distinguished.",
+    "correction": "Set needsEngineWork false; keep only the substantive part of engineNote (umbrella record carries no concrete numbers; the -1 AC / -2 Reflex drawback has no slot in this schema). Also consider whether an umbrella record with a range string as its bonus (\"+2 / +3 / +4 item\") should be registered at all, since the three graded ids carry the real numbers."
+   }
+  ]
+ },
+ {
+  "id": "applereed-mutagen-lesser",
+  "name": "Applereed Mutagen (Lesser)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "to Athletics checks while the lesser applereed mutagen is active (1 minute)",
+    "targetKind": "skill",
+    "skill": "athletics"
+   },
+   {
+    "bonus": "+10-foot status",
+    "when": "to your Speed while the lesser applereed mutagen is active (1 minute)",
+    "targetKind": "speed"
+   }
+  ],
+  "evidence": "\"You gain a +2 item bonus to Athletics checks and you gain a +10 foot status bonus to your Speed... **Duration** 1 minute.\"",
+  "corrections": [
+   {
+    "problem": "needsEngineWork true solely because of the claimed missing 'speed' kind. Record text confirms \"+2 item bonus to Athletics checks\" and \"+10 foot status bonus to your Speed\", Duration 1 minute — the entry is otherwise accurate.",
+    "correction": "Set needsEngineWork false; retain the note about the one-size-larger rider and the -1 AC / -2 Reflex penalty."
+   }
+  ]
+ },
+ {
+  "id": "applereed-mutagen-moderate",
+  "name": "Applereed Mutagen (Moderate)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+3 item",
+    "when": "to Athletics checks while the moderate applereed mutagen is active (10 minutes)",
+    "targetKind": "skill",
+    "skill": "athletics"
+   },
+   {
+    "bonus": "+15-foot status",
+    "when": "to your Speed while the moderate applereed mutagen is active (10 minutes)",
+    "targetKind": "speed"
+   }
+  ],
+  "evidence": "\"You gain a +3 item bonus to Athletics checks and you gain a +15 foot status bonus to your Speed... **Duration** 10 minutes.\"",
+  "corrections": [
+   {
+    "problem": "needsEngineWork true solely because of the claimed missing 'speed' kind. Record confirms +3 item Athletics / +15-foot status Speed / 10 minutes.",
+    "correction": "Set needsEngineWork false."
+   }
+  ]
+ },
+ {
+  "id": "applereed-mutagen-greater",
+  "name": "Applereed Mutagen (Greater)",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+4 item",
+    "when": "to Athletics checks while the greater applereed mutagen is active (1 hour)",
+    "targetKind": "skill",
+    "skill": "athletics"
+   },
+   {
+    "bonus": "+20-foot status",
+    "when": "to your Speed while the greater applereed mutagen is active (1 hour)",
+    "targetKind": "speed"
+   }
+  ],
+  "evidence": "\"You gain a +4 item bonus to Athletics checks and you gain a +20 foot status bonus to your Speed... **Duration** 1 hour.\"",
+  "corrections": [
+   {
+    "problem": "needsEngineWork true solely because of the claimed missing 'speed' kind. Record confirms +4 item Athletics / +20-foot status Speed / 1 hour.",
+    "correction": "Set needsEngineWork false."
+   }
+  ]
+ },
+ {
+  "id": "vaultbreakers-harness",
+  "name": "Vaultbreaker's Harness",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "to Stealth checks for 1 minute after you Activate the harness (1 action, manipulate)",
+    "targetKind": "skill",
+    "skill": "stealth"
+   },
+   {
+    "bonus": "+10-foot item",
+    "when": "to your Speed for 1 minute after you Activate the harness (1 action, manipulate)",
+    "targetKind": "speed"
+   }
+  ],
+  "evidence": "\"**Effect** You cinch the harness to prepare for mischief. You gain a +1 item bonus to Stealth checks and a +10-foot item bonus to your Speed for 1 minute.\"",
+  "corrections": [
+   {
+    "problem": "needsEngineWork true only for the 'speed' union claim. The data is correct and well-judged: the record's Activate entry reads \"You gain a +1 item bonus to Stealth checks and a +10-foot item bonus to your Speed for 1 minute\", and the spec correctly types this Speed bonus as ITEM (unlike applereed/plasma-hype/snowshoes, which are status) and correctly ties it to the activation rather than to wearing the harness.",
+    "correction": "Set needsEngineWork false; keep the (important) engineNote that this is activation-gated and must not be folded into totals."
+   }
+  ]
+ },
+ {
+  "id": "snowshoes-of-the-long-trek",
+  "name": "Snowshoes of the Long Trek",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+5-foot status",
+    "when": "while moving across snow or ice",
+    "targetKind": "speed"
+   }
+  ],
+  "evidence": "\"a character wearing snowshoes of the long trek gains a +5-foot status bonus to their Speed while moving across snow or ice\"",
+  "corrections": [
+   {
+    "problem": "needsEngineWork true only for the 'speed' union claim. Record confirms \"+5-foot status bonus to their Speed while moving across snow or ice\".",
+    "correction": "Set needsEngineWork false; keep the note that the difficult-terrain clause is not a bonus."
+   }
+  ]
+ },
+ {
+  "id": "skinsaw-mask",
+  "name": "Skinsaw Mask",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "to Perception checks to Seek a frightened creature, while the mask is invested",
+    "targetKind": "perception"
+   },
+   {
+    "bonus": "+1 precision damage",
+    "when": "whenever you deal precision damage to a frightened creature",
+    "targetKind": "strikeDamage"
+   }
+  ],
+  "evidence": "\"you gain a +1 item bonus to Perception checks to Seek frightened creatures. Whenever you deal precision damage to a frightened creature, you deal 1 additional precision damage.\"",
+  "corrections": [
+   {
+    "problem": "needsEngineWork true on two grounds, both weak. (a) \"'strikeDamage' is not in the current SituationalTarget union\" — strikeDamage IS a permitted kind in the schema. (b) \"gated on the TARGET being frightened, an enemy state the sheet cannot test\" — the whole registry is display-only (the file header says so explicitly: \"It is DISPLAY-ONLY: nothing here changes a computed number\"), so an untestable condition is normal, not engine work. Both bonuses themselves verify exactly against the text.",
+    "correction": "Set needsEngineWork false. Keep the Drained-2-if-not-unholy rider as a note. Optionally tighten the 'when' on the Perception leg: the record says \"When worn\" (the invested trait is on the item, but the text conditions on wearing)."
+   }
+  ]
+ },
+ {
+  "id": "astrolabe",
+  "name": "Astrolabe",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "on checks to identify celestial bodies (astrolabe held in two hands; the standard model works only on steady ground)",
+    "targetKind": "skill",
+    "skill": "all"
+   }
+  ],
+  "evidence": "\"An astrolabe also grants a +1 item bonus to checks to identify celestial bodies.\"",
+  "corrections": [
+   {
+    "problem": "The engineNote asserts as fact that the trained-in-Survival requirement \"is attached to the Calculate activity, NOT to the identify-celestial-bodies bonus\". The record does not say that — it states it flatly and unqualified: \"To use an astrolabe, the holder must be trained in Survival.\" That sentence precedes the Calculate description and reads as a general gate on using the item. The spec's conclusion (do not bind the bonus to skill 'survival') is still right — being trained in Survival is a prerequisite, not the skill rolled — but the justification is invented and the 'when' string omits a stated requirement.",
+    "correction": "Drop the \"attached to the Calculate activity\" claim from engineNote and add the prerequisite to the condition text: \"on checks to identify celestial bodies, if you are trained in Survival (astrolabe held in two hands...)\". Apply the same fix to astrolabe-standard and astrolabe-mariners, which share the identical sentence. Keep the needsHumanDecision question about which skill key to bind to. Minor: on the umbrella record the 'when' folds in \"the standard model works only on steady ground\", a restriction that belongs to the standard grade only."
+   },
+   {
+    "problem": "The engineNote misreads the record in a way that skews the human decision it raises. It claims the trained-in-Survival requirement \"is attached to the Calculate activity, NOT to the identify-celestial-bodies bonus\". The record says no such thing — its text is \"To use an astrolabe, the holder must be trained in Survival.\", a blanket requirement for using the item at all, stated before the navigation procedure and before \"An astrolabe also grants a +1 item bonus to checks to identify celestial bodies.\" Nothing scopes it to Calculate. Survival is therefore a live candidate for the skill binding, not something that would be \"reading in something the text does not say\".",
+    "correction": "The bonus itself is right: situational true, +1 item, targetKind 'skill' with the condition doing the work, needsHumanDecision true. Fix the engineNote to state that the record gates ALL use of the astrolabe on being trained in Survival, and re-frame the question as: \"the text names no skill for 'checks to identify celestial bodies', but gates use of the item on Survival training — bind to survival, to a Lore, or leave as skill 'all' with the condition text?\" Note also that skill 'all' does render today (targetMatches treats detail 'all' as matching any skill), so needsEngineWork false is correct."
+   }
+  ]
+ },
+ {
+  "id": "sovereign-steel-armor",
+  "name": "Sovereign Steel Armor",
+  "collection": "items",
+  "currentBonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "to AC against spell attack rolls, while wearing sovereign steel armor",
+    "targetKind": "ac"
+   }
+  ],
+  "evidence": "\"The noqual in sovereign steel armor provides protection against magic, granting you a +1 circumstance bonus to AC against spell attack rolls.\"",
+  "corrections": [
+   {
+    "problem": "Coverage is inverted across the sovereign-steel family. The material text — \"All sovereign steel items (including weapon and armor below) ... grant their bonus to saves the owner makes specifically to protect the item from magic\" — explicitly names armor, yet the +4 circumstance save leg is registered ONLY on the two Sovereign Steel Object records (raw material priced per Bulk, which the spec itself doubts should ever star) and NOT on the three armor records, which are the ones a character actually wears. The +1 circumstance AC vs spell attack rolls on the armor records is correct and verified.",
+    "correction": "Decide one way and apply it consistently across sovereign-steel-armor, sovereign-steel-armor-standard-grade and sovereign-steel-armor-high-grade vs sovereign-steel-object-standard-grade / -high-grade: either add the \"+4 circumstance, on a save you make specifically to protect this sovereign steel item from magic (e.g. vs. rusting grasp)\" leg to the armor records too, or drop it from the Object records as an unrollable/GM-side effect. Note the armor records' own description text does not repeat the +4 clause (it lives on the material record), so if the rule is strict grounding in the record's own text, the Object entries are the ones to drop."
+   }
+  ]
+ },
+ {
+  "id": "aon-dad-joke",
+  "name": "Dad Joke",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "when you use Dad Joke and substitute a Lore check for the skill that would identify the target, if that Lore could identify it",
+    "targetKind": "skill",
+    "skill": "lore"
+   }
+  ],
+  "evidence": "you can instead attempt a Lore check with a +2 circumstance bonus if the target is trained in that Lore or could be identified by that Lore when Recalling Knowledge",
+  "corrections": [
+   {
+    "problem": "The condition is narrowed and the engineNote invents a Paizo typo that the text does not support. The record reads: 'you can instead attempt a Lore check with a +2 circumstance bonus if the target is trained in that Lore or could be identified by that Lore when Recalling Knowledge.' That is a DISJUNCTION with two qualifying branches. The spec's `when` keeps only the second branch ('if that Lore could identify it') and silently drops the first. The engineNote then asserts the first branch 'reads as a Paizo typo for \"if you are trained in that Lore\"' — that is an invented rewrite. The printed clause is coherent as written: Dad Joke is a lovingly tailored joke, so a Lore the TARGET is trained in (Farming Lore for a farmer) is exactly the kind of Lore you would build the pun from. Rewriting a printed condition on a typo hunch is the 'condition invented or broadened beyond what the text says' failure mode.",
+    "correction": "Restore both printed branches and drop the typo claim. Use when: 'when you use Dad Joke and substitute a Lore check for the skill that would identify the target, if the target is trained in that Lore or that Lore could identify it'. Keep bonus '+2 circumstance', targetKind 'skill'. Keep needsEngineWork true, but restate the engine gap accurately: the registry keys Lore individually as `lore:*` (see the SituationalTarget doc comment in src/rules/situationalBonuses.ts), so there is no key meaning 'whichever Lore fits the target'; skill 'lore' is a placeholder for a missing any-Lore target. If the typo reading is still suspected, that belongs in needsHumanDecision as a question, not applied as a silent edit to the condition."
+   },
+   {
+    "problem": "The condition was rewritten rather than recorded: the spec declares 'if the target is trained in that Lore' a Paizo typo for 'if you are trained in that Lore', then drops that whole branch from the condition text, leaving only 'if that Lore could identify it'. The record's actual text is \"you can instead attempt a Lore check with a +2 circumstance bonus if the target is trained in that Lore or could be identified by that Lore when Recalling Knowledge\" — two alternative branches joined by 'or'. The printed wording is not obviously a typo: a joke landing because the TARGET knows the subject (Blacksmithing Lore at a blacksmith) reads perfectly well for a feat literally called Dad Joke, and the second branch ('could be identified by that Lore') already covers the identification case, so the spec's rewrite makes the first branch redundant with the second. Emitting a condition that silently deletes half of a printed 'A or B' is the 'condition invented or broadened beyond what the text says' failure, in the narrowing direction. Secondary defect: target skill is 'lore', which is not a key the registry can match — situationalBonuses.ts documents skill detail as 'a skill key, a `lore:*` key, or `all`', so a bare 'lore' would match no skill and the star would never render.",
+    "correction": "Set the when text to the printed rule, both branches: 'when you use Dad Joke and substitute a Lore check for the skill that would identify the target, if the target is trained in that Lore or could be identified by that Lore'. Move the typo hypothesis out of the data and into needsHumanDecision: 'The printed text says \"if the target is trained in that Lore\" — is that a Paizo typo for \"if you are trained in that Lore\", or does the target's own training genuinely qualify? I have kept the printed wording.' Keep needsEngineWork true and state the missing piece precisely: the registry has no 'any Lore' key (only concrete lore:* keys and 'all'), so skill:'lore' will not match anything as authored — either add an 'any lore' detail or use skill:'all' with the Lore-only condition spelled out."
+   }
+  ]
+ },
+ {
+  "id": "sharkskin-grip",
+  "name": "Sharkskin Grip",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+1 item",
+    "when": "while wearing your sharkskin-trimmed clothing, on unarmed attack rolls",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "while wearing your sharkskin-trimmed clothing",
+    "targetKind": "skill",
+    "skill": "acrobatics"
+   },
+   {
+    "bonus": "+1 item",
+    "when": "while wearing your sharkskin-trimmed clothing, to Escape, Grab an Edge, or avoid falling prone",
+    "targetKind": "save",
+    "save": "reflex"
+   }
+  ],
+  "evidence": "As long as you're wearing your clothing, you gain a +1 item bonus to unarmed attack rolls, Acrobatics checks, and Reflex saves and DCs to Escape, Grab an Edge, or avoid falling prone.",
+  "corrections": [
+   {
+    "problem": "The needsHumanDecision question presents only two readings and omits the most likely one, so the Acrobatics row as written is probably over-broad. Text: '+1 item bonus to unarmed attack rolls, Acrobatics checks, and Reflex saves and DCs to Escape, Grab an Edge, or avoid falling prone.' The spec asks only 'does the qualifier scope the Reflex half, or all three?' — but the natural third reading is that it scopes the Acrobatics AND Reflex halves and leaves only unarmed attacks unqualified, because every action in the trailing list is an Acrobatics/Reflex action (Escape can be an Acrobatics check, Grab an Edge is a Reflex save, avoiding falling prone is Acrobatics or Reflex). Under the spec's chosen reading the sheet stars ALL Acrobatics while the clothing is worn, which is a broader claim than the sentence supports. Second problem: the engineNote suggests the unarmed-attack and Acrobatics halves 'could be treated as flat item bonuses in the maths instead of stars'. Doing that for unarmed attacks would be a real bug — Handwraps of Mighty Blows already supply an ITEM bonus to unarmed attacks, item bonuses do not stack, so folding this into the maths would silently inflate the strike total for any character with handwraps.",
+    "correction": "Rewrite the question to offer three readings: (a) qualifier scopes only Reflex saves/DCs; (b) qualifier scopes Acrobatics and Reflex, leaving only unarmed attacks unconditional; (c) qualifier scopes all three. Flag (b) as the reading the sentence structure best supports, and until the owner rules, scope the Acrobatics entry with when: 'while wearing your sharkskin-trimmed clothing, to Escape, Grab an Edge, or avoid falling prone' rather than the bare 'while wearing your sharkskin-trimmed clothing'. Delete the suggestion to move any part of this into the maths, or replace it with an explicit warning that the unarmed-attack half must stay display-only because it is an item bonus that does not stack with Handwraps of Mighty Blows."
+   },
+   {
+    "problem": "The spec's chosen default reading broadens two of the three bonuses far beyond what the text supports. Record text: \"you gain a +1 item bonus to unarmed attack rolls, Acrobatics checks, and Reflex saves and DCs to Escape, Grab an Edge, or avoid falling prone.\" The spec reads the trailing qualifier as scoping ONLY the Reflex clause, so it emits an unqualified '+1 item on unarmed attack rolls' and an unqualified '+1 item on all Acrobatics checks' (condition text is only 'while wearing your sharkskin-trimmed clothing'). Core.json's own action records show why that is the wrong default: `escape` says \"Attempt a check using your unarmed attack modifier... You can attempt an Acrobatics or Athletics check instead\", and `grab-an-edge` says \"You must succeed at your choice of an Acrobatics check or a Reflex save\". Each of the three listed statistics is exactly a legal roll for one or more of the three listed actions — that is why they are listed together, and the qualifier scopes the whole list. The spec's reading also hands a level-4 archetype feat a permanent +1 item bonus to every unarmed Strike (equivalent to a +1 striking weapon) and to every Acrobatics check, which the near-always-true 'while wearing your clothing' condition would then park behind a star as if it were rare.",
+    "correction": "Keep needsHumanDecision, but flip the default to the narrow reading. All three entries should carry the Escape/Grab an Edge/avoid-falling-prone qualifier: strikeAttack — '+1 item', when: 'while wearing your sharkskin-trimmed clothing, on unarmed attack rolls to Escape'; skill/acrobatics — '+1 item', when: 'while wearing your sharkskin-trimmed clothing, to Escape, Grab an Edge, or avoid falling prone'; save/reflex — '+1 item', when: 'while wearing your sharkskin-trimmed clothing, to Grab an Edge or avoid falling prone (and to your Escape DC)'. Reword the question to: 'Does the trailing qualifier scope the whole list? The Escape and Grab an Edge action texts say each listed statistic is a legal roll for one of the listed actions, which is why I default to the narrow reading — confirm before we grant a blanket +1 item to unarmed attacks and Acrobatics.' Keep needsEngineWork for the Escape DC half."
+   }
+  ]
+ },
+ {
+  "id": "aon-civil-service",
+  "name": "Civil Service",
+  "collection": "feats",
+  "currentBonuses": [],
+  "evidence": "You gain a +2 status bonus to New Leadership checks.",
+  "corrections": [
+   {
+    "problem": "`situational: false` is being used to mean 'out of scope' rather than its defined meaning ('unconditional, so it belongs in the maths'), and the chunk applies it inconsistently. Six records whose bonus lands on someone other than the character (fear-no-pain, swift-support, bounce-boost, personalized-poisoning, guardians-deflection-swashbuckler, snap-out-of-it-marshal) are marked situational TRUE with an empty bonus list, while eight Kingmaker records with the same 'nothing lands on a character stat' shape are marked situational FALSE with an empty list. Worse, several kingdom specs contradict their own flag: aon-fortified-fiefs is false yet its engineNote says 'within that subsystem both modifiers WOULD be situational', and aon-inspiring-entertainment is false yet its engineNote says 'within that subsystem this one is clearly situational'. aon-civil-service is the same case — '+2 status bonus to New Leadership checks' is restricted to one named kingdom activity, so it is conditional, not unconditional. A downstream reader taking `situational: false` at its documented meaning would conclude these are flat bonuses.",
+    "correction": "Unify the two families on one encoding. Recommended: reserve `situational: false` for genuinely unconditional bonuses, and mark every 'nothing lands on a character statistic' record as situational true + bonuses [] + needsEngineWork true, with the reason (ally-facing / companion-facing / kingdom subsystem) in engineNote. Under that rule, flip aon-civil-service, aon-cooperative-leadership, aon-crush-dissent, aon-fortified-fiefs, aon-free-and-fair, aon-insider-trading and aon-inspiring-entertainment to situational true with empty bonuses. aon-practical-magic is the one kingdom record that should stay false, because '+1 status bonus to Magic checks' really is unconditional inside its own subsystem. Either way, remove the engineNote sentences that assert the opposite of the flag on the same record."
+   }
+  ]
+ },
+ {
+  "id": "harsh-judgement",
+  "name": "Harsh Judgement",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "to Seek your condemned foe",
+    "targetKind": "perception"
+   },
+   {
+    "bonus": "+2 circumstance",
+    "when": "to Demoralize your condemned foe",
+    "targetKind": "skill",
+    "skill": "intimidation"
+   },
+   {
+    "bonus": "-1 circumstance",
+    "when": "to Seek any creature other than your condemned foe",
+    "targetKind": "perception"
+   },
+   {
+    "bonus": "-1 circumstance",
+    "when": "to Demoralize anyone other than your condemned foe",
+    "targetKind": "skill",
+    "skill": "intimidation"
+   }
+  ],
+  "evidence": "You gain a +2 circumstance bonus to Perception checks to Seek your condemned foe and on Intimidation checks to Demoralize them. You have a -1 circumstance penalty to Perception checks to Seek creatures other than your condemned foe and on Intimidation checks to Demoralize anyone other than your condemned foe.",
+  "corrections": [
+   {
+    "problem": "The engineNote contradicts the data it ships. It says 'the sheet must not present them as bonuses' while the two -1 circumstance penalties are placed in the `bonuses` array, which is exactly what the sheet renders as bonuses. An applier following the note would strip the penalties (losing information the player needs — Harsh Judgment penalises Seeking and Demoralizing everyone except the condemned foe) or render them under a bonus heading, the thing the note forbids. The classification itself is right: the record does read '+2 circumstance bonus to Perception checks to Seek your condemned foe and on Intimidation checks to Demoralize them. You have a -1 circumstance penalty to Perception checks to Seek creatures other than your condemned foe...'. The live registry already carries penalty rows in the same array (barbarian-dedication: bonus \"-1 (penalty)\"; diverse-mystery: bonus \"-1 status\"), so there is precedent — the note is simply wrong about the convention.",
+    "correction": "Keep all four rows and delete the contradictory sentence. Follow the existing labeling convention in src/rules/situationalBonuses.ts so the display reads as a penalty rather than a bonus — e.g. bonus '-1 circumstance (penalty)' for the two Seek/Demoralize-others rows, matching barbarian-dedication's '-1 (penalty)'. Apply the identical change to the duplicate record aon-harsh-judgment, whose engineNote carries the same contradictory sentence."
+   }
+  ]
+ },
+ {
+  "id": "mutant-innervation",
+  "name": "Mutant Innervation",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "item bonus equal to the cognitive mutagen's (+2 lesser / +3 moderate / +4 greater / +5 major)",
+    "when": "while affected by a cognitive mutagen",
+    "targetKind": "skill",
+    "skill": "deception"
+   },
+   {
+    "bonus": "item bonus equal to the cognitive mutagen's (+2/+3/+4/+5)",
+    "when": "while affected by a cognitive mutagen",
+    "targetKind": "skill",
+    "skill": "diplomacy"
+   },
+   {
+    "bonus": "item bonus equal to the cognitive mutagen's (+2/+3/+4/+5)",
+    "when": "while affected by a cognitive mutagen",
+    "targetKind": "skill",
+    "skill": "intimidation"
+   },
+   {
+    "bonus": "item bonus equal to the cognitive mutagen's (+2/+3/+4/+5)",
+    "when": "while affected by a cognitive mutagen",
+    "targetKind": "skill",
+    "skill": "medicine"
+   },
+   {
+    "bonus": "item bonus equal to the cognitive mutagen's (+2/+3/+4/+5)",
+    "when": "while affected by a cognitive mutagen",
+    "targetKind": "skill",
+    "skill": "nature"
+   },
+   {
+    "bonus": "item bonus equal to the cognitive mutagen's (+2/+3/+4/+5)",
+    "when": "while affected by a cognitive mutagen",
+    "targetKind": "skill",
+    "skill": "performance"
+   },
+   {
+    "bonus": "item bonus equal to the cognitive mutagen's (+2/+3/+4/+5)",
+    "when": "while affected by a cognitive mutagen",
+    "targetKind": "skill",
+    "skill": "religion"
+   },
+   {
+    "bonus": "item bonus equal to the cognitive mutagen's (+2/+3/+4/+5)",
+    "when": "while affected by a cognitive mutagen",
+    "targetKind": "skill",
+    "skill": "survival"
+   }
+  ],
+  "evidence": "\"Cognitive Mutagen You also gain the mutagen's item bonus to Deception, Diplomacy, Intimidation, Medicine, Nature, Performance, Religion, and Survival checks.\"",
+  "corrections": [
+   {
+    "problem": "Fabricated bonus magnitudes. All eight skill entries state the cognitive mutagen's item bonus is \"+2 lesser / +3 moderate / +4 greater / +5 major\". core.json's own cognitive mutagen records say otherwise: cognitive-mutagen-lesser \"You gain a +1 item bonus\", cognitive-mutagen-moderate \"+2 item bonus\", cognitive-mutagen-greater \"+3 item bonus\", cognitive-mutagen-major \"+4 item bonus\". Every grade is overstated by 1, and the +5 grade does not exist at all. The feat text itself ('You also gain the mutagen's item bonus to Deception, Diplomacy, Intimidation, Medicine, Nature, Performance, Religion, and Survival checks') never names a number, so the figures were invented rather than read.",
+    "correction": "Replace the bonus string on all 8 entries with: \"item bonus equal to the cognitive mutagen's (+1 lesser / +2 moderate / +3 greater / +4 major)\". Everything else in this spec is correct and verified: situational true; the skill list (deception, diplomacy, intimidation, medicine, nature, performance, religion, survival) matches the text exactly; the type is item; needsEngineWork true is right because the magnitude is inherited from whichever grade is active; and the Silvertongue clause (penalty suppression) and Serene clause (detection immunity) are correctly excluded."
+   }
+  ]
+ },
+ {
+  "id": "amplifying-touch",
+  "name": "Amplifying Touch",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+1 status",
+    "when": "on an ally you healed with Lay on Hands, until the end of their next turn (the bonus is theirs, not yours)",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "+1 spirit damage (extra damage, untyped bonus)",
+    "when": "on all Strikes of an ally you healed with Lay on Hands, until the end of their next turn; their Strikes also gain the holy trait",
+    "targetKind": "strikeDamage"
+   }
+  ],
+  "evidence": "\"An ally that recovers Hit Points from your Lay on Hands gains a +1 status bonus to their attack rolls and deals 1 additional spirit damage on all their Strikes until the end of their next turn.\"",
+  "corrections": [
+   {
+    "problem": "The first bonus is recorded as 'strikeAttack', but the record says \"a +1 status bonus to their attack rolls\" — all attack rolls, not only Strikes. (The ally-only limitation, the +1 status type and the 1 additional spirit damage are all correctly read; needsEngineWork is already true.)",
+    "correction": "Use the generic 'attack' target kind rather than 'strikeAttack' so spell and ranged attacks are covered. The damage half remains blocked on a missing damage target kind."
+   }
+  ]
+ },
+ {
+  "id": "spellmasters-tenacity",
+  "name": "Spellmaster's Tenacity",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance (upgraded from Spellmaster's Resilience's +1)",
+    "when": "for 1 minute after this reaction fires — once per day, when you critically fail a save against a foe's spell of your chosen tradition (you fail instead)",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"For 1 minute, increase the circumstance bonus to saving throws from the Spellmaster's Resilience feat to +2, and increase the resistance to damage it grants to 10.\"",
+  "corrections": [
+   {
+    "problem": "The `when` text (\"for 1 minute after this reaction fires — once per day, when you critically fail a save against a foe's spell of your chosen tradition\") describes only the TRIGGER, not the scope of the upgraded bonus. I checked the referenced feat: spellmasters-resilience reads \"You gain a +1 circumstance bonus to saving throws against spells and effects with that tradition's trait\". So the upgraded +2 still applies only against that one tradition. As written a player would add +2 to every save for the minute — a broadened condition.",
+    "correction": "Reword `when` to something like \"for 1 minute, against spells and effects with your chosen tradition's trait (upgraded from Spellmaster's Resilience's +1); triggered once per day when you critically fail such a save — you fail instead\"."
+   }
+  ]
+ },
+ {
+  "id": "innate-magic-intuition",
+  "name": "Innate Magic Intuition",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "on your next save against an innate spell from a creature you successfully identified with Recall Knowledge (first success per creature)",
+    "targetKind": "save",
+    "save": "all"
+   }
+  ],
+  "evidence": "\"The first time you successfully Recall Knowledge to identify a creature... you gain a +2 circumstance bonus on your next save against an innate spell cast by that creature.\"",
+  "corrections": [
+   {
+    "problem": "The `when` asserts \"(first success per creature)\". The record says only \"The first time you successfully Recall Knowledge to identify a creature, ... you gain a +2 circumstance bonus on your next save against an innate spell cast by that creature.\" Whether 'the first time' means once per creature or once ever is not stated. The spec resolved the ambiguity silently and set needsHumanDecision:false.",
+    "correction": "Either drop the parenthetical and use the record's own wording (\"the first time you successfully Recall Knowledge to identify that creature\"), or keep the per-creature reading and set needsHumanDecision: true with the question 'Is Innate Magic Intuition once per creature or once ever?'"
+   }
+  ]
+ },
+ {
+  "id": "staff-acrobat-dedication",
+  "name": "Staff Acrobat Dedication",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "on the Athletics check for a High Jump, Leap or Long Jump, while wielding your staff",
+    "targetKind": "skill",
+    "skill": "athletics"
+   },
+   {
+    "bonus": "success becomes a critical success",
+    "when": "on Acrobatics checks to Balance while wielding your staff",
+    "targetKind": "skill",
+    "skill": "acrobatics"
+   }
+  ],
+  "evidence": "\"When you High Jump, Leap, or Long Jump while wielding your staff, you gain a +2 circumstance bonus to any Athletics check required... when you roll a success on a check to Balance while wielding your staff, you get a critical success instead.\"",
+  "corrections": [
+   {
+    "problem": "The engineNote's supporting claim is false. It says \"the registry's `bonus` field already carries effect phrases elsewhere (see situationalBonuses.ts line 76 breath-control)\". Line 76 actually reads: bonus: \"+1 circumstance\", when: \"against inhaled threats (success becomes critical success)\" — the degree-of-success phrase lives in `when`, not `bonus`. Consequently the Balance entry, which puts \"success becomes a critical success\" in `bonus`, does not match the registry's actual convention. The two bonuses themselves are correctly read from the record.",
+    "correction": "Keep the Athletics entry as-is. For the Balance clause, follow line 76: put the effect phrase in `when` (e.g. when: \"on Acrobatics checks to Balance while wielding your staff (a success becomes a critical success)\") and leave `bonus` empty or as the effect label, and drop the incorrect line-76 citation."
+   }
+  ]
+ },
+ {
+  "id": "gorilla-stance",
+  "name": "Gorilla Stance",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+2 circumstance (a success on the Climb check becomes a critical success)",
+    "when": "on Athletics checks to Climb while in Gorilla Stance",
+    "targetKind": "skill",
+    "skill": "athletics"
+   }
+  ],
+  "evidence": "\"While you are in Gorilla Stance, you gain a +2 circumstance bonus to Athletics checks to Climb, and if you roll a success on an Athletics check to Climb, you get a critical success instead.\"",
+  "corrections": [
+   {
+    "problem": "Same field-placement issue: `bonus` is given as \"+2 circumstance (a success on the Climb check becomes a critical success)\", mixing a numeric modifier and a degree-of-success effect in one field. The registry's convention (situationalBonuses.ts line 76) keeps `bonus` as the bare modifier and puts the effect phrase in `when`. The record text, target (athletics), size and type are all correct, and the claim about content.stances['gorilla-stance'] carrying only a prose `note` plus `strikes` is verified true.",
+    "correction": "Split the fields: bonus: \"+2 circumstance\", when: \"on Athletics checks to Climb while in Gorilla Stance (a success becomes a critical success)\"."
+   }
+  ]
+ },
+ {
+  "id": "reinforced-chassis",
+  "name": "Reinforced Chassis",
+  "collection": "feats",
+  "currentBonuses": [],
+  "evidence": "Your chassis is made from reinforced armor plating that grants a +3 item bonus to AC with a Dexterity cap of +1. If you are at least 5th level, the item bonus increases to +4 and at 10th level it increases to +5. You can never wear other armor or remove your chassis",
+  "corrections": [
+   {
+    "problem": "The situational:false verdict is right, but the engineNote is factually wrong. It says the feat \"Needs to be modelled as a permanent worn armor item\". core.json ALREADY contains an items record with the same id: items['reinforced-chassis'] = {\"level\":0,\"price\":{},\"bulk\":0,\"traits\":[\"comfort\"],\"rarity\":\"rare\",\"description\":\"Granted by Reinforced Chassis\",\"itemType\":\"armor\",\"category\":\"medium\",\"group\":\"plate\",\"acBonus\":3,\"dexCap\":1,\"checkPenalty\":0,\"speedPenalty\":0}. The armor item, the medium/plate classification, the Dex cap +1 and the rune-etchability are all already there.",
+    "correction": "Replace the engineNote. The real gap is level scaling: acBonus is hard-coded to 3, so the feat's '+4 at 5th level and +5 at 10th level' never happens, and the item carries no marker that it can't be removed or swapped. Note also the feat id and item id collide ('reinforced-chassis' exists in both feats and items) — anything keyed by bare id has to disambiguate by collection."
+   }
+  ]
+ },
+ {
+  "id": "core-cannon",
+  "name": "Core Cannon",
+  "collection": "feats",
+  "currentBonuses": [],
+  "evidence": "You gain the item bonus to attack rolls with your energy blasts from the highest potency rune on any Handwraps of Mighty Blows you are wearing or any weapon you are wielding, but striking and property runes have no effect on your energy blasts.",
+  "corrections": [
+   {
+    "problem": "The situational:false verdict is right but the reasonIfNot misstates the rule. It claims the potency inheritance is 'the normal rule rather than an extra situational modifier'. The record says: 'You gain the item bonus to attack rolls with your energy blasts from the highest potency rune on any Handwraps of Mighty Blows you are wearing OR ANY WEAPON YOU ARE WIELDING, but striking and property runes have no effect'. Borrowing potency from an unrelated wielded weapon is not the normal rule — normally a weapon's potency applies only to that weapon.",
+    "correction": "Keep situational:false, but restate: 'No conditional bonus to a character stat. The only bonus named is a special potency-inheritance rule for the energy blast Strike (it takes the highest potency rune from handwraps or any weapon wielded, ignoring striking/property runes) — that belongs in the Strike definition, not on a star.' The engineNote's other figures are all verbatim-correct: 3d8 fire + 3d6 force (4d8 fire at level 20), 120-foot range increment, 10 persistent fire on a crit, no critical specialization, damage dice counted as three (four at 20)."
+   }
+  ]
+ },
+ {
+  "id": "soulforger-dedication",
+  "name": "Soulforger Dedication",
+  "collection": "feats",
+  "currentBonuses": [
+   {
+    "bonus": "+2 status",
+    "when": "Deep-Seeded Fear essence: to Demoralize foes who can perceive your armament's essence form (and no penalty for not sharing a language)",
+    "targetKind": "skill",
+    "skill": "intimidation"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "Heroic Heart essence, while the essence form is manifested",
+    "targetKind": "strikeAttack"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "Heroic Heart essence, while the essence form is manifested",
+    "targetKind": "perception"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "Heroic Heart essence, while the essence form is manifested",
+    "targetKind": "skill",
+    "skill": "all"
+   },
+   {
+    "bonus": "+1 status",
+    "when": "Heroic Heart essence, while the essence form is manifested",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+2 status",
+    "when": "Magical Resilience essence (armor or shield only), on saves against spells",
+    "targetKind": "save",
+    "save": "all"
+   },
+   {
+    "bonus": "+2 status",
+    "when": "Magical Resilience essence (armor or shield only), to AC against spells",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+2 status",
+    "when": "Reflecting Spirit essence (armor or shield only), to AC against physical ranged attacks",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+2 status",
+    "when": "Planar Pain essence (weapon only), to damage with the soulforged weapon while its essence form is manifested",
+    "targetKind": "strikeDamage"
+   }
+  ],
+  "evidence": "Deep-Seeded Fear: 'You gain a +2 status bonus to your Intimidation checks ... when Demoralizing foes who can perceive your armament's essence form.' Heroic Heart: 'You gain a +1 status bonus to attack rolls, Perception checks, skill checks, and saves.' Magical Resilience: 'You gain a +2 status bonus to saving throws and AC against spells.' Reflecting Spirit: 'You gain a +2 status bonus to AC against physical ranged attacks.' Planar Pain: 'Attacks with the weapon deal this type of damage instead of their physical damage with a +2 status bonus to the damage.'",
+  "corrections": [
+   {
+    "problem": "Two accuracy issues in an otherwise verbatim-correct spec. (a) The engineNote describes Resolute Defiance as 'shield temp HP (level+2)', but the record says 'The shield gains a +2 status bonus to its Hardness and gains temporary Hit Points equal to your level + 2' — a typed numeric bonus was dropped from the summary. (b) Heroic Heart reads '+1 status bonus to attack rolls, Perception checks, skill checks, and saves'; mapping 'attack rolls' to strikeAttack alone excludes spell attack rolls.",
+    "correction": "(a) Add the Hardness bonus to the engineNote and state explicitly that it is unrepresentable (no shield/Hardness target kind), rather than omitting it. (b) Note in the when text that the +1 covers all attack rolls including spell attacks, since strikeAttack is the only available approximation. Everything else checks out verbatim: Deep-Seeded Fear +2 status Intimidation, Magical Resilience +2 status saves and AC vs spells (armor/shield only), Reflecting Spirit +2 status AC vs physical ranged attacks (armor/shield only), Planar Pain +2 status damage (weapon only), and the corruption flaws quoted."
+   }
+  ]
+ },
+ {
+  "id": "spell-swipe",
+  "name": "Spell Swipe",
+  "collection": "feats",
+  "currentBonuses": [],
+  "evidence": "\"If you're using a weapon that has the sweep trait, its circumstance bonus applies against both targets.\"",
+  "corrections": [
+   {
+    "problem": "Marked situational:false with reasonIfNot \"the feat merely extends that already-earned bonus to the second target\". That mischaracterises the sweep trait. core.json's text is: \"If you're using a weapon that has the sweep trait, its circumstance bonus applies against both targets.\" Sweep only gives its +1 circumstance bonus \"against a target you already attempted to attack this turn\"; a Spell Swipe rolls separate Strikes against TWO different creatures, so neither Strike would normally qualify. The feat therefore creates a bonus that would not otherwise exist — it is not an already-earned bonus being carried over. Classifying it as \"nothing to star\" drops a real conditional bonus (the exact under-coverage the lane exists to fix).",
+    "correction": "situational: true, one entry — targetKind 'strikeAttack', bonus \"+1 circumstance (your weapon's sweep bonus)\", when \"on both Strikes of a Spell Swipe when you're wielding a sweep weapon\". needsEngineWork false; needsHumanDecision optional if the owner wants weapon-trait-derived bonus sizes resolved from the equipped weapon rather than printed as +1. Medium confidence: the deciding text is the sweep trait's own wording, which lives outside this record, so it is worth a second look by the app owner."
+   }
+  ]
+ }
+]
