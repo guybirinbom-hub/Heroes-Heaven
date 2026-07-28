@@ -381,9 +381,39 @@ export interface AcResult {
   dexCap: number | null;
 }
 
-/** The mechanical def of the character's currently-active stance, if any (exclusive — one at a time). */
-export function activeStanceDef(c: Character, db: ContentDatabase): StanceDef | undefined {
+/** The active stance's entry REGARDLESS of whether its requirements are met. Only the UI should use
+ *  this — it needs to show the stance as selected while explaining that it isn't doing anything. */
+export function activeStanceEntry(c: Character, db: ContentDatabase): StanceDef | undefined {
   return c.activeStance ? db.stances?.[c.activeStance] : undefined;
+}
+
+/** Explorer's clothing is *unarmored*-category armor, so "are you unarmored?" is a question about the
+ *  category, not about whether anything is worn. */
+export function isUnarmored(c: Character, db: ContentDatabase): boolean {
+  const worn = findWornArmor(c, db);
+  return !worn || worn.armor.category === 'unarmored';
+}
+
+/** The printed requirement the active stance currently fails, or null when it's legal.
+ *  Only mechanically checkable requirements can fail here; the rest are shown as a reminder. */
+export function stanceRequirementIssue(c: Character, db: ContentDatabase): string | null {
+  const stance = activeStanceEntry(c, db);
+  const req = stance?.requires;
+  if (!req) return null;
+  // Tenacious Stance requires the opposite of the monk stances — "You are wearing armor".
+  if (req.unarmored && !isUnarmored(c, db)) return req.text;
+  if (req.armored && isUnarmored(c, db)) return req.text;
+  return null;
+}
+
+/** The mechanical def of the character's currently-active stance, if any (exclusive — one at a time).
+ *
+ *  Returns undefined when the stance's requirements AREN'T met: Rain of Embers requires being
+ *  unarmored, and a character in plate who toggled it was being handed its +1 status AC anyway. The
+ *  gate lives here, at the single source every mechanical call site already reads, rather than being
+ *  repeated at each of them — one missed call site would silently reopen the bug. */
+export function activeStanceDef(c: Character, db: ContentDatabase): StanceDef | undefined {
+  return stanceRequirementIssue(c, db) ? undefined : activeStanceEntry(c, db);
 }
 
 /** The `whileActive` grants from owned feats/features whose resource STATE is currently toggled on

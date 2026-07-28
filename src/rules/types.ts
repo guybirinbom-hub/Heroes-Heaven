@@ -1249,6 +1249,11 @@ export interface StanceDef {
   /** This entry is an alternate FORM (Ursine Avenger, Bat Form), not a footwork stance — it surfaces
    *  as a toggle even without the `stance` trait, and reads as "Form" in the UI. */
   form?: boolean;
+  /** The stance's printed **Requirements** line. 47 of the 128 stances have one and none used to be
+   *  enforced, so a character in full plate could toggle Rain of Embers and keep its +1 status AC.
+   *  `unarmored` is the machine-checkable part; `text` is always the printed wording, shown either as
+   *  the reason the stance is inert or (for requirements we can't check) as a reminder. */
+  requires?: { unarmored?: boolean; armored?: boolean; text: string };
   /** Concise reminder of the stance/form's other or conditional effects. */
   note?: string;
 }

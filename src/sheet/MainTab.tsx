@@ -21,6 +21,7 @@ import { critSpec } from '../rules/critSpec';
 import { ACTIVITIES, type ActivityDef } from '../rules/actions';
 import { traitDesc } from '../rules/glossary';
 import { statHasSituational, type StatRef } from '../rules/explain';
+import { stanceRequirementIssue } from '../rules/derive';
 import { ActionGlyph, RankPill, SituationalStar } from './widgets';
 import { DescriptionModal } from './DescriptionModal';
 import { DescBody } from './DescBody';
@@ -228,6 +229,9 @@ export function MainTab({
     .map(({ inv, item }) => ({ key: `itemact:${inv.instanceId}`, name: item!.name, cost: item!.activationCost, desc: item!.description, descRefs: item!.descRefs, traits: item!.traits }));
 
   const pinned = new Set(character.pinned ?? []);
+  // Why the active stance is inert, or null. derive() already refuses to apply its effects.
+  const stanceIssue = stanceRequirementIssue(character, content);
+
   const strikeKey = (instanceId: string) => `strike:${instanceId}`;
   const actionKey = (name: string) => `action:${name}`;
 
@@ -717,15 +721,35 @@ export function MainTab({
                     <button
                       key={f.id}
                       type="button"
-                      className={'stance-chip' + (character.activeStance === f.id ? ' on' : '')}
+                      className={
+                        'stance-chip' +
+                        (character.activeStance === f.id ? ' on' : '') +
+                        (character.activeStance === f.id && stanceIssue ? ' unmet' : '')
+                      }
                       disabled={!onPlay}
-                      title={content.stances[f.id]?.note || f.name}
+                      title={
+                        [content.stances[f.id]?.requires?.text && `Requires: ${content.stances[f.id]!.requires!.text}`,
+                         content.stances[f.id]?.note || f.name]
+                          .filter(Boolean)
+                          .join(' — ')
+                      }
                       onClick={onPlay ? () => onPlay((p) => setActiveStance(p, f.id)) : undefined}
                     >
                       {f.name}
                     </button>
                   ))}
                 </div>
+                {/* A stance whose Requirements aren't met grants nothing (derive gates it), so say so
+                    plainly — an inert stance that still looks active reads as a broken sheet. */}
+                {stanceIssue && (
+                  <div className="stance-warn">
+                    <i className="ti ti-alert-triangle" aria-hidden="true" />
+                    <span>
+                      Not active — this stance requires: <strong>{stanceIssue}</strong>. Its effects
+                      aren't being applied.
+                    </span>
+                  </div>
+                )}
                 {character.activeStance && content.stances[character.activeStance]?.note && (
                   <div className="stance-note">{content.stances[character.activeStance].note}</div>
                 )}
