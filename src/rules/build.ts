@@ -706,6 +706,31 @@ export function featChoiceLabel(raw: string): string {
   return s || raw;
 }
 
+/**
+ * Options for a `kind: 'skills'` feat choice — the skills this character actually qualifies with.
+ *
+ * Assurance ("Choose a skill you're trained in") is why this exists: which skills qualify depends on
+ * the BUILD and grows as it grows, so they can never be enumerated on the record. That is exactly
+ * why Assurance shipped with no choice at all and the feat did nothing.
+ *
+ * Lores are included — the rules let you choose one — and are keyed `lore:<subject>`, so the subject
+ * becomes the label. Sorted by rank (best first) then name, so the likely pick is at the top.
+ */
+export function trainedSkillOptions(
+  character: { proficiencies: { skills: Record<string, ProficiencyRank> } },
+  minRank: ProficiencyRank = 'trained',
+): { value: string; label: string }[] {
+  const RANK_ABBR: Record<ProficiencyRank, string> = { untrained: 'U', trained: 'T', expert: 'E', master: 'M', legendary: 'L' };
+  const floor = PROFICIENCY_RANKS.indexOf(minRank);
+  return Object.entries(character.proficiencies.skills)
+    .filter(([, rank]) => PROFICIENCY_RANKS.indexOf(rank) >= floor)
+    .sort(([aK, aR], [bK, bR]) => PROFICIENCY_RANKS.indexOf(bR) - PROFICIENCY_RANKS.indexOf(aR) || aK.localeCompare(bK))
+    .map(([key, rank]) => {
+      const name = key.startsWith('lore:') ? `${cap(key.slice(5).replace(/-/g, ' '))} Lore` : cap(key);
+      return { value: key, label: `${name} (${RANK_ABBR[rank]})` };
+    });
+}
+
 const ABILITY_NAMES: Record<string, string> = {
   str: 'Strength',
   dex: 'Dexterity',

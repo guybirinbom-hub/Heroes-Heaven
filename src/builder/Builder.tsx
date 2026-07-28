@@ -16,6 +16,7 @@ import {
   emptyBuild,
   featChoiceLabel,
   featChoicePrompt,
+  trainedSkillOptions,
   levelGrants,
   setupMissing,
 } from '../rules/build';
@@ -75,6 +76,7 @@ const RANK_ABBR: Record<ProficiencyRank, string> = {
   master: 'M',
   legendary: 'L',
 };
+
 
 type Sel = 'setup' | number;
 type Picker =
@@ -1153,7 +1155,13 @@ export function Builder({
                                       value: d,
                                       label: cap(d),
                                     }))
-                                  : def.options ?? [];
+                                  : def.kind === 'skills'
+                                    ? // "Choose a skill you're trained in" (Assurance and friends). The eligible set
+                                      // depends on the BUILD and grows with it, so it can't be enumerated on the
+                                      // record — resolve it from the character being built. Lores are included
+                                      // because they are skills the rules let you choose.
+                                      trainedSkillOptions(featPrereqChar, def.minRank ?? 'trained')
+                                    : def.options ?? [];
                               return (
                                 <SubCard icon="ti-adjustments" label={featChoicePrompt(def.prompt)}>
                                   <PopupSelect

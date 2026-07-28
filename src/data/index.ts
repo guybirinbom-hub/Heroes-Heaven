@@ -19,8 +19,15 @@ function merge<T>(base: Record<string, T>, over: Record<string, T>): Record<stri
 
 /** Feats deliberately excluded from the app (per user decision) — dropped from content AFTER the merge,
  *  so they never appear in any picker or resolve as a grant. Applied here in the loader rather than in
- *  the data file, so the exclusion survives every core.json regeneration. */
-export const EXCLUDED_FEATS = new Set(['arcane-tattoos', 'hag-magic']);
+ *  the data file, so the exclusion survives every core.json regeneration.
+ *
+ *  The tattoo CHAIN must be excluded together. `arcane-tattoos` was excluded on its own, which left
+ *  `ornate-tattoo` (prerequisite "Arcane Tattoos") and, behind it, `virtue-forged-tattoos`
+ *  (prerequisite "Ornate Tattoo") in the pickers with a prerequisite that can never be met — the
+ *  parent no longer exists in the running database. Both also read "the same school as your Arcane
+ *  Tattoos", a school the character can never have chosen. Excluding a feat means excluding whatever
+ *  depends on it. */
+export const EXCLUDED_FEATS = new Set(['arcane-tattoos', 'ornate-tattoo', 'virtue-forged-tattoos', 'hag-magic']);
 
 /** Collections where an `aon-`-prefixed scrape can shadow an existing record of the same name. */
 const DEDUPE_MAPS = ['items', 'feats', 'spells', 'actions', 'vehicles'] as const;

@@ -523,9 +523,17 @@ export type FeatCategory =
 export interface FeatChoiceDef {
   flag: string;
   prompt: string;
-  /** 'domains' resolves options from the deity at build time; 'array' carries fixed options. */
-  kind: 'domains' | 'array';
+  /** How the options are produced:
+   *  - 'array'   — fixed options carried on the record.
+   *  - 'domains' — resolved from the chosen deity at build time.
+   *  - 'skills'  — resolved from the CHARACTER at build time: the skills they're trained in (Lores
+   *                included). Assurance is the canonical case ("Choose a skill you're trained in");
+   *                enumerating skills on the record can't work, because which ones qualify depends
+   *                on the build and changes as it grows. */
+  kind: 'domains' | 'array' | 'skills';
   options?: { value: string; label: string; description?: string }[];
+  /** For 'skills': the minimum rank a skill must reach to be offered (default 'trained'). */
+  minRank?: ProficiencyRank;
 }
 
 export interface Feat extends ContentBase, DefenseGrants {

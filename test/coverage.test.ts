@@ -37,8 +37,11 @@ const REGISTRY_FLOOR: Record<string, number> = {
   situationalBonuses: 308,
 };
 
-/** Ceilings for work outstanding — these may only ever go DOWN. Measured 2026-07-28. */
-const MISSING_CEILING = { choices: 549, situational: 2976 };
+/** Ceilings for work outstanding — these may only ever go DOWN.
+ *  2026-07-28  choices 549 · situational 2976   (baseline)
+ *  2026-07-28  choices 546                      (choose-a-skill batch 1: Assurance, Automatic
+ *                                                Knowledge, Expert Longevity) */
+const MISSING_CEILING = { choices: 546, situational: 2976 };
 
 describe('mechanical coverage ratchet', () => {
   const r = report();
@@ -64,11 +67,17 @@ describe('mechanical coverage ratchet', () => {
     }
   });
 
-  it('Assurance is the canary: it asks for a skill and must end up modelled', () => {
-    // Deliberately expected to FAIL until the choose-a-skill lane is built. Flip to .toBe(true) as
-    // part of that work — this is the concrete, checkable definition of "Assurance is fixed".
+  it('Assurance is the canary: it asks for a skill and IS now modelled', () => {
+    // This assertion used to be `.toBe(false)` — the honest record that the feat did nothing. It was
+    // flipped when the choose-a-skill lane was built, which is what "Assurance is fixed" means in a
+    // form you can check rather than take on trust.
     const { execFileSync: run } = require('node:child_process') as typeof import('node:child_process');
-    const json = JSON.parse(run('node', ['-e', 'const d=require("./public/core.json");console.log(JSON.stringify({hasChoice:!!d.feats.assurance.choice}))'], { encoding: 'utf8' }));
-    expect(json.hasChoice, 'Assurance still has no machine-readable choice').toBe(false);
+    const json = JSON.parse(
+      run('node', ['-e', 'const d=require("./public/core.json");const c=d.feats.assurance.choice;console.log(JSON.stringify({kind:c&&c.kind,flag:c&&c.flag}))'], { encoding: 'utf8' }),
+    );
+    // kind 'skills' resolves against the CHARACTER (the skills they're trained in) — the eligible set
+    // depends on the build, so it can never be enumerated on the record.
+    expect(json.kind, 'Assurance must offer a skill choice').toBe('skills');
+    expect(json.flag).toBe('assuredSkill');
   });
 });
