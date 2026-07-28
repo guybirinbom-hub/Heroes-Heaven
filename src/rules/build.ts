@@ -1388,10 +1388,23 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       for (const id of ffs) focusSource[id] ??= feat.name;
       contributedSpell = true;
     }
-    // Each granted spell carries its own pool point, so focusPoolBonus only applies to POOL-ONLY feats
-    // (Universal Versatility). A domains-choice feat's focusPoolBonus represents the choice spell's
-    // point — with the choice unresolved there is no spell, so no pool either.
-    if (!contributedSpell && def?.kind !== 'domains' && feat.focusPoolBonus) featPoolBonus += feat.focusPoolBonus;
+    // Each granted spell carries its own pool point, so focusPoolBonus only applies to POOL-ONLY
+    // feats. A domains-choice feat's focusPoolBonus represents the choice spell's point — with the
+    // choice unresolved there is no spell, so no pool either.
+    //
+    // A feat can ALSO deliver its focus spell through an effectChoices option (Shadow Magic does).
+    // That path is handled by the separate effectChoices pass below, which pushes the chosen spell
+    // into featFocusSpells — but it never set `contributedSpell`, so the bonus was added here as
+    // well and a Shadowdancer shipped with a 2-point pool for ONE focus spell. Treat "this feat can
+    // grant a focus spell via a choice" the same way as the domains case: the point belongs to the
+    // spell, not the feat. (Its sibling Additional Shadow Magic models this correctly with a grant
+    // and no bonus, which is what made the discrepancy provable.)
+    const grantsFocusViaEffectChoice = (feat.effectChoices ?? []).some((ec) =>
+      (ec.options ?? []).some((o) => (o.grant?.focusSpells?.length ?? 0) > 0),
+    );
+    if (!contributedSpell && !grantsFocusViaEffectChoice && def?.kind !== 'domains' && feat.focusPoolBonus) {
+      featPoolBonus += feat.focusPoolBonus;
+    }
     return resolved;
   };
   const focusSeen = new Set<string>();
