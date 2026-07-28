@@ -16,8 +16,18 @@ import { execFileSync } from 'node:child_process';
  * Lowering a ceiling is the commit that proves the work; a green suite with an untouched ceiling
  * proves nothing.
  */
+/** This shells out to a script that parses the whole 23 MB core.json, so it is by far the slowest
+ *  thing in the suite. Under load it once blew vitest's default 5s timeout and reported a FAILING
+ *  ratchet — the one result this file must never get wrong, since a false red here reads as "the
+ *  coverage regressed". The generous timeout below (and maxBuffer) keeps the signal honest. */
+const REPORT_TIMEOUT_MS = 120_000;
+
 function report() {
-  const out = execFileSync('node', ['scripts/coverage-report.mjs', '--json'], { encoding: 'utf8' });
+  const out = execFileSync('node', ['scripts/coverage-report.mjs', '--json'], {
+    encoding: 'utf8',
+    timeout: REPORT_TIMEOUT_MS,
+    maxBuffer: 32 * 1024 * 1024,
+  });
   return JSON.parse(out) as {
     registryCounts: Record<string, number>;
     playerChoices: { collection: string; need: number; modelled: number; missing: number }[];
@@ -48,7 +58,7 @@ const REGISTRY_FLOOR: Record<string, number> = {
  *  Lower these when work lands; never raise one to make a red build green. */
 const MISSING_CEILING = { choices: 546, situational: 1312 };
 
-describe('mechanical coverage ratchet', () => {
+describe('mechanical coverage ratchet', { timeout: REPORT_TIMEOUT_MS }, () => {
   const r = report();
 
   it('no registry has shrunk (previously-wired feats stay wired)', () => {

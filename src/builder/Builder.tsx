@@ -1164,13 +1164,34 @@ export function Builder({
                                     : def.options ?? [];
                               return (
                                 <SubCard icon="ti-adjustments" label={featChoicePrompt(def.prompt)}>
-                                  <PopupSelect
-                                    title={featChoicePrompt(def.prompt)}
-                                    placeholder={`${featChoicePrompt(def.prompt)}…`}
-                                    value={build.featChoices[key] ?? ''}
-                                    onChange={(v) => actions.setFeatChoice(key, v)}
-                                    options={opts.map((o) => ({ value: o.value, label: featChoiceLabel(o.label), description: (o as { description?: string }).description }))}
-                                  />
+                                  {def.kind === 'text' ? (
+                                    // No option list exists for these (Kingdom skills, leadership roles):
+                                    // the app has no Kingmaker data, and typing one from memory would be
+                                    // inventing content. The player supplies the word; we record it.
+                                    <input
+                                      className="txt"
+                                      type="text"
+                                      placeholder={`${featChoicePrompt(def.prompt)}…`}
+                                      value={build.featChoices[key] ?? ''}
+                                      onChange={(e) => actions.setFeatChoice(key, e.target.value)}
+                                    />
+                                  ) : (
+                                    <PopupSelect
+                                      title={featChoicePrompt(def.prompt)}
+                                      placeholder={`${featChoicePrompt(def.prompt)}…`}
+                                      value={build.featChoices[key] ?? ''}
+                                      onChange={(v) => actions.setFeatChoice(key, v)}
+                                      options={opts.map((o) => ({ value: o.value, label: featChoiceLabel(o.label), description: (o as { description?: string }).description }))}
+                                    />
+                                  )}
+                                  {/* A pick that records but grants nothing must say so — the owner's rule
+                                      is "never silently show a pick that does nothing". */}
+                                  {def.inert && (
+                                    <div className="choice-inert">
+                                      <i className="ti ti-info-circle" aria-hidden="true" />
+                                      <span>{def.inert}</span>
+                                    </div>
+                                  )}
                                 </SubCard>
                               );
                             })()}

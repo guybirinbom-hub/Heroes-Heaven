@@ -529,9 +529,23 @@ export interface FeatChoiceDef {
    *  - 'skills'  — resolved from the CHARACTER at build time: the skills they're trained in (Lores
    *                included). Assurance is the canonical case ("Choose a skill you're trained in");
    *                enumerating skills on the record can't work, because which ones qualify depends
-   *                on the build and changes as it grows. */
-  kind: 'domains' | 'array' | 'skills';
+   *                on the build and changes as it grows.
+   *  - 'text'    — free text the player types, for picks whose vocabulary the app has no data for
+   *                (Kingmaker's Kingdom skills and leadership roles). Enumerating them from memory
+   *                would be inventing content, so the player supplies the word and it is recorded. */
+  kind: 'domains' | 'array' | 'skills' | 'text';
   options?: { value: string; label: string; description?: string }[];
+  /**
+   * Why this pick is RECORDED but grants nothing mechanical. Shown to the player next to the choice.
+   * Two shapes, both agreed with the owner rather than guessed:
+   *   - Kingmaker kingdom feats: the answer belongs to a kingdom sheet that doesn't exist yet, so it
+   *     is stored ready for one.
+   *   - Legacy content keyed off something the Remaster deleted (Warding Rune wants a school of
+   *     magic; only 147 of 1,832 spells still carry one), so the benefit can't resolve.
+   * Never used to paper over a pick that SHOULD work — legacy content whose referent still exists
+   * keeps working normally.
+   */
+  inert?: string;
   /** For 'skills': the minimum rank a skill must reach to be offered (default 'trained'). */
   minRank?: ProficiencyRank;
   /**

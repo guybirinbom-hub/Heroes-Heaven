@@ -10330,3 +10330,20 @@ button.strike-name:hover {
   flex: 0 0 auto;
   margin-top: 1px;
 }
+
+/* --- A choice that is recorded but grants nothing ---------------------------------------------- */
+/* Kingdom feats (no Kingdom sheet yet) and legacy picks keyed off something the Remaster deleted.
+   The owner's rule: never silently show a pick that does nothing. */
+.choice-inert {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--app-text-dim);
+}
+.choice-inert i {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
