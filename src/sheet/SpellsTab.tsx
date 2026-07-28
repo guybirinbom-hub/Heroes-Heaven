@@ -33,7 +33,7 @@ import { InfoTerm } from './InfoTerm';
 import { PinStar } from './PinStar';
 import { useContent } from './ContentContext';
 import { useCustomization } from '../data/customization';
-import { traitDesc } from '../rules/glossary';
+import { traitDesc, traitLabel } from '../rules/glossary';
 import type { StatRef } from '../rules/explain';
 import { spellCostMatches } from '../rules/spellFilter';
 import { heighteningApplies, splitHeightening, scaleDamage, scaleArea } from '../rules/heightening';
@@ -142,8 +142,8 @@ function SpellDetail({ spell, maxRank, signature, onClose }: { spell: Spell; max
           {spell.traits?.length > 0 && (
             <div className="sd-traits">
               {spell.traits.map((t) => (
-                <InfoTerm className="ff-trait" key={t} title={cap(t)} description={traitDesc(t, content)}>
-                  {t}
+                <InfoTerm className="ff-trait" key={t} title={traitLabel(t)} description={traitDesc(t, content)}>
+                  {traitLabel(t)}
                 </InfoTerm>
               ))}
             </div>

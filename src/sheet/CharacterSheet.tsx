@@ -417,9 +417,13 @@ export function CharacterSheet({
             <span className="char-name-text">{character.name}</span>
             {custom.showLevelChip !== false && <span className="level-chip">Level {character.level}</span>}
           </div>
-          {custom.showSubline !== false && (
+          {custom.showSubline !== false && (ancestry?.name || cls?.name) && (
+            // Only join with "·" when BOTH sides exist — an unfinished character (no ancestry or no
+            // class yet) otherwise showed a bare " · " with nothing around it.
             <div className="char-sub">
-              <span className="lk">{ancestry?.name}</span> · <span className="lk">{cls?.name}</span>
+              {ancestry?.name && <span className="lk">{ancestry.name}</span>}
+              {ancestry?.name && cls?.name ? ' · ' : ''}
+              {cls?.name && <span className="lk">{cls.name}</span>}
             </div>
           )}
         </div>

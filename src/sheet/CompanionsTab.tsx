@@ -63,6 +63,22 @@ function CompanionPortrait({ portrait, portraitRef, className, icon }: { portrai
 
 const KIND_ICON: Record<CompanionKind, string> = { animal: 'ti-paw', familiar: 'ti-feather', eidolon: 'ti-flare', follower: 'ti-user', pet: 'ti-mood-smile', vehicle: 'ti-wheel', siege: 'ti-bow' };
 
+/** Prose for the Add-companion row tag. These are internal category tokens ('siege', 'animal',
+ *  'nimble'), and the row rendered them verbatim next to the name. */
+const COMPANION_KIND_LABEL: Record<string, string> = {
+  animal: 'Animal',
+  familiar: 'Familiar',
+  eidolon: 'Eidolon',
+  follower: 'Follower',
+  pet: 'Pet',
+  vehicle: 'Vehicle',
+  siege: 'Siege weapon',
+  construct: 'Construct',
+};
+function companionKindLabel(token: string): string {
+  return COMPANION_KIND_LABEL[token] ?? token.replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase());
+}
+
 /** Display label + icon for a companion (animals may be constructs; vehicles/siege weapons too). */
 function kindMeta(cfg: CompanionConfig, content: ContentDatabase): { label: string; icon: string } {
   if (cfg.kind === 'animal') {
@@ -181,7 +197,7 @@ function AddCompanionModal({ content, currency, onAdd, onClose }: { content: Con
             // The row body opens the companion's stat block/description (never commits); a dedicated
             // Add (or Buy / Free for priced vehicles & siege) button is the only thing that adds it.
             const name = (
-              <>{r.name}<span className="cond-valued-tag">{r.cat === 'all' ? r.kind : r.cat}</span>{r.note && <span className="cmp-add-note">{r.note}</span>}</>
+              <>{r.name}<span className="cond-valued-tag">{companionKindLabel(r.cat === 'all' ? r.kind : r.cat)}</span>{r.note && <span className="cmp-add-note">{r.note}</span>}</>
             );
             const lead = <span className="cond-row-check"><i className={'ti ' + (r.cat === 'construct' ? 'ti-robot' : KIND_ICON[r.kind])} aria-hidden="true" /></span>;
             if (priced) {

@@ -6,7 +6,7 @@ import { formatPrice } from '../rules/wealth';
 import { useEscapeClose } from './useEscapeClose';
 import { confirmDialog } from './confirm';
 import { chargesFor, itemCounters } from '../rules/itemUses';
-import { traitDesc } from '../rules/glossary';
+import { traitDesc, traitLabel } from '../rules/glossary';
 import { InfoTerm } from './InfoTerm';
 import { DescBody } from './DescBody';
 import { CritSpecText } from './CritSpecText';
@@ -121,6 +121,14 @@ function materialLabel(item: Item): string | undefined {
   return cap(item.material.type.replace(/-/g, ' ')) + (item.material.grade ? ` (${item.material.grade})` : '');
 }
 
+/** Usage is stored as a Foundry slug ("held-in-one-hand", "held-in-two-hands"), which read as raw
+ *  data on the item card. Turn it into prose. */
+function usageLabel(usage?: string): string | undefined {
+  if (!usage) return undefined;
+  const s = usage.replace(/-/g, ' ').trim();
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 /** A friendly worn body-slot from a "worn…" usage string, e.g. "wornring" → "Ring". */
 function wornSlot(usage?: string): string | undefined {
   if (!usage || !usage.startsWith('worn')) return undefined;
@@ -220,8 +228,8 @@ export function ItemDetail({
               {[...item.traits]
                 .sort((a, b) => (CATEGORY_TAGS.includes(b) ? 1 : 0) - (CATEGORY_TAGS.includes(a) ? 1 : 0))
                 .map((t) => (
-                  <InfoTerm className={'ff-trait' + (CATEGORY_TAGS.includes(t) ? ' category' : '')} key={t} title={cap(t)} description={traitDesc(t, content)}>
-                    {t}
+                  <InfoTerm className={'ff-trait' + (CATEGORY_TAGS.includes(t) ? ' category' : '')} key={t} title={traitLabel(t)} description={traitDesc(t, content)}>
+                  {traitLabel(t)}
                   </InfoTerm>
                 ))}
             </div>
@@ -255,7 +263,7 @@ export function ItemDetail({
             <Stat k="Worn slot" v={wornSlot(item.usage)} />
             <Stat k="Price" v={formatPrice(item.price)} />
             <Stat k="Bulk" v={formatBulk(item.bulk)} />
-            <Stat k="Usage" v={wornSlot(item.usage) ? undefined : item.usage} />
+            <Stat k="Usage" v={wornSlot(item.usage) ? undefined : usageLabel(item.usage)} />
             <Stat k="Hands" v={item.hands ? String(item.hands) : undefined} />
           </div>
           {attached.length > 0 && (

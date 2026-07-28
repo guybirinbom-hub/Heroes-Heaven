@@ -5,7 +5,7 @@ import { InfoTerm } from './InfoTerm';
 import { PinStar } from './PinStar';
 import { useContent } from './ContentContext';
 import { useEscapeClose } from './useEscapeClose';
-import { traitDesc } from '../rules/glossary';
+import { traitDesc, traitLabel } from '../rules/glossary';
 import { astSlug } from './useAst';
 
 export interface FeatEntry {
@@ -60,8 +60,8 @@ export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () =
           {entry.traits.length > 0 && (
             <div className="sd-traits">
               {entry.traits.map((t) => (
-                <InfoTerm className="ff-trait" key={t} title={cap(t)} description={traitDesc(t, content)}>
-                  {t}
+                <InfoTerm className="ff-trait" key={t} title={traitLabel(t)} description={traitDesc(t, content)}>
+                  {traitLabel(t)}
                 </InfoTerm>
               ))}
             </div>

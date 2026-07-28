@@ -47,6 +47,8 @@ export const RAIL_CARD_LABELS: Record<string, string> = {
   movement: 'Hero points & movement',
   defenses: 'Resistances, weaknesses, immunities',
   resources: 'Class resources',
+  // Was missing, so the Customize editor listed the raw key "multiclassDc" among prose labels.
+  multiclassDc: 'Archetype class DCs',
   panache: 'Panache (swashbuckler)',
   champion: 'Cause (champion)',
   mythic: 'Mythic (calling & destiny)',

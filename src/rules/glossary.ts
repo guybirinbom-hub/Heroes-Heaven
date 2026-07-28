@@ -189,6 +189,26 @@ export const LANGUAGE_GLOSSARY: Record<string, string> = {
 const norm = (s: string) => s.trim().toLowerCase().replace(/\s+/g, '-');
 const pretty = (s: string) => s.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 
+const DIE_SUFFIX = /^d\d+$/;
+const NUM_SUFFIX = /^\d+$/;
+/**
+ * Display label for a trait/sense slug. Traits are STORED as slugs, and chips rendered the slug
+ * verbatim — "thrown-10", "deadly-d10", "versatile-s", "low-light-vision". PF2e writes the suffixed
+ * weapon-trait families with the suffix split off ("Thrown 10 ft.", "Deadly d10", "Versatile S"), so
+ * detect a trailing die / distance / single-letter segment and format it separately.
+ */
+export function traitLabel(trait: string): string {
+  const parts = norm(trait).split('-').filter(Boolean);
+  if (!parts.length) return trait;
+  const last = parts[parts.length - 1];
+  const suffix = DIE_SUFFIX.test(last) || NUM_SUFFIX.test(last) || last.length === 1;
+  const name = (suffix ? parts.slice(0, -1) : parts).map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join(' ');
+  if (!suffix) return name;
+  if (DIE_SUFFIX.test(last)) return `${name} ${last}`;
+  if (NUM_SUFFIX.test(last)) return `${name} ${last} ft.`;
+  return `${name} ${last.toUpperCase()}`;
+}
+
 /** Description for a proficiency category id (simple/martial/unarmored/spellcasting/classDc…). */
 export function proficiencyDesc(id: string): string | undefined {
   return PROFICIENCY_GLOSSARY[norm(id)];
