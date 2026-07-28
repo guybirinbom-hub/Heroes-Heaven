@@ -136,6 +136,7 @@ function ItemCard({
   onAttachOver,
   onAttachLeave,
   onAttachDrop,
+  attachPlanNow,
   runeCopy,
 }: {
   inv: InventoryItem;
@@ -168,6 +169,9 @@ function ItemCard({
   onAttachOver?: (instanceId: string) => void;
   onAttachLeave?: () => void;
   onAttachDrop?: (srcId: string, hostId: string) => void;
+  /** Plan the in-flight drag against THIS card as an attach host, read from the synchronous drag ref.
+   *  null = the current drag isn't an attachment/rune, so the section handles it as a relocate. */
+  attachPlanNow?: (hostItem: Item, hostInv: InventoryItem) => { ok: boolean; reason?: string } | null;
 }) {
   const { consumableHighlight } = useCustomization();
   const badge = stateBadge(inv);
@@ -179,6 +183,13 @@ function ItemCard({
   // still a control to show — otherwise plain items would keep an empty 7px-margin gap.
   const hasActions = !!inv.attachedTo || !!equip || !!investable || counters.length > 0 || inlineQty;
   const stop = (e: React.MouseEvent) => e.stopPropagation();
+  // Attach handlers are ALWAYS bound on a possible host (weapon/armor/shield) and decide inside via
+  // attachPlanNow(), which reads the synchronous drag ref. Binding them on `attachHost` (React state)
+  // meant they didn't exist during the FIRST dragover of a gesture, so the first rune-drop silently
+  // fell through to the section's relocate drop — the "you have to drag twice" bug. A null plan means
+  // this isn't an attach drag, so the event bubbles to the section exactly as before.
+  const canHost =
+    !!attachPlanNow && (item.itemType === 'weapon' || item.itemType === 'armor' || item.itemType === 'shield');
 
   return (
     <div
@@ -206,21 +217,26 @@ function ItemCard({
       }
       onDragEnd={onPlay ? () => onDragEndItem?.() : undefined}
       onDragOver={
-        attachHost
+        canHost
           ? (e) => {
+              const plan = attachPlanNow!(item, inv);
+              if (!plan) return; // not an attach drag → section handles the relocate
               e.preventDefault();
-              e.dataTransfer.dropEffect = attachValid ? 'copy' : 'none';
+              e.stopPropagation();
+              e.dataTransfer.dropEffect = plan.ok ? 'copy' : 'none';
               onAttachOver?.(inv.instanceId);
             }
           : undefined
       }
-      onDragLeave={attachHost ? () => onAttachLeave?.() : undefined}
+      onDragLeave={canHost ? () => onAttachLeave?.() : undefined}
       onDrop={
-        attachHost
+        canHost
           ? (e) => {
+              const plan = attachPlanNow!(item, inv);
+              if (!plan) return; // let the enclosing Group's relocate drop handle it
               e.preventDefault();
               e.stopPropagation(); // win over the enclosing Group's relocate drop
-              onAttachDrop?.(e.dataTransfer.getData('text/plain'), inv.instanceId);
+              onAttachDrop?.(e.dataTransfer.getData('text/plain') || '', inv.instanceId);
             }
           : undefined
       }
@@ -634,6 +650,22 @@ export function InventoryTab({
     dragIdRef.current = id;
     setDragId(id);
   };
+  /** The attach plan for the CURRENT drag against a host card, computed from the SYNCHRONOUS drag ref
+   *  rather than `dragId` state. The card's attach handlers used to be gated on `attachHost` (derived
+   *  from state), so during the first `dragover` of a gesture the handler didn't exist yet — the drop
+   *  fell through to the enclosing section and just relocated the rune, so it looked like nothing
+   *  happened and you had to drag a second time. Returns null when this isn't an attach drag at all,
+   *  which lets the event bubble to the section's normal relocate drop. */
+  const attachPlanNow = (hostItem: Item, hostInv: InventoryItem) => {
+    const did = dragIdRef.current;
+    if (!onPlay || !did || did === hostInv.instanceId) return null;
+    const srcInv = character.inventory.find((i) => i.instanceId === did);
+    const srcItem = srcInv ? resolve(srcInv) : null;
+    if (!srcInv || !srcItem) return null;
+    if (!isAttachable(srcItem) && !content.runes[srcItem.id]) return null;
+    if (mpActive(character, hostInv)) return null; // Monster-Parts items ignore runes entirely
+    return planAttach(srcItem, srcInv, hostItem, hostInv, character.inventory, content);
+  };
   const endDrag = () => {
     dragIdRef.current = null;
     setDragId(null);
@@ -959,6 +991,7 @@ export function InventoryTab({
                   onAttachOver={setAttachOver}
                   onAttachLeave={() => setAttachOver((cur) => (cur === inv.instanceId ? null : cur))}
                   onAttachDrop={attachDrop}
+                  attachPlanNow={onPlay ? attachPlanNow : undefined}
                 />
               );
             })}
