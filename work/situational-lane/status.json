@@ -1,12 +1,20 @@
 {
  "classified": 3020,
- "verifiedChunks": 22,
+ "verifiedChunks": 76,
  "expectedChunks": 76,
- "VERIFICATION_INCOMPLETE": true,
+ "VERIFICATION_INCOMPLETE": false,
  "situational": 2355,
  "notSituational": 665,
  "bonuses": 3593,
- "corrections": 98,
+ "corrections": 393,
  "escalate": 369,
- "engineWork": 870
+ "engineWork": 870,
+ "verifiedRecords": 3017,
+ "correctionsNote": "workflow summary said 296; on-disk distinct entries are 393 (the resume replayed 22 cached chunks whose verdict text differed slightly). Use the file, not the summary.",
+ "registryGap": {
+  "supportedNow": 3092,
+  "needsRenameToAttack": 163,
+  "noHomeInRegistry": 338,
+  "detail": "SituationalTarget.kind is skill|save|perception|ac|attack. strikeDamage 157, speed 122, spell 32, hp 23, classDc 3, ability 1 cannot be stored. MY SCHEMA ERROR - written from the display-side StatRef vocabulary, not the storage-side union. Extend the union BEFORE applying."
+ }
 }
