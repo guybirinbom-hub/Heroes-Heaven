@@ -579,7 +579,7 @@ export function MainTab({
             const note = penalized ? `${formatMod(acp.value)} armor check penalty (${acp.source})` : '';
             return (
               <div
-                className={'skill' + (onOpenStat ? ' rollable' : '') + (statHasSituational(character, { kind: 'skill', skill: key }) ? ' has-mode' : '')}
+                className={'skill' + (onOpenStat ? ' rollable' : '') + (statHasSituational(character, { kind: 'skill', skill: key }, content) ? ' has-mode' : '')}
                 key={key}
                 onClick={onOpenStat ? () => onOpenStat({ kind: 'skill', skill: key }) : undefined}
                 title={[onOpenStat ? `${skillLabel(key)} — how is this calculated?` : '', note].filter(Boolean).join(' · ') || undefined}
@@ -587,7 +587,7 @@ export function MainTab({
                 <RankPill rank={d.rank} />
                 <span className="skill-name">
                   {skillLabel(key)}
-                  {statHasSituational(character, { kind: 'skill', skill: key }) && <SituationalStar />}
+                  {statHasSituational(character, { kind: 'skill', skill: key }, content) && <SituationalStar />}
                 </span>
                 {penalized && (
                   <span className="acp-badge" title={note}>

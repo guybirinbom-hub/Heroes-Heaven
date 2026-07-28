@@ -38,6 +38,7 @@ import {
   mpSenseSkillItemBonus,
   profBonus,
   pwl,
+  ownedFeatureIds,
   shieldSwappedModes,
 } from './derive';
 import { featSituationalFor, hasFeatSituational } from './situationalBonuses';
@@ -139,23 +140,52 @@ export function statHasConditionalMode(c: Character, ref: StatRef): boolean {
   return t ? hasConditionalMode(c.activeModes, t) : false;
 }
 
-/** The feat ids the character has taken (for situational-bonus lookups). */
-function characterFeatIds(c: Character): string[] {
-  return c.feats.map((f) => f.featId);
+/**
+ * Every record id whose situational bonuses apply to this character right now.
+ *
+ * This used to be feats only, which is why the sheet so rarely marked anything: of the 2,355 records
+ * that grant a conditional typed bonus, 1,550 are ITEMS and another 200-odd are heritages,
+ * backgrounds and class features. None of them could ever raise a star, however good the data got.
+ *
+ * An ITEM only counts while it is actually in use — equipped, worn or invested. A +1 circumstance
+ * bonus from a shield you left in your pack is not a bonus you have, and listing it would be worse
+ * than showing nothing.
+ *
+ * Class features need the ContentDatabase to resolve (they hang off the class), so `db` is optional:
+ * callers that have it get feature bonuses too, callers that don't still get everything else rather
+ * than nothing.
+ */
+function characterSituationalIds(c: Character, db?: ContentDatabase): string[] {
+  const ids: string[] = c.feats.map((f) => f.featId);
+  if (c.ancestryId) ids.push(c.ancestryId);
+  if (c.heritageId) ids.push(c.heritageId);
+  if (c.backgroundId) ids.push(c.backgroundId);
+  if (db) for (const id of ownedFeatureIds(c, db)) ids.push(id);
+  for (const inv of c.inventory ?? []) {
+    if (inv.equipped || inv.worn || inv.invested) ids.push(inv.itemId);
+  }
+  return ids;
 }
 
-/** True if a taken feat grants a SITUATIONAL bonus to this stat, or an active conditional mode does —
- *  either way the sheet flags the stat with a `*` so the player checks its detail. */
-export function statHasSituational(c: Character, ref: StatRef): boolean {
-  return statHasConditionalMode(c, ref) || hasFeatSituational(characterFeatIds(c), ref);
+/** True if something the character has grants a SITUATIONAL bonus to this stat, or an active
+ *  conditional mode does — either way the sheet flags the stat with a `*` so the player checks its
+ *  detail. Pass `db` to include class features. */
+export function statHasSituational(c: Character, ref: StatRef, db?: ContentDatabase): boolean {
+  return statHasConditionalMode(c, ref) || hasFeatSituational(characterSituationalIds(c, db), ref);
 }
 
-/** Formatted situational-bonus lines from the character's feats for a stat (for the detail panel). */
+/** Formatted situational-bonus lines for a stat (for the detail panel). Names resolve across every
+ *  collection a bonus can come from, so an item's bonus reads with the item's name. */
 function featSituationalStrings(c: Character, db: ContentDatabase, ref: StatRef): string[] {
-  return featSituationalFor(characterFeatIds(c), ref).map((s) => {
-    const name = db.feats[s.id]?.name ?? s.id;
-    return `${s.bonus} from ${name} — ${s.when}`;
-  });
+  const nameOf = (id: string) =>
+    db.feats[id]?.name ??
+    db.items[id]?.name ??
+    db.heritages[id]?.name ??
+    db.backgrounds[id]?.name ??
+    db.ancestries[id]?.name ??
+    db.classFeatures[id]?.name ??
+    id;
+  return featSituationalFor(characterSituationalIds(c, db), ref).map((s) => `${s.bonus} from ${nameOf(s.id)} — ${s.when}`);
 }
 
 const DESC: Record<string, string> = {

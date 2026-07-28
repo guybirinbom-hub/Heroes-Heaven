@@ -49,6 +49,7 @@ import {
   formatMod,
 } from '../rules/derive';
 import { explainStat, statHasSituational, type StatRef } from '../rules/explain';
+import { useContent } from '../sheet/ContentContext';
 import { RankPill, SituationalStar } from '../sheet/widgets';
 import { StatDetailModal } from '../sheet/StatDetailModal';
 import { DescriptionModal } from '../sheet/DescriptionModal';
@@ -3215,7 +3216,10 @@ function StatLine({
   character?: Character;
 }) {
   const clickable = !!(refTarget && onOpenStat);
-  const sit = !!(refTarget && character && statHasSituational(character, refTarget));
+  // The content DB is optional here purely so this row keeps working outside a ContentContext; with
+  // it, class-feature situational bonuses are included alongside feats, items, heritage and background.
+  const db = useContent();
+  const sit = !!(refTarget && character && statHasSituational(character, refTarget, db ?? undefined));
   return (
     <div
       className={'brow' + (clickable ? ' brow-open' : '') + (sit ? ' has-mode' : '')}
