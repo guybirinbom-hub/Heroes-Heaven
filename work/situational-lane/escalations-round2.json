@@ -1,0 +1,169 @@
+[
+ {
+  "id": "busine-of-divine-reinforcements",
+  "action": "escalate",
+  "reason": "Genuine policy call: the text gates the +2 on 'when played as an instrument', but core.json applies it unconditionally via passiveEffects.skills.performance, so shipping the star double-counts and dropping it leaves every Performance check inflated - the owner must decide the app-wide rule for instrument items (Busine, Battle Lute and the rest) and whether passiveEffects gets removed.",
+  "bonuses": [
+   {
+    "bonus": "+2 item",
+    "when": "on Performance checks made while playing the busine as an instrument",
+    "targetKind": "skill",
+    "detail": "performance"
+   }
+  ]
+ },
+ {
+  "id": "cloak-of-repute (and -greater, -major)",
+  "action": "escalate",
+  "reason": "The correction is a two-branch policy call the owner must make once: either non-numeric degree-shift/fortune effects (cloak's 'success becomes a critical success' Request, acrobat's-staff reroll) belong in the registry for both items, or for neither."
+ },
+ {
+  "id": "thousand-blade-thesis",
+  "action": "escalate",
+  "reason": "Two-branch call the owner must settle once: the +2 Warfare Lore bonus is gated on actively Consulting the thesis, the same pattern marked situational on nosoi-charm and violet-ray, so either all three come out of passiveEffects into the registry or none do."
+ },
+ {
+  "id": "gravelands-herbalist",
+  "action": "escalate",
+  "reason": "Policy call: the feat itself grants nothing (it only adds Lastwall soup to your herbal items), so whether a consumable-gated bonus should star Stealth needs the owner; also feats/gravelands-herbalist says Greater = +4 while items/lastwall-soup-greater says +3 (that item text is a verbatim copy of the Improved entry, so +4 is the likely authority). Ladder corrected to start at +2 (levels 4-9) if it ships, and the 'and DCs' half has no target kind.",
+  "bonuses": [
+   {
+    "bonus": "+2 item (+3 with Lastwall Soup (Improved) at 10th level, +4 with Lastwall Soup (Greater) at 18th per the feat; the greater item record says +3)",
+    "when": "for 1 hour after you eat Lastwall soup, to Stealth checks and DCs against undead",
+    "targetKind": "skill",
+    "detail": "stealth"
+   }
+  ]
+ },
+ {
+  "id": "signifers-mask",
+  "action": "escalate",
+  "bonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "on Deception checks to Lie, while wearing the mask",
+    "targetKind": "skill",
+    "detail": "deception"
+   },
+   {
+    "bonus": "+1 circumstance",
+    "when": "to your Deception DC against a creature using Sense Motive on you, while wearing the mask",
+    "targetKind": "skill",
+    "detail": "deception"
+   },
+   {
+    "bonus": "+1 circumstance",
+    "when": "on Intimidation checks to Coerce, while wearing the mask",
+    "targetKind": "skill",
+    "detail": "intimidation"
+   }
+  ],
+  "reason": "Escalating the cross-cutting policy the correction raises: should DC-only bonuses (entry 2, a Deception DC vs Sense Motive) be starred on the related skill with DC-only wording, or suppressed until the sheet can display skill DCs? Same open question as olfactory-obfuscator-lesser. The two check-side entries are verified and can ship regardless of the ruling."
+ },
+ {
+  "id": "skeptics-elixir-lesser / skeptics-elixir-moderate / skeptics-elixir-greater (also ichthyosis-mutagen, fungal-walk-musk)",
+  "action": "escalate",
+  "reason": "Genuine policy question for the app owner: should a one-use consumable (uses 1/1) permanently star a stat, or only while an 'active effect' models it? Whatever is decided must be applied uniformly to every consumable in the batch, and if drunk consumables ever become a Mode the star must be removed or it will double-count."
+ },
+ {
+  "id": "staff-of-healing",
+  "action": "escalate",
+  "reason": "Invented 'while wielding' clause removed (the record has no such clause), but the bonus is to Hit Points restored by heal and no target kind represents healing output — 'spell' stars attack/DC, which this never touches, so the owner must decide whether to add a heal-amount kind or leave it unstarred; intended row: '+1 item, to the Hit Points restored whenever you cast heal using your own spell slots or the staff's charges'."
+ },
+ {
+  "id": "staff-of-healing-greater",
+  "action": "escalate",
+  "reason": "Same as the base staff: 'while wielding' removed, but no target kind exists for HP restored by heal; intended row: '+2 item, to the Hit Points restored whenever you cast heal using your own spell slots or the staff's charges'."
+ },
+ {
+  "id": "staff-of-healing-major",
+  "action": "escalate",
+  "reason": "Same as the base staff: 'while wielding' removed, but no target kind exists for HP restored by heal; intended row: '+3 item, to the Hit Points restored whenever you cast heal using your own spell slots or the staff's charges'."
+ },
+ {
+  "id": "staff-of-healing-true",
+  "action": "escalate",
+  "reason": "Same as the base staff: 'while wielding' removed, but no target kind exists for HP restored by heal; intended row: '+4 item, to the Hit Points restored whenever you cast heal using your own spell slots or the staff's charges'."
+ },
+ {
+  "id": "items/sanitizing-pin",
+  "action": "escalate",
+  "bonuses": [
+   {
+    "bonus": "+2 status",
+    "when": "on the Fortitude save against the initial exposure to a disease or poison, when you activate the affixed pin (single use; a critical failure on that save becomes a failure)",
+    "targetKind": "save",
+    "detail": "fortitude"
+   }
+  ],
+  "reason": "Row verified correct (the ⟨4⟩ glyph is free action, matching activationCost 'free', so the importer aside is dropped); escalating only the standing policy question of whether a single-use talisman should permanently star Fortitude."
+ },
+ {
+  "id": "items/prey-mutagen-lesser",
+  "action": "escalate",
+  "bonuses": [
+   {
+    "bonus": "+1 circumstance",
+    "when": "you use the mutagen's Timely Dodge reaction against a triggering Strike, while the lesser prey mutagen is active (1 minute)",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+10 status",
+    "when": "while the lesser prey mutagen is active (1 minute)",
+    "targetKind": "speed"
+   }
+  ],
+  "reason": "Added the missing Speed row per the verifier (verified '+10 status bonus to your speed'); escalating because the verifier asked it be folded into the one-use-consumable policy question — nothing in the engine applies a consumed elixir's timed bonus."
+ },
+ {
+  "id": "items/prey-mutagen-moderate",
+  "action": "escalate",
+  "bonuses": [
+   {
+    "bonus": "+2 circumstance",
+    "when": "you use the mutagen's Timely Dodge reaction against a triggering Strike, while the moderate prey mutagen is active (10 minutes)",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+20 status",
+    "when": "while the moderate prey mutagen is active (10 minutes)",
+    "targetKind": "speed"
+   }
+  ],
+  "reason": "Missing '+20 status' Speed row added (verified in the record); escalated with the rest of the family for the one-use-consumable star policy."
+ },
+ {
+  "id": "items/prey-mutagen-greater",
+  "action": "escalate",
+  "bonuses": [
+   {
+    "bonus": "+3 circumstance",
+    "when": "you use the mutagen's Timely Dodge reaction against a triggering Strike, while the greater prey mutagen is active (1 hour)",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+30 status",
+    "when": "while the greater prey mutagen is active (1 hour)",
+    "targetKind": "speed"
+   }
+  ],
+  "reason": "Missing '+30 status' Speed row added (verified in the record); escalated with the rest of the family for the one-use-consumable star policy."
+ },
+ {
+  "id": "items/prey-mutagen-major",
+  "action": "escalate",
+  "bonuses": [
+   {
+    "bonus": "+4 circumstance",
+    "when": "you use the mutagen's Timely Dodge reaction against a triggering Strike, while the major prey mutagen is active (1 hour)",
+    "targetKind": "ac"
+   },
+   {
+    "bonus": "+40 status",
+    "when": "while the major prey mutagen is active (1 hour)",
+    "targetKind": "speed"
+   }
+  ],
+  "reason": "Missing '+40 status' Speed row added (verified in the record); escalated with the rest of the family for the one-use-consumable star policy."
+ }
+]

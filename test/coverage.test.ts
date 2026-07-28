@@ -44,7 +44,7 @@ const REGISTRY_FLOOR: Record<string, number> = {
   featCantripGrants: 51,
   featFeatGrants: 185,
   companionGrants: 57,
-  situationalBonuses: 1999,
+  situationalBonuses: 2197,
 };
 
 /** Ceilings for work outstanding — these may only ever go DOWN.
@@ -55,8 +55,12 @@ const REGISTRY_FLOOR: Record<string, number> = {
  *                                                records / 2,620 bonuses. Also corrected the report
  *                                                itself, which scored items/classFeatures/heritages
  *                                                as 0% on a stale "registry is feats-only" comment.)
+ *  2026-07-29  situational 1114                 (applied the 283 verifier-DISPUTED records after
+ *                                                revising each against its own rules text: 218
+ *                                                shipped, 57 dropped as not-situational or already
+ *                                                modelled, 15 escalated to the owner.)
  *  Lower these when work lands; never raise one to make a red build green. */
-const MISSING_CEILING = { choices: 546, situational: 1312 };
+const MISSING_CEILING = { choices: 546, situational: 1114 };
 
 describe('mechanical coverage ratchet', { timeout: REPORT_TIMEOUT_MS }, () => {
   const r = report();

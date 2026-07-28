@@ -6,6 +6,15 @@ import { featSituationalFor, hasFeatSituational, FEAT_SITUATIONAL } from '../src
 describe('feat situational bonuses', () => {
   const c = content();
 
+  it('every registry key is a plain slug', () => {
+    // A generated key once arrived as "items/kraken-figurehead", and another as a COMMA-SEPARATED
+    // list of four ids in one key. The obvious dead-id scan uses /[a-z0-9-]+/, which does not flag
+    // those — it skips them, so they shipped silently and the scan reported zero problems. Assert the
+    // SHAPE of the key, not just that it resolves.
+    const bad = Object.keys(FEAT_SITUATIONAL).filter((k) => !/^[a-z0-9-]+$/.test(k));
+    expect(bad, `malformed registry keys: ${bad.join(' | ')}`).toHaveLength(0);
+  });
+
   it('the registry is populated and well-formed', () => {
     const ids = Object.keys(FEAT_SITUATIONAL);
     expect(ids.length).toBeGreaterThan(200);

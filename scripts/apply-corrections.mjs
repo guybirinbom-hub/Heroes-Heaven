@@ -29,10 +29,28 @@ const NO_DETAIL = new Set(['perception', 'ac', 'speed', 'hp', 'classDc', 'strike
 
 const patches = JSON.parse(readFileSync(PATCHES, 'utf8'));
 const src = readFileSync(REGISTRY, 'utf8');
+const db = JSON.parse(readFileSync('public/core.json', 'utf8'));
+const COLLECTIONS = ['feats', 'items', 'heritages', 'backgrounds', 'classFeatures', 'ancestries', 'animalCompanions', 'companionSpecializations'];
+const resolves = (id) => COLLECTIONS.some((c) => db[c]?.[id]);
+
+/**
+ * Agents returned a few ids in shapes the registry can't key on, and a plain `[a-z0-9-]+` scan does
+ * not even SEE them (it skips the key instead of flagging it), so they shipped silently:
+ *   - "items/kraken-figurehead"                     — collection prefix
+ *   - "endless-grimoire, endless-grimoire-greater…" — several ids in one key
+ * Normalising here turns one bad key into the right number of good ones, and anything that still
+ * doesn't resolve against core.json is rejected rather than written.
+ */
+function normaliseIds(raw) {
+  return String(raw)
+    .split(/\s*,\s*|\s+\/\s+/)
+    .map((part) => part.trim().replace(new RegExp(`^(?:${COLLECTIONS.join('|')})/`), ''))
+    .filter(Boolean);
+}
 
 const esc = (s) => String(s).replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\s+/g, ' ').trim();
 
-const stats = { replaced: 0, dropped: 0, escalated: 0, badKind: 0, empty: 0 };
+const stats = { replaced: 0, dropped: 0, escalated: 0, badKind: 0, empty: 0, badId: 0 };
 const rejected = [];
 const entries = [];
 
@@ -46,13 +64,21 @@ for (const p of patches) {
   });
   if (!list.length) { stats.empty++; continue; }
 
+  const ids = normaliseIds(p.id).filter((id) => {
+    if (resolves(id)) return true;
+    rejected.push(`${p.id}: id '${id}' matches no record`);
+    stats.badId++;
+    return false;
+  });
+  if (!ids.length) continue;
+
   const targets = list.map((b) => {
     const detail = NO_DETAIL.has(b.targetKind) ? undefined : (b.detail || (b.targetKind === 'save' || b.targetKind === 'skill' ? 'all' : undefined));
     const t = detail ? `{ kind: '${b.targetKind}', detail: '${esc(detail)}' }` : `{ kind: '${b.targetKind}' }`;
     return `{ targets: [${t}], when: "${esc(b.when)}", bonus: "${esc(b.bonus)}" }`;
   });
-  entries.push(`  "${p.id}": [${targets.join(', ')}],`);
-  stats.replaced++;
+  for (const id of ids) entries.push(`  "${id}": [${targets.join(', ')}],`);
+  stats.replaced += ids.length;
 }
 
 // A corrected record may already sit in the generated block from the first apply (it shouldn't — they
@@ -73,7 +99,7 @@ const close = out.lastIndexOf('\n};');
 if (close < 0) throw new Error('registry: could not find the object literal close');
 const next = out.slice(0, close) + banner + entries.join('\n') + out.slice(close);
 
-console.log(`replace ${stats.replaced} · drop ${stats.dropped} · escalate ${stats.escalated} · empty ${stats.empty} · bad-kind ${stats.badKind}`);
+console.log(`replace ${stats.replaced} · bad-id ${stats.badId} · drop ${stats.dropped} · escalate ${stats.escalated} · empty ${stats.empty} · bad-kind ${stats.badKind}`);
 if (rejected.length) {
   console.log(`REJECTED ${rejected.length} bonus rows:`);
   rejected.slice(0, 12).forEach((r) => console.log('  ' + r));
