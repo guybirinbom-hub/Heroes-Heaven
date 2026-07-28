@@ -62,5 +62,9 @@ if (skipped.length) {
 
 if (dry) { console.log('\n--dry-run: core.json NOT written'); process.exit(0); }
 if (!changed) { console.log('\nnothing to change (idempotent re-run)'); process.exit(0); }
-writeFileSync(corePath, JSON.stringify(db, null, 1));
+// MINIFIED, matching every other writer of this file (import-core-v2, import-companions,
+// import-siege-and-gaps all use a bare JSON.stringify). Pretty-printing it with an indent inflates
+// 21.9 MB to 25.9 MB and rewrites all 676k lines, so every later change shows as a whole-file diff —
+// which is exactly what happened when this script first shipped with `null, 1`.
+writeFileSync(corePath, JSON.stringify(db));
 console.log('\ncore.json written');
