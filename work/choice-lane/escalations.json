@@ -1,0 +1,1031 @@
+[
+ {
+  "collection": "feats",
+  "id": "eldritch-archer-dedication",
+  "name": "Eldritch Archer Dedication",
+  "question": "Should the granted cantrip be delivered through the innate lane (like Minor Magic's grantAs:'innate' at-will) or as a real one-cantrip SPONTANEOUS repertoire with a Charisma-keyed spell attack/DC? The text says repertoire, and later Eldritch Archer feats add to it — but the innate lane is the one that exists today.",
+  "evidence": "\"You gain a spell repertoire with one cantrip of your choice, from a tradition of your choice. ... This cantrip must require a spell attack roll and come from your chosen tradition.\""
+ },
+ {
+  "collection": "feats",
+  "id": "magic-ammunition",
+  "name": "Magic Ammunition",
+  "question": "For the ammunition pool: add an `ammunition` category/tag in the importer (fixes the data properly for all consumers), or ship a hand-curated id list for this feat only?",
+  "evidence": "\"When you select this feat, choose three types of common magical ammunition of 4th level or lower from *GM Core* or this book.\" plus \"**Special** You can select this feat multiple times. Each time you do, select three additional types of magical ammunition\""
+ },
+ {
+  "collection": "feats",
+  "id": "inherit-the-dreaming-heirloom",
+  "name": "Inherit the Dreaming Heirloom",
+  "question": "For the two pusaka Lores, do we (a) grant them as real trained Lores via loreChoices — simple, reuses an existing lane, but overstates the feat — or (b) add a record-only 'chosen but untrained' lore lane so the sheet shows them without a proficiency?",
+  "evidence": "\"select one Lore skill about a profession and one about a type of environment, such as Accounting Lore and Forest Lore ... (you become temporarily trained in these skills for this check). Once you make your choice of Lore skills, they can't be changed.\""
+ },
+ {
+  "collection": "feats",
+  "id": "natural-mutagen",
+  "name": "Natural Mutagen",
+  "question": "core.json holds duplicate records for every level-1 mutagen — e.g. both `bestial-mutagen` and `bestial-mutagen-lesser` at level 1. Which id set should the picker offer (and is the un-suffixed one a data duplicate that should be deduped)?",
+  "evidence": "\"When you gain this feat, select a common 1st-level mutagen. Each day during your daily preparations, you can make one temporary vial of the selected mutagen. ... your mutagen automatically becomes this higher-level version when your level equals the mutagen's level.\""
+ },
+ {
+  "collection": "feats",
+  "id": "eternal-guide",
+  "name": "Eternal Guide",
+  "question": "Do you want purely narrative one-time picks (a settlement name, a patron you represent) recorded as free text on the feat entry, or left entirely to the player's Notes page? This is the only thing that would change my answer here.",
+  "evidence": "\"Choose a single settlement with a population of at least 100 people. Whenever you die and are not returned to life within 24 hours by other means ... your attuned apparition magically transports your soul ... back to the chosen settlement, where you are reborn.\""
+ },
+ {
+  "collection": "feats",
+  "id": "cutting-without-blade",
+  "name": "Cutting Without Blade",
+  "question": "A daily-swappable temporary feat: model it as a fixed builder pick (FEAT_PICK_GRANTS entry, player retrains when they want a different one) or as a play-state daily-prep slot like Advanced Alchemy? I can specify either, but which one is your call.",
+  "evidence": "\"Each day during your daily preparations, you can select one ikon feat of 16th level or lower and gain it temporarily for that day.\""
+ },
+ {
+  "collection": "feats",
+  "id": "patron-reborn",
+  "name": "Patron Reborn",
+  "question": "Should the builder prompt for picks that provably do nothing to the owning character (this one only changes which ALLIES benefit)? If yes I'd wire it as a store-and-display choice; if no, this record needs nothing.",
+  "evidence": "\"You can be a patron for other witches. Choose a single type of patron you represent, such as The Resentment or Starless Shadow. An allied witch you can observe who has that patron counts as and gains the benefits of your Witch's Charge feat\""
+ },
+ {
+  "collection": "feats",
+  "id": "marshall-fiendish-forces",
+  "name": "Marshall Fiendish Forces",
+  "question": "There is no bestiary in core.json, so this pick has nothing to pick from. Free-text field (player types the fiend's name), or leave the feat prose-only until creature data ships?",
+  "evidence": "\"This fiend is a common fiend of level 11 or lower, which you select when you take this feat. ... At 20th level, you can choose a common fiend of level 15 or lower to appear instead\""
+ },
+ {
+  "collection": "feats",
+  "id": "celestial-armaments",
+  "name": "Celestial Armaments",
+  "question": "Do daily-prep INVENTORY picks get a play-state picker? Without one this feat's +1d8 spirit and crit-spec never appear on any Strike. The Doubling Rings rune-copy picker is the precedent — reuse that pattern here, or leave it prose-only?",
+  "evidence": "\"Select one weapon or Handwraps of Mighty Blows when you make your daily preparations. The weapon sheds light like a torch, deals an additional 1d8 spirit damage, and creatures who wield it gain the weapon's critical specialization.\""
+ },
+ {
+  "collection": "feats",
+  "id": "sanctified-relic",
+  "name": "Sanctified Relic",
+  "question": "Same call as Patron Reborn, and it also decides the shape here: prompt for build-time picks that only benefit an NPC hierophant? If yes, do you want this as ONE choice with 2 picks plus a separate holy/unholy choice, or a single flattened option list? FeatChoiceDef has no `picks` count today — every existing use is pick-one.",
+  "evidence": "\"When you take this feat, choose two attributes (one of which must be your key attribute) as your divine attributes and either holy or unholy sanctification; if you have the holy or unholy trait through a class feature or other ability, you must choose that same trait.\""
+ },
+ {
+  "collection": "feats",
+  "id": "assume-godhood",
+  "name": "Assume Godhood",
+  "question": "This feat has THREE separate build-time picks and none of them touch your own sheet — the three follower spells, \"one skill you are legendary in to act as your divine skill\", and \"one other attribute of your choosing\" for your divine attributes. Prompt for all of them as record-only, prompt for none, or something in between?",
+  "evidence": "\"When you Assume Godhood, choose three spells from any list other than the divine list; one must be 1st rank, one must be 2nd or 3rd rank, and one can be of any rank. These spells become additional cleric spells you can grant to your followers.\""
+ },
+ {
+  "collection": "feats",
+  "id": "psychic-duelist-dedication",
+  "name": "Psychic Duelist Dedication",
+  "question": "Do you want per-duel benefits like Mind Mace / Psychic Fist surfaced as toggleable Modes, or left as prose? The psychic-duel subsystem itself is unmodelled.",
+  "evidence": "\"Each time you enter a psychic duel, choose one of the following benefits for the duration of that duel.\" (Mind Mace / Psychic Fist)"
+ },
+ {
+  "collection": "feats",
+  "id": "runic-mind-smithing",
+  "name": "Runic Mind Smithing",
+  "question": "Should daily-reselectable picks (Runic Mind Smithing, Malleable Mental Forge, Starstone Aspirant Dedication) live in Feat.choice as a sticky default the player can edit on the sheet, or get a proper daily-preparations lane?",
+  "evidence": "\"During your daily preparations, choose one rune from the following list of weapon property runes: corrosive, flaming, frost, shock, thundering, and vitalizing.\""
+ },
+ {
+  "collection": "feats",
+  "id": "starstone-aspirant-dedication",
+  "name": "Starstone Aspirant Dedication",
+  "question": "Same daily-vs-build question as Runic Mind Smithing. Also: is a Modes entry (+1/+2/+3 circumstance to one chosen skill) an acceptable stand-in, or do you want a real feat-level numeric skill-bonus lane?",
+  "evidence": "\"Each day during your daily preparations, choose a skill you're untrained in. You can attempt skill actions that normally require you to be trained in that skill, and you gain a +1 circumstance bonus to checks with that skill until your next daily preparations. At 8th level, this bonus increases to +2, and at 15th level, this bonus increases to +3.\""
+ },
+ {
+  "collection": "feats",
+  "id": "aon-warding-rune",
+  "name": "Warding Rune",
+  "question": "This is a legacy (OGL, Lost Omens World Guide) feat keyed to a taxonomy the Remaster deleted and that your spell data no longer carries. Do you want to offer the 8-school list anyway as a flavour pick, or leave this feat prose-only?",
+  "evidence": "\"Choose a school of magic other than divination. You gain a rune on your body corresponding to that school, and you gain a +2 circumstance bonus to all saving throws against effects of that school.\""
+ },
+ {
+  "collection": "feats",
+  "id": "aon-civil-service",
+  "name": "Civil Service",
+  "question": "32 kingdom-trait feats sit in core.json as selectable `general` feats with no kingdom sheet behind them. Should they be hidden from the character feat picker until a kingdom subsystem exists, or kept as prose-only picks?",
+  "evidence": "\"When you select this feat, choose one leadership role; that role is now supported by your efficient civil servants, so its vacancy penalty is no longer applicable.\""
+ },
+ {
+  "collection": "feats",
+  "id": "aon-kingdom-assurance",
+  "name": "Kingdom Assurance",
+  "question": "Same as Civil Service: how should the 32 kingdom-trait feats behave in the character builder before a kingdom sheet exists?",
+  "evidence": "\"Choose one Kingdom skill in which your kingdom is trained. Once per Kingdom turn, when you would attempt a skill check for that skill, you can forgo rolling and instead take a result equal to 10 + your proficiency bonus\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "breakthrough-innovation",
+  "name": "Breakthrough Innovation",
+  "question": "Should the picker offer breakthrough modifications only, or breakthrough + initial as the text allows? And which innovation type does light-mortar-innovation count as for this filter — weapon?",
+  "evidence": "\"Choose a breakthrough modification of your innovation's type to apply to your innovation. You can choose an initial modification of your innovation's type instead if you prefer.\""
+ },
+ {
+  "collection": "feats",
+  "id": "irezoko-tattoo",
+  "name": "Irezoko Tattoo",
+  "question": "For a single-class character the pick is forced (one option). Should the builder still prompt and record it, auto-resolve silently, or hide the feat when the character has no focus-pool class? And is a once-per-day 'regain 1 Focus Point' worth a real play resource, or a sheet note?",
+  "evidence": "\"Choose a class that you are a member of that grants you access to a focus pool. When you take this feat, it gains the trait that applies to your chosen class.\""
+ },
+ {
+  "collection": "feats",
+  "id": "civil-service",
+  "name": "Civil Service",
+  "question": "Kingdom feats are taken by the kingdom, not a character. Should kingdom-feat sub-choices wait for a real Kingdom sheet, or should Feat.choice be reused with a 'kingdom' scope so the pick is at least recorded somewhere?",
+  "evidence": "\"When you select this feat, choose one leadership role; that role is now supported by your efficient civil servants, so its vacancy penalty is no longer applicable.\""
+ },
+ {
+  "collection": "feats",
+  "id": "kingdom-assurance",
+  "name": "Kingdom Assurance",
+  "question": "Same as Civil Service — where should kingdom-feat sub-choices live, given no Kingdom sheet exists? Also: should kingdom-assurance get maxTakable: null to match its Special line?",
+  "evidence": "\"Choose one Kingdom skill in which your kingdom is trained. Once per Kingdom turn, when you would attempt a skill check for that skill, you can forgo rolling and instead take a result equal to 10 + your proficiency bonus…\""
+ },
+ {
+  "collection": "feats",
+  "id": "endless-memories",
+  "name": "Endless Memories",
+  "question": "Do you want daily-preparation temporary proficiencies (Ancient Memories / Endless Memories) modelled as a play-state daily-prep control, given the rules explicitly bar using them as prerequisites — or is a sheet reminder enough?",
+  "evidence": "\"When you choose a skill in which to become trained with Ancient Memories, you can also choose a skill in which you're already trained and become an expert in that skill. This lasts until your Ancient Memories expires.\""
+ },
+ {
+  "collection": "feats",
+  "id": "improbable-elixirs",
+  "name": "Improbable Elixirs",
+  "question": "Should Heroes Heaven model crafting formulas at all (a new 'Formulas' list on the character), or should Improbable Elixirs just push the chosen potions into the alchemy-prep item list as elixirs? Until formulas exist, the pick has nowhere to land.",
+  "evidence": "\"Select a number of potions equal to your Intelligence modifier (minimum 1); these potions must be of 9th level or lower... Once you've chosen the potion formulas, they can't be changed.\""
+ },
+ {
+  "collection": "feats",
+  "id": "tricksters-ace",
+  "name": "Trickster's Ace",
+  "question": "Daily-preparation picks (this, Paradoxical Mystery, Occult Evolution's bonus spell, Arcane Evolution's extra signature): should they get a play-layer 'daily prep' surface on the sheet, or be approximated as a one-time builder pick? A builder pick would be wrong RAW but is far cheaper.",
+  "evidence": "\"When you make your daily preparations ... You also choose a single spell from the arcane, divine, occult, or primal list of 4th level or lower.\""
+ },
+ {
+  "collection": "feats",
+  "id": "diverse-mystery",
+  "name": "Diverse Mystery",
+  "question": "Diverse Mystery has no focusPoolBonus in the record, unlike Domain Acumen/Fluency/Paradoxical Mystery. Is that correct RAW (gain the spell but no extra focus point), or a data omission that should be focusPoolBonus: 1?",
+  "evidence": "\"Select one revelation spell from a mystery other than your own. You can choose only an initial revelation spell or an advanced revelation spell.\""
+ },
+ {
+  "collection": "feats",
+  "id": "paradoxical-mystery",
+  "name": "Paradoxical Mystery",
+  "question": "Same daily-prep question as Trickster's Ace — play-layer slot vs a one-time builder pick? Here it also moves a focus spell in and out of the Spells tab each day.",
+  "evidence": "\"Each day during your daily preparations, choose one basic or advanced domain spell ... You gain that spell as a revelation spell until your next daily preparations.\""
+ },
+ {
+  "collection": "feats",
+  "id": "bloodline-mutation",
+  "name": "Bloodline Mutation",
+  "question": "Leave all 8 options always offered (trust-based, with a note that your bloodline must qualify), or hand-author a bloodline→qualifying-options table for the 18 bloodlines?",
+  "evidence": "\"Choose one of the following.\" — \"you gain a fly Speed equal to your land Speed\" / \"you become amphibious ... and you gain a swim Speed\" / \"choose an energy type your bloodline is immune or resistant to and gain resistance 20 against that energy type\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "kinetic-gate",
+  "name": "Kinetic Gate",
+  "question": "Single vs Dual Gate is currently implicit (pick 1 vs 2 elements in the same picker) and Single Gate's automatic impulse junction is not granted. Do you want (a) an explicit Single/Dual Gate toggle in Setup, (b) auto-granting the chosen element's impulse junction when only one element is picked, and (c) two extra level-1 'impulse' feat slots for the gate's free impulse feats?",
+  "evidence": "\"You can choose either a single gate (one element) or dual gate (two elements) at 1st level.\" … \"you can pick from six elements - air, earth, fire metal, water, and wood\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "weapon-legend",
+  "name": "Weapon Legend",
+  "question": "Weapon Legend RAW lets you pick a DIFFERENT weapon group than the one Fighter Weapon Mastery raised at level 5, but the app stores only one group (build.fighterWeaponGroup) and just promotes it to legendary at 13. Do you want a second, independent group pick at level 13, or is the simplification intentional?",
+  "evidence": "\"You can select one weapon group and increase your proficiency ranks to legendary for all simple weapons, martial weapons, and unarmed attacks in that weapon group, and to master for all advanced weapons in that weapon group.\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "blessing-of-the-devoted",
+  "name": "Blessing of the Devoted",
+  "question": "Blessed Armament / Blessed Shield need item-targeted grants (pick a weapon or handwraps, then pick one of five property runes; or auto-apply a level-scaled Reinforcing rune to your shield) which the engine cannot express today. Ship all three options with only Blessed Swiftness mechanised and the other two as recorded-but-prose picks, or hold the whole feature until an item-targeting lane exists?",
+  "evidence": "\"Your deity blesses your service with a boon. … Choose one of the following blessings, or any other to which you have access.\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "divine-access",
+  "name": "Divine Access",
+  "question": "Divine Access needs two new structured data fields (oracle mystery → related domains, deity → granted cleric spells) before it can be prompted at all. Do you want those extracted from the existing prose into core.json, or should Divine Access ship as a recorded-but-inert note for now?",
+  "evidence": "\"Choose one deity who grants one of your mystery's granted domains. Add up to three cleric spells of your choice granted by that deity to your spell list, and to your spell repertoire as soon as you can cast spells of the appropriate rank.\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "divine-spark-and-ikons",
+  "name": "Divine Spark and Ikons",
+  "question": "Should each weapon/worn ikon get a bound inventory item (the free level-0 item it grants, which is also where its runes are etched)? Without it, an exemplar's ikon runes and the 'body ikon acts as handwraps' rule cannot be represented.",
+  "evidence": "\"As an exemplar, you select three ikons at first level.\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "adept-benefit-wand",
+  "name": "Adept Benefit (Wand)",
+  "question": "The wand implement needs TWO linked damage-type picks (initiate = one of cold/electricity/fire, adept = a different second one) and neither record has a choice field, while the adept records are unreachable until Implement Adept is built. Should the initiate/adept/paragon benefit records be wired into the implement system as part of this pass, or deferred with the wand damage type left unrecorded?",
+  "evidence": "\"Choose a second damage type from the list; whenever you Fling Magic, you can select between either of the two damage types you have chosen.\""
+ },
+ {
+  "collection": "feats",
+  "id": "westyrs-wayfinder-repository",
+  "name": "Westyr's Wayfinder Repository",
+  "question": "Should daily-preparation picks like this (and Flexible Transmogrification) get a play-state 'daily prep' slot alongside alchemist Advanced Alchemy and prepared commander tactics, or stay prose-only on the feat card?",
+  "evidence": "\"When making your daily preparations, you can choose one 1st-rank spell from your spellbook or spell repertoire and store it in your wayfinder... you must make your next daily preparations to store another spell in your wayfinder.\""
+ },
+ {
+  "collection": "feats",
+  "id": "eidolons-wrath",
+  "name": "Eidolon's Wrath",
+  "question": "The feat's second clause ('If your eidolon is a celestial, fiend, or monitor with an alignment other than true neutral, you can choose a damage type in its alignment') is pre-Remaster alignment damage. This project already remapped alignment damage to SPIRIT elsewhere. Should the option list gain a conditional 'spirit' entry, keep legacy good/evil/lawful/chaotic, or drop the clause entirely?",
+  "evidence": "\"You determine the damage type when you gain the feat: acid, cold, electricity, fire, sonic, vitality, or void.\""
+ },
+ {
+  "collection": "feats",
+  "id": "flexible-transmogrification",
+  "name": "Flexible Transmogrification",
+  "question": "Same call as Westyr's Wayfinder Repository: do daily-preparation picks get a play-state 'daily prep' slot, or stay prose-only? If yes, how should the nested sub-choice of the temporarily-granted evolution feat be handled?",
+  "evidence": "\"Each day, choose one evolution feat of 6th level or lower during your daily preparations. Your eidolon gains that feat until your next daily preparations.\""
+ },
+ {
+  "collection": "feats",
+  "id": "grasping-limbs",
+  "name": "Grasping Limbs",
+  "question": "Should EIDOLON_PRIMARY_OPTIONS include a '1d8 (grapple)' entry? The app's table lists disarm/nonlethal/shove/trip only, which leaves Grasping Limbs unreachable without Advanced Weaponry — is that the printed rule or a missing option?",
+  "evidence": "\"Choose one of the eidolon's unarmed attacks with the grapple trait. It gains the Grab action on that unarmed attack.\""
+ },
+ {
+  "collection": "feats",
+  "id": "dracomancer",
+  "name": "Dracomancer",
+  "question": "Should a character-level 'draconic benefactor' pick be added (reusing the sorcerer dragonChoice table) so Dracomancer's tradition and spell pool follow it — or is the current unrestricted any-tradition rank-1/rank-2 picker acceptable, with a dataWarning noting the dragon spell lists are missing?",
+  "evidence": "\"Choose one 1st-rank spell and one 2nd-rank spell from those listed for a dragon spellcaster of your draconic benefactor's type … You can cast each of these spells once per day as innate spells of the same tradition as your draconic benefactor.\""
+ },
+ {
+  "collection": "feats",
+  "id": "elite-dracomancer",
+  "name": "Elite Dracomancer",
+  "question": "Same benefactor question as Dracomancer — add a benefactor pick that both feats read, or keep the unrestricted rank-3/rank-4 picker with a dataWarning?",
+  "evidence": "\"Choose one 3rd-rank spell and one 4th-rank spell from those listed for a dragon spellcaster of your draconic benefactor's type … You can cast each of these spells once per day as innate spells of the same tradition as your draconic benefactor.\""
+ },
+ {
+  "collection": "feats",
+  "id": "terra-dragonblood",
+  "name": "Terra Dragonblood",
+  "question": "Which of the 44 draconic exemplars have a burrow Speed? That data is not in core.json, so the restriction cannot be enforced without you supplying the list (or accepting an unenforced advisory note).",
+  "evidence": "\"If you choose a draconic exemplar, you must choose a dragon with a burrow Speed.\""
+ },
+ {
+  "collection": "feats",
+  "id": "expert-skysage-divination",
+  "name": "Expert Skysage Divination",
+  "question": "The record's own text has a dropped spell name — \"one of the following 4th-rank spells … : or Read Omens\" (the same AoN unsubstituted-template defect; the sibling Basic Skysage Divination shows it too, \"…3rd-rank spells: or Locate\"). The missing option is almost certainly Clairvoyance (rank 4, arcane/occult, present in core.json and the only other 4th-rank Oatia divination). Confirm Clairvoyance before it is written into the options list?",
+  "evidence": "\"You choose one of the following 4th-rank spells to add to your spell repertoire: or Read Omens. At 12th level, choose one of the following 5th-rank spells … Mind Probe or Scouting Eye. At 14th level, choose one of the following 6th-rank spells … Scrying or Truesight.\""
+ },
+ {
+  "collection": "feats",
+  "id": "master-skysage-divination",
+  "name": "Master Skysage Divination",
+  "question": "Same dropped-name defect: \"one of the following 7th-rank spells: or True Target\". The missing option is almost certainly Retrocognition (rank 7, arcane/occult, present in core.json). Confirm before writing it into the options list?",
+  "evidence": "\"You choose one of the following 7th-rank spells to add to your spell repertoire: or True Target. At 18th level, add Pinpoint to your spell repertoire, and at 20th level, add Foresight to your spell repertoire.\""
+ },
+ {
+  "collection": "feats",
+  "id": "avenging-runelord-dedication",
+  "name": "Avenging Runelord Dedication",
+  "question": "The sin spell lists (the Thassilonian sin-magic school lists) are not in the shipped data. Should the sin-spell branch of the innate-spell pick be left out with a dataWarning, or do you want the five lists sourced and added so the choice can offer them?",
+  "evidence": "\"Choose one of the following sins: envy, gluttony, greed, sloth, or wrath.\""
+ },
+ {
+  "collection": "feats",
+  "id": "warshard-warrior-dedication",
+  "name": "Warshard Warrior Dedication",
+  "question": "Do you want a play-time 'warshard weapon' designation on an inventory item (which would also give transmute-weapon and warshard-rune something to attach to), or should this whole destiny stay descriptive prose?",
+  "evidence": "\"When you make your daily preparations, choose one weapon in your possession in which you have at least expert proficiency. That weapon becomes your warshard weapon until you choose a different weapon in your possession during another of your daily preparations.\""
+ },
+ {
+  "collection": "feats",
+  "id": "thaumaturges-demesne",
+  "name": "Thaumaturge's Demesne",
+  "question": "Do you want an optional free-text 'demesne' note captured on this feat for flavour, or should it stay prose-only with no prompt?",
+  "evidence": "\"When you select this feat, choose a demesne, an area of no more than 2,000 square feet. You must legitimately own the area or, if its a public area, you must lay claim to the area without anyone contesting it.\""
+ },
+ {
+  "collection": "feats",
+  "id": "psychic-dedication",
+  "name": "Psychic Dedication",
+  "question": "Confirm the two standard psi cantrips for The Unbound Step. I read them positionally out of classes.psychic.subclass.options — phase-bolt and warp-step — and the other five minds' pairs check out against the printed lists, but I could not verify Unbound Step's independently.",
+  "evidence": "\"Choose a conscious mind. You gain a spell repertoire with one standard psi cantrip of your choice from your conscious mind, which you cast as a psi cantrip.\""
+ },
+ {
+  "collection": "feats",
+  "id": "time-mage-dedication",
+  "name": "Time Mage Dedication",
+  "question": "For a character with more than one spellcasting tradition (dual class, or a class plus a caster archetype), should Time Mage prompt for which tradition its Time Sense and focus spells use, or just default to the primary class's tradition?",
+  "evidence": "\"you gain the Delay Consequence domain spell … You also gain Time Sense as an innate cantrip usable at will. This innate spell and your focus spells from the time mage archetype are of the same tradition as the spells you used to meet the archetype's prerequisites.\""
+ },
+ {
+  "collection": "feats",
+  "id": "split-slot",
+  "name": "Split Slot",
+  "question": "Should Split Slot add a real extra prepared-spell slot at the chosen rank (which overstates power, since only one of the two paired spells can be cast), or should it only record the rank + show a note on the Spells page?",
+  "evidence": "\"you can choose one spell slot at least 1 rank lower than the highest-rank spell you can cast and prepare two spells in that slot. When you Cast a Spell from that slot, choose which spell to cast.\""
+ },
+ {
+  "collection": "feats",
+  "id": "witch-dedication",
+  "name": "Witch Dedication",
+  "question": "Replace the Witch Dedication tradition picker with a patron picker (patron.tradition then feeds archetypeTradition and patron.grants.skills feeds the skill), or keep the tradition picker and just fix the skill grant to be tradition-derived?",
+  "evidence": "\"Choose a Patron; you gain a familiar with two common cantrips of your choice from your chosen patron's tradition, but aside from the tradition, you don't gain any other effects the patron would usually grant.\" … \"You become trained in the skill associated with the patron's tradition; if you were already trained in it, you instead become trained in a skill of your choice.\""
+ },
+ {
+  "collection": "feats",
+  "id": "sequestered-spell",
+  "name": "Sequestered Spell",
+  "question": "The surki 'magiphage' ability (which fixes a tradition and is referenced by 5 surki records) is missing from core.json. Should we add it as an ancestry-level tradition choice (arcane/divine/occult/primal) so Sequestered Spell's cantrip list and Consume Magic / Magitaxis triggers can be filtered by it?",
+  "evidence": "\"Choose one cantrip from the spell list of your magiphage ability. You can cast this cantrip as an innate spell at will.\""
+ },
+ {
+  "collection": "feats",
+  "id": "unlimited-pluripotency",
+  "name": "Unlimited Pluripotency",
+  "question": "Do you want a play-time (daily-preparation) heritage swap for Unlimited Pluripotency, or is leaving it as descriptive text acceptable given heritage is a fixed build field?",
+  "evidence": "\"When you sleep, you can choose to enter a pupa state. … you lose the benefits of one of your surki heritages overnight. When you emerge and make your daily preparations, you can select a different surki heritage to replace it.\""
+ },
+ {
+  "collection": "feats",
+  "id": "orichalcum-bond",
+  "name": "Orichalcum Bond",
+  "question": "Daily-preparations picks like this one: should they live in the builder as a persistent pick, on the Play tab as a daily-prep panel (like the alchemist's Advanced Alchemy prep), or be left to manual rune etching in the inventory?",
+  "evidence": "\"choose a weapon property rune of up to your level that is common or you otherwise have access to\" ... \"This rune counts against your weapon's limit as normal.\""
+ },
+ {
+  "collection": "feats",
+  "id": "harbingers-armament",
+  "name": "Harbinger's Armament",
+  "question": "Should the weapon target be a second picker over the character's wielded weapons + handwraps of mighty blows, or should only the rune be prompted and the player apply it manually?",
+  "evidence": "\"Select one weapon or handwraps of mighty blows when you make your daily preparations. While in your hands it gains the effect of one property rune. Choose either Fearsome, Ghost Touch, Returning, Shifting, or Vitalizing.\""
+ },
+ {
+  "collection": "feats",
+  "id": "domain-spirit",
+  "name": "Domain Spirit",
+  "question": "Should Domain Spirit first ask whether your bonded spirit is a creature or a terrain, so the 16-option domain list can be gated to the correct half (and leave room for the GM-added trait domain)? Or keep the flat list and let the GM police it?",
+  "evidence": "\"Select one domain related to your domain spirit. ... If your spirit is a creature, select your domain from the following: ambition, confidence, family, might, protection, or trickery. If your spirit is a terrain, select your domain from the following: air, cities, darkness, earth, nature, travel, water, or wood.\""
+ },
+ {
+  "collection": "feats",
+  "id": "expanded-domain-initiate",
+  "name": "Expanded Domain Initiate",
+  "question": "Expanded Domain Initiate needs each deity's alternate-domain list, which the shipped deity data does not have. Do you want a data pass adding `alternateDomains` per deity from AoN, or should the picker fall back to 'any domain your deity does not already have'?",
+  "evidence": "\"Select one domain from your deity's alternate domains. You gain access to that domain and an initial domain spell for that domain.\""
+ },
+ {
+  "collection": "feats",
+  "id": "peerless-mascot-companion",
+  "name": "Peerless Mascot Companion",
+  "question": "Peerless Mascot Companion makes two picks - the specialization (usual list OR the new 'peerless mascot') and one language the companion learns. Do you want 'peerless-mascot' added as a real companionSpecializations record and a companion-language field added, or is the prose note currently in companionGrants.ts good enough?",
+  "evidence": "\"You can select one of the usual specializations or the peerless mascot specialization.\" ... \"It can speak one language that you also speak (chosen at the time you gain this feat).\""
+ },
+ {
+  "collection": "feats",
+  "id": "awakened-power",
+  "name": "Awakened Power",
+  "question": "Awakened Power says 'a deviant feat of 4th level or lower' but its prerequisites array is empty. Should the picker be restricted to deviant feats the character ACTUALLY HAS (the Deviant Abilities rules read that way), or to any deviant feat of that level? And do you want the two Awakening paragraphs extracted into a structured field so step 2 becomes pickable?",
+  "evidence": "\"You gain one awakening benefit for a deviant feat of 4th level or lower.\" ... \"Each time you do, choose a different deviant feat of 4th level or lower, and gain one of its awakening benefits.\""
+ },
+ {
+  "collection": "feats",
+  "id": "greater-awakened-power",
+  "name": "Greater Awakened Power",
+  "question": "Same call as Awakened Power: restrict the deviant-feat list to feats the character actually has, or any deviant feat at or below the level cap? And should the shared 'different deviant feat each time' rule also exclude feats already used by Awakened Power?",
+  "evidence": "\"You gain one awakening benefit for a deviant feat of 10th level or lower.\" ... \"Each time you do, choose a different deviant feat of 10th level or lower, and gain one of its awakening benefits.\""
+ },
+ {
+  "collection": "feats",
+  "id": "secret-speech",
+  "name": "Secret Speech",
+  "question": "Secret Speech names societies only by example, so no canonical list exists. Do you want a new free-text feat-choice kind (player types the society), or a fixed `array` of the published societies (Lacunafex, Bellflower Network, Firebrands, Pathfinder Society, …) plus an 'Other' entry?",
+  "evidence": "\"Choose a secret society (such as the Lacunafex or the Bellflower Network). You've learned that society's secret cant or jargon…\" plus \"**Special** You can take this feat multiple times. You learn the secret speech of a different society each time.\""
+ },
+ {
+  "collection": "feats",
+  "id": "ancestral-weaponry",
+  "name": "Ancestral Weaponry",
+  "question": "Should the Ancestral Weaponry ancestry list offer all 18 ancestries that have trait-bearing weapons, or only ancestries the character demonstrably has weapon access to? The latter requires modeling 'access to ALL weapons with trait X' as a flag on the weapon-familiarity feats, which today store explicit weapon-id lists instead.",
+  "evidence": "\"Choose an ancestry for which you have access to all weapons with that trait. For you, melee weapons with that ancestry trait and either the agile or finesse trait gain the monk trait.\""
+ },
+ {
+  "collection": "feats",
+  "id": "quick-study",
+  "name": "Quick Study",
+  "question": "Quick Study grants a temporary daily Lore that 'can't be used as a prerequisite'. Do you want (a) FeatGrant.loreChoices: 1 as-is, accepting that it wrongly satisfies prerequisites, (b) a `temporary` flag the prerequisite checker ignores, or (c) leave it unmodeled as a pure daily-prep note?",
+  "evidence": "\"During your daily preparations, you can study a particular subject to gain the trained proficiency rank in one Lore skill of your choice.\" — but also \"Since this proficiency is temporary, you can't use it as a prerequisite for a skill increase or a permanent character option like a feat.\""
+ },
+ {
+  "collection": "feats",
+  "id": "shadow-reservoir",
+  "name": "Shadow Reservoir",
+  "question": "The text never says WHO picks the reservoir spells or WHEN ('Your shadow reservoir contains a single spell of each spell rank…') — is the reservoir a player-authored list fixed at build time, a daily-preparation list, or should HH just show the rule as prose and model only the source pick?",
+  "evidence": "\"If you have more than one source of spells you can cast with spell slots, such as if you're a spellcaster with a multiclass archetype, choose one source of spells for your shadow reservoir.\""
+ },
+ {
+  "collection": "feats",
+  "id": "built-in-tools",
+  "name": "Built-In Tools",
+  "question": "Do you want a display-only picker for feats like this (a genuine build-time selection with no number attached in HH), or should such feats stay prose-only until the underlying rule — the worn-tools limit — is modeled?",
+  "evidence": "\"When you take this feat, choose up to two sets of tools you own, such as thieves' tools or healer's tools, that weigh a total of 2 Bulk or less… The innovation's Bulk doesn't increase from this addition.\""
+ },
+ {
+  "collection": "feats",
+  "id": "vehicle-mechanic-dedication",
+  "name": "Vehicle Mechanic Dedication",
+  "question": "Is designating a signature vehicle worth a builder prompt given HH doesn't roll piloting checks — record-and-annotate on the vehicle companion card, or leave prose-only?",
+  "evidence": "\"you choose one vehicle you own—or your party owns collectively—to be your signature vehicle… pilots gain a +1 circumstance bonus to any piloting checks they make to control your signature vehicle. If you are a master in Crafting, this bonus increases to +2.\""
+ },
+ {
+  "collection": "feats",
+  "id": "sniping-duo-dedication",
+  "name": "Sniping Duo Dedication",
+  "question": "Should ally-designation feats (this, and Vehicle Mechanic's shared vehicle) use a free-text field, or bind to a real campaign teammate now that Campaigns/Party exists?",
+  "evidence": "\"When you take this dedication, choose one willing, non-minion ally to act as your spotter… You can change your designated spotter by spending 3 days of downtime training with another ally.\""
+ },
+ {
+  "collection": "items",
+  "id": "apotropaic-fulu",
+  "name": "Apotropaic Fulu",
+  "question": "Should consumables whose variant is fixed at creation but that affect nobody on the sheet (Apotropaic Fulu's warded alignment) get a per-instance flavour label, or is the pick left to the table? Note this is legacy-era content — alignment traits no longer exist post-Remaster, so the four options themselves are dead vocabulary.",
+  "evidence": "\"Pick an alignment trait: chaotic, good, lawful, or evil.\""
+ },
+ {
+  "collection": "feats",
+  "id": "expert-longevity",
+  "name": "Expert Longevity",
+  "question": "Ancestral/Expert/Universal Longevity grant DAILY, temporary skill proficiency that the rules forbid from counting toward prerequisites. Do you want a Play-tab 'daily preparations' picker with a proficiency source flagged non-prerequisite, or should these three feats stay descriptive-only?",
+  "evidence": "\"When you choose a skill in which to become trained with Ancestral Longevity, you can also choose a skill in which you are already trained and become an expert in that skill. This lasts until your Ancestral Longevity expires.\""
+ },
+ {
+  "collection": "feats",
+  "id": "unconventional-weaponry",
+  "name": "Unconventional Weaponry",
+  "question": "\"or that is common in another culture\" has no machine-readable tag. Should the picker offer only the 33 ancestry-traited uncommon simple/martial weapons (rules-tight, may block legitimate cultural weapons), or all 443 uncommon simple/martial weapons (permissive, matches the GM-adjudicated intent)?",
+  "evidence": "\"Choose an uncommon simple or martial weapon with a trait corresponding to an ancestry (such as dwarf, goblin, or orc) or that is common in another culture. You gain access to that weapon, and for the purpose of proficiency, you treat it as a simple weapon.\""
+ },
+ {
+  "collection": "feats",
+  "id": "elf-atavism",
+  "name": "Elf Atavism",
+  "question": "Elf Atavism's legal heritage list is explicitly GM-adjudicated (\"at the GM's discretion, you might gain a different benefit\"). Offer all 8 elf heritages including Ancient Elf (which chains into a multiclass-dedication picker), or curate the list down to the ones with no elven-feature dependency?",
+  "evidence": "\"You gain the benefits of the elf heritage of your elven parent or ancestors. You typically can't select a heritage that depends on or improves an elven feature you don't have.\""
+ },
+ {
+  "collection": "feats",
+  "id": "divine-apex",
+  "name": "Divine Apex",
+  "question": "Divine Apex needs per-deity 'divine attribute' data that core.json does not have (1/485 deities mention it). Author that field across the deity list and add a daily Play-tab apex picker, or leave the feat descriptive and let players set item.apexAttribute by hand in the item editor?",
+  "evidence": "\"When you complete your daily preparations, you can touch one worn magical item that doesn't have the apex trait. It gains the apex trait until your next preparations, and you choose one of your deity's divine attributes.\""
+ },
+ {
+  "collection": "feats",
+  "id": "rites-of-convocation",
+  "name": "Rites of Convocation",
+  "question": "Rites of Convocation's benefit is a 10-minute prepared-slot SWAP, which the spell-slot model does not support. Is recording the chosen summon spell for display (and letting the player do the swap by hand on the Spells page) acceptable, or should a 'flexible swap' lane be built?",
+  "evidence": "\"Choose one summon spell (such as Summon Animal, Summon Construct, and so forth) that appears on the spell list of your spellcasting tradition.\""
+ },
+ {
+  "collection": "items",
+  "id": "library-robes",
+  "name": "Library Robes",
+  "question": "Library Robes is re-chosen at every daily preparation, not locked at purchase. Should re-selectable daily-prep choices like this live in the builder `choice` lane (answer persisted on the item, editable any time), or in the play state alongside the existing alchemist Advanced-Alchemy daily prep? The same call decides the other three Library Robes grades and every 'during your daily preparations, choose' item.",
+  "evidence": "\"During your daily preparations, choose one spell you know of 5th rank or lower. You inscribe that spell on the robes ... Using this ability erases any scroll already inscribed on the robe.\""
+ },
+ {
+  "collection": "items",
+  "id": "library-robes-greater",
+  "name": "Library Robes (Greater)",
+  "question": "Same owner call as base Library Robes: does a daily-preparation re-choice belong in the builder `choice` lane or in play state?",
+  "evidence": "\"During your daily preparations, choose one spell you know of 6th rank or lower.\""
+ },
+ {
+  "collection": "items",
+  "id": "library-robes-major",
+  "name": "Library Robes (Major)",
+  "question": "Same owner call as base Library Robes: does a daily-preparation re-choice belong in the builder `choice` lane or in play state?",
+  "evidence": "\"During your daily preparations, choose one spell you know of 8th rank or lower.\""
+ },
+ {
+  "collection": "items",
+  "id": "library-robes-true",
+  "name": "Library Robes (True)",
+  "question": "Same owner call as base Library Robes: does a daily-preparation re-choice belong in the builder `choice` lane or in play state?",
+  "evidence": "\"During your daily preparations, choose one spell you know of 9th rank or lower.\""
+ },
+ {
+  "collection": "items",
+  "id": "captivating-score",
+  "name": "Captivating Score",
+  "question": "Captivating Score's Positive/Negative (and its subject and instrument) are baked into each written copy but change nothing the engine calculates. Do consumables whose choice is pure flavour/record-keeping deserve a stored per-copy note field, or should the app stay silent on them? Answering this once covers a whole family of 'compose/inscribe it this way' consumables.",
+  "evidence": "\"You choose one of the emotions described below and write a musical composition to convey that emotion about a subject of your choice, typically a person or group.\""
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo",
+  "name": "Faith Tattoo",
+  "question": "The tattoo carries a SECOND build-time choice: \"When you get the tattoo and aren't sanctified, you can choose to sanctify yourself to your deity.\" Does the app model sanctification as a character-level field an item can set (normally it arrives via cleric/champion class features), and if so should this item be allowed to grant it? The `choice` shape holds only one choice per record, so if sanctification is in scope it needs either a second slot or its own field. Same question applies to all four Faith Tattoo grades.",
+  "evidence": "\"You can choose harm or heal only in accord with the deity's divine font. If the deity allows either spell, choose one the tattoo can cast when you receive the tattoo.\""
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo-greater",
+  "name": "Faith Tattoo (Greater)",
+  "question": "Same as base Faith Tattoo: is the optional self-sanctification (\"When you get the tattoo and aren't sanctified, you can choose to sanctify yourself to your deity\") something an item may set, and where would that live?",
+  "evidence": "\"The tattoo casts a 3rd-rank Harm, Heal, or the 3rd-rank spell from your deity's cleric spells ... If the deity allows either spell, choose one the tattoo can cast when you receive the tattoo.\""
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo-major",
+  "name": "Faith Tattoo (Major)",
+  "question": "Same as base Faith Tattoo: is the optional self-sanctification something an item may set, and where would that live?",
+  "evidence": "\"The tattoo casts a 5th-rank Harm, Heal, or the 5th-rank spell from your deity's cleric spells ... If the deity allows either spell, choose one the tattoo can cast when you receive the tattoo.\""
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo-true",
+  "name": "Faith Tattoo (True)",
+  "question": "Same as base Faith Tattoo: is the optional self-sanctification something an item may set, and where would that live?",
+  "evidence": "\"The tattoo casts a 7th-rank Harm, Heal, or the 7th-rank spell from your deity's cleric spells ... If the deity allows either spell, choose one the tattoo can cast when you receive the tattoo.\""
+ },
+ {
+  "collection": "items",
+  "id": "the-rakshasa",
+  "name": "The Rakshasa",
+  "question": "For The Rakshasa's Coerce bonus, do you want a play-state 'pledged followers' counter (0..cap by level) driving a Coerce-scoped item bonus, or should the item stay descriptive-only? Assuming the max is always filled would hand a level-18 character a permanent +3 to Coerce they may not have earned.",
+  "evidence": "\"When you invest The Rakshasa, identify a single willing creature within 30 feet as your pledged follower.\""
+ },
+ {
+  "collection": "items",
+  "id": "the-queen-mother",
+  "name": "The Queen Mother",
+  "question": "Where should The Queen Mother's Lore pick live — a one-time builder prompt on the invested item, or a daily-preparations slot that can be re-chosen each day as the rules say? And should the app enforce 'a Lore you have no proficiency in', or just warn? This is the first item in the data that would need a builder-visible choice, so it sets the precedent.",
+  "evidence": "\"When you first invest The Queen Mother, choose a Lore skill in which you have no proficiency... you treat that Lore skill as if your proficiency rank with it were a master.\""
+ },
+ {
+  "collection": "items",
+  "id": "possibility-tome",
+  "name": "Possibility Tome",
+  "question": "Precedent (ancestral-geometry) prompts for a choice that is re-picked at daily preparations, but that item's bonus applies automatically. Possibility Tome's choice only matters after a deliberate 10-minute activation. Do activation-gated, 24-hour choices get a builder prompt at all, or should they live in play-state (Modes) instead?",
+  "evidence": "\"Choose one skill: Arcana, Crafting, Medicine, Nature, Occultism, Religion, Society, or a single subcategory of Lore.\""
+ },
+ {
+  "collection": "items",
+  "id": "taper-of-sanctification",
+  "name": "Taper of Sanctification",
+  "question": "Should this ship as two variant item records — Taper of Sanctification (Holy) / (Unholy), the way item grades are already split — rather than as a choice? EffectChoice picks are keyed `<recordId>:<choiceId>`, i.e. per item DEFINITION, so a character holding one holy and one unholy taper could not be represented. Related: the candle is also \"dedicated to a deity who can be sanctified to holy or unholy\" — do you want the deity recorded on the item at all, or is it pure flavour?",
+  "evidence": "\"If the deity's sanctification lists both options, the crafter must choose one when the candle is made.\""
+ },
+ {
+  "collection": "items",
+  "id": "essence-forge",
+  "name": "Essence Forge",
+  "question": "The four forge types (life / matter / mind / spirit) are real, distinct items — should they become four variant records (or a display-only label on the owned item) so the sheet can show which one the party has? They confer no character-sheet effect, so I did not spec a mechanical choice. Also: this base record is an umbrella AoN dump duplicating the three graded records below — should it be hidden from item pickers?",
+  "evidence": "\"Choose an item whose formula you have and whose level is equal to or less than the essence forge's level, or choose an essence charm\" — inside **Activate—Craft an Item** (2 hours)."
+ },
+ {
+  "collection": "items",
+  "id": "cape-of-justice",
+  "name": "Cape of Justice",
+  "question": "The only sheet-visible consequence is the punishment, not the reward: \"you take a –1 item penalty to Perception checks for the next 24 hours\" when no offender is designated or the 24 hours lapse. Do you want that tracked as a play-state toggle (a Mode, or a checkbox on the invested item) with an optional free-text offender name, or should the cape stay prose-only?",
+  "evidence": "\"When you invest a cape of justice, you must designate a single creature as your offender.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "reputation-seeker",
+  "name": "Reputation Seeker",
+  "question": "For Reputation Seeker, should the app ENFORCE the printed coupling (Darklands Lore locks Terrain Expertise to underground, Desert→desert, Jungle→forest) — which requires a new background→granted-feat choice link — or should it just offer the 3-option Lore picker and leave the player free to pick any of Terrain Expertise's 9 terrains independently, with a note?",
+  "evidence": "\"trained in the Survival skill and the Darklands, Desert, or Jungle Lore skill\" — plus \"(underground if you have Darklands Lore, desert if you have Desert Lore, or forest if you have Jungle Lore)\""
+ },
+ {
+  "collection": "items",
+  "id": "aon-awakened-metal-shot",
+  "name": "Awakened Metal Shot",
+  "question": "core.json ALREADY has the split variant `awakened-cold-iron-shot` (a proper standalone item with price, activationCost and descRefs). Should `aon-awakened-metal-shot` be retired as a duplicate umbrella, split into three items (adamantine/cold iron/silver), or kept and given a purchase-time variant selector? This is a content-curation call, not a rules reading.",
+  "evidence": "Three consecutive unlabelled paragraphs: \"The shot is a high-grade adamantine bullet.\" / \"The shot is a high-grade cold iron bullet.\" / \"The shot is a high-grade silver bullet.\" — with no \"choose\" verb anywhere."
+ },
+ {
+  "collection": "items",
+  "id": "aon-ancestors-call",
+  "name": "Ancestors' Call",
+  "question": "Is a 3-pick open feat picker worth building for a single relic gift whose only payoff is a 1-minute temporary grant the engine will not apply anyway? A plain free-text 'note the three feats' field may be the better cost/benefit call — your call as app owner.",
+  "evidence": "\"When you gain this gift, choose three common 1st-level dwarf ancestry feats.\" (vs. the separate in-play step: \"Activate Single Action envision; Frequency once per hour; Effect Select one of the three ancestry feats.\")"
+ },
+ {
+  "collection": "heritages",
+  "id": "beastkin",
+  "name": "Beastkin",
+  "question": "The record hardcodes grantedStrikes = Jaws d4 piercing agile/finesse for every beastkin. Should the unarmed attack vary with the chosen animal (an eagle beastkin biting with jaws is odd), and if so should the player pick the strike as part of this choice? RAW is thin here and this is an app-owner call.",
+  "evidence": "\"Choose a type of animal such as bat, eagle, shark, spider, tyrannosaurus, wasp, or wolf. This is the type of animal tied to your heritage and is known as your inherent animal.\" — and e.g. feats['animal-senses']: \"You gain one of the following senses available to your inherent animal\""
+ },
+ {
+  "collection": "heritages",
+  "id": "adaptive-anadi",
+  "name": "Adaptive Anadi",
+  "question": "Should the option list be COMPUTED at build time (rarity==='common' && size==='medium' && traits includes 'humanoid') so it tracks future ancestry imports, or frozen as the four ids above? A computed list is more correct but the current data yields only four, which players may read as a bug.",
+  "evidence": "\"Choose a common, Medium humanoid ancestry. Your human form is replaced with a form that matches this choice. You also gain the Adopted Ancestry feat for your chosen humanoid ancestry.\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "blessed-armament",
+  "name": "Blessed Armament",
+  "question": "This is explicitly re-chooseable every day ('During your daily preparations, you can change the spirit to inhabit a different armament, grant a different rune, or both'). Should it live in the BUILDER (like other feat choices) or in PlayState alongside the alchemist's daily prep? Also: is a free rune that bypasses the rune-capacity cap acceptable to model, or should it just be shown as a note?",
+  "evidence": "\"Select one weapon or handwraps of mighty blows. You gain that armament's critical specialization effect, and you grant the armament a property rune of your choice from the following list: Fearsome, Ghost Touch, Returning, Shifting, or Vitalizing.\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "demon-eidolon",
+  "name": "Demon Eidolon",
+  "question": "'Choose an associated sin for your demon' is pure flavour — it carries no mechanics anywhere in the record (Visions of Sin at 7th just references it narratively). Do you want a free-text 'associated sin' field for roleplay, or should it be left out entirely? A mechanical prompt for it would be a false prompt.",
+  "evidence": "\"choose one of your eidolon's unarmed attacks that deals physical damage; it gains the versatile trait for a different type of physical damage you choose\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "dragon-deviant-classification",
+  "name": "Dragon Deviant Classification",
+  "question": "There is no deviant subsystem in the app at all — a full-text scan of src/ for /deviant/ returns ZERO matches, this record is in no class's feature list and no subclass/extraChoice option list, and only one deviant feat ('ghostly-grasp-deviant') exists in core.json out of the whole Dark Archive set. Before this choice can be surfaced anywhere, do you want deviant abilities modelled at all, and if so where does the classification get picked — a Setup card like the GMG variant rules, or attached to the Deviant Ability archetype's feats?",
+  "evidence": "\"When you gain a dragon-type deviation, choose a type of damage, from cold, electricity, fire, or sonic. All abilities you gain from this deviation deal this type of damage and add the corresponding trait to the ability.\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "dragon-instinct",
+  "name": "Dragon Instinct",
+  "question": "The table appends 10 pre-remaster dragons (Black, Blue, Green, Red, White, Brass, Bronze, Copper, Gold, Silver) whose Dragon Breath column is an AREA not a type ('Line of Acid', 'Cone of Fire'), which doesn't fit the 'change Rage's damage type' rule cleanly. Include them as extra options (matching your legacy/superseded edition toggle), or offer only the 40 Monster Core dragons listed above?",
+  "evidence": "\"Select a type of dragon from the Dragon Instincts table as your instinct's dragon type.\" / \"change its damage type to match that of your instinct's dragon breath\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "eldritch-trickster",
+  "name": "Eldritch Trickster",
+  "question": "Magus and Summoner technically have basic/expert/master spellcasting feats in core.json but are half-casters; Animist is new. Confirm whether all 11 belong in the menu or only the 8 full-caster multiclass archetypes (bard, cleric, druid, oracle, psychic, sorcerer, witch, wizard).",
+  "evidence": "\"Choose a multiclass archetype that has a basic, expert, and master spellcasting feat. You gain that archetype's dedication feat as a bonus feat even though you don't meet its level prerequisite\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "elemental-magic",
+  "name": "Elemental Magic",
+  "question": "Is the Elementalist class archetype in scope at all? It restructures the SPELL LIST itself ('Replace your spell list with the elemental spell list'), a lane the app has never needed. If yes, it also needs a `classArchetype` field — today only 4 records in all of core.json have one (vindicator-dedication, warrior-of-legend-dedication, palatine-detective-dedication, war-mage-dedication), all on FEATS, and this record carries only the bare `otherTags: ['class-archetype']`.",
+  "evidence": "\"You must choose an elemental philosophy (detailed below), which determines which spells and other elemental magic you can use.\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "elemental-school",
+  "name": "Elemental School",
+  "question": "This record is an ORPHAN — it is not one of the wizard's 14 arcane-school subclass options, and nothing in src/ reads its `otherTags: ['wizard-elemental-school']`. It only exists to serve the Elementalist class archetype (`elemental-magic`). Should it be wired at all, and if so does it become a 15th wizard arcane-school option that is hidden unless the Elementalist archetype is taken?",
+  "evidence": "\"your curriculum spells can be any spells that you have access to and that have your chosen element's trait. Your school spells are the elemental focus spells of your chosen element\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "light-mortar-innovation",
+  "name": "Light Mortar Innovation",
+  "question": "The text says 'You must select Munitions Master Dedication as your 2nd-level class feat', i.e. this is an ARCHETYPE-gated innovation — yet it is currently listed as a plain inventor Innovation subclass option, so any inventor can pick it with no dedication. Should it be gated behind the dedication (and get a `classArchetype` field), or left freely selectable?",
+  "evidence": "\"Choose one initial light mortar modification to apply to your innovation, either from the following or from other initial light mortar modifications to which you have access.\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-infusions-bomber",
+  "name": "Perpetual Infusions (Bomber)",
+  "question": "This record is an ORPHAN and looks superseded. The shipped alchemist is the REMASTER (Player Core 2) one — its features are versatile vials / advanced-vials / abundant-vials / alchemical-mastery, and `perpetual-infusions-bomber` (source: Pathfinder Core Rulebook, OGL) appears in NO class feature list, no subclass option list and no extraChoices group. Should legacy alchemist features be wired up at all, or hidden by the legacy/superseded edition rule?",
+  "evidence": "\"Choose two 1st-level bombs.\" / \"You gain the ability to create two 1st-level alchemical items using Quick Alchemy without spending a batch of infused reagents.\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-infusions-chirurgeon",
+  "name": "Perpetual Infusions (Chirurgeon)",
+  "question": "Same as the other three Perpetual Infusions records: this is legacy Core Rulebook (OGL) content and the shipped alchemist is the Player Core 2 remaster, so the record is unreachable — it is in no class feature list, subclass option list or extraChoices group. Wire up legacy alchemist, or leave hidden as superseded?",
+  "evidence": "\"Choose two 1st-level elixirs with the healing trait.\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-infusions-mutagenist",
+  "name": "Perpetual Infusions (Mutagenist)",
+  "question": "Same as the other three Perpetual Infusions records: legacy Core Rulebook (OGL) content, orphaned by the Player Core 2 remaster alchemist — it is in no class feature list, subclass option list or extraChoices group. Wire up legacy alchemist, or leave hidden as superseded?",
+  "evidence": "\"Choose two 1st-level mutagens.\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-infusions-toxicologist",
+  "name": "Perpetual Infusions (Toxicologist)",
+  "question": "Same as the other three Perpetual Infusions records: legacy Core Rulebook (OGL) content, orphaned by the Player Core 2 remaster alchemist — it is in no class feature list, subclass option list or extraChoices group. Wire up legacy alchemist, or leave hidden as superseded?",
+  "evidence": "\"Choose two common 1st-level alchemical poisons.\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-bomber",
+  "name": "Perpetual Perfection (Bomber)",
+  "question": "Same legacy question as the Perpetual Infusions set: this is a 17th-level Core Rulebook (OGL) alchemist feature that the Player Core 2 remaster replaced, and it is in no class feature list, subclass option list or extraChoices group. Wire up legacy alchemist, or leave hidden as superseded?",
+  "evidence": "\"Choose two 11th-level or lower bombs.\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-chirurgeon",
+  "name": "Perpetual Perfection (Chirurgeon)",
+  "question": "Same legacy question as the Perpetual Infusions set: 17th-level Core Rulebook (OGL) feature superseded by the Player Core 2 alchemist, present in no class feature list, subclass option list or extraChoices group. Wire up legacy alchemist, or leave hidden as superseded?",
+  "evidence": "\"Choose two 11th-level or lower elixirs with the healing trait.\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-mutagenist",
+  "name": "Perpetual Perfection (Mutagenist)",
+  "question": "Same legacy question as the Perpetual Infusions set: 17th-level Core Rulebook (OGL) feature superseded by the Player Core 2 alchemist, present in no class feature list, subclass option list or extraChoices group. Wire up legacy alchemist, or leave hidden as superseded? (Note: only three Perpetual Perfection records were in this chunk — check whether a toxicologist variant exists and got the same treatment.)",
+  "evidence": "\"Choose two 11th-level or lower mutagens.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "onyx-trader",
+  "name": "Onyx Trader",
+  "question": "Where should a background-granted feat's own sub-choice be prompted — inside the Setup > Background card (next to the existing trainedSkillChoice / trainedLoreChoice pickers in shared.tsx 2456-2483), or on the Level 1 page next to the \"skill feat · granted\" auto-gain block? A decision here unblocks Onyx Trader, Ustalavic Academic, Hermean Expatriate, Nirmathi Guerrilla, Merabite Prodigy and Mantis Scion together.",
+  "evidence": "Description: \"You gain the skill feat.\" (feat name elided in the prose); the Background details block reads \"**Skill Feat** Multilingual\", and grantedFeatId is 'multilingual'. Multilingual's own text: \"You learn two new languages, chosen from common languages, uncommon languages...\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "ustalavic-academic",
+  "name": "Ustalavic Academic",
+  "question": "Same placement question as Onyx Trader: render the background-granted feat's skillChoices picker in the Setup > Background card or on the Level 1 page? Also: should the silent opts[0] fallback stay, or should an unresolved background-granted skill choice surface as a pending \"1 choice left\" on Level 1?",
+  "evidence": "\"You gain the Skill Training skill feat.\" — Skill Training is \"become trained in a skill of your choice\", and the background does NOT name the skill (unlike Mantis Scion / Merabite Prodigy, which do)."
+ },
+ {
+  "collection": "backgrounds",
+  "id": "hermean-expatriate",
+  "name": "Hermean Expatriate",
+  "question": "Where should the picker live (Setup > Background card vs. Level 1 page), and should an unresolved background-granted skill choice count toward the Level 1 \"choices left\" badge instead of silently defaulting to Acrobatics?",
+  "evidence": "\"You're trained in the Society skill and the Dragon Lore skill. You gain the Skill Training skill feat.\" — Skill Training trains \"a skill of your choice\" and this background does not name it."
+ },
+ {
+  "collection": "backgrounds",
+  "id": "nexian-mystic",
+  "name": "Nexian Mystic",
+  "question": "Should trainedLoreChoice stay a single generic free-text box, or gain an optional per-background hint/option-list (e.g. background.loreChoiceHint or loreChoiceOptions) so Nexian Mystic can show plane examples and reject \"Material Plane\"? Constraining it would need a new field; leaving it is legal-but-unguided.",
+  "evidence": "\"You're trained in the Arcana skill and a Lore skill related to one plane of your choice (other than the Material Plane).\" — the only record in this chunk whose own text defers a grant to the player."
+ },
+ {
+  "collection": "backgrounds",
+  "id": "toymaker",
+  "name": "Toymaker",
+  "question": "Should the builder enforce Toymaker's 6-option subset of Specialty Crafting, or just show the feat's full 12 options (simpler, but lets the player pick Alchemy/Shipbuilding which G&G does not offer here)?",
+  "evidence": "\"You gain the Specialty Crafting skill feat, choosing Artistry, Blacksmithing, Glassmaking, Leatherworking, Tailoring, or Woodworking as your specialty.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "waste-walker",
+  "name": "Waste Walker",
+  "question": "Backgrounds worded 'X Lore (or another similar Lore …)' — should the builder keep the named default fixed (status quo, zero risk of a bogus prompt), or offer a prefilled but editable Lore field? This pattern recurs across many backgrounds, so it's a policy call, not a one-record call.",
+  "evidence": "\"You're trained in the Survival skill, and Mana Wastes Lore (or another similar Lore skill associated with the wastes where you grew up).\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-toxicologist",
+  "name": "Perpetual Potency (Toxicologist)",
+  "question": "When a toxicologist reaches 17th level and gains Perpetual Perfection, do the two 5th-level picks from Perpetual Potency remain (4 free items total), or are they replaced by the two new 11th-level picks? RAW reads as replacement/upgrade of the same slot but the app owner should confirm how many perpetual slots to show.",
+  "evidence": "\"Choose two common 5th-level or lower alchemical poisons.\""
+ },
+ {
+  "collection": "classFeatures",
+  "id": "runelord",
+  "name": "Runelord",
+  "question": "Should the builder model the wizard's arcane bond / bonded item at all? Runelord is the only place it currently has a mechanical consequence (bonded polearm/spear doubles as a staff holding your sin spells). If arcane bond stays unmodelled, this pick should be dropped rather than added as a cosmetic prompt.",
+  "evidence": "\"You must choose a polearm or spear as your arcane bond.\" (the sin choice — \"you must choose one sin to specialize in\" — is already covered by the record's existing effectChoices)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "school-of-thassilonian-rune-magic",
+  "name": "School of Thassilonian Rune Magic",
+  "question": "Confirm the sin pick stays on `runelord` only. If the class-archetype layer is ever changed so that `school-of-thassilonian-rune-magic` is also owned (e.g. added via classArchetype.addFeatures), the sin prompt would appear twice — which record should own it then?",
+  "evidence": "\"In addition, you must choose one of the seven sins to specialize in.\" — but also \"can be learned only by wizards with the runelord class archetype\", and core.json's selectable arcane-school record for that archetype is `runelord`, which already carries the sin effectChoice."
+ },
+ {
+  "collection": "backgrounds",
+  "id": "harrow-led",
+  "name": "Harrow-Led",
+  "question": "Do you want to model the harrow suits at all? Option A: leave the current two-free-boosts approximation (simplest, slightly too generous, and the aligned/misaligned suits then exist only as flavor the player tracks by hand). Option B: add a two-pick suit selector (with an optional 'roll for me' d6) that then constrains boost #1 to {aligned, misaligned} — this needs a new per-background boost-constraint mechanism, since abilityBoosts options are static in the record and here they depend on an earlier pick.",
+  "evidence": "\"Randomly determine two harrow suits tied to your character, each reflecting a specific ability score… The first suit is your aligned score, and the second suit is your misaligned score. Choose two attribute boosts. One must be to your **aligned or misaligned** score, and one is a free attribute boost.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "witchlight-follower",
+  "name": "Witchlight Follower",
+  "question": "Terrain Expertise's option list is aquatic/arctic/desert/forest/mountain/plain/sky/swamp/underground — \"subterranean bodies of water\" is not one of them. Which do you want: (a) map it to 'aquatic', (b) map it to 'underground', (c) store a free-text terrain label 'subterranean bodies of water' outside the enum, or (d) grant only swamp and leave the second half as prose? Also confirm this really is two separate takes of Terrain Expertise (Terrain Expertise is maxTakable:null, so two takes is legal).",
+  "evidence": "\"You're trained in Survival and the Wisp Lore skill. You gain the Terrain Expertise skill feat with both swamp terrain and subterranean bodies of water.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "sign-bound",
+  "name": "Sign Bound",
+  "question": "The text says a player might be born under a non-Cosmic-Caravan constellation and 'gain different benefits as determined by the GM'. Should the picker include a 14th 'Other (GM-determined)' option that grants nothing mechanically, or list only the 13 printed signs?",
+  "evidence": "\"When you gain this background, choose a specific constellation, such as the Thrush or the Wagon. Your associated constellation determines one of the ability boosts you gain and an innate spell.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "brevic-noble",
+  "name": "Brevic Noble",
+  "question": "The Lebeda entry in this record's own text is truncated — it reads \"You gain the skill feat.\" with no feat named (an AoN text defect). The printed Kingmaker Player's Guide gives Lebeda the Hobnobber feat (feat id 'hobnobber' exists in core.json). Use Hobnobber, or leave Lebeda featless until you verify against the book?",
+  "evidence": "\"Choose one of the Brevic lineages below.\" … \"**Garess**: … You're trained in the Crafting skill and the Architecture Lore skill. You gain the Specialty Crafting skill feat.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "night-watch",
+  "name": "Night Watch",
+  "question": "For 'X Lore or your home settlement's Lore' backgrounds (this one, and Able Carter's three-city variant), do you want to keep the unconstrained free-text box, or should I spec a hybrid picker — a radio of named options plus a 'my home settlement' free-text branch — as a new engine feature?",
+  "evidence": "\"You're trained in the Intimidation skill and either Legal Lore or the Lore skill for your home settlement.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "close-ties",
+  "name": "Close Ties",
+  "question": "The imported description ends with the Season of Ghosts 'Family / Foundling' background adjustments (Bickering / Close-Knit / Typical, and Bitter / Mysterious / Outgoing), each of which REPLACES the background's granted skill feat. That block is generic to every Season of Ghosts background — it is not specific to Close Ties. Should it be modeled at all, and if so as a campaign-level option (a Setup toggle applying to any background) rather than duplicated onto each background record? Bitter→Intimidating Glare and Mysterious→Streetwise are mechanical feat swaps; Close-Knit and Outgoing are narrative/GM-adjudicated.",
+  "evidence": "\"You gain the Specialty Crafting skill feat (choose a specialty associated with your allied NPC), and your allied NPC begins with an attitude of friendly toward the party\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "folklore-enthusiast",
+  "name": "Folklore Enthusiast",
+  "question": "Same question as Close Ties: the description carries the shared Season of Ghosts 'Family / Foundling' adjustment block, which can REPLACE the background's granted skill feat (Bitter→Intimidating Glare, Mysterious→Streetwise). It applies to ANY Season of Ghosts background, so should it be a campaign-level Setup option rather than a per-background choice — or left unmodeled as a table-side houserule?",
+  "evidence": "\"You're trained in the Religion skill and the Art Lore skill. You gain the Oddity Identification skill feat.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "magical-experiment",
+  "name": "Magical Experiment",
+  "question": "Resistant Skin says the resistance covers \"two of the following types … one chosen by you and the other chosen by the GM\". Should the builder let the player pick BOTH types, pick one and leave the second unset, or expose it as a GM/free-text note? And should the explicit 'or come up with another special ability' escape hatch be offered as a free-text option, or omitted (leaving it to the Homebrew section)?",
+  "evidence": "\"You gain one special ability as a result of the magical experimentation. Work with the GM to select an appropriate ability from the following list or to come up with another special ability.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "driver",
+  "name": "Driver",
+  "question": "Assurance's choice must be able to target a Lore here, not just the 16 core skills. Should Assurance's choice be modelled as kind 'skills' over trained core skills only (in which case Driver needs a special case), or as a ProficiencyKey pick that includes `lore:*` entries the character is trained in?",
+  "evidence": "\"You're trained in the Acrobatics skill and either the Driving Lore or Piloting Lore skill. You gain the Assurance skill feat with the chosen lore.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "ruby-phoenix-enthusiast",
+  "name": "Ruby Phoenix Enthusiast",
+  "question": "Should Heroes Heaven model uncommon/rare ITEM ACCESS at all (gating the shop by rarity and letting backgrounds/feats unlock specific items)? If yes, this background needs a one-of-five weapon picker; if no (rarity stays cosmetic), this clause is deliberately inert and should stay unprompted.",
+  "evidence": "\"In addition, you gain access to one of the following uncommon monk weapons:\" followed by \"- Kama, - Nunchaku, - Sai, - Shuriken, or - Temple Sword.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "haunted",
+  "name": "Haunted",
+  "question": "Haunted's second trained skill is 'determined by the GM'. Should the builder prompt the player to record that skill (any of the 16), or leave the second training unmodelled? Also: the record grants BOTH a fixed skill (Occultism) and this chosen one — backgroundTrainedSkill() (build.ts:345-353) returns trainedSkill first and ignores trainedSkillChoice when trainedSkill is set, so 'fixed + chosen' is not expressible without an engine change. Do you want that pattern supported?",
+  "evidence": "\"You are trained in Occultism and an additional skill in which the haunting entity is well-versed, determined by the GM.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "northridge-scholar",
+  "name": "Northridge Scholar",
+  "question": "Should the Season of Ghosts \"Family / Foundling\" background adjustments be modelled at all? The description block (\"Choose one of the following to replace the skill feat you otherwise would've gained from your background\") is a campaign-wide optional rule appended to all four Willowshore backgrounds; Foundling→Bitter/Mysterious swap the granted feat for Intimidating Glare/Streetwise, while Family→Bickering/Close-Knit are non-feat riders with no existing field.",
+  "evidence": "\"You're trained in the Society skill and the Academia Lore skill. You gain the Additional Lore feat.\" — Society and Academia Lore are FIXED (record already has trainedSkill:'society', trainedLore:'academia'); the un-captured pick is Additional Lore's \"Choose a Lore skill subcategory.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "outskirt-dweller",
+  "name": "Outskirt Dweller",
+  "question": "Same as Northridge Scholar: should the Season of Ghosts \"Family / Foundling\" adjustment block (\"Choose one of the following to replace the skill feat you otherwise would've gained from your background\") be modelled, and if so as a background-level choice or as a campaign toggle?",
+  "evidence": "\"You gain the Terrain Expertise (forest) skill feat.\" — the parenthetical fixes the terrain; the attribute pick is already covered by abilityBoosts [dex|wis, free] and the skill/lore by trainedSkill:'nature'/trainedLore:'hunting'."
+ },
+ {
+  "collection": "backgrounds",
+  "id": "southbank-traditionalist",
+  "name": "Southbank Traditionalist",
+  "question": "Same as Northridge Scholar: should the Season of Ghosts \"Family / Foundling\" adjustment block (\"Choose one of the following to replace the skill feat you otherwise would've gained from your background\") be modelled?",
+  "evidence": "\"You're trained in the Crafting skill and the Farming Lore skill. You gain the Hobnobber feat.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "willowshore-urchin",
+  "name": "Willowshore Urchin",
+  "question": "Same as Northridge Scholar: should the Season of Ghosts \"Family / Foundling\" adjustment block (\"Choose one of the following to replace the skill feat you otherwise would've gained from your background\") be modelled?",
+  "evidence": "\"You're trained in the Athletics skill and the Engineering Lore skill. You gain the Charming Liar feat.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "child-of-the-colony",
+  "name": "Child of the Colony",
+  "question": "Do you want GM-fiction picks like this surfaced anywhere (e.g. a free-text note on the character), or should the builder stay silent about them? If a note is wanted it is a UI/notes feature, not a rules choice.",
+  "evidence": "\"work with your GM to select one business in town. You have a connection to the owner or someone who works there and get a 10% discount on goods and services from that establishment.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "runelord-researcher",
+  "name": "Runelord Researcher",
+  "question": "The 7 Thassilonian schools are re-chosen every day at daily preparations, not locked at character creation. Should a re-choosable daily-preparation option (a) get a builder prompt anyway, (b) become 7 pinnable entries in the existing Modes system, or (c) be left as prose? Same question governs the nested Wrath sub-choice (pick one of acid/cold/electricity/fire/sonic).",
+  "evidence": "\"during your daily preparations, you can choose one of the following schools of Thassilonian rune magic to focus your mind on, gaining a +1 status bonus to saving throws against the listed effect for the next 8 hours.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "raised-by-belief",
+  "name": "Raised by Belief",
+  "question": "Raised by Belief is entirely deity-derived, but our deity data has no Divine Attribute field (0/485 records) and 4 deities have no Divine Skill either. Do you want (1) a deity-data backfill pass to add divineAttribute (and fill the 4 missing skills) before wiring this background, and (2) what should the builder do when Raised by Belief is picked with no deity selected — block the background, fall back to the current two free boosts, or show a validation warning?",
+  "evidence": "\"One must be to an attribute specified in your deity's **Divine Attribute** … You're trained in the deity's listed Divine Skill and gain the Assurance feat with that skill. You gain a Lore skill related to your deity (Abadar Lore, for example).\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "wish-for-riches",
+  "name": "Wish for Riches",
+  "question": "Does Heroes Heaven intend to model the Dark Archive deviant-ability subsystem (classifications, deviation damage type, awakenings, backlash checks) at all? If not, the correct answer for this rare AP background is to leave the dragon/leech choice prose-only and add NO prompt, rather than half-wiring a feat grant into a subsystem that does not exist.",
+  "evidence": "\"Your deviant abilities are of either the dragon or leech classification. If you choose dragon, you gain the Consume Energy deviant feat with the cold type. If you choose leech, you gain the Borrowed Ability deviant feat.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "aon-post-guard-of-all-trade",
+  "name": "Post Guard of All Trade",
+  "question": "`post-guard-of-all-trades` and `aon-post-guard-of-all-trade` are the same Agents of Edgewatch background imported twice (likewise reclaimer-investigator/aon-reclaimed-investigator, historical-reenactor/aon-historical-reeanactor, wish-for-riches/aon-wishes-for-riches). Should the aon-* duplicates be de-duplicated / superseded rather than each receiving its own choice wiring?",
+  "evidence": "\"You're trained in the Performance skill, a Lore skill of your choice, and you gain a bonus language.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "aon-wishes-for-riches",
+  "name": "Wishes for Riches",
+  "question": "Same question as `wish-for-riches`: is the Dark Archive deviant subsystem in scope? If not, leave the dragon/leech line prose-only on both records rather than adding a prompt that grants feats the engine cannot run.",
+  "evidence": "\"Your deviant abilities are of either the dragon or leech classification. If you choose dragon, you gain the Consume Energy deviant feat with the cold type. If you choose leech, you gain the Borrowed Ability deviant feat.\""
+ },
+ {
+  "collection": "deities",
+  "id": "lurlup",
+  "name": "Lurlup",
+  "question": "Is sanctification (holy/unholy) in scope as a mechanical build choice, or does Heroes Heaven deliberately leave it narrative? It requires a new Deity field backfilled across all 485 deities plus a choice on the cleric `sanctification` class feature — a collection-wide project, not a per-record fix. If it stays narrative, Lurlup needs NO choice and this result should be treated as needsBuildChoice=false.",
+  "evidence": "\"**Sanctification** Can be Unholy\" (and, for contrast, the non-choices: \"**Divine Font** Harm\", \"**Divine Skill** Intimidation\", \"**Favored Weapon** Dagger\", \"**Domains** Destruction, Indulgence, Void, Plague\")"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "academic-scion",
+  "name": "Academic Scion",
+  "question": "For the nine Rival Academies backgrounds that say \"…or a Lore skill associated with your school\": expose a free-text override (default = the printed Lore), enumerate the book's named academies as fixed options, or keep the printed Lore fixed as Foundry does? It is a cosmetic-only difference, so this is your call.",
+  "evidence": "\"You're also trained in the Academia Lore skill or a Lore skill associated with your school.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "convocation-scout",
+  "name": "Convocation Scout",
+  "question": "Same batch decision as academic-scion — free-text school-Lore override, enumerated academies, or keep the printed Lore fixed?",
+  "evidence": "\"You're also trained in the Politics Lore skill or a Lore skill associated with your school.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "ghostwriter",
+  "name": "Ghostwriter",
+  "question": "Same batch decision as academic-scion — free-text school-Lore override, enumerated academies, or keep the printed Lore fixed?",
+  "evidence": "\"You're also trained in the Scribing Lore skill or a Lore skill associated with your school.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "library-dweller",
+  "name": "Library Dweller",
+  "question": "Same batch decision as academic-scion — free-text school-Lore override, enumerated academies, or keep the printed Lore fixed?",
+  "evidence": "\"You're also trained in the Library Lore skill or a Lore skill associated with your school.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "party-scholar",
+  "name": "Party Scholar",
+  "question": "Same batch decision as academic-scion — free-text school-Lore override, enumerated academies, or keep the printed Lore fixed?",
+  "evidence": "\"You're also trained in the Alcohol Lore skill or a Lore skill associated with your school.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "respected-mentor",
+  "name": "Respected Mentor",
+  "question": "Same batch decision as academic-scion — free-text school-Lore override, enumerated academies, or keep the printed Lore fixed?",
+  "evidence": "\"You're also trained in the Academia Lore skill or a Lore skill associated with your school.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "school-medic",
+  "name": "School Medic",
+  "question": "Same batch decision as academic-scion — free-text school-Lore override, enumerated academies, or keep the printed Lore fixed?",
+  "evidence": "\"You're also trained in the Academia Lore skill or a Lore skill associated with your school.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "star-athlete",
+  "name": "Star Athlete",
+  "question": "Same batch decision as academic-scion — free-text school-Lore override, enumerated academies, or keep the printed Lore fixed?",
+  "evidence": "\"You're also trained in the Games Lore skill or a Lore skill associated with your school. You gain the Assurance skill feat with Athletics.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "working-student",
+  "name": "Working Student",
+  "question": "Same batch decision as academic-scion — free-text school-Lore override, enumerated academies, or keep the printed Lore fixed?",
+  "evidence": "\"You're also trained in the Labor Lore skill or a Lore skill associated with your school.\""
+ },
+ {
+  "collection": "backgrounds",
+  "id": "verduran-city-folk",
+  "name": "Verduran City Folk",
+  "question": "What is the first skill feat in \"You gain either ___ or Streetwise as a skill feat\"? The imported text lost it and the record has no grantedFeatId, so the background currently grants nothing. Please supply the name from the Wardens of Wildwood Player's Guide / AoN.",
+  "evidence": "\"You gain either or Streetwise as a skill feat.\" — the sentence is broken; the first option's name was lost on import (descRefs lists only Streetwise, and grantedFeatId is absent)."
+ }
+]
