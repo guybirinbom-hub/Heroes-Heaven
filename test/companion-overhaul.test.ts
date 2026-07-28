@@ -14,9 +14,24 @@ describe('companion content parity', () => {
     expect(c.animalCompanions['construct-companion'].category).toBe('construct');
   });
   it('ships specializations, followers, and pets', () => {
-    expect(Object.keys(c.companionSpecializations ?? {})).toHaveLength(6);
+    // The 6 Core specializations plus the 5 book-specific ones the AoN companion import added
+    // (Deep Diver, Shade, Steadfast Strider, Wildfire Scorcher, Wind Chaser).
+    expect(Object.keys(c.companionSpecializations ?? {})).toHaveLength(11);
+    for (const id of ['ambusher', 'bully', 'daredevil', 'racer', 'tracker', 'wrecker', 'deep-diver', 'shade', 'steadfast-strider', 'wildfire-scorcher', 'wind-chaser']) {
+      expect(c.companionSpecializations?.[id], id).toBeTruthy();
+    }
     expect(Object.keys(c.followers ?? {})).toHaveLength(5);
     expect(Object.keys(c.pets ?? {})).toHaveLength(2);
+  });
+  it('every companion collection carries a source book', () => {
+    // Everything imported from AoN participates in the source-book system. `construct-companion` is
+    // the one hand-authored animal-companion entry (no AoN record), so it's exempt.
+    const missing: string[] = [];
+    for (const [id, e] of Object.entries(c.animalCompanions)) if (!e.source?.book && id !== 'construct-companion') missing.push(`animalCompanions/${id}`);
+    for (const [id, e] of Object.entries(c.companionSpecializations ?? {})) if (!e.source?.book) missing.push(`companionSpecializations/${id}`);
+    for (const [id, e] of Object.entries(c.specificFamiliars ?? {})) if (!e.source?.book) missing.push(`specificFamiliars/${id}`);
+    for (const [id, e] of Object.entries(c.companionAdvanced ?? {})) if (!e.source?.book) missing.push(`companionAdvanced/${id}`);
+    expect(missing).toEqual([]);
   });
 });
 

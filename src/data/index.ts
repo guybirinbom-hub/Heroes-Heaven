@@ -49,6 +49,8 @@ function mergeWithSeed(core: Partial<ContentDatabase>): ContentDatabase {
     animalCompanions: merge(seedContent.animalCompanions, c.animalCompanions ?? {}),
     familiarAbilities: merge(seedContent.familiarAbilities, c.familiarAbilities ?? {}),
     companionSpecializations: merge(seedContent.companionSpecializations ?? {}, c.companionSpecializations ?? {}),
+    companionAdvanced: merge(seedContent.companionAdvanced ?? {}, c.companionAdvanced ?? {}),
+    specificFamiliars: merge(seedContent.specificFamiliars ?? {}, c.specificFamiliars ?? {}),
     followers: merge(seedContent.followers ?? {}, c.followers ?? {}),
     pets: merge(seedContent.pets ?? {}, c.pets ?? {}),
     services: merge(seedContent.services ?? {}, c.services ?? {}),

@@ -36,7 +36,7 @@ import {
 } from '../rules/play';
 import { formatMod, ownedFeatureIds } from '../rules/derive';
 import { HpControl } from './HpControl';
-import { SPECIFIC_FAMILIARS } from '../rules/specificFamiliars';
+import { specificFamiliars } from '../rules/specificFamiliars';
 import { featGrantedCompanions, FEAT_COMPANION_GRANTS } from '../rules/companionGrants';
 import { ActionGlyph } from './widgets';
 import { InfoTerm } from './InfoTerm';
@@ -110,7 +110,7 @@ function addRows(content: ContentDatabase): AddRow[] {
   const constructs: AddRow[] = animalsAll.filter((t) => t.category === 'construct').map((t) => ({ kind: 'animal', cat: 'construct', typeId: t.id, name: t.name }));
   const familiars: AddRow[] = [
     { kind: 'familiar', cat: 'familiar', typeId: '', name: 'Familiar (generic)' },
-    ...SPECIFIC_FAMILIARS.map((f) => ({ kind: 'familiar' as const, cat: 'familiar' as const, typeId: f.id, name: f.name })),
+    ...specificFamiliars(content).map((f) => ({ kind: 'familiar' as const, cat: 'familiar' as const, typeId: f.id, name: f.name })),
   ];
   const eidolons: AddRow[] = (content.classes.summoner?.subclass?.options ?? []).map((o) => ({ kind: 'eidolon', cat: 'eidolon', typeId: o.id, name: o.name }));
   const followers: AddRow[] = Object.values(content.followers ?? {}).map((f) => ({ kind: 'follower', cat: 'follower', typeId: f.id, name: f.name }));
@@ -145,6 +145,7 @@ function AddCompanionModal({ content, currency, onAdd, onClose }: { content: Con
     if (r.kind === 'follower') return content.followers?.[r.typeId];
     if (r.kind === 'pet') return content.pets?.[r.typeId];
     if (r.kind === 'eidolon') return content.classes.summoner?.subclass?.options?.find((o) => o.id === r.typeId);
+    if (r.kind === 'familiar') return r.typeId ? content.specificFamiliars?.[r.typeId] : undefined;
     return undefined;
   };
   const rows = addRows(content).filter((r) => (cat === 'all' || r.cat === cat) && (!ql || r.name.toLowerCase().includes(ql)));
@@ -543,6 +544,11 @@ function AnimalBlock({ b, cond, hp }: { b: AnimalCompanionBlock; cond?: ReactNod
           <b>Advanced maneuver</b> {maneuverNode(b.maneuver)}
         </div>
       )}
+      {b.special && (
+        <div className="sb-line">
+          <b>Special</b> {b.special}
+        </div>
+      )}
     </StatBlock>
   );
 }
@@ -934,7 +940,7 @@ function EditChoices({ cfg, content, onPlay, onAbilities, onSpecialization }: { 
             <span className="cmp-lbl">Familiar</span>
             <select className="osel" aria-label="Specific familiar" value={cfg.specificFamiliarId ?? ''} onChange={(e) => set({ specificFamiliarId: e.target.value || undefined })}>
               <option value="">Generic familiar</option>
-              {SPECIFIC_FAMILIARS.map((f) => (
+              {specificFamiliars(content).map((f) => (
                 <option key={f.id} value={f.id}>{f.name}</option>
               ))}
             </select>

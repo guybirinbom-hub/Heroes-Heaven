@@ -16,7 +16,7 @@ import { mpWeaponRefine, mpImbuedDamageTerms, type MpDamage } from './monsterPar
 import { abpOn, abpAttack, abpStrikingDice } from './abp';
 import { conditionPenalty } from './conditions';
 import { modeNumberBonus } from './modes';
-import { SPECIFIC_FAMILIARS_BY_ID } from './specificFamiliars';
+import { specificFamiliar } from './specificFamiliars';
 import { COMPANION_MODS } from './companionGrants';
 import type {
   AbilityId,
@@ -32,6 +32,7 @@ import type {
   ModeDef,
   ProficiencyRank,
   SkillId,
+  SourceInfo,
 } from './types';
 
 /** A save's defining ability → the save name a mode targets (modes match saves by name, not ability). */
@@ -144,6 +145,8 @@ export interface AnimalCompanionBlock {
   modNotes?: string[];
   support: string;
   maneuver: string;
+  /** The type's "Special" line (mount, extra poison damage, an added creature trait, …). */
+  special?: string;
   /** Carried Bulk vs. capacity (only over-capacity is a problem). */
   bulk: { carried: number; encumberedAt: number; max: number };
   /** Worn/equipped gear contributing to the block (for the "what's applied" note). */
@@ -152,6 +155,16 @@ export interface AnimalCompanionBlock {
 
 /** Carrying-capacity size multiplier (PF2e doubles per size above Medium, halves below). */
 const SIZE_BULK_FACTOR: Record<string, number> = { tiny: 0.5, small: 1, medium: 1, large: 2, huge: 4, gargantuan: 8 };
+/** A companion's size can be a choice ("Medium or Large") — take the largest listed size, since
+ *  that's the one whose carrying capacity a player picking it would expect. */
+function sizeFactor(size: string): number {
+  const factors = String(size)
+    .toLowerCase()
+    .split(/\bor\b|[,/]/)
+    .map((s) => SIZE_BULK_FACTOR[s.trim()])
+    .filter((f): f is number => f != null);
+  return factors.length ? Math.max(...factors) : 1;
+}
 
 interface CompanionGear {
   acBonus: number;
@@ -282,20 +295,35 @@ export function deriveAnimalCompanion(
     rank: m.ranks.saves,
   });
 
-  const buildAttack =(name: string, dice: number, dieSize: string, damageType: string, traits: string[], flatBonus: number) => {
+  const buildAttack = (
+    name: string,
+    dice: number,
+    dieSize: string,
+    damageType: string,
+    traits: string[],
+    flatBonus: number,
+    opts: { plus?: string; noStrengthDamage?: boolean } = {},
+  ) => {
     const finesse = traits.includes('finesse');
     const atkAbility: AbilityId = finesse && (ab.dex ?? 0) > (ab.str ?? 0) ? 'dex' : 'str';
-    const flat = (ab.str ?? 0) + flatBonus + conditionPenalty(conditions, atkAbility, 'damage') + modeNumberBonus(modes, { kind: 'damage' });
+    // A few Strikes explicitly don't add the companion's Strength (the Ghost's ghostly touch).
+    const flat =
+      (opts.noStrengthDamage ? 0 : ab.str ?? 0) + flatBonus + conditionPenalty(conditions, atkAbility, 'damage') + modeNumberBonus(modes, { kind: 'damage' });
     const dmgFlat = flat > 0 ? `+${flat}` : flat < 0 ? `${flat}` : '';
     return {
       name,
       attack: (ab[atkAbility] ?? 0) + profBonus(m.ranks.attack, level, withoutLevel) + conditionPenalty(conditions, atkAbility, 'attack') + modeNumberBonus(modes, { kind: 'attack' }),
-      damage: `${dice}d${dieSize}${dmgFlat} ${damageType}`,
+      damage: `${dice}d${dieSize}${dmgFlat} ${damageType}${opts.plus ? ` plus ${opts.plus}` : ''}`,
       traits,
     };
   };
   // Natural attacks scale dice with maturity; a wielded weapon uses its own dice (no maturity flat).
-  const natural = type.attacks.map((atk) => buildAttack(atk.name, m.damageDice, (atk.die.match(/d(\d+)/) || [])[1] ?? '6', atk.damageType, atk.traits, m.flatDamage));
+  const natural = type.attacks.map((atk) =>
+    buildAttack(atk.name, m.damageDice, (atk.die.match(/d(\d+)/) || [])[1] ?? '6', atk.damageType, atk.traits, m.flatDamage, {
+      plus: atk.plus,
+      noStrengthDamage: atk.noStrengthDamage,
+    }),
+  );
   const wielded = gear.strikes.map((w) => buildAttack(w.name, w.dice, w.die.replace(/^d/, ''), w.damageType, w.traits, 0));
   const attacks = [...natural, ...wielded];
 
@@ -324,7 +352,7 @@ export function deriveAnimalCompanion(
   });
 
   const strMod = ab.str ?? 0;
-  const factor = SIZE_BULK_FACTOR[type.size.toLowerCase()] ?? 1;
+  const factor = sizeFactor(type.size);
   const bulk = {
     carried: Math.round(gear.carriedBulk * 10) / 10,
     encumberedAt: Math.max(0, Math.floor((5 + strMod) * factor)),
@@ -380,6 +408,7 @@ export function deriveAnimalCompanion(
     skills,
     support: type.support,
     maneuver: type.maneuver,
+    ...(type.special ? { special: type.special } : {}),
     bulk,
     gearNote: gear.notes.join('; ') || undefined,
     ...(iwr.length ? { iwr } : {}),
@@ -425,7 +454,7 @@ export interface FamiliarBlock extends Defenses {
     specials: { name: string; cost?: ActionCost; desc: string }[];
     traits: string[];
     note?: string;
-    source: string;
+    source?: SourceInfo;
   };
 }
 
@@ -442,7 +471,7 @@ export function deriveFamiliar(
     .map((id) => content.familiarAbilities[id])
     .filter((a): a is FamiliarAbility => !!a)
     .map((a) => ({ id: a.id, name: a.name, description: a.description, kind: a.kind }));
-  const sf = cfg.specificFamiliarId ? SPECIFIC_FAMILIARS_BY_ID[cfg.specificFamiliarId] : undefined;
+  const sf = specificFamiliar(content, cfg.specificFamiliarId);
   const has = (id: string) => (cfg.abilities ?? []).includes(id);
   // The 'Tough' familiar ability raises max HP by 2 per level (base 5/level → 7/level). A specific
   // familiar that requires Tough (e.g. Spellslime) gets it even though its required abilities aren't

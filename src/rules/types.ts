@@ -961,11 +961,32 @@ export interface AnimalCompanionType {
   abilities: Record<AbilityId, number>;
   senses: string[];
   speeds: { land?: number; fly?: number; swim?: number; climb?: number; burrow?: number };
-  attacks: { name: string; die: string; damageType: string; traits: string[] }[];
+  attacks: CompanionAttack[];
   /** Signature trained skills beyond the universal Acrobatics + Athletics. */
   skills: SkillId[];
   support: string;
   maneuver: string;
+  /** The type's "Special" line (mount, extra poison damage, an added creature trait, …). */
+  special?: string;
+  /** Flavour text + Special/Access notes — shown in the Add-companion picker. */
+  description?: string;
+  rarity?: Rarity;
+  /** Creature traits (animal, minion, undead, …). */
+  traits?: string[];
+  source?: SourceInfo;
+  edition?: string;
+}
+
+/** One of a companion's natural Strikes. */
+export interface CompanionAttack {
+  name: string;
+  die: string;
+  damageType: string;
+  traits: string[];
+  /** A rider printed after the damage ("plus Grab", "plus poison"). */
+  plus?: string;
+  /** Set for Strikes whose damage does NOT add the companion's Strength (the Ghost's ghostly touch). */
+  noStrengthDamage?: boolean;
 }
 
 /** A familiar / master ability (from the familiar-abilities pack). */
@@ -975,6 +996,58 @@ export interface FamiliarAbility {
   /** 'master' abilities require the master to act; 'familiar' are innate. */
   kind: 'master' | 'familiar';
   description: string;
+  /** Cross-references in `description` (for in-text linking). */
+  descRefs?: DescRef[];
+  source?: SourceInfo;
+  edition?: string;
+}
+
+/** A unique ability a specific familiar grants on top of its required abilities. */
+export interface SpecificFamiliarSpecial {
+  name: string;
+  /** Action cost shown as a glyph where applicable. */
+  cost?: ActionCost;
+  desc: string;
+}
+
+/**
+ * A specific familiar — a named familiar "template" (Pipefox, Imp, …). It can be applied to a
+ * familiar that has at least `requiredCount` familiar abilities; it locks in the listed required
+ * abilities (which count against that total) and grants the unique specials on top.
+ */
+export interface SpecificFamiliar {
+  id: string;
+  name: string;
+  /** Minimum familiar abilities the familiar must have to become this specific familiar. */
+  requiredCount: number;
+  /** Always-on familiar abilities (consume slots from the daily total). */
+  requiredAbilities: string[];
+  /** Unique abilities granted in addition (don't count against the total). */
+  specials: SpecificFamiliarSpecial[];
+  /** Creature traits this familiar gains (construct, fiend, dragon, …). */
+  traits: string[];
+  /** A short note (prerequisite / access), if any. */
+  note?: string;
+  description?: string;
+  rarity?: Rarity;
+  source?: SourceInfo;
+  edition?: string;
+}
+
+/**
+ * An animal-companion ADVANCED option (Nimble, Savage, Indomitable, Genie-Touched, Unseen) — the
+ * rung a mature companion advances to. `maturity` links the option to the engine's maturity ladder
+ * (src/rules/companions.ts) where one exists; the rest are reference text for now.
+ */
+export interface CompanionAdvancedOption {
+  id: string;
+  name: string;
+  description: string;
+  /** The Maturity id this option corresponds to, when the engine models it. */
+  maturity?: string;
+  rarity?: Rarity;
+  source?: SourceInfo;
+  edition?: string;
 }
 
 /** An animal-companion specialization (Ambusher, Racer, …), chosen when a companion becomes
@@ -993,6 +1066,8 @@ export interface Specialization {
   speedBonus?: number;
   /** Effects not captured numerically (shown as a note). */
   note?: string;
+  source?: SourceInfo;
+  edition?: string;
 }
 
 /** A lightweight companion (Follower or Pet) — informational, no full stat-block math. */
@@ -1198,6 +1273,10 @@ export interface ContentDatabase {
   familiarAbilities: Record<string, FamiliarAbility>;
   /** Animal-companion specializations (Ambusher, Racer, …). */
   companionSpecializations?: Record<string, Specialization>;
+  /** Animal-companion advanced options (Nimble, Savage, Indomitable, …). */
+  companionAdvanced?: Record<string, CompanionAdvancedOption>;
+  /** Specific familiars (Pipefox, Imp, …) — named familiar templates. */
+  specificFamiliars?: Record<string, SpecificFamiliar>;
   /** Follower companions (role NPCs) and Pet companions (tiny minions). */
   followers?: Record<string, SimpleCompanion>;
   pets?: Record<string, SimpleCompanion>;
