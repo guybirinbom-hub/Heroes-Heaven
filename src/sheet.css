@@ -10257,3 +10257,57 @@ button.strike-name:hover {
 .inv-runecopy select { font: inherit; color: var(--app-text); background: transparent; border: 0; border-bottom: 1px dashed var(--app-border); padding: 1px 2px; cursor: pointer; max-width: 130px; }
 
 .mc-key { font-size: 11px; color: var(--app-text-dim); font-weight: 400; }
+
+/* --- Daily preparations: choices the rules re-make each morning ------------------------------- */
+/* Lives inside the Rest confirm modal. With the "reuse my last pick" setting these only appear the
+   first time a choice has never been answered; after that the modal states what's being kept. */
+.daily-picks {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: var(--app-bw) solid var(--app-border);
+}
+.daily-picks-head {
+  margin: 0 0 8px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--app-text-dim);
+}
+.daily-pick + .daily-pick {
+  margin-top: 10px;
+}
+.daily-pick-prompt {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+/* Which feat is asking — without it a bare prompt is unattributable on a busy sheet. */
+.daily-pick-src {
+  font-size: 11px;
+  color: var(--app-text-dim);
+}
+.daily-pick-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.daily-opt {
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  padding: 3px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.daily-opt.on {
+  background: var(--app-accent);
+  border-color: var(--app-accent);
+  color: var(--app-accent-text);
+}
+.daily-keeping {
+  margin-top: 10px;
+}

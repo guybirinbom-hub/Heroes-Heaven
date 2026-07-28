@@ -18,6 +18,12 @@ const PORTRAIT_SHAPES: { id: NonNullable<Customization['portraitShape']>; label:
   { id: 'square', label: 'Square' },
 ];
 
+/** How Daily preparations handles choices the rules re-make each morning. */
+const DAILY_PREP_MODES: { id: NonNullable<Customization['dailyPrepPrompt']>; label: string }[] = [
+  { id: 'ask', label: 'Ask each time' },
+  { id: 'reuse', label: 'Reuse my last pick' },
+];
+
 /** Keys whose control is a simple on/off chip. */
 type BoolKey =
   | 'showLevelChip'
@@ -138,6 +144,7 @@ export function CustomizationEditor({
   };
 
   const curShape = value.portraitShape ?? base.portraitShape ?? 'circle';
+  const curDailyPrep = value.dailyPrepPrompt ?? base.dailyPrepPrompt ?? 'ask';
   const consumableOn = (value.consumableHighlight ?? base.consumableHighlight) as boolean | undefined;
   const consumableColor = value.consumableColor ?? base.consumableColor ?? themeConsumableColor();
   const curDefaultTab = value.defaultTab ?? base.defaultTab ?? '';
@@ -275,6 +282,25 @@ export function CustomizationEditor({
       <p className="settings-desc" style={{ marginTop: 0 }}>
         Replaces the Damage / Heal buttons with one field: a number damages, <strong>-N</strong> heals, <strong>tN</strong>{' '}
         sets temp HP.
+      </p>
+
+      <div className="menu-label">Daily preparations</div>
+      <div className="menu-row">
+        {DAILY_PREP_MODES.map((m) => (
+          <button
+            key={m.id}
+            className={'chip' + (curDailyPrep === m.id ? ' active' : '')}
+            onClick={() => onChange('dailyPrepPrompt', m.id === (base.dailyPrepPrompt ?? 'ask') ? undefined : m.id)}
+          >
+            {m.label}
+          </button>
+        ))}
+      </div>
+      <p className="settings-desc" style={{ marginTop: 0 }}>
+        Some feats are re-chosen every morning — Environmental Adaptability's cold-or-heat, for one.{' '}
+        <strong>Ask each time</strong> offers those choices whenever you rest.{' '}
+        <strong>Reuse my last pick</strong> keeps what you chose before without asking; if you've never
+        chosen, the next rest asks once and reuses that answer from then on.
       </p>
 
       <div className="menu-label">Shield</div>

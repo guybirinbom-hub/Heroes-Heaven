@@ -64,6 +64,13 @@ export interface PlayState {
   /** Alchemist: infused alchemical items on hand (itemId → quantity) — Advanced Alchemy daily prep +
    *  Quick Alchemy. Rendered as a usable list; using one decrements its quantity. */
   alchemyPrep?: Record<string, number>;
+  /**
+   * Answers to choices re-made at daily preparations, keyed `${recordId}:${flag}` — Environmental
+   * Adaptability's cold-or-heat, Mask of Power's spell. Play state rather than build state because
+   * they are chosen afresh each morning and must be able to change without editing the character.
+   * An entry persisting across a rest is exactly what the "reuse my last pick" setting relies on.
+   */
+  dailyChoices?: Record<string, string>;
   /** Notes pages; when set, overrides the build's notes (so the sheet can edit them). */
   notes?: NotePage[];
   /** Conditions on each companion, keyed by companion id. */
@@ -275,6 +282,7 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     pinnedDescs: play.pinnedDescs ?? ch.pinnedDescs ?? [],
     classResources: play.resources ?? ch.classResources ?? {},
     alchemyPrep: play.alchemyPrep ?? ch.alchemyPrep,
+    dailyChoices: play.dailyChoices ?? ch.dailyChoices,
     notes: play.notes ?? ch.notes,
     companionConditions: play.companionConditions ?? ch.companionConditions ?? {},
     companionHp: play.companionHp ?? ch.companionHp ?? {},

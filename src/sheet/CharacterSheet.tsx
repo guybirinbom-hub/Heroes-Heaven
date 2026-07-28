@@ -4,6 +4,11 @@ import { addXp, setXp, setTempSpeed, togglePinnedDesc, descId, type PlayUpdater 
 import { abilityMod, deriveSpeeds, setPlusOnMods } from '../rules/derive';
 import type { BuildState } from '../rules/build';
 import { explainStat, type StatRef } from '../rules/explain';
+import {
+  dailyChoicesFor,
+  unansweredDailyChoices,
+  dailyChoiceLabel,
+} from '../rules/dailyChoices';
 import { roll as rollDice, rollCheck, type RollResult, type DicePreset } from '../rules/dice';
 import { PinContext, type PinDescApi } from './PinContext';
 import { StatDetailModal } from './StatDetailModal';
@@ -195,6 +200,16 @@ export function CharacterSheet({
   const showParty = !readOnly && !gmEdit && !!partyEnabled && (character.campaignIds?.length ?? 0) > 0;
   useBackHandler(partyOpen, () => setPartyOpen(false));
   const [restOpen, setRestOpen] = useState(false);
+  // --- daily preparations: choices re-made each morning (Environmental Adaptability, Mask of Power) ---
+  const dailyChoices = useMemo(() => dailyChoicesFor(character, content), [character, content]);
+  const storedDaily = character.dailyChoices;
+  // 'reuse' keeps last night's answers silently; but a choice never answered still has to be asked
+  // once — that first answer is what there is to reuse.
+  const reuseDaily = custom.dailyPrepPrompt === 'reuse';
+  const needsAsking = reuseDaily ? unansweredDailyChoices(dailyChoices, storedDaily) : dailyChoices;
+  // Pending edits inside the open modal, so cancelling discards them.
+  const [dailyDraft, setDailyDraft] = useState<Record<string, string>>({});
+  const dailyAnswer = (key: string) => dailyDraft[key] ?? storedDaily?.[key] ?? '';
   const [customizeOpen, setCustomizeOpen] = useState(false);
   useBackHandler(customizeOpen, () => setCustomizeOpen(false));
   const [portraitOpen, setPortraitOpen] = useState(false);
@@ -684,6 +699,45 @@ export function CharacterSheet({
                 <li>Remove Fatigued, Wounded, and Dying; reduce Doomed and Drained by 1</li>
               </ul>
               <p className="confirm-note">Hero points are session-based and aren't changed.</p>
+
+              {/* Choices the rules re-make each morning. With "reuse", only never-answered ones show. */}
+              {needsAsking.length > 0 && (
+                <div className="daily-picks">
+                  <h4 className="daily-picks-head">Choices for today</h4>
+                  {needsAsking.map((ch) => (
+                    <div className="daily-pick" key={ch.key}>
+                      <div className="daily-pick-prompt">
+                        {ch.prompt}
+                        <span className="daily-pick-src">{ch.recordName}</span>
+                      </div>
+                      <div className="daily-pick-opts">
+                        {ch.options.map((o) => (
+                          <button
+                            key={o.value}
+                            type="button"
+                            className={'daily-opt' + (dailyAnswer(ch.key) === o.value ? ' on' : '')}
+                            title={o.description}
+                            onClick={() => setDailyDraft((d) => ({ ...d, [ch.key]: o.value }))}
+                          >
+                            {o.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* With "reuse" on and everything already answered, say what is being kept — a silent
+                  re-application the player can't see is indistinguishable from a bug. */}
+              {reuseDaily && needsAsking.length === 0 && dailyChoices.length > 0 && (
+                <p className="confirm-note daily-keeping">
+                  Keeping your last choices:{' '}
+                  {dailyChoices
+                    .map((ch) => `${ch.recordName} — ${dailyChoiceLabel(ch, storedDaily) ?? 'not set'}`)
+                    .join(' · ')}
+                </p>
+              )}
             </div>
             <div className="confirm-actions">
               <button className="btn-ghost" onClick={() => setRestOpen(false)}>
@@ -691,8 +745,18 @@ export function CharacterSheet({
               </button>
               <button
                 className="btn-primary"
+                disabled={needsAsking.some((ch) => !dailyAnswer(ch.key))}
+                title={
+                  needsAsking.some((ch) => !dailyAnswer(ch.key))
+                    ? 'Make each of today’s choices first'
+                    : undefined
+                }
                 onClick={() => {
+                  if (onPlay && Object.keys(dailyDraft).length) {
+                    onPlay((p) => ({ ...p, dailyChoices: { ...(p.dailyChoices ?? {}), ...dailyDraft } }));
+                  }
                   onRest();
+                  setDailyDraft({});
                   setRestOpen(false);
                 }}
               >

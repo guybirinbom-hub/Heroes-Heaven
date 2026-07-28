@@ -534,6 +534,13 @@ export interface FeatChoiceDef {
   options?: { value: string; label: string; description?: string }[];
   /** For 'skills': the minimum rank a skill must reach to be offered (default 'trained'). */
   minRank?: ProficiencyRank;
+  /**
+   * The pick is re-made at DAILY PREPARATIONS ("During your daily preparations, choose…") rather than
+   * once when the feat is taken — Environmental Adaptability's cold-or-heat, Mask of Power's spell.
+   * These answers live in `PlayState.dailyChoices`, NOT in the build: they change nightly, so a
+   * build-time answer would wrongly survive a rest. The Rest sheet collects them.
+   */
+  daily?: boolean;
 }
 
 export interface Feat extends ContentBase, DefenseGrants {
@@ -1861,6 +1868,8 @@ export interface Character {
   activeStance?: string;
   /** Alchemist: infused items made today (itemId → qty on hand); overlaid from play-state. */
   alchemyPrep?: Record<string, number>;
+  /** Answers to daily-preparation choices, keyed `${recordId}:${flag}`; overlaid from play-state. */
+  dailyChoices?: Record<string, string>;
 
   // --- choices ---
   languages: string[];
@@ -1957,6 +1966,14 @@ export interface Customization {
   /** Subtract the shield's Hardness from damage entered in the rail's shield box, so you type the hit
    *  you took instead of doing the math yourself (default true). Your own HP is never touched. */
   shieldAutoHardness?: boolean;
+  /**
+   * How Daily preparations handles choices that are re-made each morning (Environmental Adaptability's
+   * cold-or-heat, and so on):
+   *   'ask'   — offer the pickers every time you rest (default);
+   *   'reuse' — silently keep what you chose last time. If you have never chosen, the next rest asks
+   *             once and reuses that answer from then on.
+   */
+  dailyPrepPrompt?: 'ask' | 'reuse';
   /** Render the Actions list as compact chips (default true). */
   compactActions?: boolean;
   /** Show an available/total slot badge on each spell rank tab, phone Spells page (default true). */
