@@ -17,6 +17,12 @@ export interface FeatEntry {
   description: string;
   descRefs?: DescRef[];
   isFeature: boolean;
+  /** The builder CARD HEADING this pick came from ("Bloodline", "Hunter's Edge", "Kinetic Gate
+   *  (elements)"). Rendered as a plain tag beside Feature/Granted. It is NOT a PF2e trait, so it must
+   *  never be put in `traits`: that showed it as a trait pill AND made traitDesc() manufacture a
+   *  "<name>: a trait. Feats, items, spells… interact with anything that has this trait." sentence
+   *  for something that is not a trait at all. */
+  groupLabel?: string;
   bucket: string;
   rarity?: string;
   prerequisites?: string[];
@@ -48,6 +54,7 @@ export function FeatDetail({ entry, onClose }: { entry: FeatEntry; onClose: () =
         <div className="sd-body">
           <div className="sd-sub">
             {kind} · level {entry.level}
+            {entry.groupLabel ? ` · ${entry.groupLabel}` : ''}
             {entry.rarity && entry.rarity !== 'common' ? ` · ${cap(entry.rarity)}` : ''}
           </div>
           {entry.traits.length > 0 && (

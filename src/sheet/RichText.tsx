@@ -27,9 +27,27 @@ export function decodeEntities(s: string): string {
     .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(parseInt(d, 10)))
     .replace(/&([a-z][a-z0-9]*);/gi, (m, name) => NAMED_ENTITIES[name.toLowerCase()] ?? m);
 }
-/** Decode HTML entities then strip any residual raw HTML tags from a plain-text run. */
+/**
+ * Unwrap Archives of Nethys template markers: `<%CAT%ID%%>label<%END>` is AoN's own link syntax, and
+ * a few records ship it unsubstituted. Keep the LABEL and drop the wrapper — "5-foot
+ * <%RULES%2387%%>emanation<%END>" must read "5-foot emanation", not "5-foot". Stray openers
+ * (`<%%32%%>`) and closers (`<%END>`) are dropped outright.
+ *
+ * Must run AFTER entity decoding: some records store the markers escaped (`&lt;%…`), so stripping
+ * first would miss those (the tracker's own cleaner had exactly that ordering bug).
+ */
+export function stripAonMarkers(s: string): string {
+  return s
+    .replace(/<%[^>]*%>([\s\S]*?)<%END>/g, '$1')
+    .replace(/<%[^>]*%>/g, '')
+    .replace(/<%END>/g, '');
+}
+
+/** Decode HTML entities, unwrap AoN markers, then strip any residual raw HTML tags. */
 export function cleanRun(s: string): string {
-  return decodeEntities(s).replace(/<\/?[a-z][^>]*>/gi, '');
+  // `<%…%>` does NOT start with a letter, so the HTML-tag strip below can never remove it — that is
+  // why the markers leaked into description popups.
+  return stripAonMarkers(decodeEntities(s)).replace(/<\/?[a-z][^>]*>/gi, '');
 }
 
 /* =========================================================================

@@ -104,7 +104,9 @@ export function FeatsTab({ character, content }: { character: Character; content
       key: `choice:${c.group}:${c.name}`,
       name: c.name,
       level: c.level,
-      traits: [c.group],
+      // `c.group` is the builder card heading ("Bloodline", "Kinetic Gate (elements)"), not a trait.
+      traits: [],
+      groupLabel: c.group,
       description: c.description,
       isFeature: true,
       bucket: 'Class',
@@ -174,6 +176,8 @@ export function FeatsTab({ character, content }: { character: Character; content
       (!q ||
         e.name.toLowerCase().includes(q) ||
         e.traits.some((t) => t.toLowerCase().includes(q)) ||
+        // Keep the group heading searchable — it used to match via the fake trait entry.
+        (e.groupLabel ?? '').toLowerCase().includes(q) ||
         e.description.toLowerCase().includes(q) ||
         (e.rarity ?? '').includes(q)),
   );
@@ -271,6 +275,7 @@ export function FeatsTab({ character, content }: { character: Character; content
                       )}
                       <span className="ff-name">{e.name}</span>
                       {e.isFeature && <span className="ff-tag">Feature</span>}
+                      {e.groupLabel && <span className="ff-tag" title={`Chosen for ${e.groupLabel}`}>{e.groupLabel}</span>}
                       {e.grantedBy && <span className="ff-tag ff-tag-granted" title={`Granted by ${e.grantedBy}`}>Granted</span>}
                       {e.traits.slice(0, 3).map((t) => (
                         <span className="ff-trait" key={t}>

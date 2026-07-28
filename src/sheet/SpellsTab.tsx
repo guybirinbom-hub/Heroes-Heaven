@@ -1,4 +1,5 @@
 import { useMemo, useState, type ReactNode } from 'react';
+import { cleanRun } from './RichText';
 import { listValues } from '../data';
 import type { ActionCost, Character, ContentDatabase, Spell, SpellcastingEntry } from '../rules/types';
 import { deriveSpellcasting, deriveClassDc, formatMod } from '../rules/derive';
@@ -101,12 +102,15 @@ function SpellDetail({ spell, maxRank, signature, onClose }: { spell: Spell; max
   const upArea = scaleArea(spell, r);
   const shownBase = upDamage && spell.baseDamage ? injectDamageArrow(base, spell.baseDamage, upDamage) : base;
   const rankLabel = spell.rank === 0 ? 'Cantrip' : `${ord(spell.rank)} rank`;
+  // These are printed as raw strings (not through the description renderer), so run them through the
+  // same cleaner — a few records ship an unsubstituted AoN marker, e.g. Discomfiting Whisper's area
+  // is "5-foot <%RULES%2387%%>emanation<%END>".
   const stats: [string, string | undefined][] = [
     ['Cast', undefined],
-    ['Range', spell.range],
-    ['Area', spell.area],
-    ['Targets', spell.targets],
-    ['Duration', spell.duration],
+    ['Range', spell.range && cleanRun(spell.range)],
+    ['Area', spell.area && cleanRun(spell.area)],
+    ['Targets', spell.targets && cleanRun(spell.targets)],
+    ['Duration', spell.duration && cleanRun(spell.duration)],
     [
       'Defense',
       // A spell attack (defense: 'ac') needs a spell attack roll vs AC; it may ALSO have a save.

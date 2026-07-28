@@ -137,10 +137,19 @@ export function joinCriticalDegrees(text: string): string {
 }
 
 export function parseSegments(raw: string): Segment[] {
+  // Decode HTML entities, and resolve action-symbol / DC tags to their display
+  // form before tokenizing — this also flattens the nested {@b {@as 1} …}
+  // spell-component form into plain text the generic loop can handle.
+  raw = decodeEntities(raw)
   // Strip leftover AoN markup tokens (<%TRAITS%163%%>, <%END>, dangling
   // <%WORD…) that occasionally leak into body text, then tidy the whitespace
   // the removal leaves behind. Safety net for combatants saved before the
   // data was cleaned by scripts/clean-aon-tokens.mjs.
+  //
+  // MUST run AFTER decodeEntities: some records store these markers escaped
+  // (&lt;%%32%%&gt;), so stripping first left them to be decoded afterwards and
+  // rendered literally — e.g. "Politics (master) or <%%32%%> Warfare <%END>
+  // (expert)" in the Recover Army popup.
   if (raw.includes('<%')) {
     raw = raw
       .replace(/<%[^>]*>/g, '')
@@ -148,10 +157,7 @@ export function parseSegments(raw: string): Segment[] {
       .replace(/[ \t]{2,}/g, ' ')
       .replace(/[ \t]+([,.;:)])/g, '$1')
   }
-  // Decode HTML entities, and resolve action-symbol / DC tags to their display
-  // form before tokenizing — this also flattens the nested {@b {@as 1} …}
-  // spell-component form into plain text the generic loop can handle.
-  raw = decodeEntities(raw)
+  raw = raw
     .replace(/\{@(?:as|a)\s*(\d)\}/gi, (_m, n) => ['◆', '◆◆', '◆◆◆', '◇', '↺'][parseInt(n, 10) - 1] || '')
     .replace(/\{@(?:flat)?dc\s+([^|}]+)(?:\|[^}]*)?\}/gi, 'DC $1')
   const segments: Segment[] = []
