@@ -89,8 +89,16 @@ export function categoryOfBook(book: string): SourceCategory {
 }
 
 /** The content maps a player chooses from — exactly what a source filter governs (NOT classFeatures,
- *  which are auto-granted by a chosen class, nor non-choosable maps like languages/runes/conditions). */
-export const CHOOSABLE_SOURCE_MAPS = ['ancestries', 'heritages', 'backgrounds', 'classes', 'feats', 'spells', 'items', 'deities', 'actions'] as const;
+ *  which are auto-granted by a chosen class, nor non-choosable maps like languages/runes/conditions).
+ *
+ *  The companion maps joined this list once the AoN re-import gave every record a real `source.book`
+ *  (they previously had NO source attribution at all, being Foundry-era leftovers). They are picked
+ *  from the SHEET's Companions tab rather than the builder, so see companionSourceFilter() — the
+ *  Add-companion picker applies the same enabled-books set explicitly. */
+export const CHOOSABLE_SOURCE_MAPS = [
+  'ancestries', 'heritages', 'backgrounds', 'classes', 'feats', 'spells', 'items', 'deities', 'actions',
+  'animalCompanions', 'companionSpecializations', 'specificFamiliars', 'familiarAbilities', 'companionAdvanced',
+] as const;
 
 /* ---- Adventure Path bundling -------------------------------------------------------------------
  * The catalog has ~127 Adventure Path books — mostly individual monthly volumes ("Pathfinder #219:

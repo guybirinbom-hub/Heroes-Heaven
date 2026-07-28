@@ -5064,6 +5064,20 @@ button.strike-name:hover {
   align-items: center;
   gap: 6px;
 }
+/* "N more from books you haven't enabled" note at the top of the Add-companion picker. */
+.cmp-add-hidden {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  margin-bottom: 4px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--app-text-dim);
+  background: var(--app-surface-2);
+  border: var(--app-bw) solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+}
 /* Trash icon in the item-detail header (mirrors the footer Remove button, always reachable). */
 .sd-head-remove:hover {
   color: var(--app-danger, #e5484d);

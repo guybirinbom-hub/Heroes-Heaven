@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState, type ReactNode } from 'react';
+import { Fragment, useMemo, useRef, useState, type ReactNode } from 'react';
 import { isMobileNow } from './useIsMobile';
 import { traitDesc, senseDesc } from '../rules/glossary';
 import type { ActionCost, ActiveCondition, Character, Coins, ContentDatabase, CompanionConfig, CompanionKind, DamageType, EidolonConfig, ModeDef, SimpleCompanion, VehicleStat, SiegeWeaponStat } from '../rules/types';
@@ -12,6 +12,7 @@ import {
   type FamiliarBlock,
 } from '../rules/companions';
 import { parsePrice } from '../rules/wealth';
+import { enabledBookSet } from '../rules/sources';
 import { confirmDialog } from './confirm';
 import {
   addCompanionCondition,
@@ -120,18 +121,31 @@ interface AddRow {
   note?: string;
 }
 
-function addRows(content: ContentDatabase): AddRow[] {
-  const animalsAll = Object.values(content.animalCompanions);
+function addRows(content: ContentDatabase, enabled?: Set<string>): AddRow[] {
+  /** Offered only if its book is enabled for this character. A record with NO source.book is always
+   *  kept — those are the hand-authored ones (construct-companion, the generic familiar, the 38
+   *  app-only familiar abilities), which belong to no book and so can't be gated. `enabled`
+   *  undefined = no filtering (a character that never picked sources). Duplicate `aon-` scrapes are
+   *  dropped here too, so a companion can't be offered twice. */
+  const allowed = (r: { id?: string; source?: { book?: string } } | undefined): boolean => {
+    if (!r) return false;
+    if (r.id && content.duplicateIds?.has(r.id)) return false;
+    if (!enabled) return true;
+    const book = r.source?.book?.trim();
+    return !book || enabled.has(book);
+  };
+  const animalsAll = Object.values(content.animalCompanions).filter(allowed);
   const animals: AddRow[] = animalsAll.filter((t) => t.category !== 'construct').map((t) => ({ kind: 'animal', cat: 'animal', typeId: t.id, name: t.name }));
   const constructs: AddRow[] = animalsAll.filter((t) => t.category === 'construct').map((t) => ({ kind: 'animal', cat: 'construct', typeId: t.id, name: t.name }));
   const familiars: AddRow[] = [
     { kind: 'familiar', cat: 'familiar', typeId: '', name: 'Familiar (generic)' },
-    ...specificFamiliars(content).map((f) => ({ kind: 'familiar' as const, cat: 'familiar' as const, typeId: f.id, name: f.name })),
+    ...specificFamiliars(content).filter(allowed).map((f) => ({ kind: 'familiar' as const, cat: 'familiar' as const, typeId: f.id, name: f.name })),
   ];
   const eidolons: AddRow[] = (content.classes.summoner?.subclass?.options ?? []).map((o) => ({ kind: 'eidolon', cat: 'eidolon', typeId: o.id, name: o.name }));
   const followers: AddRow[] = Object.values(content.followers ?? {}).map((f) => ({ kind: 'follower', cat: 'follower', typeId: f.id, name: f.name }));
   const pets: AddRow[] = Object.values(content.pets ?? {}).map((p) => ({ kind: 'pet', cat: 'pet', typeId: p.id, name: p.name }));
   const vehicles: AddRow[] = Object.values(content.vehicles ?? {})
+    .filter(allowed)
     .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))
     .map((v) => ({ kind: 'vehicle', cat: 'vehicle', typeId: v.id, name: v.name, price: v.price, note: `Level ${v.level}` }));
   const siege: AddRow[] = Object.values(content.siegeWeapons ?? {})
@@ -148,7 +162,7 @@ function rowToConfig(r: AddRow): Omit<CompanionConfig, 'id'> {
 }
 
 /** Two-step picker: choose a type (category), then the specific companion. */
-function AddCompanionModal({ content, currency, onAdd, onClose }: { content: ContentDatabase; currency?: Coins; onAdd: (r: AddRow, buy: boolean) => void; onClose: () => void }) {
+function AddCompanionModal({ content, currency, enabledSources, onAdd, onClose }: { content: ContentDatabase; currency?: Coins; enabledSources?: string[]; onAdd: (r: AddRow, buy: boolean) => void; onClose: () => void }) {
   const [cat, setCat] = useState<AddCat>('all');
   const [q, setQ] = useState('');
   const [descNode, setDescNode] = useState<DescNode | null>(null);
@@ -164,7 +178,15 @@ function AddCompanionModal({ content, currency, onAdd, onClose }: { content: Con
     if (r.kind === 'familiar') return r.typeId ? content.specificFamiliars?.[r.typeId] : undefined;
     return undefined;
   };
-  const rows = addRows(content).filter((r) => (cat === 'all' || r.cat === cat) && (!ql || r.name.toLowerCase().includes(ql)));
+  // Companions now carry a real source.book (the AoN re-import), so the picker respects the
+  // character's enabled books like every other picker. `enabledSources` absent = Core only.
+  const enabledBooks = useMemo(() => enabledBookSet(enabledSources), [enabledSources]);
+  const matches = (r: AddRow) => (cat === 'all' || r.cat === cat) && (!ql || r.name.toLowerCase().includes(ql));
+  const rows = useMemo(() => addRows(content, enabledBooks).filter(matches), [content, enabledBooks, cat, ql]);
+  // Most companions come from non-Core books (19 from Howl of the Wild alone), so a Core-only
+  // character sees a much shorter list than the data holds. Say so, rather than letting it look like
+  // the app is missing content — this is the same trap the feat picker's hidden-matches note avoids.
+  const hiddenBySource = useMemo(() => addRows(content).filter(matches).length - rows.length, [content, rows.length, cat, ql]);
   return (
     <div className="picker-overlay" onClick={onClose}>
       <div className="picker cond-modal" onClick={(e) => e.stopPropagation()}>
@@ -188,6 +210,12 @@ function AddCompanionModal({ content, currency, onAdd, onClose }: { content: Con
           </div>
         </div>
         <div className="cond-list">
+          {hiddenBySource > 0 && (
+            <div className="cmp-add-hidden">
+              <i className="ti ti-book-off" aria-hidden="true" /> {hiddenBySource} more from books this character
+              hasn’t enabled — turn them on in Edit character → Setup → Sources.
+            </div>
+          )}
           {rows.map((r) => {
             const priced = (r.kind === 'vehicle' || r.kind === 'siege') && !!r.price;
             const coins = priced ? parsePrice(r.price) : undefined;
@@ -1258,7 +1286,7 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
           onDeleteMode={onDeleteMode}
         />
       )}
-      {addOpen && onPlay && <AddCompanionModal content={content} currency={character.currency} onAdd={addCompanion} onClose={() => setAddOpen(false)} />}
+      {addOpen && onPlay && <AddCompanionModal content={content} currency={character.currency} enabledSources={character.enabledSources} onAdd={addCompanion} onClose={() => setAddOpen(false)} />}
       {invAddFor && onPlay && (
         <AddItemsModal
           content={content}
