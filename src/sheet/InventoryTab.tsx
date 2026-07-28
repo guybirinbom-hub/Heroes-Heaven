@@ -448,7 +448,11 @@ function VehicleSiegeSection({
                 </div>
                 <div className="inv-sub">
                   {kindLabel}
-                  {v ? ` · level ${v.level} · AC ${v.ac} · Hardness ${v.hardness}` : ' · pick a type in Companions'}
+                  {/* A portable siege weapon states no AC/Hardness/HP at all — omit those rather than
+                      printing blanks. */}
+                  {v ? ` · level ${v.level}` : ' · pick a type in Companions'}
+                  {v?.ac != null ? ` · AC ${v.ac}` : ''}
+                  {v?.hardness != null ? ` · Hardness ${v.hardness}` : ''}
                   {v && cur != null ? ` · HP ${cur}/${v.hp}` : ''}
                 </div>
                 {onPlay && (

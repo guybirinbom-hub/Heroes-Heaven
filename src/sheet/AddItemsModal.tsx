@@ -103,7 +103,9 @@ export function AddItemsModal({
                 itemType: 'equipment',
                 catalogKind: 'siege',
                 traits: s.traits ?? [],
-                rarity: 'common',
+                // Most siege weapons are uncommon or rarer — carry the real rarity so the catalog
+                // chip and the rarity filter tell the truth.
+                rarity: s.rarity ?? 'common',
                 bulk: 0,
                 price: parsePrice(s.price),
                 description: s.description ?? '',

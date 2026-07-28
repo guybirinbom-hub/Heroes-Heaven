@@ -44,9 +44,22 @@ const CAT_BUCKET = {
 };
 // buckets carried from the current core.json wholesale — either hand-authored (no AoN source) or
 // mechanics-heavy stat blocks whose new-data content is re-sourced later (Step 3 stat blocks).
+//
+// `siegeWeapons` was REMOVED from this list (2026-07-28). It was in CAT_BUCKET *and* here, and this
+// loop runs AFTER the merge — so it silently overwrote the merged bucket with the 5 hand-authored
+// records and discarded all 62 AoN siege weapons (audit/missing-content.md §3: 57 missing names, 90%
+// of the whole content gap). `vehicles` is deliberately LEFT here: the audit measured vehicles at
+// 96/96 present, so the carried bucket is complete and re-deriving it would be pure risk.
+//
+// NOTE: removing it from the carry list stops the CLOBBER but does not by itself fill the bucket —
+// siegeWeapons is in neither FRESH_BUCKETS nor REFERENCE_BUCKETS, so new-only records still fall to
+// `deferred` (the 5 old records survive as kept orphans, step 2 below). The AoN corpus is merged in
+// by the targeted, re-runnable scripts/import-siege-and-gaps.mjs — RUN THAT AFTER a full regen, or
+// the 57 imported siege weapons (plus the High Seas heritages/deity, the Iblydosi language and the
+// two archetype reference entries) will be lost again.
 const CARRY_WHOLESALE = [
   'modes', 'stances', 'runes', 'services', 'followers', 'pets',
-  'animalCompanions', 'familiarAbilities', 'companionSpecializations', 'vehicles', 'siegeWeapons',
+  'animalCompanions', 'familiarAbilities', 'companionSpecializations', 'vehicles',
 ];
 
 const EDITION_RANK = { remaster: 0, 'remaster-era': 1, neutral: 2, 'legacy-era': 3, legacy: 4 };
@@ -154,7 +167,12 @@ for (const f of readdirSync(DATA).filter((x) => x.endsWith('.json'))) {
     total++;
     if (rec.superseded_by) { pruned++; supersededRecs.push({ id: numericId, bucket, slug: slug(rec.name), by: rec.superseded_by }); continue; }
     const s = slug(rec.name);
-    const rk = EDITION_RANK[rec.edition] ?? 5;
+    // A record AoN flags `exclude_from_search` is a hidden/older printing, and deriveFresh /
+    // deriveReference drop it outright — so letting it WIN the per-slug pick silently deletes the
+    // visible twin. That is exactly how the Jalmeri Heavenseeker and Bright Lion archetype reference
+    // entries went missing: each book ships a hidden earlier printing at the SAME edition rank, and
+    // it happened to be seen first. Rank hidden records strictly below every visible one.
+    const rk = (EDITION_RANK[rec.edition] ?? 5) + (rec.exclude_from_search === 1 ? 10 : 0);
     (bestByBucket[bucket] ||= {});
     const prev = bestByBucket[bucket][s];
     if (!prev || rk < prev.rank) bestByBucket[bucket][s] = { rec, rank: rk, numericId };

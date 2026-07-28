@@ -745,6 +745,16 @@ function SimpleCompanionView({ sc, name, cond }: { sc: SimpleCompanion; name: st
   );
 }
 
+/** A siege attack's `actionCost` is prose ("1 action", "2 actions", "operate (crew)") — parse the
+ *  glyph out of it, defaulting to one action for the hand-authored records that never stated one. */
+function siegeActionCost(cost?: string): ActionCost {
+  const m = /^([123])\s*actions?\b/i.exec(String(cost ?? '').trim());
+  if (m) return { type: 'actions', value: Number(m[1]) as 1 | 2 | 3 };
+  if (/^reaction\b/i.test(cost ?? '')) return { type: 'reaction' };
+  if (/^free\b/i.test(cost ?? '')) return { type: 'free' };
+  return { type: 'actions', value: 1 };
+}
+
 /** A vehicle or siege-weapon stat block (companion-styled). HP is trackable; siege weapons add an
  *  attack line. No conditions row (per design). */
 function VehicleBlock({
@@ -756,10 +766,11 @@ function VehicleBlock({
   status,
   attacks,
 }: {
-  v: VehicleStat;
+  v: VehicleStat | SiegeWeaponStat;
   kindLabel: string;
   icon: string;
-  hp: ReactNode;
+  /** Absent when the source states no HP (portable siege weapons) — the HP block is then omitted. */
+  hp?: ReactNode;
   bt: number;
   status: string | null;
   attacks?: SiegeWeaponStat['attacks'];
@@ -767,7 +778,8 @@ function VehicleBlock({
   return (
     <StatBlock name={v.name} kind={kindLabel} level={v.level} icon={icon}>
       <div className="sb-traits">
-        <span className="sb-trait">{v.size}</span>
+        {v.size && <span className="sb-trait">{v.size}</span>}
+        {v.rarity && v.rarity !== 'common' && <span className="sb-trait">{cap(v.rarity)}</span>}
         {(v.traits ?? []).map((t) => (
           <TraitChipTerm key={t} trait={t} label={cap(t.replace(/-/g, ' '))} />
         ))}
@@ -798,19 +810,35 @@ function VehicleBlock({
         )}
       </div>
       <div className="sb-div" />
-      <div className="sb-line">
-        <b>AC</b> {v.ac}
-        {v.fort != null && (
-          <>
-            ; <b>Fort</b> {formatMod(v.fort)}
-          </>
-        )}
-        ; <b>Hardness</b> {v.hardness}
-      </div>
-      <div className="sb-hp-block">
-        {hp}
-        <div className="sb-line sb-muted sb-hp-bt">Broken Threshold {bt}</div>
-      </div>
+      {/* A portable siege weapon (a ram) has no defensive block in the rules at all — show only the
+          stats the source actually states rather than a row of blanks. */}
+      {(v.ac != null || v.fort != null || v.hardness != null) && (
+        <div className="sb-line">
+          {v.ac != null && (
+            <>
+              <b>AC</b> {v.ac}
+            </>
+          )}
+          {v.fort != null && (
+            <>
+              {v.ac != null ? '; ' : ''}
+              <b>Fort</b> {formatMod(v.fort)}
+            </>
+          )}
+          {v.hardness != null && (
+            <>
+              {v.ac != null || v.fort != null ? '; ' : ''}
+              <b>Hardness</b> {v.hardness}
+            </>
+          )}
+        </div>
+      )}
+      {hp && (
+        <div className="sb-hp-block">
+          {hp}
+          <div className="sb-line sb-muted sb-hp-bt">Broken Threshold {bt}</div>
+        </div>
+      )}
       {v.speeds && (
         <div className="sb-line">
           <b>Speed</b> {v.speeds}
@@ -826,7 +854,7 @@ function VehicleBlock({
           <div className="sb-div" />
           {attacks.map((a, i) => (
             <div className="sb-line" key={i}>
-              <b>{a.range ? 'Ranged' : 'Melee'}</b> <ActionGlyph cost={{ type: 'actions', value: 1 }} /> {a.name}
+              <b>{(a.melee ?? !a.range) ? 'Melee' : 'Ranged'}</b> <ActionGlyph cost={siegeActionCost(a.actionCost)} /> {a.name}
               {a.bonus != null ? ` ${formatMod(a.bonus)}` : ''}
               {a.range ? `, range ${a.range}` : ''}
               {a.damage ? (
@@ -1244,18 +1272,19 @@ export function CompanionsTab({ character, content, onPlay, onSaveMode, onDelete
         : undefined;
       const label = cfg.kind === 'vehicle' ? 'Vehicle' : 'Siege weapon';
       if (!v) return { node: <StatBlock name={cfg.name || label} kind={label} icon={KIND_ICON[cfg.kind]}><div className="sb-line sb-muted">Pick a type in Edit.</div></StatBlock> };
-      const max = v.hp;
+      // A portable siege weapon has no HP in the rules — no HP tracker and no Broken/Destroyed state.
+      const max = v.hp ?? 0;
       const st = character.companionHp?.[cfg.id] ?? { damage: 0, temp: 0 };
       const cur = Math.max(0, max - st.damage);
       const bt = v.brokenThreshold ?? Math.floor(max / 2);
-      const status = cur <= 0 ? 'Destroyed' : cur <= bt ? 'Broken' : null;
+      const status = max <= 0 ? null : cur <= 0 ? 'Destroyed' : cur <= bt ? 'Broken' : null;
       return {
         node: (
           <VehicleBlock
             v={v}
             kindLabel={label}
             icon={KIND_ICON[cfg.kind]}
-            hp={hpTrackerFor(cfg.id, max)}
+            hp={max > 0 ? hpTrackerFor(cfg.id, max) : undefined}
             bt={bt}
             status={status}
             attacks={cfg.kind === 'siege' ? (v as SiegeWeaponStat).attacks : undefined}

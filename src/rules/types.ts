@@ -1110,11 +1110,36 @@ export interface VehicleStat {
   collision?: string;
   traits?: string[];
   description?: string;
+  /** Most siege weapons are uncommon or rarer — shown as a chip on the stat block. */
+  rarity?: Rarity;
+  source?: SourceInfo;
+  edition?: string;
 }
 
-/** A siege-weapon reference statblock (curated): the vehicle defensive frame + one or more attacks. */
-export interface SiegeWeaponStat extends VehicleStat {
-  attacks?: { name: string; actionCost?: string; bonus?: number; damage?: string; range?: string; reload?: string }[];
+/**
+ * A siege-weapon reference statblock: the vehicle defensive frame + one or more attacks.
+ *
+ * `size`/`ac`/`hp`/`hardness` are OPTIONAL here (unlike a vehicle) because the source genuinely
+ * omits them for some siege weapons: PORTABLE ones (the rams) are carried objects rated by Bulk and
+ * print no defensive block at all, the Light Mortar's defensive stats live in the Inventor
+ * innovation that grants it, and the Cyclonic Cannon is printed with no size trait. They are left
+ * absent rather than invented — the UI drops the row.
+ */
+export interface SiegeWeaponStat extends Omit<VehicleStat, 'size' | 'ac' | 'hp' | 'hardness'> {
+  size?: string;
+  ac?: number;
+  hp?: number;
+  hardness?: number;
+  attacks?: {
+    name: string;
+    actionCost?: string;
+    bonus?: number;
+    damage?: string;
+    range?: string;
+    reload?: string;
+    /** An explicit melee Strike (a Ram, or the Wolf Fang's Launch). Absent = inferred from `range`. */
+    melee?: boolean;
+  }[];
 }
 
 /* ---- modes: user-defined toggleable modifier sets ---- */
