@@ -351,7 +351,20 @@ const priceOf = (raw) => {
  * wording are never touched — a saved character that owns one keeps exactly what it had. Their
  * numbers do NOT agree with AoN (see the import report); reconciling them is a separate decision.
  */
-const CURATED_SIEGE_IDS = new Set(['ballista', 'catapult', 'trebuchet', 'ram', 'cannon']);
+const CURATED_SIEGE_IDS = new Set();
+
+/**
+ * The 5 records that predate this import (Ballista, Catapult, Trebuchet, Battering Ram, Cannon) were
+ * hand-authored, NOT imported: they are the only siege weapons in core.json with no `source` at all,
+ * and their numbers do not match the rules (the app said Ballista 1,000 gp / 1 crew / +10 / 4d8;
+ * AoN says 320 gp / 2 crew / no attack roll / 4d12). Per the owner they now use AoN data like every
+ * other record, so CURATED_SIEGE_IDS is empty and they are re-imported.
+ *
+ * Their IDS must not move, or a saved character that owns one stops resolving. Four already match
+ * AoN's slug; Battering Ram does not — the app has always keyed it `ram`. This maps AoN's slug onto
+ * the id the app already uses, so the stats change and the reference doesn't.
+ */
+const SIEGE_ID_ALIAS = { 'battering-ram': 'ram' };
 
 /** Rank a candidate record for a given name: lower is better. */
 function siegeRank(rec) {
@@ -386,7 +399,10 @@ function buildSiegeWeapons() {
   const skipped = [];
   const noFrame = [];
 
-  for (const [key, rec] of [...best].sort((a, b) => a[0].localeCompare(b[0]))) {
+  for (const [rawKey, rec] of [...best].sort((a, b) => a[0].localeCompare(b[0]))) {
+    // Keep the app's existing id where it differs from AoN's slug (Battering Ram -> `ram`), so a
+    // character that owns one keeps resolving it while its stats are corrected.
+    const key = SIEGE_ID_ALIAS[rawKey] ?? rawKey;
     if (have.has(key)) { skipped.push(`${rec.name} (app already ships it as "${have.get(key)}")`); continue; }
     const md = String(rec.markdown ?? '').replace(/\r/g, '');
     const parentActs = activitiesOf(pageBody(md));

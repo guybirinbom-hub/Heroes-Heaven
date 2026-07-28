@@ -32,6 +32,11 @@ describe('curated reference content (services / vehicles / siege weapons)', () =
   const NO_DEFENSIVE_FRAME = new Set([
     'adamantine-drilling-ram', 'arcane-ram', 'battering-ram-covered', 'blasting-ram',
     'blob-paste-propulsor', 'door-ram', 'drilling-ram', 'light-mortar', 'teekdoon',
+    // `ram` (Battering Ram) JOINED this set when the five hand-authored siege weapons were replaced
+    // with AoN data. The hand-written record gave it AC/HP; the source gives it none — it is
+    // "portable, held in 12 hands, Bulk 20", a carried object like every other ram here. This entry
+    // is the record of that correction, and the test failing on it is the set working as intended.
+    'ram',
   ]);
 
   it('siege weapons carry the vehicle frame plus at least one attack', () => {
