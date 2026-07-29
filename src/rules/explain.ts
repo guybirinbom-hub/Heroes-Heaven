@@ -165,7 +165,12 @@ function characterSituationalIds(c: Character, db?: ContentDatabase): string[] {
   if (c.backgroundId) ids.push(c.backgroundId);
   if (db) for (const id of ownedFeatureIds(c, db)) ids.push(id);
   for (const inv of c.inventory ?? []) {
-    if (inv.equipped || inv.worn || inv.invested) ids.push(inv.itemId);
+    if (!(inv.equipped || inv.worn || inv.invested)) continue;
+    ids.push(inv.itemId);
+    // Etching CONSUMES the loose rune item and records its id here, so `inv.itemId` never names it.
+    // Without this, a rune's conditional bonuses vanished at exactly the moment the rune started
+    // working — listed while it sat unused in your pack, silent once it was on the weapon.
+    for (const rune of inv.runes?.property ?? []) ids.push(rune);
   }
   return ids;
 }
