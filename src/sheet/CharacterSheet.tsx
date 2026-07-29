@@ -720,6 +720,21 @@ export function CharacterSheet({
                           value={dailyAnswer(ch.key)}
                           onChange={(e) => setDailyDraft((d) => ({ ...d, [ch.key]: e.target.value }))}
                         />
+                      ) : ch.kind === 'open' ? (
+                        // An OPEN daily pick resolves from content — Aroden's Innovation offers every
+                        // general feat of 3rd level or lower, far too many for chips.
+                        <select
+                          className="daily-text"
+                          value={dailyAnswer(ch.key)}
+                          onChange={(e) => setDailyDraft((d) => ({ ...d, [ch.key]: e.target.value }))}
+                        >
+                          <option value="">{`${ch.prompt}…`}</option>
+                          {ch.options.map((o) => (
+                            <option key={o.value} value={o.value}>
+                              {o.label}
+                            </option>
+                          ))}
+                        </select>
                       ) : (
                         <div className="daily-pick-opts">
                           {ch.options.map((o) => (

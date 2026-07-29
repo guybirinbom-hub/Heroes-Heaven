@@ -90,6 +90,28 @@ describe('daily-preparation choices', () => {
     for (const o of k.options) expect(c.spells[o.value], `${o.value} missing`).toBeTruthy();
   });
 
+  it('an OPEN daily pick resolves its options from content', () => {
+    // Aroden's Innovation re-picks "a general feat of 3rd level or lower" every morning — this is
+    // where the open-picker and the daily system meet. dailyChoicesFor originally accepted only
+    // 'array'/'text', so an open daily choice would have been wired in data and silently never shown.
+    const found = dailyChoicesFor(withFeat('arodens-innovation'), c);
+    const a = found.find((f) => f.recordId === 'arodens-innovation');
+    expect(a, "Aroden's Innovation should offer a daily choice").toBeTruthy();
+    expect(a!.kind).toBe('open');
+    expect(a!.options.length).toBeGreaterThan(10);
+    for (const o of a!.options.slice(0, 20)) {
+      expect(c.feats[o.value].category, o.value).toBe('general');
+      expect(c.feats[o.value].level, o.value).toBeLessThanOrEqual(3);
+    }
+  });
+
+  it('a daily choice that resolves to NOTHING is never offered', () => {
+    // An unanswerable row would block "Prepare for the day" with no way forward.
+    for (const ch of dailyChoicesFor(withFeat('arodens-innovation'), c)) {
+      if (ch.kind !== 'text') expect(ch.options.length, ch.recordId).toBeGreaterThan(0);
+    }
+  });
+
   it('an item only asks while it is actually in use', () => {
     const base = withFeat('environmental-adaptability');
     // Sanity: the feat-sourced choice is present regardless of inventory state.

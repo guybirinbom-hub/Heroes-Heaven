@@ -12,6 +12,7 @@
  */
 import type { Character, ContentDatabase, FeatChoiceDef } from './types';
 import { ownedFeatureIds } from './derive';
+import { openChoiceOptions } from './openChoice';
 
 export interface DailyChoice {
   /** Storage key in PlayState.dailyChoices — `${recordId}:${flag}`. */
@@ -19,9 +20,10 @@ export interface DailyChoice {
   recordId: string;
   recordName: string;
   prompt: string;
-  /** 'array' renders option chips; 'text' renders a field — Quick Study's Lore subject and Call Gun's
-   *  bonded weapon have no closed option set, so chips would misrepresent them. */
-  kind: 'array' | 'text';
+  /** 'array' renders option chips; 'text' renders a field (Quick Study's Lore subject, Call Gun's
+   *  bonded weapon); 'open' renders a searchable list resolved from content — Aroden's Innovation
+   *  picks "a general feat of 3rd level or lower", which is far too many for chips. */
+  kind: 'array' | 'text' | 'open';
   options: { value: string; label: string; description?: string }[];
 }
 
@@ -56,10 +58,16 @@ export function dailyChoicesFor(c: Character, db: ContentDatabase): DailyChoice[
     const def = rec.choice;
     if (!def?.daily) continue;
     // 'domains'/'skills' resolve against the BUILD, not the morning, so they never belong at rest.
-    if (def.kind !== 'array' && def.kind !== 'text') continue;
-    const options = def.kind === 'array' ? (def.options ?? []) : [];
-    // An 'array' choice with no options is malformed data — skip it rather than render an empty row.
-    if (def.kind === 'array' && !options.length) continue;
+    if (def.kind !== 'array' && def.kind !== 'text' && def.kind !== 'open') continue;
+    const options =
+      def.kind === 'array'
+        ? (def.options ?? [])
+        : def.kind === 'open'
+          ? openChoiceOptions(def.from, db).map((o) => ({ value: o.id, label: o.name, description: o.description }))
+          : [];
+    // An array/open choice with nothing to offer is malformed or unresolvable — skip it rather than
+    // render an empty row the player can't answer (and which would block "Prepare for the day").
+    if (def.kind !== 'text' && !options.length) continue;
     const key = dailyChoiceKey(rec.id, def.flag);
     if (seen.has(key)) continue;
     seen.add(key);
