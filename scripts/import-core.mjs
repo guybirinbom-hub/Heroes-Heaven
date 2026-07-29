@@ -1249,11 +1249,14 @@ const EXTRA_CHOICES = {
   // spontaneous spell repertoire (its spell ladder) cast from the apparition pool.
   animist: [{ id: 'apparition', name: 'Apparitions', tag: 'animist-apparition', pickByLevel: { 1: 2, 7: 3, 15: 4 } }],
   // Thaumaturge: choose 3 different implements — one at L1, a second at L5, a third at L15.
-  // (Modeled as a multi-pick rather than a single subclass; the adept/paragon designations at
-  // L7/L17 are a further refinement not yet surfaced.)
+  // (Modeled as a multi-pick rather than a single subclass. The initiate/adept/paragon benefits of
+  // each implement are derived in buildCharacter from these picks + build.implementAdept/Paragon.)
   thaumaturge: [{ id: 'implement', name: 'Implements', tag: 'thaumaturge-implement', pickByLevel: { 1: 1, 5: 2, 15: 3 } }],
   // Wizard: Arcane Thesis is a single level-1 pick of one methodology (alongside the Arcane School subclass).
   wizard: [{ id: 'thesis', name: 'Arcane Thesis', tag: 'wizard-arcane-thesis', pickByLevel: { 1: 1 } }],
+  // Champion: Blessing of the Devoted (L3) reads "choose one of the following blessings"; the three
+  // options carry the mechanics (Blessed Swiftness = +5-foot status bonus to Speed).
+  champion: [{ id: 'blessing', name: 'Blessing of the Devoted', tag: 'blessing-of-the-devoted', pickByLevel: { 3: 1 } }],
 };
 // Tags whose options grant a spell ladder added to the caster's repertoire/known list.
 // Subclass tags whose option feature adds bonus spells to the caster's repertoire/known list

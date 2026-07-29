@@ -594,28 +594,37 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       const ancestry = c.ancestryId ? db.ancestries[c.ancestryId] : undefined;
       const ancestryLand = ancestry?.speeds?.land ?? 0;
 
-      // Pre-armor land Speed: the ancestry base, raised by any unconditional land grant
-      // (rare — most heritage/feat grants are non-land speeds).
-      let preArmorLand = ancestryLand;
-      let landGrantSource: string | undefined;
-      const grantSources: { name?: string; speeds?: SpeedGrants }[] = [];
-      if (c.heritageId && db.heritages[c.heritageId]) grantSources.push(db.heritages[c.heritageId]);
+      // Pre-armor land Speed: the ancestry base, raised to any FLOOR ("your land Speed increases to
+      // 15 feet"), then increased by every additive source. This mirrors deriveSpeeds exactly —
+      // it previously used raise-to semantics for `speeds.land` while deriveSpeeds added it, so a
+      // +5 from Fleet was in the total but missing from the parts, and the breakdown didn't sum.
+      const named: { name?: string; landSpeedBonus?: number; landSpeedMin?: number; speeds?: SpeedGrants }[] = [];
+      if (c.heritageId && db.heritages[c.heritageId]) named.push(db.heritages[c.heritageId]);
       for (const f of c.feats) {
         const ft = db.feats[f.featId];
-        if (ft) grantSources.push(ft);
+        if (ft) named.push(ft);
       }
-      for (const src of grantSources) {
-        const g = src.speeds?.land;
-        if (typeof g === 'number' && g > preArmorLand) {
-          preArmorLand = g;
-          landGrantSource = src.name;
-        }
+      for (const fid of ownedFeatureIds(c, db)) {
+        const cf = db.classFeatures[fid];
+        if (cf) named.push(cf);
+      }
+
+      const parts: CalcPart[] = [];
+      if (ancestryLand) parts.push({ label: 'Ancestry Speed', note: ancestry?.name, value: ancestryLand });
+      const floor = Math.max(0, ...named.map((s) => s.landSpeedMin ?? 0));
+      if (floor > ancestryLand) {
+        const src = named.find((s) => (s.landSpeedMin ?? 0) === floor);
+        parts.push({ label: 'Raised to', note: src?.name, value: floor - ancestryLand });
+      }
+      let preArmorLand = Math.max(ancestryLand, floor);
+      for (const src of named) {
+        const add = (src.landSpeedBonus ?? 0) + (typeof src.speeds?.land === 'number' ? src.speeds.land : 0);
+        if (!add) continue;
+        parts.push({ label: 'Speed increase', note: src.name, value: add });
+        preArmorLand += add;
       }
 
       const naturalLand = speeds.land ?? 0;
-      const parts: CalcPart[] = [];
-      if (ancestryLand) parts.push({ label: 'Ancestry Speed', note: ancestry?.name, value: ancestryLand });
-      if (preArmorLand > ancestryLand) parts.push({ label: 'Speed increase', note: landGrantSource, value: preArmorLand - ancestryLand });
       const penalty = preArmorLand - naturalLand;
       if (penalty > 0) parts.push({ label: 'Armor Speed penalty', note: 'heavy armor or unmet Strength', value: -penalty });
 

@@ -276,9 +276,14 @@ export interface DefenseGrants {
   sizeOverride?: Size;
   /** Natural reach in feet this feat/heritage grants (Jotun's Heart: 10). Highest wins. */
   reach?: number;
-  /** A flat additive bonus to LAND Speed (Hyper Boosters: +10). Distinct from `speeds`, which SETS a
-   *  non-land movement type. */
+  /** A flat additive bonus to LAND Speed (Hyper Boosters: +10, Fleet: +5). `speeds.land` is additive
+   *  too, but `speeds` SETS the non-land movement types, so a land entry there reads as a set when it
+   *  isn't — this field says "increases by N" unambiguously. */
   landSpeedBonus?: number;
+  /** A land-Speed FLOOR: "your land Speed increases TO 15 feet" (Strong Tail), "becomes 10 feet"
+   *  (Cecaelia merfolk). Applied to the ancestry base before any additive bonus, so a merfolk who
+   *  takes Strong Tail and Fleet walks at 20, not 25. Highest floor wins. */
+  landSpeedMin?: number;
   /** Grants void ("negative") healing — harmed by vitality, healed by void (dhampir-style). Surfaced on
    *  the Defenses card. Some ITEMS grant it too (Emerald Fulcrum Lens) — see ItemBase. */
   negativeHealing?: boolean;
@@ -1863,8 +1868,15 @@ export interface Character {
   classId: string | null;
   /** Chosen subclass option id (instinct, doctrine, bloodline, ...). */
   subclassId?: string | null;
-  /** Resolved subclass + extra-choice picks (bloodline, ikons, apparitions, …) for display. */
-  classChoices?: { group: string; name: string; description: string; level: number }[];
+  /**
+   * Resolved subclass + extra-choice picks (bloodline, ikons, apparitions, implements, …).
+   *
+   * `id` is the option id, which for every current group is ALSO a classFeature id — that is what
+   * lets `ownedFeatureIds` treat a chosen option as a feature you have, so its mechanics and its
+   * situational bonuses reach the sheet. It is optional only for characters saved before it existed;
+   * those still round-trip through the by-name reverse map in `buildFromCharacter`.
+   */
+  classChoices?: { group: string; name: string; description: string; level: number; id?: string }[];
   /** Chosen key attribute (matters for classes that offer a choice, e.g. Str/Dex). */
   keyAbility: AbilityId | null;
   /** Optional variant rules this character opted into. */

@@ -18,6 +18,7 @@ import type {
   ArmorCategory,
   Background,
   Character,
+  ChoiceGroup,
   ClassDef,
   ClassFeature,
   CommanderTactics,
@@ -129,6 +130,12 @@ export interface BuildState {
   commanderTactics?: string[];
   /** Trait picks for option-granted choice feats (Dominion Epithet → Energized Spark), keyed `grant:<optionId>:<featId>`. */
   grantedChoiceFeatTraits?: Record<string, string>;
+  /** Thaumaturge Implement Adept (level 7): which of your implements unlocks its adept benefit.
+   *  Second Adept at 11 gives the OTHER of your first two automatically, so this only picks the
+   *  order. Defaults to your first implement. */
+  implementAdept?: string | null;
+  /** Thaumaturge Implement Paragon (level 17): which adept implement unlocks its paragon benefit. */
+  implementParagon?: string | null;
   /** Inventor armor innovation's base statistics (gates several armor modifications). */
   inventorArmorStats?: 'power-suit' | 'subterfuge-suit' | null;
   /** Inventor chosen modification ids by tier. */
@@ -872,6 +879,22 @@ export function commanderMaxTier(level: number): TacticTier {
 /** Folio capacity: 5 starting tactics, +2 each at the Expert/Master/Legendary Tactician levels. */
 export function commanderFolioMax(level: number): number {
   return 5 + (level >= 7 ? 2 : 0) + (level >= 15 ? 2 : 0) + (level >= 19 ? 2 : 0);
+}
+
+/**
+ * The character level at which the Nth pick of a choice group becomes available.
+ *
+ * `pickByLevel` is CUMULATIVE ({1:1, 5:2, 15:3} = one implement at 1, two at 5, three at 15), so the
+ * slot at index `i` opens at the lowest level whose cumulative count exceeds `i`. Without this every
+ * pick in a group would inherit the group's entry level and a level-15 implement would count as owned
+ * from level 1.
+ */
+export function extraPickLevel(g: ChoiceGroup, index: number): number {
+  const steps = Object.entries(g.pickByLevel)
+    .map(([lvl, count]) => ({ level: Number(lvl), count: Number(count) }))
+    .sort((a, b) => a.level - b.level);
+  for (const s of steps) if (s.count > index) return s.level;
+  return steps[steps.length - 1]?.level ?? 1;
 }
 
 /** Inventor modification tiers → the class level each is gained. */
@@ -2768,21 +2791,52 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
 
   // Resolve the subclass + extra-choice picks (bloodline, ikons, apparitions, …) for
   // display on the sheet, so the choices are visible character abilities.
-  const classChoices: { group: string; name: string; description: string; level: number }[] = [];
+  const classChoices: { group: string; name: string; description: string; level: number; id?: string }[] = [];
   if (cls?.subclass && subOption)
-    classChoices.push({ group: cls.subclass.name, name: subOption.name, description: subOption.description, level: 1 });
+    classChoices.push({ group: cls.subclass.name, name: subOption.name, description: subOption.description, level: 1, id: subOption.id });
   // Dual Class: also record the second class's subclass.
   if (cls2?.subclass && subOption2)
-    classChoices.push({ group: cls2.subclass.name, name: subOption2.name, description: subOption2.description, level: 1 });
-  // Extra-choice picks from BOTH classes (element/apparition/subconscious-mind/bloodline/…).
+    classChoices.push({ group: cls2.subclass.name, name: subOption2.name, description: subOption2.description, level: 1, id: subOption2.id });
+  // Extra-choice picks from BOTH classes (element/apparition/subconscious-mind/bloodline/…). The id
+  // rides along so the sheet can treat a pick as an OWNED class feature rather than a display row —
+  // that is what makes a thaumaturge's chosen implement or an exemplar's ikon actually do something.
   for (const ec of [cls, cls2] as (ClassDef | undefined)[]) {
     for (const g of ec?.extraChoices ?? []) {
-      const lvl = Math.min(...Object.keys(g.pickByLevel).map(Number));
-      for (const id of build.extraChoices?.[g.id] ?? []) {
-        const o = g.options.find((opt) => opt.id === id);
-        if (o) classChoices.push({ group: g.name, name: o.name, description: o.description, level: lvl });
+      const picks = build.extraChoices?.[g.id] ?? [];
+      for (let i = 0; i < picks.length; i++) {
+        const o = g.options.find((opt) => opt.id === picks[i]);
+        // The level of the SLOT, not of the group: a thaumaturge's second implement arrives at 5 and
+        // the third at 15, so stamping every pick with the group's entry level would make them all
+        // count as owned from level 1.
+        if (o) classChoices.push({ group: g.name, name: o.name, description: o.description, level: extraPickLevel(g, i), id: o.id });
       }
     }
+  }
+
+  // Thaumaturge implement BENEFITS. Each implement grants its initiate benefit when you gain it;
+  // Implement Adept (7) unlocks the adept benefit of one implement and Second Adept (11) the other of
+  // your first two; Implement Paragon (17) unlocks a paragon benefit on one that already has adept.
+  // They ride in classChoices so they are owned features (and visible abilities) with no new plumbing.
+  if (ownsClass('thaumaturge')) {
+    const impGroup = [cls, cls2].find((x) => x?.id === 'thaumaturge')?.extraChoices?.find((g) => g.id === 'implement');
+    const imps = build.extraChoices?.['implement'] ?? [];
+    const pushBenefit = (tier: 'initiate' | 'adept' | 'paragon', imp: string, level: number) => {
+      const rec = content.classFeatures[`${tier}-benefit-${imp}`];
+      if (rec && !classChoices.some((x) => x.id === rec.id)) {
+        classChoices.push({ group: 'Implement benefit', name: rec.name, description: rec.description, level, id: rec.id });
+      }
+    };
+    if (impGroup) for (let i = 0; i < imps.length; i++) pushBenefit('initiate', imps[i], extraPickLevel(impGroup, i));
+    // Adept: the level-7 pick (defaulting to your first implement), then the other of the first two.
+    const firstTwo = imps.slice(0, 2);
+    const adept7 = firstTwo.includes(build.implementAdept ?? '') ? build.implementAdept! : firstTwo[0];
+    if (adept7) pushBenefit('adept', adept7, 7);
+    const adept11 = firstTwo.find((x) => x !== adept7);
+    if (adept11) pushBenefit('adept', adept11, 11);
+    // Paragon: one that already has adept — never the third implement, which never gains adept.
+    const adeptSet = [adept7, adept11].filter(Boolean) as string[];
+    const paragon = adeptSet.includes(build.implementParagon ?? '') ? build.implementParagon! : adeptSet[0];
+    if (paragon) pushBenefit('paragon', paragon, 17);
   }
 
   // Commander tactics: validate the chosen folio against the unlocked tiers + folio capacity.
@@ -3128,13 +3182,15 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   const dcDef = (id: string): ClassDef | undefined => (c.classId === id ? cls : cls2dc?.id === id ? cls2dc : undefined);
   const background = resolveBackground(b, content);
 
-  // extraChoices: reverse-map from classChoices by name (skip the subclass entries), across both classes.
+  // extraChoices: recover from classChoices. Prefer the stored `id`; fall back to matching by NAME
+  // for characters saved before the id was recorded (two options in different groups can share a
+  // name, hence the group check on the fallback path).
   for (const ec of [cls, cls2dc] as (ClassDef | undefined)[]) {
     if (!ec) continue;
     for (const cc of c.classChoices ?? []) {
       if (ec.subclass && cc.group === ec.subclass.name) continue;
       const g = (ec.extraChoices ?? []).find((gg) => gg.name === cc.group);
-      const o = g?.options.find((opt) => opt.name === cc.name);
+      const o = g?.options.find((opt) => (cc.id ? opt.id === cc.id : opt.name === cc.name));
       if (g && o && !(b.extraChoices[g.id] ?? []).includes(o.id)) (b.extraChoices[g.id] ??= []).push(o.id);
     }
   }

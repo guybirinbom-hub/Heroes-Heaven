@@ -2636,6 +2636,56 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           </SubCard>
         );
       })}
+      {/* Thaumaturge Implement Adept (7) and Implement Paragon (17) pick from YOUR implements, so
+          they can't be ChoiceGroups — a group's options are static content. Second Adept (11) needs
+          no picker: it is whichever of your first two didn't get adept at 7. */}
+      {ownsClass('thaumaturge') &&
+        (() => {
+          const imps = build.extraChoices?.['implement'] ?? [];
+          const firstTwo = imps.slice(0, 2);
+          if (build.level < 7 || firstTwo.length < 2) return null;
+          const label = (id: string) => content.classFeatures[id]?.name ?? id;
+          const adept7 = firstTwo.includes(build.implementAdept ?? '') ? build.implementAdept! : firstTwo[0];
+          const adeptSet = build.level >= 11 ? firstTwo : [adept7];
+          const paragon = adeptSet.includes(build.implementParagon ?? '') ? build.implementParagon! : adeptSet[0];
+          return (
+            <>
+              <SubCard icon="ti-star" label="Implement Adept">
+                <PopupSelect
+                  title="Implement Adept"
+                  value={adept7}
+                  onChange={(v) => actions.patch({ implementAdept: v })}
+                  options={firstTwo.map((id) => ({
+                    value: id,
+                    label: label(id),
+                    description: content.classFeatures[`adept-benefit-${id}`]?.description,
+                  }))}
+                />
+                {build.level >= 11 && (
+                  <div className="setup-note">
+                    Second Adept (11th) gives you the adept benefit of {label(firstTwo.find((x) => x !== adept7) ?? '')} as well.
+                  </div>
+                )}
+              </SubCard>
+              {build.level >= 17 && (
+                <SubCard icon="ti-crown" label="Implement Paragon">
+                  <PopupSelect
+                    title="Implement Paragon"
+                    value={paragon}
+                    onChange={(v) => actions.patch({ implementParagon: v })}
+                    options={adeptSet.map((id) => ({
+                      value: id,
+                      label: label(id),
+                      description: content.classFeatures[`paragon-benefit-${id}`]?.description,
+                    }))}
+                  />
+                  {/* The rules restrict paragon to an implement that ALREADY has the adept benefit,
+                      which is why a third implement (gained at 15) never appears here. */}
+                </SubCard>
+              )}
+            </>
+          );
+        })()}
       {ownsClass('commander') &&
         (() => {
           const options = commanderTacticOptions(build.level, content);

@@ -1010,6 +1010,14 @@ export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> 
       if (db.classFeatures[variant]) out.add(variant);
     }
   }
+  // Extra-choice PICKS (thaumaturge implements, exemplar ikons and epithets, kineticist elements,
+  // wizard theses, animist apparitions, psychic subconscious minds) are class features you chose
+  // rather than were handed. Every current option id is also a classFeature id, and the option shape
+  // can't carry defenses/limitedUses/critSpec/effectChoices — so without this the record's mechanics
+  // and its situational bonuses were stored, displayed in the picker, and then ignored.
+  for (const cc of c.classChoices ?? []) {
+    if (cc.id && cc.level <= c.level && db.classFeatures[cc.id]) out.add(cc.id);
+  }
   return out;
 }
 
@@ -1635,6 +1643,13 @@ export function deriveSpeeds(c: Character, db: ContentDatabase): Speeds {
       if (pe.speedBonus) passiveLandBonus += pe.speedBonus;
     }
   }
+  // Land-Speed FLOORS ("your land Speed increases to 15 feet") raise the base before anything adds to
+  // it, so a merfolk with Strong Tail and Fleet walks at 20 — floor 15, then +5 — rather than 5+15+5.
+  let landFloor = 0;
+  for (const f of c.feats) landFloor = Math.max(landFloor, db.feats[f.featId]?.landSpeedMin ?? 0);
+  for (const fid of ownedFeatureIds(c, db)) landFloor = Math.max(landFloor, db.classFeatures[fid]?.landSpeedMin ?? 0);
+  if (c.heritageId) landFloor = Math.max(landFloor, db.heritages[c.heritageId]?.landSpeedMin ?? 0);
+  if (landFloor) speeds.land = Math.max(speeds.land ?? 0, landFloor);
   if (passiveLandBonus || featLandBonus) speeds.land = (speeds.land ?? 0) + passiveLandBonus + featLandBonus;
   // A proficiency-gated speed (Quick Climb/Swim: climb/swim = land Speed only if legendary Athletics).
   // Fold each qualifying block's speeds in with the unconditional ones.
