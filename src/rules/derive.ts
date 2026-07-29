@@ -658,8 +658,15 @@ export function deriveDefenses(c: Character, db: ContentDatabase): CharacterDefe
   // sheet's defenses match the class as the archetype rebuilt it.
   const suppressed = new Set(c.classArchetype?.suppressedFeatures ?? []);
   if (cls) {
-    for (const cf of cls.features) {
-      if (cf.level <= c.level && !suppressed.has(cf.featureId) && db.classFeatures[cf.featureId]) sources.push(db.classFeatures[cf.featureId]);
+    // Via ownedFeatureIds, not cls.features, so subclass VARIANTS come too — the toxicologist's
+    // poison resistance lives on `field-discovery-toxicologist` while the class only lists the
+    // generic `field-discovery`. Suppression is keyed by the generic id, so a suppressed feature
+    // takes its variant with it.
+    const sub = c.subclassId ? `-${c.subclassId}` : null;
+    for (const id of ownedFeatureIds(c, db)) {
+      const base = sub && id.endsWith(sub) ? id.slice(0, -sub.length) : id;
+      if (suppressed.has(id) || suppressed.has(base)) continue;
+      if (db.classFeatures[id]) sources.push(db.classFeatures[id]);
     }
   }
   for (const af of c.classArchetype?.addedFeatures ?? []) {
@@ -989,6 +996,20 @@ export function ownedFeatureIds(c: Character, db: ContentDatabase): Set<string> 
   const cls = c.classId ? db.classes[c.classId] : undefined;
   const out = new Set<string>();
   if (cls) for (const f of cls.features) if (f.level <= c.level) out.add(f.featureId);
+  // Subclass VARIANTS of a listed feature are stored as `<featureId>-<subclassId>` and are not in
+  // cls.features — the class lists the generic prose record (`field-discovery`), and the variant
+  // (`field-discovery-toxicologist`) carries the actual mechanics. `critSpecSources` already reached
+  // them by suffix for its own purpose; doing it here makes them owned like any other feature, which
+  // is what the toxicologist's poison resistance was missing. Only variants of a feature the class
+  // ACTUALLY grants, at or below its level, so a subclass can't smuggle in a feature its class lacks.
+  if (cls && c.subclassId) {
+    const suffix = `-${c.subclassId}`;
+    for (const f of cls.features) {
+      if (f.level > c.level) continue;
+      const variant = `${f.featureId}${suffix}`;
+      if (db.classFeatures[variant]) out.add(variant);
+    }
+  }
   return out;
 }
 
