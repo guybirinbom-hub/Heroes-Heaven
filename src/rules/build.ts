@@ -2580,6 +2580,14 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       innateGrants.push(g);
       noteSrc(g.spellId, heritage?.name);
     }
+    // A handful of BACKGROUNDS grant an innate spell outright — Blessed gives Guidance, Astrological
+    // Augur gives Augury. Only heritages and feats were read here, so those simply never appeared on
+    // the Spells page no matter what the record said.
+    const bgForSpells = resolveBackground(build, content);
+    for (const g of bgForSpells?.innateSpells ?? []) {
+      innateGrants.push(g);
+      noteSrc(g.spellId, bgForSpells?.name);
+    }
     for (const f of feats)
       for (const g of content.feats[f.featId]?.innateSpells ?? []) {
         innateGrants.push(g);

@@ -494,6 +494,9 @@ export interface Heritage extends ContentBase, DefenseGrants {
 
 export interface Background extends ContentBase {
   abilityBoosts: AbilityBoost[];
+  /** Innate spells the background grants outright — Blessed gives Guidance, Astrological Augur gives
+   *  Augury. buildCharacter reads these alongside the heritage's; before that they were inert. */
+  innateSpells?: InnateSpellGrant[];
   /** Skill the background trains you in. */
   trainedSkill?: SkillId;
   /** A "trained in your choice of X or Y" background: the offered skills (trainedSkill is unset).

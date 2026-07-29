@@ -1,0 +1,402 @@
+[
+ {
+  "id": "cloak-of-elvenkind",
+  "coll": "items",
+  "isSub": false,
+  "innate": [
+   "ghost-sound"
+  ]
+ },
+ {
+  "id": "scion-of-slayers",
+  "coll": "backgrounds",
+  "isSub": false,
+  "innate": [
+   "vitality-lash"
+  ]
+ },
+ {
+  "id": "tyrant-witness",
+  "coll": "backgrounds",
+  "isSub": false,
+  "innate": [
+   "vitality-lash"
+  ]
+ },
+ {
+  "id": "astrological-augur",
+  "coll": "backgrounds",
+  "isSub": false,
+  "innate": [
+   "augury"
+  ]
+ },
+ {
+  "id": "eclipseborn",
+  "coll": "backgrounds",
+  "isSub": false,
+  "innate": [
+   "ill-omen"
+  ]
+ },
+ {
+  "id": "blessed",
+  "coll": "backgrounds",
+  "isSub": false,
+  "innate": [
+   "guidance"
+  ]
+ },
+ {
+  "id": "knack-for-contraptions",
+  "coll": "backgrounds",
+  "isSub": false,
+  "innate": [
+   "live-wire"
+  ]
+ },
+ {
+  "id": "anthemic-performance",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "courageous-anthem"
+  ],
+  "innate": []
+ },
+ {
+  "id": "harmonize-self",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "harmonize-self"
+  ],
+  "innate": []
+ },
+ {
+  "id": "clinging-shadows-initiate",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "clinging-shadows-stance"
+  ],
+  "innate": []
+ },
+ {
+  "id": "wild-winds-initiate",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "wild-winds-stance"
+  ],
+  "innate": []
+ },
+ {
+  "id": "wind-jump",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "wind-jump"
+  ],
+  "innate": []
+ },
+ {
+  "id": "shadows-web",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "shadows-web"
+  ],
+  "innate": []
+ },
+ {
+  "id": "seneschal",
+  "coll": "classFeatures",
+  "isSub": false,
+  "focus": [
+   "manifest-will"
+  ],
+  "innate": []
+ },
+ {
+  "id": "patrons-glamour",
+  "coll": "feats",
+  "isSub": false,
+  "innate": [
+   "illusory-disguise"
+  ]
+ },
+ {
+  "id": "patrons-whisper",
+  "coll": "feats",
+  "isSub": false,
+  "innate": [
+   "message"
+  ]
+ },
+ {
+  "id": "vindicators-judgement",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "vindicators-judgment"
+  ],
+  "innate": []
+ },
+ {
+  "id": "link-spells",
+  "coll": "classFeatures",
+  "isSub": false,
+  "focus": [
+   "evolution-surge",
+   "boost-eidolon"
+  ],
+  "innate": []
+ },
+ {
+  "id": "composition-spells",
+  "coll": "classFeatures",
+  "isSub": false,
+  "focus": [
+   "counter-performance",
+   "courageous-anthem"
+  ],
+  "innate": []
+ },
+ {
+  "id": "heros-defiance",
+  "coll": "classFeatures",
+  "isSub": false,
+  "focus": [
+   "heros-defiance"
+  ],
+  "innate": []
+ },
+ {
+  "id": "hand-of-the-apprentice",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "hand-of-the-apprentice"
+  ],
+  "innate": []
+ },
+ {
+  "id": "silvers-refrain",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "silvers-refrain"
+  ],
+  "innate": []
+ },
+ {
+  "id": "reinforce-eidolon",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "reinforce-eidolon"
+  ],
+  "innate": []
+ },
+ {
+  "id": "stonebound-magic",
+  "coll": "feats",
+  "isSub": false,
+  "innate": [
+   "scatter-scree",
+   "one-with-stone",
+   "shape-stone",
+   "wall-of-stone"
+  ]
+ },
+ {
+  "id": "hymn-of-healing",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "hymn-of-healing"
+  ],
+  "innate": []
+ },
+ {
+  "id": "loremasters-etude",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "loremasters-etude"
+  ],
+  "innate": []
+ },
+ {
+  "id": "song-of-strength",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "song-of-strength"
+  ],
+  "innate": []
+ },
+ {
+  "id": "uplifting-overture",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "uplifting-overture"
+  ],
+  "innate": []
+ },
+ {
+  "id": "rallying-anthem",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "rallying-anthem"
+  ],
+  "innate": []
+ },
+ {
+  "id": "triple-time",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "triple-time"
+  ],
+  "innate": []
+ },
+ {
+  "id": "dirge-of-doom",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "dirge-of-doom"
+  ],
+  "innate": []
+ },
+ {
+  "id": "song-of-marching",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "song-of-marching"
+  ],
+  "innate": []
+ },
+ {
+  "id": "ode-to-ouroboros",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "ode-to-ouroboros"
+  ],
+  "innate": []
+ },
+ {
+  "id": "allegro",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "allegro"
+  ],
+  "innate": []
+ },
+ {
+  "id": "soothing-ballad",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "soothing-ballad"
+  ],
+  "innate": []
+ },
+ {
+  "id": "fatal-aria",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "fatal-aria"
+  ],
+  "innate": []
+ },
+ {
+  "id": "pied-piping",
+  "coll": "feats",
+  "isSub": false,
+  "focus": [
+   "pied-piping"
+  ],
+  "innate": []
+ },
+ {
+  "id": "hunters-brooch",
+  "coll": "items",
+  "isSub": false,
+  "innate": [
+   "vitality-lash"
+  ]
+ },
+ {
+  "id": "nosoi-charm",
+  "coll": "items",
+  "isSub": false,
+  "innate": [
+   "sending"
+  ]
+ },
+ {
+  "id": "nosoi-charm-greater",
+  "coll": "items",
+  "isSub": false,
+  "innate": [
+   "sending"
+  ]
+ },
+ {
+  "id": "pendant-of-the-occult",
+  "coll": "items",
+  "isSub": false,
+  "innate": [
+   "guidance"
+  ]
+ },
+ {
+  "id": "pendant-of-the-occult-greater",
+  "coll": "items",
+  "isSub": false,
+  "innate": [
+   "guidance"
+  ]
+ },
+ {
+  "id": "passage-charm",
+  "coll": "items",
+  "isSub": false,
+  "innate": [
+   "darkness"
+  ]
+ },
+ {
+  "id": "generals-word",
+  "coll": "items",
+  "isSub": false,
+  "innate": [
+   "bullhorn"
+  ]
+ },
+ {
+  "id": "pact-of-the-herald-and-host",
+  "coll": "items",
+  "isSub": false,
+  "innate": [
+   "fear"
+  ]
+ },
+ {
+  "id": "living-storm",
+  "coll": "items",
+  "isSub": false,
+  "innate": [
+   "lightning-bolt"
+  ]
+ }
+]

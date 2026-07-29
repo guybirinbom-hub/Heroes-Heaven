@@ -29,6 +29,13 @@ const CLASS_FEATURE_IDS = new Set(
   Object.values(db.classes ?? {}).flatMap((c) => (c.features ?? []).map((f) => f.featureId)),
 );
 
+/** Subclass-option ids that already carry a focus/innate spell grant (witch patrons, druid orders). */
+const SUBCLASS_OPTION_SPELLS = new Set(
+  Object.values(db.classes ?? {}).flatMap((c) =>
+    (c.subclass?.options ?? []).filter((o) => o.focusSpells?.length || o.innateSpells?.length).map((o) => o.id),
+  ),
+);
+
 const MODELLED = {
   choice: new Set([
     ...idsIn('src/rules/featPickGrants.ts'),
@@ -102,7 +109,11 @@ const LANES = [
     id: 'spellGrant',
     what: 'grants a spell, cantrip or focus spell',
     re: /\b(you (?:learn|gain|can cast)|gains?) .{0,40}\b(spell|cantrip|focus spell)\b/i,
-    modelled: (r) => !!r.focusSpells || !!r.innateSpells || !!r.spellcasting || MODELLED.choice.has(r.id),
+    /** Subclass options (witch patrons, druid orders) carry focusSpells on the OPTION, not on any
+     *  record in a scanned collection, so they looked unmodelled while working perfectly. */
+    modelled: (r) =>
+      !!r.focusSpells || !!r.innateSpells || !!r.spellcasting || MODELLED.choice.has(r.id) ||
+      SUBCLASS_OPTION_SPELLS.has(r.id),
   },
   {
     id: 'companion',

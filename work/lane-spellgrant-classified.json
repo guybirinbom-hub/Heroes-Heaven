@@ -1,0 +1,2572 @@
+[
+ {
+  "id": "cloak-of-elvenkind",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "ghost-sound",
+    "tradition": "arcane",
+    "atWill": true,
+    "heightenHalfLevel": true
+   }
+  ],
+  "note": "Passive (not an activation): while worn/invested the cloak lets you cast Ghost Sound as an arcane innate cantrip at will. The separate 2-action Activate ability (invisibility-style hood effect) is temporary and not a grant. ghost-sound verified in core.json."
+ },
+ {
+  "id": "feral-linguist-greater",
+  "grants": false,
+  "note": "Item used as a catalyst for Animal Form; it only changes how a spell you already cast works (lets you cast while in battle form). Names Animal Form as the target spell, grants nothing."
+ },
+ {
+  "id": "gamtu-hat",
+  "grants": false,
+  "note": "Activated item effect ('gain the effects of a 2nd-rank spell', spell name stripped from the text) and temporary. Not a spell grant."
+ },
+ {
+  "id": "aon-noqual-armor",
+  "grants": false,
+  "note": "Only a +1 circumstance bonus to AC vs spell attacks and a DC 5 flat check to cast; no spell granted."
+ },
+ {
+  "id": "aon-scrap-shot",
+  "grants": false,
+  "note": "Relic gift that makes a spell attack roll with the relic; it is its own attack effect, not a named spell grant."
+ },
+ {
+  "id": "aon-flowing-footsteps",
+  "grants": false,
+  "note": "Relic gift giving the continuous *effects of* Water Walk plus water breathing/swim Speed — a constant effect tied to a relic, not a castable spell you gain."
+ },
+ {
+  "id": "aon-fervent-spell",
+  "grants": false,
+  "note": "Relic gift: access to 'the spell provided by the emotional state' — conditional on the fervor gift and no spell is named."
+ },
+ {
+  "id": "empty-sky-kitsune",
+  "grants": false,
+  "note": "Grants the Kitsune Spell Familiarity ancestry feat, not a spell. Any spell access comes from that feat (handled by the grants-another-feat lane)."
+ },
+ {
+  "id": "rite-of-invocation",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks one cantrip from the arcane or occult list, cast at will as an innate spell — picker lane, no named spell."
+ },
+ {
+  "id": "spellkeeper-shisk",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a tradition and one cantrip from that list, cast at will as an innate spell."
+ },
+ {
+  "id": "mage-automaton",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks one cantrip from the arcane spell list, at-will arcane innate."
+ },
+ {
+  "id": "ragdyan-vanara",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks one non-damaging cantrip from the divine spell list, at-will divine innate."
+ },
+ {
+  "id": "forge-blessed-dwarf",
+  "grants": false,
+  "isChoice": true,
+  "note": "You choose a dwarven deity and gain the 1st-rank spell that deity grants clerics; Soothe is only an example (Bolka). Spell depends on the chosen deity, so it is a picker, not a fixed grant."
+ },
+ {
+  "id": "fey-touched-gnome",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses one primal cantrip (and can swap it daily), at-will primal innate."
+ },
+ {
+  "id": "wellspring-gnome",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a tradition and one cantrip from it; also retrains later primal innates to that tradition — modifier plus a choice, no named spell."
+ },
+ {
+  "id": "budding-speaker-centaur",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a spell list and one cantrip from it, at-will innate."
+ },
+ {
+  "id": "spellhorn-kobold",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks one common arcane cantrip, at-will arcane innate (Cha key attribute); no named spell."
+ },
+ {
+  "id": "makari-lizardfolk",
+  "grants": false,
+  "isChoice": true,
+  "note": "Choice between two named cantrips (Divine Lance or Forbidding Ward) as an at-will divine innate — player picks, so a two-option picker lane rather than an unconditional grant. Both divine-lance and forbidding-ward exist in core.json for the picker."
+ },
+ {
+  "id": "oracular-samsaran",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a tradition and one cantrip from it, at-will innate."
+ },
+ {
+  "id": "shadow-of-the-hermit",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses one occult cantrip, at-will occult innate."
+ },
+ {
+  "id": "respite-of-loam-and-leaf",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses one primal cantrip, at-will primal innate."
+ },
+ {
+  "id": "born-of-celestial",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses one divine cantrip, at-will divine innate."
+ },
+ {
+  "id": "born-of-elements",
+  "grants": false,
+  "isChoice": true,
+  "note": "Yaoguai Form: choose one of Electric Arc, Frostbite, Ignition, Needle Darts, Timber, Scatter Scree, Slashing Gust, or Spout as an at-will primal innate cantrip — an 8-option picker."
+ },
+ {
+  "id": "plane-hopper-jotunborn",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses one occult cantrip, at-will occult innate."
+ },
+ {
+  "id": "magaambya-academic",
+  "grants": false,
+  "note": "Grants the Recognize Spell skill feat, not a spell."
+ },
+ {
+  "id": "rivethun-adherent",
+  "grants": false,
+  "note": "Grants the Recognize Spell skill feat, not a spell."
+ },
+ {
+  "id": "demon-slayer",
+  "grants": false,
+  "note": "Grants the Recognize Spell skill feat, not a spell."
+ },
+ {
+  "id": "learned-guard-prodigy",
+  "grants": false,
+  "note": "Grants the Recognize Spell skill feat, not a spell."
+ },
+ {
+  "id": "spell-seeker",
+  "grants": false,
+  "note": "Grants the Recognize Spell skill feat, not a spell."
+ },
+ {
+  "id": "student-of-magic",
+  "grants": false,
+  "note": "Grants the Recognize Spell skill feat, not a spell."
+ },
+ {
+  "id": "seer-of-the-dead",
+  "grants": false,
+  "note": "'You gain the effects of the Spirit Sense spell at all times' — a permanent passive effect, not a castable spell; it would have no casting/resource economy on the Spells page. Better modeled as a constant sense/effect."
+ },
+ {
+  "id": "mystic-tutor",
+  "grants": false,
+  "note": "Grants the Recognize Spell skill feat, not a spell."
+ },
+ {
+  "id": "scion-of-slayers",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "vitality-lash",
+    "tradition": "divine",
+    "atWill": true,
+    "heightenHalfLevel": true
+   }
+  ],
+  "note": "'You can cast Vitality Lash as an innate divine cantrip' — unconditional at-will divine innate cantrip (heightens to half level per normal cantrip rules). Uses Intelligence as the spellcasting attribute for this innate spell. vitality-lash verified in core.json."
+ },
+ {
+  "id": "tyrant-witness",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "vitality-lash",
+    "tradition": "divine",
+    "atWill": true,
+    "heightenHalfLevel": true
+   }
+  ],
+  "note": "'You can cast Vitality Lash as a divine innate cantrip. As normal, the cantrip heightens to half your level rounded up.' vitality-lash verified in core.json."
+ },
+ {
+  "id": "astrological-augur",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "augury",
+    "tradition": "divine",
+    "usesPer": "week"
+   }
+  ],
+  "note": "'You can cast Augury as a divine innate spell once per week' (its effect also looks 1 hour ahead instead of 30 minutes). Cast at its base rank 2. augury verified in core.json."
+ },
+ {
+  "id": "eclipseborn",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "ill-omen",
+    "tradition": "occult",
+    "usesPer": "day"
+   }
+  ],
+  "note": "'You can cast Ill Omen as an occult innate spell once per day' (base rank 1); the GM-forced reroll drawback can refund a second casting that day but the guaranteed grant is 1/day. ill-omen verified in core.json."
+ },
+ {
+  "id": "sign-bound",
+  "grants": false,
+  "isChoice": true,
+  "note": "Occult innate spell determined by the constellation you choose (13 options: Ghost Sound, Light, Charm, Environmental Endurance, Guidance, Marvelous Mount, Know the Way, Tailwind, Speak with Animals, Clear Mind, Sure Strike, Message, Stabilize) with per-sign frequency (at will / 1 per day / 1 per week). Picker lane."
+ },
+ {
+  "id": "guest-of-sedeq-lodge",
+  "grants": false,
+  "note": "Grants the Recognize Spell skill feat, not a spell."
+ },
+ {
+  "id": "elementally-infused",
+  "grants": false,
+  "isChoice": true,
+  "note": "Cantrip determined by the elemental plane you choose (Air: Gale Blast, Earth: Scatter Scree, Fire: Ignition, Metal: Needle Darts, Water: Spout, Wood: Root Reading), at-will primal innate. All six ids exist in core.json, but the player picks — picker lane."
+ },
+ {
+  "id": "blessed",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "guidance",
+    "tradition": "divine",
+    "atWill": true,
+    "heightenHalfLevel": true
+   }
+  ],
+  "note": "'Either you can cast Guidance as a divine innate spell at will, or you gain a similar blessing determined by the GM.' Guidance is the named default; the GM alternative is an optional substitution, so filing it as an unconditional at-will divine innate. guidance verified in core.json."
+ },
+ {
+  "id": "zodiac-bound",
+  "grants": false,
+  "isChoice": true,
+  "note": "Divine innate spell determined by the zodiac sign you choose (12 options: Ignition, Gale Blast, Water Breathing, Jump, Ant Haul, Command, Fear, Tangle Vine, Dizzying Colors, Clear Mind, Bless, Sure Strike) with per-sign frequency. Picker lane."
+ },
+ {
+  "id": "knack-for-contraptions",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "live-wire",
+    "tradition": "arcane",
+    "atWill": true,
+    "heightenHalfLevel": true
+   }
+  ],
+  "note": "'You can cast Live Wire as an arcane innate cantrip. As normal, the cantrip heightens to half your level rounded up.' live-wire verified in core.json."
+ },
+ {
+  "id": "combat-chaplain",
+  "grants": false,
+  "note": "Grants the Recognize Spell skill feat, not a spell."
+ },
+ {
+  "id": "local-savior",
+  "grants": false,
+  "isChoice": true,
+  "note": "You pick a hometown, then pick one of two cantrips for that town (Shield/Stabilize, Message/Read Aura, Forbidding Ward/Guidance, Haunting Hymn/Summon Instrument, etc.) as an at-will divine innate. Two nested choices — picker lane."
+ },
+ {
+  "id": "mirror-shield",
+  "grants": false,
+  "note": "Reaction that reflects an enemy's failed spell back at them; no spell is added to the character."
+ },
+ {
+  "id": "initiate-warden",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks one of four initial warden focus spells (gravity-weapon, heal-companion, magic-hide, or another accessible); repeatable, so a picker lane is needed."
+ },
+ {
+  "id": "advanced-warden",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks one advanced warden focus spell (animal-feature, enlarge-companion, hunters-luck, soothing-mist); repeatable."
+ },
+ {
+  "id": "masterful-warden",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks one master warden focus spell (ephemeral-tracking or rangers-bramble); repeatable."
+ },
+ {
+  "id": "peerless-warden",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks one peerless warden focus spell (hunters-vision or terrain-transposition); repeatable."
+ },
+ {
+  "id": "siphon-power",
+  "grants": false,
+  "note": "Lets you cast a spell your familiar already knows without a slot — a casting modifier, and the spell belongs to the familiar."
+ },
+ {
+  "id": "patrons-truth",
+  "grants": false,
+  "note": "Grants an extra 10th-rank spell slot, not a named spell."
+ },
+ {
+  "id": "advanced-school-spell",
+  "grants": false,
+  "note": "Spell is determined by the character's arcane school subclass, not a single named spell; must be resolved from the chosen school."
+ },
+ {
+  "id": "second-thoughts",
+  "grants": false,
+  "note": "Recasts a spell you already cast; modifier, not a grant."
+ },
+ {
+  "id": "archwizards-might",
+  "grants": false,
+  "note": "Extra 10th-rank spell slot only."
+ },
+ {
+  "id": "bard-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Two occult cantrips of the player's choice into a repertoire; no named spell."
+ },
+ {
+  "id": "basic-bard-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Adds player-chosen common occult spells to the repertoire as archetype slots come online; also grants slots, not named spells."
+ },
+ {
+  "id": "anthemic-performance",
+  "grants": true,
+  "focusSpells": [
+   "courageous-anthem"
+  ],
+  "note": "Unconditional grant of the Courageous Anthem composition cantrip; composition cantrips are focus cantrips that cost a Focus Point, so filed as focus."
+ },
+ {
+  "id": "occult-breadth",
+  "grants": false,
+  "note": "Increases repertoire size and slot count only."
+ },
+ {
+  "id": "cleric-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Prepare two divine cantrips of the player's choice each day."
+ },
+ {
+  "id": "druid-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Prepare two primal cantrips of the player's choice each day."
+ },
+ {
+  "id": "order-spell",
+  "grants": false,
+  "note": "Initial order focus spell is determined by the druidic order subclass, not a single named spell."
+ },
+ {
+  "id": "ranger-dedication",
+  "grants": false,
+  "note": "Only sets trained proficiency in spell attacks/DCs if a warden spell is gained later; grants no spell itself."
+ },
+ {
+  "id": "witch-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Familiar gains two player-chosen patron-tradition cantrips and you prepare one of them; the spells are chosen and held by the familiar."
+ },
+ {
+  "id": "basic-witch-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Adds player-chosen common spells to the familiar plus archetype slots; no named spell."
+ },
+ {
+  "id": "patrons-breadth",
+  "grants": false,
+  "note": "Increases archetype spell slots only."
+ },
+ {
+  "id": "wizard-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Spellbook with four arcane cantrips of the player's choice."
+ },
+ {
+  "id": "arcane-school-spell",
+  "grants": false,
+  "note": "Initial school focus spell is determined by the chosen arcane school, not a single named spell."
+ },
+ {
+  "id": "basic-wizard-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Adds two player-chosen common arcane spells per new slot rank to the spellbook."
+ },
+ {
+  "id": "true-senses",
+  "grants": false,
+  "note": "Once/day 2-action activity that explicitly non-magically replicates the effects of a 6th-rank truesight; no castable spell is added."
+ },
+ {
+  "id": "emergency-regeneration",
+  "grants": false,
+  "note": "Once/day triggered reaction giving the effects of 7th-rank regenerate; an ability, not a spell you can cast."
+ },
+ {
+  "id": "rat-form",
+  "grants": false,
+  "note": "1-action polymorph ability granting the effects of 1st-rank pest form restricted to a rat; not a castable spell grant."
+ },
+ {
+  "id": "deitys-domain",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses one of the deity's domains; the resulting initial domain focus (devotion) spell depends on that pick."
+ },
+ {
+  "id": "advanced-deitys-domain",
+  "grants": false,
+  "note": "Advanced domain spell derived from the domain previously picked with Deity's Domain; not a fixed named spell."
+ },
+ {
+  "id": "harmonize-self",
+  "grants": true,
+  "focusSpells": [
+   "harmonize-self"
+  ],
+  "note": "Unconditional grant of the Harmonize Self qi spell (focus, monk); spell id verified in core.json."
+ },
+ {
+  "id": "clinging-shadows-initiate",
+  "grants": true,
+  "focusSpells": [
+   "clinging-shadows-stance"
+  ],
+  "note": "Grants the Clinging Shadows Stance qi (focus) spell; spell id is clinging-shadows-stance, not the feat id."
+ },
+ {
+  "id": "wild-winds-initiate",
+  "grants": true,
+  "focusSpells": [
+   "wild-winds-stance"
+  ],
+  "note": "Grants the Wild Winds Stance qi (focus) spell; spell id is wild-winds-stance."
+ },
+ {
+  "id": "wind-jump",
+  "grants": true,
+  "focusSpells": [
+   "wind-jump"
+  ],
+  "note": "Grants the Wind Jump qi (focus) spell; spell id matches the feat id and exists in core.json."
+ },
+ {
+  "id": "shadows-web",
+  "grants": true,
+  "focusSpells": [
+   "shadows-web"
+  ],
+  "note": "Grants the Shadow's Web qi (focus) spell; verified in core.json spells."
+ },
+ {
+  "id": "domain-acumen",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses a domain associated with their mystery; the initial domain spell (cast as a revelation focus spell) follows from that pick. Repeatable."
+ },
+ {
+  "id": "meddling-futures",
+  "grants": false,
+  "note": "Cursebound action giving a status bonus to a spell's damage/healing; no spell granted."
+ },
+ {
+  "id": "advanced-revelation",
+  "grants": false,
+  "note": "Advanced revelation focus spell is determined by the oracle mystery subclass, not a single named spell."
+ },
+ {
+  "id": "domain-fluency",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses one of their mystery's domains; advanced domain spell follows from that pick."
+ },
+ {
+  "id": "epiphany-at-the-crossroads",
+  "grants": false,
+  "note": "Once/day free action while dying that gives the effects of augury; not a castable spell grant."
+ },
+ {
+  "id": "greater-revelation",
+  "grants": false,
+  "note": "Greater revelation focus spell depends on the oracle's mystery, not a fixed named spell."
+ },
+ {
+  "id": "blaze-of-revelation",
+  "grants": false,
+  "note": "Lets you cast revelation spells you already have without spending Focus Points; a modifier."
+ },
+ {
+  "id": "divine-effusion",
+  "grants": false,
+  "note": "Two extra castings after slots run out; no named spell."
+ },
+ {
+  "id": "oracular-providence",
+  "grants": false,
+  "note": "Extra 10th-rank spell slot only."
+ },
+ {
+  "id": "paradoxical-mystery",
+  "grants": false,
+  "isChoice": true,
+  "note": "Daily player choice of a domain or revelation spell gained as a revelation spell until next preparations; temporary and chosen."
+ },
+ {
+  "id": "divine-evolution",
+  "grants": false,
+  "note": "Extra highest-rank slot usable only for Heal or Harm — a slot plus a per-casting choice, not a granted spell."
+ },
+ {
+  "id": "primal-evolution",
+  "grants": false,
+  "note": "Extra highest-rank slot usable only for Summon Animal or Summon Plant or Fungus; a slot, not a granted spell."
+ },
+ {
+  "id": "advanced-bloodline",
+  "grants": false,
+  "note": "Advanced bloodline focus spell is determined by the sorcerer bloodline subclass, not a single named spell."
+ },
+ {
+  "id": "greater-bloodline",
+  "grants": false,
+  "note": "Greater bloodline focus spell depends on the bloodline subclass."
+ },
+ {
+  "id": "greater-vital-evolution",
+  "grants": false,
+  "note": "Two extra castings after slots run out; no named spell."
+ },
+ {
+  "id": "echoing-spell",
+  "grants": false,
+  "note": "Duplicates a spell you are already casting; modifier."
+ },
+ {
+  "id": "bloodline-perfection",
+  "grants": false,
+  "note": "Extra 10th-rank spell slot only."
+ },
+ {
+  "id": "champion-dedication",
+  "grants": false,
+  "note": "Only grants spell attack/DC proficiency if a devotion spell is gained later; no spell granted."
+ },
+ {
+  "id": "devout-magic",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a devotion (focus) spell from the champion devotion spells list under the same restrictions."
+ },
+ {
+  "id": "choir-politic",
+  "grants": true,
+  "focusSpells": [
+   "share-vision"
+  ],
+  "note": "Witch patron: 'You gain the Share Vision hex cantrip' — hexes are focus spells (cost 1 FP). share-vision verified in core.json (traits cantrip,hex,witch). Share Lore goes to the familiar, so it is excluded."
+ },
+ {
+  "id": "cobyslarni",
+  "grants": true,
+  "focusSpells": [
+   "information-overload"
+  ],
+  "note": "Witch patron hex cantrip; information-overload verified (cantrip,hex,witch). Deja Vu is the familiar's spell, excluded."
+ },
+ {
+  "id": "cultivation-order",
+  "grants": true,
+  "focusSpells": [
+   "cornucopia"
+  ],
+  "note": "Druid order spell = focus spell; cornucopia verified in core.json (traits druid,focus). Leshy Familiar is a feat grant, not a spell."
+ },
+ {
+  "id": "curse-of-the-mortal-warrior",
+  "grants": false,
+  "note": "Oracle curse effect (weakness 2 to spell damage). No spell granted."
+ },
+ {
+  "id": "devourer-of-decay",
+  "grants": true,
+  "focusSpells": [
+   "scroungers-glee"
+  ],
+  "note": "Witch patron hex cantrip; id is scroungers-glee (no apostrophe) — verified. Enfeeble goes to the familiar."
+ },
+ {
+  "id": "faiths-flamekeeper",
+  "grants": true,
+  "focusSpells": [
+   "stoke-the-heart"
+  ],
+  "note": "Witch patron hex cantrip; stoke-the-heart verified. Command is the familiar's spell."
+ },
+ {
+  "id": "flexible-spell-preparation",
+  "grants": false,
+  "note": "Wizard thesis: changes how prepared slots work. No named spell."
+ },
+ {
+  "id": "focus-spells",
+  "grants": false,
+  "note": "Generic rules text explaining the focus-spell subsystem. Grants nothing."
+ },
+ {
+  "id": "ki-spells",
+  "grants": false,
+  "note": "Generic rules text for the ki focus-spell pool. Individual ki spells come from feats."
+ },
+ {
+  "id": "mosquito-witch",
+  "grants": true,
+  "focusSpells": [
+   "buzzing-bites"
+  ],
+  "note": "Witch patron hex cantrip; buzzing-bites verified. Pest Form is the familiar's spell."
+ },
+ {
+  "id": "occult-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Bard spellcasting class feature — spells come from the repertoire, all player-chosen."
+ },
+ {
+  "id": "paradox-of-opposites",
+  "grants": true,
+  "focusSpells": [
+   "trade-death-for-life"
+  ],
+  "note": "Witch patron hex cantrip; trade-death-for-life verified (cantrip,healing,hex,witch). Sleep is the familiar's spell."
+ },
+ {
+  "id": "revelation-spells",
+  "grants": false,
+  "note": "Generic rules text for the oracle focus-spell pool. Specific revelation spells come from the mystery."
+ },
+ {
+  "id": "ripple-in-the-deep",
+  "grants": true,
+  "focusSpells": [
+   "sting-of-the-sea"
+  ],
+  "note": "Witch patron hex cantrip; sting-of-the-sea verified. The familiar's Dizzying Colors/Grease choice is excluded (familiar + choice)."
+ },
+ {
+  "id": "runelord",
+  "grants": false,
+  "note": "Wizard class archetype: personal rune, Thassilonian school, and Advanced School Spell as a bonus feat at 8th. No specifically named spell is granted by this record."
+ },
+ {
+  "id": "seneschal",
+  "grants": true,
+  "focusSpells": [
+   "manifest-will"
+  ],
+  "note": "Witch class archetype: 'you gain the Manifest Will hex cantrip' — manifest-will verified (cantrip,aura,hex,witch). The familiar's 1st-rank spell is a player choice and goes to the familiar."
+ },
+ {
+  "id": "silence-in-snow",
+  "grants": true,
+  "focusSpells": [
+   "clinging-ice"
+  ],
+  "note": "Witch patron hex cantrip; clinging-ice verified. Gust of Wind is the familiar's spell."
+ },
+ {
+  "id": "spell-repertoire-bard",
+  "grants": false,
+  "isChoice": true,
+  "note": "Repertoire spells are entirely player-chosen."
+ },
+ {
+  "id": "spell-repertoire-oracle",
+  "grants": false,
+  "isChoice": true,
+  "note": "Repertoire spells are entirely player-chosen."
+ },
+ {
+  "id": "spell-repertoire-psychic",
+  "grants": false,
+  "isChoice": true,
+  "note": "Repertoire/cantrips are player-chosen; the extra spells 'listed in your conscious mind' are named on the conscious-mind record, not here."
+ },
+ {
+  "id": "spell-repertoire-sorcerer",
+  "grants": false,
+  "isChoice": true,
+  "note": "Repertoire spells are player-chosen; the bloodline's extra spell/cantrip is named on the bloodline record, not here."
+ },
+ {
+  "id": "spell-repertoire-summoner",
+  "grants": false,
+  "isChoice": true,
+  "note": "Repertoire spells are entirely player-chosen."
+ },
+ {
+  "id": "spinner-of-threads",
+  "grants": true,
+  "focusSpells": [
+   "nudge-fate"
+  ],
+  "note": "Witch patron hex cantrip; nudge-fate verified. Sure Strike is the familiar's spell."
+ },
+ {
+  "id": "spore-order",
+  "grants": true,
+  "focusSpells": [
+   "mushroom-patch"
+  ],
+  "note": "Druid order spell = focus spell; mushroom-patch verified (traits druid,focus)."
+ },
+ {
+  "id": "staff-nexus",
+  "grants": false,
+  "isChoice": true,
+  "note": "Wizard thesis: makeshift staff holds one cantrip and one 1st-rank spell 'both from your spellbook' — player-chosen, and cast from an item."
+ },
+ {
+  "id": "starless-shadow",
+  "grants": true,
+  "focusSpells": [
+   "shroud-of-night"
+  ],
+  "note": "Witch patron hex cantrip; shroud-of-night verified. Fear is the familiar's spell."
+ },
+ {
+  "id": "the-infinite-eye",
+  "grants": false,
+  "note": "Psychic conscious mind. Full core.json text shows a 'Granted Spells' rank ladder (Sure Strike/Augury/Locate/Scouting Eye/Truesight/True Target/Unrelenting Observation/Foresight) plus standard psi cantrips Detect Magic and Guidance — but these enter the SPELL REPERTOIRE (slot-cast + at-will amped cantrips), not a focus pool or innate castings. The schema has no repertoire lane, and the captured `text` here is only the amp/range modifier prose. Filing as innate would give the wrong economy, so grants=false; needs a repertoire-grant lane."
+ },
+ {
+  "id": "the-resentment",
+  "grants": true,
+  "focusSpells": [
+   "evil-eye"
+  ],
+  "note": "Witch patron hex cantrip; evil-eye verified (cantrip,curse,hex,witch). Enfeeble is the familiar's spell."
+ },
+ {
+  "id": "the-tangible-dream",
+  "grants": false,
+  "note": "Psychic conscious mind, same situation as the-infinite-eye: a 'Granted Spells' rank ladder (Dizzying Colors/Sea of Thought/Containment/Etheric Shards/Scintillating Safeguard/Project Image/Confusing Colors/Resplendent Mansion) plus psi cantrips Figment and Shield, all repertoire rather than focus/innate. The captured text is only figment/shield amp modifiers."
+ },
+ {
+  "id": "the-unseen-broker",
+  "grants": true,
+  "focusSpells": [
+   "pact-broker"
+  ],
+  "note": "Witch patron hex cantrip; pact-broker verified. Command is the familiar's spell."
+ },
+ {
+  "id": "vindicator",
+  "grants": true,
+  "focusSpells": [
+   "vindicators-mark"
+  ],
+  "note": "Ranger class archetype vindication edge: 'You gain the Vindicator's Mark warden spell' — warden spells are focus spells. Id is vindicators-mark (no apostrophe), verified (traits attack,focus,manipulate,sanctified)."
+ },
+ {
+  "id": "warden-spells",
+  "grants": false,
+  "note": "Generic rules text for the ranger warden focus pool. Individual warden spells come from feats."
+ },
+ {
+  "id": "wellspring-magic",
+  "grants": false,
+  "note": "Sorcerer/wizard wellspring: alters slot counts and random slot recovery. No named spell."
+ },
+ {
+  "id": "whisper-of-wings",
+  "grants": true,
+  "focusSpells": [
+   "murmuration"
+  ],
+  "note": "Witch patron hex cantrip; murmuration verified (cantrip,hex,sonic,witch). Gentle Landing is the familiar's spell."
+ },
+ {
+  "id": "wilding-steward",
+  "grants": true,
+  "focusSpells": [
+   "wilding-word"
+  ],
+  "note": "Witch patron hex cantrip; wilding-word verified. The familiar's Summon Animal / Summon Plant or Fungus is both a familiar spell and a choice."
+ },
+ {
+  "id": "witch-lessons",
+  "grants": false,
+  "isChoice": true,
+  "note": "Container record listing every basic/greater/major lesson; the hex you get depends on which lesson a feat grants you. Nothing unconditional here."
+ },
+ {
+  "id": "drain-bonded-item",
+  "grants": false,
+  "note": "Lets you recast an already-prepared spell without a slot — a resource ability, not a spell grant."
+ },
+ {
+  "id": "cloak-of-social-graces",
+  "grants": false,
+  "note": "Item with an activation ('you gain the effects of a heroism spell'). Conditional on owning and activating the cloak, and it is an effect not a castable grant."
+ },
+ {
+  "id": "greater-cloak-of-social-graces",
+  "grants": false,
+  "note": "Same as cloak-of-social-graces: activated item effect, not a character spell grant."
+ },
+ {
+  "id": "major-cloak-of-social-graces",
+  "grants": false,
+  "note": "Same as cloak-of-social-graces: activated item effect, not a character spell grant."
+ },
+ {
+  "id": "ethereal",
+  "grants": false,
+  "note": "Armor rune: Activate ⟨1⟩ command, once per day, 'effects of an Ethereal Jaunt spell'. Item activation, so not a character grant (ethereal-jaunt does exist in core.json)."
+ },
+ {
+  "id": "luck-blade-wishing",
+  "grants": false,
+  "note": "'You can cast this spell as an arcane innate spell WHILE WIELDING the luck blade' — conditional on wielding an item, and the stored spell is consumed/rechargeable."
+ },
+ {
+  "id": "aeon-stone-azure-briolette",
+  "grants": false,
+  "note": "Item activation ⟨2⟩ once per day for a Void Warp cantrip effect. Item-activated, not a character grant."
+ },
+ {
+  "id": "ring-of-wizardry",
+  "grants": false,
+  "note": "Grants extra arcane spell SLOTS, not any named spell."
+ },
+ {
+  "id": "ring-of-wizardry-type-i",
+  "grants": false,
+  "note": "Grants extra spell slots only."
+ },
+ {
+  "id": "ring-of-wizardry-type-ii",
+  "grants": false,
+  "note": "Grants extra spell slots only."
+ },
+ {
+  "id": "ring-of-wizardry-type-iii",
+  "grants": false,
+  "note": "Grants extra spell slots only."
+ },
+ {
+  "id": "ring-of-wizardry-type-iv",
+  "grants": false,
+  "note": "Grants extra spell slots only."
+ },
+ {
+  "id": "elemental-wayfinder-air",
+  "grants": false,
+  "note": "Item: activated 4th-rank Lightning Bolt once/day plus Gentle Landing as a primal innate spell once per 10 minutes — both are item-borne and conditional on carrying the wayfinder, so not a character grant. (Both spell ids do exist if an item-innate lane is ever added.)"
+ },
+ {
+  "id": "scrollstaff",
+  "grants": false,
+  "isChoice": true,
+  "note": "Casts whatever scroll is currently inscribed — player-chosen and item-borne."
+ },
+ {
+  "id": "planar-ribbon",
+  "grants": false,
+  "note": "Item activation producing Scrying-like effects; not a castable spell grant."
+ },
+ {
+  "id": "hunters-dawn",
+  "grants": false,
+  "note": "Item: once per day cast a 5th-rank Locate on the marked target — requires the item and a marked target, so conditional."
+ },
+ {
+  "id": "candle-of-invocation",
+  "grants": false,
+  "note": "Grants two extra spell slots during daily preparations near the lit candle. No named spell, and conditional."
+ },
+ {
+  "id": "fungal-armor",
+  "grants": false,
+  "note": "Item activation with a trigger (once/day, when hit) granting Vapor Form benefits. Conditional item effect."
+ },
+ {
+  "id": "forgotten-shell",
+  "grants": false,
+  "note": "'While wearing the armor, you gain the benefits of a Veil of Privacy spell' — a passive worn-item effect, not a castable spell the character gains."
+ },
+ {
+  "id": "oracle-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Repertoire of two divine cantrips the player picks (common divine or others learned); no named spell."
+ },
+ {
+  "id": "basic-oracle-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Adds a player-chosen divine spell per new slot rank; spell slots + choice, not a named grant."
+ },
+ {
+  "id": "first-revelation",
+  "grants": false,
+  "isChoice": true,
+  "note": "Grants 'your mystery's initial revelation spell' — depends on the mystery chosen, no specific named spell here."
+ },
+ {
+  "id": "sorcerer-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Two cantrips of the player's choice from the bloodline's tradition/granted spells."
+ },
+ {
+  "id": "basic-sorcerer-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player-chosen spell added to repertoire per new slot rank."
+ },
+ {
+  "id": "basic-bloodline-spell",
+  "grants": false,
+  "isChoice": true,
+  "note": "Grants 'your bloodline's initial bloodline spell' — resolved by the bloodline choice, not a named spell in this record."
+ },
+ {
+  "id": "beastmaster-dedication",
+  "grants": false,
+  "note": "Only sets proficiency when a later beastmaster feat gives a focus spell; grants no spell itself."
+ },
+ {
+  "id": "eldritch-archer-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "One attack-roll cantrip of the player's choice from a tradition of their choice, plus the Eldritch Shot activity (not a spell)."
+ },
+ {
+  "id": "basic-eldritch-archer-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player-chosen spell added to repertoire per new slot rank."
+ },
+ {
+  "id": "basic-red-mantis-magic",
+  "grants": false,
+  "isChoice": true,
+  "note": "Prepares two divine cantrips of the player's choice each day; also opens the Red Mantis school list. No named spell."
+ },
+ {
+  "id": "morphic-strike",
+  "grants": false,
+  "note": "Grants an unarmed Strike; only references 'the cantrip you gained from your heritage' as a damage-type source."
+ },
+ {
+  "id": "legendary-monster",
+  "grants": false,
+  "note": "'You gain the effects of the Fly spell' is one of three optional 1-minute benefits chosen once per day when you Unleash Yaoguai Might — temporary, conditional, and a choice."
+ },
+ {
+  "id": "cosmic-cocktail",
+  "grants": false,
+  "note": "Once-per-day crafted drink giving the effects of Truesight for 10 minutes — temporary effect, not a castable spell grant."
+ },
+ {
+  "id": "cardinal-guardians",
+  "grants": false,
+  "note": "Status bonus to spell attacks/DCs against a creature; no spell granted."
+ },
+ {
+  "id": "true-channel-spell",
+  "grants": false,
+  "note": "Grants a 10th-rank spell slot only; the spell prepared in it is chosen normally."
+ },
+ {
+  "id": "animist-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Prepares two divine cantrips of the player's choice each day (may include the apparition's cantrip); no named spell."
+ },
+ {
+  "id": "apparition-magic",
+  "grants": false,
+  "note": "Extra spell slots from animist archetype feats only."
+ },
+ {
+  "id": "bloodrager-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Two cantrips of the player's choice from arcane or divine; adds the rage trait to repertoire spells."
+ },
+ {
+  "id": "rising-blood-magic",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player-chosen common spell added to repertoire per new slot rank, plus a damage rider."
+ },
+ {
+  "id": "spelldrinker",
+  "grants": false,
+  "isChoice": true,
+  "note": "Temporary (24 hours / once per hour) 3rd-rank spell determined by the blood drunk, with a choice when multiple traits apply — explicitly temporary."
+ },
+ {
+  "id": "exultant-blood-magic",
+  "grants": false,
+  "note": "Increases bloodrager archetype spell slots and rage damage; no spell granted."
+ },
+ {
+  "id": "patrons-glamour",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "illusory-disguise",
+    "heightenHalfLevel": true,
+    "atWill": true
+   }
+  ],
+  "note": "'You gain Illusory Disguise as an innate spell of your patron's tradition, automatically heightened to the rank of your witch cantrips' — unconditional innate grant; cantrip rank = half level rounded up, so heightenHalfLevel. No frequency is printed, so treated as at-will; tradition varies with the patron so it is omitted. The restriction (only to look like your patron) is a usage limit, not a condition on gaining it. 'illusory-disguise' verified in core.json spells."
+ },
+ {
+  "id": "patrons-whisper",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "message",
+    "atWill": true
+   }
+  ],
+  "note": "'You gain Message as an innate cantrip of your former patron's tradition' — unconditional innate cantrip, at-will. Tradition depends on the patron so omitted. 'message' verified in core.json spells."
+ },
+ {
+  "id": "vindicators-judgement",
+  "grants": true,
+  "focusSpells": [
+   "vindicators-judgment"
+  ],
+  "note": "'You gain the vindicator's judgment focus spell' — focus (costs a Focus Point). core.json has twin ids; used the canonical 'vindicators-judgment' (rank 5, focus trait) that the twin feat record 'vindicators-judgment' and effect-backfill.json already reference, not the aon- duplicate."
+ },
+ {
+  "id": "mythic-magic",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses up to three 1st/2nd-rank spells to cast with Mythic Points; no named spell (and the resource is Mythic Points, not focus/innate)."
+ },
+ {
+  "id": "godling-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "'You learn the initial domain spell for this domain' after choosing a domain — resolved by the domain pick; the focus pool it grants is separate. The hierophant casting it is an ally effect."
+ },
+ {
+  "id": "claim-cardinal-domains",
+  "grants": false,
+  "isChoice": true,
+  "note": "Advanced domain spell for each claimed domain — depends on domains chosen, and access rotates daily during preparations."
+ },
+ {
+  "id": "assume-godhood",
+  "grants": false,
+  "note": "Three chosen spells become cleric spells you grant to your FOLLOWERS; the Intercession Spell ability is not a spell record. Nothing granted to the character."
+ },
+ {
+  "id": "channelers-stance",
+  "grants": false,
+  "note": "Stance giving damage/healing bonuses to apparition and vessel spells; no spell granted."
+ },
+ {
+  "id": "spell-woven-shot",
+  "grants": false,
+  "note": "Grants the Spell-Woven Shot activity (an action), not a spell."
+ },
+ {
+  "id": "listeners-boon",
+  "grants": false,
+  "isChoice": true,
+  "note": "Grants the Domain Initiate feat for a chosen domain (fire, knowledge, protection or travel); the domain spell follows that pick."
+ },
+ {
+  "id": "sin-reservoir",
+  "grants": false,
+  "note": "Extra wizard spell slot only."
+ },
+ {
+  "id": "creed-magic",
+  "grants": false,
+  "isChoice": true,
+  "note": "Grants two special creed spell SLOTS that may be used to prepare from a fixed list (Resist Energy, See the Unseen, Sure Strike, Water Breathing; +Haste/Heroism at 10th; +Fly/Unfettered Movement at 14th). The player picks which to prepare each day, and they are slot-cast, so neither the focus nor the innate lane applies."
+ },
+ {
+  "id": "esoteric-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses the 1st-rank occult or divine spell (and the 2nd/3rd-rank ones at 6th/8th) as once-per-day innate spells; no named spell."
+ },
+ {
+  "id": "greater-esoteric-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses the 4th/5th/6th-rank innate spells from the tradition picked with Esoteric Spellcasting."
+ },
+ {
+  "id": "open-the-blazing-eye",
+  "grants": false,
+  "note": "Once-per-day activity giving the benefits of See the Unseen for 1 minute — a temporary effect, not a castable spell added to the sheet."
+ },
+ {
+  "id": "domain-spirit",
+  "grants": false,
+  "isChoice": true,
+  "note": "'You gain the initial domain spell for that domain' after selecting a domain tied to your spirit — resolved by that pick (it is a Rivethun focus spell once chosen)."
+ },
+ {
+  "id": "advanced-domain-spirit",
+  "grants": false,
+  "isChoice": true,
+  "note": "Advanced domain spell of the domain chosen with Domain Spirit — depends on the earlier choice, no named spell."
+ },
+ {
+  "id": "rivethun-involutionist-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Two divine cantrips of the player's choice."
+ },
+ {
+  "id": "basic-rivethun-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player-chosen divine spell added to repertoire per new slot rank."
+ },
+ {
+  "id": "basic-prophet-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player-chosen occult spell added to repertoire per new slot rank."
+ },
+ {
+  "id": "prophet-of-kalistrade-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Two common occult cantrips of the player's choice 'plus either <missing link> or Read Aura' — the AoN text has a dropped spell link, and it is a choice either way, so nothing is unconditionally granted."
+ },
+ {
+  "id": "wylderheart-dedication",
+  "grants": false,
+  "note": "Only sets proficiency when a later wylderheart feat gives a focus spell; grants no spell itself."
+ },
+ {
+  "id": "shattered-sacrament",
+  "grants": false,
+  "isChoice": true,
+  "note": "'You gain a halcyon cantrip and a 1st-rank halcyon spell' — the player picks which halcyon spells; no named spell."
+ },
+ {
+  "id": "shield-spell-reinforcement",
+  "grants": false,
+  "note": "Changes how you cast the Shield cantrip you already have (ally target, Shield Block on their behalf) — a modifier, not a grant."
+ },
+ {
+  "id": "dracomancer",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses one 1st-rank and one 2nd-rank spell from the dragon-spellcaster list of their benefactor's type (Fear is only an example) as once-per-day innate spells."
+ },
+ {
+  "id": "oatia-skysage-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Two cantrips of the player's choice from Detect Magic, Guidance, Know the Way, or Read Aura."
+ },
+ {
+  "id": "master-skysage-divination",
+  "grants": false,
+  "isChoice": true,
+  "note": "The 7th-rank spell is a choice (list is truncated in the data: '... or True Target'). Pinpoint at 18th and Foresight at 20th ARE unconditional and named, but they are added to the spell REPERTOIRE (slot-cast), which is neither the focus nor the innate lane — filing them as innate would give the wrong resource economy, so no grant is emitted."
+ },
+ {
+  "id": "avenging-runelord-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses one arcane innate spell from a list (Darkvision, Mystic Armor, Runic Body, Runic Weapon, See the Unseen, Sending, Truesight, or a sin spell of 6th rank or lower)."
+ },
+ {
+  "id": "reliable-magic",
+  "grants": false,
+  "note": "Lets you re-cast a spell from a scroll with mythic proficiency; item-activated and no spell granted."
+ },
+ {
+  "id": "dark-personas-presence",
+  "grants": false,
+  "note": "Emanation/save rider on spells you already cast; no spell granted."
+ },
+ {
+  "id": "foreseen-failure",
+  "grants": false,
+  "note": "Reaction letting you cast a different spell after a failed one; no spell granted."
+ },
+ {
+  "id": "conscious-spell-specialization",
+  "grants": false,
+  "note": "Extra spell slots restricted to conscious-mind spells; no named spell."
+ },
+ {
+  "id": "mind-over-matter",
+  "grants": false,
+  "note": "Grants an additional 10th-rank spell slot only."
+ },
+ {
+  "id": "psychic-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "One standard psi cantrip of the player's choice from the chosen conscious mind."
+ },
+ {
+  "id": "basic-psychic-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Adds a spell of your choice (common occult / conscious-mind granted spell / learned spell) to your repertoire when you gain a new archetype slot rank — player picks, no named spell."
+ },
+ {
+  "id": "psi-development",
+  "grants": false,
+  "isChoice": true,
+  "note": "Another psi cantrip from your conscious mind: either the standard cantrip you skipped or the unique surface cantrip — a player choice whose options depend on the chosen conscious mind."
+ },
+ {
+  "id": "cryptic-spell",
+  "grants": false,
+  "note": "Only adds the subtle trait to a spell you are about to cast; a modifier, not a grant."
+ },
+ {
+  "id": "pact-of-infernal-prowess",
+  "grants": false,
+  "note": "The DEVILS gain the effects of Pinpoint (and 10th-rank Scrying) on you — granted to NPCs against the character, not to the character."
+ },
+ {
+  "id": "chronomancers-secrets",
+  "grants": false,
+  "isChoice": true,
+  "note": "Choose Stasis (stasis) OR Path of Least Resistance (path-of-least-resistance); both exist in core.json but the pick is the player's, so a picker lane is needed."
+ },
+ {
+  "id": "future-spell-learning",
+  "grants": false,
+  "note": "Adds Behold the Weave, Cast into Time, Haste, etc. to your spell LIST (access only) plus an optional retrain — no casting is granted."
+ },
+ {
+  "id": "duel-spell-advantage",
+  "grants": false,
+  "isChoice": true,
+  "note": "A third natural psychic spell chosen when a psychic duel starts; player-chosen and conditional on being in a duel."
+ },
+ {
+  "id": "libertys-devotion",
+  "grants": false,
+  "isChoice": true,
+  "note": "An advanced domain spell from a domain you picked with Liberty's Promise — depends on earlier choices, not a named spell."
+ },
+ {
+  "id": "minor-deific-power",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"Choose a common divine cantrip and one common 1st-rank divine spell\" — the innate at-will cantrip + once/day 1st-rank casting are real, but both spells are player-picked."
+ },
+ {
+  "id": "pure-legion-enforcer-dedication",
+  "grants": false,
+  "note": "Grants the Recognize Spell skill feat and a Religion bonus; no spell."
+ },
+ {
+  "id": "holy-bloom",
+  "grants": false,
+  "isChoice": true,
+  "note": "Initial domain spell of a domain you select (Milani's two domains) — the domain, and thus the focus spell, is chosen."
+ },
+ {
+  "id": "holy-flower",
+  "grants": false,
+  "isChoice": true,
+  "note": "Advanced domain spell of the domain chosen with Holy Bloom — depends on the earlier pick."
+ },
+ {
+  "id": "pirates-pet",
+  "grants": false,
+  "isChoice": true,
+  "note": "Learn a common 1st/2nd-rank familiar-targeting spell (1/day primal innate) OR Phase Familiar (1/hour) — player choice; also targets the pet rather than the character."
+ },
+ {
+  "id": "dedication-to-the-five",
+  "grants": false,
+  "isChoice": true,
+  "note": "Grants the Domain Initiate feat with the domain restricted to duty/might/perfection/protection — still a player choice of domain, so no named spell."
+ },
+ {
+  "id": "aon-empty-body",
+  "grants": false,
+  "note": "Text does grant the Empty Body ki focus spell unconditionally (+1 Focus Point), but NO matching spell id exists in core.json — searched 'empty', 'body', 'ethereal' and all monk-trait focus spells; only empty-inside/empty-pack exist. Refusing to guess a slug."
+ },
+ {
+  "id": "conflux-spells",
+  "grants": false,
+  "note": "\"You learn a conflux spell from your hybrid study\" — the specific spell comes from the chosen hybrid study, not this feature."
+ },
+ {
+  "id": "studious-spells",
+  "grants": false,
+  "note": "Grants dedicated prepared spell SLOTS plus spellbook access to Gecko Grip/Sure Strike/Water Breathing (later Haste, Fly, + hybrid-study spells). Named, but it is a spell-slot/spellbook lane, not a focus or innate grant."
+ },
+ {
+  "id": "double-spellstrike",
+  "grants": false,
+  "note": "Lets you re-cast a spell you already cast via Spellstrike; a modifier on existing casting."
+ },
+ {
+  "id": "summoner-spellcasting",
+  "grants": false,
+  "note": "Generic spellcasting progression (slots + repertoire); no named spell."
+ },
+ {
+  "id": "spell-repertoire",
+  "grants": false,
+  "isChoice": true,
+  "note": "The repertoire mechanic itself — every spell in it is player-selected."
+ },
+ {
+  "id": "link-spells",
+  "grants": true,
+  "focusSpells": [
+   "evolution-surge",
+   "boost-eidolon"
+  ],
+  "note": "Full core.json text: \"You learn the Evolution Surge link spell\" and \"You learn the Boost Eidolon link cantrip\" — both unconditional summoner focus spells (Boost Eidolon is a focus cantrip that costs no Focus Point). Both ids verified with the summoner trait."
+ },
+ {
+  "id": "composition-spells",
+  "grants": true,
+  "focusSpells": [
+   "counter-performance",
+   "courageous-anthem"
+  ],
+  "note": "Full core.json text: \"You learn the Counter Performance composition spell\" and \"You learn the Courageous Anthem composition cantrip\" — both unconditional bard focus spells; ids verified (both carry the focus/composition traits)."
+ },
+ {
+  "id": "magnum-opus",
+  "grants": false,
+  "note": "A single 10th-rank bard spell slot; no named spell."
+ },
+ {
+  "id": "cleric-spellcasting",
+  "grants": false,
+  "note": "Generic prepared divine spellcasting; no named spell."
+ },
+ {
+  "id": "divine-font",
+  "grants": false,
+  "isChoice": true,
+  "note": "Extra top-rank spell SLOTS restricted to Heal or Harm, with the choice set by deity (or picked when both are allowed). Slot lane, and a choice — not a focus/innate grant."
+ },
+ {
+  "id": "miraculous-spell",
+  "grants": false,
+  "note": "A single 10th-rank cleric spell slot; no named spell."
+ },
+ {
+  "id": "druid-spellcasting",
+  "grants": false,
+  "note": "Generic prepared primal spellcasting; no named spell."
+ },
+ {
+  "id": "druidic-order",
+  "grants": false,
+  "isChoice": true,
+  "note": "Grants \"an order spell\" — the actual focus spell comes from the chosen druidic order."
+ },
+ {
+  "id": "primal-hierophant",
+  "grants": false,
+  "note": "A single 10th-rank druid spell slot; no named spell."
+ },
+ {
+  "id": "witch-spellcasting",
+  "grants": false,
+  "note": "Generic prepared spellcasting via the patron's tradition; no named spell."
+ },
+ {
+  "id": "hex-spells",
+  "grants": false,
+  "isChoice": true,
+  "note": "Full core.json text: \"You learn your choice of the Patron's Puppet hex or Phase Familiar hex\" — a player choice; other hexes come from lessons and the hex cantrip comes from the patron."
+ },
+ {
+  "id": "patrons-gift",
+  "grants": false,
+  "note": "A single 10th-rank witch spell slot; no named spell."
+ },
+ {
+  "id": "wizard-spellcasting",
+  "grants": false,
+  "note": "Generic prepared arcane spellcasting; no named spell."
+ },
+ {
+  "id": "arcane-school",
+  "grants": false,
+  "isChoice": true,
+  "note": "Curriculum spells and slots depend on the school you select; no named spell here."
+ },
+ {
+  "id": "archwizards-spellcraft",
+  "grants": false,
+  "note": "A single 10th-rank wizard spell slot; no named spell."
+ },
+ {
+  "id": "devotion-spells",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"Choose either Shields of the Spirit or a spell based on your deity's divine font (Lay on Hands if heal, Touch of the Void if harm)\" — all three ids exist (shields-of-the-spirit, lay-on-hands, touch-of-the-void) but the pick is the player's/deity-dependent."
+ },
+ {
+  "id": "heros-defiance",
+  "grants": true,
+  "focusSpells": [
+   "heros-defiance"
+  ],
+  "note": "Champion level-19 feature: \"You gain the Hero's Defiance devotion spell\" — unconditional. Spell id heros-defiance verified (champion, focus, rank 10)."
+ },
+ {
+  "id": "oracle-spellcasting",
+  "grants": false,
+  "note": "Generic spontaneous divine spellcasting; no named spell."
+ },
+ {
+  "id": "mystery",
+  "grants": false,
+  "isChoice": true,
+  "note": "Granted spells and the initial revelation spell both come from the mystery you choose; this umbrella feature names none."
+ },
+ {
+  "id": "oracular-clarity",
+  "grants": false,
+  "note": "A single 10th-rank oracle spell slot; no named spell."
+ },
+ {
+  "id": "sorcerer-spellcasting",
+  "grants": false,
+  "note": "Generic spontaneous spellcasting; no named spell."
+ },
+ {
+  "id": "sorcerous-potency",
+  "grants": false,
+  "note": "A damage/healing status bonus on spells you cast; a modifier, not a grant."
+ },
+ {
+  "id": "bloodline-paragon",
+  "grants": false,
+  "note": "A single 10th-rank sorcerer spell slot; no named spell."
+ },
+ {
+  "id": "animist-apparition-spellcasting",
+  "grants": false,
+  "note": "Generic dual (prepared + apparition-repertoire) divine spellcasting; no named spell."
+ },
+ {
+  "id": "supreme-incarnation",
+  "grants": false,
+  "note": "Grants a 10th-rank apparition SLOT that can hold heightened apparition spells or Avatar (spell id avatar exists). Slot-based access shared with other spells, not a focus or innate casting — filing it in either lane would give a wrong resource economy."
+ },
+ {
+  "id": "psychic-spellcasting",
+  "grants": false,
+  "note": "Generic spontaneous occult spellcasting; no named spell."
+ },
+ {
+  "id": "conscious-mind",
+  "grants": false,
+  "isChoice": true,
+  "note": "Granted repertoire spells and the three psi cantrips all come from the conscious mind you choose; this umbrella feature names none."
+ },
+ {
+  "id": "infinite-mind",
+  "grants": false,
+  "isChoice": true,
+  "note": "Add two common 10th-rank occult spells of your choice plus one 10th-rank slot."
+ },
+ {
+  "id": "arcane-spellcasting-magus",
+  "grants": false,
+  "note": "Generic prepared arcane spellcasting from a spellbook; no named spell."
+ },
+ {
+  "id": "baba-yaga",
+  "grants": true,
+  "focusSpells": [
+   "spirit-object"
+  ],
+  "note": "Witch patron: \"You gain the Spirit Object hex cantrip\" — unconditional focus (hex) cantrip, id spirit-object verified (cantrip, hex, witch). The Chilling Spray in the same sentence goes to the FAMILIAR, so it is excluded."
+ },
+ {
+  "id": "battle-creed",
+  "grants": false,
+  "note": "Battle harbinger cleric doctrine: alters slots/proficiencies and removes Miraculous Spell; no named spell."
+ },
+ {
+  "id": "bloodline-phoenix",
+  "grants": true,
+  "focusSpells": [
+   "rejuvenating-flames"
+  ],
+  "note": "Initial bloodline (focus) spell Rejuvenating Flames is unconditional at level 1; advanced (shroud-of-flame) and greater (cleansing-flames) require the Advanced/Greater Bloodline feats so they are excluded. The \"Granted Spells\" list (Detect Magic, Breathe Fire, Fireball, …) are repertoire/spell-slot additions gained by level, a different lane from focus/innate."
+ },
+ {
+  "id": "bloodline-spells",
+  "grants": false,
+  "note": "Generic focus-pool rules text for sorcerer bloodline spells; the actual spells come from the bloodline."
+ },
+ {
+  "id": "bloodline-undead",
+  "grants": true,
+  "focusSpells": [
+   "undeaths-blessing"
+  ],
+  "note": "Initial bloodline (focus) spell Undeath's Blessing is unconditional at level 1; advanced (drain-life) and greater (grasping-grave) need the Advanced/Greater Bloodline feats. The \"Sorcerous Gifts\" list (Void Warp, Harm, …) are repertoire additions, a different lane."
+ },
+ {
+  "id": "catharsis-emotion",
+  "grants": false,
+  "note": "Template/rules text describing that each catharsis emotion lists a spell and a focus spell; names no spell itself, and the listed spell needs a spell slot while the focus spell requires the Cathartic Focus Spell feat."
+ },
+ {
+  "id": "animal-rage",
+  "grants": false,
+  "note": "Rage action that gives the EFFECTS of 3rd-rank animal form with your own stats; no spell is added to the character."
+ },
+ {
+  "id": "minor-magic",
+  "grants": false,
+  "isChoice": true,
+  "note": "Two cantrips of your choice from a tradition you choose - picker lane."
+ },
+ {
+  "id": "dangerous-sorcery",
+  "grants": false,
+  "note": "Damage bonus to spells you already cast; no spell granted."
+ },
+ {
+  "id": "hand-of-the-apprentice",
+  "grants": true,
+  "focusSpells": [
+   "hand-of-the-apprentice"
+  ],
+  "note": "Explicit named universalist focus spell + 1 Focus Point; id verified rank 1 with focus trait."
+ },
+ {
+  "id": "silent-spell",
+  "grants": false,
+  "note": "Removes the verbal component from a spell you are already casting; a modifier, not a grant."
+ },
+ {
+  "id": "advanced-red-mantis-magic",
+  "grants": false,
+  "note": "Grants spell slots plus unnamed spellbook additions; no specific named spell."
+ },
+ {
+  "id": "perfect-ki-adept",
+  "grants": false,
+  "note": "Subclass-conditional, not unconditional: Unblinking Flame -> unblinking-flame-revelation, Unbreaking Waves -> unbreaking-wave-advance, Unfolding Wind -> unfolding-wind-rush, Untwisting Iron -> untwisting-iron-buffer (all 4 focus-spell ids verified) - needs a School-of-Perfection conditional lane, not a flat grant."
+ },
+ {
+  "id": "spell-runes",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses a 1st-rank arcane spell (2nd at 6th, 3rd at 8th) cast 1/day innate - picker lane."
+ },
+ {
+  "id": "greater-spell-runes",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses 4th/5th/6th-rank arcane spells as 1/day innate runes - picker lane."
+ },
+ {
+  "id": "silvers-refrain",
+  "grants": true,
+  "focusSpells": [
+   "silvers-refrain"
+  ],
+  "note": "Named composition cantrip; composition cantrips are focus spells (cast at will, no Focus Point), so filed as focus not innate. id verified rank 0, composition trait."
+ },
+ {
+  "id": "ornate-tattoo",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses a 1st-rank arcane spell of their Arcane Tattoos school, 1/day innate arcane - picker lane."
+ },
+ {
+  "id": "virtue-forged-tattoos",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses a 3rd-rank arcane spell of their tattoo school, 1/day innate arcane - picker lane."
+ },
+ {
+  "id": "intuitive-illusions",
+  "grants": false,
+  "note": "Free Sustain on an illusion you already cast; no grant."
+ },
+ {
+  "id": "cascade-bearers-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Widens the halcyon spell list and gives an unnamed halcyon cantrip + 1st-rank spell of your choice."
+ },
+ {
+  "id": "halcyon-speaker-dedication",
+  "grants": false,
+  "note": "Grants a 1st-rank halcyon spell slot only; no named spell."
+ },
+ {
+  "id": "dualistic-synergy",
+  "grants": false,
+  "note": "Bonus after casting; no spell granted."
+ },
+ {
+  "id": "halcyon-spellcasting-initiate",
+  "grants": false,
+  "note": "Spell slots only."
+ },
+ {
+  "id": "flexible-halcyon-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Extra unnamed common halcyon spells (player-chosen) plus extra slots."
+ },
+ {
+  "id": "halcyon-spellcasting-adept",
+  "grants": false,
+  "note": "Spell slots and proficiency advancement only."
+ },
+ {
+  "id": "halcyon-spellcasting-sage",
+  "grants": false,
+  "note": "Spell slots and proficiency advancement only."
+ },
+ {
+  "id": "synergistic-spell",
+  "grants": false,
+  "note": "Lets you cast a second spell from existing slots; no grant."
+ },
+ {
+  "id": "surreptitious-spellcaster",
+  "grants": false,
+  "note": "Grants the Conceal Spell FEAT, not a spell (belongs to the feat-grants-feat lane)."
+ },
+ {
+  "id": "absorb-spell",
+  "grants": false,
+  "note": "Triggered, temporary use of a foe's spell; conditional, not a grant."
+ },
+ {
+  "id": "spell-mastery",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player selects four spells already in their spellbook to be auto-prepared; slot/preparation mechanic."
+ },
+ {
+  "id": "endurance-of-the-rooted-tree",
+  "grants": false,
+  "note": "Only changes the action cost of Wholeness of Body, which you must already have (and no wholeness-of-body id exists in core.json spells)."
+ },
+ {
+  "id": "loaner-spell",
+  "grants": false,
+  "note": "Ally-dependent, per-day loan of an unnamed spell."
+ },
+ {
+  "id": "steal-spell",
+  "grants": false,
+  "note": "Randomly stolen enemy spell, temporary; not a grant."
+ },
+ {
+  "id": "ancestral-mage",
+  "grants": false,
+  "note": "Adds innate spells you already have to your repertoire; a modifier on existing grants."
+ },
+ {
+  "id": "shadow-magic",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks ONE of dance-of-darkness or shadow-jump (both verified focus spells) plus a focus pool - two-option focus picker, not an unconditional grant."
+ },
+ {
+  "id": "determined-lore-seeker",
+  "grants": false,
+  "note": "Only upgrades Lore Seeker's existing innate spells (extra uses / heightening); note the legacy names comprehend language, restore senses, see invisibility have no matching ids (remaster: translate, see-the-unseen)."
+ },
+ {
+  "id": "retain-absorbed-spell",
+  "grants": false,
+  "note": "Upgrades Absorb Spell's temporary stolen casting."
+ },
+ {
+  "id": "westyrs-wayfinder-repository",
+  "grants": false,
+  "note": "Stores an unnamed spell you already know in a wayfinder during daily preparations."
+ },
+ {
+  "id": "ghost-hunter-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Two player-chosen occult cantrips (divination/enchantment/necromancy) as innate occult, Cha - picker lane, at-will."
+ },
+ {
+  "id": "spirit-spells",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses 1st- (then 2nd- and 3rd-rank) occult spells cast 1/day innate - picker lane."
+ },
+ {
+  "id": "advanced-seeker-of-truths",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks an advanced domain focus spell from a domain chosen with Seeker of Truths; repeatable."
+ },
+ {
+  "id": "true-gaze",
+  "grants": false,
+  "note": "Goloma activity giving the EFFECTS of a 6th-rank truesight once per hour; not cast as a spell, so no Spells-page entry (flagging in case you'd rather model it as innate truesight rank 6, usesPer hour - truesight id does exist)."
+ },
+ {
+  "id": "strikers-scroll",
+  "grants": false,
+  "note": "Lets you cast a spell from an affixed scroll item during Spellstrike."
+ },
+ {
+  "id": "standby-spell",
+  "grants": false,
+  "note": "Lets you cast a chosen spellbook spell unprepared by expending a slot; preparation mechanic."
+ },
+ {
+  "id": "magical-understudy",
+  "grants": false,
+  "note": "Two cantrips go to the EIDOLON, not the character."
+ },
+ {
+  "id": "reinforce-eidolon",
+  "grants": true,
+  "focusSpells": [
+   "reinforce-eidolon"
+  ],
+  "note": "The SUMMONER gains the Reinforce Eidolon link cantrip (link cantrips are focus spells that cost no Focus Point); id verified rank 0, summoner trait."
+ },
+ {
+  "id": "magical-adept",
+  "grants": false,
+  "note": "Innate spells go to the EIDOLON, and they are player-chosen."
+ },
+ {
+  "id": "magus-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Four common arcane cantrips of your choice into a spellbook - picker lane."
+ },
+ {
+  "id": "hybrid-study-spell",
+  "grants": false,
+  "isChoice": true,
+  "note": "Conflux focus spell from a hybrid study of your choice; player picks which study, so not a fixed spell."
+ },
+ {
+  "id": "basic-summoner-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Repertoire plus two unnamed cantrips of the eidolon's tradition."
+ },
+ {
+  "id": "cathartic-mage-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "One cantrip of your choice from a spell list of your choice."
+ },
+ {
+  "id": "basic-cathartic-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Unnamed repertoire additions as slots unlock."
+ },
+ {
+  "id": "cathartic-focus-spell",
+  "grants": false,
+  "note": "Focus spell is determined by your chosen emotion (subclass-conditional) and castable only in emotional fervor; needs an emotion->spell conditional lane, not a flat grant."
+ },
+ {
+  "id": "advanced-elemental-spell",
+  "grants": false,
+  "note": "Druid-order conditional: flame -> combustion, stone -> stone-lance, storm -> powerful-inhalation, wave -> pulverizing-cascade (all 4 focus ids verified) - order-conditional lane, not unconditional."
+ },
+ {
+  "id": "geomancer-dedication",
+  "grants": false,
+  "note": "Terrain attunement riders on spells you cast; no spell granted."
+ },
+ {
+  "id": "basic-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Repertoire additions of unnamed common spells of your trait's tradition."
+ },
+ {
+  "id": "shadow-reservoir",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player-selected unnamed spells per rank cast via existing slots; casting mechanic."
+ },
+ {
+  "id": "secrets-of-shadow",
+  "grants": false,
+  "note": "Adds an unnamed extra reservoir spell plus resistance."
+ },
+ {
+  "id": "soulforger-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "harm/heal/dispel-magic come only from specific chosen essence powers (Harmful Malice / Healing Grace / Magical Resilience) and only while the armament is manifested - conditional on an essence-power pick, so not an unconditional grant."
+ },
+ {
+  "id": "nantambu-chime-ringer-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "One arcane OR occult cantrip of your choice, heightened to half your level - picker lane (at-will, heightenHalfLevel) but the spell is player-chosen."
+ },
+ {
+  "id": "beast-gunner-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "One arcane/primal cantrip of your choice that must require a spell attack roll - filtered picker lane."
+ },
+ {
+  "id": "basic-beast-gunner-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "Adds a spell of the player's choosing to the repertoire ('a common spell of your chosen tradition') — open repertoire pick, no named spell."
+ },
+ {
+  "id": "spellshot-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Four common arcane cantrips OF YOUR CHOICE into a spellbook — player picks, nothing named."
+ },
+ {
+  "id": "captivator-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "'Choose two cantrips from the occult list' (enchantment or illusion) cast as occult innate spells — filtered player pick, no named spell."
+ },
+ {
+  "id": "basic-captivator-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "'Choose a 1st-rank occult spell' (+2nd at 6th, 3rd at 8th) as occult innate — open filtered picks, no named spell."
+ },
+ {
+  "id": "captivating-intensity",
+  "grants": false,
+  "note": "Only adds an extra daily casting of innate spells already granted by other captivator feats — a modifier to existing grants, not a grant."
+ },
+ {
+  "id": "expert-captivator-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "'You learn a 4th-rank occult spell' (5th at 12th, 6th at 14th) as occult innate — open filtered picks, no named spell."
+ },
+ {
+  "id": "effortless-captivation",
+  "grants": false,
+  "note": "Grants the effects of the Sustain a Spell action on an existing enchantment/illusion spell — no spell granted."
+ },
+ {
+  "id": "master-captivator-spellcasting",
+  "grants": false,
+  "isChoice": true,
+  "note": "'You learn a 7th-rank occult spell' (8th at 18th, 9th at 20th) as occult innate — open filtered picks, no named spell."
+ },
+ {
+  "id": "blessing-of-the-sun-gods",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player selects one of 11 domains (ambition, cities, darkness, dreams, family, fire, freedom, healing, moon, passion, sun) and gains ITS initial domain spell — a domain picker resolving to a focus spell; also +1 Focus Point. Repeatable."
+ },
+ {
+  "id": "greater-sun-blessing",
+  "grants": false,
+  "isChoice": true,
+  "note": "Advanced domain spell from a domain already chosen with Blessing of the Sun Gods — focus spell determined by the earlier domain pick, not named here; +1 Focus Point."
+ },
+ {
+  "id": "hallowed-initiate",
+  "grants": false,
+  "isChoice": true,
+  "note": "Choose ONE of two named focus spells: call-of-the-grave (necromancer school) or deaths-call (death domain initial). Both ids verified in core.json spells. +1 Focus Point. Repeatable to take the other."
+ },
+ {
+  "id": "advanced-hallowed-spell",
+  "grants": false,
+  "isChoice": true,
+  "note": "Choose ONE of two named focus spells: life-siphon (necromancer advanced) or eradicate-undeath (death domain advanced). Both ids verified. +1 Focus Point. Repeatable to take the other."
+ },
+ {
+  "id": "deathly-secrets",
+  "grants": false,
+  "isChoice": true,
+  "note": "Choose ONE of two named focus spells: eyes-of-the-dead or subjugate-undead (both verified in core.json). +1 Focus Point; tradition inherited from the archetype prerequisite's casting tradition."
+ },
+ {
+  "id": "greater-deathly-secrets",
+  "grants": false,
+  "isChoice": true,
+  "note": "Choose ONE of two named focus spells: malignant-sustenance or grasping-grave (both verified in core.json). +1 Focus Point."
+ },
+ {
+  "id": "bat-form",
+  "grants": false,
+  "note": "An activity (frequency once per hour) granting the EFFECTS of a 4th-rank Pest Form — temporary transformation, not a castable spell added to the sheet."
+ },
+ {
+  "id": "fey-ascension",
+  "grants": false,
+  "note": "Lineage-gated: the spell depends on the Fey Influence type chosen earlier (Anteater -> slow 1/day primal; Faun -> charm, sleep, triple-time 1/day each primal; Gremlin -> mad-monkeys 1/day primal; other lineages grant no spell). Conditional on a prior pick, not an unconditional grant — needs a lineage-conditional lane rather than a spell picker."
+ },
+ {
+  "id": "perfect-ki-expert",
+  "grants": false,
+  "note": "Subclass-gated focus spell: School of Perfection determines it (Unblinking Flame -> unblinking-flame-aura, Unbreaking Waves -> unbreaking-wave-vapor, Unfolding Wind -> unfolding-wind-buffet, Untwisting Iron -> untwisting-iron-roots; all four ids verified). Conditional, not unconditional; +1 Focus Point."
+ },
+ {
+  "id": "perfect-ki-exemplar",
+  "grants": false,
+  "note": "Subclass-gated focus spell (Unblinking Flame Emblem / Unbreaking Wave Barrier / Unfolding Wind Blitz / Untwisting Iron Augmentation) keyed to School of Perfection — conditional. Did not confirm these four ids since grants=false; +1 Focus Point."
+ },
+ {
+  "id": "perfect-ki-grandmaster",
+  "grants": false,
+  "note": "Subclass-gated focus spell (Unblinking Flame Ignition / Unbreaking Wave Containment / Unfolding Wind Crash / Untwisting Iron Pillar) keyed to School of Perfection — conditional. +1 Focus Point."
+ },
+ {
+  "id": "great-bear",
+  "grants": false,
+  "note": "Spends an extra action during Ursine Avenger Form for the EFFECTS of a 1st-rank Enlarge — temporary, conditional on being in the form."
+ },
+ {
+  "id": "snowcaster",
+  "grants": false,
+  "isChoice": true,
+  "note": "Adds a player-chosen cold arcane spell to the repertoire each time a new slot rank is gained — open filtered pick."
+ },
+ {
+  "id": "helts-spelldance",
+  "grants": false,
+  "note": "Lets you Cast a Spell you already have after Striding — an action-economy modifier, no spell granted."
+ },
+ {
+  "id": "elemental-apotheosis",
+  "grants": false,
+  "note": "Grants the Speeds listed in the Elemental Form spell plus darkvision — the spell is only a reference for which Speeds you get, not a grant."
+ },
+ {
+  "id": "furnace-form",
+  "grants": false,
+  "note": "Temporary: benefits of Fiery Body until the end of your next turn via an activity — not a castable spell."
+ },
+ {
+  "id": "alloy-flesh-and-steel",
+  "grants": false,
+  "note": "Temporary: benefits of Ferrous Form until the end of your next turn via an activity — not a castable spell."
+ },
+ {
+  "id": "return-to-the-sea",
+  "grants": false,
+  "note": "Kineticist impulse targeting a willing creature (often an ally) with the EFFECTS of Feet to Fins for 10 minutes — activated, temporary, and ally-targetable."
+ },
+ {
+  "id": "stonebound-magic",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "scatter-scree",
+    "tradition": "primal",
+    "atWill": true
+   },
+   {
+    "spellId": "one-with-stone",
+    "tradition": "primal",
+    "usesPerDay": 1,
+    "usesPer": "day"
+   },
+   {
+    "spellId": "shape-stone",
+    "tradition": "primal",
+    "usesPerDay": 1,
+    "usesPer": "day"
+   },
+   {
+    "spellId": "wall-of-stone",
+    "tradition": "primal",
+    "usesPerDay": 1,
+    "usesPer": "day"
+   }
+  ],
+  "note": "Real unconditional innate grant; all 4 ids verified in core.json spells. CAVEAT: the feat is level 6 and only scatter-scree arrives immediately — one-with-stone unlocks at level 8, shape-stone at 10, wall-of-stone at 12. InnateSpellGrant has no per-spell unlock-level field, so these three will appear ~2-6 levels early unless the parent adds gating."
+ },
+ {
+  "id": "otherworldly-acumen",
+  "grants": false,
+  "isChoice": true,
+  "note": "'Choose one common 2nd-rank spell' from the tradition of a previous elf innate spell, 1/day, retrainable — open filtered pick, no named spell."
+ },
+ {
+  "id": "adapted-cantrip",
+  "grants": false,
+  "isChoice": true,
+  "note": "'Choose one cantrip from a magical tradition other than your own' — player pick; also it just adds to your normal prepared/repertoire options rather than granting an independent casting."
+ },
+ {
+  "id": "adaptive-adept",
+  "grants": false,
+  "isChoice": true,
+  "note": "'Choose a cantrip or 1st-rank spell' from the Adapted Cantrip tradition — player pick, no named spell."
+ },
+ {
+  "id": "hymn-of-healing",
+  "grants": true,
+  "focusSpells": [
+   "hymn-of-healing"
+  ],
+  "note": "Bard composition spell (rank 1, traits include 'focus') — verified id hymn-of-healing in core.json spells."
+ },
+ {
+  "id": "loremasters-etude",
+  "grants": true,
+  "focusSpells": [
+   "loremasters-etude"
+  ],
+  "note": "Bard composition spell (rank 1, focus trait) — verified id loremasters-etude."
+ },
+ {
+  "id": "song-of-strength",
+  "grants": true,
+  "focusSpells": [
+   "song-of-strength"
+  ],
+  "note": "Composition CANTRIP (rank 0) — filed as focus to match the app's model: the bard class record already lists the composition cantrip courageous-anthem under focusSpells. Composition cantrips are focus spells that cost 0 Focus Points, so the sheet should show it in the focus/composition area, not as an innate. Id verified."
+ },
+ {
+  "id": "uplifting-overture",
+  "grants": true,
+  "focusSpells": [
+   "uplifting-overture"
+  ],
+  "note": "Composition cantrip (rank 0); focus lane, same as courageous-anthem on the bard class record. Id verified."
+ },
+ {
+  "id": "courageous-advance",
+  "grants": false,
+  "note": "Rider on casting Courageous Anthem (an ally Strides) — modifies a spell you already have, and the benefit goes to an ally."
+ },
+ {
+  "id": "rallying-anthem",
+  "grants": true,
+  "focusSpells": [
+   "rallying-anthem"
+  ],
+  "note": "Composition cantrip (rank 0); focus lane. Id verified in core.json spells."
+ },
+ {
+  "id": "triple-time",
+  "grants": true,
+  "focusSpells": [
+   "triple-time"
+  ],
+  "note": "Composition cantrip (rank 0); focus lane. Spell id triple-time verified — note it collides in name with the feat id triple-time, but the spells collection does contain it."
+ },
+ {
+  "id": "defensive-coordination",
+  "grants": false,
+  "note": "Rider on casting Rallying Anthem (you and an ally Raise a Shield) — a modifier to an existing spell."
+ },
+ {
+  "id": "dirge-of-doom",
+  "grants": true,
+  "focusSpells": [
+   "dirge-of-doom"
+  ],
+  "note": "Composition cantrip (rank 0); focus lane. Id verified."
+ },
+ {
+  "id": "song-of-marching",
+  "grants": true,
+  "focusSpells": [
+   "song-of-marching"
+  ],
+  "note": "Composition cantrip (rank 0); focus lane. Id verified."
+ },
+ {
+  "id": "courageous-assault",
+  "grants": false,
+  "note": "Rider on casting Courageous Anthem (an ally Strikes) — a modifier, and the benefit is an ally's."
+ },
+ {
+  "id": "ode-to-ouroboros",
+  "grants": true,
+  "focusSpells": [
+   "ode-to-ouroboros"
+  ],
+  "note": "Bard composition spell (rank 5, focus trait). Id verified."
+ },
+ {
+  "id": "allegro",
+  "grants": true,
+  "focusSpells": [
+   "allegro"
+  ],
+  "note": "Composition cantrip (rank 0); focus lane. Id verified."
+ },
+ {
+  "id": "soothing-ballad",
+  "grants": true,
+  "focusSpells": [
+   "soothing-ballad"
+  ],
+  "note": "Bard composition spell (rank 7, focus trait). Id verified."
+ },
+ {
+  "id": "courageous-onslaught",
+  "grants": false,
+  "note": "Rider on casting Courageous Anthem (an ally Strides then Strikes) — a modifier, ally-facing."
+ },
+ {
+  "id": "studious-capacity",
+  "grants": false,
+  "note": "Lets you cast one spell per day after running out of slots — a slot/resource ability, no spell named."
+ },
+ {
+  "id": "fatal-aria",
+  "grants": true,
+  "focusSpells": [
+   "fatal-aria"
+  ],
+  "note": "Bard composition spell (rank 10, focus trait). Id verified."
+ },
+ {
+  "id": "perfect-encore",
+  "grants": false,
+  "note": "Grants an additional 10th-rank spell SLOT — no spell."
+ },
+ {
+  "id": "pied-piping",
+  "grants": true,
+  "focusSpells": [
+   "pied-piping"
+  ],
+  "note": "Bard composition spell (rank 10, focus trait). Id verified."
+ },
+ {
+  "id": "domain-initiate",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player selects one of the deity's domains and gains its initial domain (focus) spell — a domain picker; +1 Focus Point, focus spells auto-heighten to half level."
+ },
+ {
+  "id": "advanced-domain",
+  "grants": false,
+  "isChoice": true,
+  "note": "Advanced domain spell from a domain you already have an initial spell for — determined by the earlier domain pick, no spell named here."
+ },
+ {
+  "id": "maker-of-miracles",
+  "grants": false,
+  "note": "Grants an additional 10th-rank spell SLOT — no spell."
+ },
+ {
+  "id": "leshy-familiar-secrets",
+  "grants": false,
+  "note": "Familiar ability (Verdant Burst): the FAMILIAR casts Heal when it dies — a companion/familiar grant, and conditional on the familiar's death."
+ },
+ {
+  "id": "order-magic",
+  "grants": false,
+  "isChoice": true,
+  "note": "'Choose an order you have selected with Order Explorer. You gain the initial order spell from that order' — an order picker resolving to a focus spell; repeatable."
+ },
+ {
+  "id": "hierophants-power",
+  "grants": false,
+  "note": "Grants an additional 10th-rank spell SLOT — no spell."
+ },
+ {
+  "id": "hunters-brooch",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "vitality-lash",
+    "tradition": "divine",
+    "atWill": true
+   }
+  ],
+  "note": "Passive worn/invested grant: 'you can cast the Vitality Lash cantrip as an innate divine spell'; cantrip with no frequency = at will. vitality-lash verified in core.json."
+ },
+ {
+  "id": "nosoi-charm",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "sending",
+    "tradition": "divine",
+    "usesPerDay": 1
+   }
+  ],
+  "note": "Passive while held/invested: 'cast Sending once per day as a divine innate spell'. sending verified (rank 5)."
+ },
+ {
+  "id": "nosoi-charm-greater",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "sending",
+    "tradition": "divine",
+    "usesPerDay": 1
+   }
+  ],
+  "note": "Identical passive grant to the base charm; the greater version only improves the Performance bonus and lifesense."
+ },
+ {
+  "id": "pistol-of-wonder",
+  "grants": false,
+  "note": "Random wild-magic table on activation; no specific named spell is granted to the character."
+ },
+ {
+  "id": "peacemaker",
+  "grants": false,
+  "note": "Talisman activation gives the temporary effects of Sanctuary; not a casting grant."
+ },
+ {
+  "id": "wand-of-fey-flames",
+  "grants": false,
+  "note": "Wand activation (Cast a Spell, once per day) — item-activated Faerie Fire, not a character grant."
+ },
+ {
+  "id": "dragons-breath",
+  "grants": false,
+  "note": "Cape/shield activation applies a Widen Spell spellshape to a spell you already cast; no spell granted."
+ },
+ {
+  "id": "dragons-breath-1st-level-spell",
+  "grants": false,
+  "note": "Spellshape (Widen Spell) activation only; no spell granted."
+ },
+ {
+  "id": "dragons-breath-2nd-level-spell",
+  "grants": false,
+  "note": "Spellshape (Widen Spell) activation only; no spell granted."
+ },
+ {
+  "id": "dragons-breath-3rd-level-spell",
+  "grants": false,
+  "note": "Spellshape (Widen Spell) activation only; no spell granted."
+ },
+ {
+  "id": "dragons-breath-4th-level-spell",
+  "grants": false,
+  "note": "Spellshape (Widen Spell) activation only; no spell granted."
+ },
+ {
+  "id": "dragons-breath-5th-level-spell",
+  "grants": false,
+  "note": "Spellshape (Widen Spell) activation only; no spell granted."
+ },
+ {
+  "id": "dragons-breath-6th-level-spell",
+  "grants": false,
+  "note": "Spellshape (Widen Spell) activation only; no spell granted."
+ },
+ {
+  "id": "dragons-breath-7th-level-spell",
+  "grants": false,
+  "note": "Spellshape (Widen Spell) activation only; no spell granted."
+ },
+ {
+  "id": "dragons-breath-8th-level-spell",
+  "grants": false,
+  "note": "Spellshape (Widen Spell) activation only; no spell granted."
+ },
+ {
+  "id": "dragons-breath-9th-level-spell",
+  "grants": false,
+  "note": "Spellshape (Widen Spell) activation only; no spell granted."
+ },
+ {
+  "id": "noqual-armor",
+  "grants": false,
+  "note": "AC bonus vs spell attacks plus a spellcasting flat check; names no spell."
+ },
+ {
+  "id": "noqual-armor-standard-grade",
+  "grants": false,
+  "note": "Same as base noqual armor: defensive/penalty text only, no spell."
+ },
+ {
+  "id": "noqual-armor-high-grade",
+  "grants": false,
+  "note": "Same as base noqual armor: defensive/penalty text only, no spell."
+ },
+ {
+  "id": "roaring-potion",
+  "grants": false,
+  "note": "Consumable activation granting the temporary effects of Bullhorn."
+ },
+ {
+  "id": "roaring-potion-lesser",
+  "grants": false,
+  "note": "Consumable; temporary Bullhorn effects on activation."
+ },
+ {
+  "id": "roaring-potion-moderate",
+  "grants": false,
+  "note": "Consumable; temporary 5th-rank Bullhorn effects on activation."
+ },
+ {
+  "id": "roaring-potion-greater",
+  "grants": false,
+  "note": "Consumable; temporary 7th-rank Bullhorn effects on activation."
+ },
+ {
+  "id": "dragonclaw-scutcheon",
+  "grants": false,
+  "note": "Talisman: on Activate you may cast Dragon Breath once before the end of your next turn — activation-gated and temporary, not a standing grant."
+ },
+ {
+  "id": "spellstriker-staff",
+  "grants": false,
+  "note": "Staff spell list (ignition/echoing-weapon/sure-strike/acid-grip/telekinetic-maneuver) cast by expending charges; already modelled via the item's heldSpells, not a character grant."
+ },
+ {
+  "id": "spellstriker-staff-greater",
+  "grants": false,
+  "note": "Staff charge-cast spell list; item-activated, handled by heldSpells."
+ },
+ {
+  "id": "spellstriker-staff-major",
+  "grants": false,
+  "note": "Staff charge-cast spell list; item-activated, handled by heldSpells."
+ },
+ {
+  "id": "phoenix-cinder",
+  "grants": false,
+  "note": "Ignition innate casting only appears at Stage 1 (one week after activating the consumable boon) and comes with escalating drawbacks — staged/conditional, not unconditional."
+ },
+ {
+  "id": "the-deck-of-destiny",
+  "grants": false,
+  "note": "Item bonus to divination DCs and spell attacks; names no spell."
+ },
+ {
+  "id": "affinity-stones",
+  "grants": false,
+  "note": "'Permanently gain the effects of the Status spell' is a continuous shared effect (and requires a multi-creature investment ceremony), not a castable spell grant."
+ },
+ {
+  "id": "fan-of-soothing-winds",
+  "grants": false,
+  "note": "The fan itself casts Heal on activation; item-activated, not a character grant."
+ },
+ {
+  "id": "fan-of-soothing-winds-greater",
+  "grants": false,
+  "note": "The fan itself casts Heal on activation; item-activated, not a character grant."
+ },
+ {
+  "id": "invisibility-potion",
+  "grants": false,
+  "note": "Consumable giving temporary 2nd-rank Invisibility effects."
+ },
+ {
+  "id": "potion-of-leaping",
+  "grants": false,
+  "note": "Consumable giving temporary Jump effects when you Leap."
+ },
+ {
+  "id": "potion-of-undetectability",
+  "grants": false,
+  "note": "Consumable giving temporary undetectability effects; not a casting grant."
+ },
+ {
+  "id": "truesight-potion",
+  "grants": false,
+  "note": "Consumable giving the temporary benefits of 7th-rank Truesight."
+ },
+ {
+  "id": "headwrap-of-wisdom",
+  "grants": false,
+  "note": "Augury effects come from a once-per-day item Activate; the passive benefit is the apex Wisdom boost only."
+ },
+ {
+  "id": "pendant-of-the-occult",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "guidance",
+    "tradition": "occult",
+    "atWill": true
+   }
+  ],
+  "note": "Passive worn grant: 'you can cast the Guidance cantrip as an occult innate spell'; cantrip = at will. guidance verified in core.json."
+ },
+ {
+  "id": "pendant-of-the-occult-greater",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "guidance",
+    "tradition": "occult",
+    "atWill": true
+   }
+  ],
+  "note": "Same passive Guidance grant; the once-per-day 4th-rank Dream Message is an item Activate (already in the item's heldSpells) so it is excluded."
+ },
+ {
+  "id": "third-eye",
+  "grants": false,
+  "note": "Continuous 9th-rank Detect Magic sight is an ongoing sense, not a casting; the 8th-rank Truesight is a once-per-day Activate."
+ },
+ {
+  "id": "the-hollow-star",
+  "grants": false,
+  "note": "Activation modifies a linguistic spell you already cast; no spell granted."
+ },
+ {
+  "id": "jian-of-lifes-duality",
+  "grants": false,
+  "note": "Weapon spends light/dark charges to cast Heal or Harm on activation; item-activated, not a character grant."
+ },
+ {
+  "id": "final-scalecloak",
+  "grants": false,
+  "note": "Once-per-day Activate (plus a Mythic Point) for restricted 6th-rank Telepathy effects."
+ },
+ {
+  "id": "passage-charm",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "darkness",
+    "tradition": "occult",
+    "usesPerDay": 2
+   }
+  ],
+  "note": "Passive worn grant: 'you can cast Darkness as an innate occult spell twice per day'. The 5th-rank Wall of Stone is a separate once-per-day Activate, so excluded. darkness verified (rank 2)."
+ },
+ {
+  "id": "greater-feral-linguist",
+  "grants": false,
+  "note": "Catalyst that modifies an animal form spell you cast; grants no spell."
+ },
+ {
+  "id": "psyche-salts",
+  "grants": false,
+  "note": "Consumable giving temporary Clear Mind effects to the creature treated."
+ },
+ {
+  "id": "psyche-salts-lesser",
+  "grants": false,
+  "note": "Consumable; temporary 2nd-rank Clear Mind effects."
+ },
+ {
+  "id": "psyche-salts-moderate",
+  "grants": false,
+  "note": "Consumable; temporary 4th-rank Clear Mind effects."
+ },
+ {
+  "id": "psyche-salts-greater",
+  "grants": false,
+  "note": "Consumable; temporary 8th-rank Clear Mind effects."
+ },
+ {
+  "id": "generals-word",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "bullhorn",
+    "tradition": "occult",
+    "atWill": true,
+    "rank": 1
+   }
+  ],
+  "note": "Passive while wielding: 'you can cast Bullhorn as a 1st-rank cantrip at will'; tradition not printed, inferred occult from the weapon's occult activation and craft requirements. bullhorn verified (cantrip)."
+ },
+ {
+  "id": "pact-of-the-herald-and-host",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "fear",
+    "usesPerDay": 1
+   }
+  ],
+  "note": "Passive contract/invested grant: 'cast fear as an innate spell once per day'; tradition deliberately omitted because it matches the bound dragon's. fear verified (rank 1)."
+ },
+ {
+  "id": "fervent-spell",
+  "grants": false,
+  "note": "The spell varies with the relic's emotional fervor state and is never named; also cast with your own slots. No specific spell to grant."
+ },
+ {
+  "id": "scrap-shot",
+  "grants": false,
+  "note": "Relic gift giving a spell attack effect; names no spell."
+ },
+ {
+  "id": "living-storm",
+  "grants": true,
+  "innateSpells": [
+   {
+    "spellId": "lightning-bolt",
+    "rank": 5
+   }
+  ],
+  "note": "Relic gift (Air aspect) passive: 'you can cast 5th-rank lightning bolt as an innate spell'; no frequency or tradition is printed, so uses defaults to once per day and tradition is omitted. lightning-bolt verified (base rank 3)."
+ },
+ {
+  "id": "flowing-footsteps",
+  "grants": false,
+  "note": "'You gain the effects of the water walk spell' is a continuous relic benefit (with water breathing and a swim Speed), not a castable spell."
+ }
+]

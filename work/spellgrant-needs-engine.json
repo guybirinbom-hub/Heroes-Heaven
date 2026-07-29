@@ -1,0 +1,22 @@
+[
+ "items/cloak-of-elvenkind — items is never read for spell grants (build.ts 1811 / 2579)",
+ "backgrounds/scion-of-slayers — backgrounds is never read for spell grants (build.ts 1811 / 2579)",
+ "backgrounds/tyrant-witness — backgrounds is never read for spell grants (build.ts 1811 / 2579)",
+ "backgrounds/astrological-augur — backgrounds is never read for spell grants (build.ts 1811 / 2579)",
+ "backgrounds/eclipseborn — backgrounds is never read for spell grants (build.ts 1811 / 2579)",
+ "backgrounds/blessed — backgrounds is never read for spell grants (build.ts 1811 / 2579)",
+ "backgrounds/knack-for-contraptions — backgrounds is never read for spell grants (build.ts 1811 / 2579)",
+ "classFeatures/seneschal — classFeatures is never read for spell grants (build.ts 1811 / 2579)",
+ "classFeatures/link-spells — classFeatures is never read for spell grants (build.ts 1811 / 2579)",
+ "classFeatures/composition-spells — classFeatures is never read for spell grants (build.ts 1811 / 2579)",
+ "classFeatures/heros-defiance — classFeatures is never read for spell grants (build.ts 1811 / 2579)",
+ "items/hunters-brooch — items is never read for spell grants (build.ts 1811 / 2579)",
+ "items/nosoi-charm — items is never read for spell grants (build.ts 1811 / 2579)",
+ "items/nosoi-charm-greater — items is never read for spell grants (build.ts 1811 / 2579)",
+ "items/pendant-of-the-occult — items is never read for spell grants (build.ts 1811 / 2579)",
+ "items/pendant-of-the-occult-greater — items is never read for spell grants (build.ts 1811 / 2579)",
+ "items/passage-charm — items is never read for spell grants (build.ts 1811 / 2579)",
+ "items/generals-word — items is never read for spell grants (build.ts 1811 / 2579)",
+ "items/pact-of-the-herald-and-host — items is never read for spell grants (build.ts 1811 / 2579)",
+ "items/living-storm — items is never read for spell grants (build.ts 1811 / 2579)"
+]
