@@ -30,8 +30,33 @@ function merge<T>(base: Record<string, T>, over: Record<string, T>): Record<stri
 export const EXCLUDED_FEATS = new Set(['arcane-tattoos', 'ornate-tattoo', 'virtue-forged-tattoos', 'hag-magic']);
 
 /** Collections where an `aon-`-prefixed scrape can shadow an existing record of the same name. */
-const DEDUPE_MAPS = ['items', 'feats', 'spells', 'actions', 'vehicles'] as const;
+const DEDUPE_MAPS = ['items', 'feats', 'spells', 'actions', 'vehicles', 'backgrounds', 'heritages', 'deities'] as const;
 const dedupeKey = (name: string) => name.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+/**
+ * `aon-` duplicates the exact-name match walks straight past, because the scrape spelled the name
+ * differently — "Historical Reeanactor" beside "Historical Reenactor".
+ *
+ * Scanning every `aon-` record for a canonical name within edit distance 2, then scoring the two
+ * descriptions by word overlap, found 46 such pairs. 42 of them turned out to ALSO have an
+ * exactly-named twin, so the rule above already hid them; listing those here would be 42 lines that
+ * do nothing. The four below are the real holes, and all four are BACKGROUNDS — a collection that
+ * was missing from DEDUPE_MAPS entirely.
+ *
+ * Not every near-miss is a duplicate: Minor vs Major Astonishing Ink, Magic Armor vs Magic Armor (+1),
+ * the ten scroll ranks, Firearm Ammunition 5 vs 10 rounds, Searing vs Healing Wave and Shield Bash vs
+ * Shield Boss all read alike and are distinct records. A similarity threshold alone cannot tell a
+ * typo from a grade, which is why this list is curated rather than computed at load.
+ *
+ * Hidden, never deleted — same reason as the exact-name set: a saved character may already reference
+ * one of these ids, and an id that vanishes takes the player's background with it.
+ */
+export const NEAR_DUPLICATE_IDS = new Set([
+  'aon-historical-reeanactor', // -> historical-reenactor
+  'aon-post-guard-of-all-trade', // -> post-guard-of-all-trades
+  'aon-reclaimed-investigator', // -> reclaimer-investigator
+  'aon-wishes-for-riches', // -> wish-for-riches
+]);
 
 /**
  * Ids of `aon-`-prefixed records that DUPLICATE a canonical record of the same name in the same
@@ -58,6 +83,13 @@ export function findDuplicateIds(db: ContentDatabase): Set<string> {
       // Only an `aon-` record that COLLIDES with a canonical twin is a duplicate; an `aon-` record
       // that is the sole copy of its content stays visible.
       if (id.startsWith('aon-') && rec?.name && canonical.has(dedupeKey(rec.name))) dupes.add(id);
+    }
+  }
+  // The curated near-miss set: same content, different spelling, so the exact match above misses it.
+  // Guarded on existence so a retired id never hides something that took its place.
+  for (const id of NEAR_DUPLICATE_IDS) {
+    for (const mapName of DEDUPE_MAPS) {
+      if ((db[mapName] as unknown as Record<string, unknown> | undefined)?.[id]) dupes.add(id);
     }
   }
   return dupes;

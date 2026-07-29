@@ -1,0 +1,62 @@
+[
+ {
+  "col": "spells",
+  "aid": "aon-discomfiting-whisper",
+  "cid": "discomfiting-whispers",
+  "name": "Discomfiting Whisper"
+ },
+ {
+  "col": "items",
+  "aid": "aon-extendible-pincer",
+  "cid": "extendable-pincer",
+  "name": "Extendible Pincer"
+ },
+ {
+  "col": "items",
+  "aid": "aon-practice-targets",
+  "cid": "practice-target",
+  "name": "Practice Targets"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-innate-magic-intuition",
+  "cid": "innate-magical-intuition",
+  "name": "Innate Magic Intuition"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-recycled-cogwheel",
+  "cid": "recycled-cogwheels",
+  "name": "Recycled Cogwheel"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-exemplar-resilency",
+  "cid": "exemplar-resiliency",
+  "name": "Exemplar Resilency"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-armor-regiment-training",
+  "cid": "armored-regiment-training",
+  "name": "Armor Regiment Training"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-festering-wound",
+  "cid": "festering-wounds",
+  "name": "Festering Wound"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-camoflage-coat",
+  "cid": "camouflage-coat",
+  "name": "Camoflage Coat"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-certain-strategem",
+  "cid": "certain-stratagem",
+  "name": "Certain Strategem"
+ }
+]

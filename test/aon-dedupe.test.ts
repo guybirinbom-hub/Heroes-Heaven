@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { content } from './_content';
-import { listValues, isDuplicateId } from '../src/data';
+import { listValues, isDuplicateId, NEAR_DUPLICATE_IDS } from '../src/data';
 import { eligibleFeatsForSlot } from '../src/rules/featSlots';
 import { emptyBuild } from '../src/rules/build';
 
@@ -22,6 +22,8 @@ describe('aon- duplicate suppression', () => {
 
   it('never hides an aon- record that is the ONLY copy of its content', () => {
     // e.g. 72 animal companions / 37 vehicles / 14 conditions exist solely as `aon-` records.
+    // NEAR_DUPLICATE_IDS is exempt: their twin's NAME is spelled differently, so an exact-name test
+    // cannot see it. The next assertion is what keeps that exemption from being a blank cheque.
     for (const [mapName, map] of Object.entries(c) as [string, Record<string, { name?: string }>][]) {
       if (!map || typeof map !== 'object' || map instanceof Set) continue;
       const canonical = new Set<string>();
@@ -29,16 +31,42 @@ describe('aon- duplicate suppression', () => {
         if (rec?.name && !id.startsWith('aon-')) canonical.add(key(rec.name));
       }
       for (const [id, rec] of Object.entries(map)) {
-        if (id.startsWith('aon-') && rec?.name && !canonical.has(key(rec.name))) {
+        if (id.startsWith('aon-') && rec?.name && !canonical.has(key(rec.name)) && !NEAR_DUPLICATE_IDS.has(id)) {
           expect(isDuplicateId(c, id), `${mapName}/${id} is the sole copy and must stay visible`).toBe(false);
         }
       }
     }
   });
 
+  it('every curated near-duplicate really does have a near twin', () => {
+    const ed = (a: string, b: string): number => {
+      if (Math.abs(a.length - b.length) > 2) return 9;
+      let prev = [...Array(b.length + 1).keys()];
+      for (let i = 1; i <= a.length; i++) {
+        const cur = [i];
+        for (let j = 1; j <= b.length; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+        prev = cur;
+      }
+      return prev[b.length];
+    };
+    for (const id of NEAR_DUPLICATE_IDS) {
+      let twin: string | undefined;
+      for (const map of Object.values(c) as Record<string, { name?: string }>[]) {
+        if (!map || typeof map !== 'object' || map instanceof Set || !map[id]?.name) continue;
+        const mine = key(map[id].name!);
+        for (const [cid, rec] of Object.entries(map)) {
+          if (cid.startsWith('aon-') || !rec?.name) continue;
+          if (ed(mine, key(rec.name)) > 0 && ed(mine, key(rec.name)) <= 2) twin = cid;
+        }
+      }
+      expect(twin, `${id} is hidden but has no near twin — it may be the only copy of its content`).toBeTruthy();
+    }
+  });
+
   it('leaves duplicates RESOLVABLE by id so saved characters do not break', () => {
     for (const id of c.duplicateIds!) {
-      const found = c.items[id] ?? c.feats[id] ?? c.spells[id] ?? c.actions[id] ?? c.vehicles?.[id];
+      const found =
+        c.items[id] ?? c.feats[id] ?? c.spells[id] ?? c.actions[id] ?? c.vehicles?.[id] ?? c.backgrounds[id] ?? c.heritages[id] ?? c.deities?.[id];
       expect(found, `${id} must still resolve`).toBeTruthy();
     }
   });

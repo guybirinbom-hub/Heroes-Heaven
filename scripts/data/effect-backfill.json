@@ -14965,18 +14965,6 @@
   {
     "category": "backgrounds",
     "id": "aon-historical-reeanactor",
-    "field": "trainedSkill",
-    "value": "performance"
-  },
-  {
-    "category": "backgrounds",
-    "id": "aon-historical-reeanactor",
-    "field": "trainedSkill",
-    "value": "society"
-  },
-  {
-    "category": "backgrounds",
-    "id": "aon-historical-reeanactor",
     "field": "grantedFeatId",
     "value": "impressive-performance"
   },
@@ -36620,5 +36608,66 @@
         }
       ]
     }
+  },
+  {
+    "category": "classes",
+    "id": "champion",
+    "field": "extraChoices",
+    "value": [
+      {
+        "id": "blessing",
+        "name": "Blessing of the Devoted",
+        "pickByLevel": {
+          "3": 1
+        },
+        "options": [
+          {
+            "id": "blessed-armament",
+            "name": "Blessed Armament",
+            "description": "Select one weapon or handwraps of mighty blows. You gain that armament's critical specialization effect, and you grant the armament a property rune of your choice from the following list: Fearsome, Ghost Touch, Returning, Shifting, or Vitalizing. During your daily preparations, you can change the spirit to inhabit a different armament, grant a different rune, or both.\n\nThis rune doesn't count toward the weapon's number of property runes. It can be used even if the weapon already has its maximum number of property runes."
+          },
+          {
+            "id": "blessed-shield",
+            "name": "Blessed Shield",
+            "description": "In your hands, a shield gains the minor Reinforcing rune. As you go up in level, the shield gains the reinforcing rune of your level (lesser at 7th level, moderate at 10th level, greater at 13th level, major at 16th level, and supreme at 19th level). If your shield already has the appropriate reinforcing rune for your level, or if it's a Sturdy Shield of the same level as the appropriate reinforcing rune, the shield's Hardness instead increases by 1."
+          },
+          {
+            "id": "blessed-swiftness",
+            "name": "Blessed Swiftness",
+            "description": "You gain a +5-foot status bonus to Speed. If you're mounted, your mount gains the bonus instead. In addition, when the movement of one of your allies triggers an enemy's reaction while the ally is in your champion's aura, the ally gains a +2 status bonus to all defenses against that reaction."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "spell-seeker",
+    "field": "trainedSkill",
+    "value": null
+  },
+  {
+    "category": "backgrounds",
+    "id": "spell-seeker",
+    "field": "trainedSkillChoice",
+    "value": [
+      "arcana",
+      "occultism"
+    ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "aon-historical-reeanactor",
+    "field": "trainedSkill",
+    "value": null
+  },
+  {
+    "category": "backgrounds",
+    "id": "aon-historical-reeanactor",
+    "field": "trainedSkillChoice",
+    "value": [
+      "performance",
+      "society"
+    ]
   }
 ]

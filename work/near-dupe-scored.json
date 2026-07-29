@@ -1,0 +1,641 @@
+[
+ {
+  "col": "spells",
+  "aid": "aon-discomfiting-whisper",
+  "an": "Discomfiting Whisper",
+  "cid": "discomfiting-whispers",
+  "s": 1,
+  "d": 1,
+  "cn": "Discomfiting Whispers"
+ },
+ {
+  "col": "spells",
+  "aid": "aon-vindicator-s-judgement",
+  "an": "Vindicator's Judgement",
+  "cid": "vindicators-judgment",
+  "s": 1,
+  "d": 1,
+  "cn": "Vindicator's Judgment"
+ },
+ {
+  "col": "items",
+  "aid": "aon-extendible-pincer",
+  "an": "Extendible Pincer",
+  "cid": "extendable-pincer",
+  "s": 1,
+  "d": 1,
+  "cn": "Extendable Pincer"
+ },
+ {
+  "col": "items",
+  "aid": "aon-practice-targets",
+  "an": "Practice Targets",
+  "cid": "practice-target",
+  "s": 1,
+  "d": 1,
+  "cn": "Practice Target"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-innate-magic-intuition",
+  "an": "Innate Magic Intuition",
+  "cid": "innate-magical-intuition",
+  "s": 1,
+  "d": 2,
+  "cn": "Innate Magical Intuition"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-recycled-cogwheel",
+  "an": "Recycled Cogwheel",
+  "cid": "recycled-cogwheels",
+  "s": 1,
+  "d": 1,
+  "cn": "Recycled Cogwheels"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-harsh-judgment",
+  "an": "Harsh Judgment",
+  "cid": "harsh-judgement",
+  "s": 1,
+  "d": 1,
+  "cn": "Harsh Judgement"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-no-hands-no-problems",
+  "an": "No Hands, No Problems",
+  "cid": "no-hands-no-problem",
+  "s": 1,
+  "d": 1,
+  "cn": "No Hands, No Problem"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-exemplar-resilency",
+  "an": "Exemplar Resilency",
+  "cid": "exemplar-resiliency",
+  "s": 1,
+  "d": 1,
+  "cn": "Exemplar Resiliency"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-embolded-with-glorious-purpose",
+  "an": "Embolded With Glorious Purpose",
+  "cid": "emboldened-with-glorious-purpose",
+  "s": 1,
+  "d": 2,
+  "cn": "Emboldened with Glorious Purpose"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-armor-regiment-training",
+  "an": "Armor Regiment Training",
+  "cid": "armored-regiment-training",
+  "s": 1,
+  "d": 2,
+  "cn": "Armored Regiment Training"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-festering-wound",
+  "an": "Festering Wound",
+  "cid": "festering-wounds",
+  "s": 1,
+  "d": 1,
+  "cn": "Festering Wounds"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-camoflage-coat",
+  "an": "Camoflage Coat",
+  "cid": "camouflage-coat",
+  "s": 1,
+  "d": 1,
+  "cn": "Camouflage Coat"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-certain-strategem",
+  "an": "Certain Strategem",
+  "cid": "certain-stratagem",
+  "s": 1,
+  "d": 1,
+  "cn": "Certain Stratagem"
+ },
+ {
+  "col": "backgrounds",
+  "aid": "aon-post-guard-of-all-trade",
+  "an": "Post Guard of All Trade",
+  "cid": "post-guard-of-all-trades",
+  "s": 0.9869281045751634,
+  "d": 1,
+  "cn": "Post Guard of All Trades"
+ },
+ {
+  "col": "backgrounds",
+  "aid": "aon-historical-reeanactor",
+  "an": "Historical Reeanactor",
+  "cid": "historical-reenactor",
+  "s": 0.984,
+  "d": 1,
+  "cn": "Historical Reenactor"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-orator-s-fillibuster",
+  "an": "Orator's Fillibuster",
+  "cid": "orators-filibuster",
+  "s": 0.9833333333333333,
+  "d": 1,
+  "cn": "Orator's Filibuster"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-lurching-chomp",
+  "an": "Lurching Chomp",
+  "cid": "luring-chomp",
+  "s": 0.9827586206896551,
+  "d": 2,
+  "cn": "Luring Chomp"
+ },
+ {
+  "col": "backgrounds",
+  "aid": "aon-reclaimed-investigator",
+  "an": "Reclaimed Investigator",
+  "cid": "reclaimer-investigator",
+  "s": 0.972972972972973,
+  "d": 1,
+  "cn": "Reclaimer Investigator"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-decree-of-banisment",
+  "an": "Decree of Banisment",
+  "cid": "decree-of-banishment",
+  "s": 0.972027972027972,
+  "d": 1,
+  "cn": "Decree of Banishment"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-empathetic-envoy",
+  "an": "Empathetic Envoy",
+  "cid": "empathic-envoy",
+  "s": 0.9705882352941176,
+  "d": 2,
+  "cn": "Empathic Envoy"
+ },
+ {
+  "col": "items",
+  "aid": "aon-alacritous-horsehoes",
+  "an": "Alacritous Horsehoes",
+  "cid": "alacritous-horseshoes",
+  "s": 0.9636363636363636,
+  "d": 1,
+  "cn": "Alacritous Horseshoes"
+ },
+ {
+  "col": "items",
+  "aid": "aon-tyrant-s-writ",
+  "an": "Tyrant's Writ",
+  "cid": "tyrants-writs",
+  "s": 0.961038961038961,
+  "d": 1,
+  "cn": "Tyrant's Writs"
+ },
+ {
+  "col": "items",
+  "aid": "aon-sack-of-hyrdra-s-teeth",
+  "an": "Sack of Hyrdra's Teeth",
+  "cid": "sack-of-hydras-teeth",
+  "s": 0.9577464788732394,
+  "d": 1,
+  "cn": "Sack of Hydra's Teeth"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-judgment-of-the-monolith",
+  "an": "Judgment of the Monolith",
+  "cid": "judgement-of-the-monolith",
+  "s": 0.95,
+  "d": 1,
+  "cn": "Judgement of the Monolith"
+ },
+ {
+  "col": "items",
+  "aid": "aon-comandant-s-scabbard",
+  "an": "Comandant's Scabbard",
+  "cid": "commandants-scabbard",
+  "s": 0.9489795918367347,
+  "d": 1,
+  "cn": "Commandant's Scabbard"
+ },
+ {
+  "col": "backgrounds",
+  "aid": "aon-wishes-for-riches",
+  "an": "Wishes for Riches",
+  "cid": "wish-for-riches",
+  "s": 0.9477611940298507,
+  "d": 2,
+  "cn": "Wish for Riches"
+ },
+ {
+  "col": "items",
+  "aid": "aon-busine-of-divine-reinforcement",
+  "an": "Busine of Divine Reinforcement",
+  "cid": "busine-of-divine-reinforcements",
+  "s": 0.9432624113475178,
+  "d": 1,
+  "cn": "Busine of Divine Reinforcements"
+ },
+ {
+  "col": "items",
+  "aid": "aon-enhanced-hearing-aid",
+  "an": "Enhanced Hearing Aid",
+  "cid": "enhanced-hearing-aids",
+  "s": 0.9387755102040817,
+  "d": 1,
+  "cn": "Enhanced Hearing Aids"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-vengful-remnant",
+  "an": "Vengful Remnant",
+  "cid": "vengeful-remnant",
+  "s": 0.9285714285714286,
+  "d": 1,
+  "cn": "Vengeful Remnant"
+ },
+ {
+  "col": "items",
+  "aid": "aon-windlass-bolas",
+  "an": "Windlass Bolas",
+  "cid": "windlass-bola",
+  "s": 0.9230769230769231,
+  "d": 1,
+  "cn": "Windlass Bola"
+ },
+ {
+  "col": "items",
+  "aid": "aon-mat-of-resilence",
+  "an": "Mat of Resilence",
+  "cid": "mat-of-resilience",
+  "s": 0.9203539823008849,
+  "d": 1,
+  "cn": "Mat of Resilience"
+ },
+ {
+  "col": "items",
+  "aid": "aon-eyes-of-the-moonwarden",
+  "an": "Eyes Of The Moonwarden",
+  "cid": "eye-of-the-moonwarden",
+  "s": 0.8955223880597015,
+  "d": 1,
+  "cn": "Eye of the Moonwarden"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-oppurtune-trickster",
+  "an": "Oppurtune Trickster",
+  "cid": "opportune-trickster",
+  "s": 0.8941176470588236,
+  "d": 1,
+  "cn": "Opportune Trickster"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-fautless-defense",
+  "an": "Fautless Defense",
+  "cid": "faultless-defense",
+  "s": 0.8928571428571429,
+  "d": 1,
+  "cn": "Faultless Defense"
+ },
+ {
+  "col": "items",
+  "aid": "aon-nap-gas-disperser",
+  "an": "Nap Gas Disperser",
+  "cid": "nap-gas-dispenser",
+  "s": 0.8762886597938144,
+  "d": 1,
+  "cn": "Nap Gas Dispenser"
+ },
+ {
+  "col": "items",
+  "aid": "aon-mythic-resilent",
+  "an": "Mythic Resilent",
+  "cid": "mythic-resilient",
+  "s": 0.8690476190476191,
+  "d": 1,
+  "cn": "Mythic Resilient"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-flash-of-omipotence",
+  "an": "Flash of Omipotence",
+  "cid": "flash-of-omnipotence",
+  "s": 0.868421052631579,
+  "d": 1,
+  "cn": "Flash of Omnipotence"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-vermilion-threads",
+  "an": "Vermilion Threads",
+  "cid": "vermillion-threads",
+  "s": 0.865979381443299,
+  "d": 1,
+  "cn": "Vermillion Threads"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-pass-vengeful-judgement",
+  "an": "Pass Vengeful Judgement",
+  "cid": "pass-vengeful-judgment",
+  "s": 0.8533333333333334,
+  "d": 1,
+  "cn": "Pass Vengeful Judgment"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-vindicator-s-judgement",
+  "an": "Vindicator's Judgement",
+  "cid": "vindicators-judgment",
+  "s": 0.85,
+  "d": 1,
+  "cn": "Vindicator's Judgment"
+ },
+ {
+  "col": "items",
+  "aid": "aon-minor-astonishing-ink",
+  "an": "Minor Astonishing Ink",
+  "cid": "major-astonishing-ink",
+  "s": 0.8364779874213837,
+  "d": 2,
+  "cn": "Major Astonishing Ink"
+ },
+ {
+  "col": "items",
+  "aid": "aon-major-astonishing-ink",
+  "an": "Major Astonishing Ink",
+  "cid": "minor-astonishing-ink",
+  "s": 0.8364779874213837,
+  "d": 2,
+  "cn": "Minor Astonishing Ink"
+ },
+ {
+  "col": "items",
+  "aid": "aon-fulus-of-concealment",
+  "an": "Fulus of Concealment",
+  "cid": "fulu-of-concealment",
+  "s": 0.8088235294117647,
+  "d": 1,
+  "cn": "Fulu of Concealment"
+ },
+ {
+  "col": "items",
+  "aid": "aon-submersible-helm",
+  "an": "Submersible Helm",
+  "cid": "submersible-helmet",
+  "s": 0.7936507936507936,
+  "d": 2,
+  "cn": "Submersible Helmet"
+ },
+ {
+  "col": "items",
+  "aid": "aon-magic-armor",
+  "an": "Magic Armor",
+  "cid": "magic-armor-1",
+  "s": 0.7764705882352941,
+  "d": 1,
+  "cn": "Magic Armor (+1)"
+ },
+ {
+  "col": "items",
+  "aid": "aon-firearm-ammunition-10-rounds",
+  "an": "Firearm Ammunition (10 rounds)",
+  "cid": "firearm-ammunition-5-rounds",
+  "s": 0.7307692307692307,
+  "d": 2,
+  "cn": "Firearm Ammunition (5 rounds)"
+ },
+ {
+  "col": "items",
+  "aid": "aon-magic-weapon",
+  "an": "Magic Weapon",
+  "cid": "magic-weapon-1",
+  "s": 0.7012987012987013,
+  "d": 1,
+  "cn": "Magic Weapon (+1)"
+ },
+ {
+  "col": "items",
+  "aid": "aon-spore-shepherd-s-staff",
+  "an": "Spore Shepherd's Staff",
+  "cid": "spore-shephards-staff",
+  "s": 0.6947368421052632,
+  "d": 1,
+  "cn": "Spore Shephard's Staff"
+ },
+ {
+  "col": "items",
+  "aid": "aon-depth-charge",
+  "an": "Depth Charge",
+  "cid": "depth-charge-i",
+  "s": 0.6811594202898551,
+  "d": 1,
+  "cn": "Depth Charge (I)"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-repulse-the-wicken",
+  "an": "Repulse the Wicken",
+  "cid": "repulse-the-wicked",
+  "s": 0.6666666666666666,
+  "d": 1,
+  "cn": "Repulse the Wicked"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-whisper-of-warning",
+  "an": "Whisper of Warning",
+  "cid": "whispers-of-warning",
+  "s": 0.6176470588235294,
+  "d": 1,
+  "cn": "Whispers of Warning"
+ },
+ {
+  "col": "feats",
+  "aid": "aon-harbinger-s-claw",
+  "an": "Harbinger's Claw",
+  "cid": "harbingers-caw",
+  "s": 0.5142857142857142,
+  "d": 1,
+  "cn": "Harbinger's Caw"
+ },
+ {
+  "col": "items",
+  "aid": "aon-1st-rank-scroll",
+  "an": "1st-rank Scroll",
+  "cid": "10th-rank-scroll",
+  "s": 0.288135593220339,
+  "d": 2,
+  "cn": "10th-rank Scroll"
+ },
+ {
+  "col": "items",
+  "aid": "aon-2nd-rank-scroll",
+  "an": "2nd-rank Scroll",
+  "cid": "3rd-rank-scroll",
+  "s": 0.288135593220339,
+  "d": 2,
+  "cn": "3rd-rank Scroll"
+ },
+ {
+  "col": "items",
+  "aid": "aon-3rd-rank-scroll",
+  "an": "3rd-rank Scroll",
+  "cid": "2nd-rank-scroll",
+  "s": 0.288135593220339,
+  "d": 2,
+  "cn": "2nd-rank Scroll"
+ },
+ {
+  "col": "items",
+  "aid": "aon-4th-rank-scroll",
+  "an": "4th-rank Scroll",
+  "cid": "5th-rank-scroll",
+  "s": 0.288135593220339,
+  "d": 1,
+  "cn": "5th-rank Scroll"
+ },
+ {
+  "col": "items",
+  "aid": "aon-5th-rank-scroll",
+  "an": "5th-rank Scroll",
+  "cid": "4th-rank-scroll",
+  "s": 0.288135593220339,
+  "d": 1,
+  "cn": "4th-rank Scroll"
+ },
+ {
+  "col": "items",
+  "aid": "aon-6th-rank-scroll",
+  "an": "6th-rank Scroll",
+  "cid": "4th-rank-scroll",
+  "s": 0.288135593220339,
+  "d": 1,
+  "cn": "4th-rank Scroll"
+ },
+ {
+  "col": "items",
+  "aid": "aon-7th-rank-scroll",
+  "an": "7th-rank Scroll",
+  "cid": "4th-rank-scroll",
+  "s": 0.288135593220339,
+  "d": 1,
+  "cn": "4th-rank Scroll"
+ },
+ {
+  "col": "items",
+  "aid": "aon-8th-rank-scroll",
+  "an": "8th-rank Scroll",
+  "cid": "4th-rank-scroll",
+  "s": 0.288135593220339,
+  "d": 1,
+  "cn": "4th-rank Scroll"
+ },
+ {
+  "col": "items",
+  "aid": "aon-9th-rank-scroll",
+  "an": "9th-rank Scroll",
+  "cid": "4th-rank-scroll",
+  "s": 0.288135593220339,
+  "d": 1,
+  "cn": "4th-rank Scroll"
+ },
+ {
+  "col": "items",
+  "aid": "aon-10th-rank-scroll",
+  "an": "10th-rank Scroll",
+  "cid": "1st-rank-scroll",
+  "s": 0.288135593220339,
+  "d": 2,
+  "cn": "1st-rank Scroll"
+ },
+ {
+  "col": "items",
+  "aid": "aon-searing-wave",
+  "an": "Searing Wave",
+  "cid": "healing-wave",
+  "s": 0.208955223880597,
+  "d": 2,
+  "cn": "Healing Wave"
+ },
+ {
+  "col": "items",
+  "aid": "aon-healing-wave",
+  "an": "Healing Wave",
+  "cid": "searing-wave",
+  "s": 0.208955223880597,
+  "d": 2,
+  "cn": "Searing Wave"
+ },
+ {
+  "col": "items",
+  "aid": "aon-duelist-s-blazon",
+  "an": "Duelist's Blazon",
+  "cid": "duelists-beacon",
+  "s": 0.13043478260869565,
+  "d": 2,
+  "cn": "Duelist's Beacon"
+ },
+ {
+  "col": "items",
+  "aid": "aon-death-gaze",
+  "an": "Death Gaze",
+  "cid": "heat-haze",
+  "s": 0.12903225806451613,
+  "d": 2,
+  "cn": "Heat Haze"
+ },
+ {
+  "col": "items",
+  "aid": "aon-spray-pellet",
+  "an": "Spray Pellet",
+  "cid": "spray-pellets",
+  "s": 0.12727272727272726,
+  "d": 1,
+  "cn": "Spray Pellets"
+ },
+ {
+  "col": "items",
+  "aid": "aon-shield-bash",
+  "an": "Shield Bash",
+  "cid": "shield-boss",
+  "s": 0.09090909090909091,
+  "d": 2,
+  "cn": "Shield Boss"
+ },
+ {
+  "col": "items",
+  "aid": "aon-dragonhide",
+  "an": "Dragonhide",
+  "cid": "dragon-bile",
+  "s": 0.08256880733944955,
+  "d": 2,
+  "cn": "Dragon Bile"
+ },
+ {
+  "col": "spells",
+  "aid": "aon-dread-aura",
+  "an": "Dread Aura",
+  "cid": "read-aura",
+  "s": 0.07462686567164178,
+  "d": 1,
+  "cn": "Read Aura"
+ }
+]
