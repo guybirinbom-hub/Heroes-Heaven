@@ -59,6 +59,21 @@ const SUBCLASS_OPTION_SPELLS = new Set(
   ),
 );
 
+/**
+ * Ids EXAMINED against their own rules text and deliberately left with no data, because the correct
+ * answer for that record is "it grants nothing of this kind" — a stance-requiring action is not a
+ * stance, a feat that names a prerequisite proficiency does not grant one.
+ *
+ * Without this the report counts finished work as outstanding: the defense lane read all 1,096 of its
+ * records and correctly modelled 119, yet still showed ~975 "TO DO". Those numbers can never reach
+ * zero, because for most records "no data" IS the right answer. Splitting examined from unexamined is
+ * the difference between "975 left to do" and "975 already decided".
+ */
+const EXAMINED = (() => {
+  try { return JSON.parse(read('work/examined.json')); } catch { return {}; }
+})();
+const examinedIn = (lane) => new Set(EXAMINED[lane] ?? []);
+
 const MODELLED = {
   choice: new Set([
     ...idsIn('src/rules/featPickGrants.ts'),
@@ -177,7 +192,8 @@ for (const coll of COLLECTIONS) {
     for (const lane of LANES) {
       if (!lane.re.test(text)) continue;
       if (lane.not?.test(text)) continue;
-      hits.push({ lane: lane.id, modelled: !!lane.modelled?.(r) });
+      const modelled = !!lane.modelled?.(r);
+      hits.push({ lane: lane.id, modelled, examined: !modelled && examinedIn(lane.id).has(r.id) });
     }
     ledger.push({ collection: coll, id: r.id, name: r.name, level: r.level ?? null, lanes: hits, noSignal: hits.length === 0 });
   }
@@ -202,13 +218,21 @@ if (laneArg > -1) {
   console.log(`TRIAGED ${ledger.length} records across ${COLLECTIONS.length} collections\n`);
   const per = {};
   for (const e of ledger) for (const l of e.lanes) {
-    const b = (per[l.lane] ??= { need: 0, modelled: 0 });
-    b.need++; if (l.modelled) b.modelled++;
+    const b = (per[l.lane] ??= { need: 0, modelled: 0, examined: 0 });
+    b.need++;
+    if (l.modelled) b.modelled++;
+    else if (l.examined) b.examined++;
   }
-  console.log('LANE'.padEnd(14) + 'candidates'.padStart(11) + 'modelled'.padStart(10) + 'TO DO'.padStart(8));
+  console.log(
+    'LANE'.padEnd(14) + 'candidates'.padStart(11) + 'modelled'.padStart(10) + 'examined'.padStart(10) + 'TO DO'.padStart(8),
+  );
   for (const lane of LANES) {
-    const b = per[lane.id] ?? { need: 0, modelled: 0 };
-    console.log(lane.id.padEnd(14) + String(b.need).padStart(11) + String(b.modelled).padStart(10) + String(b.need - b.modelled).padStart(8) + '   ' + lane.what);
+    const b = per[lane.id] ?? { need: 0, modelled: 0, examined: 0 };
+    const todo = b.need - b.modelled - b.examined;
+    console.log(
+      lane.id.padEnd(14) + String(b.need).padStart(11) + String(b.modelled).padStart(10) +
+      String(b.examined).padStart(10) + String(todo).padStart(8) + '   ' + lane.what,
+    );
   }
   const noSignal = ledger.filter((e) => e.noSignal).length;
   const touched = ledger.length - noSignal;
