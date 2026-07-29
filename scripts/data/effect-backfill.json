@@ -36328,5 +36328,297 @@
         ]
       }
     ]
+  },
+  {
+    "category": "feats",
+    "id": "elemental-lore",
+    "field": "choice",
+    "value": {
+      "flag": "elementalLore",
+      "prompt": "Skill",
+      "kind": "array",
+      "options": [
+        {
+          "value": "arcana",
+          "label": "Arcana"
+        },
+        {
+          "value": "nature",
+          "label": "Nature"
+        }
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "manifold-modifications",
+    "field": "choice",
+    "value": {
+      "flag": "modification",
+      "prompt": "Prompt",
+      "kind": "array",
+      "options": [
+        {
+          "value": "harmonic-oscillator",
+          "label": "Harmonic Oscillator"
+        },
+        {
+          "value": "metallic-reactance",
+          "label": "Metallic Reactance"
+        },
+        {
+          "value": "muscular-exoskeleton",
+          "label": "Muscular Exoskeleton"
+        },
+        {
+          "value": "otherworldly-protection",
+          "label": "Otherworldly Protection"
+        },
+        {
+          "value": "phlogistonic-regulator",
+          "label": "Phlogistonic Regulator"
+        },
+        {
+          "value": "speed-boosters",
+          "label": "Speed Boosters"
+        },
+        {
+          "value": "subtle-dampeners",
+          "label": "Subtle Dampeners"
+        },
+        {
+          "value": "blunt-shot",
+          "label": "Blunt Shot"
+        },
+        {
+          "value": "complex-simplicity",
+          "label": "Complex Simplicity"
+        },
+        {
+          "value": "dynamic-weighting",
+          "label": "Dynamic Weighting"
+        },
+        {
+          "value": "entangling-form",
+          "label": "Entangling Form"
+        },
+        {
+          "value": "hampering-spikes",
+          "label": "Hampering Spikes"
+        },
+        {
+          "value": "hefty-composition",
+          "label": "Hefty Composition"
+        },
+        {
+          "value": "modular-head",
+          "label": "Modular Head"
+        },
+        {
+          "value": "pacification-tools",
+          "label": "Pacification Tools"
+        },
+        {
+          "value": "razor-prongs",
+          "label": "Razor Prongs"
+        },
+        {
+          "value": "segmented-frame",
+          "label": "Segmented Frame"
+        }
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "gildedsoul",
+    "field": "choice",
+    "value": {
+      "flag": "gildedsoul",
+      "prompt": "Choose an option",
+      "kind": "array",
+      "options": [
+        {
+          "value": "diplomacy",
+          "label": "Diplomacy"
+        },
+        {
+          "value": "society",
+          "label": "Society"
+        }
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "beast-trainer",
+    "field": "choice",
+    "value": {
+      "flag": "feat",
+      "prompt": "Feat",
+      "kind": "array",
+      "options": [
+        {
+          "value": "pet",
+          "label": "Pet"
+        },
+        {
+          "value": "train-animal",
+          "label": "Train Animal"
+        }
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "pitborn",
+    "field": "choice",
+    "value": {
+      "flag": "feat",
+      "prompt": "Skill Feat",
+      "kind": "array",
+      "options": [
+        {
+          "value": "armor-assist",
+          "label": "Armor Assist"
+        },
+        {
+          "value": "combat-climber",
+          "label": "Combat Climber"
+        },
+        {
+          "value": "hefty-hauler",
+          "label": "Hefty Hauler"
+        },
+        {
+          "value": "quick-jump",
+          "label": "Quick Jump"
+        },
+        {
+          "value": "titan-wrestler",
+          "label": "Titan Wrestler"
+        },
+        {
+          "value": "underwater-marauder",
+          "label": "Underwater Marauder"
+        }
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "rogue-dedication",
+    "field": "choice",
+    "value": {
+      "flag": "rogueDedication",
+      "prompt": "Prompt",
+      "kind": "array",
+      "options": [
+        {
+          "value": "stealth",
+          "label": "Stealth"
+        },
+        {
+          "value": "thievery",
+          "label": "Thievery"
+        }
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "canny-acumen",
+    "field": "choice",
+    "value": {
+      "flag": "cannyAcumen",
+      "prompt": "Choose an option",
+      "kind": "array",
+      "options": [
+        {
+          "value": "fortitude",
+          "label": "Fortitude"
+        },
+        {
+          "value": "reflex",
+          "label": "Reflex"
+        },
+        {
+          "value": "will",
+          "label": "Will"
+        },
+        {
+          "value": "perception",
+          "label": "Perception"
+        }
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "second-blessing",
+    "field": "choice",
+    "value": {
+      "flag": "blessing",
+      "prompt": "Choose an option",
+      "kind": "array",
+      "options": [
+        {
+          "value": "blessed-armament",
+          "label": "Blessed Armament"
+        },
+        {
+          "value": "blessed-shield",
+          "label": "Blessed Shield"
+        },
+        {
+          "value": "blessed-swiftness",
+          "label": "Blessed Swiftness"
+        }
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "devout-blessing",
+    "field": "choice",
+    "value": {
+      "flag": "divineAlly",
+      "prompt": "Prompt",
+      "kind": "array",
+      "options": [
+        {
+          "value": "blessed-armament",
+          "label": "Blessed Armament"
+        },
+        {
+          "value": "blessed-shield",
+          "label": "Blessed Shield"
+        },
+        {
+          "value": "blessed-swiftness",
+          "label": "Blessed Swiftness"
+        }
+      ]
+    }
+  },
+  {
+    "category": "feats",
+    "id": "pirate-combat-training",
+    "field": "choice",
+    "value": {
+      "flag": "feat",
+      "prompt": "Feat",
+      "kind": "array",
+      "options": [
+        {
+          "value": "combat-climber",
+          "label": "Combat Climber"
+        },
+        {
+          "value": "underwater-marauder",
+          "label": "Underwater Marauder"
+        }
+      ]
+    }
   }
 ]

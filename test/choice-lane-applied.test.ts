@@ -73,3 +73,41 @@ describe('choice definitions are well-formed', () => {
     expect(bad, 'duplicate option values would make two rows indistinguishable').toEqual([]);
   });
 });
+
+/**
+ * NO RAW FOUNDRY PATHS IN A PICKER.
+ *
+ * The importer copied Foundry's ChoiceSet values verbatim, so eight records shipped options like
+ * `system.skills.stealth.rank` and `Compendium.pf2e.feats-srd.Item.Pet`. Three used the path as the
+ * LABEL too, which the player read in the picker; and the stored answer was unresolvable either way.
+ */
+describe('choice options use app ids, not import artifacts', () => {
+  const collections = ['feats', 'classFeatures', 'items', 'heritages', 'backgrounds', 'ancestries'] as const;
+
+  it('no option value or label is a Foundry path', () => {
+    const bad: string[] = [];
+    for (const col of collections) {
+      for (const [id, r] of Object.entries(
+        (c as unknown as Record<string, Record<string, { choice?: { options?: { value: string; label: string }[] } }>>)[col] ?? {},
+      )) {
+        for (const o of r.choice?.options ?? []) {
+          if (/^(system\.|Compendium\.|@)/.test(String(o.value))) bad.push(`${col}/${id} value=${o.value}`);
+          if (/^(system\.|Compendium\.|@)/.test(String(o.label))) bad.push(`${col}/${id} label=${o.label}`);
+        }
+      }
+    }
+    expect(bad).toEqual([]);
+  });
+
+  it('the rewritten ids resolve to real records', () => {
+    expect(c.feats['beast-trainer'].choice?.options?.map((o) => o.value)).toEqual(['pet', 'train-animal']);
+    for (const v of c.feats['beast-trainer'].choice!.options!.map((o) => o.value)) expect(c.feats[v], v).toBeTruthy();
+    expect(c.feats['second-blessing'].choice?.options?.map((o) => o.value)).toEqual(['blessed-armament', 'blessed-shield', 'blessed-swiftness']);
+    for (const v of c.feats['second-blessing'].choice!.options!.map((o) => o.value)) expect(c.classFeatures[v], v).toBeTruthy();
+  });
+
+  it('skill and save options use the keys the app uses elsewhere', () => {
+    expect(c.feats['rogue-dedication'].choice?.options?.map((o) => o.value)).toEqual(['stealth', 'thievery']);
+    expect(c.feats['canny-acumen'].choice?.options?.map((o) => o.value)).toEqual(['fortitude', 'reflex', 'will', 'perception']);
+  });
+});
