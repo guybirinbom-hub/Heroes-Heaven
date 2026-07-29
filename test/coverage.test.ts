@@ -44,7 +44,7 @@ const REGISTRY_FLOOR: Record<string, number> = {
   featCantripGrants: 51,
   featFeatGrants: 254,
   companionGrants: 78,
-  situationalBonuses: 2293,
+  situationalBonuses: 2299,
 };
 
 /** Ceilings for work outstanding — these may only ever go DOWN.
@@ -64,8 +64,11 @@ const REGISTRY_FLOOR: Record<string, number> = {
  *                                                `familiar` and 96 situational ids were invisible and
  *                                                counted as gaps. Now matched broadly and filtered to
  *                                                ids that resolve to a real record.)
+ *  2026-07-29  choices 451 · situational 1012   (the daily-preparations pass wired 38 records and
+ *                                                the innate-grant pass 9 more; spellDamage gave
+ *                                                Dangerous Sorcery and friends a surface to land on.)
  *  Lower these when work lands; never raise one to make a red build green. */
-const MISSING_CEILING = { choices: 536, situational: 1018 };
+const MISSING_CEILING = { choices: 451, situational: 1012 };
 
 describe('mechanical coverage ratchet', { timeout: REPORT_TIMEOUT_MS }, () => {
   const r = report();

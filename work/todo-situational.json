@@ -1,25 +1,6 @@
 [
  {
   "collection": "feats",
-  "id": "dangerous-sorcery",
-  "name": "Dangerous Sorcery",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "spellGrant",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
   "id": "tweak-appearances",
   "name": "Tweak Appearances",
   "level": 2,
@@ -51,67 +32,6 @@
   "id": "battleforger",
   "name": "Battleforger",
   "level": 9,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "amplifying-touch",
-  "name": "Amplifying Touch",
-  "level": 12,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "hireling-manager",
-  "name": "Hireling Manager",
-  "level": 3,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "skyseeker",
-  "name": "Skyseeker",
-  "level": 8,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "toggle",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "archaeologists-warning",
-  "name": "Archaeologist's Warning",
-  "level": 6,
   "lanes": [
    {
     "lane": "situational",
@@ -173,20 +93,6 @@
    {
     "lane": "grantsFeat",
     "modelled": true,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "silent-sting",
-  "name": "Silent Sting",
-  "level": 10,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
     "examined": false
    }
   ],
@@ -288,290 +194,9 @@
  },
  {
   "collection": "feats",
-  "id": "protective-spirit-mask",
-  "name": "Protective Spirit Mask",
-  "level": 20,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "tireless-guides-mask",
-  "name": "Tireless Guide's Mask",
-  "level": 20,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "undying-conviction",
-  "name": "Undying Conviction",
-  "level": 4,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "reanimator-dedication",
-  "name": "Reanimator Dedication",
-  "level": 2,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
   "id": "gravelands-herbalist",
   "name": "Gravelands Herbalist",
   "level": 4,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "push-back-the-dead",
-  "name": "Push Back the Dead!",
-  "level": 4,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "stalwart-standard",
-  "name": "Stalwart Standard",
-  "level": 10,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "devoted-guardian",
-  "name": "Devoted Guardian",
-  "level": 2,
-  "lanes": [
-   {
-    "lane": "choice",
-    "modelled": false,
-    "examined": true
-   },
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "toggle",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "inspiring-resilience",
-  "name": "Inspiring Resilience",
-  "level": 4,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "corpse-killers-defiance",
-  "name": "Corpse-Killer's Defiance",
-  "level": 10,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "zombie-horde",
-  "name": "Zombie Horde",
-  "level": 20,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "bodysnatcher",
-  "name": "Bodysnatcher",
-  "level": 14,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "civil-service",
-  "name": "Civil Service",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "choice",
-    "modelled": true,
-    "examined": false
-   },
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "cooperative-leadership",
-  "name": "Cooperative Leadership",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "crush-dissent",
-  "name": "Crush Dissent",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "fortified-fiefs",
-  "name": "Fortified Fiefs",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "free-and-fair",
-  "name": "Free and Fair",
-  "level": 7,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "insider-trading",
-  "name": "Insider Trading",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "inspiring-entertainment",
-  "name": "Inspiring Entertainment",
-  "level": 3,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "quick-recovery-kingdom",
-  "name": "Quick Recovery (Kingdom)",
-  "level": 3,
   "lanes": [
    {
     "lane": "situational",
@@ -599,13 +224,13 @@
    },
    {
     "lane": "resource",
-    "modelled": false,
+    "modelled": true,
     "examined": false
    },
    {
     "lane": "spellGrant",
-    "modelled": false,
-    "examined": true
+    "modelled": true,
+    "examined": false
    }
   ],
   "noSignal": false
@@ -623,25 +248,6 @@
    },
    {
     "lane": "proficiency",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "tunnel-wall",
-  "name": "Tunnel Wall",
-  "level": 4,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "toggle",
     "modelled": false,
     "examined": true
    }
@@ -683,25 +289,6 @@
  },
  {
   "collection": "feats",
-  "id": "consume-power",
-  "name": "Consume Power",
-  "level": 6,
-  "lanes": [
-   {
-    "lane": "choice",
-    "modelled": false,
-    "examined": true
-   },
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
   "id": "wormskin",
   "name": "Wormskin",
   "level": 4,
@@ -716,210 +303,9 @@
  },
  {
   "collection": "feats",
-  "id": "inexorable",
-  "name": "Inexorable",
-  "level": 6,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "defense",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "burn-it",
-  "name": "Burn It!",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "divine-rebuttal",
-  "name": "Divine Rebuttal",
-  "level": 6,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
   "id": "magic-hands",
   "name": "Magic Hands",
   "level": 6,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "shared-avoidance",
-  "name": "Shared Avoidance",
-  "level": 10,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "shared-clarity",
-  "name": "Shared Clarity",
-  "level": 18,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "assisting-shot",
-  "name": "Assisting Shot",
-  "level": 2,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "guardians-deflection-fighter",
-  "name": "Guardian's Deflection (Fighter)",
-  "level": 6,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "scouts-warning",
-  "name": "Scout's Warning",
-  "level": 4,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "watch-your-back",
-  "name": "Watch Your Back",
-  "level": 6,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "coven-spell",
-  "name": "Coven Spell",
-  "level": 12,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "witchs-broom",
-  "name": "Witch’s Broom",
-  "level": 12,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "irresistible-magic",
-  "name": "Irresistible Magic",
-  "level": 6,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "swift-eel-mount",
-  "name": "Swift Eel Mount",
-  "level": 13,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "begin-stampede",
-  "name": "Begin Stampede",
-  "level": 17,
   "lanes": [
    {
     "lane": "situational",
@@ -959,42 +345,9 @@
  },
  {
   "collection": "feats",
-  "id": "vicious-vengeance",
-  "name": "Vicious Vengeance",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
   "id": "mountain-stance",
   "name": "Mountain Stance",
   "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "toggle",
-    "modelled": true,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "cobra-stance",
-  "name": "Cobra Stance",
-  "level": 4,
   "lanes": [
    {
     "lane": "situational",
@@ -1019,30 +372,6 @@
     "lane": "situational",
     "modelled": false,
     "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "cobra-envenom",
-  "name": "Cobra Envenom",
-  "level": 10,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "resource",
-    "modelled": true,
-    "examined": false
-   },
-   {
-    "lane": "toggle",
-    "modelled": false,
-    "examined": true
    }
   ],
   "noSignal": false
@@ -1135,7 +464,7 @@
    },
    {
     "lane": "resource",
-    "modelled": false,
+    "modelled": true,
     "examined": false
    }
   ],
@@ -1157,25 +486,6 @@
  },
  {
   "collection": "feats",
-  "id": "root-magic",
-  "name": "Root Magic",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "proficiency",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
   "id": "perfected-gamtu",
   "name": "Perfected Gamtu",
   "level": 17,
@@ -1183,25 +493,6 @@
    {
     "lane": "situational",
     "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "hasty-celebration",
-  "name": "Hasty Celebration",
-  "level": 5,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "resource",
-    "modelled": true,
     "examined": false
    }
   ],
@@ -1251,25 +542,6 @@
  },
  {
   "collection": "feats",
-  "id": "acupuncturist",
-  "name": "Acupuncturist",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "defense",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
   "id": "cardinal-guardians",
   "name": "Cardinal Guardians",
   "level": 14,
@@ -1313,213 +585,9 @@
  },
  {
   "collection": "feats",
-  "id": "chosen-ward",
-  "name": "Chosen Ward",
-  "level": 14,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "creature-of-myth",
-  "name": "Creature of Myth",
-  "level": 18,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "defense",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "cry-of-rebellion",
-  "name": "Cry of Rebellion",
-  "level": 16,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "resource",
-    "modelled": true,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "you-cant-kill-an-idea",
-  "name": "You Can't Kill an Idea",
-  "level": 20,
-  "lanes": [
-   {
-    "lane": "choice",
-    "modelled": false,
-    "examined": true
-   },
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "defense",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
   "id": "decree-of-prosperity",
   "name": "Decree of Prosperity",
   "level": 14,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "resource",
-    "modelled": true,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "sovereigns-blade",
-  "name": "Sovereign's Blade",
-  "level": 18,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "channelers-stance",
-  "name": "Channeler's Stance",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "toggle",
-    "modelled": true,
-    "examined": false
-   },
-   {
-    "lane": "spellGrant",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "rise-my-creature",
-  "name": "Rise, My Creature!",
-  "level": 4,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "companion",
-    "modelled": true,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "beautiful-knifework",
-  "name": "Beautiful Knifework",
-  "level": 7,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "exigent-aura",
-  "name": "Exigent Aura",
-  "level": 6,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "empowered-onslaught",
-  "name": "Empowered Onslaught",
-  "level": 12,
-  "lanes": [
-   {
-    "lane": "choice",
-    "modelled": false,
-    "examined": true
-   },
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "resource",
-    "modelled": true,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "cursebreaker",
-  "name": "Cursebreaker",
-  "level": 10,
   "lanes": [
    {
     "lane": "situational",
@@ -1593,44 +661,6 @@
  },
  {
   "collection": "feats",
-  "id": "commitment-to-liberty",
-  "name": "Commitment to Liberty",
-  "level": 6,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "demon-hunting-companion",
-  "name": "Demon-Hunting Companion",
-  "level": 4,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "companion",
-    "modelled": true,
-    "examined": false
-   },
-   {
-    "lane": "defense",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
   "id": "vellumis-excision",
   "name": "Vellumis Excision",
   "level": 16,
@@ -1643,20 +673,6 @@
    {
     "lane": "spellGrant",
     "modelled": true,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "pennant-of-victory",
-  "name": "Pennant of Victory",
-  "level": 20,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
     "examined": false
    }
   ],
@@ -1707,105 +723,6 @@
  },
  {
   "collection": "feats",
-  "id": "hero-gods-bond",
-  "name": "Hero-God's Bond",
-  "level": 6,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "grantsFeat",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "martyrs-parry",
-  "name": "Martyr's Parry",
-  "level": 8,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "hydras-bond",
-  "name": "Hydra's Bond",
-  "level": 4,
-  "lanes": [
-   {
-    "lane": "choice",
-    "modelled": false,
-    "examined": true
-   },
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "stages-of-fate",
-  "name": "Stages of Fate",
-  "level": 8,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "dragonet-breath",
-  "name": "Dragonet Breath",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "defense",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "indomitable-shot",
-  "name": "Indomitable Shot",
-  "level": 16,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
   "id": "ward-slumber",
   "name": "Ward Slumber",
   "level": 12,
@@ -1843,119 +760,6 @@
   "noSignal": false
  },
  {
-  "collection": "feats",
-  "id": "fear-no-pain",
-  "name": "Fear No Pain!",
-  "level": 6,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "resource",
-    "modelled": true,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "swift-support",
-  "name": "Swift Support",
-  "level": 6,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "bounce-boost",
-  "name": "Bounce Boost",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "personalized-poisoning",
-  "name": "Personalized Poisoning",
-  "level": 2,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "snap-out-of-it-marshal",
-  "name": "Snap Out of It! (Marshal)",
-  "level": 4,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "defense",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "feats",
-  "id": "guardians-deflection-swashbuckler",
-  "name": "Guardian's Deflection (Swashbuckler)",
-  "level": 4,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
-  "id": "sorcerous-potency",
-  "name": "Sorcerous Potency",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "spellGrant",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
   "collection": "classFeatures",
   "id": "commanders-banner",
   "name": "Commander's Banner",
@@ -1965,92 +769,6 @@
     "lane": "situational",
     "modelled": false,
     "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
-  "id": "choir-politic",
-  "name": "Choir Politic",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "spellGrant",
-    "modelled": true,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
-  "id": "construct-eidolon",
-  "name": "Construct Eidolon",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "choice",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "grantsFeat",
-    "modelled": false,
-    "examined": true
-   },
-   {
-    "lane": "defense",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
-  "id": "devotion-phantom-eidolon",
-  "name": "Devotion Phantom Eidolon",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "defense",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
-  "id": "elemental-eidolon",
-  "name": "Elemental Eidolon",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "defense",
-    "modelled": false,
-    "examined": true
    }
   ],
   "noSignal": false
@@ -2100,20 +818,6 @@
  },
  {
   "collection": "classFeatures",
-  "id": "regalia",
-  "name": "Regalia",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
   "id": "shield",
   "name": "Shield",
   "level": 1,
@@ -2149,20 +853,6 @@
   "collection": "classFeatures",
   "id": "the-unbound-step",
   "name": "The Unbound Step",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
-  "id": "wand",
-  "name": "Wand",
   "level": 1,
   "lanes": [
    {
@@ -2286,25 +976,6 @@
    {
     "lane": "situational",
     "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
-  "id": "inspiring-spotlight",
-  "name": "Inspiring Spotlight",
-  "level": 9,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "resource",
-    "modelled": true,
     "examined": false
    }
   ],
@@ -2675,8 +1346,8 @@
    },
    {
     "lane": "resource",
-    "modelled": false,
-    "examined": true
+    "modelled": true,
+    "examined": false
    },
    {
     "lane": "spellGrant",
@@ -3452,39 +2123,6 @@
  },
  {
   "collection": "items",
-  "id": "trackless",
-  "name": "Trackless",
-  "level": 6,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
-  "id": "trackless-greater",
-  "name": "Trackless (Greater)",
-  "level": 10,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "resource",
-    "modelled": true,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
   "id": "ursine-avenger-hood",
   "name": "Ursine Avenger Hood",
   "level": 2,
@@ -3821,48 +2459,6 @@
  },
  {
   "collection": "items",
-  "id": "keep-stone-weapon",
-  "name": "Keep Stone Weapon",
-  "level": 18,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
-  "id": "keep-stone-weapon-high-grade",
-  "name": "Keep Stone Weapon (High-Grade)",
-  "level": 18,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
-  "id": "vital-earth",
-  "name": "Vital Earth",
-  "level": 9,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
   "id": "globe-of-shrouds",
   "name": "Globe of Shrouds",
   "level": 8,
@@ -4183,34 +2779,6 @@
   "id": "antiplague",
   "name": "Antiplague",
   "level": 1,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
-  "id": "bombers-eye-elixir",
-  "name": "Bomber's Eye Elixir",
-  "level": 4,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
-  "id": "alacritous-horsehoes",
-  "name": "Alacritous Horsehoes",
-  "level": 7,
   "lanes": [
    {
     "lane": "situational",
@@ -4848,20 +3416,6 @@
  },
  {
   "collection": "items",
-  "id": "apotheosis-knife",
-  "name": "Apotheosis Knife",
-  "level": 20,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
   "id": "antifungal-salve",
   "name": "Antifungal Salve",
   "level": 1,
@@ -4989,20 +3543,6 @@
     "lane": "spellGrant",
     "modelled": false,
     "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
-  "id": "draddeths-edge",
-  "name": "Draddeth's Edge",
-  "level": 16,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
    }
   ],
   "noSignal": false
@@ -5206,25 +3746,6 @@
   "id": "horn-of-the-archon",
   "name": "Horn of the Archon",
   "level": 16,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "resource",
-    "modelled": true,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
-  "id": "warpipes",
-  "name": "Warpipes",
-  "level": 5,
   "lanes": [
    {
     "lane": "situational",
@@ -5510,20 +4031,6 @@
  },
  {
   "collection": "items",
-  "id": "verdant-poultice",
-  "name": "Verdant Poultice",
-  "level": 5,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
   "id": "overflowing-life",
   "name": "Overflowing Life",
   "level": 0,
@@ -5576,20 +4083,6 @@
  },
  {
   "collection": "items",
-  "id": "anti-dragon-barding-greater",
-  "name": "Anti-Dragon Barding (Greater)",
-  "level": 12,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
   "id": "astrolabe-of-the-falling-stars",
   "name": "Astrolabe of the Falling Stars",
   "level": 5,
@@ -5602,34 +4095,6 @@
    {
     "lane": "resource",
     "modelled": true,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
-  "id": "banner-of-the-restful-greater",
-  "name": "Banner of the Restful (Greater)",
-  "level": 12,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
-  "id": "banner-of-the-restful-major",
-  "name": "Banner of the Restful (Major)",
-  "level": 19,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
     "examined": false
    }
   ],
@@ -6002,34 +4467,6 @@
  },
  {
   "collection": "items",
-  "id": "aon-keep-stone-weapon",
-  "name": "Keep Stone Weapon",
-  "level": 18,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
-  "id": "aon-alacritous-horsehoes",
-  "name": "Alacritous Horsehoes",
-  "level": 7,
-  "lanes": [
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "items",
   "id": "aon-magical-medals",
   "name": "Magical Medals",
   "level": 3,
@@ -6112,7 +4549,7 @@
   "lanes": [
    {
     "lane": "choice",
-    "modelled": false,
+    "modelled": true,
     "examined": false
    },
    {
@@ -6127,8 +4564,8 @@
    },
    {
     "lane": "spellGrant",
-    "modelled": false,
-    "examined": true
+    "modelled": true,
+    "examined": false
    }
   ],
   "noSignal": false
@@ -6189,7 +4626,7 @@
   "lanes": [
    {
     "lane": "choice",
-    "modelled": false,
+    "modelled": true,
     "examined": false
    },
    {
@@ -6208,7 +4645,7 @@
   "lanes": [
    {
     "lane": "choice",
-    "modelled": false,
+    "modelled": true,
     "examined": false
    },
    {
@@ -6237,8 +4674,8 @@
   "lanes": [
    {
     "lane": "choice",
-    "modelled": false,
-    "examined": true
+    "modelled": true,
+    "examined": false
    },
    {
     "lane": "situational",
@@ -6266,7 +4703,7 @@
   "lanes": [
    {
     "lane": "choice",
-    "modelled": false,
+    "modelled": true,
     "examined": false
    },
    {
@@ -6295,8 +4732,8 @@
   "lanes": [
    {
     "lane": "choice",
-    "modelled": false,
-    "examined": true
+    "modelled": true,
+    "examined": false
    },
    {
     "lane": "situational",
@@ -6324,7 +4761,7 @@
   "lanes": [
    {
     "lane": "choice",
-    "modelled": false,
+    "modelled": true,
     "examined": false
    },
    {
@@ -6334,40 +4771,6 @@
    },
    {
     "lane": "proficiency",
-    "modelled": true,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "backgrounds",
-  "id": "blight-survivor",
-  "name": "Blight Survivor",
-  "level": null,
-  "lanes": [
-   {
-    "lane": "choice",
-    "modelled": false,
-    "examined": true
-   },
-   {
-    "lane": "situational",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "proficiency",
-    "modelled": true,
-    "examined": false
-   },
-   {
-    "lane": "resource",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "grantsFeat",
     "modelled": true,
     "examined": false
    }
@@ -6382,8 +4785,8 @@
   "lanes": [
    {
     "lane": "choice",
-    "modelled": false,
-    "examined": true
+    "modelled": true,
+    "examined": false
    },
    {
     "lane": "situational",
@@ -6406,7 +4809,7 @@
   "lanes": [
    {
     "lane": "choice",
-    "modelled": false,
+    "modelled": true,
     "examined": false
    },
    {

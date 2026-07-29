@@ -145,12 +145,14 @@ if (process.argv.includes('--json')) {
   console.log('\nLANE 2 — records granting a typed (circumstance/status/item) bonus');
   sits.forEach((l) => console.log(row(l)));
   console.log(`  => ${report.totals.situationalMissing} of ${report.totals.situationalNeed} unmodelled`);
-  console.log('\nNOTE: the REACH bug is FIXED (c00984a) — explain.ts -> characterSituationalIds now spans');
-  console.log('      feats, items (equipped/worn/invested only), heritage, ancestry, background and class');
-  console.log('      features, so every row above is reachable. What is missing now is DATA, not reach.');
-  console.log('NOTE: 338 verified bonuses still have NO storable target kind — SituationalTarget.kind is');
-  console.log('      skill|save|perception|ac|attack but the data needs strikeDamage/speed/spell/hp/classDc.');
-  console.log('      Extend that union BEFORE applying work/situational-lane (see its status.json).');
-  console.log('NOTE: these text heuristics OVER-count. They are an upper bound on work, not a defect');
-  console.log('      count — classifying the remainder is the audit’s first job.');
+  console.log('\nNOTE: reach is FIXED — explain.ts -> characterSituationalIds spans feats, items');
+  console.log('      (equipped/worn/invested, INCLUDING etched property runes), heritage, ancestry,');
+  console.log('      background and class features, so every row above is reachable.');
+  console.log('NOTE: the storable-target gap is CLOSED. SituationalTarget.kind now covers');
+  console.log('      skill|save|perception|ac|attack|strikeAttack|strikeDamage|speed|hp|classDc|spell|');
+  console.log('      spellDamage|ability, and every kind renders its lines in the stat breakdown.');
+  console.log('      test/situational-target-kinds.test.ts fails the build if the two drift apart.');
+  console.log('NOTE: these text heuristics OVER-count, and have done so in every lane of this audit —');
+  console.log('      they are an upper bound on work, not a defect count. Use scripts/triage-mechanics.mjs');
+  console.log('      for the modelled/examined/TO DO split, which knows where each mechanic can live.');
 }
