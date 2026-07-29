@@ -1,0 +1,4837 @@
+[
+ {
+  "collection": "feats",
+  "id": "master-of-many-styles",
+  "name": "Master of Many Styles",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "wayfinder-resonance-tinkerer",
+  "name": "Wayfinder Resonance Tinkerer",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "attunement-to-stone",
+  "name": "Attunement to Stone",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "judgment-of-the-monolith",
+  "name": "Judgment of the Monolith",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "stone-communion",
+  "name": "Stone Communion",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "familiars-eyes",
+  "name": "Familiar's Eyes",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "companion",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "gorilla-pound",
+  "name": "Gorilla Pound",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "peafowl-strut",
+  "name": "Peafowl Strut",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "wish-alchemy",
+  "name": "Wish Alchemy",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "rescuers-press",
+  "name": "Rescuer's Press",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "skyseeker",
+  "name": "Skyseeker",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "cross-the-final-horizon",
+  "name": "Cross the Final Horizon",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "wayfinder-resonance-infiltrator",
+  "name": "Wayfinder Resonance Infiltrator",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "communal-sustain",
+  "name": "Communal Sustain",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "blazing-talon-surge",
+  "name": "Blazing Talon Surge",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "explosive-death-drop",
+  "name": "Explosive Death Drop",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "flame-jump",
+  "name": "Flame Jump",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "quick-shape",
+  "name": "Quick Shape",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "electric-counter",
+  "name": "Electric Counter",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "devastating-spellstrike",
+  "name": "Devastating Spellstrike",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "distracting-spellstrike",
+  "name": "Distracting Spellstrike",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "starlit-eyes",
+  "name": "Starlit Eyes",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "student-of-the-staff",
+  "name": "Student of the Staff",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "capture-magic",
+  "name": "Capture Magic",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "dazzling-block",
+  "name": "Dazzling Block",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "sustaining-steel",
+  "name": "Sustaining Steel",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "resounding-cascade",
+  "name": "Resounding Cascade",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "inner-fire-som",
+  "name": "Inner Fire (SoM)",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "blazing-streak",
+  "name": "Blazing Streak",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "shifting-terrain",
+  "name": "Shifting Terrain",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "bullet-dancer-dedication",
+  "name": "Bullet Dancer Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "bullet-dancer-burn",
+  "name": "Bullet Dancer Burn",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "bullet-dancer-reload",
+  "name": "Bullet Dancer Reload",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "summon-ensemble",
+  "name": "Summon Ensemble",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "confounding-image",
+  "name": "Confounding Image",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "disk-rider",
+  "name": "Disk Rider",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "directed-poison",
+  "name": "Directed Poison",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "black-powder-flash",
+  "name": "Black Powder Flash",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "devoted-guardian",
+  "name": "Devoted Guardian",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "pirouette",
+  "name": "Pirouette",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "grand-dance",
+  "name": "Grand Dance",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "stalwart-defender-dedication",
+  "name": "Stalwart Defender Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "tunnel-wall",
+  "name": "Tunnel Wall",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "upset-balance",
+  "name": "Upset Balance",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "rupture-stomp",
+  "name": "Rupture Stomp",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "unshaken-in-iron",
+  "name": "Unshaken in Iron",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "gathering-moss",
+  "name": "Gathering Moss",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "cracked-mountain",
+  "name": "Cracked Mountain",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "stone-body",
+  "name": "Stone Body",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "kinetic-activation",
+  "name": "Kinetic Activation",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "safe-elements",
+  "name": "Safe Elements",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "aura-shaping",
+  "name": "Aura Shaping",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "effortless-impulse",
+  "name": "Effortless Impulse",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "imperious-aura",
+  "name": "Imperious Aura",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "kinetic-pinnacle",
+  "name": "Kinetic Pinnacle",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "kineticist-dedication",
+  "name": "Kineticist Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "stone-brawler-dedication",
+  "name": "Stone Brawler Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "stoney-deflection",
+  "name": "Stoney Deflection",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "ore-fists",
+  "name": "Ore Fists",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "dual-handed-assault",
+  "name": "Dual-Handed Assault",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "disarming-twist",
+  "name": "Disarming Twist",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "opening-stance-fighter",
+  "name": "Opening Stance (Fighter)",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "ricochet-feint",
+  "name": "Ricochet Feint",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "witchs-bottle",
+  "name": "Witch’s Bottle",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "hex-master",
+  "name": "Hex Master",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "trample-centaur",
+  "name": "Trample (Centaur)",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "clawdancer-dedication",
+  "name": "Clawdancer Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "claw-snag",
+  "name": "Claw Snag",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "dashing-pounce",
+  "name": "Dashing Pounce",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "talon-sweep",
+  "name": "Talon Sweep",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "wheeling-grab",
+  "name": "Wheeling Grab",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "hindquarter-kick",
+  "name": "Hindquarter Kick",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "spinning-stand",
+  "name": "Spinning Stand",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "tear-tendons",
+  "name": "Tear Tendons",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "feline-dance",
+  "name": "Feline Dance",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "claw-and-talon-flow",
+  "name": "Claw and Talon Flow",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "precise-hooks",
+  "name": "Precise Hooks",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "storm-of-claws",
+  "name": "Storm of Claws",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "trample-mimicry",
+  "name": "Trample Mimicry",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "one-toed-hop",
+  "name": "One-Toed Hop",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "majestic-presence",
+  "name": "Majestic Presence",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "expand-aura",
+  "name": "Expand Aura",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "thats-odd",
+  "name": "That's Odd",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "monastic-weaponry",
+  "name": "Monastic Weaponry",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "crane-flutter",
+  "name": "Crane Flutter",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "dragon-roar",
+  "name": "Dragon Roar",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "mountain-stronghold",
+  "name": "Mountain Stronghold",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "return-fire",
+  "name": "Return Fire",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "stumbling-feint",
+  "name": "Stumbling Feint",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "tiger-slash",
+  "name": "Tiger Slash",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "wolf-drag",
+  "name": "Wolf Drag",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "clinging-shadows-initiate",
+  "name": "Clinging Shadows Initiate",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "wild-winds-initiate",
+  "name": "Wild Winds Initiate",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "cobra-envenom",
+  "name": "Cobra Envenom",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "prevailing-position",
+  "name": "Prevailing Position",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "focused-shot",
+  "name": "Focused Shot",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "reflexive-stance",
+  "name": "Reflexive Stance",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "ironblood-surge",
+  "name": "Ironblood Surge",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "mountain-quake",
+  "name": "Mountain Quake",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "tangled-forest-rake",
+  "name": "Tangled Forest Rake",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "wild-winds-gust",
+  "name": "Wild Winds Gust",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "fuse-stance",
+  "name": "Fuse Stance",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "qi-center",
+  "name": "Qi Center",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "triangle-shot",
+  "name": "Triangle Shot",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "immortal-techniques",
+  "name": "Immortal Techniques",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "vexing-tumble",
+  "name": "Vexing Tumble",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "student-of-the-dueling-arts",
+  "name": "Student of the Dueling Arts",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "skim-scroll",
+  "name": "Skim Scroll",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "trample",
+  "name": "Trample",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "inherit-the-dreaming-heirloom",
+  "name": "Inherit the Dreaming Heirloom",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "unleash-yaoguai-might",
+  "name": "Unleash Yaoguai Might",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "five-breath-vanguard-dedication",
+  "name": "Five-breath Vanguard Dedication",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "renewing-cycle",
+  "name": "Renewing Cycle",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "induce-imbalance",
+  "name": "Induce Imbalance",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "protective-cycle",
+  "name": "Protective Cycle",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "five-breaths-one-death",
+  "name": "Five Breaths, One Death",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "know-your-enemy",
+  "name": "Know Your Enemy",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "momentous-charge",
+  "name": "Momentous Charge",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "scattering-in-spring",
+  "name": "Scattering in Spring",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "five-gods-ram",
+  "name": "Five-gods Ram",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "whirling-in-the-summer-storm",
+  "name": "Whirling in the Summer Storm",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "world-breaking-footfall",
+  "name": "World-breaking Footfall",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "wake-of-devastation",
+  "name": "Wake of Devastation",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "channeled-protection",
+  "name": "Channeled Protection",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "cycle-of-souls",
+  "name": "Cycle of Souls",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "haft-beatdown",
+  "name": "Haft Beatdown",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "razors-edge",
+  "name": "Razor's Edge",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "aegis-for-the-innocent",
+  "name": "Aegis for the Innocent",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "unstoppable-force",
+  "name": "Unstoppable Force",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "imbue-spell",
+  "name": "Imbue Spell",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "convergent-tides",
+  "name": "Convergent Tides",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "shattering-spellstrike",
+  "name": "Shattering Spellstrike",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "culverts-collapse",
+  "name": "Culvert's Collapse",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "rippling-spin",
+  "name": "Rippling Spin",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "snakebirds-shadow",
+  "name": "Snakebird's Shadow",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "wave-spiral",
+  "name": "Wave Spiral",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "the-thousand-lashes-of-the-weeping-willow",
+  "name": "The Thousand Lashes of the Weeping Willow",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "stalwart-song",
+  "name": "Stalwart Song",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "klingegeist",
+  "name": "Klingegeist",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "jotuns-heart",
+  "name": "Jotun's Heart",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "not-so-fast",
+  "name": "Not so Fast!",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "lock-down",
+  "name": "Lock Down",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "opening-stance",
+  "name": "Opening Stance",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "distant-wandering",
+  "name": "Distant Wandering",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "strafing-breath",
+  "name": "Strafing Breath",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "ive-been-here-before",
+  "name": "I've Been Here Before",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "scroll-thaumaturgy",
+  "name": "Scroll Thaumaturgy",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "one-more-activation",
+  "name": "One More Activation",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "petrified-skin",
+  "name": "Petrified Skin",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "curse-maelstrom-dedication",
+  "name": "Curse Maelstrom Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "psychic-duelist-dedication",
+  "name": "Psychic Duelist Dedication",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false
+   },
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "instigate-psychic-duel",
+  "name": "Instigate Psychic Duel",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "cruel-piercing",
+  "name": "Cruel Piercing",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "wrathful-presence",
+  "name": "Wrathful Presence",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "trample-sarangay",
+  "name": "Trample (Sarangay)",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "judgement-of-the-monolith",
+  "name": "Judgement of the Monolith",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "riptide-undersea-privateer",
+  "name": "Riptide (Undersea Privateer)",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "inner-fire-monk",
+  "name": "Inner Fire (Monk)",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "aon-judgment-of-the-monolith",
+  "name": "Judgment of the Monolith",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "aon-wombat-style",
+  "name": "Wombat Style",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "aon-wombat-burrow",
+  "name": "Wombat Burrow",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "final-gate",
+  "name": "Final Gate",
+  "level": 19,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "master-detective",
+  "name": "Master Detective",
+  "level": 19,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "animist-apparition-spellcasting",
+  "name": "Animist & Apparition Spellcasting",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "aloof-firmament",
+  "name": "Aloof Firmament",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "curse-of-engulfing-flames",
+  "name": "Curse of Engulfing Flames",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "inexorable-iron",
+  "name": "Inexorable Iron",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "laughing-shadow",
+  "name": "Laughing Shadow",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "of-verse-unbroken",
+  "name": "Of Verse Unbroken",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "resurgent-maelstrom",
+  "name": "Resurgent Maelstrom",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "sparkling-targe",
+  "name": "Sparkling Targe",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-tangible-dream",
+  "name": "The Tangible Dream",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "toxicologist",
+  "name": "Toxicologist",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "twisting-tree",
+  "name": "Twisting Tree",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "unfurling-brocade",
+  "name": "Unfurling Brocade",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "channel-elements",
+  "name": "Channel Elements",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "mariners-mien",
+  "name": "Mariner's Mien",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "lesser-mariners-mien",
+  "name": "Lesser Mariner's Mien",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "moderate-mariners-mien",
+  "name": "Moderate Mariner's Mien",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aeon-stone-rainbow-prism",
+  "name": "Aeon Stone (Rainbow Prism)",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "wayfinder-of-rescue",
+  "name": "Wayfinder of Rescue",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "hummingbird-wayfinder",
+  "name": "Hummingbird Wayfinder",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "blessed-tattoo",
+  "name": "Blessed Tattoo",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "singing-bowl-of-the-versatile-stance",
+  "name": "Singing Bowl of the Versatile Stance",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "necklace-of-strangulation",
+  "name": "Necklace of Strangulation",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "axe-of-the-dwarven-lords",
+  "name": "Axe of the Dwarven Lords",
+  "level": 26,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "rope-of-climbing",
+  "name": "Rope of Climbing",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "ruby-string",
+  "name": "Ruby String",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "cordelias-construct-key",
+  "name": "Cordelia's Construct Key",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "cordelias-construct-key-greater",
+  "name": "Cordelia's Construct Key (Greater)",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "fulcrum-lenses",
+  "name": "Fulcrum Lenses",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "ebon-fulcrum-lens",
+  "name": "Ebon Fulcrum Lens",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sky-piercing-bow",
+  "name": "Sky-Piercing Bow",
+  "level": 19,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "warding-tattoo-wave",
+  "name": "Warding Tattoo (Wave)",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "leopards-armor",
+  "name": "Leopard's Armor",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "silver-tripod",
+  "name": "Silver Tripod",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "toadskin-salve",
+  "name": "Toadskin Salve",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "toadskin-salve-greater",
+  "name": "Toadskin Salve (Greater)",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "toadskin-salve-major",
+  "name": "Toadskin Salve (Major)",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "crown-of-insight",
+  "name": "Crown of Insight",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "wardrobe-stone",
+  "name": "Wardrobe Stone",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "wardrobe-stone-lesser",
+  "name": "Wardrobe Stone (Lesser)",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "wardrobe-stone-moderate",
+  "name": "Wardrobe Stone (Moderate)",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "wardrobe-stone-greater",
+  "name": "Wardrobe Stone (Greater)",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "folding-boat",
+  "name": "Folding Boat",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "folding-boat-greater",
+  "name": "Folding Boat (Greater)",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "barricade-stone",
+  "name": "Barricade Stone",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "barricade-stone-cylinder",
+  "name": "Barricade Stone (Cylinder)",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "little-love",
+  "name": "Little Love",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "life-salt",
+  "name": "Life Salt",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "alchemical-fuse",
+  "name": "Alchemical Fuse",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "curled-cure-gel",
+  "name": "Curled Cure Gel",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "ladys-blessing-oil",
+  "name": "Lady's Blessing Oil",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "tornado-trompo",
+  "name": "Tornado Trompo",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "oculus-of-abaddon",
+  "name": "Oculus of Abaddon",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "companion",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "passage-pane",
+  "name": "Passage Pane",
+  "level": 25,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "immovable",
+  "name": "Immovable",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "blade-byrnie",
+  "name": "Blade Byrnie",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "blade-byrnie-greater",
+  "name": "Blade Byrnie (Greater)",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "blade-byrnie-major",
+  "name": "Blade Byrnie (Major)",
+  "level": 19,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "blessed-reformer",
+  "name": "Blessed Reformer",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "emetic-paste",
+  "name": "Emetic Paste",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "emetic-paste-lesser",
+  "name": "Emetic Paste (Lesser)",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "emetic-paste-moderate",
+  "name": "Emetic Paste (Moderate)",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "emetic-paste-greater",
+  "name": "Emetic Paste (Greater)",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "immovable-potion",
+  "name": "Immovable Potion",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "anchor-of-aquatic-exploration",
+  "name": "Anchor of Aquatic Exploration",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "soaring-wings-major",
+  "name": "Soaring Wings (Major)",
+  "level": 19,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "caydens-tankard",
+  "name": "Cayden's Tankard",
+  "level": 25,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "heartblood-ring",
+  "name": "Heartblood Ring",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "phoenix-cinder",
+  "name": "Phoenix Cinder",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "void-fragment",
+  "name": "Void Fragment",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sluggish-bracelet",
+  "name": "Sluggish Bracelet",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "anylength-rope",
+  "name": "Anylength Rope",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "boots-of-free-running",
+  "name": "Boots of Free Running",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "cape-of-illumination",
+  "name": "Cape of Illumination",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "cape-of-illumination-lesser",
+  "name": "Cape of Illumination (Lesser)",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "cape-of-illumination-moderate",
+  "name": "Cape of Illumination (Moderate)",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "cape-of-illumination-greater",
+  "name": "Cape of Illumination (Greater)",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "cowl-of-keys",
+  "name": "Cowl of Keys",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "highhelm-stronghold-plate",
+  "name": "Highhelm Stronghold Plate",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "veiled-figurehead",
+  "name": "Veiled Figurehead",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "veiled-figurehead-greater",
+  "name": "Veiled Figurehead (Greater)",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "winged",
+  "name": "Winged",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "serpent-dagger",
+  "name": "Serpent Dagger",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "vipers-fang",
+  "name": "Viper's Fang",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "marvelous-miniature",
+  "name": "Marvelous Miniature",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "marvelous-miniature-chest",
+  "name": "Marvelous Miniature (Chest)",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "collar-of-inconspicuousness",
+  "name": "Collar of Inconspicuousness",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "companion",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "bottled-air",
+  "name": "Bottled Air",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "accolade-robe-greater",
+  "name": "Accolade Robe (Greater)",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "clawed-bracers",
+  "name": "Clawed Bracers",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "entertainers-cincture",
+  "name": "Entertainer's Cincture",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "entertainers-cincture-greater",
+  "name": "Entertainer's Cincture (Greater)",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "bioluminescent-stripes",
+  "name": "Bioluminescent Stripes",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "whip-tongue-sling",
+  "name": "Whip-Tongue Sling",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "skinstitch-salve",
+  "name": "Skinstitch Salve",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "flame-navette",
+  "name": "Flame Navette",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "twisting-twine",
+  "name": "Twisting Twine",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "tiger-fork",
+  "name": "Tiger Fork",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-sun-wukong",
+  "name": "Staff of Sun Wukong",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "shadowpiercer",
+  "name": "Shadowpiercer",
+  "level": 23,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "demon-hunting-bands",
+  "name": "Demon-Hunting Bands",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "perfections-first-step",
+  "name": "Perfection's First Step",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "drop-of-convergent-waters",
+  "name": "Drop of Convergent Waters",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "heralds-ring",
+  "name": "Herald's Ring",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "mat-of-resilience",
+  "name": "Mat of Resilience",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "mat-of-resilence",
+  "name": "Mat of Resilence",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "greater-mat-of-resilence",
+  "name": "Greater Mat of Resilence",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "farlight-stone",
+  "name": "Farlight Stone",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "blade-phantoms-guide",
+  "name": "Blade Phantom's Guide",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "vine-baton",
+  "name": "Vine Baton",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "shining-hackle",
+  "name": "Shining Hackle",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "pyrefeather-token",
+  "name": "Pyrefeather Token",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "soldiers-syrup",
+  "name": "Soldier's Syrup",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "minor-soldiers-syrup",
+  "name": "Minor Soldier's Syrup",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "lesser-soldiers-syrup",
+  "name": "Lesser Soldier's Syrup",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "moderate-soldiers-syrup",
+  "name": "Moderate Soldier's Syrup",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "greater-soldiers-syrup",
+  "name": "Greater Soldier's Syrup",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "major-soldiers-syrup",
+  "name": "Major Soldier's Syrup",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "fortune-cord",
+  "name": "Fortune Cord",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "wyrms-flight",
+  "name": "Wyrm's Flight",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "creative-spark",
+  "name": "Creative Spark",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "elements-of-creation",
+  "name": "Elements of Creation",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "feral-claws",
+  "name": "Feral Claws",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "tide-of-death",
+  "name": "Tide of Death",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "petal-dance",
+  "name": "Petal Dance",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "cloak-of-elvenkind-greater",
+  "name": "Cloak of Elvenkind (Greater)",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "cloak-of-elvenkind",
+  "name": "Cloak of Elvenkind",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "cordelias-greater-construct-key",
+  "name": "Cordelia's Greater Construct Key",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "feather-token-chest-ammunition",
+  "name": "Feather Token (Chest) (Ammunition)",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "mat-of-resilience-greater",
+  "name": "Mat of Resilience (Greater)",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "oathbow",
+  "name": "Oathbow",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "soldiers-syrup-greater",
+  "name": "Soldier's Syrup (Greater)",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "soldiers-syrup-lesser",
+  "name": "Soldier's Syrup (Lesser)",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "soldiers-syrup-major",
+  "name": "Soldier's Syrup (Major)",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "soldiers-syrup-minor",
+  "name": "Soldier's Syrup (Minor)",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "soldiers-syrup-moderate",
+  "name": "Soldier's Syrup (Moderate)",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-fulcrum-lenses",
+  "name": "Fulcrum Lenses",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-mat-of-resilence",
+  "name": "Mat of Resilence",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-greater-mat-of-resilence",
+  "name": "Greater Mat of Resilence",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-wyrm-s-flight",
+  "name": "Wyrm's Flight",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-creative-spark",
+  "name": "Creative Spark",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-elements-of-creation",
+  "name": "Elements of Creation",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-feral-claws",
+  "name": "Feral Claws",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-tide-of-death",
+  "name": "Tide of Death",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-petal-dance",
+  "name": "Petal Dance",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "bright-fetchling",
+  "name": "Bright Fetchling",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "ancient-scale-azarketi",
+  "name": "Ancient Scale Azarketi",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "flying-animal",
+  "name": "Flying Animal",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "stoutheart-centaur",
+  "name": "Stoutheart Centaur",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ }
+]

@@ -1,0 +1,387 @@
+[
+ {
+  "id": "angelic-vessel",
+  "collection": "items",
+  "name": "Angelic Vessel",
+  "level": 0,
+  "text": "311 Aspect Celestial Activate (concentrate, manipulate) Frequency once per day; Effect At your invitation, a celestial imbues your body with the divine."
+ },
+ {
+  "id": "shroud-of-the-afterlife",
+  "collection": "items",
+  "name": "Shroud of the Afterlife",
+  "level": 0,
+  "text": "312 Aspect Death Activate (concentrate, manipulate) Frequency once per day; Effect You shroud yourself with powers from beyond the living realm for 1 minute."
+ },
+ {
+  "id": "grim-specter",
+  "collection": "items",
+  "name": "Grim Specter",
+  "level": 0,
+  "text": "312 Aspect Death Activate (concentrate, polymorph, void) Frequency once per day; Effect You can call upon the terrifying powers that fuel your relic to transform yourself into a specter of death."
+ },
+ {
+  "id": "rolling-geode",
+  "collection": "items",
+  "name": "Rolling Geode",
+  "level": 0,
+  "text": "312 Aspect Earth Activate (concentrate) Frequency once per hour; Effect Stone and crystal form a sphere that chases your foes. If the geode enters a creature's space, the creature must succeed at a basic Reflex save or take 2d6 bludgeoning damage; a creature can take damage this way only once per turn, even if you roll the geode through its space multiple times."
+ },
+ {
+  "id": "shattered-earth",
+  "collection": "items",
+  "name": "Shattered Earth",
+  "level": 0,
+  "text": "313 Aspect Earth Activate (concentrate, manipulate) Frequency once per hour; Effect Seismic pulses from your relic ripple through the nearby ground, shaking sharp fragments to the surface. A creature that enters an affected square during a move action must succeed at an Acrobatics check or Reflex save or take 1d6 piercing damage; it needs to roll only once per move action even if it moves through several squares."
+ },
+ {
+  "id": "raise-ramparts",
+  "collection": "items",
+  "name": "Raise Ramparts",
+  "level": 0,
+  "text": "313 Aspect Earth Activate (concentrate, manipulate) Frequency once per day; Effect Your relic reshapes the earth around you."
+ },
+ {
+  "id": "living-statue",
+  "collection": "items",
+  "name": "Living Statue",
+  "level": 0,
+  "text": "You can cast 6th-rank petrify and sure footing (to remove petrification only) as innate spells, each once per day."
+ },
+ {
+  "id": "fiendish-bargain",
+  "collection": "items",
+  "name": "Fiendish Bargain",
+  "level": 0,
+  "text": "313 Aspect Fiend Activate (concentrate) Frequency once per day; Effect You bargain with the evil force empowering your relic for a boon, though you must trade something in return."
+ },
+ {
+  "id": "heat-haze",
+  "collection": "items",
+  "name": "Heat Haze",
+  "level": 0,
+  "text": "Activate (concentrate) Frequency once per day; Effect Your relic erratically elevates the air temperature around you, creating heat shimmers that distort your appearance and grant you the concealed condition for 1 minute."
+ },
+ {
+  "id": "incandescent-sight",
+  "collection": "items",
+  "name": "Incandescent Sight",
+  "level": 0,
+  "text": "314 Aspect Fire Activate (concentrate) Frequency once per day; Effect Your eyes become attuned to heat signatures as your vision extends into the infrared, granting you a heatsight precise sense for 1 minute."
+ },
+ {
+  "id": "jet-propulsion",
+  "collection": "items",
+  "name": "Jet Propulsion",
+  "level": 0,
+  "text": "314 Aspect Fire Activate (concentrate) Frequency once per hour; Effect Flames from your relic channel through your body, erupting from your feet, hands, or other limbs with enough force to blast you across the ground and propel you through the air."
+ },
+ {
+  "id": "bestow-life",
+  "collection": "items",
+  "name": "Bestow Life",
+  "level": 0,
+  "text": "315 Aspect Life Activate (concentrate) Frequency once per day; Effect An infusion of vitality energy from your relic can temporarily animate an unliving object."
+ },
+ {
+  "id": "healing-wave",
+  "collection": "items",
+  "name": "Healing Wave",
+  "level": 0,
+  "text": "315 Aspect Life Activate (concentrate) Frequency once per hour; Effect You release a wave of vitality energy in a 15-foot cone."
+ },
+ {
+  "id": "life-everlasting",
+  "collection": "items",
+  "name": "Life Everlasting",
+  "level": 0,
+  "text": "316 Aspect Life Activate (concentrate) Frequency once per day; Effect Massive amounts of vitality energy surge forth."
+ },
+ {
+  "id": "perception-filter",
+  "collection": "items",
+  "name": "Perception Filter",
+  "level": 0,
+  "text": "316 Aspect Mind Activate (concentrate) Frequency once per day; Effect Your relic reaches into the minds of nearby creatures and blocks your presence from their perceptions."
+ },
+ {
+  "id": "sprout-ally",
+  "collection": "items",
+  "name": "Sprout Ally",
+  "level": 0,
+  "text": "317 Aspect Plant Activate (concentrate, manipulate) Frequency once per day; Effect Your relic rapidly matures and animates nearby plant matter into an ally to fight by you, casting summon plant or fungus, with a rank of half the item's level rounded up."
+ },
+ {
+  "id": "petal-dance",
+  "collection": "items",
+  "name": "Petal Dance",
+  "level": 0,
+  "text": "317 Aspect Plant Activate (concentrate) Frequency once per hour; Effect You discorporate into a cloud of petals and leaves."
+ },
+ {
+  "id": "megaflora",
+  "collection": "items",
+  "name": "Megaflora",
+  "level": 0,
+  "text": "317 Aspect Plant Activate (concentrate, manipulate) Frequency once per day; Effect With a pulse of natural energy, your relic grows massive plants in an instant. This is a healing and wood effect, and a given creature can heal from the tree only once per round."
+ },
+ {
+  "id": "dancing-shadow",
+  "collection": "items",
+  "name": "Dancing Shadow",
+  "level": 0,
+  "text": "Activate (concentrate, manipulate) Frequency once per hour; Effect Your relic's shadow detaches from your relic and dances through the air to attack an enemy."
+ },
+ {
+  "id": "monsoon-curtain",
+  "collection": "items",
+  "name": "Monsoon Curtain",
+  "level": 0,
+  "text": "318 Aspect Water Activate (attack, concentrate) Frequency once per day; Effect You call down a curtain of violent rain in a location within 120 feet."
+ },
+ {
+  "id": "tidal-crash",
+  "collection": "items",
+  "name": "Tidal Crash",
+  "level": 0,
+  "text": "318 Aspect Water Activate (concentrate) Frequency once per day; Effect Your relic spews forth a dense sphere of water."
+ },
+ {
+  "id": "ripples-and-waves",
+  "collection": "items",
+  "name": "Ripples and Waves",
+  "level": 0,
+  "text": "Activate (concentrate) Frequency once per day; Effect Ankle-deep water floods outward from you, filling a 60-foot emanation centered on you for 1 minute."
+ },
+ {
+  "id": "azatas-grace",
+  "collection": "items",
+  "name": "Azata's Grace",
+  "level": 0,
+  "text": "185 Aspect Celestial Activate command, Interact; Frequency once per day; Effect Monarch opens a conduit to Desna's palace of Cynosure and infuses your soul with the grace of the azatas who dance and frolic therein."
+ },
+ {
+  "id": "seers-array",
+  "collection": "items",
+  "name": "Seer's Array",
+  "level": 0,
+  "text": "Four Items: You can use the relic's time jump once per hour. Five Items: You can use the relic's precognition once per hour."
+ },
+ {
+  "id": "aeon-stone-gold-nodule",
+  "collection": "items",
+  "name": "Aeon Stone (Gold Nodule)",
+  "level": 6,
+  "text": "The resonant power allows you to cast Translate as an occult innate spell once per day."
+ },
+ {
+  "id": "conductors-instrument",
+  "collection": "items",
+  "name": "Conductor's Instrument",
+  "level": 3,
+  "text": "Once per day, you can use the following activity."
+ },
+ {
+  "id": "suit-of-armoire",
+  "collection": "items",
+  "name": "Suit of Armoire",
+  "level": 13,
+  "text": "--- **Activate** ⟨1⟩ Interact; Once per day; You did not fail at the check to assemble the suit of armoire today --- **Effect** You open a set of doors on the armoire's front, producing one fancy suit of clothes of your choosing."
+ },
+ {
+  "id": "taljjaes-mask-the-grandmother",
+  "collection": "items",
+  "name": "Taljjae's Mask (The Grandmother)",
+  "level": 18,
+  "text": "The *Grandmother* allows its wearer to cast 8th-rank Heal and 7th-rank Breath of Life, each as a divine innate spell, once per day."
+ },
+ {
+  "id": "taljjaes-mask-the-hermit",
+  "collection": "items",
+  "name": "Taljjae's Mask (The Hermit)",
+  "level": 18,
+  "text": "The *Hermit* allows its wearer to cast 8th-rank Spirit Blast and 7th-rank Flame Strike, each as a divine innate spell, once per day."
+ },
+ {
+  "id": "taljjaes-mask-the-wanderer",
+  "collection": "items",
+  "name": "Taljjae's Mask (The Wanderer)",
+  "level": 18,
+  "text": "The *Wanderer* allows its wearer to cast 7th-rank Air Walk and 8th-rank Unfettered Movement, each as a divine innate spell, once per day."
+ },
+ {
+  "id": "witch-token",
+  "collection": "items",
+  "name": "Witch Token",
+  "level": 10,
+  "text": "The creature can also Activate the *witch token* to Cast a Spell once per day."
+ },
+ {
+  "id": "aon-wand-of-slaying",
+  "collection": "items",
+  "name": "Wand of Slaying",
+  "level": 16,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast finger of death of the indicated level."
+ },
+ {
+  "id": "aon-fulcrum-lenses",
+  "collection": "items",
+  "name": "Fulcrum Lenses",
+  "level": 9,
+  "text": "Activate Two Actions Interact; Frequency once per day; Effect You grasp the Crimson Fulcrum Lens in one hand and make a Strike that doesn't require that hand. Activate Reaction envision; Frequency once per day; Requirement At least one glimmer remains in the Ebon Fulcrum Lens ; Prerequisites you have the rejuvenation ability; Trigger you would be destroyed and are able to rejuvenate; Effect For the first 24 hours aft"
+ },
+ {
+  "id": "aon-warcaller-s-chime",
+  "collection": "items",
+  "name": "Warcaller's Chime",
+  "level": 4,
+  "text": "The specifics of each chime, as well as the activation's frequency (if any), appear in its entry below. You can use this chime once per day. You can use this chime once per day. This chime can be used only once per day, whether or not you Sustain the aura. You can use this chime up to five times per day, but each use must target a different creature. This chime can be used once per week. This chime can be used once p"
+ },
+ {
+  "id": "aon-energy-robe",
+  "collection": "items",
+  "name": "Energy Robe",
+  "level": 7,
+  "text": "Activate Two Actions command, Interact; Frequency once per day; Effect You speak a command word, and the embroidered threads in the robe glow vividly."
+ },
+ {
+  "id": "aon-enhanced-hearing-aid",
+  "collection": "items",
+  "name": "Enhanced Hearing Aid",
+  "level": 3,
+  "text": "Activate Free Action envision; Frequency once per day; Requirements Your hearing aids are currently on; Effect You mentally increase the input of your hearing aids."
+ },
+ {
+  "id": "aon-busine-of-divine-reinforcement",
+  "collection": "items",
+  "name": "Busine of Divine Reinforcement",
+  "level": 15,
+  "text": "Activate Two Actions Interact (auditory) Frequency once per minute; Effect You play a few notes on the busine. Activate Three Actions command, envision, Interact; Frequency once per day; Effect You blow into the busine and conjure a celestial with the effects of a 6th-level summon celestial spell, but there are no alignment restrictions to define which celestials you can call."
+ },
+ {
+  "id": "aon-tyrant-s-writ",
+  "collection": "items",
+  "name": "Tyrant's Writ",
+  "level": 8,
+  "text": "Activate Free Action envision (metamagic) Frequency once per day; Effect If your next action is to Cast a Spell to cast an animate dead spell prepared with tyrant's writs , you can choose one of the following additional benefits to grant the summoned undead."
+ },
+ {
+  "id": "aon-windlass-bolas",
+  "collection": "items",
+  "name": "Windlass Bolas",
+  "level": 6,
+  "text": "Activate Single Action (manipulate) Frequency once per day; Effect The cord of the bola snakes out as you throw it, allowing the weapon to wrap around a group of enemies."
+ },
+ {
+  "id": "aon-submersible-helm",
+  "collection": "items",
+  "name": "Submersible Helm",
+  "level": 9,
+  "text": "Activate Three Actions (concentrate, manipulate) Frequency once per day; Effect You can breathe underwater for 8 hours."
+ },
+ {
+  "id": "aon-fan-of-the-four-winds",
+  "collection": "items",
+  "name": "Fan of the Four Winds",
+  "level": 4,
+  "text": "Activate Two Actions (concentrate, manipulate) Frequency once per day; Effect You fan in a direction, and the fan casts gust of wind ."
+ },
+ {
+  "id": "aon-highhelm-drill",
+  "collection": "items",
+  "name": "Highhelm Drill",
+  "level": 4,
+  "text": "Activate Two Actions Interact; Frequency once per day; Effect The force drill appears and begins turning, dealing 5 force damage per round to any material against which you hold the drill."
+ },
+ {
+  "id": "aon-mnemonic-feather",
+  "collection": "items",
+  "name": "Mnemonic Feather",
+  "level": 3,
+  "text": "Activate—Recite Mnemonic Reaction (auditory, concentrate, mental) Frequency once per day; Trigger An ally within 30 feet attempts a Recall Knowledge check involving the topic in the mnemonic feather’s book; Effect You mentally impart the book’s knowledge to your ally, giving them the benefit of the mnemonic feather ."
+ },
+ {
+  "id": "aon-eyes-of-the-moonwarden",
+  "collection": "items",
+  "name": "Eyes Of The Moonwarden",
+  "level": 9,
+  "text": "Activate—Lunar Illumination Single Action (concentrate) Frequency once per hour; Effect Bright moonlight shines out of the gem in a 30-foot emanation, forcing hostile creatures in the area to make a DC 26 Fortitude save or be blinded for 1 round."
+ },
+ {
+  "id": "aon-sack-of-hyrdra-s-teeth",
+  "collection": "items",
+  "name": "Sack of Hyrdra's Teeth",
+  "level": 12,
+  "text": "Activate—Sow a Tooth Two Actions (manipulate, occult) Frequency once per hour; Effect You cast forth a tooth from the bag, and where it lands, a skeleton springs up from the ground. Activate—Fist Full of Fangs Two Actions (manipulate, occult) Frequency once per day; Effect You draw a whole handful of teeth and cast them to the ground, casting rouse skeletons as a 5th-rank spell (DC 30)."
+ },
+ {
+  "id": "aon-comandant-s-scabbard",
+  "collection": "items",
+  "name": "Comandant's Scabbard",
+  "level": 17,
+  "text": "Activate—Commanding Draw Single Action (fortune) Frequency once per hour; Requirements You have a weapon sheathed in your commandant’s scabbard ; Effect You Interact to draw your weapon from your scabbard and Strike with it."
+ },
+ {
+  "id": "aon-magical-medals",
+  "collection": "items",
+  "name": "Magical Medals",
+  "level": 3,
+  "text": "Activate—Gorila's Second Leap Reaction (concentrate, fortune) Frequency once per day; Trigger You would fail but not critically fail an Athletics check to High Jump or Long Jump; Effect The gorilla on the medal beats its chest, giving you another chance. Activate—Unicorn’s Grace Reaction (concentrate, healing, vitality) Frequency once per day; Trigger You would regain Hit Points from a magical effect; Effect You rega"
+ },
+ {
+  "id": "aon-breath-of-dragons",
+  "collection": "items",
+  "name": "Breath of Dragons",
+  "level": 0,
+  "text": "Breath of Dragons Aspect Dragon Activate Two Actions command, envision; Frequency once per day; Effect You breathe out a cone or line of energy."
+ },
+ {
+  "id": "aon-dragon-strike",
+  "collection": "items",
+  "name": "Dragon Strike",
+  "level": 0,
+  "text": "Dragon Strike Aspect Dragon Activate Single Action command; Frequency once per hour; Effect Ghostly images of draconic claws form around your hands and linger in the air when you attack. At 11th level, you can use the ability once per 10 minutes instead of once per hour."
+ },
+ {
+  "id": "aon-draconic-arrogance",
+  "collection": "items",
+  "name": "Draconic Arrogance",
+  "level": 0,
+  "text": "Draconic Arrogance Aspect Dragon Activate Reaction command; Frequency once per day; Trigger You're about to roll a saving throw; Effect You laugh at fate and revel in your draconic arrogance."
+ },
+ {
+  "id": "aon-wyrm-s-flight",
+  "collection": "items",
+  "name": "Wyrm's Flight",
+  "level": 0,
+  "text": "Wyrm's Flight Aspect Dragon Activate Two Actions command, envision; Frequency once per day; Effect Ghostly draconic wings grant you a fly Speed equal to your Speed or 20 feet, whichever is greater."
+ },
+ {
+  "id": "aon-draconic-ascendance",
+  "collection": "items",
+  "name": "Draconic Ascendance",
+  "level": 0,
+  "text": "Draconic Ascendance Aspect Dragon Activate Two Actions command, envision; Frequency once per hour; Effect The soul seed casts 8th-level dragon form targeting you; you must take the dragon form corresponding to the soul seed's draconic origin."
+ },
+ {
+  "id": "aon-absorb-injury",
+  "collection": "items",
+  "name": "Absorb Injury",
+  "level": 0,
+  "text": "Absorb Injury Aspect Soul Activate Reaction envision; Frequency once per day; Trigger an ally within 30 feet takes damage; Effect You forge a conduit to your ally's soul and absorb the injury to protect them."
+ },
+ {
+  "id": "aon-soul-puppet",
+  "collection": "items",
+  "name": "Soul Puppet",
+  "level": 0,
+  "text": "Soul Puppet Aspect Soul Activate Three Actions command, envision; Frequency once per day; Effect You bind loose souls, briefly animating an undead creature."
+ },
+ {
+  "id": "aon-cleanse-soul",
+  "collection": "items",
+  "name": "Cleanse Soul",
+  "level": 0,
+  "text": "Cleanse Soul Aspect Soul Activate 1 minute (command, envision); Frequency once per day; Effect You cleanse a soul of curses."
+ }
+]

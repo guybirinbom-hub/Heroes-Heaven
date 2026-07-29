@@ -1,0 +1,4910 @@
+[
+ {
+  "id": "wand-of-hybrid-form-8th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand: its own Cast a Spell activation is Frequency once per day (overcharge is a risky extra that can destroy the wand, not a guaranteed second use)."
+ },
+ {
+  "id": "wand-of-hybrid-form-9th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand: item's activation is once per day; overcharge modeled as risk, not an extra tracked use."
+ },
+ {
+  "id": "wand-of-legerdemain",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand: Cast a Spell activation once per day; the second (Interact spotlight) activation has no separate frequency."
+ },
+ {
+  "id": "wand-of-legerdemain-1st-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-legerdemain-2nd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-legerdemain-3rd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-legerdemain-4th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-legerdemain-5th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-legerdemain-6th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-legerdemain-7th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-legerdemain-8th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-legerdemain-9th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mental-purification",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand: item activation (cast soothe + counteract) is once per day."
+ },
+ {
+  "id": "wand-of-mental-purification-1st-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mental-purification-2nd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mental-purification-3rd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mental-purification-4th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mental-purification-5th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mental-purification-6th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mental-purification-7th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mental-purification-8th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mental-purification-9th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mercy",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand: item activation is once per day; the nonlethal choice is a rider, not a separate pool."
+ },
+ {
+  "id": "wand-of-mercy-1st-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mercy-2nd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mercy-3rd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mercy-4th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mercy-5th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mercy-6th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mercy-7th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mercy-8th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-mercy-9th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-noisome-acid-2nd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand: item activation (cast acid grip) is once per day."
+ },
+ {
+  "id": "wand-of-noisome-acid-4th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation."
+ },
+ {
+  "id": "wand-of-noisome-acid-6th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation."
+ },
+ {
+  "id": "wand-of-noisome-acid-8th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation."
+ },
+ {
+  "id": "wand-of-paralytic-shock",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand: item activation (cast paralyze) is once per day."
+ },
+ {
+  "id": "wand-of-paralytic-shock-3rd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation."
+ },
+ {
+  "id": "wand-of-paralytic-shock-7th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation."
+ },
+ {
+  "id": "wand-of-pernicious-poison",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand: item activation is once per day."
+ },
+ {
+  "id": "wand-of-pernicious-poison-1st-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation."
+ },
+ {
+  "id": "wand-of-pernicious-poison-6th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation."
+ },
+ {
+  "id": "wand-of-reaching",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand: item activation is once per day."
+ },
+ {
+  "id": "wand-of-reaching-1st-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-reaching-2nd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-reaching-3rd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-reaching-4th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-reaching-5th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-reaching-6th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-reaching-7th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-reaching-8th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-reaching-9th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation as the base wand."
+ },
+ {
+  "id": "wand-of-refracting-rays",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand: item activation (cast chromatic ray) is once per day; the refraction chain is part of one activation."
+ },
+ {
+  "id": "wand-of-refracting-rays-4th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation."
+ },
+ {
+  "id": "wand-of-refracting-rays-6th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: same once-per-day activation."
+ },
+ {
+  "id": "aon-spirit-blink",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-soul-magic",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-charming",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-enthralling",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-dominant-emotion",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Reaction activation capped at once per hour."
+ },
+ {
+  "id": "aon-emotion-surge",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per hour."
+ },
+ {
+  "id": "aon-fervor",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per hour."
+ },
+ {
+  "id": "aon-beginner-s-luck",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Reaction activation capped at once per day."
+ },
+ {
+  "id": "aon-swap-luck",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Reaction activation capped at once per hour."
+ },
+ {
+  "id": "aon-whammy",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Reaction activation capped at once per day."
+ },
+ {
+  "id": "aon-steal-luck",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Reaction activation capped at once per day."
+ },
+ {
+  "id": "aon-sands-of-the-hourglass",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per hour."
+ },
+ {
+  "id": "aon-precognition",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Reaction activation capped at once per day."
+ },
+ {
+  "id": "aon-temporal-pulse",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-time-jump",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Gift activation is once/day; the spell it casts is free (no slot), so the cap is the item's."
+ },
+ {
+  "id": "aon-time-reversal",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Gift activation is once/day; the time beacon it casts costs no slot, so the cap is the item's."
+ },
+ {
+  "id": "aon-creative-spark",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Activation is once/day; the separate once/day critical-failure downgrade is a passive rider, not a second tracked pool."
+ },
+ {
+  "id": "aon-forge-weld",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-work-harden",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-molten-crucible",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-living-forge",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-precious-anodization",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Activation is once/day; the clad in metal effect is granted by the gift, not a spell slot."
+ },
+ {
+  "id": "aon-rail-dash",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per hour."
+ },
+ {
+  "id": "aon-all-will-decay",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-ancestors-call",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per hour."
+ },
+ {
+  "id": "aon-propelling-winds",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Activation is once/hour; the fly it casts costs no slot, so the cap is the item's."
+ },
+ {
+  "id": "aon-call-of-the-wild",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Activation is once/day; the summon animal it casts costs no slot, so the cap is the item's."
+ },
+ {
+  "id": "aon-word-of-faith",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per hour."
+ },
+ {
+  "id": "aon-righteous-call",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-angelic-vessel",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-shroud-of-the-afterlife",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-grim-specter",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-rolling-geode",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Activation is once/hour; the 'once per turn' clause limits damage to a creature, not uses."
+ },
+ {
+  "id": "aon-shattered-earth",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Activation is once/hour; the 'once per move action' clause is on affected creatures' saves, not uses."
+ },
+ {
+  "id": "aon-raise-ramparts",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-living-statue",
+  "limited": false,
+  "note": "No activation of its own; the once/day limits belong to the granted innate spells (petrify, sure footing), already tracked as innate spells."
+ },
+ {
+  "id": "aon-fiendish-bargain",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-heat-haze",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-incandescent-sight",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-jet-propulsion",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per hour."
+ },
+ {
+  "id": "aon-bestow-life",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-healing-wave",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per hour."
+ },
+ {
+  "id": "aon-life-everlasting",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-perception-filter",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-sprout-ally",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Activation is once/day; the summon plant or fungus it casts costs no slot, so the cap is the item's."
+ },
+ {
+  "id": "aon-petal-dance",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per hour."
+ },
+ {
+  "id": "aon-megaflora",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Activation is once/day; the 'once per round' clause limits each creature's healing, not uses."
+ },
+ {
+  "id": "aon-dancing-shadow",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per hour."
+ },
+ {
+  "id": "aon-monsoon-curtain",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-tidal-crash",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-ripples-and-waves",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-azata-s-grace",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift's own Activate line: Frequency once per day."
+ },
+ {
+  "id": "aon-seer-s-array",
+  "limited": false,
+  "note": "Relic set entry, not an activatable item; the once/hour limits it mentions belong to the separate time jump and precognition gifts."
+ },
+ {
+  "id": "wand-of-rolling-flames",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand's own Activate line: once per day (plus the optional risky overcharge); the wand itself is the tracked resource."
+ },
+ {
+  "id": "wand-of-rolling-flames-2nd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same wand activation, once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-rolling-flames-3rd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same wand activation, once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-rolling-flames-4th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same wand activation, once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-rolling-flames-5th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same wand activation, once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-rolling-flames-6th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same wand activation, once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-rolling-flames-7th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same wand activation, once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-rolling-flames-8th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same wand activation, once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-rolling-flames-9th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same wand activation, once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-2nd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand Activate: once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-3rd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand Activate: once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-4th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand Activate: once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-5th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand Activate: once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-6th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand Activate: once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-7th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand Activate: once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-8th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand Activate: once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-9th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand Activate: once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-toxic-blades",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand Activate is once per day; the 'no more than once per turn' clause limits the poison effect on a creature, not the item."
+ },
+ {
+  "id": "wand-of-toxic-blades-6th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand Activate once per day; the per-turn poison clause is an effect limit, not an item limit."
+ },
+ {
+  "id": "wand-of-toxic-blades-7th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand Activate once per day; the per-turn poison clause is an effect limit, not an item limit."
+ },
+ {
+  "id": "wand-of-toxic-blades-8th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand Activate once per day; the per-turn poison clause is an effect limit, not an item limit."
+ },
+ {
+  "id": "retaliation",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Shield property rune with its own triggered Activate, Frequency once per hour."
+ },
+ {
+  "id": "bravery-baldric",
+  "limited": true,
+  "counters": [
+   {
+    "id": "charges",
+    "label": "charges",
+    "max": "2",
+    "resetsOnRest": false
+   }
+  ],
+  "note": "Named pool: holds up to 2 charges, gained from fear saves and spent by the activation; charges reset to 0 (not refilled) when re-invested, so resetsOnRest is false. The extra 'once per hour' is only a rate limit on spending, not a second pool."
+ },
+ {
+  "id": "bravery-baldric-healthful-greater",
+  "limited": true,
+  "counters": [
+   {
+    "id": "charges",
+    "label": "charges",
+    "max": "2",
+    "resetsOnRest": false
+   }
+  ],
+  "note": "Same 2-charge pool as the base bravery baldric; charges start at 0 on investment, so resetsOnRest is false."
+ },
+ {
+  "id": "clarity-goggles",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item's own concentrate Activate, once per day."
+ },
+ {
+  "id": "submersible-helm",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item Activate, once per day (8 hours of water breathing)."
+ },
+ {
+  "id": "submersible-helm-greater",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item Activate, once per day."
+ },
+ {
+  "id": "instinct-crown",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Two distinct activations, each once per day; recorded as a single 1/day cap since the schema holds one frequency."
+ },
+ {
+  "id": "armory-bracelet",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item Activate, once per day to pull a charm; charms return at daily preparations."
+ },
+ {
+  "id": "fan-of-the-four-winds",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item Activate, once per day (fan casts gust of wind)."
+ },
+ {
+  "id": "anylength-rope",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Reassemble activation is once per day (the trackable limit); the split activation's once-per-minute cap is effectively unbounded in play."
+ },
+ {
+  "id": "boots-of-free-running",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Base (lesser) boots activate once per day; the once-per-hour and unlimited wording belongs to the moderate/greater versions."
+ },
+ {
+  "id": "cape-of-illumination",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Blinding-flash activation is once per day on the base cape; the 'once per hour' line is the greater version. The at-will light activation has no limit."
+ },
+ {
+  "id": "ring-of-observation",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Base ring's survey activation is once per day; the invisibility lines belong to the moderate/greater versions."
+ },
+ {
+  "id": "grub-gloves",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item Activate (heal + lose fatigued), once per day."
+ },
+ {
+  "id": "words-of-wisdom",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Tattoo item's command Activate, once per day."
+ },
+ {
+  "id": "everair-mask",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item Activate, once per day."
+ },
+ {
+  "id": "highhelm-drill",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item Activate, once per day."
+ },
+ {
+  "id": "highhelm-war-shield",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Triggered shield activation, once per day."
+ },
+ {
+  "id": "fossil-fragment",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Base entry (level 7, matching the deinonychus claw): the fragment can be called upon once per day. Text mixes in variant frequencies (the brontosaurus phalange is 4/month, a different item)."
+ },
+ {
+  "id": "fossil-fragment-amber-mosquito",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Called upon once per day for up to 10 minutes; the limit is on activating the fragment, not on the summoned creature's abilities."
+ },
+ {
+  "id": "fossil-fragment-deinonychus-claw",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Fragment can be called upon once per day."
+ },
+ {
+  "id": "fossil-fragment-petrified-wood",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Tree can be called upon once per day for up to 1 minute."
+ },
+ {
+  "id": "fossil-fragment-triceratops-frill",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Fragment can be called upon once per day."
+ },
+ {
+  "id": "fossil-fragment-tyrannosaur-tooth",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Fragment can be called upon once per day."
+ },
+ {
+  "id": "purifying-spoon",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Permanent item (not a consumable); Purify activation once per day."
+ },
+ {
+  "id": "splinter-spear",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Shatter activation once per day; the spear regrows at end of turn, so it is a reusable item with a daily cap."
+ },
+ {
+  "id": "splinter-spear-greater",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Shatter activation once per day."
+ },
+ {
+  "id": "splinter-spear-major",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Shatter activation once per day."
+ },
+ {
+  "id": "crystal-ball",
+  "limited": true,
+  "frequency": {
+   "max": 2,
+   "per": "day"
+  },
+  "note": "Scrying activation is twice per day (the meaningful tracked cap); the separate clairvoyance activation is once per hour and can't also be expressed in one frequency."
+ },
+ {
+  "id": "maestros-instrument",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Charming Performance activation, once per day."
+ },
+ {
+  "id": "thurible-of-revelation",
+  "limited": false,
+  "note": "Base/lesser thurible has only the incense-cost activation with no frequency; the 'once per day increase its revelations' sentence belongs to the moderate and greater versions."
+ },
+ {
+  "id": "thurible-of-revelation-moderate",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Moderate version adds a once-per-day enhanced revelation (see the unseen) when activated."
+ },
+ {
+  "id": "thurible-of-revelation-greater",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Greater version shares the moderate's once-per-day enhanced revelation (truesight)."
+ },
+ {
+  "id": "magic-wand",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand Activate: once per day plus overcharge; the daily cap belongs to the wand itself."
+ },
+ {
+  "id": "angelic-vessel",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift; its own Activate has Frequency once per day (and explicitly does not expend righteous call's separate use)."
+ },
+ {
+  "id": "shroud-of-the-afterlife",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, Frequency once per day."
+ },
+ {
+  "id": "grim-specter",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, Frequency once per day."
+ },
+ {
+  "id": "rolling-geode",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Gift activation is once per hour; the 'only once per turn' clause limits damage to a creature, not the item."
+ },
+ {
+  "id": "shattered-earth",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Gift activation once per hour; the per-move-action roll is a target-side limit."
+ },
+ {
+  "id": "raise-ramparts",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, Frequency once per day."
+ },
+ {
+  "id": "living-statue",
+  "limited": false,
+  "note": "The once-per-day limits belong to the granted innate spells (petrify, sure footing), not to activating the gift; the gift's resistance is passive."
+ },
+ {
+  "id": "fiendish-bargain",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, Frequency once per day."
+ },
+ {
+  "id": "heat-haze",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, Frequency once per day."
+ },
+ {
+  "id": "incandescent-sight",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, Frequency once per day."
+ },
+ {
+  "id": "jet-propulsion",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift activation, Frequency once per hour."
+ },
+ {
+  "id": "bestow-life",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, Frequency once per day."
+ },
+ {
+  "id": "healing-wave",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift activation, Frequency once per hour."
+ },
+ {
+  "id": "life-everlasting",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, Frequency once per day."
+ },
+ {
+  "id": "perception-filter",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, Frequency once per day."
+ },
+ {
+  "id": "sprout-ally",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Gift activation is once per day; the summon spell it casts has no separate cap."
+ },
+ {
+  "id": "petal-dance",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift activation, Frequency once per hour."
+ },
+ {
+  "id": "megaflora",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Gift activation once per day; the 'heal only once per round' clause is a per-creature limit, not an item pool."
+ },
+ {
+  "id": "dancing-shadow",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift activation, Frequency once per hour."
+ },
+ {
+  "id": "monsoon-curtain",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, Frequency once per day."
+ },
+ {
+  "id": "tidal-crash",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, Frequency once per day."
+ },
+ {
+  "id": "ripples-and-waves",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, Frequency once per day."
+ },
+ {
+  "id": "azatas-grace",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation once per day; it explicitly does not spend righteous call's own daily use."
+ },
+ {
+  "id": "seers-array",
+  "limited": false,
+  "note": "This is a relic SET entry: the once-per-hour lines loosen the frequency of the separate time jump / precognition gifts, so the tracking belongs on those gifts, not on the set."
+ },
+ {
+  "id": "aeon-stone-gold-nodule",
+  "limited": false,
+  "note": "The once-per-day belongs to the granted occult innate spell (Translate); the stone itself has no activation cap."
+ },
+ {
+  "id": "conductors-instrument",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "'Once per day, you can use the following activity' caps the item's own Command Performance activation."
+ },
+ {
+  "id": "suit-of-armoire",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "The 1-action Interact activation is once per day; the 5-action collapse activation is trigger/condition-gated with no stated frequency."
+ },
+ {
+  "id": "taljjaes-mask-the-grandmother",
+  "limited": false,
+  "note": "Once per day applies to the granted divine innate spells (Heal, Breath of Life), not to an activation of the mask."
+ },
+ {
+  "id": "taljjaes-mask-the-hermit",
+  "limited": false,
+  "note": "Once per day applies to the granted divine innate spells (Spirit Blast, Flame Strike), not to an activation of the mask."
+ },
+ {
+  "id": "taljjaes-mask-the-wanderer",
+  "limited": false,
+  "note": "Once per day applies to the granted divine innate spells (Air Walk, Unfettered Movement), not to an activation of the mask."
+ },
+ {
+  "id": "witch-token",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "'Activate the witch token to Cast a Spell once per day' is a cap on activating the item itself."
+ },
+ {
+  "id": "aon-wand-of-slaying",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Standard wand: the item's own Activate is once per day (overcharge is the usual risky extra casting, not a second pool). This core.json entry carries no item-spell fields, so no existing wand-charge tracking covers it."
+ },
+ {
+  "id": "aon-fulcrum-lenses",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Every lens variant in this single entry has a once-per-day activation. Deliberately did NOT add a glimmers counter: the 3-glimmer pool exists only on the Ebon lens, so it would be spurious for the Crimson/Emerald/Ochre variants."
+ },
+ {
+  "id": "aon-warcaller-s-chime",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "The chime itself is capped; one entry covers several chime variants (most once per day, one up to five per day, some once per week), so 1/day is the dominant case."
+ },
+ {
+  "id": "aon-energy-robe",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item's own Activate, Frequency once per day."
+ },
+ {
+  "id": "aon-enhanced-hearing-aid",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item's own free-action Activate, Frequency once per day."
+ },
+ {
+  "id": "aon-busine-of-divine-reinforcement",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Tracked the once-per-day summon-celestial activation; the other activation is once per minute, which is effectively per-encounter noise rather than a pool worth a counter."
+ },
+ {
+  "id": "aon-tyrant-s-writ",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item's own free-action metamagic Activate, Frequency once per day."
+ },
+ {
+  "id": "aon-windlass-bolas",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item's own Activate, Frequency once per day."
+ },
+ {
+  "id": "aon-submersible-helm",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item's own Activate, Frequency once per day."
+ },
+ {
+  "id": "aon-fan-of-the-four-winds",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item's own Activate is once per day; the gust of wind it casts has no separate cap."
+ },
+ {
+  "id": "aon-highhelm-drill",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item's own Activate, Frequency once per day."
+ },
+ {
+  "id": "aon-mnemonic-feather",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item's own reaction Activate is once per day; the ally's Recall Knowledge is only the trigger."
+ },
+ {
+  "id": "aon-eyes-of-the-moonwarden",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Item's own Lunar Illumination activation, Frequency once per hour."
+ },
+ {
+  "id": "aon-sack-of-hyrdra-s-teeth",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Tracked the once-per-day Fist Full of Fangs activation; Sow a Tooth is a separate once-per-hour activation that the flat frequency shape can't also express."
+ },
+ {
+  "id": "aon-comandant-s-scabbard",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Item's own Commanding Draw activation, Frequency once per hour."
+ },
+ {
+  "id": "aon-magical-medals",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Each activatable medal (gorilla, unicorn, phoenix) is once per day; the griffon/wolf-pack medals are passive or grant an at-will innate cantrip."
+ },
+ {
+  "id": "aon-breath-of-dragons",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, Frequency once per day."
+ },
+ {
+  "id": "aon-dragon-strike",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Gift activation is once per hour (improves to once per 10 minutes at 11th level, which the flat shape can't express)."
+ },
+ {
+  "id": "aon-draconic-arrogance",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift reaction, Frequency once per day."
+ },
+ {
+  "id": "aon-wyrm-s-flight",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, Frequency once per day."
+ },
+ {
+  "id": "aon-draconic-ascendance",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift activation, Frequency once per hour."
+ },
+ {
+  "id": "aon-absorb-injury",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "The once-per-day is on the gift's reaction; the ally taking damage is only the trigger."
+ },
+ {
+  "id": "aon-soul-puppet",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, Frequency once per day."
+ },
+ {
+  "id": "aon-cleanse-soul",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation (1 minute), Frequency once per day."
+ },
+ {
+  "id": "wand-of-thundering-echoes-8th-level",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand's own Activate line: \"Frequency once per day, plus overcharge\" — the daily cap belongs to the wand, not the spell. Overcharge is the standard risky extra use, not a second pool."
+ },
+ {
+  "id": "called-accessory-rune",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Rune's own command activation is capped at once per hour (confirmed in core.json)."
+ },
+ {
+  "id": "fleshgem",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Fleshgem (Earthspeaker) has its own command activation, Frequency once per day; the item is invested, not a consumable."
+ },
+ {
+  "id": "midday-lantern",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Lantern's sunlight-blast activation is once per day (the lantern's own limit, all grades)."
+ },
+ {
+  "id": "twilight-lantern",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Moonbeam counteract activation is once per day; the other envision activation (adjust radius) is unlimited."
+ },
+ {
+  "id": "busine-of-divine-reinforcement",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Two activations on the item: summon celestial once per day (tracked here) and a separate play-a-few-notes activation once per minute; the daily one is the one worth tracking."
+ },
+ {
+  "id": "tyrants-writ",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "The grimoire's own envision (metamagic) activation is once per day; the animate dead spell itself still costs a slot separately."
+ },
+ {
+  "id": "windlass-bolas",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "The bolas' own manipulate activation (burst Trip) is once per day; the weapon is otherwise reusable."
+ },
+ {
+  "id": "colorful-coating",
+  "limited": false,
+  "note": "Alchemical consumable (tracked by quantity), and the \"only once per round\" clause caps how often a creature takes the coating's damage — it is not a cap on activating the item."
+ },
+ {
+  "id": "olfactory-stimulators-bloodhound",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Worn item; the bloodhound version's concentrate activation (imprecise scent 30 ft) is once per day."
+ },
+ {
+  "id": "tome-of-restorative-cleansing",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "The grimoire's own temp-HP activation is once per day; the triggering spell is a separate resource."
+ },
+ {
+  "id": "bewitching-bloom",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Invested tattoo; its concentrate activation is once per day (bloom stays open until next daily preparations). The benefit lands on an ally but the use is the item's."
+ },
+ {
+  "id": "staring-skull",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "counters": [
+   {
+    "id": "eyes",
+    "label": "eyes",
+    "max": "2",
+    "resetsOnRest": false
+   }
+  ],
+  "note": "Two genuine limits: it can save you only once per day, and each save removes one of the tattoo's two eyes — after both are gone the tattoo is permanently non-magical, so the eye pool never refreshes."
+ },
+ {
+  "id": "unifying-emblem",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Tattoo casts its assigned spell once per day; the frequency is printed on the tattoo's activation, not on the spell."
+ },
+ {
+  "id": "judgement-thurible",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Spellheart; base grade has one once-per-day activation (divine wrath). The unlimited divine lance activation carries no cap."
+ },
+ {
+  "id": "judgement-thurible-greater",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Greater grade lists several distinct activations (6th-rank divine wrath, divine decree), each separately once per day; modeled as the per-activation once-per-day cap since they are not a shared pool."
+ },
+ {
+  "id": "judgement-thurible-major",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Major grade adds more distinct activations (7th-rank divine decree, summon deific herald), each separately once per day; modeled as the per-activation once-per-day cap."
+ },
+ {
+  "id": "wand-of-choking-mist",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation: once per day, plus overcharge — the cap is on the wand."
+ },
+ {
+  "id": "wand-of-choking-mist-2nd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same wand, 2nd-rank variant: once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-choking-mist-4th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same wand, 4th-rank variant: once per day plus overcharge."
+ },
+ {
+  "id": "wand-of-chromatic-burst",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-chromatic-burst-4th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-chromatic-burst-7th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-clinging-rime",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-clinging-rime-7th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-clinging-rime-8th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-clinging-rime-9th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-dazzling-rays",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-dazzling-rays-3rd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-dazzling-rays-4th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-dazzling-rays-5th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-dazzling-rays-6th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-dazzling-rays-7th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-dazzling-rays-8th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-dazzling-rays-9th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-dumbfounding-doom",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-3rd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-4th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-5th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-6th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-7th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-8th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-9th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-hawthorn",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-hawthorn-2nd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-hawthorn-4th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-hawthorn-6th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-hawthorn-8th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-hybrid-form",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-hybrid-form-2nd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-hybrid-form-3rd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-hybrid-form-4th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-hybrid-form-5th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-hybrid-form-6th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-hybrid-form-7th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand variant: once per day, plus overcharge."
+ },
+ {
+  "id": "lesser-flowing-water",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Tattoo item's own reactive activation Embody the Truce is once per day."
+ },
+ {
+  "id": "moderate-flowing-water",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same tattoo, higher counteract rank; Embody the Truce is still once per day."
+ },
+ {
+  "id": "greater-flowing-water",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same tattoo, counteract rank 6; Embody the Truce is still once per day."
+ },
+ {
+  "id": "rending-gauntlets",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Worn bracers' own Shredding Finisher activation is once per hour."
+ },
+ {
+  "id": "lesser-rending-gauntlets",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Same Shredding Finisher activation, once per hour (2d6 damage variant)."
+ },
+ {
+  "id": "moderate-rending-gauntlets",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Same Shredding Finisher activation, once per hour (4d6 damage variant)."
+ },
+ {
+  "id": "greater-rending-gauntlets",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Same Shredding Finisher activation, once per hour (6d6 damage variant)."
+ },
+ {
+  "id": "greater-stormshard",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Held item's Free the Spirits activation is once per day."
+ },
+ {
+  "id": "major-stormshard",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same Free the Spirits activation, once per day (13d8 variant)."
+ },
+ {
+  "id": "anima-robe-artifact",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Two of the robe's own activations (Who Are We?, Who Are They?) are each once per hour; expressed as a single 1/hour cap since both share the period."
+ },
+ {
+  "id": "fiendbreaker-artifact",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Restore Mind is once per hour on the staff itself; the Cast a Spell activation's once-per-round cap resets constantly and its charges are the staff-charge pool the app already tracks."
+ },
+ {
+  "id": "guiding-star-orb-artifact",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Momentary Aiudara (9th-rank teleport) is the orb's own once-per-day activation; its other activations are unlimited."
+ },
+ {
+  "id": "slithermaws-bane-artifact",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Calistria's Sting is once per day (the armor also has 1/minute and 1/hour activations); tracked at the most restrictive daily period."
+ },
+ {
+  "id": "soulcutter-artifact",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Soothe Souls and Soulcutting Storm are each once per hour; Shame Demon's 24-hour immunity is on the demon, not a limit on the sword."
+ },
+ {
+  "id": "wintershot-artifact",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Signal Flare is once per hour (Auroral Shine is a lighter once-per-minute activation); tracked at the hourly cap."
+ },
+ {
+  "id": "greater-bolkas-blessing",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Gift of Life healing activation on the filigree itself is once per day."
+ },
+ {
+  "id": "greater-kolss-oath",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Vow Unbreakable activation on the filigree itself is once per day."
+ },
+ {
+  "id": "greater-trudds-strength",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Protect the Clan! activation on the filigree itself is once per day."
+ },
+ {
+  "id": "lions-pelt",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Contact Ally (casts message) is the uniform's own once-per-hour activation."
+ },
+ {
+  "id": "essence-forge-lesser",
+  "limited": false,
+  "note": "The 'once per day' text is an enhancement the forge adds to a CRAFTED item's activation; the forge's own activations (Prime, Craft, Absorb Essence) have no frequency."
+ },
+ {
+  "id": "essence-forge-moderate",
+  "limited": false,
+  "note": "Same enhancement text about a crafted item's daily activation, not a limit on the forge."
+ },
+ {
+  "id": "essence-forge-greater",
+  "limited": false,
+  "note": "Same enhancement text about a crafted item's daily activation, not a limit on the forge."
+ },
+ {
+  "id": "greater-mitigation-mail",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Salve healing activation on the armor is once per day."
+ },
+ {
+  "id": "major-mitigation-mail",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same Salve activation, once per day."
+ },
+ {
+  "id": "greater-reactive-mail",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Quick Spike reaction on the armor is once per hour."
+ },
+ {
+  "id": "major-reactive-mail",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Same Quick Spike reaction, once per hour."
+ },
+ {
+  "id": "greater-testudo-shield",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Tortoise Form activation on the shield is once per day."
+ },
+ {
+  "id": "greater-belkzen-deadsmasher",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Untouchable Spirit reroll (fortune) on the weapon is once per day."
+ },
+ {
+  "id": "calvary-commanders-lance",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Ride Them Down! activation on the lance is once per day."
+ },
+ {
+  "id": "greater-chainbreaker",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Liberating Strike activation on the weapon is once per day."
+ },
+ {
+  "id": "hells-judgement",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Flames of Phlegethon activation on the axe is once per day."
+ },
+ {
+  "id": "greater-talonstrike-blade",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Greater version adds Grasping Talons once per day on top of Defense of Liberty once per hour; tracked at the most restrictive daily period."
+ },
+ {
+  "id": "greater-arcane-standard",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "round"
+  },
+  "note": "Magical Weakness is once per turn on the banner itself; mapped to the per-round period as the closest match."
+ },
+ {
+  "id": "banner-of-creeping-death",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "note": "Void's Embrace activation on the banner is once per minute."
+ },
+ {
+  "id": "lesser-banner-of-creeping-death",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "note": "Same Void's Embrace activation, once per minute."
+ },
+ {
+  "id": "moderate-banner-of-creeping-death",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "note": "Same Void's Embrace activation, once per minute (2d4+2 variant)."
+ },
+ {
+  "id": "greater-banner-of-creeping-death",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "note": "Same Void's Embrace activation, once per minute (4d4+4 variant)."
+ },
+ {
+  "id": "major-banner-of-creeping-death",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "note": "Same Void's Embrace activation, once per minute (8d4+8 variant)."
+ },
+ {
+  "id": "greater-banner-of-piercing-shards",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "note": "Shards Seek Wounds activation on the banner is once per minute."
+ },
+ {
+  "id": "major-banner-of-piercing-shards",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "note": "Same Shards Seek Wounds activation, once per minute."
+ },
+ {
+  "id": "greater-stalwarts-banner",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "note": "Stand Firm activation on the banner is once per minute."
+ },
+ {
+  "id": "major-stalwarts-banner",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "note": "Same Stand Firm activation, once per minute."
+ },
+ {
+  "id": "feather-of-the-unfounded-bravado",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Overconfident Facade activation on the feather is once per day."
+ },
+ {
+  "id": "sack-of-hyrdras-teeth",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Fist Full of Fangs is once per day (Sow a Tooth is a separate once-per-hour activation); tracked at the daily cap."
+ },
+ {
+  "id": "greater-boots-of-the-secret-blade",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Draw Secret Blade activation on the boots is once per hour."
+ },
+ {
+  "id": "major-boots-of-the-secret-blade",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Same Draw Secret Blade activation, once per hour."
+ },
+ {
+  "id": "comandants-scabbard",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Commanding Draw (fortune) activation on the scabbard is once per hour."
+ },
+ {
+  "id": "greater-endless-quiver",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Convert Arrows is the quiver's own once-per-day activation; the 100-arrow reservoir self-regenerates 10/hour and is better handled as ammunition than a tracked pool."
+ },
+ {
+  "id": "greater-fireproof-gloves",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Release Heat activation on the gloves is once per day."
+ },
+ {
+  "id": "greater-killers-belt",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Bleeding Rubies activation on the belt is once per day."
+ },
+ {
+  "id": "magical-medals",
+  "limited": false,
+  "note": "Umbrella/category entry for the medal family (no price of its own); the daily activations belong to the individual medals, which are separate item entries."
+ },
+ {
+  "id": "medal-of-gorillas-might",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "This medal's own Gorilla's Second Leap reroll is once per day."
+ },
+ {
+  "id": "medal-of-griffons-heart",
+  "limited": false,
+  "note": "Shared family text is misleading: this medal only grants a +1 save bonus and at-will forbidding ward, with no activation of its own."
+ },
+ {
+  "id": "medal-of-the-wolf-pack",
+  "limited": false,
+  "note": "Shared family text is misleading: this medal only grants a +2 circumstance bonus to damage when flanking, with no activation."
+ },
+ {
+  "id": "medal-of-unicorns-purity",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "This medal's own Unicorn's Grace extra healing is once per day."
+ },
+ {
+  "id": "medal-of-phoenixs-fire",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "core.json shows this medal's own Activate—Phoenix's Sacrifice is Frequency once per day (the Gorilla/Unicorn lines in the chunk text belong to the other medals sharing the doc)."
+ },
+ {
+  "id": "greater-medics-armband",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Single item activation, Do No Harm, once per day; greater grade only changes the penalty size."
+ },
+ {
+  "id": "greater-sailors-collar",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Single item activation, Gasp for Air, once per day; greater grade only adds a swim Speed."
+ },
+ {
+  "id": "vortex-pouch",
+  "limited": false,
+  "note": "\"Sustain once per round, up to 1 minute\" is a sustain cadence/duration for the ongoing activation, not a cap on how often the pouch can be used."
+ },
+ {
+  "id": "aerekostes-item",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "minute"
+  },
+  "note": "Forward Planning is an activation of the weapon itself, once per minute. (Aerekostes' 3 Mythic Points refresh per session and fuel Spell Reserve; left out as it isn't a per-day/per-period item cap.)"
+ },
+ {
+  "id": "enkindled-quintessence",
+  "limited": false,
+  "note": "The once-per-day teleport is something the bound dragon does \"from any distance\" - a creature's ability, not an activation the item's owner tracks."
+ },
+ {
+  "id": "greater-stalk-goggles",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Looksee, once per day; grade only adds a Perception bonus to the same activation."
+ },
+ {
+  "id": "major-stalk-goggles",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same single Looksee activation, once per day."
+ },
+ {
+  "id": "astrolabe-of-falling-stars",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Starfall, once per day."
+ },
+ {
+  "id": "greater-pickled-demon-tongue",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Spellheart: the base caustic blast activation is at-will; the greater grade adds exactly one once-per-day activation (3rd-rank acidic burst)."
+ },
+ {
+  "id": "major-pickled-demon-tongue",
+  "limited": true,
+  "frequency": {
+   "max": 3,
+   "per": "day"
+  },
+  "note": "Cumulative spellheart: greater's 3rd-rank acidic burst plus major's acid grip and 4th-rank acidic burst = three separate once-per-day activations; expressed as a 3/day activation budget since only one frequency can be stated."
+ },
+ {
+  "id": "greater-polished-demon-horn",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Base daze activation is at-will; greater grade adds one once-per-day activation (3rd-rank fear)."
+ },
+ {
+  "id": "major-polished-demon-horn",
+  "limited": true,
+  "frequency": {
+   "max": 3,
+   "per": "day"
+  },
+  "note": "Cumulative: 3rd-rank fear, outcast's curse, and vision of death, each once per day; expressed as a 3/day activation budget."
+ },
+ {
+  "id": "greater-sihedron-medallion",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Bolster Flesh, once per day; grade only changes the temp HP and save bonus."
+ },
+ {
+  "id": "major-sihedron-medallion",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same single Bolster Flesh activation, once per day."
+ },
+ {
+  "id": "cyrusian-wand",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand: Cast a Spell once per day (plus the standard overcharge attempt). The separate once-per-day Presume Success only triggers on a failed overcharge flat check and isn't tracked here."
+ },
+ {
+  "id": "hand-hewed-face",
+  "limited": false,
+  "note": "The once-per-day appearance change is done by the entity holding your bargained contract - another creature's ability. The item's own Fresh Face activation has no frequency."
+ },
+ {
+  "id": "pyrite-rat",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"You can use this action only once per day\" applies to the figurine's Transform Statue activation."
+ },
+ {
+  "id": "breath-of-dragons",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift (Aspect Dragon); its activation is once per day."
+ },
+ {
+  "id": "dragon-strike",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift, once per hour; at 11th level it improves to once per 10 minutes, which the period enum can't express."
+ },
+ {
+  "id": "draconic-arrogance",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, once per day (reaction-style trigger on your own saving throw)."
+ },
+ {
+  "id": "wyrms-flight",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, once per day."
+ },
+ {
+  "id": "draconic-ascendance",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift activation, once per hour."
+ },
+ {
+  "id": "absorb-injury",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "The once-per-day cap is on your relic activation; the ally is only the trigger, not the owner of the limit."
+ },
+ {
+  "id": "soul-puppet",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, once per day."
+ },
+ {
+  "id": "cleanse-soul",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation (1 minute), once per day."
+ },
+ {
+  "id": "spirit-blink",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, once per day."
+ },
+ {
+  "id": "soul-magic",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, once per day."
+ },
+ {
+  "id": "charming",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift (Aspect Artistry) activation, once per day."
+ },
+ {
+  "id": "enthralling",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift (Aspect Artistry) activation, once per day."
+ },
+ {
+  "id": "dominant-emotion",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift activation, once per hour."
+ },
+ {
+  "id": "emotion-surge",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift activation, once per hour."
+ },
+ {
+  "id": "fervor",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift activation, once per hour."
+ },
+ {
+  "id": "beginners-luck",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, once per day."
+ },
+ {
+  "id": "swap-luck",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift activation, once per hour; the ally who swaps is just part of the effect, not the limit holder."
+ },
+ {
+  "id": "whammy",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, once per day (enemy's roll is only the trigger)."
+ },
+ {
+  "id": "steal-luck",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, once per day."
+ },
+ {
+  "id": "sands-of-the-hourglass",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift (Aspect Time) activation, once per hour."
+ },
+ {
+  "id": "precognition",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, once per day."
+ },
+ {
+  "id": "temporal-pulse",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, once per day."
+ },
+ {
+  "id": "time-jump",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Once per day is the relic's activation cap, not a property of the time jump spell it casts."
+ },
+ {
+  "id": "time-reversal",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Once per day is the relic's activation cap for casting time beacon."
+ },
+ {
+  "id": "forge-weld",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift (Aspect Forge) activation, once per day."
+ },
+ {
+  "id": "creative-spark",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "The fire-wisp activation is once per day. There is a second, independent once-per-day benefit (crit-fail to fail on blacksmithing Crafting checks) that a single frequency can't also represent; tracked the activation as the primary limit."
+ },
+ {
+  "id": "work-harden",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift (Aspect Forge) activation, once per day."
+ },
+ {
+  "id": "molten-crucible",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift (Aspect Forge) activation, once per day."
+ },
+ {
+  "id": "living-forge",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift (Aspect Forge) activation, once per day."
+ },
+ {
+  "id": "precious-anodization",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift activation, once per day; the clad in metal rank scales with relic level but the use cap is still a flat 1/day."
+ },
+ {
+  "id": "rail-dash",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift (Aspect Metal) activation, once per hour."
+ },
+ {
+  "id": "all-will-decay",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "The at-will rust cloud innate spell is unlimited; the separate aura activation is once per day."
+ },
+ {
+  "id": "ancestors-call",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift activation, once per hour."
+ },
+ {
+  "id": "propelling-winds",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Once per hour is the relic's activation cap for casting fly."
+ },
+ {
+  "id": "call-of-the-wild",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Once per day is the relic's activation cap; the summoned creature isn't a tracked companion resource."
+ },
+ {
+  "id": "word-of-faith",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Relic gift (Aspect Celestial) activation, once per hour."
+ },
+ {
+  "id": "righteous-call",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Relic gift (Aspect Celestial) activation, once per day."
+ },
+ {
+  "id": "wand-of-continuation",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand (reusable, not a consumable): the wand's own Activate has Frequency once per day, plus the risky overcharge attempt which isn't a second tracked pool."
+ },
+ {
+  "id": "wand-of-shardstorm",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand's own activation frequency is once per day (overcharge is an extra risky use, not a pool)."
+ },
+ {
+  "id": "wand-of-widening",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand's own activation frequency is once per day, plus overcharge."
+ },
+ {
+  "id": "aeon-stone",
+  "limited": false,
+  "note": "Family/category page for all aeon stones (no price of its own); the base entry has no activation — each variant carries its own limit and exists as a separate item id."
+ },
+ {
+  "id": "aeon-stone-delaying",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "The stone's own automatic dying-reduction can benefit you only once per day (it then becomes a consumed stone); the resonant 1/day Heal only exists when slotted in a wayfinder, so one daily pool is enough."
+ },
+ {
+  "id": "aeon-stone-envisioning",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Its telepathy is constant; the only tracked use is the stone's own resonant power (Translate once per day), available when slotted in a wayfinder."
+ },
+ {
+  "id": "aeon-stone-nourishing",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Constant no-eat/drink benefit is unlimited; the item's resonant power grants Air Bubble once per day (wayfinder-slotted)."
+ },
+ {
+  "id": "aeon-stone-formulating",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Formula knowledge and +1 Craft are passive; the item's resonant power grants Phantasmal Minion once per day (wayfinder-slotted)."
+ },
+ {
+  "id": "aeon-stone-repairing",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Craft bonus and Repair boost are passive; the item's resonant power grants Mending once per day (wayfinder-slotted)."
+ },
+ {
+  "id": "bristling-spines",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Urticating Burst is the graft's own activation, Frequency once per day at every tier."
+ },
+ {
+  "id": "camouflaging-chromatophores",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Background Adaptation is the item's activation, once per day (the greater version upgrades this to once per hour)."
+ },
+ {
+  "id": "compound-eyes",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "The graft itself grants one reroll of a concealment flat check per day — a use the player must track."
+ },
+ {
+  "id": "twisting-twine",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Unravel Twine is the item's own activation, once per day at the base/lesser tier (moderate is once per hour, greater has no limit)."
+ },
+ {
+  "id": "wand-of-crackling-lightning",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-hopeless-night",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-overflowing-life",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation is once per day; the extra \"only once per turn\" clause caps a bonus across multiple such wands and is not a second pool."
+ },
+ {
+  "id": "wand-of-slaughter",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-smoldering-fireballs",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-the-snowfields",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-the-spider",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day, plus overcharge."
+ },
+ {
+  "id": "midnight-milk",
+  "limited": false,
+  "note": "Alchemical consumable drug (traits alchemical, consumable, ingested, poison) — a dose is spent by quantity; the text is affliction stages, not a use limit."
+ },
+ {
+  "id": "wand-of-purification",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day, plus overcharge (choosing among its three spells doesn't add pools)."
+ },
+ {
+  "id": "assassins-bracers",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Focus on the Doomed is the bracers' own activation, once per day; the AC/save bonuses are passive."
+ },
+ {
+  "id": "mnemonic-feather",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Recite Mnemonic is the feather's own reaction-style activation, once per day — you activate it even though the benefit lands on an ally."
+ },
+ {
+  "id": "portable-inspiring-spotlight",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Light It Up is the spotlight's own activation, Frequency once per hour."
+ },
+ {
+  "id": "mounted-inspiring-spotlight",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Same Light It Up activation as the portable version, once per hour."
+ },
+ {
+  "id": "zeto-geki-hide-armor",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Shift Scales is the armor's own activation, once per day."
+ },
+ {
+  "id": "eyes-of-the-moonwarden",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Lunar Illumination is the pendant's own activation, once per hour; the danger-glow is passive."
+ },
+ {
+  "id": "arboreal-wand",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day, plus overcharge."
+ },
+ {
+  "id": "arboreal-wand-2nd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Rank variant of the arboreal wand; same once-per-day wand activation."
+ },
+ {
+  "id": "arboreal-wand-3rd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Rank variant of the arboreal wand; same once-per-day wand activation."
+ },
+ {
+  "id": "arboreal-wand-4th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Rank variant of the arboreal wand; same once-per-day wand activation."
+ },
+ {
+  "id": "arboreal-wand-5th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Rank variant of the arboreal wand; same once-per-day wand activation."
+ },
+ {
+  "id": "arboreal-wand-6th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Rank variant of the arboreal wand; same once-per-day wand activation."
+ },
+ {
+  "id": "arboreal-wand-7th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Rank variant of the arboreal wand; same once-per-day wand activation."
+ },
+ {
+  "id": "greater-heros-plate",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Personal Legend (self-cast heroism) is the armor's own activation, once per day."
+ },
+ {
+  "id": "greater-foxglove-token",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Greater tier adds exactly one limited activation (3rd-rank noxious vapors, once per day); the Puff of Poison cantrip activation is unlimited. The item text shown includes the whole family page, but petal storm / wall of thorns belong to the major tier."
+ },
+ {
+  "id": "major-foxglove-token",
+  "limited": true,
+  "counters": [
+   {
+    "id": "noxious-vapors",
+    "label": "noxious vapors",
+    "max": "1",
+    "resetsOnRest": true
+   },
+   {
+    "id": "petal-storm",
+    "label": "petal storm",
+    "max": "1",
+    "resetsOnRest": true
+   },
+   {
+    "id": "wall-of-thorns",
+    "label": "wall of thorns",
+    "max": "1",
+    "resetsOnRest": true
+   }
+  ],
+  "note": "Major tier has three independent once-per-day activations (each spell separately), so three one-use daily pools rather than a single flat cap; the Puff of Poison activation stays unlimited."
+ },
+ {
+  "id": "greater-heartmoss",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Greater tier adds exactly one limited activation (3rd-rank heal, once per day); Stabilize activation is unlimited. Sound body / healing well belong to the major tier."
+ },
+ {
+  "id": "major-heartmoss",
+  "limited": true,
+  "counters": [
+   {
+    "id": "heal",
+    "label": "3rd-rank heal",
+    "max": "1",
+    "resetsOnRest": true
+   },
+   {
+    "id": "sound-body",
+    "label": "4th-rank sound body",
+    "max": "1",
+    "resetsOnRest": true
+   },
+   {
+    "id": "healing-well",
+    "label": "healing well",
+    "max": "1",
+    "resetsOnRest": true
+   }
+  ],
+  "note": "Three separate once-per-day activations at the major tier, each its own daily use; Stabilize remains unlimited."
+ },
+ {
+  "id": "wand-of-splintered-sorrows",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-splintered-sorrows-2nd-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Rank variant; same once-per-day wand activation."
+ },
+ {
+  "id": "wand-of-splintered-sorrows-4th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Rank variant; same once-per-day wand activation."
+ },
+ {
+  "id": "wand-of-splintered-sorrows-6th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Rank variant; same once-per-day wand activation."
+ },
+ {
+  "id": "wand-of-splintered-sorrows-8th-rank-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Rank variant; same once-per-day wand activation."
+ },
+ {
+  "id": "greater-clay-sphere",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Greater tier adds one limited activation (enlarge, once per day); Gouging Claw activation is unlimited. Cursed metamorphosis / plant form belong to the major tier."
+ },
+ {
+  "id": "major-clay-sphere",
+  "limited": true,
+  "counters": [
+   {
+    "id": "cursed-metamorphosis",
+    "label": "cursed metamorphosis",
+    "max": "1",
+    "resetsOnRest": true
+   },
+   {
+    "id": "plant-form",
+    "label": "plant form",
+    "max": "1",
+    "resetsOnRest": true
+   }
+  ],
+  "note": "Major tier lists two independent once-per-day activations, each its own daily use; Gouging Claw remains unlimited."
+ },
+ {
+  "id": "aurochs-might-tattoo",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Aurochs Charge is the tattoo's own activation, once per day at every tier."
+ },
+ {
+  "id": "lesser-aurochs-might-tattoo",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Lesser tier of the same tattoo; Aurochs Charge once per day."
+ },
+ {
+  "id": "moderate-aurochs-might-tattoo",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Moderate tier only raises the DC/damage; Aurochs Charge is still once per day."
+ },
+ {
+  "id": "greater-aurochs-might-tattoo",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Greater tier only raises the DC/damage; Aurochs Charge is still once per day."
+ },
+ {
+  "id": "cleft-head-marking",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Unexpected Strike is the tattoo's own triggered activation, once per day; the +1 Feint bonus is passive."
+ },
+ {
+  "id": "lesser-cleft-head-marking",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Lesser tier of the same tattoo; Unexpected Strike once per day."
+ },
+ {
+  "id": "greater-cleft-head-marking",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Greater tier only raises the bonus and damage; Unexpected Strike is still once per day."
+ },
+ {
+  "id": "flowing-water",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Embody the Truce is the tattoo's own triggered activation, once per day; the Diplomacy bonus is passive."
+ },
+ {
+  "id": "cloak-of-social-graces",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item's own Activate—Overcome Self-Doubt is Frequency once per day."
+ },
+ {
+  "id": "greater-cloak-of-social-graces",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same Overcome Self-Doubt activation, once per day."
+ },
+ {
+  "id": "major-cloak-of-social-graces",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Same Overcome Self-Doubt activation, once per day."
+ },
+ {
+  "id": "gloves-of-precision",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Nimble Fingers is an item activation with Frequency once per day."
+ },
+ {
+  "id": "greater-gloves-of-precision",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Nimble Fingers is an item activation with Frequency once per day."
+ },
+ {
+  "id": "golden-wings",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Assisted Flight activation, Frequency once per day."
+ },
+ {
+  "id": "greater-golden-wings",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Assisted Flight activation, Frequency once per day."
+ },
+ {
+  "id": "major-golden-wings",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Assisted Flight activation, Frequency once per day."
+ },
+ {
+  "id": "true-golden-wings",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Assisted Flight activation, Frequency once per day."
+ },
+ {
+  "id": "kinetic-wraps-of-strength",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Burst of Might activation, Frequency once per day."
+ },
+ {
+  "id": "greater-kinetic-wraps-of-strength",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Burst of Might activation, Frequency once per day."
+ },
+ {
+  "id": "bloodstride-blade",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Call of the Bloodthirst activation, Frequency once per hour."
+ },
+ {
+  "id": "bloodstride-boots",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "counters": [
+   {
+    "id": "blood-walk",
+    "label": "Blood Walk",
+    "max": "1",
+    "resetsOnRest": true
+   }
+  ],
+  "note": "Two genuinely separate activations: Blood Hop once per hour (the frequency) and Blood Walk once per day (the counter)."
+ },
+ {
+  "id": "gaze-of-the-mantis",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Target Sense activation, Frequency once per day; the Red Mantis line is a requirement, not the limit."
+ },
+ {
+  "id": "sawtooth-reaper",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Bloodmist Whirl activation, Frequency once per hour."
+ },
+ {
+  "id": "amaranthine-visage",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Eternal Renewal is a triggered item activation, Frequency once per day."
+ },
+ {
+  "id": "coral-aspect",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Cohabitate activation, Frequency once per day."
+ },
+ {
+  "id": "mariners-mien",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Base mask: Set the Course once per day (the once-per-hour line in the merged text belongs to the Moderate variant)."
+ },
+ {
+  "id": "lesser-mariners-mien",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Lesser keeps the base once-per-day Set the Course; core.json shows +1 passive skill bonus."
+ },
+ {
+  "id": "moderate-mariners-mien",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "hour"
+  },
+  "note": "Moderate variant text upgrades it: +2 item bonus and \"you can activate it once per hour\"."
+ },
+ {
+  "id": "mordant-mask",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Pounding Surf triggered activation, Frequency once per day."
+ },
+ {
+  "id": "whispering-veil",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Spire Power activation, Frequency once per day; the Mythic Point is the trigger condition, not the item's cost."
+ },
+ {
+  "id": "crown-of-the-master",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Imperative Order activation is once per day; the dominate it casts uses no slot of yours."
+ },
+ {
+  "id": "greater-crown-of-the-master",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Imperative Order activation, Frequency once per day."
+ },
+ {
+  "id": "helm-of-the-tides",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Raise the Tide activation, Frequency once per day."
+ },
+ {
+  "id": "hydration-cloak",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Pull Hood activation, Frequency once per day."
+ },
+ {
+  "id": "oneiric-crystals-of-the-slumberer",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Steal Remembrance activation, Frequency once per day."
+ },
+ {
+  "id": "trident-of-the-azarketis",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Force of the Sea activation, Frequency once per day."
+ },
+ {
+  "id": "greater-trident-of-the-azarketis",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Force of the Sea activation, Frequency once per day."
+ },
+ {
+  "id": "decanter-of-endless-water",
+  "limited": false,
+  "note": "\"Repeat this once per round\" only paces the geyser's Interact redirection; the decanter is explicitly endless, with no Frequency entry and no pool to spend."
+ },
+ {
+  "id": "holy-prayer-beads",
+  "limited": true,
+  "counters": [
+   {
+    "id": "bless",
+    "label": "Bless",
+    "max": "1",
+    "resetsOnRest": true
+   },
+   {
+    "id": "heal",
+    "label": "Heal",
+    "max": "1",
+    "resetsOnRest": true
+   }
+  ],
+  "note": "\"Cast Bless or Heal, each once per day\" is two independent per-day pools, so a flat frequency would let you double-cast one spell."
+ },
+ {
+  "id": "holy-prayer-beads-greater",
+  "limited": true,
+  "counters": [
+   {
+    "id": "bless",
+    "label": "Bless",
+    "max": "1",
+    "resetsOnRest": true
+   },
+   {
+    "id": "divine-wrath",
+    "label": "Divine Wrath",
+    "max": "1",
+    "resetsOnRest": true
+   },
+   {
+    "id": "heal",
+    "label": "Heal",
+    "max": "1",
+    "resetsOnRest": true
+   },
+   {
+    "id": "cleanse-affliction",
+    "label": "Cleanse Affliction",
+    "max": "1",
+    "resetsOnRest": true
+   }
+  ],
+  "note": "Four 4th-rank spells \"each once per day\" — four separate per-day pools (matches its heldSpells list in core.json)."
+ },
+ {
+  "id": "wondrous-figurine",
+  "limited": false,
+  "note": "Generic parent entry: its Activate states the frequency \"(if any)\" is defined per variant (1/day lions, 4/month elephant, 1/week steed), so the base item carries no limit of its own."
+ },
+ {
+  "id": "wondrous-figurine-golden-lions",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"The lions can be called on only once per day\" limits activating the figurine itself."
+ },
+ {
+  "id": "wondrous-figurine-jade-serpent",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"The figurine can be used only once per day.\""
+ },
+ {
+  "id": "wondrous-figurine-candy-constrictor",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"The snake can be used once per day.\""
+ },
+ {
+  "id": "wondrous-figurine-rubber-bear",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"The bear can be used once per day.\""
+ },
+ {
+  "id": "wondrous-figurine-bismuth-leopards",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"The leopards can be called on only once per day.\""
+ },
+ {
+  "id": "wondrous-figurine-ruby-hippopotamus",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"The figurine can be used only once per day.\""
+ },
+ {
+  "id": "wand-of-slaying",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Reusable wand, not a consumable: Frequency once per day (overcharge is an extra risky use, not a tracked pool). Matches other wands in core.json."
+ },
+ {
+  "id": "wand-of-slaying-7th-level-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-slaying-8th-level-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation once per day, plus overcharge."
+ },
+ {
+  "id": "wand-of-slaying-9th-level-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation once per day, plus overcharge."
+ },
+ {
+  "id": "aeon-stone-black-pearl",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Resonant power grants a once-per-day Sending from the stone itself; no heldSpells entry in core.json, so nothing else tracks it."
+ },
+ {
+  "id": "aeon-stone-agate-ellipsoid",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Stone grants 2nd-rank Augury as an innate spell once per day — the stone's own use, not a spell slot."
+ },
+ {
+  "id": "aeon-stone-clear-quartz-octagon",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Resonant power casts 1st-rank Mending once per day (the break-prevention activation is automatic and one-time-only, not a pool)."
+ },
+ {
+  "id": "aeon-stone-mottled-ellipsoid",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Resonant power casts 7th-rank False Vitality once per day."
+ },
+ {
+  "id": "aeon-stone-cymophane-cabochon",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Resonant power casts See the Unseen once per day."
+ },
+ {
+  "id": "aeon-stone-polished-pebble",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Resonant power casts Grease as a primal innate spell once per day."
+ },
+ {
+  "id": "knapsack-of-halflingkind-greater",
+  "limited": true,
+  "counters": [
+   {
+    "id": "tarts",
+    "label": "Tarts",
+    "max": "4",
+    "resetsOnRest": true
+   },
+   {
+    "id": "sling-bullet",
+    "label": "Sling bullet",
+    "max": "1",
+    "resetsOnRest": true
+   },
+   {
+    "id": "portal",
+    "label": "Portal",
+    "max": "1",
+    "resetsOnRest": true
+   }
+  ],
+  "note": "Three independent daily pools on the same item: four healing tarts per day, one lucky sling bullet per day, one 5-foot portal per day."
+ },
+ {
+  "id": "ring-of-wizardry",
+  "limited": false,
+  "note": "The ring adds spell slots at daily preparation; the \"not more than once per day\" clause prevents double-dipping rings, and the resource the player spends is the spell slots themselves."
+ },
+ {
+  "id": "ring-of-wizardry-type-i",
+  "limited": false,
+  "note": "Grants extra spell slots — tracked as spell slots, no item activation to count."
+ },
+ {
+  "id": "ring-of-wizardry-type-ii",
+  "limited": false,
+  "note": "Grants extra spell slots — tracked as spell slots, no item activation to count."
+ },
+ {
+  "id": "ring-of-wizardry-type-iii",
+  "limited": false,
+  "note": "Grants extra spell slots — tracked as spell slots, no item activation to count."
+ },
+ {
+  "id": "ring-of-wizardry-type-iv",
+  "limited": false,
+  "note": "Grants extra spell slots — tracked as spell slots, no item activation to count."
+ },
+ {
+  "id": "wayfinder-of-rescue",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Item's own activation: \"once per day you can activate it to cast Heal\" — a cap on activating the wayfinder, not an external resource."
+ },
+ {
+  "id": "stalwarts-ring",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"Once per day, during your daily preparations, you can meditate on this ring\" — one activation of the ring per day (usable only at daily prep)."
+ },
+ {
+  "id": "skarjas-heartstone",
+  "limited": false,
+  "note": "The twice/day and once/day limits are on Skarja's (an NPC hag's) granted innate spells; the heartstone's own Activate (counteract disease) has no frequency."
+ },
+ {
+  "id": "necklace-of-strangulation",
+  "limited": false,
+  "note": "Cursed item — the \"once per round\" is a save attempt against its ongoing suffocation, not an expendable activation; nothing persists to track."
+ },
+ {
+  "id": "tears-of-the-last-azlanti",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"Once per day, you can attempt to exchange the aeon stone in a given bail\" — an activation of the artifact itself."
+ },
+ {
+  "id": "rope-of-climbing",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Base/lesser rope: \"Activate Interact; Frequency once per day\". Moderate (1/hour) and greater (no limit) are separate records."
+ },
+ {
+  "id": "wand-of-noisome-acid",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand's Activate line: \"Frequency once per day, plus overcharge\" — the limit is on the wand, not on acid grip."
+ },
+ {
+  "id": "wand-of-noisome-acid-2nd-level-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-noisome-acid-4th-level-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-noisome-acid-6th-level-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-noisome-acid-8th-level-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-teeming-ghosts",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-2nd-level-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-3rd-level-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-4th-level-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-5th-level-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-6th-level-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-7th-level-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-8th-level-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-9th-level-spell",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "cordelias-construct-key-greater",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Two activations: summon construct once per hour and the animated-object one once per day; only the daily one is worth tracking (per-hour resets on its own)."
+ },
+ {
+  "id": "sparkblade",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"Once per day, you can spend 1 action to point the sparkblade at a foe\" — the weapon's own lightning activation."
+ },
+ {
+  "id": "secret-keepers-mask",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Category page; each mask type (Blackfingers/Gray Master/Father Skinsaw/Reaper of Reputation) has exactly one \"Frequency once per day\" activation, so 1/day holds for any single mask."
+ },
+ {
+  "id": "devils-luck",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"Benefit Once per day, you can roll a saving throw twice and use the higher result\" — the contract item's own benefit."
+ },
+ {
+  "id": "hag-eye-frightful",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Frightful variant's activation is once per day (AoN prints it as \"Trigger once per day\"); the 24-hour target immunity is not the limit."
+ },
+ {
+  "id": "hag-eye-oracular",
+  "limited": false,
+  "note": "Oracular variant has no activation at all — it only lowers the flat-check DC when a hag casts augury; the once/day text in the excerpt belongs to the frightful variant on the shared page."
+ },
+ {
+  "id": "hag-eye-smokey",
+  "limited": false,
+  "note": "Smoky variant's Activate has no frequency; its only \"per day\" clause is the target's 24-hour temporary immunity, which is not a limit on the item."
+ },
+ {
+  "id": "hag-eye-stoney",
+  "limited": false,
+  "note": "Stony variant's only cap is \"Trigger once per round\", which resets every round — no per-day pool for the player to track."
+ },
+ {
+  "id": "fulcrum-lenses",
+  "limited": false,
+  "note": "Category page only; the actual lenses are separate records (crimson/ebon/emerald/ochre) and carry the limits — notably the Ebon lens's 3 glimmers plus its 1/day activations."
+ },
+ {
+  "id": "warcallers-chime",
+  "limited": false,
+  "note": "Parent entry states the frequency \"(if any)\" appears in each chime's entry; the specific chimes are separate records with their own limits."
+ },
+ {
+  "id": "warcallers-chime-of-blasting",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"You can use this chime once per day.\""
+ },
+ {
+  "id": "warcallers-chime-of-destruction",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"You can use this chime once per day.\""
+ },
+ {
+  "id": "warcallers-chime-of-dread",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"This chime can be used only once per day, whether or not you Sustain the aura.\""
+ },
+ {
+  "id": "nosoi-charm-greater",
+  "limited": false,
+  "note": "The 1/day is the granted divine innate Sending (tracked as an innate spell); the charm's own 3-action Activate has no frequency."
+ },
+ {
+  "id": "aquarium-lamp",
+  "limited": true,
+  "counters": [
+   {
+    "id": "prey",
+    "label": "activations",
+    "max": "50",
+    "resetsOnRest": false
+   },
+   {
+    "id": "",
+    "label": "",
+    "max": "",
+    "resetsOnRest": false
+   }
+  ],
+  "note": "Feeding tanks \"carry enough prey animals for 50 activations before needing to be refilled\" — a real depleting pool refilled by restocking, not by rest; the \"once per day\" text is about how often the eels eat, not a use cap."
+ },
+ {
+  "id": "drake-rifle",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"Activate—Drake Shot ... Frequency once per day\"; ordinary Strikes with the rifle are unlimited."
+ },
+ {
+  "id": "wand-of-spiritual-warfare",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-spiritual-warfare-2nd-level",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-spiritual-warfare-4th-level",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-spiritual-warfare-6th-level",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-spiritual-warfare-8th-level",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "queasy-lantern",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"Activate Interact; Frequency once per day\" — shared by all lantern grades; the constant light is free."
+ },
+ {
+  "id": "energy-robe",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"Activate command, Interact; Frequency once per day\" — shared activation for every energy type; the resistance is passive."
+ },
+ {
+  "id": "energy-robe-fire",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Robe's activation is once per day (grants the +30-foot Speed bonus)."
+ },
+ {
+  "id": "energy-robe-cold",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Robe's activation is once per day (grants water walk)."
+ },
+ {
+  "id": "energy-robe-acid",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Robe's activation is once per day (grants a climb Speed)."
+ },
+ {
+  "id": "energy-robe-electricity",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Robe's activation is once per day (grants a fly Speed)."
+ },
+ {
+  "id": "wardrobe-stone",
+  "limited": false,
+  "note": "Base/lesser stone's Activate has no Frequency (unlimited outfit illusion); the \"once per day / cast prying eye\" line belongs to the moderate variant, which is its own record."
+ },
+ {
+  "id": "enhanced-hearing-aid",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "\"Activate envision; Frequency once per day\" — the item's own boost activation."
+ },
+ {
+  "id": "wand-of-thundering-echoes",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-thundering-echoes-3rd-level",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-thundering-echoes-4th-level",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-thundering-echoes-5th-level",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-thundering-echoes-6th-level",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ },
+ {
+  "id": "wand-of-thundering-echoes-7th-level",
+  "limited": true,
+  "frequency": {
+   "max": 1,
+   "per": "day"
+  },
+  "note": "Wand activation frequency once per day (plus overcharge)."
+ }
+]

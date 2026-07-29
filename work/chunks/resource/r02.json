@@ -1,0 +1,387 @@
+[
+ {
+  "id": "wand-of-thundering-echoes-8th-level",
+  "collection": "items",
+  "name": "Wand of Thundering Echoes (8th-Level)",
+  "level": 19,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast sound burst of the indicated level."
+ },
+ {
+  "id": "called-accessory-rune",
+  "collection": "items",
+  "name": "Called (Accessory Rune)",
+  "level": 3,
+  "text": "Activate command; Frequency once per hour; Requirements You have a free hand and the called item is in a bag, pack, pouch, or other container on your person, or unattended within 30 feet; Effect The item teleports to a free hand."
+ },
+ {
+  "id": "fleshgem",
+  "collection": "items",
+  "name": "Fleshgem",
+  "level": 5,
+  "text": "Activate command; Frequency once per day; Requirements You are standing on the ground; Effect The ground around you erupts in a 10-foot burst of knee-high crystal shards that remain for 1 round, or 1 minute if you spent two actions."
+ },
+ {
+  "id": "midday-lantern",
+  "collection": "items",
+  "name": "Midday Lantern",
+  "level": 6,
+  "text": "Activate envision, Interact; Frequency once per day; Effect You raise the lantern and unleash a blast of powerful sunlight."
+ },
+ {
+  "id": "twilight-lantern",
+  "collection": "items",
+  "name": "Twilight Lantern",
+  "level": 6,
+  "text": "Activate envision, Interact; Frequency once per day; Effect You raise the lantern and unleash a beam of powerful moonlight, targeting a darkness effect within 60 feet."
+ },
+ {
+  "id": "busine-of-divine-reinforcement",
+  "collection": "items",
+  "name": "Busine of Divine Reinforcement",
+  "level": 15,
+  "text": "Activate Interact (auditory) Frequency once per minute; Effect You play a few notes on the busine. Activate command, envision, Interact; Frequency once per day; Effect You blow into the busine and conjure a celestial with the effects of a 6th-level summon celestial spell, but there are no alignment restrictions to define which celestials you can call."
+ },
+ {
+  "id": "tyrants-writ",
+  "collection": "items",
+  "name": "Tyrant's Writ",
+  "level": 8,
+  "text": "Activate envision (metamagic) Frequency once per day; Effect If your next action is to Cast a Spell to cast an animate dead spell prepared with tyrant's writs, you can choose one of the following additional benefits to grant the summoned undead."
+ },
+ {
+  "id": "windlass-bolas",
+  "collection": "items",
+  "name": "Windlass Bolas",
+  "level": 6,
+  "text": "Activate (manipulate) Frequency once per day; Effect The cord of the bola snakes out as you throw it, allowing the weapon to wrap around a group of enemies."
+ },
+ {
+  "id": "colorful-coating",
+  "collection": "items",
+  "name": "Colorful Coating",
+  "level": 3,
+  "text": "A creature can take this acid damage only once per round."
+ },
+ {
+  "id": "olfactory-stimulators-bloodhound",
+  "collection": "items",
+  "name": "Olfactory Stimulators (Bloodhound)",
+  "level": 5,
+  "text": "Activate (concentrate) Frequency once per day; Effect Your olfactory stimulators twitch as they gather even more information."
+ },
+ {
+  "id": "tome-of-restorative-cleansing",
+  "collection": "items",
+  "name": "Tome of Restorative Cleansing",
+  "level": 5,
+  "text": "Activate (concentrate, healing, vitality) Frequency once per day; Requirements Your last action was to cast a spell prepared from this grimoire, and the spell removed a harmful condition or affliction from yourself or an ally; Effect Choose one creature whose condition was removed by the required spell."
+ },
+ {
+  "id": "bewitching-bloom",
+  "collection": "items",
+  "name": "Bewitching Bloom",
+  "level": 2,
+  "text": "Activate (concentrate) Frequency once per day; Effect Choose a willing ally you can see within 30 feet."
+ },
+ {
+  "id": "staring-skull",
+  "collection": "items",
+  "name": "Staring Skull",
+  "level": 8,
+  "text": "You can benefit from this ability only once per day."
+ },
+ {
+  "id": "unifying-emblem",
+  "collection": "items",
+  "name": "Unifying Emblem",
+  "level": 3,
+  "text": "Activate The actions required to Activate the tattoo are the same as those needed to cast its spell; Frequency once per day; Effect The tattoo casts its spell."
+ },
+ {
+  "id": "judgement-thurible",
+  "collection": "items",
+  "name": "Judgement Thurible",
+  "level": 10,
+  "text": "126 Price 975 gp Activate Cast a Spell; Frequency once per day; Effect You cast divine wrath. Activate Cast a Spell; Frequency once per day; Effect You cast 6th-rank divine wrath. Activate Cast a Spell; Frequency once per day; Effect You cast divine decree. Activate Cast a Spell; Frequency once per day; Effect You cast 7th-rank divine decree. Activate Cast a Spell; Frequency once per day; Effect You cast summon deifi"
+ },
+ {
+  "id": "judgement-thurible-greater",
+  "collection": "items",
+  "name": "Judgement Thurible (Greater)",
+  "level": 17,
+  "text": "126 Price 975 gp Activate Cast a Spell; Frequency once per day; Effect You cast divine wrath. Activate Cast a Spell; Frequency once per day; Effect You cast 6th-rank divine wrath. Activate Cast a Spell; Frequency once per day; Effect You cast divine decree. Activate Cast a Spell; Frequency once per day; Effect You cast 7th-rank divine decree. Activate Cast a Spell; Frequency once per day; Effect You cast summon deifi"
+ },
+ {
+  "id": "judgement-thurible-major",
+  "collection": "items",
+  "name": "Judgement Thurible (Major)",
+  "level": 20,
+  "text": "126 Price 975 gp Activate Cast a Spell; Frequency once per day; Effect You cast divine wrath. Activate Cast a Spell; Frequency once per day; Effect You cast 6th-rank divine wrath. Activate Cast a Spell; Frequency once per day; Effect You cast divine decree. Activate Cast a Spell; Frequency once per day; Effect You cast 7th-rank divine decree. Activate Cast a Spell; Frequency once per day; Effect You cast summon deifi"
+ },
+ {
+  "id": "wand-of-choking-mist",
+  "collection": "items",
+  "name": "Wand of Choking Mist",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast the wand's spell, but the mist prevents creatures from being able to breathe in its area."
+ },
+ {
+  "id": "wand-of-choking-mist-2nd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Choking Mist (2nd-Rank Spell)",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast the wand's spell, but the mist prevents creatures from being able to breathe in its area."
+ },
+ {
+  "id": "wand-of-choking-mist-4th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Choking Mist (4th-Rank Spell)",
+  "level": 10,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast the wand's spell, but the mist prevents creatures from being able to breathe in its area."
+ },
+ {
+  "id": "wand-of-chromatic-burst",
+  "collection": "items",
+  "name": "Wand of Chromatic Burst",
+  "level": 10,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast chromatic armor of the indicated rank."
+ },
+ {
+  "id": "wand-of-chromatic-burst-4th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Chromatic Burst (4th-Rank Spell)",
+  "level": 10,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast chromatic armor of the indicated rank."
+ },
+ {
+  "id": "wand-of-chromatic-burst-7th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Chromatic Burst (7th-Rank Spell)",
+  "level": 16,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast chromatic armor of the indicated rank."
+ },
+ {
+  "id": "wand-of-clinging-rime",
+  "collection": "items",
+  "name": "Wand of Clinging Rime",
+  "level": 16,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast frigid flurry of the indicated rank."
+ },
+ {
+  "id": "wand-of-clinging-rime-7th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Clinging Rime (7th-Rank Spell)",
+  "level": 16,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast frigid flurry of the indicated rank."
+ },
+ {
+  "id": "wand-of-clinging-rime-8th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Clinging Rime (8th-Rank Spell)",
+  "level": 18,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast frigid flurry of the indicated rank."
+ },
+ {
+  "id": "wand-of-clinging-rime-9th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Clinging Rime (9th-Rank Spell)",
+  "level": 20,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast frigid flurry of the indicated rank."
+ },
+ {
+  "id": "wand-of-dazzling-rays",
+  "collection": "items",
+  "name": "Wand of Dazzling Rays",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast holy light of the indicated rank, dazzling your target with the beam’s intensity."
+ },
+ {
+  "id": "wand-of-dazzling-rays-3rd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Dazzling Rays (3rd-Rank Spell)",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast holy light of the indicated rank, dazzling your target with the beam’s intensity."
+ },
+ {
+  "id": "wand-of-dazzling-rays-4th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Dazzling Rays (4th-Rank Spell)",
+  "level": 10,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast holy light of the indicated rank, dazzling your target with the beam’s intensity."
+ },
+ {
+  "id": "wand-of-dazzling-rays-5th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Dazzling Rays (5th-Rank Spell)",
+  "level": 12,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast holy light of the indicated rank, dazzling your target with the beam’s intensity."
+ },
+ {
+  "id": "wand-of-dazzling-rays-6th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Dazzling Rays (6th-Rank Spell)",
+  "level": 14,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast holy light of the indicated rank, dazzling your target with the beam’s intensity."
+ },
+ {
+  "id": "wand-of-dazzling-rays-7th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Dazzling Rays (7th-Rank Spell)",
+  "level": 16,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast holy light of the indicated rank, dazzling your target with the beam’s intensity."
+ },
+ {
+  "id": "wand-of-dazzling-rays-8th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Dazzling Rays (8th-Rank Spell)",
+  "level": 18,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast holy light of the indicated rank, dazzling your target with the beam’s intensity."
+ },
+ {
+  "id": "wand-of-dazzling-rays-9th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Dazzling Rays (9th-Rank Spell)",
+  "level": 20,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast holy light of the indicated rank, dazzling your target with the beam’s intensity."
+ },
+ {
+  "id": "wand-of-dumbfounding-doom",
+  "collection": "items",
+  "name": "Wand of Dumbfounding Doom",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast impending doom of the indicated rank, showing the target a potential death that's gruesome and absurd."
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-3rd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Dumbfounding Doom (3rd-Rank Spell)",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast impending doom of the indicated rank, showing the target a potential death that's gruesome and absurd."
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-4th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Dumbfounding Doom (4th-Rank Spell)",
+  "level": 10,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast impending doom of the indicated rank, showing the target a potential death that's gruesome and absurd."
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-5th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Dumbfounding Doom (5th-Rank Spell)",
+  "level": 12,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast impending doom of the indicated rank, showing the target a potential death that's gruesome and absurd."
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-6th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Dumbfounding Doom (6th-Rank Spell)",
+  "level": 14,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast impending doom of the indicated rank, showing the target a potential death that's gruesome and absurd."
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-7th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Dumbfounding Doom (7th-Rank Spell)",
+  "level": 16,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast impending doom of the indicated rank, showing the target a potential death that's gruesome and absurd."
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-8th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Dumbfounding Doom (8th-Rank Spell)",
+  "level": 18,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast impending doom of the indicated rank, showing the target a potential death that's gruesome and absurd."
+ },
+ {
+  "id": "wand-of-dumbfounding-doom-9th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Dumbfounding Doom (9th-Rank Spell)",
+  "level": 20,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast impending doom of the indicated rank, showing the target a potential death that's gruesome and absurd."
+ },
+ {
+  "id": "wand-of-hawthorn",
+  "collection": "items",
+  "name": "Wand of Hawthorn",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast oaken resilience of the indicated rank, and the target sprouts long thorns like those of a hawthorn tree."
+ },
+ {
+  "id": "wand-of-hawthorn-2nd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Hawthorn (2nd-Rank Spell)",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast oaken resilience of the indicated rank, and the target sprouts long thorns like those of a hawthorn tree."
+ },
+ {
+  "id": "wand-of-hawthorn-4th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Hawthorn (4th-Rank Spell)",
+  "level": 10,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast oaken resilience of the indicated rank, and the target sprouts long thorns like those of a hawthorn tree."
+ },
+ {
+  "id": "wand-of-hawthorn-6th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Hawthorn (6th-Rank Spell)",
+  "level": 14,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast oaken resilience of the indicated rank, and the target sprouts long thorns like those of a hawthorn tree."
+ },
+ {
+  "id": "wand-of-hawthorn-8th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Hawthorn (8th-Rank Spell)",
+  "level": 18,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast oaken resilience of the indicated rank, and the target sprouts long thorns like those of a hawthorn tree."
+ },
+ {
+  "id": "wand-of-hybrid-form",
+  "collection": "items",
+  "name": "Wand of Hybrid Form",
+  "level": 6,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose."
+ },
+ {
+  "id": "wand-of-hybrid-form-2nd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Hybrid Form (2nd-Rank Spell)",
+  "level": 6,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose."
+ },
+ {
+  "id": "wand-of-hybrid-form-3rd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Hybrid Form (3rd-Rank Spell)",
+  "level": 8,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose."
+ },
+ {
+  "id": "wand-of-hybrid-form-4th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Hybrid Form (4th-Rank Spell)",
+  "level": 10,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose."
+ },
+ {
+  "id": "wand-of-hybrid-form-5th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Hybrid Form (5th-Rank Spell)",
+  "level": 12,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose."
+ },
+ {
+  "id": "wand-of-hybrid-form-6th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Hybrid Form (6th-Rank Spell)",
+  "level": 14,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose."
+ },
+ {
+  "id": "wand-of-hybrid-form-7th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Hybrid Form (7th-Rank Spell)",
+  "level": 16,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose."
+ }
+]

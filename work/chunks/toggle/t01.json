@@ -1,0 +1,387 @@
+[
+ {
+  "id": "kineticist-dedication",
+  "collection": "feats",
+  "name": "Kineticist Dedication",
+  "level": 2,
+  "text": "You gain a kinetic aura and the Channel Elements action, though you don't get to use an Elemental Blast or stance impulse when you take that action."
+ },
+ {
+  "id": "stone-brawler-dedication",
+  "collection": "feats",
+  "name": "Stone Brawler Dedication",
+  "level": 2,
+  "text": "You gain the Stonestrike Stance action."
+ },
+ {
+  "id": "stoney-deflection",
+  "collection": "feats",
+  "name": "Stoney Deflection",
+  "level": 6,
+  "text": "**Requirements** You are in Stonestrike Stance. You gain a +2 circumstance bonus to AC and to any defenses against being Shoved or Tripped until the beginning of your next turn."
+ },
+ {
+  "id": "ore-fists",
+  "collection": "feats",
+  "name": "Ore Fists",
+  "level": 8,
+  "text": "When you enter the Stonestrike Stance, your fists appear to be covered with veins of unrefined ore. Your stonestrike attacks count as cold iron and silver when determining weaknesses and bypassing resistances."
+ },
+ {
+  "id": "dual-handed-assault",
+  "collection": "feats",
+  "name": "Dual-Handed Assault",
+  "level": 4,
+  "text": "If the weapon has the two-hand trait, you gain the benefit of that trait and a circumstance bonus to damage equal to the weapon's number of damage dice. This action doesn't end any stance or fighter feat effect that requires you to have one hand free."
+ },
+ {
+  "id": "disarming-twist",
+  "collection": "feats",
+  "name": "Disarming Twist",
+  "level": 10,
+  "text": "--- **Special** If you're in Disarming Stance, you gain a +1 circumstance bonus to the attack roll."
+ },
+ {
+  "id": "opening-stance-fighter",
+  "collection": "feats",
+  "name": "Opening Stance (Fighter)",
+  "level": 14,
+  "text": "Opening Stance (Fighter) Source Player Core pg. 150 Trigger You roll initiative At the first sign of trouble, often before you consciously realize the danger, you drop into a stance with a mere thought. Use an action that has the stance trait. Opening Stance (Fighter) leads to..."
+ },
+ {
+  "id": "ricochet-feint",
+  "collection": "feats",
+  "name": "Ricochet Feint",
+  "level": 12,
+  "text": "While in Ricochet Stance, you can bounce a thrown weapon off a foe to distract them."
+ },
+ {
+  "id": "witchs-bottle",
+  "collection": "feats",
+  "name": "Witch’s Bottle",
+  "level": 8,
+  "text": "If the hex has a sustained duration and you have Cackle, you can cast *cackle* into the bottle just before you seal it."
+ },
+ {
+  "id": "hex-master",
+  "collection": "feats",
+  "name": "Hex Master",
+  "level": 20,
+  "text": "In addition, when you cast Cackle to sustain a hex, you gain the effects of Sustain for all your active hexes that have a duration of sustained."
+ },
+ {
+  "id": "trample-centaur",
+  "collection": "feats",
+  "name": "Trample (Centaur)",
+  "level": 13,
+  "text": "Stride up to double your Speed; you can move through the spaces of creatures at least one size smaller, Trampling each creature whose space you enter."
+ },
+ {
+  "id": "clawdancer-dedication",
+  "collection": "feats",
+  "name": "Clawdancer Dedication",
+  "level": 2,
+  "text": "You gain the following two actions, which let you assume specific stances to strike more effectively with your claws. Claw Stance Talon Stance"
+ },
+ {
+  "id": "claw-snag",
+  "collection": "feats",
+  "name": "Claw Snag",
+  "level": 4,
+  "text": "Shift into claw stance if you aren't in it already, then make a frenzied claw Strike against the triggering creature."
+ },
+ {
+  "id": "dashing-pounce",
+  "collection": "feats",
+  "name": "Dashing Pounce",
+  "level": 4,
+  "text": "**Requirements** You are in claw stance and have two open hands."
+ },
+ {
+  "id": "talon-sweep",
+  "collection": "feats",
+  "name": "Talon Sweep",
+  "level": 4,
+  "text": "You shift to talon stance if you weren't in it already."
+ },
+ {
+  "id": "wheeling-grab",
+  "collection": "feats",
+  "name": "Wheeling Grab",
+  "level": 6,
+  "text": "You shift into claw stance and Tumble Through."
+ },
+ {
+  "id": "hindquarter-kick",
+  "collection": "feats",
+  "name": "Hindquarter Kick",
+  "level": 6,
+  "text": "**Requirements** You are in claw stance and have grabbed a creature. Shift to talon stance and make two spinning talon Strikes against the grabbed creature."
+ },
+ {
+  "id": "spinning-stand",
+  "collection": "feats",
+  "name": "Spinning Stand",
+  "level": 6,
+  "text": "You enter talon stance if you weren't in it already, make a spinning talon Strike against an enemy in reach, and then Stand. You don't take the -2 circumstance penalty for attacking while prone, and your Stand action doesn't trigger reactions."
+ },
+ {
+  "id": "tear-tendons",
+  "collection": "feats",
+  "name": "Tear Tendons",
+  "level": 8,
+  "text": "**Requirements** You are in claw stance and have two open hands."
+ },
+ {
+  "id": "feline-dance",
+  "collection": "feats",
+  "name": "Feline Dance",
+  "level": 8,
+  "text": "**Requirements** You're in either claw stance or talon stance. --- You fluidly move between stances in the process of dodging. If you were in claw stance, you shift to talon stance, and vice versa."
+ },
+ {
+  "id": "claw-and-talon-flow",
+  "collection": "feats",
+  "name": "Claw and Talon Flow",
+  "level": 12,
+  "text": "**Requirements** You're in either claw stance or talon stance. --- You fluidly shift between your two stances. You use the unarmed attack associated with your current clawdancer stance, then switch into the other stance (if you're in claw stance, make a frenzied claw Strike and then shift to talon stance, or vice versa)."
+ },
+ {
+  "id": "precise-hooks",
+  "collection": "feats",
+  "name": "Precise Hooks",
+  "level": 14,
+  "text": "When you critically hit a target with your claw or talon, you can apply a critical specialization effect based on the stance you're in. For claw stance, apply the knife weapon group's effect. For talon stance, apply the axe group's effect."
+ },
+ {
+  "id": "storm-of-claws",
+  "collection": "feats",
+  "name": "Storm of Claws",
+  "level": 16,
+  "text": "**Requirements** You're in either claw stance or talon stance."
+ },
+ {
+  "id": "trample-mimicry",
+  "collection": "feats",
+  "name": "Trample Mimicry",
+  "level": 10,
+  "text": "You Stride up to double your speed and can move through the spaces of creatures at least one size smaller, trampling each creature whose space you enter."
+ },
+ {
+  "id": "one-toed-hop",
+  "collection": "feats",
+  "name": "One-Toed Hop",
+  "level": 1,
+  "text": "Assuming a peculiar stance, you make a short hop on each toe. You make a vertical Leap without triggering reactions that can be triggered by move actions or upon leaving or entering a square."
+ },
+ {
+  "id": "majestic-presence",
+  "collection": "feats",
+  "name": "Majestic Presence",
+  "level": 13,
+  "text": "By taking an impressive stance, the full force of your personality cows lesser beings."
+ },
+ {
+  "id": "expand-aura",
+  "collection": "feats",
+  "name": "Expand Aura",
+  "level": 6,
+  "text": "At 10th level, the expansion lasts for 1 minute, and at 16th level, it lasts until you Dismiss it."
+ },
+ {
+  "id": "thats-odd",
+  "collection": "feats",
+  "name": "That's Odd",
+  "level": 1,
+  "text": "When you enter a new location, such as a room or corridor, you immediately notice one thing out of the ordinary. For example, if you entered a study with a large bloodstain on the ground, the bloodstain is so obviously suspicious it's evident to you already, so the GM might note that there's something suspicious about the desk drawer instead."
+ },
+ {
+  "id": "monastic-weaponry",
+  "collection": "feats",
+  "name": "Monastic Weaponry",
+  "level": 1,
+  "text": "You can use melee monk weapons with any of your monk feats or monk abilities that normally require unarmed attacks, though not if the feat or ability requires you to use a single specific type of attack, such as Crane Stance."
+ },
+ {
+  "id": "crane-flutter",
+  "collection": "feats",
+  "name": "Crane Flutter",
+  "level": 6,
+  "text": "**Requirements** You are in Crane Stance. Your circumstance bonus to AC from Crane Stance increases to +3 against the triggering attack."
+ },
+ {
+  "id": "dragon-roar",
+  "collection": "feats",
+  "name": "Dragon Roar",
+  "level": 6,
+  "text": "**Requirements** You are in Dragon Stance --- You bellow, instilling fear in your enemies. Your first attack that hits a frightened creature after you roar and before the end of your next turn gains a +4 circumstance bonus to damage. Its effects end immediately if you leave Dragon Stance."
+ },
+ {
+  "id": "mountain-stronghold",
+  "collection": "feats",
+  "name": "Mountain Stronghold",
+  "level": 6,
+  "text": "**Requirements** You are in Mountain Stance --- You focus on your connection to the earth and call upon the mountain to block attacks against you. You gain a +2 circumstance bonus to AC until the beginning of your next turn. --- **Special** If you have this feat, the Dexterity modifier cap to your AC while you're in Mountain Stance increases from +0 to +1."
+ },
+ {
+  "id": "return-fire",
+  "collection": "feats",
+  "name": "Return Fire",
+  "level": 6,
+  "text": "**Requirements** You are in Monastic Archer Stance, are wielding a bow, and have a free hand."
+ },
+ {
+  "id": "stumbling-feint",
+  "collection": "feats",
+  "name": "Stumbling Feint",
+  "level": 6,
+  "text": "**Requirements** You are in Stumbling Stance."
+ },
+ {
+  "id": "tiger-slash",
+  "collection": "feats",
+  "name": "Tiger Slash",
+  "level": 6,
+  "text": "**Requirements** You are in Tiger Stance --- You make a fierce swipe with both hands."
+ },
+ {
+  "id": "wolf-drag",
+  "collection": "feats",
+  "name": "Wolf Drag",
+  "level": 6,
+  "text": "**Requirements** You are in Wolf Stance --- You rip your enemy off their feet."
+ },
+ {
+  "id": "clinging-shadows-initiate",
+  "collection": "feats",
+  "name": "Clinging Shadows Initiate",
+  "level": 8,
+  "text": "You learn a mystical stance that transforms your qi into sticky smoke that shrouds your limbs. You gain the Clinging Shadows Stance qi spell. While entering the stance is a qi spell, the shadow grasp attacks it grants are not, so you can use them as often as you like while in the stance."
+ },
+ {
+  "id": "wild-winds-initiate",
+  "collection": "feats",
+  "name": "Wild Winds Initiate",
+  "level": 8,
+  "text": "You learn a stance that lets you attack from a distance. You gain the Wild Winds Stance qi spell. While entering the stance is a qi spell, the wind crash Strikes the stance grants are not, so you can use them as often as you like while in the stance."
+ },
+ {
+  "id": "cobra-envenom",
+  "collection": "feats",
+  "name": "Cobra Envenom",
+  "level": 10,
+  "text": "**Frequency** once per minute **Requirements** You are in Cobra Stance. --- **Special** If you have this feat, the circumstance bonus to Fortitude saves and Fortitude DC granted by Cobra Stance increases from +1 to +2."
+ },
+ {
+  "id": "prevailing-position",
+  "collection": "feats",
+  "name": "Prevailing Position",
+  "level": 10,
+  "text": "**Trigger** You are targeted by an attack or attempt a Reflex saving throw against a damaging effect, and you are in a stance. --- Your flexibility with stances lets you sacrifice their benefits to better protect yourself. You leave the stance you were in, gaining a +4 circumstance bonus to the triggering saving throw or to your AC against the triggering attack."
+ },
+ {
+  "id": "focused-shot",
+  "collection": "feats",
+  "name": "Focused Shot",
+  "level": 12,
+  "text": "**Requirements** You are in Monastic Archer Stance."
+ },
+ {
+  "id": "reflexive-stance",
+  "collection": "feats",
+  "name": "Reflexive Stance",
+  "level": 12,
+  "text": "**Trigger** You roll initiative --- You enter a stance without a thought. Use an action that has the stance trait."
+ },
+ {
+  "id": "ironblood-surge",
+  "collection": "feats",
+  "name": "Ironblood Surge",
+  "level": 14,
+  "text": "**Requirements** You are in Ironblood Stance --- You steel yourself, preparing to resist oncoming attacks and using your muscles to absorb the impact. You gain the benefits of your iron sweep's parry trait (a +1 circumstance bonus to AC until the start of your next turn) and your resistance from Ironblood Stance increases to your Strength modifier (if it's higher) for the same duration."
+ },
+ {
+  "id": "mountain-quake",
+  "collection": "feats",
+  "name": "Mountain Quake",
+  "level": 14,
+  "text": "**Requirements** You are in Mountain Stance --- You stomp, shaking the earth beneath you. --- **Special** If you have this feat, the Dexterity modifier cap to your AC while using Mountain Stance increases from +1 to +2."
+ },
+ {
+  "id": "tangled-forest-rake",
+  "collection": "feats",
+  "name": "Tangled Forest Rake",
+  "level": 14,
+  "text": "**Requirements** You are in Tangled Forest Stance."
+ },
+ {
+  "id": "wild-winds-gust",
+  "collection": "feats",
+  "name": "Wild Winds Gust",
+  "level": 14,
+  "text": "**Requirements** You are in Wild Winds Stance --- You build air pressure with repeated motions, before releasing an enormous crescent of rushing wind strikes."
+ },
+ {
+  "id": "fuse-stance",
+  "collection": "feats",
+  "name": "Fuse Stance",
+  "level": 16,
+  "text": "You have combined two stances into a single stance all your own. When you take this feat, choose two stances you know and combine them into a single fused stance. Give your new fused stance a unique name. When you enter your fused stance, you gain all the effects of both stances, including the requirements and restrictions. If the stances both grant special attacks, you gain all those attacks. If a stance restricts you to one particular attack (such as Crane Stance), you must"
+ },
+ {
+  "id": "qi-center",
+  "collection": "feats",
+  "name": "Qi Center",
+  "level": 18,
+  "text": "**Frequency** once per minute --- You center yourself with the universe and draw upon its vast power. You cast a single action qi spell with the stance trait, without spending a Focus Point."
+ },
+ {
+  "id": "triangle-shot",
+  "collection": "feats",
+  "name": "Triangle Shot",
+  "level": 18,
+  "text": "**Requirements** You are in Monastic Archer Stance and wielding a bow usable with that stance. This counts as two attacks when calculating your multiple attack penalty, and you combine the attacks' damage for the purpose of resistances and weaknesses."
+ },
+ {
+  "id": "immortal-techniques",
+  "collection": "feats",
+  "name": "Immortal Techniques",
+  "level": 20,
+  "text": "The first time each round that you use an action that has both the monk and stance traits, you gain 20 temporary Hit Points that last until the start of your next turn."
+ },
+ {
+  "id": "vexing-tumble",
+  "collection": "feats",
+  "name": "Vexing Tumble",
+  "level": 6,
+  "text": "Compare the result to the Reflex DC of each enemy whose reach you began in or enter during the movement, in sequence. **Critical Failure** Your movement immediately stops when you enter the creature's reach; if you began in the creature's reach, you don't move."
+ },
+ {
+  "id": "student-of-the-dueling-arts",
+  "collection": "feats",
+  "name": "Student of the Dueling Arts",
+  "level": 12,
+  "text": "In addition, you can enter a stance from a duelist archetype feat you don't have (such as one listed under Additional Feats) by increasing the number of actions it takes to enter the stance by 1 (typically to 2 actions). You must still meet the stance feat's prerequisites."
+ },
+ {
+  "id": "skim-scroll",
+  "collection": "feats",
+  "name": "Skim Scroll",
+  "level": 8,
+  "text": "You can activate the magic of a scroll with a cursory read as you draw it from your belt."
+ },
+ {
+  "id": "trample",
+  "collection": "feats",
+  "name": "Trample",
+  "level": 17,
+  "text": "You Stride up to double your Speed and can move through the spaces of creatures at least one size smaller than you, Trampling each creature whose space you enter."
+ },
+ {
+  "id": "inherit-the-dreaming-heirloom",
+  "collection": "feats",
+  "name": "Inherit the Dreaming Heirloom",
+  "level": 1,
+  "text": "As long as you sleep with this item in reach and spend 10 minutes during your daily preparations pampering the spirit within, you can Activate the pusaka that day. **Activate—Ancestral Recollection** ⟨1⟩ (concentrate) **Frequency** once per day --- **Effect** The spirit within the pusaka advises you on a subject they knew in life. When you Activate the pusaka, you attempt to Recall Knowledge using one of these skills (you become temporarily trained in these skills for this ch"
+ }
+]

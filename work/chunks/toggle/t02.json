@@ -1,0 +1,387 @@
+[
+ {
+  "id": "unleash-yaoguai-might",
+  "collection": "feats",
+  "name": "Unleash Yaoguai Might",
+  "level": 9,
+  "text": "**Frequency** once per day As you enter your yaoguai form, you draw upon your internal magic to assume an even greater form. When you Change Shape to enter your yaoguai form, you can spend an additional action to gain the effects of Enlarge and an additional effect based on your heritage. This effect persists for 1 minute or until you Change Shape again. - **Animal** Your hide thickens, granting a +1 circumstance bonus to AC. - **Object** Your skin transmutes partially into a"
+ },
+ {
+  "id": "five-breath-vanguard-dedication",
+  "collection": "feats",
+  "name": "Five-breath Vanguard Dedication",
+  "level": 6,
+  "text": "**Access** Tian Xia origin or exposure to Tian elementalism --- You flow like the elemental cycle, adapting your stance and techniques constantly in response to whatever circumstances you face. You gain the Cycle Elemental Stance action."
+ },
+ {
+  "id": "renewing-cycle",
+  "collection": "feats",
+  "name": "Renewing Cycle",
+  "level": 10,
+  "text": "The first time each round that you Cycle Elemental Stance, you gain temporary Hit Points equal to half your level that last until the start of your next turn. After you've gained temporary Hit Points for entering a specific elemental stance, you can't gain temporary Hit Points from entering that stance again until you've entered every other elemental stance you know or 10 minutes passes, whichever comes first."
+ },
+ {
+  "id": "induce-imbalance",
+  "collection": "feats",
+  "name": "Induce Imbalance",
+  "level": 14,
+  "text": "**Requirements** You're in an elemental stance. Strike the target using the unarmed attack associated with your current elemental stance. Elementals take a –2 circumstance penalty to their save."
+ },
+ {
+  "id": "protective-cycle",
+  "collection": "feats",
+  "name": "Protective Cycle",
+  "level": 16,
+  "text": "**Requirements** You're in an elemental stance. --- You react to harm by flowing into an elemental stance with new advantages. You Cycle Elemental Stance and gain a +2 circumstance bonus to AC until the end of your next turn."
+ },
+ {
+  "id": "five-breaths-one-death",
+  "collection": "feats",
+  "name": "Five Breaths, One Death",
+  "level": 18,
+  "text": "**Frequency** once per 10 minutes **Requirements** You're in an elemental stance, and the target is under the effects of Induce Imbalance. Strike the target using the unarmed attack associated with your current elemental stance, then Cycle Elemental Stance. Then, Strike the target with the unarmed attack associated with your new elemental stance. You can continue to Cycle Elemental Stance and Strike until you've made a Strike using the unarmed attack of every elemental stance"
+ },
+ {
+  "id": "know-your-enemy",
+  "collection": "feats",
+  "name": "Know Your Enemy",
+  "level": 8,
+  "text": "**Requirements** You're in Strategist Stance."
+ },
+ {
+  "id": "momentous-charge",
+  "collection": "feats",
+  "name": "Momentous Charge",
+  "level": 6,
+  "text": "**Requirements** You're in Rushing Goat Stance."
+ },
+ {
+  "id": "scattering-in-spring",
+  "collection": "feats",
+  "name": "Scattering in Spring",
+  "level": 8,
+  "text": "**Requirements** You're in Twisting Petal Stance. You gain a +2 circumstance bonus to AC against the triggering attack."
+ },
+ {
+  "id": "five-gods-ram",
+  "collection": "feats",
+  "name": "Five-gods Ram",
+  "level": 12,
+  "text": "**Requirements** You're in Rushing Goat Stance. Both Strikes count toward your multiple attack penalty, but the penalty doesn't increase until you've made both of them."
+ },
+ {
+  "id": "whirling-in-the-summer-storm",
+  "collection": "feats",
+  "name": "Whirling in the Summer Storm",
+  "level": 12,
+  "text": "**Requirements** You're in Twisting Petal Stance."
+ },
+ {
+  "id": "world-breaking-footfall",
+  "collection": "feats",
+  "name": "World-breaking Footfall",
+  "level": 14,
+  "text": "**Requirements** You are in Kaiju Stance and are touching the ground."
+ },
+ {
+  "id": "wake-of-devastation",
+  "collection": "feats",
+  "name": "Wake of Devastation",
+  "level": 20,
+  "text": "**Requirements** You're in Kaiju Stance."
+ },
+ {
+  "id": "channeled-protection",
+  "collection": "feats",
+  "name": "Channeled Protection",
+  "level": 4,
+  "text": "**Requirements** You are in Channeler's Stance and your last action was to Cast a Spell from your spell slots."
+ },
+ {
+  "id": "cycle-of-souls",
+  "collection": "feats",
+  "name": "Cycle of Souls",
+  "level": 18,
+  "text": "You Step, then enter an animist stance you know."
+ },
+ {
+  "id": "haft-beatdown",
+  "collection": "feats",
+  "name": "Haft Beatdown",
+  "level": 10,
+  "text": "**Frequency** once per minute **Requirements** You are in Haft Striker Stance. Each attack counts towards your multiple attack penalty, but do not increase your penalty until you have made both attacks."
+ },
+ {
+  "id": "razors-edge",
+  "collection": "feats",
+  "name": "Razor's Edge",
+  "level": 18,
+  "text": "You can enter Spear of Doom stance as a free action."
+ },
+ {
+  "id": "aegis-for-the-innocent",
+  "collection": "feats",
+  "name": "Aegis for the Innocent",
+  "level": 14,
+  "text": "You surround the target in a protective barrier of light; this is a centered on the target. This barrier lasts for 1 minute, or until you Dismiss it. Any enemy within the barrier, or entering the barrier, must attempt a saving throw against your class DC or your spell DC."
+ },
+ {
+  "id": "unstoppable-force",
+  "collection": "feats",
+  "name": "Unstoppable Force",
+  "level": 18,
+  "text": "While you are in the stance provided by Immovable Object, you ignore difficult terrain and greater difficult terrain. Once per 10 minutes, if you Dismiss your Immovable Object stance, you can Stride as a free action."
+ },
+ {
+  "id": "imbue-spell",
+  "collection": "feats",
+  "name": "Imbue Spell",
+  "level": 16,
+  "text": "If the spell must or can be Sustained, your ally takes the action to Sustain it."
+ },
+ {
+  "id": "convergent-tides",
+  "collection": "feats",
+  "name": "Convergent Tides",
+  "level": 2,
+  "text": "While you're in Arcane Cascade stance, you ignore difficult terrain caused by water, such as walking along a flooded path or swimming in rough water."
+ },
+ {
+  "id": "shattering-spellstrike",
+  "collection": "feats",
+  "name": "Shattering Spellstrike",
+  "level": 4,
+  "text": "**Requirements** You're in Arcane Cascade stance and wielding an improvised weapon."
+ },
+ {
+  "id": "culverts-collapse",
+  "collection": "feats",
+  "name": "Culvert's Collapse",
+  "level": 6,
+  "text": "**Requirements** You are in Flood Stance and were damaged by an enemy since your previous turn."
+ },
+ {
+  "id": "rippling-spin",
+  "collection": "feats",
+  "name": "Rippling Spin",
+  "level": 8,
+  "text": "**Requirements** You're in Reflective Ripple Stance."
+ },
+ {
+  "id": "snakebirds-shadow",
+  "collection": "feats",
+  "name": "Snakebird's Shadow",
+  "level": 8,
+  "text": "**Requirements** You are in Waterfowl Stance and are wielding a monk weapon from the sword group. Each attack counts toward your multiple attack penalty, but you do not increase your penalty until you have made all your attacks."
+ },
+ {
+  "id": "wave-spiral",
+  "collection": "feats",
+  "name": "Wave Spiral",
+  "level": 12,
+  "text": "**Frequency** once per minute **Requirements** You're in Reflective Ripple Stance."
+ },
+ {
+  "id": "the-thousand-lashes-of-the-weeping-willow",
+  "collection": "feats",
+  "name": "The Thousand Lashes of the Weeping Willow",
+  "level": 18,
+  "text": "The tree whips its branches at all your enemies within a 30-foot-radius emanation centered on the willow's trunk, dealing damage with a save against your class DC. The willow tree remains until the end of your next turn, but you can Sustain it up to 1 minute. The first time you Sustain the impulse each round, the weeping willow attacks again, dealing damage to all enemies in the area with a basic reflex save. --- **Level (20th)** The initial damage is 14d8, and the Sustained "
+ },
+ {
+  "id": "stalwart-song",
+  "collection": "feats",
+  "name": "Stalwart Song",
+  "level": 4,
+  "text": "**Requirements** You're in Tenacious Stance. You bring to mind—and possibly give voice to—a cherished dwarven song of inspiring heroism, granting you a +2 circumstance bonus to the saving throw."
+ },
+ {
+  "id": "klingegeist",
+  "collection": "feats",
+  "name": "Klingegeist",
+  "level": 10,
+  "text": "Your imprisonment inside a Final Blade used to perform countless executions has instilled in you an aptitude for entering and possessing similar sharp implements of murder. Otherwise, the effect lasts for 10 minutes or until you Dismiss it."
+ },
+ {
+  "id": "jotuns-heart",
+  "collection": "feats",
+  "name": "Jotun's Heart",
+  "level": 17,
+  "text": "--- **Special** When you enter Jotun's Battle Stance, instead of its previous effects, it now increases the reach of any weapon you are wielding, or your fist unarmed attack, by 5 feet."
+ },
+ {
+  "id": "not-so-fast",
+  "collection": "feats",
+  "name": "Not so Fast!",
+  "level": 4,
+  "text": "**Requirements** You are in Hampering Stance. **Success** The target takes a –10-foot circumstance penalty to its Speed for the rest of its triggering movement. **Failure** As success, but the target instead takes a –5-foot circumstance penalty to its Speed."
+ },
+ {
+  "id": "lock-down",
+  "collection": "feats",
+  "name": "Lock Down",
+  "level": 6,
+  "text": "**Requirements** You are in Hampering Stance. This effect lasts until the beginning of your next turn, until you move, or until you use that weapon or unarmed attack to make another attack, whichever comes first."
+ },
+ {
+  "id": "opening-stance",
+  "collection": "feats",
+  "name": "Opening Stance",
+  "level": 14,
+  "text": "--- At the first sign of trouble, often before you consciously realize the danger, you drop into a stance with a mere thought. Use an action that has the stance trait."
+ },
+ {
+  "id": "distant-wandering",
+  "collection": "feats",
+  "name": "Distant Wandering",
+  "level": 10,
+  "text": "When you enter spirit form, you can Recall Knowledge or Seek."
+ },
+ {
+  "id": "strafing-breath",
+  "collection": "feats",
+  "name": "Strafing Breath",
+  "level": 12,
+  "text": "**Requirements** War Rider Stance is active. The aura from War Rider Stance increases to a during this movement, and each creature that's in the emanation at any point during your movement takes the damage from it (with the normal save)."
+ },
+ {
+  "id": "ive-been-here-before",
+  "collection": "feats",
+  "name": "I've Been Here Before",
+  "level": 14,
+  "text": "These benefits end as soon as you enter a new region, as determined by the GM."
+ },
+ {
+  "id": "scroll-thaumaturgy",
+  "collection": "feats",
+  "name": "Scroll Thaumaturgy",
+  "level": 1,
+  "text": "Your multidisciplinary study of magic means you know how to activate the magic in scrolls with ease. You can activate scrolls of any magical tradition, using your thaumaturge class DC for the scroll's DC, rather than a particular spell DC. If a spell is on the spell list for multiple traditions, you choose which tradition to use at the time you activate the scroll. You can draw and activate scrolls with the same hand holding an implement, much like you can for esoterica."
+ },
+ {
+  "id": "one-more-activation",
+  "collection": "feats",
+  "name": "One More Activation",
+  "level": 6,
+  "text": "You've forged a deeper bond to your invested items, allowing you to activate them more than usual. Once each day, you can Activate an Item you've invested even after you've used that activation the maximum number of times for its frequency."
+ },
+ {
+  "id": "petrified-skin",
+  "collection": "feats",
+  "name": "Petrified Skin",
+  "level": 12,
+  "text": "When you have fewer than half your maximum Hit Points, you increase the damage die size of your stone fist from 1d8 to 1d10 and gain resistance to physical damage (except adamantine) equal to your Constitution modifier. When you do, you enter your petrified form with your full maximum Hit Points instead of the normal number."
+ },
+ {
+  "id": "curse-maelstrom-dedication",
+  "collection": "feats",
+  "name": "Curse Maelstrom Dedication",
+  "level": 2,
+  "text": "If you do so, you enter a curse maelstrom state. If the misfortune effect is somehow canceled or negated (by a fortune effect, for example), you don't enter a curse maelstrom state. If a foe places a misfortune effect on your roll and the effect applies to your roll, you enter a curse maelstrom state, and if you fail a saving throw against a foe's curse effect and are affected by the curse, you also enter a curse maelstrom state. No matter the source, you can only enter a cur"
+ },
+ {
+  "id": "psychic-duelist-dedication",
+  "collection": "feats",
+  "name": "Psychic Duelist Dedication",
+  "level": 4,
+  "text": "You gain a +2 circumstance bonus to your initiative rolls for psychic duels. Each time you enter a psychic duel, choose one of the following benefits for the duration of that duel."
+ },
+ {
+  "id": "instigate-psychic-duel",
+  "collection": "feats",
+  "name": "Instigate Psychic Duel",
+  "level": 12,
+  "text": "**Frequency** once per day --- You attempt to enter a psychic duel with a creature within 100 feet. If it enters the duel willingly, use the result for a critical failure. **Success** The two of you enter a psychic duel, but it ends automatically at the end of your next turn. You can each choose a psychic center for any skill in which you're trained, as you would if you were using that skill to roll initiative for the duel."
+ },
+ {
+  "id": "cruel-piercing",
+  "collection": "feats",
+  "name": "Cruel Piercing",
+  "level": 8,
+  "text": "When you're in Golden Erinys Stance, you gain the Puncture Flesh action."
+ },
+ {
+  "id": "wrathful-presence",
+  "collection": "feats",
+  "name": "Wrathful Presence",
+  "level": 12,
+  "text": "You have a 30-foot aura for 1 minute or until you Dismiss it."
+ },
+ {
+  "id": "trample-sarangay",
+  "collection": "feats",
+  "name": "Trample (Sarangay)",
+  "level": 17,
+  "text": "You Stride up to double your Speed and can move through the spaces of creatures at least one size smaller than you, Trampling each creature whose space you enter."
+ },
+ {
+  "id": "judgement-of-the-monolith",
+  "collection": "feats",
+  "name": "Judgement of the Monolith",
+  "level": 12,
+  "text": "You can activate your ka stone to target a single living creature, causing that creature to experience the effects of being in a Ring of Truth. You can also activate it with a 10-minute activation (envision) to cast Talking Corpse."
+ },
+ {
+  "id": "riptide-undersea-privateer",
+  "collection": "feats",
+  "name": "Riptide (Undersea Privateer)",
+  "level": 8,
+  "text": "**Requirements** You're in Anchor Stance, and your target is within 5 feet of the edge of a water vehicle or already in the water."
+ },
+ {
+  "id": "inner-fire-monk",
+  "collection": "feats",
+  "name": "Inner Fire (Monk)",
+  "level": 6,
+  "text": "While you're in Stoked Flame Stance, you have cold and fire resistance equal to half your level, and any creature that hits you with an unarmed attack, tries to Grab or Grapple you, or otherwise touches you takes fire damage equal to your Wisdom modifier (minimum 1)."
+ },
+ {
+  "id": "aon-judgment-of-the-monolith",
+  "collection": "feats",
+  "name": "Judgment of the Monolith",
+  "level": 12,
+  "text": "You can activate your ka stone to target a single living creature, causing that creature to experience the effects of being in a zone of truth. You can also activate it with a 10-minute activation (envision) to cast talking corpse."
+ },
+ {
+  "id": "aon-wombat-style",
+  "collection": "feats",
+  "name": "Wombat Style",
+  "level": 1,
+  "text": "You enter the stance of the implacable wombat, your reinforced backside ready to jostle and batter those who offend you. While you are in Wombat Stance, you can't be flanked by enemies of your level or lower."
+ },
+ {
+  "id": "aon-wombat-burrow",
+  "collection": "feats",
+  "name": "Wombat Burrow",
+  "level": 10,
+  "text": "While in Wombat Stance, you gain a Burrow speed equal to the Speed bonus granted by your Incredible Movement ability."
+ },
+ {
+  "id": "final-gate",
+  "collection": "classFeatures",
+  "name": "Final Gate",
+  "level": 19,
+  "text": "If you're unable to act, final gate still functions, but you don't get to use the Elemental Blast or stance impulse you normally do from using Channel Elements"
+ },
+ {
+  "id": "master-detective",
+  "collection": "classFeatures",
+  "name": "Master Detective",
+  "level": 19,
+  "text": "In addition, if you enter a new location that includes another clue toward answering the question at the heart of one of your active investigations, the GM informs you of the existence of the clue and its type: an object, person, spell effect, or the like."
+ },
+ {
+  "id": "animist-apparition-spellcasting",
+  "collection": "classFeatures",
+  "name": "Animist & Apparition Spellcasting",
+  "level": 1,
+  "text": "Prepared spells remain available to you until you cast them or until you prepare your spells again. Because vessel spells are a manifestation of a specific apparition, an animist can't cast or Sustain a specific vessel spell in the same round they have already cast or Sustained it (for example, an animist who has cast earth's bile during their turn can't then cast or Sustain another instance of earth's bile during that same turn)."
+ },
+ {
+  "id": "aloof-firmament",
+  "collection": "classFeatures",
+  "name": "Aloof Firmament",
+  "level": 1,
+  "text": "While in Arcane Cascade stance, your steps become even lighter, giving you the benefits of the Quick Jump general feat. When you Fly, Leap, High Jump, or Long Jump while in that stance, your movement doesn't trigger reactions."
+ }
+]

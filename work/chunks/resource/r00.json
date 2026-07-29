@@ -1,0 +1,387 @@
+[
+ {
+  "id": "cloak-of-social-graces",
+  "collection": "items",
+  "name": "Cloak of Social Graces",
+  "level": 7,
+  "text": "Activate—Overcome Self-Doubt (concentrate, manipulate) Frequency once per day; Effect You readjust your cloak, straightening the collar and brushing out any wrinkles."
+ },
+ {
+  "id": "greater-cloak-of-social-graces",
+  "collection": "items",
+  "name": "Greater Cloak of Social Graces",
+  "level": 13,
+  "text": "Activate—Overcome Self-Doubt (concentrate, manipulate) Frequency once per day; Effect You readjust your cloak, straightening the collar and brushing out any wrinkles."
+ },
+ {
+  "id": "major-cloak-of-social-graces",
+  "collection": "items",
+  "name": "Major Cloak of Social Graces",
+  "level": 19,
+  "text": "Activate—Overcome Self-Doubt (concentrate, manipulate) Frequency once per day; Effect You readjust your cloak, straightening the collar and brushing out any wrinkles."
+ },
+ {
+  "id": "gloves-of-precision",
+  "collection": "items",
+  "name": "Gloves of Precision",
+  "level": 10,
+  "text": "Activate—Nimble Fingers (fortune, manipulate) Frequency once per day; Trigger You attempt a skill check to Climb, Disable a Device, or Pick a Lock; Effect You roll the skill check twice and take the better result."
+ },
+ {
+  "id": "greater-gloves-of-precision",
+  "collection": "items",
+  "name": "Greater Gloves of Precision",
+  "level": 18,
+  "text": "Activate—Nimble Fingers (fortune, manipulate) Frequency once per day; Trigger You attempt a skill check to Climb, Disable a Device, or Pick a Lock; Effect You roll the skill check twice and take the better result."
+ },
+ {
+  "id": "golden-wings",
+  "collection": "items",
+  "name": "Golden Wings",
+  "level": 3,
+  "text": "Activate—Assisted Flight (manipulate) Frequency once per day; Effect For the next 10 minutes, you can Leap 20 feet, using the wings to propel yourself."
+ },
+ {
+  "id": "greater-golden-wings",
+  "collection": "items",
+  "name": "Greater Golden Wings",
+  "level": 7,
+  "text": "Activate—Assisted Flight (manipulate) Frequency once per day; Effect For the next 10 minutes, you can Leap 20 feet, using the wings to propel yourself."
+ },
+ {
+  "id": "major-golden-wings",
+  "collection": "items",
+  "name": "Major Golden Wings",
+  "level": 9,
+  "text": "Activate—Assisted Flight (manipulate) Frequency once per day; Effect For the next 10 minutes, you can Leap 20 feet, using the wings to propel yourself."
+ },
+ {
+  "id": "true-golden-wings",
+  "collection": "items",
+  "name": "True Golden Wings",
+  "level": 17,
+  "text": "Activate—Assisted Flight (manipulate) Frequency once per day; Effect For the next 10 minutes, you can Leap 20 feet, using the wings to propel yourself."
+ },
+ {
+  "id": "kinetic-wraps-of-strength",
+  "collection": "items",
+  "name": "Kinetic Wraps of Strength",
+  "level": 10,
+  "text": "Activate—Burst of Might (fortune, manipulate) Frequency once per day; Trigger You attempt an Athletics check to Force Open, Reposition, or Shove; Effect You roll the skill check twice and take the better result."
+ },
+ {
+  "id": "greater-kinetic-wraps-of-strength",
+  "collection": "items",
+  "name": "Greater Kinetic Wraps of Strength",
+  "level": 18,
+  "text": "Activate—Burst of Might (fortune, manipulate) Frequency once per day; Trigger You attempt an Athletics check to Force Open, Reposition, or Shove; Effect You roll the skill check twice and take the better result."
+ },
+ {
+  "id": "bloodstride-blade",
+  "collection": "items",
+  "name": "Bloodstride Blade",
+  "level": 13,
+  "text": "Activate—Call of the Bloodthirst ; Frequency once per hour; Trigger A creature within 60 feet takes bleed damage; Effect You cast translocate, appearing adjacent to the triggering creature, then Strike it with this weapon."
+ },
+ {
+  "id": "bloodstride-boots",
+  "collection": "items",
+  "name": "Bloodstride Boots",
+  "level": 13,
+  "text": "Activate—Blood Hop (concentrate, manipulate) Frequency once per hour; Effect The boots produce a small pool of blood beneath your feet and in a free space you can see within 120 feet. Activate—Blood Walk 1 minute (concentrate, manipulate) Frequency once per day; Requirements You’re standing in blood; Effect You melt into the ground and reconstitute at a location you have previously seen that’s within 100 miles, with "
+ },
+ {
+  "id": "gaze-of-the-mantis",
+  "collection": "items",
+  "name": "Gaze of the Mantis",
+  "level": 11,
+  "text": "Activate—Target Sense ; Frequency once per day; Requirements You’re a Red Mantis assassin; Effect You learn the distance to and direction of all creatures that have a Red Mantis contract on them within 10 miles."
+ },
+ {
+  "id": "sawtooth-reaper",
+  "collection": "items",
+  "name": "Sawtooth Reaper",
+  "level": 15,
+  "text": "Activate—Bloodmist Whirl (concentrate, manipulate) Frequency once per hour; Effect You whirl the chain of the sawtooth reaper, creating a crimson fog that conceals you for 1 round or until you Strike."
+ },
+ {
+  "id": "amaranthine-visage",
+  "collection": "items",
+  "name": "Amaranthine Visage",
+  "level": 17,
+  "text": "Activate—Eternal Renewal (healing) Frequency once per day; Trigger Your dying condition would reach the value that would cause you to die; Effect You Sublimate Self."
+ },
+ {
+  "id": "coral-aspect",
+  "collection": "items",
+  "name": "Coral Aspect",
+  "level": 4,
+  "text": "Activate—Cohabitate (concentrate, manipulate, polymorph) Frequency once per day; Effect For 1 minute, your body becomes a mobile coral reef, letting much smaller creatures pass through or shelter in it."
+ },
+ {
+  "id": "mariners-mien",
+  "collection": "items",
+  "name": "Mariner's Mien",
+  "level": 8,
+  "text": "Activate—Set the Course (concentrate) Frequency once per day; Requirements You are aboard a vehicle; Effect You become quickened for 1 minute or until you leave the vehicle, whichever comes first, and can use the extra action to Take Control of the vehicle or, if you’re already piloting it, Drive or Stop the vehicle. 78 Price 5,300 gp The mask grants a +2 item bonus, and you can activate it once per hour."
+ },
+ {
+  "id": "lesser-mariners-mien",
+  "collection": "items",
+  "name": "Lesser Mariner's Mien",
+  "level": 8,
+  "text": "Activate—Set the Course (concentrate) Frequency once per day; Requirements You are aboard a vehicle; Effect You become quickened for 1 minute or until you leave the vehicle, whichever comes first, and can use the extra action to Take Control of the vehicle or, if you’re already piloting it, Drive or Stop the vehicle. 78 Price 5,300 gp The mask grants a +2 item bonus, and you can activate it once per hour."
+ },
+ {
+  "id": "moderate-mariners-mien",
+  "collection": "items",
+  "name": "Moderate Mariner's Mien",
+  "level": 15,
+  "text": "Activate—Set the Course (concentrate) Frequency once per day; Requirements You are aboard a vehicle; Effect You become quickened for 1 minute or until you leave the vehicle, whichever comes first, and can use the extra action to Take Control of the vehicle or, if you’re already piloting it, Drive or Stop the vehicle. 78 Price 5,300 gp The mask grants a +2 item bonus, and you can activate it once per hour."
+ },
+ {
+  "id": "mordant-mask",
+  "collection": "items",
+  "name": "Mordant Mask",
+  "level": 6,
+  "text": "Activate—Pounding Surf (concentrate) Frequency once per day; Trigger You would be affected by an auditory effect; Effect The noise of the waves grow to an overwhelming, crashing booming, drowning out all other sounds."
+ },
+ {
+  "id": "whispering-veil",
+  "collection": "items",
+  "name": "Whispering Veil",
+  "level": 13,
+  "text": "Activate—Spire Power (concentrate) Frequency once per day; Trigger You are about to attempt a check that your mythic calling would allow you to spend a Mythic Point on; Effect You draw on the power of the Mordant Spire."
+ },
+ {
+  "id": "crown-of-the-master",
+  "collection": "items",
+  "name": "Crown of the Master",
+  "level": 7,
+  "text": "Activate—Imperative Order (concentrate) Frequency once per day; Effect You cast a 6th-rank dominate with a DC of 30."
+ },
+ {
+  "id": "greater-crown-of-the-master",
+  "collection": "items",
+  "name": "Greater Crown of the Master",
+  "level": 13,
+  "text": "Activate—Imperative Order (concentrate) Frequency once per day; Effect You cast a 6th-rank dominate with a DC of 30."
+ },
+ {
+  "id": "helm-of-the-tides",
+  "collection": "items",
+  "name": "Helm of the Tides",
+  "level": 11,
+  "text": "Activate—Raise the Tide (manipulate) Frequency once per day; Effect You cast control water."
+ },
+ {
+  "id": "hydration-cloak",
+  "collection": "items",
+  "name": "Hydration Cloak",
+  "level": 5,
+  "text": "Activate—Pull Hood (manipulate) Frequency once per day; Effect You pull the cloak’s hood up and gain the effects of a 2nd-rank water walk until you pull the hood down, to a maximum of 10 minutes."
+ },
+ {
+  "id": "oneiric-crystals-of-the-slumberer",
+  "collection": "items",
+  "name": "Oneiric Crystals of the Slumberer",
+  "level": 15,
+  "text": "Activate—Steal Remembrance (concentrate, manipulate) Frequency once per day; Effect Choose a creature you can see, trapping its memories in the crystal."
+ },
+ {
+  "id": "trident-of-the-azarketis",
+  "collection": "items",
+  "name": "Trident of the Azarketis",
+  "level": 11,
+  "text": "Activate—Force of the Sea (manipulate) Frequency once per day; Effect You cast a 5th-rank hydraulic torrent."
+ },
+ {
+  "id": "greater-trident-of-the-azarketis",
+  "collection": "items",
+  "name": "Greater Trident of the Azarketis",
+  "level": 13,
+  "text": "Activate—Force of the Sea (manipulate) Frequency once per day; Effect You cast a 5th-rank hydraulic torrent."
+ },
+ {
+  "id": "decanter-of-endless-water",
+  "collection": "items",
+  "name": "Decanter of Endless Water",
+  "level": 7,
+  "text": "You can repeat this once per round as long as the geyser continues, spending an Interact action to direct the geyser each time."
+ },
+ {
+  "id": "holy-prayer-beads",
+  "collection": "items",
+  "name": "Holy Prayer Beads",
+  "level": 5,
+  "text": "--- **Activate** Cast a Spell **Effect** Cast Bless or Heal, each once per day."
+ },
+ {
+  "id": "holy-prayer-beads-greater",
+  "collection": "items",
+  "name": "Holy Prayer Beads (Greater)",
+  "level": 11,
+  "text": "--- **Activate** Cast a Spell **Effect** Cast 4th-rank versions of Bless, Divine Wrath, Heal, or Cleanse Affliction each once per day."
+ },
+ {
+  "id": "wondrous-figurine",
+  "collection": "items",
+  "name": "Wondrous Figurine",
+  "level": 2,
+  "text": "The specifics of each creature, as well as the activation’s frequency (if any), appear in its entry below. The lions can be called on only once per day, and they remain in lion form for no more than 1 hour. The figurine can be used only once per day, and it can remain in serpent form for no more than 10 minutes. The elephant can be called upon no more than four times per month. It can be called upon once per week for"
+ },
+ {
+  "id": "wondrous-figurine-golden-lions",
+  "collection": "items",
+  "name": "Wondrous Figurine (Golden Lions)",
+  "level": 10,
+  "text": "The specifics of each creature, as well as the activation's frequency (if any), appear in its entry below. The lions can be called on only once per day, and they remain in lion form for no more than 1 hour."
+ },
+ {
+  "id": "wondrous-figurine-jade-serpent",
+  "collection": "items",
+  "name": "Wondrous Figurine (Jade Serpent)",
+  "level": 7,
+  "text": "The specifics of each creature, as well as the activation's frequency (if any), appear in its entry below. The figurine can be used only once per day, and it can remain in serpent form for no more than 10 minutes."
+ },
+ {
+  "id": "wondrous-figurine-candy-constrictor",
+  "collection": "items",
+  "name": "Wondrous Figurine (Candy Constrictor)",
+  "level": 5,
+  "text": "The snake can be used once per day, and it can remain in snake form for up to 20 minutes."
+ },
+ {
+  "id": "wondrous-figurine-rubber-bear",
+  "collection": "items",
+  "name": "Wondrous Figurine (Rubber Bear)",
+  "level": 7,
+  "text": "The specifics of each creature, as well as the activation's frequency (if any), appear in its entry below. The bear can be used once per day, and it can remain in bear form for up to 1 hour."
+ },
+ {
+  "id": "wondrous-figurine-bismuth-leopards",
+  "collection": "items",
+  "name": "Wondrous Figurine (Bismuth Leopards)",
+  "level": 8,
+  "text": "The leopards can be called on only once per day, and they remain in their leopard form for up to 10 minutes."
+ },
+ {
+  "id": "wondrous-figurine-ruby-hippopotamus",
+  "collection": "items",
+  "name": "Wondrous Figurine (Ruby Hippopotamus)",
+  "level": 9,
+  "text": "The figurine can be used only once per day."
+ },
+ {
+  "id": "wand-of-slaying",
+  "collection": "items",
+  "name": "Wand of Slaying",
+  "level": 16,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast finger of death of the indicated level."
+ },
+ {
+  "id": "wand-of-slaying-7th-level-spell",
+  "collection": "items",
+  "name": "Wand of Slaying (7th-Level Spell)",
+  "level": 16,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast finger of death of the indicated level."
+ },
+ {
+  "id": "wand-of-slaying-8th-level-spell",
+  "collection": "items",
+  "name": "Wand of Slaying (8th-Level Spell)",
+  "level": 18,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast finger of death of the indicated level."
+ },
+ {
+  "id": "wand-of-slaying-9th-level-spell",
+  "collection": "items",
+  "name": "Wand of Slaying (9th-Level Spell)",
+  "level": 20,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast finger of death of the indicated level."
+ },
+ {
+  "id": "aeon-stone-black-pearl",
+  "collection": "items",
+  "name": "Aeon Stone (Black Pearl)",
+  "level": 12,
+  "text": "The resonant power allows you to cast Sending once per day."
+ },
+ {
+  "id": "aeon-stone-agate-ellipsoid",
+  "collection": "items",
+  "name": "Aeon Stone (Agate Ellipsoid)",
+  "level": 5,
+  "text": "This aeon stone allows you to cast 2nd-rank Augury as a divine innate spell once per day."
+ },
+ {
+  "id": "aeon-stone-clear-quartz-octagon",
+  "collection": "items",
+  "name": "Aeon Stone (Clear Quartz Octagon)",
+  "level": 4,
+  "text": "The stone's resonant power allows you to cast 1st-rank Mending as a divine innate spell once per day."
+ },
+ {
+  "id": "aeon-stone-mottled-ellipsoid",
+  "collection": "items",
+  "name": "Aeon Stone (Mottled Ellipsoid)",
+  "level": 15,
+  "text": "The resonant power allows you to cast 7th-rank False Vitality once per day."
+ },
+ {
+  "id": "aeon-stone-cymophane-cabochon",
+  "collection": "items",
+  "name": "Aeon Stone (Cymophane Cabochon)",
+  "level": 9,
+  "text": "The resonant power allows you to cast See the Unseen as an arcane innate spell once per day."
+ },
+ {
+  "id": "aeon-stone-polished-pebble",
+  "collection": "items",
+  "name": "Aeon Stone (Polished Pebble)",
+  "level": 3,
+  "text": "The stone's resonant power allows you to cast Grease as a primal innate spell once per day."
+ },
+ {
+  "id": "knapsack-of-halflingkind-greater",
+  "collection": "items",
+  "name": "Knapsack of Halflingkind (Greater)",
+  "level": 13,
+  "text": "The knapsack produces four tarts per day, which appear at breakfast time. Once per day, you can draw a lucky magic sling bullet from this compartment. Once per day, you can unfold this compartment into a 5-foot-diameter portal on the ground."
+ },
+ {
+  "id": "ring-of-wizardry",
+  "collection": "items",
+  "name": "Ring of Wizardry",
+  "level": 7,
+  "text": "You can’t gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day."
+ },
+ {
+  "id": "ring-of-wizardry-type-i",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type I)",
+  "level": 7,
+  "text": "You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day."
+ },
+ {
+  "id": "ring-of-wizardry-type-ii",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type II)",
+  "level": 10,
+  "text": "You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day."
+ },
+ {
+  "id": "ring-of-wizardry-type-iii",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type III)",
+  "level": 12,
+  "text": "You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day."
+ },
+ {
+  "id": "ring-of-wizardry-type-iv",
+  "collection": "items",
+  "name": "Ring of Wizardry (Type IV)",
+  "level": 14,
+  "text": "You can't gain spell slots from more than one ring of wizardry per day, nor can a single ring of wizardry grant spell slots more than once per day."
+ }
+]

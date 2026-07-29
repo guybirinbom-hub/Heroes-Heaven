@@ -1,0 +1,387 @@
+[
+ {
+  "id": "lesser-flowing-water",
+  "collection": "items",
+  "name": "Lesser Flowing Water",
+  "level": 3,
+  "text": "Activate—Embody the Truce (concentrate) Frequency once per day; Trigger A mental effect would compel you to harm an ally or bystander; Effect Attempt a counteract check with a counteract rank of 2 to end the effect."
+ },
+ {
+  "id": "moderate-flowing-water",
+  "collection": "items",
+  "name": "Moderate Flowing Water",
+  "level": 7,
+  "text": "Activate—Embody the Truce (concentrate) Frequency once per day; Trigger A mental effect would compel you to harm an ally or bystander; Effect Attempt a counteract check with a counteract rank of 2 to end the effect."
+ },
+ {
+  "id": "greater-flowing-water",
+  "collection": "items",
+  "name": "Greater Flowing Water",
+  "level": 11,
+  "text": "Activate—Embody the Truce (concentrate) Frequency once per day; Trigger A mental effect would compel you to harm an ally or bystander; Effect Attempt a counteract check with a counteract rank of 2 to end the effect."
+ },
+ {
+  "id": "rending-gauntlets",
+  "collection": "items",
+  "name": "Rending Gauntlets",
+  "level": 5,
+  "text": "Activate—Shredding Finisher (manipulate) Frequency once per hour; Requirements You hit the same creature with two unarmed Strikes in the same round; Effect The gauntlets’ spikes dig into the creature just before you tear them free, dealing the listed piercing damage."
+ },
+ {
+  "id": "lesser-rending-gauntlets",
+  "collection": "items",
+  "name": "Lesser Rending Gauntlets",
+  "level": 5,
+  "text": "Activate—Shredding Finisher (manipulate) Frequency once per hour; Requirements You hit the same creature with two unarmed Strikes in the same round; Effect The gauntlets’ spikes dig into the creature just before you tear them free, dealing the listed piercing damage."
+ },
+ {
+  "id": "moderate-rending-gauntlets",
+  "collection": "items",
+  "name": "Moderate Rending Gauntlets",
+  "level": 12,
+  "text": "Activate—Shredding Finisher (manipulate) Frequency once per hour; Requirements You hit the same creature with two unarmed Strikes in the same round; Effect The gauntlets’ spikes dig into the creature just before you tear them free, dealing the listed piercing damage."
+ },
+ {
+  "id": "greater-rending-gauntlets",
+  "collection": "items",
+  "name": "Greater Rending Gauntlets",
+  "level": 19,
+  "text": "Activate—Shredding Finisher (manipulate) Frequency once per hour; Requirements You hit the same creature with two unarmed Strikes in the same round; Effect The gauntlets’ spikes dig into the creature just before you tear them free, dealing the listed piercing damage."
+ },
+ {
+  "id": "greater-stormshard",
+  "collection": "items",
+  "name": "Greater Stormshard",
+  "level": 12,
+  "text": "Activate—Free the Spirits (concentrate, manipulate) Frequency once per day; Effect You briefly release the spirits from the stormshard before drawing them back into the glass."
+ },
+ {
+  "id": "major-stormshard",
+  "collection": "items",
+  "name": "Major Stormshard",
+  "level": 18,
+  "text": "Activate—Free the Spirits (concentrate, manipulate) Frequency once per day; Effect You briefly release the spirits from the stormshard before drawing them back into the glass."
+ },
+ {
+  "id": "anima-robe-artifact",
+  "collection": "items",
+  "name": "Anima Robe (Artifact)",
+  "level": 20,
+  "text": "Activate—Who Are We? (concentrate) Frequency once per hour; Effect The robe’s hem swishes, casting a 7th-rank illusory disguise to your specifications. Activate—Who Are They? (concentrate) Frequency once per hour; Effect An image of a creature shows up in the robe’s stitching, then appears to come to life; the robe casts an 8th-rank illusory creature to your specifications."
+ },
+ {
+  "id": "fiendbreaker-artifact",
+  "collection": "items",
+  "name": "Fiendbreaker (Artifact)",
+  "level": 20,
+  "text": "Fiendbreaker can activate or deactivate this radiance as a free action once per round on her partner’s turn. Activate Cast a Spell; Frequency once per round; Effect You expend a number of charges from the staff to cast a spell from her list. Cantrip divine lance 1st sanctuary 2nd see the unseen 3rd anointed ground, holy light 4th clear mind, planar tether 5th banishment, divine wrath 6th holy light, spirit blast 7th "
+ },
+ {
+  "id": "guiding-star-orb-artifact",
+  "collection": "items",
+  "name": "Guiding Star Orb (Artifact)",
+  "level": 20,
+  "text": "Activate—Momentary Aiudara (concentrate) Frequency once per day; Effect A shimmering magical archway appears next to you as the Guiding Star Orb casts a 9th-rank teleport to your specifications."
+ },
+ {
+  "id": "slithermaws-bane-artifact",
+  "collection": "items",
+  "name": "Slithermaw's Bane (Artifact)",
+  "level": 20,
+  "text": "Activate—Calistria’s Sting (concentrate, poison) Frequency once per day; Trigger A creature grapples you; Effect Poison wells up from the armor’s links to seep into the triggering creature’s body, causing it to suffer wracking pains as if it was being stung by thousands of angry wasps. Activate—Purge Toxins (concentrate) Frequency once per minute; Effect Slithermaw’s Bane attempts to counteract a disease or poison af"
+ },
+ {
+  "id": "soulcutter-artifact",
+  "collection": "items",
+  "name": "Soulcutter (Artifact)",
+  "level": 20,
+  "text": "73 Usage held in 1 hand Bulk 2 Perception +34; precise low-light vision and hearing within 30 feet Communication telepathy (partner only) Skills Nature +34, Religion +34, Survival +34 Int +7, Wis +6, Cha +5 Will +34 The echo of the Calistrian witch Silisifex imbues her legendary blade with a shimmering pale-green glow equivalent to that of candlelight; Soulcutter can activate or deactivate this radiance as a free act"
+ },
+ {
+  "id": "wintershot-artifact",
+  "collection": "items",
+  "name": "Wintershot (Artifact)",
+  "level": 20,
+  "text": "Activate—Auroral Shine (cold, concentrate, light) Frequency once per minute; Effect Wintershot can’t use this activation. Activate—Signal Flare (light, manipulate) Frequency once per hour; Effect Wintershot fires an arrow-shaped construct of ice straight upward."
+ },
+ {
+  "id": "greater-bolkas-blessing",
+  "collection": "items",
+  "name": "Greater Bolka's Blessing",
+  "level": 11,
+  "text": "Additionally, once per day, the filigree symbol can be activated for a healing effect. Activate—Gift of Life (concentrate, healing, vitality) Frequency once per day; Effect You regain 3d10 Hit Points."
+ },
+ {
+  "id": "greater-kolss-oath",
+  "collection": "items",
+  "name": "Greater Kols's Oath",
+  "level": 11,
+  "text": "Additionally, once per day, the filigree symbol can be activated to compel an enemy to act. Activate—Vow Unbreakable (auditory, concentrate, linguistic, mental) Frequency once per day; Effect You command a creature within 30 feet to Stride away from you, drop prone, or release one item it’s holding."
+ },
+ {
+  "id": "greater-trudds-strength",
+  "collection": "items",
+  "name": "Greater Trudd's Strength",
+  "level": 11,
+  "text": "Additionally, once per day, the filigree symbol can be activated to protect your allies. Activate—Protect the Clan! (concentrate) Frequency once per day; Effect Protective energy releases in a 10-foot emanation, granting a +1 status bonus to Armor Class to all allies within the area."
+ },
+ {
+  "id": "lions-pelt",
+  "collection": "items",
+  "name": "Lion's Pelt",
+  "level": 6,
+  "text": "Activate—Contact Ally (arcane, concentrate) Frequency once per hour; Effect You cast message at 1st rank to a target that you know is also wearing a lion’s pelt uniform."
+ },
+ {
+  "id": "essence-forge-lesser",
+  "collection": "items",
+  "name": "Essence Forge (Lesser)",
+  "level": 6,
+  "text": "Choose one of the following enhancements to add to the item: - If the item has an activation that has a frequency of once per day, that activation can be made an additional time each day."
+ },
+ {
+  "id": "essence-forge-moderate",
+  "collection": "items",
+  "name": "Essence Forge (Moderate)",
+  "level": 12,
+  "text": "Choose one of the following enhancements to add to the item: - If the item has an activation that has a frequency of once per day, that activation can be made an additional time each day."
+ },
+ {
+  "id": "essence-forge-greater",
+  "collection": "items",
+  "name": "Essence Forge (Greater)",
+  "level": 18,
+  "text": "Choose one of the following enhancements to add to the item: - If the item has an activation that has a frequency of once per day, that activation can be made an additional time each day."
+ },
+ {
+  "id": "greater-mitigation-mail",
+  "collection": "items",
+  "name": "Greater Mitigation Mail",
+  "level": 13,
+  "text": "Activate—Salve (concentrate, healing, manipulate, vitality) Frequency once per day; Effect You restore 5d10+10 Hit points."
+ },
+ {
+  "id": "major-mitigation-mail",
+  "collection": "items",
+  "name": "Major Mitigation Mail",
+  "level": 17,
+  "text": "Activate—Salve (concentrate, healing, manipulate, vitality) Frequency once per day; Effect You restore 5d10+10 Hit points."
+ },
+ {
+  "id": "greater-reactive-mail",
+  "collection": "items",
+  "name": "Greater Reactive Mail",
+  "level": 11,
+  "text": "Activate—Quick Spike (manipulate, metal) Frequency once per hour; Trigger A creature within 15 feet uses a manipulate action; Effect An iron spike launches from your armor at the target, dealing 2d8 piercing damage to the target (DC 20 basic Reflex save)."
+ },
+ {
+  "id": "major-reactive-mail",
+  "collection": "items",
+  "name": "Major Reactive Mail",
+  "level": 17,
+  "text": "Activate—Quick Spike (manipulate, metal) Frequency once per hour; Trigger A creature within 15 feet uses a manipulate action; Effect An iron spike launches from your armor at the target, dealing 2d8 piercing damage to the target (DC 20 basic Reflex save)."
+ },
+ {
+  "id": "greater-testudo-shield",
+  "collection": "items",
+  "name": "Greater Testudo Shield",
+  "level": 13,
+  "text": "Activate—Tortoise Form (concentrate, force, manipulate) Frequency once per day; Effect Your shield creates a magical barrier, consisting of translucent copies of the shield."
+ },
+ {
+  "id": "greater-belkzen-deadsmasher",
+  "collection": "items",
+  "name": "Greater Belkzen Deadsmasher",
+  "level": 18,
+  "text": "Activate—Untouchable Spirit (fortune) Frequency once per day; Trigger You fail or critically fail a saving throw against an effect originating from an undead creature that would inflict void damage; Effect Reroll the saving throw and take the better result."
+ },
+ {
+  "id": "calvary-commanders-lance",
+  "collection": "items",
+  "name": "Calvary Commander's Lance",
+  "level": 6,
+  "text": "Activate—Ride Them Down! (auditory, concentrate, linguistic) Frequency once per day; Requirements Your last action was to Strike and inflict damage on a target with the cavalry commander’s lance; Effect You shout a command to all mounted allies within 60 feet, granting them a +1 circumstance bonus on the next attack roll they make against the target you just damaged before the start of your next turn."
+ },
+ {
+  "id": "greater-chainbreaker",
+  "collection": "items",
+  "name": "Greater Chainbreaker",
+  "level": 12,
+  "text": "Activate—Liberating Strike ; Frequency once per day; Effect You Strike a creature with the chainbreaker."
+ },
+ {
+  "id": "hells-judgement",
+  "collection": "items",
+  "name": "Hell's Judgement",
+  "level": 16,
+  "text": "Activate—Flames of Phlegethon (concentrate, divine, manipulate, unholy) Frequency once per day; Effect You strike the ground with your axe, tearing open a one-way rift to the fourth layer of Hell in a 30-foot line that spews a curtain of hellfire."
+ },
+ {
+  "id": "greater-talonstrike-blade",
+  "collection": "items",
+  "name": "Greater Talonstrike Blade",
+  "level": 14,
+  "text": "Activate—Defense of Liberty ; Frequency once per hour; Trigger You or your mount are targeted by a physical melee or ranged attack; Requirements You are aware of the attack and are not off-guard against it; Effect You or your mount gain a +2 circumstance bonus to AC against the triggering attack. 126 Price 4,500 gp Eagle Knights charged with protecting Andoran’s western border against Chelaxian incursion often carry "
+ },
+ {
+  "id": "greater-arcane-standard",
+  "collection": "items",
+  "name": "Greater Arcane Standard",
+  "level": 20,
+  "text": "Activate—Magical Weakness (concentrate) Frequency once per turn; Effect The magic of the banner causes energy to linger, tearing away at its target, leaving them vulnerable to more."
+ },
+ {
+  "id": "banner-of-creeping-death",
+  "collection": "items",
+  "name": "Banner of Creeping Death",
+  "level": 4,
+  "text": "Activate—Void’s Embrace (concentrate, void) Frequency once per minute; Effect A massive wave of void energy floods out from the banner in all directions."
+ },
+ {
+  "id": "lesser-banner-of-creeping-death",
+  "collection": "items",
+  "name": "Lesser Banner of Creeping Death",
+  "level": 4,
+  "text": "Activate—Void’s Embrace (concentrate, void) Frequency once per minute; Effect A massive wave of void energy floods out from the banner in all directions."
+ },
+ {
+  "id": "moderate-banner-of-creeping-death",
+  "collection": "items",
+  "name": "Moderate Banner of Creeping Death",
+  "level": 9,
+  "text": "Activate—Void’s Embrace (concentrate, void) Frequency once per minute; Effect A massive wave of void energy floods out from the banner in all directions."
+ },
+ {
+  "id": "greater-banner-of-creeping-death",
+  "collection": "items",
+  "name": "Greater Banner of Creeping Death",
+  "level": 14,
+  "text": "Activate—Void’s Embrace (concentrate, void) Frequency once per minute; Effect A massive wave of void energy floods out from the banner in all directions."
+ },
+ {
+  "id": "major-banner-of-creeping-death",
+  "collection": "items",
+  "name": "Major Banner of Creeping Death",
+  "level": 19,
+  "text": "Activate—Void’s Embrace (concentrate, void) Frequency once per minute; Effect A massive wave of void energy floods out from the banner in all directions."
+ },
+ {
+  "id": "greater-banner-of-piercing-shards",
+  "collection": "items",
+  "name": "Greater Banner of Piercing Shards",
+  "level": 13,
+  "text": "Activate—Shards Seek Wounds (concentrate) Frequency once per minute; Effect Shards of sharpened glass violently shoot out from the magical banner into the newly opened wounds of a nearby enemy."
+ },
+ {
+  "id": "major-banner-of-piercing-shards",
+  "collection": "items",
+  "name": "Major Banner of Piercing Shards",
+  "level": 18,
+  "text": "Activate—Shards Seek Wounds (concentrate) Frequency once per minute; Effect Shards of sharpened glass violently shoot out from the magical banner into the newly opened wounds of a nearby enemy."
+ },
+ {
+  "id": "greater-stalwarts-banner",
+  "collection": "items",
+  "name": "Greater Stalwart’s Banner",
+  "level": 12,
+  "text": "Activate—Stand Firm (concentrate) Frequency once per minute; Effect You and allies within your banner’s aura gain 5 temporary Hit Points and a +1 status bonus to your Fortitude DC and Reflex DC against any effect that would move you or knock you prone."
+ },
+ {
+  "id": "major-stalwarts-banner",
+  "collection": "items",
+  "name": "Major Stalwart’s Banner",
+  "level": 17,
+  "text": "Activate—Stand Firm (concentrate) Frequency once per minute; Effect You and allies within your banner’s aura gain 5 temporary Hit Points and a +1 status bonus to your Fortitude DC and Reflex DC against any effect that would move you or knock you prone."
+ },
+ {
+  "id": "feather-of-the-unfounded-bravado",
+  "collection": "items",
+  "name": "Feather of the Unfounded Bravado",
+  "level": 2,
+  "text": "Activate—Overconfident Facade (concentrate) Frequency once per day; Effect For 1 hour, the feather grants you a +1 item bonus to Intimidation checks to Demoralize and Diplomacy checks to Make an Impression, but a –1 item penalty on Acrobatics and Athletics checks, as your inflated confidence leads you to attempt things you simply cannot do."
+ },
+ {
+  "id": "sack-of-hyrdras-teeth",
+  "collection": "items",
+  "name": "Sack of Hyrdra's Teeth",
+  "level": 12,
+  "text": "Activate—Sow a Tooth (manipulate, occult) Frequency once per hour; Effect You cast forth a tooth from the bag, and where it lands, a skeleton springs up from the ground. Activate—Fist Full of Fangs (manipulate, occult) Frequency once per day; Effect You draw a whole handful of teeth and cast them to the ground, casting rouse skeletons as a 5th-rank spell (DC 30)."
+ },
+ {
+  "id": "greater-boots-of-the-secret-blade",
+  "collection": "items",
+  "name": "Greater Boots of the Secret Blade",
+  "level": 8,
+  "text": "Activate—Draw Secret Blade (manipulate) Frequency once per hour; Effect You reach down to your boot, draw a dagger from it, and make a ranged or melee Strike with it."
+ },
+ {
+  "id": "major-boots-of-the-secret-blade",
+  "collection": "items",
+  "name": "Major Boots of the Secret Blade",
+  "level": 15,
+  "text": "Activate—Draw Secret Blade (manipulate) Frequency once per hour; Effect You reach down to your boot, draw a dagger from it, and make a ranged or melee Strike with it."
+ },
+ {
+  "id": "comandants-scabbard",
+  "collection": "items",
+  "name": "Comandant's Scabbard",
+  "level": 17,
+  "text": "Activate—Commanding Draw (fortune) Frequency once per hour; Requirements You have a weapon sheathed in your commandant’s scabbard; Effect You Interact to draw your weapon from your scabbard and Strike with it."
+ },
+ {
+  "id": "greater-endless-quiver",
+  "collection": "items",
+  "name": "Greater Endless Quiver",
+  "level": 18,
+  "text": "This quiver holds 40 mundane arrows and regenerates 10 per hour. Activate—Convert Arrows (manipulate) Frequency once per day; Effect You tap the quiver, and the arrows inside transform into cold iron or silver."
+ },
+ {
+  "id": "greater-fireproof-gloves",
+  "collection": "items",
+  "name": "Greater Fireproof Gloves",
+  "level": 13,
+  "text": "Activate—Release Heat (concentrate, fire) Frequency once per day; Requirements You have a free hand; Effect You take the heat that’s built up in your gloves and discharge it onto an enemy."
+ },
+ {
+  "id": "greater-killers-belt",
+  "collection": "items",
+  "name": "Greater Killer’s Belt",
+  "level": 9,
+  "text": "Activate—Bleeding Rubies (manipulate) Frequency once per day; Requirements You have a free hand and your last action was to deal damage to an enemy with a Strike or spell attack roll; Effect You pull a ruby off your belt and crush it into dust."
+ },
+ {
+  "id": "magical-medals",
+  "collection": "items",
+  "name": "Magical Medals",
+  "level": 3,
+  "text": "Activate—Gorila's Second Leap (concentrate, fortune) Frequency once per day; Trigger You would fail but not critically fail an Athletics check to High Jump or Long Jump; Effect The gorilla on the medal beats its chest, giving you another chance. Activate—Unicorn’s Grace (concentrate, healing, vitality) Frequency once per day; Trigger You would regain Hit Points from a magical effect; Effect You regain an additional 4"
+ },
+ {
+  "id": "medal-of-gorillas-might",
+  "collection": "items",
+  "name": "Medal of Gorilla’s Might",
+  "level": 3,
+  "text": "Activate—Gorila's Second Leap (concentrate, fortune) Frequency once per day; Trigger You would fail but not critically fail an Athletics check to High Jump or Long Jump; Effect The gorilla on the medal beats its chest, giving you another chance. Activate—Unicorn’s Grace (concentrate, healing, vitality) Frequency once per day; Trigger You would regain Hit Points from a magical effect; Effect You regain an additional 4"
+ },
+ {
+  "id": "medal-of-griffons-heart",
+  "collection": "items",
+  "name": "Medal of Griffon’s Heart",
+  "level": 4,
+  "text": "Activate—Gorila's Second Leap (concentrate, fortune) Frequency once per day; Trigger You would fail but not critically fail an Athletics check to High Jump or Long Jump; Effect The gorilla on the medal beats its chest, giving you another chance. Activate—Unicorn’s Grace (concentrate, healing, vitality) Frequency once per day; Trigger You would regain Hit Points from a magical effect; Effect You regain an additional 4"
+ },
+ {
+  "id": "medal-of-the-wolf-pack",
+  "collection": "items",
+  "name": "Medal of the Wolf Pack",
+  "level": 7,
+  "text": "Activate—Gorila's Second Leap (concentrate, fortune) Frequency once per day; Trigger You would fail but not critically fail an Athletics check to High Jump or Long Jump; Effect The gorilla on the medal beats its chest, giving you another chance. Activate—Unicorn’s Grace (concentrate, healing, vitality) Frequency once per day; Trigger You would regain Hit Points from a magical effect; Effect You regain an additional 4"
+ },
+ {
+  "id": "medal-of-unicorns-purity",
+  "collection": "items",
+  "name": "Medal of Unicorn’s Purity",
+  "level": 12,
+  "text": "Activate—Gorila's Second Leap (concentrate, fortune) Frequency once per day; Trigger You would fail but not critically fail an Athletics check to High Jump or Long Jump; Effect The gorilla on the medal beats its chest, giving you another chance. Activate—Unicorn’s Grace (concentrate, healing, vitality) Frequency once per day; Trigger You would regain Hit Points from a magical effect; Effect You regain an additional 4"
+ }
+]

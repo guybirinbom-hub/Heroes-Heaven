@@ -1,0 +1,387 @@
+[
+ {
+  "id": "blessed-reformer",
+  "collection": "items",
+  "name": "Blessed Reformer",
+  "level": 14,
+  "text": "**Activate** ⟨2⟩ (concentrate, manipulate) **Frequency** once per hour **Effect** You hold your weapon aloft, calling on righteousness to steel your resolve. - You can Activate the weapon in the following way. **Activate** ⟨1⟩ (concentrate, manipulate) **Frequency** once per day **Requirements** You hit a creature using the blessed reformer as your last action --- **Effect** You cast Calm at the same rank as your champion focus spells."
+ },
+ {
+  "id": "emetic-paste",
+  "collection": "items",
+  "name": "Emetic Paste",
+  "level": 2,
+  "text": "53 Usage held in 1 hand Bulk L Activate (manipulate) Sickened creatures have difficulty swallowing, so you can Activate emetic paste by applying it to your skin or that of a sickened creature within reach, typically on the throat."
+ },
+ {
+  "id": "emetic-paste-lesser",
+  "collection": "items",
+  "name": "Emetic Paste (Lesser)",
+  "level": 2,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- sickened creatures have difficulty swallowing, so you can Activate emetic paste by applying it to your skin or that of a sickened creature within reach, typically on the throat."
+ },
+ {
+  "id": "emetic-paste-moderate",
+  "collection": "items",
+  "name": "Emetic Paste (Moderate)",
+  "level": 9,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- sickened creatures have difficulty swallowing, so you can Activate emetic paste by applying it to your skin or that of a sickened creature within reach, typically on the throat."
+ },
+ {
+  "id": "emetic-paste-greater",
+  "collection": "items",
+  "name": "Emetic Paste (Greater)",
+  "level": 14,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- sickened creatures have difficulty swallowing, so you can Activate emetic paste by applying it to your skin or that of a sickened creature within reach, typically on the throat."
+ },
+ {
+  "id": "immovable-potion",
+  "collection": "items",
+  "name": "Immovable Potion",
+  "level": 10,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- When you drink the thick, slate-colored immovable potion, you become anchored in place, even defying gravity, rendering you immobilized for 1 minute or until you Dismiss the activation."
+ },
+ {
+  "id": "anchor-of-aquatic-exploration",
+  "collection": "items",
+  "name": "Anchor of Aquatic Exploration",
+  "level": 9,
+  "text": "Instead, when you enter a body of water, you sink to the bottom at a rate of 25 feet per round and can move across the bottom at your normal Speed. **Activate** 1 minute (manipulate) **Frequency** once per day **Requirements** You're underwater --- **Effect** You spend one minute digging the anchor into the seabed, after which the anchor casts a Cozy Cabin spell, summoning a sunken ship instead of a cabin."
+ },
+ {
+  "id": "soaring-wings-major",
+  "collection": "items",
+  "name": "Soaring Wings (Major)",
+  "level": 19,
+  "text": "Wings, normally tattooed on the upper back, enable you to fly when activated. --- **Activate** ⟨2⟩ (concentrate) **Effect** You gain a fly Speed equal to either your land Speed or 20 feet, whichever is greater. You can activate the tattoo any number of times, and the effect lasts until you Dismiss the activation."
+ },
+ {
+  "id": "caydens-tankard",
+  "collection": "items",
+  "name": "Cayden's Tankard",
+  "level": 25,
+  "text": "Any liquid poured into the tankard transforms into a strong, alcoholic ambrosia that remains contained safely within until you drink it. Drinking the ambrosia Activates the tankard, with one of the following effects. --- **Activate** ⟨5⟩ (manipulate) **Trigger** You are targeted or included in the area of a fear effect **Effect** Calmly swigging a drink on the battlefield turns your foe's attempt to frighten you against them. --- **Activate** ⟨2⟩ (concentrate, manipulate) **F"
+ },
+ {
+  "id": "heartblood-ring",
+  "collection": "items",
+  "name": "Heartblood Ring",
+  "level": 15,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Sealed inside the hidden compartment of a gold ring, *heartblood* has an unmistakable coppery taste, along with a thick mouth feel. --- **Stage 1 (1 Week)** The first time you enter this stage from a particular dose of *heartblood*, you are affected as if by regenerate. (Non-adults who drink *heartblood* change only in apparent vigor, not age.) You have fast healing equal to half your level, as well as resistance to void damage and poison dam"
+ },
+ {
+  "id": "phoenix-cinder",
+  "collection": "items",
+  "name": "Phoenix Cinder",
+  "level": 16,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- An incandescent, multipronged crystal the color of dying fire, a phoenix cinder gives off pleasant warmth and a sense of peace. --- **Stage 1 (1 Week)** The first time you enter this stage from a particular phoenix cinder, you are affected as if by Regenerate. While in this stage or higher, you have fast healing equal to half your level, as well as resistance to fire damage equal to half your level. You gain a +1 circumstance bonus to saving "
+ },
+ {
+  "id": "void-fragment",
+  "collection": "items",
+  "name": "Void Fragment",
+  "level": 13,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Hovering midair, thrumming and whispering of its power, a *void fragment* is a crystalline fragment of swirling colors, reminiscent of stars and deep darkness. --- **Stage 1 (8 Days)** The first time you enter this stage from a given void fragment, you gain the effect of a potion of truespeech for 3 days. The wisp grants you resistance to mental damage equal to half your level. **Activate** ⟨1⟩ or ⟨2⟩ (concentrate, teleportation) **Frequency*"
+ },
+ {
+  "id": "sluggish-bracelet",
+  "collection": "items",
+  "name": "Sluggish Bracelet",
+  "level": 3,
+  "text": "If the curse goes unrecognized, you think you can Activate it to gain a +10-foot status bonus to your Speed for 1 minute. **Activate** ⟨1⟩ (concentrate) --- **Effect** You take a –10-foot penalty to your Speed for 1 minute, and the bracelet fuses to you."
+ },
+ {
+  "id": "anylength-rope",
+  "collection": "items",
+  "name": "Anylength Rope",
+  "level": 3,
+  "text": "Activate command; Frequency once per minute; Effect You command the rope to split, declaring a specific length or amount, such as “ten feet of rope,” “half of the rope,” and so on. Activate envision, Interact ; Frequency once per day; Requirements The rope is split into two or more pieces; Effect The rope attempts to reassemble itself. You can activate the moderate anylength rope once per hour instead of once per day. You can activate the greater anylength rope without any fr"
+ },
+ {
+  "id": "boots-of-free-running",
+  "collection": "items",
+  "name": "Boots of Free Running",
+  "level": 5,
+  "text": "Activate envision; Frequency once per day; Effect The traction of your boots improves, allowing you to run along vertical surfaces for 1 minute. If you end a Stride off the ground, you must Stride along the surface again until you reach a horizontal surface or you begin to fall (though you can Grab an Edge, if applicable). You can activate the moderate boots of free running once per hour instead of once per day. You can activate the greater boots of free running without a fre"
+ },
+ {
+  "id": "cape-of-illumination",
+  "collection": "items",
+  "name": "Cape of Illumination",
+  "level": 5,
+  "text": "Activate command, Interact; Effect The cape glows with the effects of 1st-level light. You can Activate the cape again to Dismiss the effect. Activate envision, Interact; Frequency once per day; Effect You draw the cape and unleash a blinding flash of light."
+ },
+ {
+  "id": "cape-of-illumination-lesser",
+  "collection": "items",
+  "name": "Cape of Illumination (Lesser)",
+  "level": 5,
+  "text": "**Activate** ⟨2⟩ command, Interact **Effect** The cape glows with the effects of 1st-rank Light. You can Activate the cape again to Dismiss the effect. --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per day **Effect** You draw the cape and unleash a blinding flash of light."
+ },
+ {
+  "id": "cape-of-illumination-moderate",
+  "collection": "items",
+  "name": "Cape of Illumination (Moderate)",
+  "level": 9,
+  "text": "**Activate** ⟨2⟩ command, Interact **Effect** The cape glows with the effects of 4th-rank Light. You can Activate the cape again to Dismiss the effect. --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per day **Effect** You draw the cape and unleash a blinding flash of light."
+ },
+ {
+  "id": "cape-of-illumination-greater",
+  "collection": "items",
+  "name": "Cape of Illumination (Greater)",
+  "level": 15,
+  "text": "**Activate** ⟨2⟩ command, Interact **Effect** The cape glows with the effects of 7th-rank Light. You can Activate the cape again to Dismiss the effect. --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per hour **Effect** You draw the cape and unleash a blinding flash of light."
+ },
+ {
+  "id": "cowl-of-keys",
+  "collection": "items",
+  "name": "Cowl of Keys",
+  "level": 17,
+  "text": "**Activate** ⟨1⟩ Interact **Effect** You brush your hand against the cloak and your fingers transform into picks, tension wrenches, skeleton keys, and any other tools, providing you with a full set of Thieves' Tools. You can Activate the cloak again to revert your fingers to normal. --- **Activate** ⟨2⟩ envision, Interact **Frequency** once per day **Effect** You place your hand against a wall, floor, or ceiling."
+ },
+ {
+  "id": "highhelm-stronghold-plate",
+  "collection": "items",
+  "name": "Highhelm Stronghold Plate",
+  "level": 14,
+  "text": "If you have armor specialization with heavy armor, your resistance while wearing *Highhelm stronghold plate* applies to both slashing and piercing damage. **Activate** ⟨3⟩ envision, Interact **Frequency** once per day --- **Effect** The plating on your armor explodes off of your body, expands, and reshapes, transforming into a stone structure with the effects of Wall of Stone. The armor remains transformed for up to 10 minutes or until you Dismiss the effect, at which point t"
+ },
+ {
+  "id": "veiled-figurehead",
+  "collection": "items",
+  "name": "Veiled Figurehead",
+  "level": 7,
+  "text": "--- **Activate—Veil!** 1 minute (concentrate, illusion, visual) **Frequency** once per day **Effect** You change the appearance of the ship in minor but noticeable ways. The illusion lasts for 6 hours or until you Dismiss this effect."
+ },
+ {
+  "id": "veiled-figurehead-greater",
+  "collection": "items",
+  "name": "Veiled Figurehead (Greater)",
+  "level": 14,
+  "text": "--- **Activate—Veil!** 1 minute (concentrate, illusion, visual) **Frequency** once per day **Effect** You change the appearance of the ship in minor but noticeable ways. The illusion lasts for 24 hours or until you Dismiss this effect. The figurehead casts a Illusory Disguise spell upon them, except it targets everyone on board when activated, and it alters their clothing to a general look that matches the new appearance of the ship."
+ },
+ {
+  "id": "winged",
+  "collection": "items",
+  "name": "Winged",
+  "level": 13,
+  "text": "**Activate—Take to the Skies** ⟨2⟩ (concentrate, manipulate) **Frequency** once per hour --- **Effect** You trace the rune on the front of the breastplate, and the armor's ephemeral wings grow tangible, granting you a fly Speed of 25 feet or your land Speed, whichever is slower. This effect lasts for 5 minutes or until you Dismiss it."
+ },
+ {
+  "id": "serpent-dagger",
+  "collection": "items",
+  "name": "Serpent Dagger",
+  "level": 5,
+  "text": "In addition, you can activate the dagger to poison a creature with a more potent poison. --- **Activate—Drip Poison** ⟨4⟩ (manipulate) **Frequency** once per day **Trigger** You damage a creature with the *serpent dagger* **Effect** You poison the creature you hit with dagger venom."
+ },
+ {
+  "id": "vipers-fang",
+  "collection": "items",
+  "name": "Viper's Fang",
+  "level": 14,
+  "text": "**Activate** ⟨5⟩ (concentrate) **Trigger** A creature within your reach uses a manipulate or move action, makes a ranged attack, or leaves a square during a moving action it's using **Requirements** You are a master with the affixed weapon --- When you activate this resin-strengthened viper skull, make a melee Strike against the triggering creature. If you have Reactive Strike, you can activate the *viper's fang* as a free action."
+ },
+ {
+  "id": "marvelous-miniature",
+  "collection": "items",
+  "name": "Marvelous Miniature",
+  "level": 1,
+  "text": "268 Usage held in 1 hand Activate (manipulate) Every marvelous miniature is an exceptionally small replica of a real creature or object. Each miniature can be activated only once, with most of them permanently becoming the item in their description. 268 Price 76 gp This miniature can be activated only when tossed into a large body of water, such as a lake or broad river. 268 Price 1 gp When activated, this miniature transforms into an active campfire. You can activate this ke"
+ },
+ {
+  "id": "marvelous-miniature-chest",
+  "collection": "items",
+  "name": "Marvelous Miniature (Chest)",
+  "level": 3,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- Every *marvelous miniature* is an exceptionally small replica of a real creature or object. Each miniature can be activated only once, with most of them permanently becoming the item in their description. You can activate this key by spending an Interact action to turn it in an imaginary lock, which causes it to transform back into a chest with all of the items still inside."
+ },
+ {
+  "id": "collar-of-inconspicuousness",
+  "collection": "items",
+  "name": "Collar of Inconspicuousness",
+  "level": 8,
+  "text": "**Activate—Adorable Guise** ⟨1⟩ envision --- **Effect** You touch your animal companion to transform it into a nonthreatening Tiny creature of the same family or a similar creature (for instance, a house cat instead of a tiger, or a puppy instead of a wolf). The effect lasts until you Dismiss it."
+ },
+ {
+  "id": "bottled-air",
+  "collection": "items",
+  "name": "Bottled Air",
+  "level": 7,
+  "text": "You must uncork the bottle with an Interact action before you can activate it. **Activate—Breathe In** ⟨1⟩ (manipulate) --- **Effect** You draw a breath of air from the bottle."
+ },
+ {
+  "id": "accolade-robe-greater",
+  "collection": "items",
+  "name": "Accolade Robe (Greater)",
+  "level": 17,
+  "text": "--- **Activate—Review** ⟨1⟩ (concentrate, manipulate) **Effect** You retrieve an item of your choice from the robe's storage, then Recall Knowledge. You can activate the robe's Review once per minute as a free action. --- **Activate—Extra Credit** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** You gain 1 Focus Point, which you can spend only to cast a school spell."
+ },
+ {
+  "id": "clawed-bracers",
+  "collection": "items",
+  "name": "Clawed Bracers",
+  "level": 7,
+  "text": "--- **Activate—Extend Claws** ⟨1⟩ (manipulate, morph) **Frequency** once per hour **Effect** The bracers fuse temporarily with your forearms, with the claws extending to your fingertips. This lasts for 10 minutes or until you Dismiss it."
+ },
+ {
+  "id": "entertainers-cincture",
+  "collection": "items",
+  "name": "Entertainer's Cincture",
+  "level": 10,
+  "text": "--- **Activate—Encore!** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** Gain 1 Focus Point, which you can spend only to cast a bard composition spell. --- **Activate—Transcribe** ⟨1⟩ (manipulate) **Frequency** once per day **Effect** You tuck a small roll of paper into the cincture. For the next 10 minutes or until you Dismiss the activation, any performance you make is recorded on the paper, and the paper expands as necessary to accommodate it."
+ },
+ {
+  "id": "entertainers-cincture-greater",
+  "collection": "items",
+  "name": "Entertainer's Cincture (Greater)",
+  "level": 17,
+  "text": "--- **Activate—Encore!** ⟨4⟩ (concentrate) **Frequency** once per day **Effect** Gain 1 Focus Point, which you can spend only to cast a bard composition spell. --- **Activate—Transcribe** ⟨1⟩ (manipulate) **Frequency** once per day **Effect** You tuck a small roll of paper into the cincture. For the next hour or until you Dismiss the activation, any performance you make is recorded on the paper, and the paper expands as necessary to accommodate it."
+ },
+ {
+  "id": "bioluminescent-stripes",
+  "collection": "items",
+  "name": "Bioluminescent Stripes",
+  "level": 1,
+  "text": "As a single action, you can activate your bioluminescent stripes to glow with a bright light in a 20-foot radius and dim light for the next 20 feet. You can Dismiss the glow as a free action."
+ },
+ {
+  "id": "whip-tongue-sling",
+  "collection": "items",
+  "name": "Whip-Tongue Sling",
+  "level": 11,
+  "text": "--- **Activate—Bolstering Croak** ⟨2⟩ (auditory, concentrate, emotion, manipulate, mental) **Frequency** once per day; **Effect** You raise your sling and work the handle to mimic a mobogo's croaking song. You can Sustain this for up to 4 rounds. During this time, you can't use the sling to Strike or activate its Tongue Twister ability. For example, if you activated but didn't sustain Bolstering Croak, you would require 2 gallons of water to recharge it. If you activated Bols"
+ },
+ {
+  "id": "skinstitch-salve",
+  "collection": "items",
+  "name": "Skinstitch Salve",
+  "level": 7,
+  "text": "You can activate the salve in either of the following ways. **Activate—Administer Stitch** ⟨1⟩ (manipulate) --- **Effect** You Administer First Aid without requiring Healer's Toolkit. **Activate—Stitch Wounds** ⟨4⟩ (manipulate) --- **Trigger** You Treat Wounds or use Battle Medicine **Effect** You gain a +2 item bonus to the triggering Medicine check."
+ },
+ {
+  "id": "flame-navette",
+  "collection": "items",
+  "name": "Flame Navette",
+  "level": 16,
+  "text": "**Usage** affixed to armor **Activate** ⟨1⟩ (concentrate) --- This piece of bronzite is shaped like an oval with points at both ends. It has a carved flame at its center and is traditionally worn over the heart. You can activate only one *flame navette* per day. When you activate the navette, you gain the benefit of the fighter's class feat, with a counteract rank of 8 and a counteract modifier of +22."
+ },
+ {
+  "id": "twisting-twine",
+  "collection": "items",
+  "name": "Twisting Twine",
+  "level": 3,
+  "text": "Activate—Unravel Twine (manipulate) Frequency once per day; Effect You toss the ball of twine into a square within 20 feet. 307 Price 125 gp Bulk L You can activate the moderate twisting twine once per hour instead of once per day, and the Athletics modifier is +12. 307 Price 300 gp Bulk L You can activate the greater twisting twine without any frequency limit, and the Athletics modifier is +15."
+ },
+ {
+  "id": "tiger-fork",
+  "collection": "items",
+  "name": "Tiger Fork",
+  "level": 5,
+  "text": "While you have another creature Grabbed with the *tiger fork*, you gain a +1 circumstance bonus to saves against forced movement effects. **Activate—Fork Grip** ⟨1⟩ (manipulate) **Requirements** Your last action was a successful Strike against a creature --- **Effect** You can activate the *tiger fork* to attempt to Grapple the creature."
+ },
+ {
+  "id": "staff-of-sun-wukong",
+  "collection": "items",
+  "name": "Staff of Sun Wukong",
+  "level": 20,
+  "text": "**Activate—Meteor Slam** ⟨1⟩ (concentrate, manipulate) **Frequency** once per day --- **Effect** You extend the staff with the force of a meteor, dealing 10d10 damage to a single creature within 120 feet and making it Enfeebled 1 for 1 day. **Activate—Close at Hand** ⟨4⟩ --- **Effect** It's said that Sun Wukong tucked this magical staff behind his ear during his travels. When not in use, the Staff of Sun Wukong shrinks to the size and weight of a needle or toothpick, making i"
+ },
+ {
+  "id": "shadowpiercer",
+  "collection": "items",
+  "name": "Shadowpiercer",
+  "level": 23,
+  "text": "*Shadowpiercer* ignores immunity and resistance to precision damage of creatures with the incorporeal or shadow trait, and deals an additional 2d6 precision damage to such creatures. --- **Activate—Absorb Shadows** ⟨2⟩ (concentrate, healing, manipulate, occult) **Frequency** once per day **Effect** You touch *Shadowpiercer* to a darkness or shadow effect to siphon its energy and bolster yourself. --- **Activate—Rebuff Gloom** ⟨5⟩ (concentrate, occult) **Trigger** You or an al"
+ },
+ {
+  "id": "demon-hunting-bands",
+  "collection": "items",
+  "name": "Demon-Hunting Bands",
+  "level": 3,
+  "text": "**Activate** ⟨4⟩ (concentrate) --- **Trigger** You Stride. When activated, the band's holy patterns surround you as you move, preventing your movement from triggering reactions from demons. You can activate the bands when you Burrow, Climb, Fly, or Swim (instead of Stride) if you have the corresponding movement type."
+ },
+ {
+  "id": "perfections-first-step",
+  "collection": "items",
+  "name": "Perfection's First Step",
+  "level": 5,
+  "text": "**Activate** ⟨1⟩ (concentrate) --- This palm-leaf manuscript contains an incomplete philosophical treatise about perfection, which you must complete and provide written commentaries upon before you can activate it. This activity takes 10 minutes, but can occur at any time before you activate the treatise. When you activate *perfection's first step*, you cast Unbreaking Wave Advance with a save DC of 19. You are then temporarily immune to benefiting from further copies of *per"
+ },
+ {
+  "id": "drop-of-convergent-waters",
+  "collection": "items",
+  "name": "Drop of Convergent Waters",
+  "level": 2,
+  "text": "When you activate this talisman, a watery echo of one of your limbs emerges from the container. You can perform this Strike even if you're in a stance or under a polymorph effect that restricts your Strikes."
+ },
+ {
+  "id": "heralds-ring",
+  "collection": "items",
+  "name": "Herald's Ring",
+  "level": 13,
+  "text": "--- **Activate—Project Voice** ⟨1⟩ (manipulate) **Frequency** Once per day **Effect** When you turn the *herald's ring* around your finger three times in either direction, you gain the ability to easily project your voice up to 200 feet without raising the volume of speech, reaching your audience in most venues, including arenas. --- **Activate—Reflect Sound** ⟨5⟩ (concentrate) **Frequency** once per day **Trigger** You take sonic damage from a spell or effect **Effect** You "
+ },
+ {
+  "id": "mat-of-resilience",
+  "collection": "items",
+  "name": "Mat of Resilience",
+  "level": 7,
+  "text": "--- **Activate—Steady Ground** ⟨1⟩ (envision) You unfurl the mat and choose which shape it takes, either a or a 20-foot by 5-foot line. --- **Activate—Sturdy Foundation** ⟨1⟩ (manipulate) **Requirements** A creature is atop the mat **Effect** The creature enters a simple stance that makes the most of the mat's stabilizing magic. While in this stance, if at least half of the creature's space is atop the mat, it cannot gain the off-guard condition."
+ },
+ {
+  "id": "mat-of-resilence",
+  "collection": "items",
+  "name": "Mat of Resilence",
+  "level": 7,
+  "text": "Activate—Steady Ground (envision) Effect You unfurl the mat and choose which shape it takes, either a 10-foot square or a 20-foot by 5-foot line. Activate—Sturdy Foundation (manipulate) Requirements A creature is atop the mat; Effect The creature enters a simple stance that makes the most of the mat’s stabilizing magic. While in this stance, if at least half of the creature’s space is atop the mat, it cannot gain the off-guard condition."
+ },
+ {
+  "id": "greater-mat-of-resilence",
+  "collection": "items",
+  "name": "Greater Mat of Resilence",
+  "level": 12,
+  "text": "Activate—Steady Ground (envision) Effect You unfurl the mat and choose which shape it takes, either a 10-foot square or a 20-foot by 5-foot line. Activate—Sturdy Foundation (manipulate) Requirements A creature is atop the mat; Effect The creature enters a simple stance that makes the most of the mat’s stabilizing magic. While in this stance, if at least half of the creature’s space is atop the mat, it cannot gain the off-guard condition."
+ },
+ {
+  "id": "farlight-stone",
+  "collection": "items",
+  "name": "Farlight Stone",
+  "level": 2,
+  "text": "*Farlight stones* always come in linked pairs, and each of the fist-sized stones can be Activated independently. --- **Activate—Light** ⟨1⟩ (manipulate) **Effect** The stone begins to glow as a torch, shedding bright light in a 20-foot radius (and dim light to the next 20 feet). You can Activate the stone in this way again to end the effect. --- **Activate—Color** ⟨1⟩ (concentrate) **Requirements** The stone is glowing with light **Effect** You change the color of the stone's"
+ },
+ {
+  "id": "blade-phantoms-guide",
+  "collection": "items",
+  "name": "Blade Phantom's Guide",
+  "level": 11,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- A blade phantom's guide is a metal rectangle, often on a chain, etched with an image of a warrior in a fighting stance."
+ },
+ {
+  "id": "vine-baton",
+  "collection": "items",
+  "name": "Vine Baton",
+  "level": 5,
+  "text": "--- **Activate—Forward March!** ⟨2⟩ (manipulate, visual) **Frequency** once per day **Effect** You brandish the *vine baton* with a flourish or in some other dramatic manner. If you enter an encounter during this time period, the effect ends, but you receive a +2 status bonus to your initiative rolls for that encounter."
+ },
+ {
+  "id": "shining-hackle",
+  "collection": "items",
+  "name": "Shining Hackle",
+  "level": 4,
+  "text": "**Activate—Glowing Hackle** ⟨1⟩ (concentrate, light) --- **Effect** Your *shining hackle* glows even brighter, shedding bright light in a 20-foot radius (and dim light for the next 20 feet). This effect lasts until you Dismiss it."
+ },
+ {
+  "id": "pyrefeather-token",
+  "collection": "items",
+  "name": "Pyrefeather Token",
+  "level": 3,
+  "text": "**Activate** ⟨4⟩ (concentrate) **Trigger** You succeed at, fail, or critically fail a recovery check while dying by 1. When you Activate the token, you reduce the triggering recovery check's DC by 1, potentially improving your check's degree of success. You can Activate this talisman even while unconscious."
+ },
+ {
+  "id": "soldiers-syrup",
+  "collection": "items",
+  "name": "Soldier's Syrup",
+  "level": 1,
+  "text": "Activating a dose of soldier’s syrup requires you to combine it with another consumable potion that takes 1 action to activate. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become enfeebled 1 for 24 hours."
+ }
+]

@@ -1,0 +1,254 @@
+[
+ {
+  "id": "minor-soldiers-syrup",
+  "collection": "items",
+  "name": "Minor Soldier's Syrup",
+  "level": 1,
+  "text": "Activating a dose of soldier’s syrup requires you to combine it with another consumable potion that takes 1 action to activate. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become enfeebled 1 for 24 hours."
+ },
+ {
+  "id": "lesser-soldiers-syrup",
+  "collection": "items",
+  "name": "Lesser Soldier's Syrup",
+  "level": 3,
+  "text": "Activating a dose of soldier’s syrup requires you to combine it with another consumable potion that takes 1 action to activate. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become enfeebled 1 for 24 hours."
+ },
+ {
+  "id": "moderate-soldiers-syrup",
+  "collection": "items",
+  "name": "Moderate Soldier's Syrup",
+  "level": 6,
+  "text": "Activating a dose of soldier’s syrup requires you to combine it with another consumable potion that takes 1 action to activate. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become enfeebled 1 for 24 hours."
+ },
+ {
+  "id": "greater-soldiers-syrup",
+  "collection": "items",
+  "name": "Greater Soldier's Syrup",
+  "level": 12,
+  "text": "Activating a dose of soldier’s syrup requires you to combine it with another consumable potion that takes 1 action to activate. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become enfeebled 1 for 24 hours."
+ },
+ {
+  "id": "major-soldiers-syrup",
+  "collection": "items",
+  "name": "Major Soldier's Syrup",
+  "level": 18,
+  "text": "Activating a dose of soldier’s syrup requires you to combine it with another consumable potion that takes 1 action to activate. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become enfeebled 1 for 24 hours."
+ },
+ {
+  "id": "fortune-cord",
+  "collection": "items",
+  "name": "Fortune Cord",
+  "level": 11,
+  "text": "In many parts of Tian Xia, it's tradition to mint coins with holes in the centers for the purpose of being able to thread a cord through them and tie them off for security and ease of transaction. If you load up to 100 coins onto a fortune cord as part of your daily preparations, you can Activate the magic item in two different ways until the next time you make your daily preparations, provided all the loaded coins are of the same type. **Activate—Merchant's Bludgeon** ⟨1⟩ (c"
+ },
+ {
+  "id": "wyrms-flight",
+  "collection": "items",
+  "name": "Wyrm's Flight",
+  "level": 0,
+  "text": "230 Aspect Dragon Activate command, envision; Frequency once per day; Effect Ghostly draconic wings grant you a fly Speed equal to your Speed or 20 feet, whichever is greater. This lasts for 10 minutes or until you Dismiss the effect. At 17th level, you can Activate and Dismiss the ability as often as you want, and it has unlimited duration."
+ },
+ {
+  "id": "creative-spark",
+  "collection": "items",
+  "name": "Creative Spark",
+  "level": 0,
+  "text": "114 Aspect Forge Activate command, Interact; Frequency once per day; Effect You strike the relic against a piece of flint and summon a fire wisp to assist you, which appears in an unoccupied square next to you. The wisp remains for up to 10 minutes or until you Dismiss it."
+ },
+ {
+  "id": "elements-of-creation",
+  "collection": "items",
+  "name": "Elements of Creation",
+  "level": 0,
+  "text": "114 Aspect Forge Prerequisite creative spark gift When you activate creative spark, you can choose to summon an air wisp, a water wisp, and an earth wisp in unoccupied squares next to you, in addition to the fire wisp. The wisps last for up to 10 minutes or until you Dismiss them all together as an action."
+ },
+ {
+  "id": "feral-claws",
+  "collection": "items",
+  "name": "Feral Claws",
+  "level": 0,
+  "text": "Activate (concentrate); Effect Your hands transform into a pair of claws. This lasts until you Dismiss the effect."
+ },
+ {
+  "id": "tide-of-death",
+  "collection": "items",
+  "name": "Tide of Death",
+  "level": 0,
+  "text": "312 Aspect Death Prerequisite death gaze gift You can Activate death gaze with 3 actions instead of 2."
+ },
+ {
+  "id": "petal-dance",
+  "collection": "items",
+  "name": "Petal Dance",
+  "level": 0,
+  "text": "317 Aspect Plant Activate (concentrate) Frequency once per hour; Effect You discorporate into a cloud of petals and leaves. This grants you the swarm trait, immunity to falling damage, resistance 5 to bludgeoning and slashing damage, and weakness 5 to area and splash damage. As a swarm, you can't speak, cast spells, use manipulate actions requiring your hands, activate your magic items, or make any of your Strikes with your normal body. You remain in this form for 1 minute or"
+ },
+ {
+  "id": "cloak-of-elvenkind-greater",
+  "collection": "items",
+  "name": "Cloak of Elvenkind (Greater)",
+  "level": 12,
+  "text": "--- **Activate** ⟨2⟩ Interact **Frequency** once per day --- **Effect** You draw the hood up and gain the effects of a 4th-rank , with the spell's normal duration or until you pull the hood back down, whichever comes first. If you're also wearing Boots of Elvenkind, you can activate this ability twice per day, and it allows you to Sneak in forest environments even when creatures are currently observing you."
+ },
+ {
+  "id": "cloak-of-elvenkind",
+  "collection": "items",
+  "name": "Cloak of Elvenkind",
+  "level": 7,
+  "text": "--- **Activate** ⟨2⟩ Interact **Frequency** once per day --- **Effect** You draw the hood up and gain the effects of , with the spell's normal duration or until you pull the hood back down, whichever comes first. If you're also wearing Boots of Elvenkind you can activate this ability twice per day."
+ },
+ {
+  "id": "cordelias-greater-construct-key",
+  "collection": "items",
+  "name": "Cordelia's Greater Construct Key",
+  "level": 12,
+  "text": "Additionally, you can activate the key in two ways to call a construct to serve you. A greater key allows you to fully comprehend and thus partially bypass a construct's resistances. You ignore the first 5 resistance a construct has against your damaging effects, whether martial or magical. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per hour --- **Effect** You turn the key in the air and create a magic glyph. --- **Activate** 1 minute (command, envision, Intera"
+ },
+ {
+  "id": "feather-token-chest-ammunition",
+  "collection": "items",
+  "name": "Feather Token (Chest) (Ammunition)",
+  "level": 5,
+  "text": "Each feather can be activated only once, with most of them permanently becoming the item in their description. **Activate** ⟨1⟩ Strike from a ranged weapon When you use this token, a small wooden chest appears and immediately opens. You can activate this key by spending an Interact action to turn it in an imaginary lock, which causes it to transform back into a chest with all of the items still inside."
+ },
+ {
+  "id": "mat-of-resilience-greater",
+  "collection": "items",
+  "name": "Mat of Resilience (Greater)",
+  "level": 12,
+  "text": "--- **Activate—Steady Ground** ⟨1⟩ (envision) You unfurl the mat and choose which shape it takes, either a or a 40-foot by 5-foot line. --- **Activate—Sturdy Foundation** ⟨1⟩ (manipulate) **Requirements** A creature is atop the mat **Effect** The creature enters a simple stance that makes the most of the mat's stabilizing magic. While in this stance, if at least half of the creature's space is atop the mat, it cannot gain the off-guard condition."
+ },
+ {
+  "id": "oathbow",
+  "collection": "items",
+  "name": "Oathbow",
+  "level": 11,
+  "text": "**Activate** ⟨1⟩ command --- **Effect** You swear an oath to destroy one creature you can see. For the next 7 days or until that creature is slain, your attacks with the bow against that creature deal 1d6 additional damage, and you gain a +2 circumstance bonus to Survival checks to Track that creature. After you activate the bow, you can't activate it again for 7 days. If you kill the creature you've sworn an oath against, the oath ends and you need to wait only 10 minutes be"
+ },
+ {
+  "id": "soldiers-syrup-greater",
+  "collection": "items",
+  "name": "Soldier's Syrup (Greater)",
+  "level": 12,
+  "text": "Activating a dose of *soldier's syrup* requires you to combine it with another consumable potion that takes 1 action to activate. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become Enfeebled 1 for 24 hours."
+ },
+ {
+  "id": "soldiers-syrup-lesser",
+  "collection": "items",
+  "name": "Soldier's Syrup (Lesser)",
+  "level": 3,
+  "text": "Activating a dose of *soldier's syrup* requires you to combine it with another consumable potion that takes 1 action to activate. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become Enfeebled 1 for 24 hours."
+ },
+ {
+  "id": "soldiers-syrup-major",
+  "collection": "items",
+  "name": "Soldier's Syrup (Major)",
+  "level": 18,
+  "text": "Activating a dose of *soldier's syrup* requires you to combine it with another consumable potion that takes 1 action to activate. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become Enfeebled 1 for 24 hours."
+ },
+ {
+  "id": "soldiers-syrup-minor",
+  "collection": "items",
+  "name": "Soldier's Syrup (Minor)",
+  "level": 1,
+  "text": "Activating a dose of *soldier's syrup* requires you to combine it with another consumable potion that takes 1 action to activate. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become Enfeebled 1 for 24 hours."
+ },
+ {
+  "id": "soldiers-syrup-moderate",
+  "collection": "items",
+  "name": "Soldier's Syrup (Moderate)",
+  "level": 6,
+  "text": "Activating a dose of *soldier's syrup* requires you to combine it with another consumable potion that takes 1 action to activate. Instead, you can activate the potion within the next hour as a single action, which has the concentrate trait. If you do not activate the potion within 1 hour, the potion spoils inside you, and you become Enfeebled 1 for 24 hours."
+ },
+ {
+  "id": "aon-fulcrum-lenses",
+  "collection": "items",
+  "name": "Fulcrum Lenses",
+  "level": 9,
+  "text": "You can also activate the lens in the following ways. Activate Two Actions Interact; Frequency once per day; Effect You grasp the Crimson Fulcrum Lens in one hand and make a Strike that doesn't require that hand. Activate Two Actions Interact (attack, possession); Effect While grasping the lens, make a melee spell attack roll with a modifier of +18. You're no longer invested in the lens, and the target gains the benefits as though it had invested the lens but can't activate t"
+ },
+ {
+  "id": "aon-mat-of-resilence",
+  "collection": "items",
+  "name": "Mat of Resilence",
+  "level": 7,
+  "text": "Activate—Steady Ground Single Action (envision) Effect You unfurl the mat and choose which shape it takes, either a 10-foot square or a 20-foot by 5-foot line. Activate—Sturdy Foundation Single Action (manipulate) Requirements A creature is atop the mat; Effect The creature enters a simple stance that makes the most of the mat’s stabilizing magic. While in this stance, if at least half of the creature’s space is atop the mat, it cannot gain the off-guard condition."
+ },
+ {
+  "id": "aon-greater-mat-of-resilence",
+  "collection": "items",
+  "name": "Greater Mat of Resilence",
+  "level": 12,
+  "text": "Activate—Steady Ground Single Action (envision) Effect You unfurl the mat and choose which shape it takes, either a 10-foot square or a 20-foot by 5-foot line. Activate—Sturdy Foundation Single Action (manipulate) Requirements A creature is atop the mat; Effect The creature enters a simple stance that makes the most of the mat’s stabilizing magic. While in this stance, if at least half of the creature’s space is atop the mat, it cannot gain the off-guard condition."
+ },
+ {
+  "id": "aon-wyrm-s-flight",
+  "collection": "items",
+  "name": "Wyrm's Flight",
+  "level": 0,
+  "text": "Wyrm's Flight Aspect Dragon Activate Two Actions command, envision; Frequency once per day; Effect Ghostly draconic wings grant you a fly Speed equal to your Speed or 20 feet, whichever is greater. This lasts for 10 minutes or until you Dismiss the effect. At 17th level, you can Activate and Dismiss the ability as often as you want, and it has unlimited duration."
+ },
+ {
+  "id": "aon-creative-spark",
+  "collection": "items",
+  "name": "Creative Spark",
+  "level": 0,
+  "text": "Creative Spark Aspect Forge Activate Two Actions command, Interact; Frequency once per day; Effect You strike the relic against a piece of flint and summon a fire wisp to assist you, which appears in an unoccupied square next to you. The wisp remains for up to 10 minutes or until you Dismiss it."
+ },
+ {
+  "id": "aon-elements-of-creation",
+  "collection": "items",
+  "name": "Elements of Creation",
+  "level": 0,
+  "text": "Elements of Creation Aspect Forge Prerequisite creative spark gift When you activate creative spark, you can choose to summon an air wisp, a water wisp, and an earth wisp in unoccupied squares next to you, in addition to the fire wisp. The wisps last for up to 10 minutes or until you Dismiss them all together as an action."
+ },
+ {
+  "id": "aon-feral-claws",
+  "collection": "items",
+  "name": "Feral Claws",
+  "level": 0,
+  "text": "Activate Single Action (concentrate); Effect Your hands transform into a pair of claws. This lasts until you Dismiss the effect."
+ },
+ {
+  "id": "aon-tide-of-death",
+  "collection": "items",
+  "name": "Tide of Death",
+  "level": 0,
+  "text": "Tide of Death Aspect Death Prerequisite death gaze gift You can Activate death gaze with 3 actions instead of 2."
+ },
+ {
+  "id": "aon-petal-dance",
+  "collection": "items",
+  "name": "Petal Dance",
+  "level": 0,
+  "text": "Petal Dance Aspect Plant Activate Two Actions (concentrate) Frequency once per hour; Effect You discorporate into a cloud of petals and leaves. This grants you the swarm trait, immunity to falling damage, resistance 5 to bludgeoning and slashing damage, and weakness 5 to area and splash damage. As a swarm, you can't speak, cast spells, use manipulate actions requiring your hands, activate your magic items, or make any of your Strikes with your normal body. You remain in this "
+ },
+ {
+  "id": "bright-fetchling",
+  "collection": "heritages",
+  "name": "Bright Fetchling",
+  "level": null,
+  "text": "You can activate or suppress this ability as an action, which has the concentrate trait."
+ },
+ {
+  "id": "ancient-scale-azarketi",
+  "collection": "heritages",
+  "name": "Ancient Scale Azarketi",
+  "level": null,
+  "text": "You can activate, deactivate, or change the arrangement of lights as an action, which has the concentration trait."
+ },
+ {
+  "id": "flying-animal",
+  "collection": "heritages",
+  "name": "Flying Animal",
+  "level": null,
+  "text": "You are an animal that can take flight for long or sustained bursts, such as an eagle, bat, bee, or flying squirrel. You can still slow your descent, so you take no damage from falling, regardless of the distance you fall."
+ },
+ {
+  "id": "stoutheart-centaur",
+  "collection": "heritages",
+  "name": "Stoutheart Centaur",
+  "level": null,
+  "text": "You're a hardy centaur, firm of stance and strong of heart. You gain 10 Hit Points from your ancestry instead of 8 and gain a +1 circumstance bonus to Acrobatics checks to Balance and to your Reflex DC to avoid being tripped."
+ }
+]

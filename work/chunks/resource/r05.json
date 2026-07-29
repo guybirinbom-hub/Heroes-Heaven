@@ -1,0 +1,387 @@
+[
+ {
+  "id": "wand-of-continuation",
+  "collection": "items",
+  "name": "Wand of Continuation",
+  "level": 5,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Effect You Cast the Spell, and its duration is increased by half."
+ },
+ {
+  "id": "wand-of-shardstorm",
+  "collection": "items",
+  "name": "Wand of Shardstorm",
+  "level": 5,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast force barrage of the indicated level."
+ },
+ {
+  "id": "wand-of-widening",
+  "collection": "items",
+  "name": "Wand of Widening",
+  "level": 4,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Effect You Cast the Spell, and increase its area."
+ },
+ {
+  "id": "aeon-stone",
+  "collection": "items",
+  "name": "Aeon Stone",
+  "level": 1,
+  "text": "You can benefit from this ability only once per day, even if you have multiple such stones. The resonant power allows you to cast 1st-rank heal as a divine innate spell once per day. The resonant power allows you to cast translate as an occult innate spell once per day. The resonant power allows you to cast air bubble as a primal innate spell once per day. Activate—Flow of Life (concentrate, vitality) Frequency once "
+ },
+ {
+  "id": "aeon-stone-delaying",
+  "collection": "items",
+  "name": "Aeon Stone (Delaying)",
+  "level": 7,
+  "text": "You can benefit from this ability only once per day, even if you have multiple such stones. The resonant power allows you to cast 1st-rank Heal as a divine innate spell once per day."
+ },
+ {
+  "id": "aeon-stone-envisioning",
+  "collection": "items",
+  "name": "Aeon Stone (Envisioning)",
+  "level": 8,
+  "text": "The resonant power allows you to cast Translate as an occult innate spell once per day."
+ },
+ {
+  "id": "aeon-stone-nourishing",
+  "collection": "items",
+  "name": "Aeon Stone (Nourishing)",
+  "level": 7,
+  "text": "The resonant power allows you to cast Air Bubble as a primal innate spell once per day."
+ },
+ {
+  "id": "aeon-stone-formulating",
+  "collection": "items",
+  "name": "Aeon Stone (Formulating)",
+  "level": 4,
+  "text": "The resonant power allows you to cast Phantasmal Minion as an arcane innate spell once per day."
+ },
+ {
+  "id": "aeon-stone-repairing",
+  "collection": "items",
+  "name": "Aeon Stone (Repairing)",
+  "level": 4,
+  "text": "The resonant power allows you to cast Mending as an arcane innate spell once per day."
+ },
+ {
+  "id": "bristling-spines",
+  "collection": "items",
+  "name": "Bristling Spines",
+  "level": 1,
+  "text": "Activate—Urticating Burst (manipulate) Frequency once per day; Effect You flick tiny spines in a 15-foot cone, dealing the listed amount of piercing damage to all creatures in the area with a basic Reflex save."
+ },
+ {
+  "id": "camouflaging-chromatophores",
+  "collection": "items",
+  "name": "Camouflaging Chromatophores",
+  "level": 4,
+  "text": "Activate—Background Adaptation (concentrate) Frequency once per day; Effect For 1 minute, you can Hide without needing cover or concealment to do so. 98 Price 665 gp The bonus is +2, and you can use Background Adaptation once per hour."
+ },
+ {
+  "id": "compound-eyes",
+  "collection": "items",
+  "name": "Compound Eyes",
+  "level": 4,
+  "text": "Once per day when you attempt a flat check to target a creature that's concealed from you, you can roll twice and take the better result."
+ },
+ {
+  "id": "twisting-twine",
+  "collection": "items",
+  "name": "Twisting Twine",
+  "level": 3,
+  "text": "Activate—Unravel Twine (manipulate) Frequency once per day; Effect You toss the ball of twine into a square within 20 feet. 307 Price 125 gp Bulk L You can activate the moderate twisting twine once per hour instead of once per day, and the Athletics modifier is +12. 307 Price 300 gp Bulk L You can activate the greater twisting twine without any frequency limit, and the Athletics modifier is +15."
+ },
+ {
+  "id": "wand-of-crackling-lightning",
+  "collection": "items",
+  "name": "Wand of Crackling Lightning",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast lightning bolt, but the spell's area is twice as wide (two adjacent and parallel 120-foot lines) and creatures that fail their save are off-guard for 1 round."
+ },
+ {
+  "id": "wand-of-hopeless-night",
+  "collection": "items",
+  "name": "Wand of Hopeless Night",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast darkness."
+ },
+ {
+  "id": "wand-of-overflowing-life",
+  "collection": "items",
+  "name": "Wand of Overflowing Life",
+  "level": 9,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast heal at the indicated rank. You gain this benefit only once per turn, even if you cast multiple heal spells from wands of overflowing life in the same turn."
+ },
+ {
+  "id": "wand-of-slaughter",
+  "collection": "items",
+  "name": "Wand of Slaughter",
+  "level": 16,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast execute at the indicated rank."
+ },
+ {
+  "id": "wand-of-smoldering-fireballs",
+  "collection": "items",
+  "name": "Wand of Smoldering Fireballs",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast fireball at the indicated rank."
+ },
+ {
+  "id": "wand-of-the-snowfields",
+  "collection": "items",
+  "name": "Wand of the Snowfields",
+  "level": 14,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast howling blizzard."
+ },
+ {
+  "id": "wand-of-the-spider",
+  "collection": "items",
+  "name": "Wand of the Spider",
+  "level": 7,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast web, but the strands of webbing are toxic."
+ },
+ {
+  "id": "midnight-milk",
+  "collection": "items",
+  "name": "Midnight Milk",
+  "level": 5,
+  "text": "184 Price 400 gp Bulk L Saving Throw DC 29 Fortitude; Onset 1 minute; Maximum Duration 8 hours; Stage 1 +3 item bonus to Perception (1 hour); Stage 2 unconscious (1 hour; if the creature recovers from the dosage and wakes up before reaching Stage 3, they don't remember their vivid dreams but do wake up feeling revitalized as if they'd enjoyed a full 8 hours of sleep—this doesn't allow the creature to perform their da"
+ },
+ {
+  "id": "wand-of-purification",
+  "collection": "items",
+  "name": "Wand of Purification",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast cleanse affliction, clear mind, or sound body of the indicated level."
+ },
+ {
+  "id": "assassins-bracers",
+  "collection": "items",
+  "name": "Assassin's Bracers",
+  "level": 10,
+  "text": "Activate—Focus on the Doomed (concentrate, manipulate) Frequency once per day; Effect You designate one creature within 30 feet."
+ },
+ {
+  "id": "mnemonic-feather",
+  "collection": "items",
+  "name": "Mnemonic Feather",
+  "level": 3,
+  "text": "Activate—Recite Mnemonic (auditory, concentrate, mental) Frequency once per day; Trigger An ally within 30 feet attempts a Recall Knowledge check involving the topic in the mnemonic feather’s book; Effect You mentally impart the book’s knowledge to your ally, giving them the benefit of the mnemonic feather."
+ },
+ {
+  "id": "portable-inspiring-spotlight",
+  "collection": "items",
+  "name": "Portable Inspiring Spotlight",
+  "level": 9,
+  "text": "Activate—Light It Up (light, manipulate) Frequency once per hour; Effect The inspiring spotlight emits a 5-foot burst of bright magical light within 120 feet."
+ },
+ {
+  "id": "mounted-inspiring-spotlight",
+  "collection": "items",
+  "name": "Mounted Inspiring Spotlight",
+  "level": 15,
+  "text": "Activate—Light It Up (light, manipulate) Frequency once per hour; Effect The inspiring spotlight emits a 5-foot burst of bright magical light within 120 feet."
+ },
+ {
+  "id": "zeto-geki-hide-armor",
+  "collection": "items",
+  "name": "Zeto Geki Hide Armor",
+  "level": 8,
+  "text": "Activate Shift Scales; Frequency once per day; Effect Until the end of your next turn, you gain resistance 5 to bludgeoning, piercing, and slashing damage, but your Speeds are reduced by 10 feet (minimum 5 feet)."
+ },
+ {
+  "id": "eyes-of-the-moonwarden",
+  "collection": "items",
+  "name": "Eyes Of The Moonwarden",
+  "level": 9,
+  "text": "Activate—Lunar Illumination (concentrate) Frequency once per hour; Effect Bright moonlight shines out of the gem in a 30-foot emanation, forcing hostile creatures in the area to make a DC 26 Fortitude save or be blinded for 1 round."
+ },
+ {
+  "id": "arboreal-wand",
+  "collection": "items",
+  "name": "Arboreal Wand",
+  "level": 9,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast heal at the indicated rank."
+ },
+ {
+  "id": "arboreal-wand-2nd-rank-spell",
+  "collection": "items",
+  "name": "Arboreal Wand (2nd-rank spell)",
+  "level": 9,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast heal at the indicated rank."
+ },
+ {
+  "id": "arboreal-wand-3rd-rank-spell",
+  "collection": "items",
+  "name": "Arboreal Wand (3rd-rank spell)",
+  "level": 11,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast heal at the indicated rank."
+ },
+ {
+  "id": "arboreal-wand-4th-rank-spell",
+  "collection": "items",
+  "name": "Arboreal Wand (4th-rank spell)",
+  "level": 13,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast heal at the indicated rank."
+ },
+ {
+  "id": "arboreal-wand-5th-rank-spell",
+  "collection": "items",
+  "name": "Arboreal Wand (5th-rank spell)",
+  "level": 15,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast heal at the indicated rank."
+ },
+ {
+  "id": "arboreal-wand-6th-rank-spell",
+  "collection": "items",
+  "name": "Arboreal Wand (6th-rank spell)",
+  "level": 17,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast heal at the indicated rank."
+ },
+ {
+  "id": "arboreal-wand-7th-rank-spell",
+  "collection": "items",
+  "name": "Arboreal Wand (7th-rank spell)",
+  "level": 19,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast heal at the indicated rank."
+ },
+ {
+  "id": "greater-heros-plate",
+  "collection": "items",
+  "name": "Greater Hero’s Plate",
+  "level": 18,
+  "text": "Activate—Personal Legend (concentrate) Frequency once per day; Effect The scenes depicted on your armor shift and change, making room to accommodate your current heroic feats."
+ },
+ {
+  "id": "greater-foxglove-token",
+  "collection": "items",
+  "name": "Greater Foxglove Token",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day; Effect You cast 3rd-rank noxious vapors. Activate Cast a Spell; Frequency once per day; Effect You cast petal storm. Activate Cast a Spell; Frequency once per day; Effect You cast 4th-rank wall of thorns."
+ },
+ {
+  "id": "major-foxglove-token",
+  "collection": "items",
+  "name": "Major Foxglove Token",
+  "level": 12,
+  "text": "Activate Cast a Spell; Frequency once per day; Effect You cast 3rd-rank noxious vapors. Activate Cast a Spell; Frequency once per day; Effect You cast petal storm. Activate Cast a Spell; Frequency once per day; Effect You cast 4th-rank wall of thorns."
+ },
+ {
+  "id": "greater-heartmoss",
+  "collection": "items",
+  "name": "Greater Heartmoss",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day; Effect You cast 3rd-rank heal. Activate Cast a Spell; Frequency once per day; Effect You cast 4th-rank sound body. Activate Cast a Spell; Frequency once per day; Effect You cast healing well."
+ },
+ {
+  "id": "major-heartmoss",
+  "collection": "items",
+  "name": "Major Heartmoss",
+  "level": 12,
+  "text": "Activate Cast a Spell; Frequency once per day; Effect You cast 3rd-rank heal. Activate Cast a Spell; Frequency once per day; Effect You cast 4th-rank sound body. Activate Cast a Spell; Frequency once per day; Effect You cast healing well."
+ },
+ {
+  "id": "wand-of-splintered-sorrows",
+  "collection": "items",
+  "name": "Wand of Splintered Sorrows",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day plus overcharge; Effect You cast splinter volley of the indicated rank."
+ },
+ {
+  "id": "wand-of-splintered-sorrows-2nd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Splintered Sorrows (2nd-Rank Spell)",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day plus overcharge; Effect You cast splinter volley of the indicated rank."
+ },
+ {
+  "id": "wand-of-splintered-sorrows-4th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Splintered Sorrows (4th-Rank Spell)",
+  "level": 10,
+  "text": "Activate Cast a Spell; Frequency once per day plus overcharge; Effect You cast splinter volley of the indicated rank."
+ },
+ {
+  "id": "wand-of-splintered-sorrows-6th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Splintered Sorrows (6th-Rank Spell)",
+  "level": 14,
+  "text": "Activate Cast a Spell; Frequency once per day plus overcharge; Effect You cast splinter volley of the indicated rank."
+ },
+ {
+  "id": "wand-of-splintered-sorrows-8th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Splintered Sorrows (8th-Rank Spell)",
+  "level": 18,
+  "text": "Activate Cast a Spell; Frequency once per day plus overcharge; Effect You cast splinter volley of the indicated rank."
+ },
+ {
+  "id": "greater-clay-sphere",
+  "collection": "items",
+  "name": "Greater Clay Sphere",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day; Effect You cast enlarge. Activate Cast a Spell; Frequency once per day; Effect You cast cursed metamorphosis. Activate Cast a Spell; Frequency once per day; Effect You cast plant form."
+ },
+ {
+  "id": "major-clay-sphere",
+  "collection": "items",
+  "name": "Major Clay Sphere",
+  "level": 14,
+  "text": "Activate Cast a Spell; Frequency once per day; Effect You cast enlarge. Activate Cast a Spell; Frequency once per day; Effect You cast cursed metamorphosis. Activate Cast a Spell; Frequency once per day; Effect You cast plant form."
+ },
+ {
+  "id": "aurochs-might-tattoo",
+  "collection": "items",
+  "name": "Aurochs' Might Tattoo",
+  "level": 8,
+  "text": "Activate—Aurochs Charge (concentrate) Frequency once per day; Effect You Stride twice and make a melee Strike against a creature within your reach at any point during your movement."
+ },
+ {
+  "id": "lesser-aurochs-might-tattoo",
+  "collection": "items",
+  "name": "Lesser Aurochs' Might Tattoo",
+  "level": 8,
+  "text": "Activate—Aurochs Charge (concentrate) Frequency once per day; Effect You Stride twice and make a melee Strike against a creature within your reach at any point during your movement."
+ },
+ {
+  "id": "moderate-aurochs-might-tattoo",
+  "collection": "items",
+  "name": "Moderate Aurochs' Might Tattoo",
+  "level": 13,
+  "text": "Activate—Aurochs Charge (concentrate) Frequency once per day; Effect You Stride twice and make a melee Strike against a creature within your reach at any point during your movement."
+ },
+ {
+  "id": "greater-aurochs-might-tattoo",
+  "collection": "items",
+  "name": "Greater Aurochs' Might Tattoo",
+  "level": 18,
+  "text": "Activate—Aurochs Charge (concentrate) Frequency once per day; Effect You Stride twice and make a melee Strike against a creature within your reach at any point during your movement."
+ },
+ {
+  "id": "cleft-head-marking",
+  "collection": "items",
+  "name": "Cleft Head Marking",
+  "level": 4,
+  "text": "Activate—Unexpected Strike (concentrate) Frequency once per day; Trigger You Strike a creature that has the off-guard condition with a weapon attack; Effect You deal an extra 1d6 precision damage to the target."
+ },
+ {
+  "id": "lesser-cleft-head-marking",
+  "collection": "items",
+  "name": "Lesser Cleft Head Marking",
+  "level": 4,
+  "text": "Activate—Unexpected Strike (concentrate) Frequency once per day; Trigger You Strike a creature that has the off-guard condition with a weapon attack; Effect You deal an extra 1d6 precision damage to the target."
+ },
+ {
+  "id": "greater-cleft-head-marking",
+  "collection": "items",
+  "name": "Greater Cleft Head Marking",
+  "level": 10,
+  "text": "Activate—Unexpected Strike (concentrate) Frequency once per day; Trigger You Strike a creature that has the off-guard condition with a weapon attack; Effect You deal an extra 1d6 precision damage to the target."
+ },
+ {
+  "id": "flowing-water",
+  "collection": "items",
+  "name": "Flowing Water",
+  "level": 3,
+  "text": "Activate—Embody the Truce (concentrate) Frequency once per day; Trigger A mental effect would compel you to harm an ally or bystander; Effect Attempt a counteract check with a counteract rank of 2 to end the effect."
+ }
+]

@@ -1,0 +1,373 @@
+[
+ {
+  "id": "aon-spirit-blink",
+  "collection": "items",
+  "name": "Spirit Blink",
+  "level": 0,
+  "text": "Spirit Blink Aspect Soul Activate Two Actions command, envision; Frequency once per day; Effect You blink between the realm of mortals and the Ethereal Plane."
+ },
+ {
+  "id": "aon-soul-magic",
+  "collection": "items",
+  "name": "Soul Magic",
+  "level": 0,
+  "text": "Soul Magic Aspect Soul Activate Single Action envision; Frequency once per day; Effect You infuse yourself or a willing creature that you touch with spiritual energy."
+ },
+ {
+  "id": "aon-charming",
+  "collection": "items",
+  "name": "Charming",
+  "level": 0,
+  "text": "Charming Aspect Artistry Activate Two Actions (concentrate) Frequency once per day; Effect You speak briefly about your craft or enact a short performance."
+ },
+ {
+  "id": "aon-enthralling",
+  "collection": "items",
+  "name": "Enthralling",
+  "level": 0,
+  "text": "Enthralling Aspect Artistry Activate Two Actions (concentrate) Frequency once per day; Effect You speak at length about or demonstrate your craft, or you enact a performance."
+ },
+ {
+  "id": "aon-dominant-emotion",
+  "collection": "items",
+  "name": "Dominant Emotion",
+  "level": 0,
+  "text": "Dominant Emotion Aspect Emotion Activate Reaction (concentrate) Frequency once per hour; Trigger You would be adversely affected by an emotion effect; Effect The relic tries to neutralize the triggering effect with its own emotion, attempting a counteract check."
+ },
+ {
+  "id": "aon-emotion-surge",
+  "collection": "items",
+  "name": "Emotion Surge",
+  "level": 0,
+  "text": "Emotion Surge Aspect Emotion Activate Single Action (concentrate) Frequency once per hour; Effect A surge of emotion emanates from your relic, granting a +1 status bonus to skill checks determined by the relic's emotion."
+ },
+ {
+  "id": "aon-fervor",
+  "collection": "items",
+  "name": "Fervor",
+  "level": 0,
+  "text": "Fervor Aspect Emotion Activate Single Action (concentrate) Frequency once per hour; Effect You gain the emotional fervor benefits for your relic's emotional state for the next 3 rounds, but ignore the spell associated with the fervor."
+ },
+ {
+  "id": "aon-beginner-s-luck",
+  "collection": "items",
+  "name": "Beginner's Luck",
+  "level": 0,
+  "text": "Beginner's Luck Aspect Luck Activate Reaction (concentrate) Frequency once per day; Trigger You attempt a d20 roll you're untrained in; Effect You treat your proficiency bonus as equal to half your level, or if the relic is 7th level or higher, as equal to your level."
+ },
+ {
+  "id": "aon-swap-luck",
+  "collection": "items",
+  "name": "Swap Luck",
+  "level": 0,
+  "text": "Swap Luck Aspect Luck Activate Reaction (concentrate) Frequency once per hour; Trigger You roll a failure or critical failure on a saving throw against an effect with multiple targets; Effect You swap rolls with another target who's willing to swap with you."
+ },
+ {
+  "id": "aon-whammy",
+  "collection": "items",
+  "name": "Whammy",
+  "level": 0,
+  "text": "Whammy Aspect Luck Activate Reaction (concentrate) Frequency once per day; Trigger An enemy within 30 feet rolls a success on an attack roll, saving throw, or skill check; Effect Your relic sends out a wave of bad luck, forcing the creature to reroll and take the worse result."
+ },
+ {
+  "id": "aon-steal-luck",
+  "collection": "items",
+  "name": "Steal Luck",
+  "level": 0,
+  "text": "Steal Luck Aspect Luck Activate Reaction (concentrate) Frequency once per day; ; Trigger You or a creature within 30 feet of you rolls two d20s for a fortune or misfortune effect and you like the higher roll; Effect You steal the higher of the two numbers the triggering target rolled; the target must use the other result."
+ },
+ {
+  "id": "aon-sands-of-the-hourglass",
+  "collection": "items",
+  "name": "Sands of the Hourglass",
+  "level": 0,
+  "text": "Activate Two Actions (concentrate, manipulate) Frequency once per hour; Effect You target one creature within 30 feet, temporarily imposing the decrepitude of time on it."
+ },
+ {
+  "id": "aon-precognition",
+  "collection": "items",
+  "name": "Precognition",
+  "level": 0,
+  "text": "Precognition Aspect Time Activate Reaction (concentrate) Frequency once per day; Trigger Your turn starts; Effect You analyze diverging time streams to determine the best course of action."
+ },
+ {
+  "id": "aon-temporal-pulse",
+  "collection": "items",
+  "name": "Temporal Pulse",
+  "level": 0,
+  "text": "Temporal Pulse Aspect Time Activate Two Actions (concentrate) Frequency once per day; Effect You make time shudder around you, stealing it from enemies and granting it to allies."
+ },
+ {
+  "id": "aon-time-jump",
+  "collection": "items",
+  "name": "Time Jump",
+  "level": 0,
+  "text": "Time Jump Aspect Time Activate Single Action (concentrate) Frequency once per day; Effect Your relic casts time jump on you to your specifications."
+ },
+ {
+  "id": "aon-time-reversal",
+  "collection": "items",
+  "name": "Time Reversal",
+  "level": 0,
+  "text": "Time Reversal Aspect Time Activate Single Action (concentrate) Frequency once per day; Effect The relic casts time beacon on you."
+ },
+ {
+  "id": "aon-creative-spark",
+  "collection": "items",
+  "name": "Creative Spark",
+  "level": 0,
+  "text": "Creative Spark Aspect Forge Activate Two Actions command, Interact; Frequency once per day; Effect You strike the relic against a piece of flint and summon a fire wisp to assist you, which appears in an unoccupied square next to you. Once per day, when you roll a critical failure on a Crafting check related to blacksmithing, you get a failure instead."
+ },
+ {
+  "id": "aon-forge-weld",
+  "collection": "items",
+  "name": "Forge Weld",
+  "level": 0,
+  "text": "Forge Weld Aspect Forge Activate Two Actions command, Interact; Frequency once per day; Effect You strike the relic against a non-magical metal object of 4 Bulk or less, repairing it."
+ },
+ {
+  "id": "aon-work-harden",
+  "collection": "items",
+  "name": "Work Harden",
+  "level": 0,
+  "text": "Work Harden Aspect Forge Activate Two Actions command, Interact; Frequency once per day; Effect You strike the relic against a shield or armor made of metal, and steam pours from it like it's just been quenched."
+ },
+ {
+  "id": "aon-molten-crucible",
+  "collection": "items",
+  "name": "Molten Crucible",
+  "level": 0,
+  "text": "Molten Crucible Aspect Forge Activate Three Actions command, Interact; Frequency once per day; Effect You strike your relic against a weapon, armor, or shield made of metal."
+ },
+ {
+  "id": "aon-living-forge",
+  "collection": "items",
+  "name": "Living Forge",
+  "level": 0,
+  "text": "Living Forge Aspect Forge Activate Two Actions command, Interact; Frequency once per day; Effect The relic is absorbed into your body, and you transform into an elemental being of red-hot steel."
+ },
+ {
+  "id": "aon-precious-anodization",
+  "collection": "items",
+  "name": "Precious Anodization",
+  "level": 0,
+  "text": "Precious Anodization Aspect Metal Activate Single Action (concentrate) Frequency once per day; Effect For one minute, your relic is affected by a clad in metal spell of a rank equal to half the relic's level, rounded up."
+ },
+ {
+  "id": "aon-rail-dash",
+  "collection": "items",
+  "name": "Rail Dash",
+  "level": 0,
+  "text": "Rail Dash Aspect Metal Activate Two Actions ; Frequency once per hour; Effect Your relic conjures a guideway of magnets beneath you, creating a frictionless path for you to rush forward at high speeds."
+ },
+ {
+  "id": "aon-all-will-decay",
+  "collection": "items",
+  "name": "All Will Decay",
+  "level": 0,
+  "text": "Activate Two Actions (aura, concentrate) Frequency once per day; Effect Rusted flakes swirl in a cloud around you, creating a 15-foot emanation that lasts for 1 minute."
+ },
+ {
+  "id": "aon-ancestors-call",
+  "collection": "items",
+  "name": "Ancestors' Call",
+  "level": 0,
+  "text": "Activate Single Action envision; Frequency once per hour; Effect Select one of the three ancestry feats."
+ },
+ {
+  "id": "aon-propelling-winds",
+  "collection": "items",
+  "name": "Propelling Winds",
+  "level": 0,
+  "text": "Propelling Winds Aspect Air Activate Two Actions (concentrate, manipulate) Frequency once per hour; Effect The relic casts fly targeting you."
+ },
+ {
+  "id": "aon-call-of-the-wild",
+  "collection": "items",
+  "name": "Call of the Wild",
+  "level": 0,
+  "text": "Call of the Wild Aspect Beast Activate Two Actions (concentrate, manipulate) Frequency once per day; Effect Your relic summons a creature to fight at your side, casting summon animal with a spell rank of half the item's level rounded up."
+ },
+ {
+  "id": "aon-word-of-faith",
+  "collection": "items",
+  "name": "Word of Faith",
+  "level": 0,
+  "text": "Word of Faith Aspect Celestial Activate Two Actions (concentrate, manipulate) Frequency once per hour; Effect Placing your hand on yourself or an ally, you heal their wounds and bolster their spirit."
+ },
+ {
+  "id": "aon-righteous-call",
+  "collection": "items",
+  "name": "Righteous Call",
+  "level": 0,
+  "text": "Righteous Call Aspect Celestial Activate Two Actions (concentrate, manipulate) Frequency once per day; Effect Holy magic fills your armaments, making them true weapons against evil."
+ },
+ {
+  "id": "aon-angelic-vessel",
+  "collection": "items",
+  "name": "Angelic Vessel",
+  "level": 0,
+  "text": "Angelic Vessel Aspect Celestial Activate Two Actions (concentrate, manipulate) Frequency once per day; Effect At your invitation, a celestial imbues your body with the divine."
+ },
+ {
+  "id": "aon-shroud-of-the-afterlife",
+  "collection": "items",
+  "name": "Shroud of the Afterlife",
+  "level": 0,
+  "text": "Shroud of the Afterlife Aspect Death Activate Single Action (concentrate, manipulate) Frequency once per day; Effect You shroud yourself with powers from beyond the living realm for 1 minute."
+ },
+ {
+  "id": "aon-grim-specter",
+  "collection": "items",
+  "name": "Grim Specter",
+  "level": 0,
+  "text": "Grim Specter Aspect Death Activate Two Actions (concentrate, polymorph, void) Frequency once per day; Effect You can call upon the terrifying powers that fuel your relic to transform yourself into a specter of death."
+ },
+ {
+  "id": "aon-rolling-geode",
+  "collection": "items",
+  "name": "Rolling Geode",
+  "level": 0,
+  "text": "Rolling Geode Aspect Earth Activate Two Actions (concentrate) Frequency once per hour; Effect Stone and crystal form a sphere that chases your foes. If the geode enters a creature's space, the creature must succeed at a basic Reflex save or take 2d6 bludgeoning damage; a creature can take damage this way only once per turn, even if you roll the geode through its space multiple times."
+ },
+ {
+  "id": "aon-shattered-earth",
+  "collection": "items",
+  "name": "Shattered Earth",
+  "level": 0,
+  "text": "Shattered Earth Aspect Earth Activate Two Actions (concentrate, manipulate) Frequency once per hour; Effect Seismic pulses from your relic ripple through the nearby ground, shaking sharp fragments to the surface. A creature that enters an affected square during a move action must succeed at an Acrobatics check or Reflex save or take 1d6 piercing damage; it needs to roll only once per move action even if it moves thro"
+ },
+ {
+  "id": "aon-raise-ramparts",
+  "collection": "items",
+  "name": "Raise Ramparts",
+  "level": 0,
+  "text": "Raise Ramparts Aspect Earth Activate Three Actions (concentrate, manipulate) Frequency once per day; Effect Your relic reshapes the earth around you."
+ },
+ {
+  "id": "aon-living-statue",
+  "collection": "items",
+  "name": "Living Statue",
+  "level": 0,
+  "text": "You can cast 6th-rank petrify and sure footing (to remove petrification only) as innate spells, each once per day."
+ },
+ {
+  "id": "aon-fiendish-bargain",
+  "collection": "items",
+  "name": "Fiendish Bargain",
+  "level": 0,
+  "text": "Fiendish Bargain Aspect Fiend Activate Single Action (concentrate) Frequency once per day; Effect You bargain with the evil force empowering your relic for a boon, though you must trade something in return."
+ },
+ {
+  "id": "aon-heat-haze",
+  "collection": "items",
+  "name": "Heat Haze",
+  "level": 0,
+  "text": "Activate Two Actions (concentrate) Frequency once per day; Effect Your relic erratically elevates the air temperature around you, creating heat shimmers that distort your appearance and grant you the concealed condition for 1 minute."
+ },
+ {
+  "id": "aon-incandescent-sight",
+  "collection": "items",
+  "name": "Incandescent Sight",
+  "level": 0,
+  "text": "Incandescent Sight Aspect Fire Activate Two Actions (concentrate) Frequency once per day; Effect Your eyes become attuned to heat signatures as your vision extends into the infrared, granting you a heatsight precise sense for 1 minute."
+ },
+ {
+  "id": "aon-jet-propulsion",
+  "collection": "items",
+  "name": "Jet Propulsion",
+  "level": 0,
+  "text": "Jet Propulsion Aspect Fire Activate Single Action (concentrate) Frequency once per hour; Effect Flames from your relic channel through your body, erupting from your feet, hands, or other limbs with enough force to blast you across the ground and propel you through the air."
+ },
+ {
+  "id": "aon-bestow-life",
+  "collection": "items",
+  "name": "Bestow Life",
+  "level": 0,
+  "text": "Bestow Life Aspect Life Activate Two Actions (concentrate) Frequency once per day; Effect An infusion of vitality energy from your relic can temporarily animate an unliving object."
+ },
+ {
+  "id": "aon-healing-wave",
+  "collection": "items",
+  "name": "Healing Wave",
+  "level": 0,
+  "text": "Healing Wave Aspect Life Activate Two Actions (concentrate) Frequency once per hour; Effect You release a wave of vitality energy in a 15-foot cone."
+ },
+ {
+  "id": "aon-life-everlasting",
+  "collection": "items",
+  "name": "Life Everlasting",
+  "level": 0,
+  "text": "Life Everlasting Aspect Life Activate Two Actions (concentrate) Frequency once per day; Effect Massive amounts of vitality energy surge forth."
+ },
+ {
+  "id": "aon-perception-filter",
+  "collection": "items",
+  "name": "Perception Filter",
+  "level": 0,
+  "text": "Perception Filter Aspect Mind Activate Two Actions (concentrate) Frequency once per day; Effect Your relic reaches into the minds of nearby creatures and blocks your presence from their perceptions."
+ },
+ {
+  "id": "aon-sprout-ally",
+  "collection": "items",
+  "name": "Sprout Ally",
+  "level": 0,
+  "text": "Sprout Ally Aspect Plant Activate Two Actions (concentrate, manipulate) Frequency once per day; Effect Your relic rapidly matures and animates nearby plant matter into an ally to fight by you, casting summon plant or fungus , with a rank of half the item's level rounded up."
+ },
+ {
+  "id": "aon-petal-dance",
+  "collection": "items",
+  "name": "Petal Dance",
+  "level": 0,
+  "text": "Petal Dance Aspect Plant Activate Two Actions (concentrate) Frequency once per hour; Effect You discorporate into a cloud of petals and leaves."
+ },
+ {
+  "id": "aon-megaflora",
+  "collection": "items",
+  "name": "Megaflora",
+  "level": 0,
+  "text": "Megaflora Aspect Plant Activate Two Actions (concentrate, manipulate) Frequency once per day; Effect With a pulse of natural energy, your relic grows massive plants in an instant. This is a healing and wood effect, and a given creature can heal from the tree only once per round."
+ },
+ {
+  "id": "aon-dancing-shadow",
+  "collection": "items",
+  "name": "Dancing Shadow",
+  "level": 0,
+  "text": "Activate Two Actions (concentrate, manipulate) Frequency once per hour; Effect Your relic's shadow detaches from your relic and dances through the air to attack an enemy."
+ },
+ {
+  "id": "aon-monsoon-curtain",
+  "collection": "items",
+  "name": "Monsoon Curtain",
+  "level": 0,
+  "text": "Monsoon Curtain Aspect Water Activate Three Actions (attack, concentrate) Frequency once per day; Effect You call down a curtain of violent rain in a location within 120 feet."
+ },
+ {
+  "id": "aon-tidal-crash",
+  "collection": "items",
+  "name": "Tidal Crash",
+  "level": 0,
+  "text": "Tidal Crash Aspect Water Activate Two Actions (concentrate) Frequency once per day; Effect Your relic spews forth a dense sphere of water."
+ },
+ {
+  "id": "aon-ripples-and-waves",
+  "collection": "items",
+  "name": "Ripples and Waves",
+  "level": 0,
+  "text": "Activate Two Actions (concentrate) Frequency once per day; Effect Ankle-deep water floods outward from you, filling a 60-foot emanation centered on you for 1 minute."
+ },
+ {
+  "id": "aon-azata-s-grace",
+  "collection": "items",
+  "name": "Azata's Grace",
+  "level": 0,
+  "text": "Azata's Grace Aspect Celestial Activate Two Actions command, Interact; Frequency once per day; Effect Monarch opens a conduit to Desna's palace of Cynosure and infuses your soul with the grace of the azatas who dance and frolic therein."
+ },
+ {
+  "id": "aon-seer-s-array",
+  "collection": "items",
+  "name": "Seer's Array",
+  "level": 0,
+  "text": "Four Items : You can use the relic's time jump once per hour. Five Items : You can use the relic's precognition once per hour."
+ }
+]

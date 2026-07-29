@@ -1,0 +1,387 @@
+[
+ {
+  "id": "wand-of-hybrid-form-8th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Hybrid Form (8th-Rank Spell)",
+  "level": 18,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose."
+ },
+ {
+  "id": "wand-of-hybrid-form-9th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Hybrid Form (9th-Rank Spell)",
+  "level": 20,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, selecting two forms from among those you can normally choose."
+ },
+ {
+  "id": "wand-of-legerdemain",
+  "collection": "items",
+  "name": "Wand of Legerdemain",
+  "level": 4,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-legerdemain-1st-rank-spell",
+  "collection": "items",
+  "name": "Wand of Legerdemain (1st-Rank Spell)",
+  "level": 4,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-legerdemain-2nd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Legerdemain (2nd-Rank Spell)",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-legerdemain-3rd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Legerdemain (3rd-Rank Spell)",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-legerdemain-4th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Legerdemain (4th-Rank Spell)",
+  "level": 10,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-legerdemain-5th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Legerdemain (5th-Rank Spell)",
+  "level": 12,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-legerdemain-6th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Legerdemain (6th-Rank Spell)",
+  "level": 14,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-legerdemain-7th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Legerdemain (7th-Rank Spell)",
+  "level": 16,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-legerdemain-8th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Legerdemain (8th-Rank Spell)",
+  "level": 18,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-legerdemain-9th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Legerdemain (9th-Rank Spell)",
+  "level": 20,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-mental-purification",
+  "collection": "items",
+  "name": "Wand of Mental Purification",
+  "level": 4,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target."
+ },
+ {
+  "id": "wand-of-mental-purification-1st-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mental Purification (1st-Rank Spell)",
+  "level": 4,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target."
+ },
+ {
+  "id": "wand-of-mental-purification-2nd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mental Purification (2nd-Rank Spell)",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target."
+ },
+ {
+  "id": "wand-of-mental-purification-3rd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mental Purification (3rd-Rank Spell)",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target."
+ },
+ {
+  "id": "wand-of-mental-purification-4th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mental Purification (4th-Rank Spell)",
+  "level": 10,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target."
+ },
+ {
+  "id": "wand-of-mental-purification-5th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mental Purification (5th-Rank Spell)",
+  "level": 12,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target."
+ },
+ {
+  "id": "wand-of-mental-purification-6th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mental Purification (6th-Rank Spell)",
+  "level": 14,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target."
+ },
+ {
+  "id": "wand-of-mental-purification-7th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mental Purification (7th-Rank Spell)",
+  "level": 16,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target."
+ },
+ {
+  "id": "wand-of-mental-purification-8th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mental Purification (8th-Rank Spell)",
+  "level": 18,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target."
+ },
+ {
+  "id": "wand-of-mental-purification-9th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mental Purification (9th-Rank Spell)",
+  "level": 20,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast soothe of the indicated rank, and can attempt to counteract one mental effect on the same target."
+ },
+ {
+  "id": "wand-of-mercy",
+  "collection": "items",
+  "name": "Wand of Mercy",
+  "level": 4,
+  "text": "Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait."
+ },
+ {
+  "id": "wand-of-mercy-1st-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mercy (1st-Rank Spell)",
+  "level": 4,
+  "text": "Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait."
+ },
+ {
+  "id": "wand-of-mercy-2nd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mercy (2nd-Rank Spell)",
+  "level": 6,
+  "text": "Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait."
+ },
+ {
+  "id": "wand-of-mercy-3rd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mercy (3rd-Rank Spell)",
+  "level": 8,
+  "text": "Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait."
+ },
+ {
+  "id": "wand-of-mercy-4th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mercy (4th-Rank Spell)",
+  "level": 10,
+  "text": "Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait."
+ },
+ {
+  "id": "wand-of-mercy-5th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mercy (5th-Rank Spell)",
+  "level": 12,
+  "text": "Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait."
+ },
+ {
+  "id": "wand-of-mercy-6th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mercy (6th-Rank Spell)",
+  "level": 14,
+  "text": "Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait."
+ },
+ {
+  "id": "wand-of-mercy-7th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mercy (7th-Rank Spell)",
+  "level": 16,
+  "text": "Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait."
+ },
+ {
+  "id": "wand-of-mercy-8th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mercy (8th-Rank Spell)",
+  "level": 18,
+  "text": "Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait."
+ },
+ {
+  "id": "wand-of-mercy-9th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Mercy (9th-Rank Spell)",
+  "level": 20,
+  "text": "Activate Cast a Spell; the activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell, and can choose to give it the nonlethal trait."
+ },
+ {
+  "id": "wand-of-noisome-acid-2nd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (2nd-Rank Spell)",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid grip of the indicated rank."
+ },
+ {
+  "id": "wand-of-noisome-acid-4th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (4th-Rank Spell)",
+  "level": 10,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid grip of the indicated rank."
+ },
+ {
+  "id": "wand-of-noisome-acid-6th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (6th-Rank Spell)",
+  "level": 14,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid grip of the indicated rank."
+ },
+ {
+  "id": "wand-of-noisome-acid-8th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (8th-Rank Spell)",
+  "level": 18,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid grip of the indicated rank."
+ },
+ {
+  "id": "wand-of-paralytic-shock",
+  "collection": "items",
+  "name": "Wand of Paralytic Shock",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast paralyze, electrocuting the target into immobility."
+ },
+ {
+  "id": "wand-of-paralytic-shock-3rd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Paralytic Shock (3rd-Rank Spell)",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast paralyze, electrocuting the target into immobility."
+ },
+ {
+  "id": "wand-of-paralytic-shock-7th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Paralytic Shock (7th-Rank Spell)",
+  "level": 16,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast paralyze, electrocuting the target into immobility."
+ },
+ {
+  "id": "wand-of-pernicious-poison",
+  "collection": "items",
+  "name": "Wand of Pernicious Poison",
+  "level": 4,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast a Spell determined by the wand's type."
+ },
+ {
+  "id": "wand-of-pernicious-poison-1st-rank-spell",
+  "collection": "items",
+  "name": "Wand of Pernicious Poison (1st-Rank Spell)",
+  "level": 4,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast a Spell determined by the wand's type."
+ },
+ {
+  "id": "wand-of-pernicious-poison-6th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Pernicious Poison (6th-Rank Spell)",
+  "level": 14,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast a Spell determined by the wand's type."
+ },
+ {
+  "id": "wand-of-reaching",
+  "collection": "items",
+  "name": "Wand of Reaching",
+  "level": 4,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-reaching-1st-rank-spell",
+  "collection": "items",
+  "name": "Wand of Reaching (1st-Rank Spell)",
+  "level": 4,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-reaching-2nd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Reaching (2nd-Rank Spell)",
+  "level": 6,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-reaching-3rd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Reaching (3rd-Rank Spell)",
+  "level": 8,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-reaching-4th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Reaching (4th-Rank Spell)",
+  "level": 10,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-reaching-5th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Reaching (5th-Rank Spell)",
+  "level": 12,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-reaching-6th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Reaching (6th-Rank Spell)",
+  "level": 14,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-reaching-7th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Reaching (7th-Rank Spell)",
+  "level": 16,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-reaching-8th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Reaching (8th-Rank Spell)",
+  "level": 18,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-reaching-9th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Reaching (9th-Rank Spell)",
+  "level": 20,
+  "text": "Activate Cast a Spell; This activation takes if the spell normally takes to cast, or if the spell normally takes ; Frequency once per day, plus overcharge; Effect You Cast the Spell."
+ },
+ {
+  "id": "wand-of-refracting-rays",
+  "collection": "items",
+  "name": "Wand of Refracting Rays",
+  "level": 11,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast chromatic ray of the indicated rank."
+ },
+ {
+  "id": "wand-of-refracting-rays-4th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Refracting Rays (4th-Rank Spell)",
+  "level": 11,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast chromatic ray of the indicated rank."
+ },
+ {
+  "id": "wand-of-refracting-rays-6th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Refracting Rays (6th-Rank Spell)",
+  "level": 15,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast chromatic ray of the indicated rank."
+ }
+]

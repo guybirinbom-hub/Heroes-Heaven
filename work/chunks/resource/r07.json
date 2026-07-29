@@ -1,0 +1,387 @@
+[
+ {
+  "id": "medal-of-phoenixs-fire",
+  "collection": "items",
+  "name": "Medal of Phoenix’s Fire",
+  "level": 16,
+  "text": "Activate—Gorila's Second Leap (concentrate, fortune) Frequency once per day; Trigger You would fail but not critically fail an Athletics check to High Jump or Long Jump; Effect The gorilla on the medal beats its chest, giving you another chance. Activate—Unicorn’s Grace (concentrate, healing, vitality) Frequency once per day; Trigger You would regain Hit Points from a magical effect; Effect You regain an additional 4"
+ },
+ {
+  "id": "greater-medics-armband",
+  "collection": "items",
+  "name": "Greater Medic’s Armband",
+  "level": 10,
+  "text": "Activate—Do No Harm (concentrate) Frequency once per day; Trigger An enemy within 30 feet targets you with a Strike or a spell that deals damage; Effect Your armband glows, showing that you’re here as a medic and not as a combatant."
+ },
+ {
+  "id": "greater-sailors-collar",
+  "collection": "items",
+  "name": "Greater Sailor’s Collar",
+  "level": 10,
+  "text": "Activate—Gasp for Air (air, concentrate) Frequency once per day; Trigger You fail a Swim check; Effect Your collar inflates, giving you something to breathe from."
+ },
+ {
+  "id": "vortex-pouch",
+  "collection": "items",
+  "name": "Vortex Pouch",
+  "level": 6,
+  "text": "You can Sustain the activation once per round, up to 1 minute, to continue Catching Wind."
+ },
+ {
+  "id": "aerekostes-item",
+  "collection": "items",
+  "name": "Aerekostes (Item)",
+  "level": 8,
+  "text": "Activate—Forward Planning (concentrate, fortune) Frequency once per minute; Effect Aerekostes studies the ongoing combat and myriad ways an upcoming attack might resolve."
+ },
+ {
+  "id": "enkindled-quintessence",
+  "collection": "items",
+  "name": "Enkindled Quintessence",
+  "level": 14,
+  "text": "Once per day, from any distance, the dragon can either teleport you to their lair or teleport to switch places with you."
+ },
+ {
+  "id": "greater-stalk-goggles",
+  "collection": "items",
+  "name": "Greater Stalk Goggles",
+  "level": 3,
+  "text": "Activate—Looksee (concentrate) Frequency once per day; Effect By focusing hard, you can watch for enemies in all directions."
+ },
+ {
+  "id": "major-stalk-goggles",
+  "collection": "items",
+  "name": "Major Stalk Goggles",
+  "level": 8,
+  "text": "Activate—Looksee (concentrate) Frequency once per day; Effect By focusing hard, you can watch for enemies in all directions."
+ },
+ {
+  "id": "astrolabe-of-falling-stars",
+  "collection": "items",
+  "name": "Astrolabe of Falling Stars",
+  "level": 5,
+  "text": "Activate—Starfall (manipulate) Frequency once per day; Effect With a flick of your finger, you set the astrolabe’s rule spinning, causing the inset rubies to become a blur."
+ },
+ {
+  "id": "greater-pickled-demon-tongue",
+  "collection": "items",
+  "name": "Greater Pickled Demon Tongue",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day; Effect You cast 3rd-rank acidic burst. Activate Cast a Spell; Frequency once per day; Effect You cast 4th-rank acid grip. Activate Cast a Spell; Frequency once per day; Effect You cast 4th-rank acidic burst."
+ },
+ {
+  "id": "major-pickled-demon-tongue",
+  "collection": "items",
+  "name": "Major Pickled Demon Tongue",
+  "level": 12,
+  "text": "Activate Cast a Spell; Frequency once per day; Effect You cast 3rd-rank acidic burst. Activate Cast a Spell; Frequency once per day; Effect You cast 4th-rank acid grip. Activate Cast a Spell; Frequency once per day; Effect You cast 4th-rank acidic burst."
+ },
+ {
+  "id": "greater-polished-demon-horn",
+  "collection": "items",
+  "name": "Greater Polished Demon Horn",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day; Effect You cast 3rd-rank fear. Activate Cast a Spell; Frequency once per day; Effect You cast outcast’s curse. Activate Cast a Spell; Frequency once per day; Effect You cast vision of death."
+ },
+ {
+  "id": "major-polished-demon-horn",
+  "collection": "items",
+  "name": "Major Polished Demon Horn",
+  "level": 12,
+  "text": "Activate Cast a Spell; Frequency once per day; Effect You cast 3rd-rank fear. Activate Cast a Spell; Frequency once per day; Effect You cast outcast’s curse. Activate Cast a Spell; Frequency once per day; Effect You cast vision of death."
+ },
+ {
+  "id": "greater-sihedron-medallion",
+  "collection": "items",
+  "name": "Greater Sihedron Medallion",
+  "level": 9,
+  "text": "Activate—Bolster Flesh (concentrate, manipulate) Frequency once per day; Effect Your flesh is augmented with magical vitality."
+ },
+ {
+  "id": "major-sihedron-medallion",
+  "collection": "items",
+  "name": "Major Sihedron Medallion",
+  "level": 15,
+  "text": "Activate—Bolster Flesh (concentrate, manipulate) Frequency once per day; Effect Your flesh is augmented with magical vitality."
+ },
+ {
+  "id": "cyrusian-wand",
+  "collection": "items",
+  "name": "Cyrusian Wand",
+  "level": 4,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell at the indicated rank. Activate—Presume Success ; Frequency once per day; Trigger You fail the DC 10 flat check when you overcharge the wand; Effect You disbelieve your failure, willing the check to success."
+ },
+ {
+  "id": "hand-hewed-face",
+  "collection": "items",
+  "name": "Hand-Hewed Face",
+  "level": 7,
+  "text": "Once per day, from any distance, the entity that holds your *bargained contract* can change their appearance to match your appearance from before you sealed the contract, or the appearance you're currently using through Impersonate."
+ },
+ {
+  "id": "pyrite-rat",
+  "collection": "items",
+  "name": "Pyrite Rat",
+  "level": 2,
+  "text": "You can use this action only once per day, and the rat remains transformed for 1 hour."
+ },
+ {
+  "id": "breath-of-dragons",
+  "collection": "items",
+  "name": "Breath of Dragons",
+  "level": 0,
+  "text": "230 Aspect Dragon Activate command, envision; Frequency once per day; Effect You breathe out a cone or line of energy."
+ },
+ {
+  "id": "dragon-strike",
+  "collection": "items",
+  "name": "Dragon Strike",
+  "level": 0,
+  "text": "230 Aspect Dragon Activate command; Frequency once per hour; Effect Ghostly images of draconic claws form around your hands and linger in the air when you attack. At 11th level, you can use the ability once per 10 minutes instead of once per hour."
+ },
+ {
+  "id": "draconic-arrogance",
+  "collection": "items",
+  "name": "Draconic Arrogance",
+  "level": 0,
+  "text": "230 Aspect Dragon Activate command; Frequency once per day; Trigger You're about to roll a saving throw; Effect You laugh at fate and revel in your draconic arrogance."
+ },
+ {
+  "id": "wyrms-flight",
+  "collection": "items",
+  "name": "Wyrm's Flight",
+  "level": 0,
+  "text": "230 Aspect Dragon Activate command, envision; Frequency once per day; Effect Ghostly draconic wings grant you a fly Speed equal to your Speed or 20 feet, whichever is greater."
+ },
+ {
+  "id": "draconic-ascendance",
+  "collection": "items",
+  "name": "Draconic Ascendance",
+  "level": 0,
+  "text": "231 Aspect Dragon Activate command, envision; Frequency once per hour; Effect The soul seed casts 8th-level dragon form targeting you; you must take the dragon form corresponding to the soul seed's draconic origin."
+ },
+ {
+  "id": "absorb-injury",
+  "collection": "items",
+  "name": "Absorb Injury",
+  "level": 0,
+  "text": "231 Aspect Soul Activate envision; Frequency once per day; Trigger an ally within 30 feet takes damage; Effect You forge a conduit to your ally's soul and absorb the injury to protect them."
+ },
+ {
+  "id": "soul-puppet",
+  "collection": "items",
+  "name": "Soul Puppet",
+  "level": 0,
+  "text": "231 Aspect Soul Activate command, envision; Frequency once per day; Effect You bind loose souls, briefly animating an undead creature."
+ },
+ {
+  "id": "cleanse-soul",
+  "collection": "items",
+  "name": "Cleanse Soul",
+  "level": 0,
+  "text": "231 Aspect Soul Activate 1 minute (command, envision); Frequency once per day; Effect You cleanse a soul of curses."
+ },
+ {
+  "id": "spirit-blink",
+  "collection": "items",
+  "name": "Spirit Blink",
+  "level": 0,
+  "text": "231 Aspect Soul Activate command, envision; Frequency once per day; Effect You blink between the realm of mortals and the Ethereal Plane."
+ },
+ {
+  "id": "soul-magic",
+  "collection": "items",
+  "name": "Soul Magic",
+  "level": 0,
+  "text": "231 Aspect Soul Activate envision; Frequency once per day; Effect You infuse yourself or a willing creature that you touch with spiritual energy."
+ },
+ {
+  "id": "charming",
+  "collection": "items",
+  "name": "Charming",
+  "level": 0,
+  "text": "198 Aspect Artistry Activate (concentrate) Frequency once per day; Effect You speak briefly about your craft or enact a short performance."
+ },
+ {
+  "id": "enthralling",
+  "collection": "items",
+  "name": "Enthralling",
+  "level": 0,
+  "text": "198 Aspect Artistry Activate (concentrate) Frequency once per day; Effect You speak at length about or demonstrate your craft, or you enact a performance."
+ },
+ {
+  "id": "dominant-emotion",
+  "collection": "items",
+  "name": "Dominant Emotion",
+  "level": 0,
+  "text": "198 Aspect Emotion Activate (concentrate) Frequency once per hour; Trigger You would be adversely affected by an emotion effect; Effect The relic tries to neutralize the triggering effect with its own emotion, attempting a counteract check."
+ },
+ {
+  "id": "emotion-surge",
+  "collection": "items",
+  "name": "Emotion Surge",
+  "level": 0,
+  "text": "199 Aspect Emotion Activate (concentrate) Frequency once per hour; Effect A surge of emotion emanates from your relic, granting a +1 status bonus to skill checks determined by the relic's emotion."
+ },
+ {
+  "id": "fervor",
+  "collection": "items",
+  "name": "Fervor",
+  "level": 0,
+  "text": "199 Aspect Emotion Activate (concentrate) Frequency once per hour; Effect You gain the emotional fervor benefits for your relic's emotional state for the next 3 rounds, but ignore the spell associated with the fervor."
+ },
+ {
+  "id": "beginners-luck",
+  "collection": "items",
+  "name": "Beginner's Luck",
+  "level": 0,
+  "text": "199 Aspect Luck Activate (concentrate) Frequency once per day; Trigger You attempt a d20 roll you're untrained in; Effect You treat your proficiency bonus as equal to half your level, or if the relic is 7th level or higher, as equal to your level."
+ },
+ {
+  "id": "swap-luck",
+  "collection": "items",
+  "name": "Swap Luck",
+  "level": 0,
+  "text": "199 Aspect Luck Activate (concentrate) Frequency once per hour; Trigger You roll a failure or critical failure on a saving throw against an effect with multiple targets; Effect You swap rolls with another target who's willing to swap with you."
+ },
+ {
+  "id": "whammy",
+  "collection": "items",
+  "name": "Whammy",
+  "level": 0,
+  "text": "199 Aspect Luck Activate (concentrate) Frequency once per day; Trigger An enemy within 30 feet rolls a success on an attack roll, saving throw, or skill check; Effect Your relic sends out a wave of bad luck, forcing the creature to reroll and take the worse result."
+ },
+ {
+  "id": "steal-luck",
+  "collection": "items",
+  "name": "Steal Luck",
+  "level": 0,
+  "text": "199 Aspect Luck Activate (concentrate) Frequency once per day; ; Trigger You or a creature within 30 feet of you rolls two d20s for a fortune or misfortune effect and you like the higher roll; Effect You steal the higher of the two numbers the triggering target rolled; the target must use the other result."
+ },
+ {
+  "id": "sands-of-the-hourglass",
+  "collection": "items",
+  "name": "Sands of the Hourglass",
+  "level": 0,
+  "text": "Activate (concentrate, manipulate) Frequency once per hour; Effect You target one creature within 30 feet, temporarily imposing the decrepitude of time on it."
+ },
+ {
+  "id": "precognition",
+  "collection": "items",
+  "name": "Precognition",
+  "level": 0,
+  "text": "200 Aspect Time Activate (concentrate) Frequency once per day; Trigger Your turn starts; Effect You analyze diverging time streams to determine the best course of action."
+ },
+ {
+  "id": "temporal-pulse",
+  "collection": "items",
+  "name": "Temporal Pulse",
+  "level": 0,
+  "text": "200 Aspect Time Activate (concentrate) Frequency once per day; Effect You make time shudder around you, stealing it from enemies and granting it to allies."
+ },
+ {
+  "id": "time-jump",
+  "collection": "items",
+  "name": "Time Jump",
+  "level": 0,
+  "text": "200 Aspect Time Activate (concentrate) Frequency once per day; Effect Your relic casts time jump on you to your specifications."
+ },
+ {
+  "id": "time-reversal",
+  "collection": "items",
+  "name": "Time Reversal",
+  "level": 0,
+  "text": "200 Aspect Time Activate (concentrate) Frequency once per day; Effect The relic casts time beacon on you."
+ },
+ {
+  "id": "creative-spark",
+  "collection": "items",
+  "name": "Creative Spark",
+  "level": 0,
+  "text": "114 Aspect Forge Activate command, Interact; Frequency once per day; Effect You strike the relic against a piece of flint and summon a fire wisp to assist you, which appears in an unoccupied square next to you. Once per day, when you roll a critical failure on a Crafting check related to blacksmithing, you get a failure instead."
+ },
+ {
+  "id": "forge-weld",
+  "collection": "items",
+  "name": "Forge Weld",
+  "level": 0,
+  "text": "114 Aspect Forge Activate command, Interact; Frequency once per day; Effect You strike the relic against a non-magical metal object of 4 Bulk or less, repairing it."
+ },
+ {
+  "id": "work-harden",
+  "collection": "items",
+  "name": "Work Harden",
+  "level": 0,
+  "text": "114 Aspect Forge Activate command, Interact; Frequency once per day; Effect You strike the relic against a shield or armor made of metal, and steam pours from it like it's just been quenched."
+ },
+ {
+  "id": "molten-crucible",
+  "collection": "items",
+  "name": "Molten Crucible",
+  "level": 0,
+  "text": "114 Aspect Forge Activate command, Interact; Frequency once per day; Effect You strike your relic against a weapon, armor, or shield made of metal."
+ },
+ {
+  "id": "living-forge",
+  "collection": "items",
+  "name": "Living Forge",
+  "level": 0,
+  "text": "114 Aspect Forge Activate command, Interact; Frequency once per day; Effect The relic is absorbed into your body, and you transform into an elemental being of red-hot steel."
+ },
+ {
+  "id": "precious-anodization",
+  "collection": "items",
+  "name": "Precious Anodization",
+  "level": 0,
+  "text": "148 Aspect Metal Activate (concentrate) Frequency once per day; Effect For one minute, your relic is affected by a clad in metal spell of a rank equal to half the relic's level, rounded up."
+ },
+ {
+  "id": "rail-dash",
+  "collection": "items",
+  "name": "Rail Dash",
+  "level": 0,
+  "text": "148 Aspect Metal Activate ; Frequency once per hour; Effect Your relic conjures a guideway of magnets beneath you, creating a frictionless path for you to rush forward at high speeds."
+ },
+ {
+  "id": "all-will-decay",
+  "collection": "items",
+  "name": "All Will Decay",
+  "level": 0,
+  "text": "Activate (aura, concentrate) Frequency once per day; Effect Rusted flakes swirl in a cloud around you, creating a 15-foot emanation that lasts for 1 minute."
+ },
+ {
+  "id": "ancestors-call",
+  "collection": "items",
+  "name": "Ancestors' Call",
+  "level": 0,
+  "text": "Activate envision; Frequency once per hour; Effect Select one of the three ancestry feats."
+ },
+ {
+  "id": "propelling-winds",
+  "collection": "items",
+  "name": "Propelling Winds",
+  "level": 0,
+  "text": "310 Aspect Air Activate (concentrate, manipulate) Frequency once per hour; Effect The relic casts fly targeting you."
+ },
+ {
+  "id": "call-of-the-wild",
+  "collection": "items",
+  "name": "Call of the Wild",
+  "level": 0,
+  "text": "310 Aspect Beast Activate (concentrate, manipulate) Frequency once per day; Effect Your relic summons a creature to fight at your side, casting summon animal with a spell rank of half the item's level rounded up."
+ },
+ {
+  "id": "word-of-faith",
+  "collection": "items",
+  "name": "Word of Faith",
+  "level": 0,
+  "text": "311 Aspect Celestial Activate (concentrate, manipulate) Frequency once per hour; Effect Placing your hand on yourself or an ally, you heal their wounds and bolster their spirit."
+ },
+ {
+  "id": "righteous-call",
+  "collection": "items",
+  "name": "Righteous Call",
+  "level": 0,
+  "text": "311 Aspect Celestial Activate (concentrate, manipulate) Frequency once per day; Effect Holy magic fills your armaments, making them true weapons against evil."
+ }
+]

@@ -1,0 +1,387 @@
+[
+ {
+  "id": "master-of-many-styles",
+  "collection": "feats",
+  "name": "Master of Many Styles",
+  "level": 16,
+  "text": "--- You move fluidly between stances, using your mastery of combat to always adopt the best tactics. You use an action with the stance trait."
+ },
+ {
+  "id": "wayfinder-resonance-tinkerer",
+  "collection": "feats",
+  "name": "Wayfinder Resonance Tinkerer",
+  "level": 4,
+  "text": "You can activate your *wayfinder* to cast that cantrip at will. Additionally, you can Activate your *wayfinder* with a ⟨1⟩ (envision) activation to transform it into a nondescript pin or brooch to hide your affiliation with the Pathfinder Society."
+ },
+ {
+  "id": "attunement-to-stone",
+  "collection": "feats",
+  "name": "Attunement to Stone",
+  "level": 10,
+  "text": "When in contact with a stone surface, you gain tremorsense (imprecise) 5 feet along that surface, and you can activate your *ka stone* to cast One with Stone."
+ },
+ {
+  "id": "judgment-of-the-monolith",
+  "collection": "feats",
+  "name": "Judgment of the Monolith",
+  "level": 12,
+  "text": "You can activate your ka stone to target a single living creature, causing that creature to experience the effects of being in a zone of truth. You can also activate it with a 10-minute activation (envision) to cast talking corpse."
+ },
+ {
+  "id": "stone-communion",
+  "collection": "feats",
+  "name": "Stone Communion",
+  "level": 14,
+  "text": "You learn the Terran language and you can Activate your *ka stone* with a 10-minute activation (envision) to cast Speak with Stones."
+ },
+ {
+  "id": "familiars-eyes",
+  "collection": "feats",
+  "name": "Familiar's Eyes",
+  "level": 12,
+  "text": "When you do, you lose all sensory information from your own body, but you can sense through your familiar's body until you Dismiss the effect."
+ },
+ {
+  "id": "gorilla-pound",
+  "collection": "feats",
+  "name": "Gorilla Pound",
+  "level": 6,
+  "text": "**Requirements** You are in Gorilla Stance. If your Strike hits, you gain a circumstance bonus to the damage roll equal to triple the value of the target's frightened condition. --- **Special** If you have this feat, while you are in Gorilla Stance, you gain a Climb Speed of 15 feet."
+ },
+ {
+  "id": "peafowl-strut",
+  "collection": "feats",
+  "name": "Peafowl Strut",
+  "level": 10,
+  "text": "**Requirements** You are in Peafowl Stance. The Strike must be made with the sword required by Peafowl Stance."
+ },
+ {
+  "id": "wish-alchemy",
+  "collection": "feats",
+  "name": "Wish Alchemy",
+  "level": 20,
+  "text": "Only you can Activate the wish vial, which takes the same number of Interact actions as the spell's casting time and grants you the effects of the spell."
+ },
+ {
+  "id": "rescuers-press",
+  "collection": "feats",
+  "name": "Rescuer's Press",
+  "level": 4,
+  "text": "In addition, if you are in the Everstand Stance and successfully Shove a creature using a shield that you wield two-handed, you can increase the distance of your Shove to 10 feet."
+ },
+ {
+  "id": "skyseeker",
+  "collection": "feats",
+  "name": "Skyseeker",
+  "level": 8,
+  "text": "**Requirements** You're in Sky and Heaven Stance. All Leaps made during this activity gain a +10‐foot status bonus to the total height or distance of your leap, and no two Strikes can target the same creature."
+ },
+ {
+  "id": "cross-the-final-horizon",
+  "collection": "feats",
+  "name": "Cross the Final Horizon",
+  "level": 20,
+  "text": "**Requirements** You're in Sky and Heaven Stance. --- You Stride up to your Speed, and your ki enshrouds your limbs in terrifying stormy energy, increasing the reach of your Sky and Heaven Stance unarmed attacks by 5 feet."
+ },
+ {
+  "id": "wayfinder-resonance-infiltrator",
+  "collection": "feats",
+  "name": "Wayfinder Resonance Infiltrator",
+  "level": 8,
+  "text": "Once per day you can activate your *wayfinder* to cast Illusory Disguise, heightened to 2nd level, as an arcane spell. Additionally, once per day, you can Activate your *wayfinder* with a single-action envision activation to transform it into a perfect replica of another similarly sized badge of membership or office, such as an Aspis Consortium badge."
+ },
+ {
+  "id": "communal-sustain",
+  "collection": "feats",
+  "name": "Communal Sustain",
+  "level": 12,
+  "text": "**Frequency** once per round --- Choose one spell with a sustained duration that one of your allies has in effect. The ally can Sustain the Spell once as a free action, triggered at the start of their next turn."
+ },
+ {
+  "id": "blazing-talon-surge",
+  "collection": "feats",
+  "name": "Blazing Talon Surge",
+  "level": 6,
+  "text": "**Requirements** You are in Rain of Embers Stance."
+ },
+ {
+  "id": "explosive-death-drop",
+  "collection": "feats",
+  "name": "Explosive Death Drop",
+  "level": 14,
+  "text": "**Requirements** You are in Rain of Embers Stance and have a target grabbed or restrained. You take a -1 circumstance penalty to your check if the target is one size larger than you and a -3 circumstance penalty if it's larger than that. You gain a +1 circumstance bonus to your check if the target is one size smaller than you and a +3 circumstance bonus if it's smaller than that."
+ },
+ {
+  "id": "flame-jump",
+  "collection": "feats",
+  "name": "Flame Jump",
+  "level": 13,
+  "text": "You can spend 1 minute in focused preparation, then enter a fire your size or larger to instantly teleport to any fire that is your size or larger up to 5 miles away. You take no damage from entering or exiting fires when using this ability. Once you enter the fire, you instantly know the rough locations of other large fires within range and can exit from the original fire, if you prefer."
+ },
+ {
+  "id": "quick-shape",
+  "collection": "feats",
+  "name": "Quick Shape",
+  "level": 1,
+  "text": "--- Your instincts kick in and you take on an aggressive stance. You use Change Shape to enter your hybrid form or a new form granted by a beastkin feat."
+ },
+ {
+  "id": "electric-counter",
+  "collection": "feats",
+  "name": "Electric Counter",
+  "level": 16,
+  "text": "**Requirements** You are in Wild Winds Stance. --- You gain resistance to electricity equal to your level until the start of your next turn. If the triggering damage was electricity, this resistance applies to it."
+ },
+ {
+  "id": "devastating-spellstrike",
+  "collection": "feats",
+  "name": "Devastating Spellstrike",
+  "level": 4,
+  "text": "**Requirements** You are in Arcane Cascade stance and your Spellstrike is charged. The damage type is the same as Arcane Cascade; if the spell already deals splash damage of the same type, combine the damage together before applying weaknesses or resistances."
+ },
+ {
+  "id": "distracting-spellstrike",
+  "collection": "feats",
+  "name": "Distracting Spellstrike",
+  "level": 4,
+  "text": "**Requirements** You're in Arcane Cascade stance and have a hand free."
+ },
+ {
+  "id": "starlit-eyes",
+  "collection": "feats",
+  "name": "Starlit Eyes",
+  "level": 4,
+  "text": "When you make a ranged Strike while in Arcane Cascade stance, you lower the DC of your flat check to target a creature that's concealed or hidden from you."
+ },
+ {
+  "id": "student-of-the-staff",
+  "collection": "feats",
+  "name": "Student of the Staff",
+  "level": 4,
+  "text": "While you're in Arcane Cascade stance, your staff gains the deadly d6 trait, with the damage from the deadly die being the same damage type as the extra damage from Arcane Cascade."
+ },
+ {
+  "id": "capture-magic",
+  "collection": "feats",
+  "name": "Capture Magic",
+  "level": 8,
+  "text": "You enter your Arcane Cascade stance, using the triggering spell to determine what damage type your Arcane Cascade deals."
+ },
+ {
+  "id": "dazzling-block",
+  "collection": "feats",
+  "name": "Dazzling Block",
+  "level": 10,
+  "text": "**Requirements** You are in Arcane Cascade stance."
+ },
+ {
+  "id": "sustaining-steel",
+  "collection": "feats",
+  "name": "Sustaining Steel",
+  "level": 10,
+  "text": "**Requirements** You're in Arcane Cascade stance. --- You pull magic into your weapon, using its substance to transform the magic into restorative energy."
+ },
+ {
+  "id": "resounding-cascade",
+  "collection": "feats",
+  "name": "Resounding Cascade",
+  "level": 16,
+  "text": "--- When you enter your Arcane Cascade, you disperse the magical reinforcement to nearby allies. This uses only the base damage of the stance, based on the ally's weapon specialization; it doesn't use any increase you get from bonuses, the Laughing Shadow hybrid study, or the like."
+ },
+ {
+  "id": "inner-fire-som",
+  "collection": "feats",
+  "name": "Inner Fire (SoM)",
+  "level": 6,
+  "text": "202 Prerequisites Stoked Flame Stance While you're in Stoked Flame Stance, you have cold and fire resistance equal to half your level, and any creature that hits you with an unarmed attack, tries to Grab or Grapple you, or otherwise touches you takes fire damage equal to your Wisdom modifier (minimum 1)."
+ },
+ {
+  "id": "blazing-streak",
+  "collection": "feats",
+  "name": "Blazing Streak",
+  "level": 10,
+  "text": "**Requirements** You're in Stoked Flame Stance."
+ },
+ {
+  "id": "shifting-terrain",
+  "collection": "feats",
+  "name": "Shifting Terrain",
+  "level": 14,
+  "text": "**Requirements** Your terrain attunement matches the terrain you're in and you're in Rough Terrain Stance. Each creature within your area of difficult terrain from Rough Terrain Stance must attempt a saving throw against your spell DC with the following effects."
+ },
+ {
+  "id": "bullet-dancer-dedication",
+  "collection": "feats",
+  "name": "Bullet Dancer Dedication",
+  "level": 2,
+  "text": "You gain the Bullet Dancer Stance action. **Bullet Dancer Stance** ⟨1⟩ (stance)"
+ },
+ {
+  "id": "bullet-dancer-burn",
+  "collection": "feats",
+  "name": "Bullet Dancer Burn",
+  "level": 4,
+  "text": "While in Bullet Dancer Stance, when you successfully Strike an opponent with the melee form of a combination weapon or a bayonet or reinforced stock attached to a simple firearm, the next ranged Strike you make against that opponent doesn't trigger reactions that would trigger on a ranged attack, such as Reactive Strike. While in Bullet Dancer Stance, when you make a successful ranged Strike against an opponent within your melee reach using a firearm, the next melee attack ag"
+ },
+ {
+  "id": "bullet-dancer-reload",
+  "collection": "feats",
+  "name": "Bullet Dancer Reload",
+  "level": 10,
+  "text": "**Requirements** You're in Bullet Dancer Stance."
+ },
+ {
+  "id": "summon-ensemble",
+  "collection": "feats",
+  "name": "Summon Ensemble",
+  "level": 4,
+  "text": "When you cast Summon Instrument, you can modify its duration to be sustained, up to 1 minute. Once per turn when you Sustain the Spell, choose an opponent within 30 feet who can hear your performance."
+ },
+ {
+  "id": "confounding-image",
+  "collection": "feats",
+  "name": "Confounding Image",
+  "level": 6,
+  "text": "When you cast Mirror Image, you can modify its duration to be sustained up to 1 minute and modify its range to 30 feet. When you Sustain the Spell, you can move the image to an unoccupied square within range."
+ },
+ {
+  "id": "disk-rider",
+  "collection": "feats",
+  "name": "Disk Rider",
+  "level": 6,
+  "text": "When you cast Floating Disk, you can modify its duration to be sustained, up to 10 minutes. If you ride atop the disk, you can direct it to move along the ground up to 30 feet or your Speed, whichever is slower, each time you Sustain the Spell."
+ },
+ {
+  "id": "directed-poison",
+  "collection": "feats",
+  "name": "Directed Poison",
+  "level": 12,
+  "text": "When you cast Toxic Cloud, modify its duration to be sustained up to 1 minute, and modify its standard effect to include the following: The cloud doesn't move away from you each round. Once per round when you Sustain the Spell, you can move the cloud 10 feet in the direction of your choice."
+ },
+ {
+  "id": "black-powder-flash",
+  "collection": "feats",
+  "name": "Black Powder Flash",
+  "level": 10,
+  "text": "**Requirements** You're in Powder Punch Stance."
+ },
+ {
+  "id": "devoted-guardian",
+  "collection": "feats",
+  "name": "Devoted Guardian",
+  "level": 2,
+  "text": "--- You adopt a wide stance, ready to defend both yourself and your chosen ward. As long as your shield is raised and the creature remains adjacent to you, the creature gains a +1 circumstance bonus to their AC, or a +2 circumstance bonus if the shield you raised was a tower shield."
+ },
+ {
+  "id": "pirouette",
+  "collection": "feats",
+  "name": "Pirouette",
+  "level": 6,
+  "text": "**Requirements** You're in Masquerade of Seasons Stance. You gain a +2 circumstance bonus to AC against the triggering attack. If the attack hits you anyway, reduce the damage it deals by an amount equal to half your level; this reduction in damage is applied after calculating immunities, resistances, and weakness."
+ },
+ {
+  "id": "grand-dance",
+  "collection": "feats",
+  "name": "Grand Dance",
+  "level": 8,
+  "text": "**Requirements** You're in Masquerade of Seasons Stance."
+ },
+ {
+  "id": "stalwart-defender-dedication",
+  "collection": "feats",
+  "name": "Stalwart Defender Dedication",
+  "level": 2,
+  "text": "You gain the Tenacious Stance action."
+ },
+ {
+  "id": "tunnel-wall",
+  "collection": "feats",
+  "name": "Tunnel Wall",
+  "level": 4,
+  "text": "**Requirements** You are in Tenacious Stance. While anchored, you gain a +4 circumstance bonus to the DC to Tumble Through your space."
+ },
+ {
+  "id": "upset-balance",
+  "collection": "feats",
+  "name": "Upset Balance",
+  "level": 6,
+  "text": "**Requirements** You are in Tenacious Stance. If you are anchored, you gain a +2 circumstance bonus to this check."
+ },
+ {
+  "id": "rupture-stomp",
+  "collection": "feats",
+  "name": "Rupture Stomp",
+  "level": 8,
+  "text": "**Frequency** once per day **Requirements** You are in Tenacious Stance."
+ },
+ {
+  "id": "unshaken-in-iron",
+  "collection": "feats",
+  "name": "Unshaken in Iron",
+  "level": 8,
+  "text": "While in Tenacious Stance, you increase the value of your armor specialization effects by an amount equal to the value of your armor check penalty (adding +3 to the resistance while wearing plate armors, for example)."
+ },
+ {
+  "id": "gathering-moss",
+  "collection": "feats",
+  "name": "Gathering Moss",
+  "level": 10,
+  "text": "**Trigger** You enter Tenacious Stance. This fast healing remains for 1 minute or until you end your Tenacious Stance, whichever comes first."
+ },
+ {
+  "id": "cracked-mountain",
+  "collection": "feats",
+  "name": "Cracked Mountain",
+  "level": 12,
+  "text": "**Requirements** You are in Tenacious Stance. You immediately end your Tenacious Stance."
+ },
+ {
+  "id": "stone-body",
+  "collection": "feats",
+  "name": "Stone Body",
+  "level": 16,
+  "text": "**Requirements** You are in Tenacious Stance. You gain resistance 10 to all damage."
+ },
+ {
+  "id": "kinetic-activation",
+  "collection": "feats",
+  "name": "Kinetic Activation",
+  "level": 2,
+  "text": "You can Activate magic items that require you to be able to Cast a Spell, provided you activate them to Cast a Spell with the same trait as one of your kinetic elements; for example, if you can channel fire, you could Activate a *scroll of* Fireball."
+ },
+ {
+  "id": "safe-elements",
+  "collection": "feats",
+  "name": "Safe Elements",
+  "level": 4,
+  "text": "When you Channel Elements or use a stance impulse that affects your kinetic aura, you can designate a number of creatures up to your Constitution modifier (minimum 1 creature)."
+ },
+ {
+  "id": "aura-shaping",
+  "collection": "feats",
+  "name": "Aura Shaping",
+  "level": 10,
+  "text": "You choose the size when you Channel Elements and can change it when you use a stance impulse that affects your kinetic aura."
+ },
+ {
+  "id": "effortless-impulse",
+  "collection": "feats",
+  "name": "Effortless Impulse",
+  "level": 12,
+  "text": "You immediately Sustain one of your active impulses that can be sustained."
+ },
+ {
+  "id": "imperious-aura",
+  "collection": "feats",
+  "name": "Imperious Aura",
+  "level": 16,
+  "text": "Use a stance impulse that affects your kinetic aura."
+ },
+ {
+  "id": "kinetic-pinnacle",
+  "collection": "feats",
+  "name": "Kinetic Pinnacle",
+  "level": 20,
+  "text": "You can use your extra action only to Channel Elements, use a 1-action Elemental Blast, or use a 1-action stance impulse."
+ }
+]

@@ -1,0 +1,387 @@
+[
+ {
+  "id": "curse-of-engulfing-flames",
+  "collection": "classFeatures",
+  "name": "Curse of Engulfing Flames",
+  "level": 1,
+  "text": "When you have the cursebound condition, you catch fire, taking persistent fire damage equal to your cursebound value, and any immunity or resistance you have to fire is suppressed. The flames shed light like a Torch, and if you enter an environment where they could not burn (such as underwater), you simply seethe with flameless heat."
+ },
+ {
+  "id": "inexorable-iron",
+  "collection": "classFeatures",
+  "name": "Inexorable Iron",
+  "level": 1,
+  "text": "When you enter Arcane Cascade stance and at the start of each of your turns while you're in that stance, if you're wielding a melee weapon in two hands, you gain temporary Hit Points equal to half your level (minimum 1 temporary HP)."
+ },
+ {
+  "id": "laughing-shadow",
+  "collection": "classFeatures",
+  "name": "Laughing Shadow",
+  "level": 1,
+  "text": "While in Arcane Cascade stance, you gain a +5-foot status bonus to your Speeds, or a +10-foot bonus if you're unarmored. If you have a free hand while in the stance and are attacking an off-guard creature, you increase the extra damage to 3, to 5 if you have weapon specialization, or to 7 if you have greater weapon specialization."
+ },
+ {
+  "id": "of-verse-unbroken",
+  "collection": "classFeatures",
+  "name": "Of Verse Unbroken",
+  "level": 7,
+  "text": "Until the start of your next turn, any of your allies that starts their turn within 30 feet of you can hum to Sustain one of their effects that can be sustained."
+ },
+ {
+  "id": "resurgent-maelstrom",
+  "collection": "classFeatures",
+  "name": "Resurgent Maelstrom",
+  "level": 1,
+  "text": "While you're in Arcane Cascade stance , you can manipulate the water around your improvised weapon, making it cut like a knife or bash with the force of falling rocks. For instance, an improvised weapon that normally deals bludgeoning damage gains the versatile P and versatile S traits."
+ },
+ {
+  "id": "sparkling-targe",
+  "collection": "classFeatures",
+  "name": "Sparkling Targe",
+  "level": 1,
+  "text": "When you're in Arcane Cascade stance with your shield raised, your circumstance bonus to AC from your shield also applies to your saves against spells and other magical effects."
+ },
+ {
+  "id": "the-tangible-dream",
+  "collection": "classFeatures",
+  "name": "The Tangible Dream",
+  "level": 1,
+  "text": "When you Sustain the spell, you can move the apparent sound or vision up to 15 feet. If you Sustain the spell, the details of the illusion change and shift to keep your enemies unsettled; the flanking illusion's duration extends until the beginning of your next turn and you can move it to any unoccupied square in the spell's range. The duration increases to sustained up to 1 minute. The shield still lowers at the start of each of your turns, but you can raise it again when yo"
+ },
+ {
+  "id": "toxicologist",
+  "collection": "classFeatures",
+  "name": "Toxicologist",
+  "level": 1,
+  "text": "**Field Benefit** You can Activate an injury poison as a single action, provided you apply it to a weapon you're holding or a piece of ammunition on your person or loaded in a weapon you're holding. This can be an item you're holding or you can Interact to draw an eligible item or make one using Quick Alchemy as part of the single action; if you can make more than one item with Quick Alchemy (such as with the double brew class feature), you can still Activate only one. The su"
+ },
+ {
+  "id": "twisting-tree",
+  "collection": "classFeatures",
+  "name": "Twisting Tree",
+  "level": 1,
+  "text": "While you're in Arcane Cascade stance, you can Interact or Release to change your grip on the weapon as a free action when you Strike with your staff, including Strikes made in a Spellstrike."
+ },
+ {
+  "id": "unfurling-brocade",
+  "collection": "classFeatures",
+  "name": "Unfurling Brocade",
+  "level": 1,
+  "text": "While in Arcane Cascade stance, the magical energy flowing through your fabric partially animates it to accomplish an even greater range of tricks."
+ },
+ {
+  "id": "channel-elements",
+  "collection": "classFeatures",
+  "name": "Channel Elements",
+  "level": 1,
+  "text": "Your kinetic aura activates, and as a part of this action, you can use a 1-action Elemental Blast or a 1-action stance impulse. Your kinetic aura automatically deactivates if you're knocked out, you use an impulse with the overflow trait, or you Dismiss the aura. Though you can't use new impulses while your kinetic aura is deactivated, ones you already used remain, and you can still Sustain any that can be sustained. Stance impulses are linked to your kinetic aura and end whe"
+ },
+ {
+  "id": "mariners-mien",
+  "collection": "items",
+  "name": "Mariner's Mien",
+  "level": 8,
+  "text": "Activate—Set the Course (concentrate) Frequency once per day; Requirements You are aboard a vehicle; Effect You become quickened for 1 minute or until you leave the vehicle, whichever comes first, and can use the extra action to Take Control of the vehicle or, if you’re already piloting it, Drive or Stop the vehicle. 78 Price 5,300 gp The mask grants a +2 item bonus, and you can activate it once per hour."
+ },
+ {
+  "id": "lesser-mariners-mien",
+  "collection": "items",
+  "name": "Lesser Mariner's Mien",
+  "level": 8,
+  "text": "Activate—Set the Course (concentrate) Frequency once per day; Requirements You are aboard a vehicle; Effect You become quickened for 1 minute or until you leave the vehicle, whichever comes first, and can use the extra action to Take Control of the vehicle or, if you’re already piloting it, Drive or Stop the vehicle. 78 Price 5,300 gp The mask grants a +2 item bonus, and you can activate it once per hour."
+ },
+ {
+  "id": "moderate-mariners-mien",
+  "collection": "items",
+  "name": "Moderate Mariner's Mien",
+  "level": 15,
+  "text": "Activate—Set the Course (concentrate) Frequency once per day; Requirements You are aboard a vehicle; Effect You become quickened for 1 minute or until you leave the vehicle, whichever comes first, and can use the extra action to Take Control of the vehicle or, if you’re already piloting it, Drive or Stop the vehicle. 78 Price 5,300 gp The mask grants a +2 item bonus, and you can activate it once per hour."
+ },
+ {
+  "id": "aeon-stone-rainbow-prism",
+  "collection": "items",
+  "name": "Aeon Stone (Rainbow Prism)",
+  "level": 13,
+  "text": "You can activate this stone in two ways. **Activate** ⟨2⟩ envision --- **Effect** The aeon stone captures the image of a creature of your size that you can see within 30 feet. **Activate** ⟨2⟩ envision **Frequency** three times per day **Requirements** The prism is storing at least one image of a creature of your size --- **Effect** The aeon stone casts a 3rd-rank Illusory Disguise on you, which must be of one of the creatures it has currently captured."
+ },
+ {
+  "id": "wayfinder-of-rescue",
+  "collection": "items",
+  "name": "Wayfinder of Rescue",
+  "level": 4,
+  "text": "As a standard Wayfinder, but once per day you can activate it to cast Heal on a creature other than yourself, using either the one-action or two-action version of heal as a 1st-rank spell."
+ },
+ {
+  "id": "hummingbird-wayfinder",
+  "collection": "items",
+  "name": "Hummingbird Wayfinder",
+  "level": 12,
+  "text": "--- **Activate** ⟨2⟩ command, Interact **Frequency** once per hour --- **Effect** You cause the wayfinder to transform into a Tiny bee hummingbird, only 2 inches long. In addition to Seeking through the hummingbird, you can activate any aeon stone within the wayfinder as if the wayfinder were still on your person."
+ },
+ {
+  "id": "blessed-tattoo",
+  "collection": "items",
+  "name": "Blessed Tattoo",
+  "level": 4,
+  "text": "**Activate** ⟨2⟩ envision, Interact **Frequency** once per day --- **Effect** You gain the effect of Protection against evil. You can activate the tattoo as a reaction instead of a two-action activity, triggered when a demon attacks you or you attempt a saving throw against a demon's ability."
+ },
+ {
+  "id": "singing-bowl-of-the-versatile-stance",
+  "collection": "items",
+  "name": "Singing Bowl of the Versatile Stance",
+  "level": 11,
+  "text": "**Activate** ⟨1⟩ Interact (auditory) --- **Effect** While holding the *singing bowl of the versatile stance* with one hand, you strike the lip of it with a mallet held in the other. Anyone within 60 feet currently in a stance can spend a reaction to use one of their stance actions in order to change to a different stance."
+ },
+ {
+  "id": "necklace-of-strangulation",
+  "collection": "items",
+  "name": "Necklace of Strangulation",
+  "level": 15,
+  "text": "When you enter a situation of extreme stress (as determined by the GM), the necklace tightens around your neck, suffocating you and dealing 30 damage to you at the end of each of your turns."
+ },
+ {
+  "id": "axe-of-the-dwarven-lords",
+  "collection": "items",
+  "name": "Axe of the Dwarven Lords",
+  "level": 26,
+  "text": "--- **Activate** ⟨3⟩ envision, Interact **Frequency** once per week **Effect** The axe casts a 10th-rank Summon Elemental spell to conjure an elite elemental avalanche. The spell is automatically sustained, requiring no action on your part but still allowing you to command the elemental on each of your turns. You can Dismiss the Spell."
+ },
+ {
+  "id": "rope-of-climbing",
+  "collection": "items",
+  "name": "Rope of Climbing",
+  "level": 3,
+  "text": "Activate Interact; Frequency once per day; Effect You hold one end of the rope and point to a destination. 262 Price 125 gp Bulk L You can activate the moderate rope of climbing once per hour instead of once per day. 262 Price 300 gp Bulk L You can activate the greater rope of climbing without any frequency limit."
+ },
+ {
+  "id": "ruby-string",
+  "collection": "items",
+  "name": "Ruby String",
+  "level": 14,
+  "text": "Alternatively, you can activate it to create a smaller demiplane without requiring the ritual. **Activate** 8 hours (envision, Interact) --- **Effect** You spin the thread to form a demiplane with the effects of a successful 8th-rank *create demiplane*, but the space is a single 10-foot cube."
+ },
+ {
+  "id": "cordelias-construct-key",
+  "collection": "items",
+  "name": "Cordelia's Construct Key",
+  "level": 8,
+  "text": "Additionally, you can activate the key in two ways to call a construct to serve you. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per hour --- **Effect** You turn the key in the air and create a magic glyph. --- **Activate** 1 minute (command, envision, Interact) **Frequency** once per day --- **Effect** You place the key on a Small object and turn it, creating a simple animated object for 1 hour."
+ },
+ {
+  "id": "cordelias-construct-key-greater",
+  "collection": "items",
+  "name": "Cordelia's Construct Key (Greater)",
+  "level": 12,
+  "text": "Additionally, you can activate the key in two ways to call a construct to serve you. Activate command, Interact; Frequency once per hour; Effect You turn the key in the air and create a magic glyph. Activate 1 minute (command, envision, Interact); Frequency once per day; Effect You place the key on a Small object and turn it, creating a simple animated object for 1 hour. 123 Price 1,750 gp Usage worn A greater key allows you to fully comprehend and thus partially bypass a con"
+ },
+ {
+  "id": "fulcrum-lenses",
+  "collection": "items",
+  "name": "Fulcrum Lenses",
+  "level": 9,
+  "text": "You can also activate the lens in the following ways. Activate Interact; Frequency once per day; Effect You grasp the Crimson Fulcrum Lens in one hand and make a Strike that doesn't require that hand. Activate Interact (attack, possession); Effect While grasping the lens, make a melee spell attack roll with a modifier of +18. You're no longer invested in the lens, and the target gains the benefits as though it had invested the lens but can't activate the lens's other abilitie"
+ },
+ {
+  "id": "ebon-fulcrum-lens",
+  "collection": "items",
+  "name": "Ebon Fulcrum Lens",
+  "level": 12,
+  "text": "You can activate the lens in the following ways. --- **Activate** ⟨5⟩ envision **Frequency** once per day **Requirements** At least one glimmer remains in the *Ebon Fulcrum Lens* **Prerequisites** you have the rejuvenation ability **Trigger** you would be destroyed and are able to rejuvenate **Effect** For the first 24 hours after you rejuvenate, you gain a +1 item bonus to attack rolls, saving throws, and DCs. --- **Activate** ⟨2⟩ Interact **Frequency** once per day **Requir"
+ },
+ {
+  "id": "sky-piercing-bow",
+  "collection": "items",
+  "name": "Sky-Piercing Bow",
+  "level": 19,
+  "text": "--- **Activate** ⟨2⟩ Interact (conjuration, teleportation) **Frequency** once per day --- **Effect** You shoot an arrow at an open space on a surface within 500 feet and momentarily vanish into a wind that carries the arrow. --- **Activate** ⟨2⟩ command, Interact (electricity) **Frequency** once per hour --- **Effect** You shoot an arrow at the sky and it tears an extraplanar rift that resembles a storm cloud in a centered on a point within 200 feet. A torrent of rain pours d"
+ },
+ {
+  "id": "warding-tattoo-wave",
+  "collection": "items",
+  "name": "Warding Tattoo (Wave)",
+  "level": 6,
+  "text": "In addition to the normal triggers, you can activate the tattoo when you enter an environment where you can't breathe. --- **Activate** ⟨5⟩ envision **Frequency** once per day **Trigger** An enemy, hazard, or the environment makes an attack against your AC, requires you to attempt a saving throw, or causes you to take damage automatically --- **Effect** Until the end of the current turn, against the triggering effect, you gain a +1 status bonus to AC and saving throws and gai"
+ },
+ {
+  "id": "leopards-armor",
+  "collection": "items",
+  "name": "Leopard's Armor",
+  "level": 9,
+  "text": "--- **Activate** ⟨2⟩ command, envision **Frequency** once per day --- **Effect** You call upon the ferocity and grace of the leopard. This lasts for 1 hour, but you can Activate the armor again to revert it back to its original form."
+ },
+ {
+  "id": "silver-tripod",
+  "collection": "items",
+  "name": "Silver Tripod",
+  "level": 1,
+  "text": "**Activate** ⟨1⟩ (concentrate) --- This tiny, silver facsimile of a weapon tripod is usually attached to the underside of the affixed weapon's barrel. When activated, it creates an invisible construct of magical force that attaches to the weapon and automatically stabilizes it in any location, even in midair. The effect lasts for 1 minute or until you Dismiss it."
+ },
+ {
+  "id": "toadskin-salve",
+  "collection": "items",
+  "name": "Toadskin Salve",
+  "level": 3,
+  "text": "Once it's applied, you can activate the salve in one of the two ways detailed below. --- **Activate** ⟨5⟩ Interact **Trigger** You hit a creature with a melee Strike --- **Effect** You fling mucus on the creature, dealing 1d4. --- **Activate** ⟨5⟩ Interact **Trigger** You are hit with a melee attack that deals physical damage --- **Effect** The mucus dulls the blow, granting you resistance 3 to physical damage against the triggering attack."
+ },
+ {
+  "id": "toadskin-salve-greater",
+  "collection": "items",
+  "name": "Toadskin Salve (Greater)",
+  "level": 7,
+  "text": "Once it's applied, you can activate the salve in one of the two ways detailed below. --- **Activate** ⟨5⟩ Interact **Trigger** You hit a creature with a melee Strike --- **Effect** You fling mucus on the creature, dealing 2d4. --- **Activate** ⟨5⟩ Interact **Trigger** You are hit with a melee attack that deals physical damage --- **Effect** The mucus dulls the blow, granting you resistance 5 to physical damage against the triggering attack."
+ },
+ {
+  "id": "toadskin-salve-major",
+  "collection": "items",
+  "name": "Toadskin Salve (Major)",
+  "level": 11,
+  "text": "Once it's applied, you can activate the salve in one of the two ways detailed below. --- **Activate** ⟨5⟩ Interact **Trigger** You hit a creature with a melee Strike --- **Effect** You fling mucus on the creature, dealing 3d4. --- **Activate** ⟨5⟩ Interact **Trigger** You are hit with a melee attack that deals physical damage --- **Effect** The mucus dulls the blow, granting you resistance 8 to physical damage against the triggering attack."
+ },
+ {
+  "id": "crown-of-insight",
+  "collection": "items",
+  "name": "Crown of Insight",
+  "level": 7,
+  "text": "When you enter an area that contains creatures within 60 feet that are unnoticed to you, the GM rolls a secret Perception check for you against the creatures' Stealth DCs. Additionally, since the effect occurs when you move to enter an area that contains creatures, it doesn't detect an unnoticed creature Sneaking up on you."
+ },
+ {
+  "id": "wardrobe-stone",
+  "collection": "items",
+  "name": "Wardrobe Stone",
+  "level": 3,
+  "text": "Activate (1 minute) envision, Interact; Effect You enter a brief trance in which you envision yourself entering a large dressing room. You can actively Dismiss the Spell, but the effects are also dismissed immediately when you're no longer holding the wardrobe stone. 51 Price 1,250 gp Bulk L You gain a +2 item bonus to a specific Lore skill associated with your outfit, such as Carpentry Lore when wearing a carpenter's outfit or Cooking Lore when wearing a chef's outfit. Activ"
+ },
+ {
+  "id": "wardrobe-stone-lesser",
+  "collection": "items",
+  "name": "Wardrobe Stone (Lesser)",
+  "level": 3,
+  "text": "--- **Activate** (1 minute) envision, Interact --- **Effect** You enter a brief trance in which you envision yourself entering a large dressing room. You can actively Dismiss the Spell, but the effects are also dismissed immediately when you're no longer holding the wardrobe stone."
+ },
+ {
+  "id": "wardrobe-stone-moderate",
+  "collection": "items",
+  "name": "Wardrobe Stone (Moderate)",
+  "level": 11,
+  "text": "You gain a +2 item bonus to a specific Lore skill associated with your outfit, such as Carpentry Lore when wearing a carpenter's outfit or Cooking Lore when wearing a chef's outfit. --- **Activate** (1 minute) envision, Interact --- **Effect** You enter a brief trance in which you envision yourself entering a large dressing room. You can actively Dismiss the Spell, but the effects are also dismissed immediately when you're no longer holding the wardrobe stone. --- **Activate*"
+ },
+ {
+  "id": "wardrobe-stone-greater",
+  "collection": "items",
+  "name": "Wardrobe Stone (Greater)",
+  "level": 20,
+  "text": "You gain +3 item bonus to Perception checks involving sight and you gain a +3 item bonus to a specific Lore skill associated with your outfit, such as Carpentry Lore when wearing a carpenter's outfit or Cooking Lore when wearing a chef's outfit. --- **Activate** (1 minute) envision, Interact --- **Effect** You enter a brief trance in which you envision yourself entering a large dressing room. You can actively Dismiss the Spell, but the effects are also dismissed immediately w"
+ },
+ {
+  "id": "folding-boat",
+  "collection": "items",
+  "name": "Folding Boat",
+  "level": 8,
+  "text": "This simple carved box can fold or unfold into a boat when activated. --- **Activate** ⟨2⟩ command, Interact --- **Effect** The folding boat can take two shapes. You can activate the boat again to revert it to its original shape. If the boat is occupied, the item can't be activated."
+ },
+ {
+  "id": "folding-boat-greater",
+  "collection": "items",
+  "name": "Folding Boat (Greater)",
+  "level": 15,
+  "text": "This simple carved box can fold or unfold into a boat when activated. --- **Activate** ⟨2⟩ command, Interact --- **Effect** The folding boat can take two shapes. You can activate the boat again to revert it to its original shape. If the boat is occupied, the item can't be activated."
+ },
+ {
+  "id": "barricade-stone",
+  "collection": "items",
+  "name": "Barricade Stone",
+  "level": 6,
+  "text": "75 Bulk when not activated Activate command, Interact The ancient inhabitants of Bloodsalt crafted these magic rocks to construct defenses quickly. When you activate the barricade stone, you drop it on the ground, throw it up to 20 feet away, or sling it using a sling weapon. While it's likely to take some time even with the right tools, an activated barricade stone can be destroyed the same as any normal stone structure (Hardness 14, HP 56). 75 Price 40 gp This smooth marble"
+ },
+ {
+  "id": "barricade-stone-cylinder",
+  "collection": "items",
+  "name": "Barricade Stone (Cylinder)",
+  "level": 10,
+  "text": "**Activate** ⟨2⟩ command, Interact --- The ancient inhabitants of Bloodsalt crafted these magic rocks to construct defenses quickly. When you activate the *barricade stone*, you drop it on the ground, throw it up to 20 feet away, or sling it using a sling weapon. While it's likely to take some time even with the right tools, an activated *barricade stone* can be destroyed the same as any normal stone structure (Hardness 14, HP 56). --- **Type: Cylinder** When activated, this "
+ },
+ {
+  "id": "little-love",
+  "collection": "items",
+  "name": "Little Love",
+  "level": 3,
+  "text": "When you critically succeed at an attack roll with *Little Love*, you can activate the dagger to spring away from your foes. **Activate** ⟨4⟩ (manipulate) **Frequency** once per 10 minutes **Trigger** You critically hit a creature with *Little Love* --- **Effect** You Leap (or Vault, if you're Spring-Heeled Jack)."
+ },
+ {
+  "id": "life-salt",
+  "collection": "items",
+  "name": "Life Salt",
+  "level": 5,
+  "text": "**Activate** ⟨1⟩ Strike This crystal vial contains salts blessed by channeling life-giving energies into waters purified by holy fire. You can activate this vial by throwing it as a Strike."
+ },
+ {
+  "id": "alchemical-fuse",
+  "collection": "items",
+  "name": "Alchemical Fuse",
+  "level": 1,
+  "text": "--- **Activate** ⟨1⟩ Interact --- **Effect** You attach the alchemical fuse to an alchemical bomb, stick of pyronite, or other device that can be triggered by a fuse. --- **Activate** ⟨1⟩ Interact --- **Effect** You light the alchemical fuse with an adjacent fire source or a fire source that you hold in a hand. If you have a tindertwig in your other hand, you can activate the tindertwig and use it to light a fuse with the same Interact action. During the round that the fuse r"
+ },
+ {
+  "id": "curled-cure-gel",
+  "collection": "items",
+  "name": "Curled Cure Gel",
+  "level": 7,
+  "text": "**Activate** Treat Wounds --- Curled cure secretes a gel that gently warms the skin and stimulates healing. You can Activate the item as part of the same activity you use to Treat Wounds."
+ },
+ {
+  "id": "ladys-blessing-oil",
+  "collection": "items",
+  "name": "Lady's Blessing Oil",
+  "level": 1,
+  "text": "**Activate** Administer First Aid --- Lady's blessing oil is favored by Pharasmin healers who ease the transitions of life. You can Activate the item as part of the same activity you use to Administer First Aid to stabilize a creature."
+ },
+ {
+  "id": "tornado-trompo",
+  "collection": "items",
+  "name": "Tornado Trompo",
+  "level": 18,
+  "text": "**Activate** ⟨2⟩ envision, Interact **Requirements** A string is wrapped around the top and you have a hand free --- **Effect** You lightly pull on the string and catch the top in your free hand. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per day **Requirements** A string is wrapped around the top --- **Effect** You call upon the top's power and give the string a powerful pull. This tornado has the effects of Whirlwind except that it's not limited by being used"
+ },
+ {
+  "id": "oculus-of-abaddon",
+  "collection": "items",
+  "name": "Oculus of Abaddon",
+  "level": 15,
+  "text": "An *oculus of Abaddon* appears as a sphere of clear crystal that contains a pinpoint of flickering red light at its center. It can also be activated to perform a number of other magical effects, as detailed below, but if you aren't evil, each time you activate an *oculus of Abaddon*, you must succeed at a save or become affected by a subconscious suggestion (heightened to 8th level) to perform an evil act the next time an opportunity to do so arises, as determined by the GM. "
+ },
+ {
+  "id": "passage-pane",
+  "collection": "items",
+  "name": "Passage Pane",
+  "level": 25,
+  "text": "**Activate** 1 minute (envision, Interact; divination, divine, scrying) **Requirements** The *passage pane* is mounted firmly to a solid surface, and you're bonded with the *passage pane* --- **Effect** You focus on a location in the Boneyard that you wish to travel to. **Activate** ⟨3⟩ envision, Interact (conjuration, divine, teleportation) **Frequency** once per week **Requirements** The *passage pane* is mounted firmly to a solid surface, and you're bonded with the *passag"
+ },
+ {
+  "id": "immovable",
+  "collection": "items",
+  "name": "Immovable",
+  "level": 12,
+  "text": "**Activate**⟨1⟩ (manipulate) **Frequency** once per day --- **Effect** Your armor anchors you in place, even defying gravity, rendering you immobilized until you Dismiss the Activation."
+ },
+ {
+  "id": "blade-byrnie",
+  "collection": "items",
+  "name": "Blade Byrnie",
+  "level": 7,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- **Effect** You pull a link from the armor, which transforms into a *+1 striking Dagger*. You can Activate the blade byrnie in place of an Interact action to draw a weapon for abilities such as the Quick Draw feat."
+ },
+ {
+  "id": "blade-byrnie-greater",
+  "collection": "items",
+  "name": "Blade Byrnie (Greater)",
+  "level": 13,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- **Effect** You pull a link from the armor, which transforms into a *+2 greater striking Dagger*. You can Activate the blade byrnie in place of an Interact action to draw a weapon for abilities such as the Quick Draw feat."
+ },
+ {
+  "id": "blade-byrnie-major",
+  "collection": "items",
+  "name": "Blade Byrnie (Major)",
+  "level": 19,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- **Effect** You pull a link from the armor, which transforms into a *+3 greater striking Dagger*. You can Activate the blade byrnie in place of an Interact action to draw a weapon for abilities such as the Quick Draw feat."
+ }
+]

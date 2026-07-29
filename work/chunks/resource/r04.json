@@ -1,0 +1,387 @@
+[
+ {
+  "id": "wand-of-rolling-flames",
+  "collection": "items",
+  "name": "Wand of Rolling Flames",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank."
+ },
+ {
+  "id": "wand-of-rolling-flames-2nd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Rolling Flames (2nd-Rank Spell)",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank."
+ },
+ {
+  "id": "wand-of-rolling-flames-3rd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Rolling Flames (3rd-Rank Spell)",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank."
+ },
+ {
+  "id": "wand-of-rolling-flames-4th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Rolling Flames (4th-Rank Spell)",
+  "level": 10,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank."
+ },
+ {
+  "id": "wand-of-rolling-flames-5th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Rolling Flames (5th-Rank Spell)",
+  "level": 12,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank."
+ },
+ {
+  "id": "wand-of-rolling-flames-6th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Rolling Flames (6th-Rank Spell)",
+  "level": 14,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank."
+ },
+ {
+  "id": "wand-of-rolling-flames-7th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Rolling Flames (7th-Rank Spell)",
+  "level": 16,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank."
+ },
+ {
+  "id": "wand-of-rolling-flames-8th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Rolling Flames (8th-Rank Spell)",
+  "level": 18,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank."
+ },
+ {
+  "id": "wand-of-rolling-flames-9th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Rolling Flames (9th-Rank Spell)",
+  "level": 20,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast floating flame of the indicated rank."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-2nd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts (2nd-Rank Spell)",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false vitality of the indicated rank."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-3rd-rank-spell",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts (3rd-Rank Spell)",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false vitality of the indicated rank."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-4th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts (4th-Rank Spell)",
+  "level": 10,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false vitality of the indicated rank."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-5th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts (5th-Rank Spell)",
+  "level": 12,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false vitality of the indicated rank."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-6th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts (6th-Rank Spell)",
+  "level": 14,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false vitality of the indicated rank."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-7th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts (7th-Rank Spell)",
+  "level": 16,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false vitality of the indicated rank."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-8th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts (8th-Rank Spell)",
+  "level": 18,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false vitality of the indicated rank."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-9th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts (9th-Rank Spell)",
+  "level": 20,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false vitality of the indicated rank."
+ },
+ {
+  "id": "wand-of-toxic-blades",
+  "collection": "items",
+  "name": "Wand of Toxic Blades",
+  "level": 15,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast blessed boundary of the indicated rank. A creature can be exposed to the poison no more than once per turn."
+ },
+ {
+  "id": "wand-of-toxic-blades-6th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Toxic Blades (6th-Rank Spell)",
+  "level": 15,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast blessed boundary of the indicated rank. A creature can be exposed to the poison no more than once per turn."
+ },
+ {
+  "id": "wand-of-toxic-blades-7th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Toxic Blades (7th-Rank Spell)",
+  "level": 17,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast blessed boundary of the indicated rank. A creature can be exposed to the poison no more than once per turn."
+ },
+ {
+  "id": "wand-of-toxic-blades-8th-rank-spell",
+  "collection": "items",
+  "name": "Wand of Toxic Blades (8th-Rank Spell)",
+  "level": 19,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast blessed boundary of the indicated rank. A creature can be exposed to the poison no more than once per turn."
+ },
+ {
+  "id": "retaliation",
+  "collection": "items",
+  "name": "Retaliation",
+  "level": 6,
+  "text": "Activate (concentrate) Frequency once per hour; Trigger You Shield Block a melee Strike; Effect You unleash force damage against the creature that made the triggering attack."
+ },
+ {
+  "id": "bravery-baldric",
+  "collection": "items",
+  "name": "Bravery Baldric",
+  "level": 5,
+  "text": "When you critically succeed on a save against a fear effect or reduce your frightened condition to 0, the baldric gains 1 charge, which slightly alters the color. A bravery baldric can hold up to 2 charges, and its charges reset to 0 when you invest it. Activate (concentrate) Frequency once per hour; Requirements The baldric has a charge; Effect One charge in the baldric expires, and you gain its benefit, according t"
+ },
+ {
+  "id": "bravery-baldric-healthful-greater",
+  "collection": "items",
+  "name": "Bravery Baldric (Healthful, Greater)",
+  "level": 11,
+  "text": "When you critically succeed on a save against a fear effect or reduce your frightened condition to 0, the baldric gains 1 charge, which slightly alters the color. A bravery baldric can hold up to 2 charges, and its charges reset to 0 when you invest it. Activate (concentrate) Frequency once per hour; Requirements The baldric has a charge; Effect One charge in the baldric expires, and you gain its benefit, according t"
+ },
+ {
+  "id": "clarity-goggles",
+  "collection": "items",
+  "name": "Clarity Goggles",
+  "level": 8,
+  "text": "Activate (concentrate) Frequency once per day; Effect You focus on your environment and the creatures around you to see them as they really are."
+ },
+ {
+  "id": "submersible-helm",
+  "collection": "items",
+  "name": "Submersible Helm",
+  "level": 9,
+  "text": "Activate (concentrate, manipulate) Frequency once per day; Effect You can breathe underwater for 8 hours."
+ },
+ {
+  "id": "submersible-helm-greater",
+  "collection": "items",
+  "name": "Submersible Helm (Greater)",
+  "level": 13,
+  "text": "Activate (concentrate, manipulate) Frequency once per day; Effect You can breathe underwater for 8 hours."
+ },
+ {
+  "id": "instinct-crown",
+  "collection": "items",
+  "name": "Instinct Crown",
+  "level": 10,
+  "text": "Activate (concentrate) Frequency once per day; Trigger You roll initiative; Requirements You have Quick-Tempered and meet its requirements;; Effect You use Quick-Tempered and gain 10 additional temporary Hit Points from your Rage. Activate (concentrate, rage) Frequency once per day; Requirements You’re raging, and the crown’s instinct matches your barbarian instinct; Effect You draw upon your instinct to gain a boon,"
+ },
+ {
+  "id": "armory-bracelet",
+  "collection": "items",
+  "name": "Armory Bracelet",
+  "level": 3,
+  "text": "Activate (concentrate, manipulate) Frequency once per day; Effect You pull one charm from the bracelet."
+ },
+ {
+  "id": "fan-of-the-four-winds",
+  "collection": "items",
+  "name": "Fan of the Four Winds",
+  "level": 4,
+  "text": "Activate (concentrate, manipulate) Frequency once per day; Effect You fan in a direction, and the fan casts gust of wind."
+ },
+ {
+  "id": "anylength-rope",
+  "collection": "items",
+  "name": "Anylength Rope",
+  "level": 3,
+  "text": "Activate command; Frequency once per minute; Effect You command the rope to split, declaring a specific length or amount, such as “ten feet of rope,” “half of the rope,” and so on. Activate envision, Interact ; Frequency once per day; Requirements The rope is split into two or more pieces; Effect The rope attempts to reassemble itself. You can activate the moderate anylength rope once per hour instead of once per day"
+ },
+ {
+  "id": "boots-of-free-running",
+  "collection": "items",
+  "name": "Boots of Free Running",
+  "level": 5,
+  "text": "Activate envision; Frequency once per day; Effect The traction of your boots improves, allowing you to run along vertical surfaces for 1 minute. You can activate the moderate boots of free running once per hour instead of once per day. You can activate the greater boots of free running without a frequency limit."
+ },
+ {
+  "id": "cape-of-illumination",
+  "collection": "items",
+  "name": "Cape of Illumination",
+  "level": 5,
+  "text": "Activate envision, Interact; Frequency once per day; Effect You draw the cape and unleash a blinding flash of light. The frequency is once per hour."
+ },
+ {
+  "id": "ring-of-observation",
+  "collection": "items",
+  "name": "Ring of Observation",
+  "level": 3,
+  "text": "Activate envision; Frequency once per day; Effect The watchful eye of the cat-eye gemstone remains unmoving but feels as if it's surveying your surroundings. The ring can cast invisibility on you once per day. The ring can cast either invisibility or 4th-level invisibility on you once per day."
+ },
+ {
+  "id": "grub-gloves",
+  "collection": "items",
+  "name": "Grub Gloves",
+  "level": 6,
+  "text": "Activate envision, Interact; Frequency once per day; Effect You rub your hands together and take a deep breath to prepare for the rest of your day."
+ },
+ {
+  "id": "words-of-wisdom",
+  "collection": "items",
+  "name": "Words of Wisdom",
+  "level": 4,
+  "text": "Activate command; Frequency once per day; Effect You speak your meaningful phrase from your tattoo out loud, emboldening your words for 1 minute."
+ },
+ {
+  "id": "everair-mask",
+  "collection": "items",
+  "name": "Everair Mask",
+  "level": 2,
+  "text": "Activate envision, Interact; Frequency once per day; Effect You activate the mask's rune, and the air surrounding air, as well as the air you exhale, becomes enriched with oxygen."
+ },
+ {
+  "id": "highhelm-drill",
+  "collection": "items",
+  "name": "Highhelm Drill",
+  "level": 4,
+  "text": "Activate Interact; Frequency once per day; Effect The force drill appears and begins turning, dealing 5 force damage per round to any material against which you hold the drill."
+ },
+ {
+  "id": "highhelm-war-shield",
+  "collection": "items",
+  "name": "Highhelm War Shield",
+  "level": 9,
+  "text": "Activate envision; Frequency once per day; Trigger You critically hit with the shield's integrated blades; Effect The shield's blades grow and dig themselves into your foe."
+ },
+ {
+  "id": "fossil-fragment",
+  "collection": "items",
+  "name": "Fossil Fragment",
+  "level": 7,
+  "text": "The specifics of each creature, as well as the activation's frequency, if any, appear in its entry below. It can be called upon once per day for up to 10 minutes. It can be called upon no more than four times per month. It can be called upon once per day and can remain in deinonychus form for no more than 10 minutes. The tree can be called upon once per day for up to 1 minute. It can be called upon once per day and c"
+ },
+ {
+  "id": "fossil-fragment-amber-mosquito",
+  "collection": "items",
+  "name": "Fossil Fragment (Amber Mosquito)",
+  "level": 13,
+  "text": "The specifics of each creature, as well as the activation's frequency, if any, appear in its entry below. It can be called upon once per day for up to 10 minutes."
+ },
+ {
+  "id": "fossil-fragment-deinonychus-claw",
+  "collection": "items",
+  "name": "Fossil Fragment (Deinonychus Claw)",
+  "level": 7,
+  "text": "The specifics of each creature, as well as the activation's frequency, if any, appear in its entry below. It can be called upon once per day and can remain in deinonychus form for no more than 10 minutes."
+ },
+ {
+  "id": "fossil-fragment-petrified-wood",
+  "collection": "items",
+  "name": "Fossil Fragment (Petrified Wood)",
+  "level": 14,
+  "text": "The specifics of each creature, as well as the activation's frequency, if any, appear in its entry below. The tree can be called upon once per day for up to 1 minute."
+ },
+ {
+  "id": "fossil-fragment-triceratops-frill",
+  "collection": "items",
+  "name": "Fossil Fragment (Triceratops Frill)",
+  "level": 15,
+  "text": "The specifics of each creature, as well as the activation's frequency, if any, appear in its entry below. It can be called upon once per day and can remain in triceratops form for no more than 10 minutes."
+ },
+ {
+  "id": "fossil-fragment-tyrannosaur-tooth",
+  "collection": "items",
+  "name": "Fossil Fragment (Tyrannosaur Tooth)",
+  "level": 17,
+  "text": "The specifics of each creature, as well as the activation's frequency, if any, appear in its entry below. It can be called upon once per day and can remain in tyrannosaurus form for no more than 10 minutes."
+ },
+ {
+  "id": "purifying-spoon",
+  "collection": "items",
+  "name": "Purifying Spoon",
+  "level": 1,
+  "text": "Activate—Purify (manipulate) Frequency once per day; Effect You stir the spoon in food or drink, casting cleanse cuisine on the substance as you stir."
+ },
+ {
+  "id": "splinter-spear",
+  "collection": "items",
+  "name": "Splinter Spear",
+  "level": 13,
+  "text": "Activate—Shatter ; Frequency once per day; Effect You smash the spear into the ground or another nearby surface, shattering it into thousands of duskwood splinters in your choice of a 30-foot cone or a 10-foot emanation."
+ },
+ {
+  "id": "splinter-spear-greater",
+  "collection": "items",
+  "name": "Splinter Spear (Greater)",
+  "level": 17,
+  "text": "Activate—Shatter ; Frequency once per day; Effect You smash the spear into the ground or another nearby surface, shattering it into thousands of duskwood splinters in your choice of a 30-foot cone or a 10-foot emanation."
+ },
+ {
+  "id": "splinter-spear-major",
+  "collection": "items",
+  "name": "Splinter Spear (Major)",
+  "level": 20,
+  "text": "Activate—Shatter ; Frequency once per day; Effect You smash the spear into the ground or another nearby surface, shattering it into thousands of duskwood splinters in your choice of a 30-foot cone or a 10-foot emanation."
+ },
+ {
+  "id": "crystal-ball",
+  "collection": "items",
+  "name": "Crystal Ball",
+  "level": 14,
+  "text": "Activate—Clairvoyance 1 minute (concentrate, manipulate) Frequency once per hour; Effect The crystal ball casts clairvoyance to your specifications. Activate—Scrying 10 minutes (concentrate, manipulate) Frequency twice per day; Effect The crystal ball casts a DC 33 scrying spell to your specifications."
+ },
+ {
+  "id": "maestros-instrument",
+  "collection": "items",
+  "name": "Maestro's Instrument",
+  "level": 3,
+  "text": "Activate—Charming Performance (manipulate) Frequency once per day; Effect You play the instrument, causing it to cast a DC 17 charm spell."
+ },
+ {
+  "id": "thurible-of-revelation",
+  "collection": "items",
+  "name": "Thurible of Revelation",
+  "level": 3,
+  "text": "Once per day, when you activate the thurible, you can increase its revelations."
+ },
+ {
+  "id": "thurible-of-revelation-moderate",
+  "collection": "items",
+  "name": "Thurible of Revelation (Moderate)",
+  "level": 10,
+  "text": "Once per day, when you activate the thurible, you can increase its revelations."
+ },
+ {
+  "id": "thurible-of-revelation-greater",
+  "collection": "items",
+  "name": "Thurible of Revelation (Greater)",
+  "level": 18,
+  "text": "Once per day, when you activate the thurible, you can increase its revelations."
+ },
+ {
+  "id": "magic-wand",
+  "collection": "items",
+  "name": "Magic Wand",
+  "level": 3,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You Cast the Spell at the indicated level."
+ }
+]

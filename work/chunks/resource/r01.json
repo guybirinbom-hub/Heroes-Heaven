@@ -1,0 +1,387 @@
+[
+ {
+  "id": "wayfinder-of-rescue",
+  "collection": "items",
+  "name": "Wayfinder of Rescue",
+  "level": 4,
+  "text": "As a standard Wayfinder, but once per day you can activate it to cast Heal on a creature other than yourself, using either the one-action or two-action version of heal as a 1st-rank spell."
+ },
+ {
+  "id": "stalwarts-ring",
+  "collection": "items",
+  "name": "Stalwart's Ring",
+  "level": 5,
+  "text": "Once per day, during your daily preparations, you can meditate on this ring to grant yourself 5 temporary Hit Points."
+ },
+ {
+  "id": "skarjas-heartstone",
+  "collection": "items",
+  "name": "Skarja's Heartstone",
+  "level": 13,
+  "text": "***Note:** Item is worth 1000 gp when non-magical* Skarja's *heartstone* allows her to use additional occult innate spells: Ethereal Jaunt (9th level) and Seize Soul at will, Shadow Blast (6th level) twice per day, and Spirit Blast once per day."
+ },
+ {
+  "id": "necklace-of-strangulation",
+  "collection": "items",
+  "name": "Necklace of Strangulation",
+  "level": 15,
+  "text": "Once per round, you can spend a single action to attempt a check or save; success means you don't take the damage on your current turn, but you continue suffocating."
+ },
+ {
+  "id": "tears-of-the-last-azlanti",
+  "collection": "items",
+  "name": "Tears of the Last Azlanti",
+  "level": 25,
+  "text": "Once per day, you can attempt to exchange the *aeon stone* in a given bail for another *aeon stone* with a successful check."
+ },
+ {
+  "id": "rope-of-climbing",
+  "collection": "items",
+  "name": "Rope of Climbing",
+  "level": 3,
+  "text": "Activate Interact; Frequency once per day; Effect You hold one end of the rope and point to a destination. 262 Price 125 gp Bulk L You can activate the moderate rope of climbing once per hour instead of once per day. 262 Price 300 gp Bulk L You can activate the greater rope of climbing without any frequency limit."
+ },
+ {
+  "id": "wand-of-noisome-acid",
+  "collection": "items",
+  "name": "Wand of Noisome Acid",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid grip of the indicated rank."
+ },
+ {
+  "id": "wand-of-noisome-acid-2nd-level-spell",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (2nd-Level Spell)",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid arrow of the indicated level."
+ },
+ {
+  "id": "wand-of-noisome-acid-4th-level-spell",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (4th-Level Spell)",
+  "level": 10,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid arrow of the indicated level."
+ },
+ {
+  "id": "wand-of-noisome-acid-6th-level-spell",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (6th-Level Spell)",
+  "level": 14,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid arrow of the indicated level."
+ },
+ {
+  "id": "wand-of-noisome-acid-8th-level-spell",
+  "collection": "items",
+  "name": "Wand of Noisome Acid (8th-Level Spell)",
+  "level": 18,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast acid arrow of the indicated level."
+ },
+ {
+  "id": "wand-of-teeming-ghosts",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false vitality of the indicated rank."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-2nd-level-spell",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts (2nd-Level Spell)",
+  "level": 6,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false life of the indicated level."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-3rd-level-spell",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts (3rd-Level Spell)",
+  "level": 8,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false life of the indicated level."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-4th-level-spell",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts (4th-Level Spell)",
+  "level": 10,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false life of the indicated level."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-5th-level-spell",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts (5th-Level Spell)",
+  "level": 12,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false life of the indicated level."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-6th-level-spell",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts (6th-Level Spell)",
+  "level": 14,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false life of the indicated level."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-7th-level-spell",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts (7th-Level Spell)",
+  "level": 16,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false life of the indicated level."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-8th-level-spell",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts (8th-Level Spell)",
+  "level": 18,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false life of the indicated level."
+ },
+ {
+  "id": "wand-of-teeming-ghosts-9th-level-spell",
+  "collection": "items",
+  "name": "Wand of Teeming Ghosts (9th-Level Spell)",
+  "level": 20,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast false life of the indicated level."
+ },
+ {
+  "id": "cordelias-construct-key-greater",
+  "collection": "items",
+  "name": "Cordelia's Construct Key (Greater)",
+  "level": 12,
+  "text": "Activate command, Interact; Frequency once per hour; Effect You turn the key in the air and create a magic glyph. Activate 1 minute (command, envision, Interact); Frequency once per day; Effect You place the key on a Small object and turn it, creating a simple animated object for 1 hour."
+ },
+ {
+  "id": "sparkblade",
+  "collection": "items",
+  "name": "Sparkblade",
+  "level": 3,
+  "text": "**Activate** ⟨1⟩ Interact Once per day, you can spend 1 action to point the sparkblade at a foe within 30 feet of you and shoot an arc of lightning from the blade."
+ },
+ {
+  "id": "secret-keepers-mask",
+  "collection": "items",
+  "name": "Secret-Keeper's Mask",
+  "level": 3,
+  "text": "Activate Interact; Frequency once per day; Effect You twist the mask's eye and peer at an object. Activate Interact; Frequency once per day; Trigger You succeed on a Thievery check to Steal an item of negligible Bulk; Effect You create an illusory duplicate of the item you just stole. Activate Interact; Frequency once per day; Trigger You deal persistent bleed damage to a creature; Effect The bleeding wound you cause"
+ },
+ {
+  "id": "devils-luck",
+  "collection": "items",
+  "name": "Devil's Luck",
+  "level": 3,
+  "text": "**Benefit** Once per day, you can roll a saving throw twice and use the higher result."
+ },
+ {
+  "id": "hag-eye-frightful",
+  "collection": "items",
+  "name": "Hag Eye (Frightful)",
+  "level": 4,
+  "text": "Activate (emotion, enchantment, fear, mental, visual) Trigger once per day; Effect You target a creature within 30 feet that must be able to see the frightful hag eye; the target must attempt a DC 19 Will save. Activate (incapacitation, transmutation, visual) Trigger once per round; Effect You target a creature within 30 feet that can see the stony hag eye."
+ },
+ {
+  "id": "hag-eye-oracular",
+  "collection": "items",
+  "name": "Hag Eye (Oracular)",
+  "level": 4,
+  "text": "Activate (emotion, enchantment, fear, mental, visual) Trigger once per day; Effect You target a creature within 30 feet that must be able to see the frightful hag eye; the target must attempt a DC 19 Will save. Activate (incapacitation, transmutation, visual) Trigger once per round; Effect You target a creature within 30 feet that can see the stony hag eye."
+ },
+ {
+  "id": "hag-eye-smokey",
+  "collection": "items",
+  "name": "Hag Eye (Smokey)",
+  "level": 8,
+  "text": "Activate (emotion, enchantment, fear, mental, visual) Trigger once per day; Effect You target a creature within 30 feet that must be able to see the frightful hag eye; the target must attempt a DC 19 Will save. Activate (incapacitation, transmutation, visual) Trigger once per round; Effect You target a creature within 30 feet that can see the stony hag eye."
+ },
+ {
+  "id": "hag-eye-stoney",
+  "collection": "items",
+  "name": "Hag Eye (Stoney)",
+  "level": 6,
+  "text": "Activate (emotion, enchantment, fear, mental, visual) Trigger once per day; Effect You target a creature within 30 feet that must be able to see the frightful hag eye; the target must attempt a DC 19 Will save. Activate (incapacitation, transmutation, visual) Trigger once per round; Effect You target a creature within 30 feet that can see the stony hag eye."
+ },
+ {
+  "id": "fulcrum-lenses",
+  "collection": "items",
+  "name": "Fulcrum Lenses",
+  "level": 9,
+  "text": "Activate Interact; Frequency once per day; Effect You grasp the Crimson Fulcrum Lens in one hand and make a Strike that doesn't require that hand. Activate envision; Frequency once per day; Requirement At least one glimmer remains in the Ebon Fulcrum Lens; Prerequisites you have the rejuvenation ability; Trigger you would be destroyed and are able to rejuvenate; Effect For the first 24 hours after you rejuvenate, you"
+ },
+ {
+  "id": "warcallers-chime",
+  "collection": "items",
+  "name": "Warcaller's Chime",
+  "level": 4,
+  "text": "The specifics of each chime, as well as the activation's frequency (if any), appear in its entry below. You can use this chime once per day. You can use this chime once per day. This chime can be used only once per day, whether or not you Sustain the aura. You can use this chime up to five times per day, but each use must target a different creature. This chime can be used once per week. This chime can be used once p"
+ },
+ {
+  "id": "warcallers-chime-of-blasting",
+  "collection": "items",
+  "name": "Warcaller's Chime of Blasting",
+  "level": 6,
+  "text": "You can use this chime once per day."
+ },
+ {
+  "id": "warcallers-chime-of-destruction",
+  "collection": "items",
+  "name": "Warcaller's Chime of Destruction",
+  "level": 4,
+  "text": "You can use this chime once per day."
+ },
+ {
+  "id": "warcallers-chime-of-dread",
+  "collection": "items",
+  "name": "Warcaller's Chime of Dread",
+  "level": 10,
+  "text": "This chime can be used only once per day, whether or not you Sustain the aura."
+ },
+ {
+  "id": "nosoi-charm-greater",
+  "collection": "items",
+  "name": "Nosoi Charm (Greater)",
+  "level": 18,
+  "text": "You can cast Sending once per day as a divine innate spell."
+ },
+ {
+  "id": "aquarium-lamp",
+  "collection": "items",
+  "name": "Aquarium Lamp",
+  "level": 8,
+  "text": "Within seconds, the eels converge on the hapless animal, using their electrical charges to stun their victims. Each activation provides enough energy for 10 minutes of use, and the two feeding tanks combined carry enough prey animals for 50 activations before needing to be refilled, though electric eels usually need feeding only once per day, and won't go after the prey if they're all full. This behavior leads to sma"
+ },
+ {
+  "id": "drake-rifle",
+  "collection": "items",
+  "name": "Drake Rifle",
+  "level": 4,
+  "text": "Activate—Drake Shot manipulate Frequency once per day; Effect You fire a large, specialized burst designed to hamper your foes."
+ },
+ {
+  "id": "wand-of-spiritual-warfare",
+  "collection": "items",
+  "name": "Wand of Spiritual Warfare",
+  "level": 7,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast spiritual weapon of the indicated level."
+ },
+ {
+  "id": "wand-of-spiritual-warfare-2nd-level",
+  "collection": "items",
+  "name": "Wand of Spiritual Warfare (2nd-Level)",
+  "level": 7,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast spiritual weapon of the indicated level."
+ },
+ {
+  "id": "wand-of-spiritual-warfare-4th-level",
+  "collection": "items",
+  "name": "Wand of Spiritual Warfare (4th-Level)",
+  "level": 11,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast spiritual weapon of the indicated level."
+ },
+ {
+  "id": "wand-of-spiritual-warfare-6th-level",
+  "collection": "items",
+  "name": "Wand of Spiritual Warfare (6th-Level)",
+  "level": 15,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast spiritual weapon of the indicated level."
+ },
+ {
+  "id": "wand-of-spiritual-warfare-8th-level",
+  "collection": "items",
+  "name": "Wand of Spiritual Warfare (8th-Level)",
+  "level": 19,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast spiritual weapon of the indicated level."
+ },
+ {
+  "id": "queasy-lantern",
+  "collection": "items",
+  "name": "Queasy Lantern",
+  "level": 7,
+  "text": "Activate Interact; Frequency once per day; Effect You slide in a magical lens that causes the lantern to emit a pale green light and then aim the lantern."
+ },
+ {
+  "id": "energy-robe",
+  "collection": "items",
+  "name": "Energy Robe",
+  "level": 7,
+  "text": "Activate command, Interact; Frequency once per day; Effect You speak a command word, and the embroidered threads in the robe glow vividly."
+ },
+ {
+  "id": "energy-robe-fire",
+  "collection": "items",
+  "name": "Energy Robe (Fire)",
+  "level": 7,
+  "text": "Activate command, Interact; Frequency once per day; Effect You speak a command word, and the embroidered threads in the robe glow vividly."
+ },
+ {
+  "id": "energy-robe-cold",
+  "collection": "items",
+  "name": "Energy Robe (Cold)",
+  "level": 8,
+  "text": "Activate command, Interact; Frequency once per day; Effect You speak a command word, and the embroidered threads in the robe glow vividly."
+ },
+ {
+  "id": "energy-robe-acid",
+  "collection": "items",
+  "name": "Energy Robe (Acid)",
+  "level": 9,
+  "text": "Activate command, Interact; Frequency once per day; Effect You speak a command word, and the embroidered threads in the robe glow vividly."
+ },
+ {
+  "id": "energy-robe-electricity",
+  "collection": "items",
+  "name": "Energy Robe (Electricity)",
+  "level": 10,
+  "text": "Activate command, Interact; Frequency once per day; Effect You speak a command word, and the embroidered threads in the robe glow vividly."
+ },
+ {
+  "id": "wardrobe-stone",
+  "collection": "items",
+  "name": "Wardrobe Stone",
+  "level": 3,
+  "text": "Activate (1 minute) envision, Interact; Frequency once per day; Effect You cast prying eye."
+ },
+ {
+  "id": "enhanced-hearing-aid",
+  "collection": "items",
+  "name": "Enhanced Hearing Aid",
+  "level": 3,
+  "text": "Activate envision; Frequency once per day; Requirements Your hearing aids are currently on; Effect You mentally increase the input of your hearing aids."
+ },
+ {
+  "id": "wand-of-thundering-echoes",
+  "collection": "items",
+  "name": "Wand of Thundering Echoes",
+  "level": 9,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast sound burst of the indicated level."
+ },
+ {
+  "id": "wand-of-thundering-echoes-3rd-level",
+  "collection": "items",
+  "name": "Wand of Thundering Echoes (3rd-Level)",
+  "level": 9,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast sound burst of the indicated level."
+ },
+ {
+  "id": "wand-of-thundering-echoes-4th-level",
+  "collection": "items",
+  "name": "Wand of Thundering Echoes (4th-Level)",
+  "level": 11,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast sound burst of the indicated level."
+ },
+ {
+  "id": "wand-of-thundering-echoes-5th-level",
+  "collection": "items",
+  "name": "Wand of Thundering Echoes (5th-Level)",
+  "level": 13,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast sound burst of the indicated level."
+ },
+ {
+  "id": "wand-of-thundering-echoes-6th-level",
+  "collection": "items",
+  "name": "Wand of Thundering Echoes (6th-Level)",
+  "level": 15,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast sound burst of the indicated level."
+ },
+ {
+  "id": "wand-of-thundering-echoes-7th-level",
+  "collection": "items",
+  "name": "Wand of Thundering Echoes (7th-Level)",
+  "level": 17,
+  "text": "Activate Cast a Spell; Frequency once per day, plus overcharge; Effect You cast sound burst of the indicated level."
+ }
+]
