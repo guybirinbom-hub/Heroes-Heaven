@@ -1,0 +1,1602 @@
+[
+ {
+  "id": "kineticist-dedication",
+  "isToggle": false,
+  "note": "Dedication: grants a kinetic aura + Channel Elements and Elemental Blast actions. No stance trait; the aura is a passive class feature, not a player-entered stance."
+ },
+ {
+  "id": "stone-brawler-dedication",
+  "isToggle": false,
+  "note": "Grants the separate Stonestrike Stance action — the stance itself is the toggle, not this dedication feat."
+ },
+ {
+  "id": "stoney-deflection",
+  "isToggle": false,
+  "note": "One-off action requiring Stonestrike Stance; +2 circumstance AC and vs Shove/Trip only until the beginning of your next turn."
+ },
+ {
+  "id": "ore-fists",
+  "isToggle": false,
+  "note": "Passive rider on Stonestrike Stance (stonestrike attacks count as cold iron and silver). No independent on/off decision."
+ },
+ {
+  "id": "dual-handed-assault",
+  "isToggle": false,
+  "note": "Fighter flourish action; mentions stances only to clarify it doesn't end them."
+ },
+ {
+  "id": "disarming-twist",
+  "isToggle": false,
+  "note": "Press action; Disarming Stance appears only as a conditional +1 bonus reference."
+ },
+ {
+  "id": "opening-stance-fighter",
+  "isToggle": false,
+  "note": "Free action on initiative that lets you use some other stance action; the stance it triggers is the real toggle."
+ },
+ {
+  "id": "ricochet-feint",
+  "isToggle": false,
+  "note": "Action usable while in Ricochet Stance; the stance is a separate record."
+ },
+ {
+  "id": "witchs-bottle",
+  "isToggle": false,
+  "note": "Hex/spell storage feat, unrelated to stances."
+ },
+ {
+  "id": "hex-master",
+  "isToggle": false,
+  "note": "Capstone affecting sustained hexes; spellcasting, not a stance."
+ },
+ {
+  "id": "trample-centaur",
+  "isToggle": false,
+  "note": "Single Stride-and-trample action."
+ },
+ {
+  "id": "clawdancer-dedication",
+  "isToggle": false,
+  "note": "Grants two separate stance actions (Claw Stance, Talon Stance); those are the toggles, not this feat."
+ },
+ {
+  "id": "claw-snag",
+  "isToggle": false,
+  "note": "Reaction that shifts you into claw stance and Strikes; the shift is incidental to a one-off action."
+ },
+ {
+  "id": "dashing-pounce",
+  "isToggle": false,
+  "note": "Flourish action with a claw-stance requirement."
+ },
+ {
+  "id": "talon-sweep",
+  "isToggle": false,
+  "note": "Action that shifts you into talon stance and attacks; talon stance itself is the toggle."
+ },
+ {
+  "id": "wheeling-grab",
+  "isToggle": false,
+  "note": "Flourish action (shift to claw stance + Tumble Through)."
+ },
+ {
+  "id": "hindquarter-kick",
+  "isToggle": false,
+  "note": "Action requiring claw stance; shifts to talon stance and makes two Strikes."
+ },
+ {
+  "id": "spinning-stand",
+  "isToggle": false,
+  "note": "Action that enters talon stance, Strikes, and Stands; the stance is the separate toggle."
+ },
+ {
+  "id": "tear-tendons",
+  "isToggle": false,
+  "note": "Action with a claw-stance requirement."
+ },
+ {
+  "id": "feline-dance",
+  "isToggle": false,
+  "note": "Fortune action that swaps between the two clawdancer stances."
+ },
+ {
+  "id": "claw-and-talon-flow",
+  "isToggle": false,
+  "note": "Flourish action that Strikes and swaps stances."
+ },
+ {
+  "id": "precise-hooks",
+  "isToggle": false,
+  "note": "Passive critical-specialization rider keyed to whichever clawdancer stance you're in."
+ },
+ {
+  "id": "storm-of-claws",
+  "isToggle": false,
+  "note": "Flourish action with a claw/talon stance requirement."
+ },
+ {
+  "id": "trample-mimicry",
+  "isToggle": false,
+  "note": "Single Stride-and-trample action."
+ },
+ {
+  "id": "one-toed-hop",
+  "isToggle": false,
+  "note": "Tengu action making a vertical Leap; 'stance' is only flavor wording."
+ },
+ {
+  "id": "majestic-presence",
+  "isToggle": false,
+  "note": "Fear-effect action forcing saves; 'impressive stance' is flavor, and targets get 24-hour immunity."
+ },
+ {
+  "id": "expand-aura",
+  "isToggle": false,
+  "note": "Champion action that temporarily expands an aura (1 round, later 1 minute / until Dismissed) — a duration effect, not a stance."
+ },
+ {
+  "id": "thats-odd",
+  "isToggle": false,
+  "note": "Always-on investigator exploration benefit; no on/off decision."
+ },
+ {
+  "id": "monastic-weaponry",
+  "isToggle": false,
+  "note": "Passive weapon-access/proficiency feat; Crane Stance is named only as an exclusion example."
+ },
+ {
+  "id": "crane-flutter",
+  "isToggle": false,
+  "note": "Reaction requiring Crane Stance; raises that stance's AC bonus to +3 against one triggering attack only."
+ },
+ {
+  "id": "dragon-roar",
+  "isToggle": false,
+  "note": "Auditory fear action requiring Dragon Stance; +4 circumstance damage on one hit before the end of your next turn."
+ },
+ {
+  "id": "mountain-stronghold",
+  "isToggle": false,
+  "note": "Action requiring Mountain Stance: +2 circumstance AC until the start of your next turn. Its Special clause raises Mountain Stance's Dex cap from +0 to +1 — apply that on the Mountain Stance record, not here."
+ },
+ {
+  "id": "return-fire",
+  "isToggle": false,
+  "note": "Reaction with a Monastic Archer Stance requirement."
+ },
+ {
+  "id": "stumbling-feint",
+  "isToggle": false,
+  "note": "Action with a Stumbling Stance requirement."
+ },
+ {
+  "id": "tiger-slash",
+  "isToggle": false,
+  "note": "Action with a Tiger Stance requirement."
+ },
+ {
+  "id": "wolf-drag",
+  "isToggle": false,
+  "note": "Action with a Wolf Stance requirement."
+ },
+ {
+  "id": "clinging-shadows-initiate",
+  "isToggle": false,
+  "note": "Grants the Clinging Shadows Stance qi (focus) spell; that spell is the toggle, this feat is only the grant."
+ },
+ {
+  "id": "wild-winds-initiate",
+  "isToggle": false,
+  "note": "Grants the Wild Winds Stance qi (focus) spell; that spell is the toggle, this feat is only the grant."
+ },
+ {
+  "id": "cobra-envenom",
+  "isToggle": false,
+  "note": "Once-per-minute action requiring Cobra Stance. Its Special raises Cobra Stance's Fortitude bonus from +1 to +2 — apply that on the Cobra Stance record."
+ },
+ {
+  "id": "prevailing-position",
+  "isToggle": false,
+  "note": "Reaction that LEAVES your current stance for a +4 circumstance bonus to one save or AC."
+ },
+ {
+  "id": "focused-shot",
+  "isToggle": false,
+  "note": "Concentrate action with a Monastic Archer Stance requirement."
+ },
+ {
+  "id": "reflexive-stance",
+  "isToggle": false,
+  "note": "Free action on initiative that lets you use some other stance action."
+ },
+ {
+  "id": "ironblood-surge",
+  "isToggle": false,
+  "note": "Action requiring Ironblood Stance; +1 circumstance AC and raises that stance's resistance to your Str mod only until the start of your next turn."
+ },
+ {
+  "id": "mountain-quake",
+  "isToggle": false,
+  "note": "Action requiring Mountain Stance. Its Special raises Mountain Stance's Dex cap from +1 to +2 — apply on the Mountain Stance record."
+ },
+ {
+  "id": "tangled-forest-rake",
+  "isToggle": false,
+  "note": "Action with a Tangled Forest Stance requirement."
+ },
+ {
+  "id": "wild-winds-gust",
+  "isToggle": false,
+  "note": "Concentrate/manipulate action with a Wild Winds Stance requirement."
+ },
+ {
+  "id": "fuse-stance",
+  "isToggle": false,
+  "note": "Passive build feat: lets two stances you already know be entered as one. The component stances remain the actual toggles; nothing here to apply on its own."
+ },
+ {
+  "id": "qi-center",
+  "isToggle": false,
+  "note": "Once-per-minute action that casts a stance qi spell for free; the qi stance spell is the toggle."
+ },
+ {
+  "id": "triangle-shot",
+  "isToggle": false,
+  "note": "Fortune action with a Monastic Archer Stance requirement."
+ },
+ {
+  "id": "immortal-techniques",
+  "isToggle": false,
+  "note": "Passive: first stance+monk action each round grants 20 temporary HP until the start of your next turn. No stance to enter."
+ },
+ {
+  "id": "vexing-tumble",
+  "isToggle": false,
+  "note": "Swashbuckler bravado movement action; no stance involved."
+ },
+ {
+  "id": "student-of-the-dueling-arts",
+  "isToggle": false,
+  "note": "Daily feat-swap passive; 'stance' appears only as what you may borrow from other duelist feats."
+ },
+ {
+  "id": "skim-scroll",
+  "isToggle": false,
+  "note": "Action for activating a scroll; unrelated to stances."
+ },
+ {
+  "id": "trample",
+  "isToggle": false,
+  "note": "Single Stride-and-trample action (sarangay)."
+ },
+ {
+  "id": "inherit-the-dreaming-heirloom",
+  "isToggle": false,
+  "note": "Item (pusaka) with a once-per-day Recall Knowledge activation; toggles an item, not the character."
+ },
+ {
+  "id": "blessed-reformer",
+  "isToggle": false,
+  "note": "Weapon item activations (steel resolve, then a Calm cast) — one-off Activate abilities with frequency limits, not a stance."
+ },
+ {
+  "id": "emetic-paste",
+  "isToggle": false,
+  "note": "Consumable applied to yourself or a sickened creature; a one-off Activate, not a stance."
+ },
+ {
+  "id": "emetic-paste-lesser",
+  "isToggle": false,
+  "note": "Consumable one-off Activate against the sickened condition; not a stance."
+ },
+ {
+  "id": "emetic-paste-moderate",
+  "isToggle": false,
+  "note": "Consumable one-off Activate against the sickened condition; not a stance."
+ },
+ {
+  "id": "emetic-paste-greater",
+  "isToggle": false,
+  "note": "Consumable one-off Activate against the sickened condition; not a stance."
+ },
+ {
+  "id": "immovable-potion",
+  "isToggle": false,
+  "note": "Potion effect: immobilized for 1 minute or until Dismissed — a timed item effect, not a stance."
+ },
+ {
+  "id": "anchor-of-aquatic-exploration",
+  "isToggle": false,
+  "note": "Item passive (sink and move along the bottom) plus a 1-minute once-per-day Cozy Cabin activation; no stance."
+ },
+ {
+  "id": "soaring-wings-major",
+  "isToggle": false,
+  "note": "Tattoo activation granting a fly Speed until Dismissed — a magic-item effect, not a stance or alternate form."
+ },
+ {
+  "id": "caydens-tankard",
+  "isToggle": false,
+  "note": "Triggered/limited drink activations of an artifact tankard; not a stance."
+ },
+ {
+  "id": "heartblood-ring",
+  "isToggle": false,
+  "note": "Consumed dose with week-long escalating stages (fast healing, resistances); a drug-like item progression, not a toggled stance."
+ },
+ {
+  "id": "phoenix-cinder",
+  "isToggle": false,
+  "note": "Consumed dose with week-long escalating stages (fast healing, fire resistance); an item stage progression, not a toggled stance."
+ },
+ {
+  "id": "void-fragment",
+  "isToggle": false,
+  "note": "Consumed dose with multi-day stages plus teleportation activations; not a stance."
+ },
+ {
+  "id": "sluggish-bracelet",
+  "isToggle": false,
+  "note": "Cursed item: activation imposes a -10-foot Speed penalty for 1 minute and fuses the bracelet; a curse effect, not a stance."
+ },
+ {
+  "id": "anylength-rope",
+  "isToggle": false,
+  "note": "Rope splits/reassembles on command; item utility activations, not a stance."
+ },
+ {
+  "id": "boots-of-free-running",
+  "isToggle": false,
+  "note": "Run along vertical surfaces for 1 minute, limited frequency — timed item effect, not a stance."
+ },
+ {
+  "id": "cape-of-illumination",
+  "isToggle": false,
+  "note": "Toggles a Light spell effect on the cape (an item light source) and a once-per-day blinding flash; not a personal stance."
+ },
+ {
+  "id": "cape-of-illumination-lesser",
+  "isToggle": false,
+  "note": "Toggles the cape's 1st-rank Light effect; an item light toggle, not a stance."
+ },
+ {
+  "id": "cape-of-illumination-moderate",
+  "isToggle": false,
+  "note": "Toggles the cape's 4th-rank Light effect; an item light toggle, not a stance."
+ },
+ {
+  "id": "cape-of-illumination-greater",
+  "isToggle": false,
+  "note": "Toggles the cape's 7th-rank Light effect; an item light toggle, not a stance."
+ },
+ {
+  "id": "cowl-of-keys",
+  "isToggle": false,
+  "note": "Transforms fingers into Thieves' Tools (re-activate to revert) plus a once-per-day wall ability; an item utility toggle, not a stance or combat form."
+ },
+ {
+  "id": "highhelm-stronghold-plate",
+  "isToggle": false,
+  "note": "Once-per-day armor transformation into a Wall of Stone for up to 10 minutes; the armor's resistance is a passive property, not a stance."
+ },
+ {
+  "id": "veiled-figurehead",
+  "isToggle": false,
+  "note": "Alters the appearance of a SHIP for 6 hours; affects a vehicle, not the character."
+ },
+ {
+  "id": "veiled-figurehead-greater",
+  "isToggle": false,
+  "note": "Alters the appearance of a SHIP and its crew for 24 hours; affects a vehicle/allies, not the character alone."
+ },
+ {
+  "id": "winged",
+  "isToggle": false,
+  "note": "Armor rune granting a fly Speed for 5 minutes or until Dismissed, once per hour; a timed item effect, not a stance."
+ },
+ {
+  "id": "serpent-dagger",
+  "isToggle": false,
+  "note": "Triggered once-per-day poison application on a hit; not a stance."
+ },
+ {
+  "id": "vipers-fang",
+  "isToggle": false,
+  "note": "Triggered talisman making a reactive Strike; not a stance."
+ },
+ {
+  "id": "marvelous-miniature",
+  "isToggle": false,
+  "note": "Single-use miniature that transforms into an object/creature; not a personal stance or form."
+ },
+ {
+  "id": "marvelous-miniature-chest",
+  "isToggle": false,
+  "note": "Single-use miniature that becomes a chest; not a personal stance or form."
+ },
+ {
+  "id": "collar-of-inconspicuousness",
+  "isToggle": false,
+  "note": "Transforms your ANIMAL COMPANION into a Tiny nonthreatening creature; affects the companion, not you."
+ },
+ {
+  "id": "bottled-air",
+  "isToggle": false,
+  "note": "One-off breath of air from a bottle; not a stance."
+ },
+ {
+  "id": "accolade-robe-greater",
+  "isToggle": false,
+  "note": "Retrieve-and-Recall-Knowledge activation plus a once-per-day Focus Point; not a stance."
+ },
+ {
+  "id": "clawed-bracers",
+  "isToggle": false,
+  "note": "Once-per-hour morph granting a climb Speed and a 1d6 slashing agile/finesse claw for 10 minutes or until Dismissed — a timed item effect with a duration, not a stance."
+ },
+ {
+  "id": "entertainers-cincture",
+  "isToggle": false,
+  "note": "Once-per-day Focus Point and a 10-minute performance-recording activation; not a stance."
+ },
+ {
+  "id": "entertainers-cincture-greater",
+  "isToggle": false,
+  "note": "Once-per-day Focus Point and a 1-hour performance-recording activation; not a stance."
+ },
+ {
+  "id": "bioluminescent-stripes",
+  "isToggle": false,
+  "note": "Toggleable personal glow (light source) — a light effect with no mechanical combat state; not a stance."
+ },
+ {
+  "id": "whip-tongue-sling",
+  "isToggle": false,
+  "note": "Sustained once-per-day croak (up to 4 rounds) that also blocks using the sling; sustained/limited-duration activation, not a stance."
+ },
+ {
+  "id": "skinstitch-salve",
+  "isToggle": false,
+  "note": "First Aid and triggered Medicine-bonus activations; not a stance."
+ },
+ {
+  "id": "flame-navette",
+  "isToggle": false,
+  "note": "Consumable talisman granting a one-time fighter feat benefit (counteract rank 8, +22); not a stance."
+ },
+ {
+  "id": "twisting-twine",
+  "isToggle": false,
+  "note": "Thrown twine that grapples at range on a limited frequency; not a stance."
+ },
+ {
+  "id": "tiger-fork",
+  "isToggle": false,
+  "note": "Requirement-gated Grapple activation after a successful Strike, plus a conditional save bonus while a creature is Grabbed; not a stance."
+ },
+ {
+  "id": "staff-of-sun-wukong",
+  "isToggle": false,
+  "note": "Once-per-day damage activation plus a shrink/store activation; not a stance."
+ },
+ {
+  "id": "shadowpiercer",
+  "isToggle": false,
+  "note": "Passive precision-damage property plus once-per-day/triggered activations; not a stance."
+ },
+ {
+  "id": "demon-hunting-bands",
+  "isToggle": false,
+  "note": "Triggered on Stride to avoid demon reactions during that movement; not a stance."
+ },
+ {
+  "id": "perfections-first-step",
+  "isToggle": false,
+  "note": "Single activation casting Unbreaking Wave Advance; not a stance."
+ },
+ {
+  "id": "drop-of-convergent-waters",
+  "isToggle": false,
+  "note": "Talisman granting one enhanced unarmed Strike; the word 'stance' appears only as a reference to stances that restrict Strikes."
+ },
+ {
+  "id": "heralds-ring",
+  "isToggle": false,
+  "note": "Once-per-day voice projection and a triggered sonic reflection; not a stance."
+ },
+ {
+  "id": "mat-of-resilience",
+  "isToggle": false,
+  "note": "Item-granted 'simple stance' that only works while a creature stands atop the unfurled mat (no off-guard); position-dependent item effect that can target any creature, not a character-sheet stance."
+ },
+ {
+  "id": "mat-of-resilence",
+  "isToggle": false,
+  "note": "Duplicate spelling of Mat of Resilience — item-granted, position-dependent 'simple stance' tied to standing on the mat, not a character stance."
+ },
+ {
+  "id": "greater-mat-of-resilence",
+  "isToggle": false,
+  "note": "Greater version of the mat — item-granted, position-dependent 'simple stance' tied to standing on the mat, not a character stance."
+ },
+ {
+  "id": "farlight-stone",
+  "isToggle": false,
+  "note": "Paired stones toggling their own light and color; an item light source, not a personal stance."
+ },
+ {
+  "id": "blade-phantoms-guide",
+  "isToggle": false,
+  "note": "Consumable whetstone granting weapon proficiency for 1 minute; 'fighting stance' appears only in the flavor description."
+ },
+ {
+  "id": "vine-baton",
+  "isToggle": false,
+  "note": "Once-per-day pre-encounter initiative buff; not a stance."
+ },
+ {
+  "id": "shining-hackle",
+  "isToggle": false,
+  "note": "Toggles brighter light from the hackle until Dismissed; an item light source, not a stance."
+ },
+ {
+  "id": "pyrefeather-token",
+  "isToggle": false,
+  "note": "Triggered talisman lowering a recovery-check DC by 1; not a stance."
+ },
+ {
+  "id": "soldiers-syrup",
+  "isToggle": false,
+  "note": "Consumable that pre-loads another potion for later 1-action activation; not a stance."
+ },
+ {
+  "id": "minor-soldiers-syrup",
+  "isToggle": false,
+  "note": "Consumable potion: lets you activate a combined potion as 1 action within the hour, or become enfeebled 1. Not a stance."
+ },
+ {
+  "id": "lesser-soldiers-syrup",
+  "isToggle": false,
+  "note": "Consumable potion with a 1-hour window, not a stance."
+ },
+ {
+  "id": "moderate-soldiers-syrup",
+  "isToggle": false,
+  "note": "Consumable potion with a 1-hour window, not a stance."
+ },
+ {
+  "id": "greater-soldiers-syrup",
+  "isToggle": false,
+  "note": "Consumable potion with a 1-hour window, not a stance."
+ },
+ {
+  "id": "major-soldiers-syrup",
+  "isToggle": false,
+  "note": "Consumable potion with a 1-hour window, not a stance."
+ },
+ {
+  "id": "fortune-cord",
+  "isToggle": false,
+  "note": "Worn item loaded during daily preparations with two Activate options (Merchant's Bludgeon etc.); item activation, not a stance."
+ },
+ {
+  "id": "wyrms-flight",
+  "isToggle": false,
+  "note": "Relic gift Activate: fly Speed for 10 minutes, once per day (unlimited only at 17th level). Duration-limited activation, not a stance."
+ },
+ {
+  "id": "creative-spark",
+  "isToggle": false,
+  "note": "Relic gift Activate that summons a fire wisp for up to 10 minutes; a summon with a duration, not a stance."
+ },
+ {
+  "id": "elements-of-creation",
+  "isToggle": false,
+  "note": "Modifies creative spark to summon three extra wisps for 10 minutes; a summon rider, not a stance."
+ },
+ {
+  "id": "feral-claws",
+  "isToggle": true,
+  "form": false,
+  "strikes": [
+   {
+    "name": "Claw",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "slashing",
+    "traits": [
+     "agile",
+     "finesse",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "Relic gift (Beast aspect, morph). Activate (concentrate) transforms your hands into claws with no duration — lasts until you Dismiss it — granting the claw unarmed attack. Requires owning the relic; no other bonuses stated."
+ },
+ {
+  "id": "tide-of-death",
+  "isToggle": false,
+  "note": "Relic gift that only changes the action cost of the death gaze gift (3 actions instead of 2). Not a stance."
+ },
+ {
+  "id": "petal-dance",
+  "isToggle": false,
+  "note": "Relic gift form with an explicit 1-minute duration (once per hour): swarm trait, immunity to falling damage, resistance 5 bludgeoning/slashing, weakness 5 area/splash. Duration-limited, so not a persistent toggle."
+ },
+ {
+  "id": "cloak-of-elvenkind-greater",
+  "isToggle": false,
+  "note": "Once-per-day item activation granting a 4th-rank invisibility-style spell effect for the spell's duration. Spell effect with a duration, not a stance."
+ },
+ {
+  "id": "cloak-of-elvenkind",
+  "isToggle": false,
+  "note": "Once-per-day item activation granting a spell effect for the spell's normal duration. Not a stance."
+ },
+ {
+  "id": "cordelias-greater-construct-key",
+  "isToggle": false,
+  "note": "Item activations that summon/command a construct plus a passive 5-resistance-bypass. Not a stance."
+ },
+ {
+  "id": "feather-token-chest-ammunition",
+  "isToggle": false,
+  "note": "Single-use consumable token fired from a ranged weapon; not a stance."
+ },
+ {
+  "id": "mat-of-resilience-greater",
+  "isToggle": false,
+  "note": "The 'simple stance' is granted by the item to whichever creature is atop the mat (Requirements: A creature is atop the mat) and only works while at least half its space is on the mat. Item-granted and possibly for an ally, so not a character stance toggle."
+ },
+ {
+  "id": "oathbow",
+  "isToggle": false,
+  "note": "Once-per-7-days activation that marks a single target for 7 days; a timed effect against a creature, not a stance."
+ },
+ {
+  "id": "soldiers-syrup-greater",
+  "isToggle": false,
+  "note": "Consumable potion with a 1-hour window, not a stance."
+ },
+ {
+  "id": "soldiers-syrup-lesser",
+  "isToggle": false,
+  "note": "Consumable potion with a 1-hour window, not a stance."
+ },
+ {
+  "id": "soldiers-syrup-major",
+  "isToggle": false,
+  "note": "Consumable potion with a 1-hour window, not a stance."
+ },
+ {
+  "id": "soldiers-syrup-minor",
+  "isToggle": false,
+  "note": "Consumable potion with a 1-hour window, not a stance."
+ },
+ {
+  "id": "soldiers-syrup-moderate",
+  "isToggle": false,
+  "note": "Consumable potion with a 1-hour window, not a stance."
+ },
+ {
+  "id": "aon-fulcrum-lenses",
+  "isToggle": false,
+  "note": "Held item with per-use Activate options (bonus Strike, melee spell attack, transfer investiture). Not a stance."
+ },
+ {
+  "id": "aon-mat-of-resilence",
+  "isToggle": false,
+  "note": "Same as Mat of Resilience: the 'simple stance' is conferred by the item on any creature atop the mat and lapses off the mat. Item/ally-facing, not a character stance."
+ },
+ {
+  "id": "aon-greater-mat-of-resilence",
+  "isToggle": false,
+  "note": "Greater Mat of Resilience; the anti-off-guard stance belongs to whatever creature stands on the mat, not a personal stance toggle."
+ },
+ {
+  "id": "aon-wyrm-s-flight",
+  "isToggle": false,
+  "note": "Relic gift granting fly Speed for 10 minutes once per day; duration-limited activation."
+ },
+ {
+  "id": "aon-creative-spark",
+  "isToggle": false,
+  "note": "Relic gift summoning a fire wisp for up to 10 minutes; not a stance."
+ },
+ {
+  "id": "aon-elements-of-creation",
+  "isToggle": false,
+  "note": "Adds extra wisps to creative spark for 10 minutes; a summon rider, not a stance."
+ },
+ {
+  "id": "aon-feral-claws",
+  "isToggle": true,
+  "form": false,
+  "strikes": [
+   {
+    "name": "Claw",
+    "dice": 1,
+    "die": "d6",
+    "damageType": "slashing",
+    "traits": [
+     "agile",
+     "finesse",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "Duplicate AoN entry for the Feral Claws relic gift (morph). Activate (concentrate), no duration — persists until you Dismiss it — granting the claw unarmed attack. No other bonuses stated."
+ },
+ {
+  "id": "aon-tide-of-death",
+  "isToggle": false,
+  "note": "Only alters the action cost of the death gaze gift. Not a stance."
+ },
+ {
+  "id": "aon-petal-dance",
+  "isToggle": false,
+  "note": "Swarm form with a stated 1-minute duration, once per hour; duration-limited, not a persistent toggle."
+ },
+ {
+  "id": "bright-fetchling",
+  "isToggle": false,
+  "note": "Heritage light aura you can activate or suppress as an action, plus an innate Light cantrip. An illumination on/off with no combat statistics, not a stance or form."
+ },
+ {
+  "id": "ancient-scale-azarketi",
+  "isToggle": false,
+  "note": "Heritage bioluminescence (10-foot dim light) you can activate, deactivate, or rearrange, plus darkvision. No stance mechanics."
+ },
+ {
+  "id": "flying-animal",
+  "isToggle": false,
+  "note": "Awakened animal heritage: passive 20-foot land Speed, an animal unarmed attack, and immunity to falling damage. Always-on, no toggle."
+ },
+ {
+  "id": "stoutheart-centaur",
+  "isToggle": false,
+  "note": "Passive heritage (10 ancestry HP, +1 circumstance to Balance and anti-trip Reflex DC); the word 'stance' is only flavor text."
+ },
+ {
+  "id": "master-of-many-styles",
+  "isToggle": false,
+  "note": "Free action triggered when your turn begins that lets you use some other stance action; it is not itself a stance."
+ },
+ {
+  "id": "wayfinder-resonance-tinkerer",
+  "isToggle": false,
+  "note": "Item-activation feat (wayfinder cantrip at will / disguise the wayfinder) — affects an item, not a player stance."
+ },
+ {
+  "id": "attunement-to-stone",
+  "isToggle": false,
+  "note": "Passive tremorsense while touching stone plus a ka stone item activation; no on/off stance."
+ },
+ {
+  "id": "judgment-of-the-monolith",
+  "isToggle": false,
+  "note": "Ka stone item activation that casts spell effects on a target; not a stance."
+ },
+ {
+  "id": "stone-communion",
+  "isToggle": false,
+  "note": "Language grant plus a 10-minute ka stone activation to cast Speak with Stones; not a stance."
+ },
+ {
+  "id": "familiars-eyes",
+  "isToggle": false,
+  "note": "Concentrate action projecting your senses into your familiar until Dismissed; a sense-projection effect with no stance bonuses, and it centers on the companion."
+ },
+ {
+  "id": "gorilla-pound",
+  "isToggle": false,
+  "note": "Flourish Strike requiring Gorilla Stance; the Climb Speed rider is a passive Special that applies while in that separate stance."
+ },
+ {
+  "id": "peafowl-strut",
+  "isToggle": false,
+  "note": "Flourish action (Step twice then Strike) requiring Peafowl Stance; stance is only a Requirement."
+ },
+ {
+  "id": "wish-alchemy",
+  "isToggle": false,
+  "note": "Lets you Activate a crafted wish vial to gain a spell's effects; an item activation, not a stance."
+ },
+ {
+  "id": "rescuers-press",
+  "isToggle": false,
+  "note": "Conditional Shove improvement while in Everstand Stance; stance is only a reference, not granted here."
+ },
+ {
+  "id": "skyseeker",
+  "isToggle": false,
+  "note": "Multi-Strike/Leap activity requiring Sky and Heaven Stance; bonuses apply only during the activity."
+ },
+ {
+  "id": "cross-the-final-horizon",
+  "isToggle": false,
+  "note": "One-off Stride-and-Strike activity requiring Sky and Heaven Stance; the +5 ft reach applies only during this action."
+ },
+ {
+  "id": "wayfinder-resonance-infiltrator",
+  "isToggle": false,
+  "note": "Once-per-day wayfinder activations (Illusory Disguise / replica badge); item activation, not a stance."
+ },
+ {
+  "id": "communal-sustain",
+  "isToggle": false,
+  "note": "Grants an ALLY a free Sustain; sustained spellcasting support, not a personal stance."
+ },
+ {
+  "id": "blazing-talon-surge",
+  "isToggle": false,
+  "note": "Flourish Stride-and-Strike action requiring Rain of Embers Stance; stance is only a Requirement."
+ },
+ {
+  "id": "explosive-death-drop",
+  "isToggle": false,
+  "note": "One-off throw/Strike action requiring Rain of Embers Stance and a grabbed target; the circumstance modifiers apply to that single check."
+ },
+ {
+  "id": "flame-jump",
+  "isToggle": false,
+  "note": "Exploration teleportation ability with a 1-minute preparation; not a stance."
+ },
+ {
+  "id": "quick-shape",
+  "isToggle": false,
+  "note": "Free action on initiative that uses Change Shape; the form itself comes from the separate Change Shape/beastkin ability, so no toggle is added here."
+ },
+ {
+  "id": "electric-counter",
+  "isToggle": false,
+  "note": "Reaction requiring Wild Winds Stance; the electricity resistance lasts only until the start of your next turn."
+ },
+ {
+  "id": "devastating-spellstrike",
+  "isToggle": false,
+  "note": "Spellstrike enhancement requiring Arcane Cascade stance; a one-off attack effect."
+ },
+ {
+  "id": "distracting-spellstrike",
+  "isToggle": false,
+  "note": "Spellstrike + Feint activity requiring Arcane Cascade stance; stance is only a Requirement."
+ },
+ {
+  "id": "starlit-eyes",
+  "isToggle": false,
+  "note": "Passive flat-check reduction that applies while in the separate Arcane Cascade stance; no independent on/off state."
+ },
+ {
+  "id": "student-of-the-staff",
+  "isToggle": false,
+  "note": "Passive rider granting your staff deadly d6 while in the separate Arcane Cascade stance."
+ },
+ {
+  "id": "capture-magic",
+  "isToggle": false,
+  "note": "Reaction that makes you enter the separate Arcane Cascade stance (or grants a temporary +2 status damage bonus); the toggle belongs to Arcane Cascade itself."
+ },
+ {
+  "id": "dazzling-block",
+  "isToggle": false,
+  "note": "Shield Block rider requiring Arcane Cascade stance; a one-off burst of light."
+ },
+ {
+  "id": "sustaining-steel",
+  "isToggle": false,
+  "note": "Reaction healing triggered by casting a spell, requiring Arcane Cascade stance; not a stance."
+ },
+ {
+  "id": "resounding-cascade",
+  "isToggle": false,
+  "note": "Free action triggered by entering Arcane Cascade that grants the extra damage to ALLIES in an aura; ally-facing, not a personal toggle."
+ },
+ {
+  "id": "inner-fire-som",
+  "isToggle": false,
+  "note": "Passive always-on rider (cold/fire resistance half level, retributive fire damage) that applies while in the separate Stoked Flame Stance; the toggle belongs to that stance."
+ },
+ {
+  "id": "blazing-streak",
+  "isToggle": false,
+  "note": "Flourish Stride-and-Strike activity requiring Stoked Flame Stance; stance is only a Requirement."
+ },
+ {
+  "id": "shifting-terrain",
+  "isToggle": false,
+  "note": "One-off save-inflicting action requiring Rough Terrain Stance and matching terrain attunement."
+ },
+ {
+  "id": "bullet-dancer-dedication",
+  "isToggle": false,
+  "note": "Dedication that GRANTS the separate Bullet Dancer Stance action (plus weapon familiarity); the toggle belongs to that stance record, not the dedication."
+ },
+ {
+  "id": "bullet-dancer-burn",
+  "isToggle": false,
+  "note": "Passive riders that apply while in the separate Bullet Dancer Stance; no independent on/off state."
+ },
+ {
+  "id": "bullet-dancer-reload",
+  "isToggle": false,
+  "note": "Flourish Strike-and-reload action requiring Bullet Dancer Stance; stance is only a Requirement."
+ },
+ {
+  "id": "summon-ensemble",
+  "isToggle": false,
+  "note": "Modifies Summon Instrument to a sustained duration; sustained spellcasting."
+ },
+ {
+  "id": "confounding-image",
+  "isToggle": false,
+  "note": "Modifies Mirror Image to a sustained duration and range; sustained spellcasting."
+ },
+ {
+  "id": "disk-rider",
+  "isToggle": false,
+  "note": "Modifies Floating Disk to a sustained duration; sustained spellcasting."
+ },
+ {
+  "id": "directed-poison",
+  "isToggle": false,
+  "note": "Modifies Toxic Cloud to a sustained duration and movement; sustained spellcasting."
+ },
+ {
+  "id": "black-powder-flash",
+  "isToggle": false,
+  "note": "One-off blinding/dazzling action requiring Powder Punch Stance; stance is only a Requirement."
+ },
+ {
+  "id": "devoted-guardian",
+  "isToggle": false,
+  "note": "Action following Raise a Shield that gives an adjacent ALLY a circumstance AC bonus; ally-facing and tied to the raised shield, despite the word \"stance\" in the flavor text."
+ },
+ {
+  "id": "pirouette",
+  "isToggle": false,
+  "note": "Reaction requiring Masquerade of Seasons Stance; the +2 circumstance AC and damage reduction apply only to the triggering attack."
+ },
+ {
+  "id": "grand-dance",
+  "isToggle": false,
+  "note": "Stride-on-air activity requiring Masquerade of Seasons Stance; stance is only a Requirement."
+ },
+ {
+  "id": "stalwart-defender-dedication",
+  "isToggle": false,
+  "note": "Dedication that GRANTS the separate Tenacious Stance action; the toggle belongs to that stance record."
+ },
+ {
+  "id": "tunnel-wall",
+  "isToggle": false,
+  "note": "Action requiring Tenacious Stance that makes you anchored for 1 round; a timed one-off, not a stance."
+ },
+ {
+  "id": "upset-balance",
+  "isToggle": false,
+  "note": "Reaction requiring Tenacious Stance; inflicts clumsy on a foe."
+ },
+ {
+  "id": "rupture-stomp",
+  "isToggle": false,
+  "note": "Once-per-day action requiring Tenacious Stance that creates difficult terrain for 1 minute."
+ },
+ {
+  "id": "unshaken-in-iron",
+  "isToggle": false,
+  "note": "Passive armor-specialization grant, with an extra rider that applies while in the separate Tenacious Stance; no on/off decision of its own."
+ },
+ {
+  "id": "cracked-mountain",
+  "isToggle": false,
+  "note": "Death-saving reaction requiring Tenacious Stance; it in fact ENDS the stance."
+ },
+ {
+  "id": "gathering-moss",
+  "isToggle": false,
+  "note": "Free action triggered by entering Tenacious Stance; fast healing lasts 1 minute or until the stance ends."
+ },
+ {
+  "id": "stone-body",
+  "isToggle": false,
+  "note": "Action requiring Tenacious Stance; resistance 10 to all damage lasts only until the end of your next turn or until you are critically hit."
+ },
+ {
+  "id": "kinetic-activation",
+  "isToggle": false,
+  "note": "Passive permission to Activate spell-casting magic items matching your kinetic elements; item-facing."
+ },
+ {
+  "id": "safe-elements",
+  "isToggle": false,
+  "note": "Passive rider letting you exempt creatures from your kinetic aura when you Channel Elements or use a stance impulse; targets others, not a stance itself."
+ },
+ {
+  "id": "aura-shaping",
+  "isToggle": false,
+  "note": "Passive control over your kinetic aura's emanation size; \"stance impulse\" is only a reference to when you may resize."
+ },
+ {
+  "id": "effortless-impulse",
+  "isToggle": false,
+  "note": "Free action at the start of your turn that Sustains an impulse; sustained-effect support."
+ },
+ {
+  "id": "imperious-aura",
+  "isToggle": false,
+  "note": "Free action triggered when your turn begins that lets you use a separate stance impulse; not itself a stance."
+ },
+ {
+  "id": "kinetic-pinnacle",
+  "isToggle": false,
+  "note": "Passive permanent quickened with restricted uses for the extra action; \"stance impulse\" is only one of the allowed uses."
+ },
+ {
+  "id": "unleash-yaoguai-might",
+  "isToggle": false,
+  "note": "Not a stance: a once-per-day extra action spent when you Change Shape into yaoguai form; the Enlarge + heritage effect lasts 1 minute or until you Change Shape again."
+ },
+ {
+  "id": "five-breath-vanguard-dedication",
+  "isToggle": false,
+  "note": "Dedication that merely grants the Cycle Elemental Stance action; the dedication itself is not a stance."
+ },
+ {
+  "id": "renewing-cycle",
+  "isToggle": false,
+  "note": "Passive rider: temp HP equal to half your level the first time each round you Cycle Elemental Stance. No on/off state of its own."
+ },
+ {
+  "id": "induce-imbalance",
+  "isToggle": false,
+  "note": "A Strike activity; 'You're in an elemental stance' is only a Requirements line."
+ },
+ {
+  "id": "protective-cycle",
+  "isToggle": false,
+  "note": "Reaction that Cycles Elemental Stance and gives +2 circumstance AC only until the end of your next turn; stance is a requirement."
+ },
+ {
+  "id": "five-breaths-one-death",
+  "isToggle": false,
+  "note": "Once-per-10-minutes Strike chain activity; the stance is only a requirement."
+ },
+ {
+  "id": "know-your-enemy",
+  "isToggle": false,
+  "note": "Action whose Requirements line references Strategist Stance; not itself a stance."
+ },
+ {
+  "id": "momentous-charge",
+  "isToggle": false,
+  "note": "Action requiring Rushing Goat Stance; not itself a stance."
+ },
+ {
+  "id": "scattering-in-spring",
+  "isToggle": false,
+  "note": "Reaction granting +2 circumstance AC against one triggering attack; Twisting Petal Stance is only a requirement."
+ },
+ {
+  "id": "five-gods-ram",
+  "isToggle": false,
+  "note": "Two-Strike activity requiring Rushing Goat Stance; not itself a stance."
+ },
+ {
+  "id": "whirling-in-the-summer-storm",
+  "isToggle": false,
+  "note": "Action requiring Twisting Petal Stance; not itself a stance."
+ },
+ {
+  "id": "world-breaking-footfall",
+  "isToggle": false,
+  "note": "Action requiring Kaiju Stance and touching the ground; not itself a stance."
+ },
+ {
+  "id": "wake-of-devastation",
+  "isToggle": false,
+  "note": "Action requiring Kaiju Stance; not itself a stance."
+ },
+ {
+  "id": "channeled-protection",
+  "isToggle": false,
+  "note": "Aura action requiring Channeler's Stance and a just-cast spell; not itself a stance."
+ },
+ {
+  "id": "cycle-of-souls",
+  "isToggle": false,
+  "note": "Free action (trigger: your turn starts) that lets you Step and then enter an animist stance you already know; it is not a stance itself."
+ },
+ {
+  "id": "haft-beatdown",
+  "isToggle": false,
+  "note": "Once-per-minute two-attack activity requiring Haft Striker Stance; not itself a stance."
+ },
+ {
+  "id": "razors-edge",
+  "isToggle": false,
+  "note": "Passive that lets you enter the separate Spear of Doom stance as a free action; grants no state of its own."
+ },
+ {
+  "id": "aegis-for-the-innocent",
+  "isToggle": false,
+  "note": "Mythic action creating a barrier on a target for 1 minute or until Dismissed; affects an ally/area, not a stance."
+ },
+ {
+  "id": "unstoppable-force",
+  "isToggle": false,
+  "note": "Passive rider on the Immovable Object stance (ignore difficult terrain, and a once-per-10-minutes Stride on Dismiss); has no separate on/off state."
+ },
+ {
+  "id": "imbue-spell",
+  "isToggle": false,
+  "note": "Mythic action that hands a spell to an ally; toggles nothing for you."
+ },
+ {
+  "id": "convergent-tides",
+  "isToggle": false,
+  "note": "Passive rider while in Arcane Cascade stance (ignore water-caused difficult terrain); no separate toggle."
+ },
+ {
+  "id": "shattering-spellstrike",
+  "isToggle": false,
+  "note": "Spellstrike-style action whose Requirements reference Arcane Cascade stance; not itself a stance."
+ },
+ {
+  "id": "culverts-collapse",
+  "isToggle": false,
+  "note": "Action/reaction requiring Flood Stance; not itself a stance."
+ },
+ {
+  "id": "rippling-spin",
+  "isToggle": false,
+  "note": "Flourish action requiring Reflective Ripple Stance; not itself a stance."
+ },
+ {
+  "id": "snakebirds-shadow",
+  "isToggle": false,
+  "note": "Flourish multi-Strike activity requiring Waterfowl Stance; not itself a stance."
+ },
+ {
+  "id": "wave-spiral",
+  "isToggle": false,
+  "note": "Once-per-minute flourish action requiring Reflective Ripple Stance; not itself a stance."
+ },
+ {
+  "id": "the-thousand-lashes-of-the-weeping-willow",
+  "isToggle": false,
+  "note": "Kineticist overflow impulse that is Sustained up to 1 minute; a sustained effect, not a stance."
+ },
+ {
+  "id": "stalwart-song",
+  "isToggle": false,
+  "note": "Reaction granting +2 circumstance bonus to one saving throw; Tenacious Stance is only a requirement."
+ },
+ {
+  "id": "klingegeist",
+  "isToggle": false,
+  "note": "Two-action possession of a weapon lasting 10 minutes or until Dismissed; a timed possession effect, not a stance."
+ },
+ {
+  "id": "jotuns-heart",
+  "isToggle": false,
+  "note": "Passive jotunborn ability (Huge size, 10-foot reach, +level max HP) whose Special clause only rewrites what the separate Jotun's Battle Stance does."
+ },
+ {
+  "id": "not-so-fast",
+  "isToggle": false,
+  "note": "Reaction imposing a Speed penalty on a moving foe; Hampering Stance is only a requirement."
+ },
+ {
+  "id": "lock-down",
+  "isToggle": false,
+  "note": "Flourish action lasting until your next turn or until you move; Hampering Stance is only a requirement."
+ },
+ {
+  "id": "opening-stance",
+  "isToggle": false,
+  "note": "Free action on initiative that lets you use some other action with the stance trait; it grants no stance of its own."
+ },
+ {
+  "id": "distant-wandering",
+  "isToggle": false,
+  "note": "Deviant 1-action spirit projection: your body falls unconscious, you can't attack or affect anything, and you must attempt a backlash check each turn. Not a combat stance/battle form and carries no bonuses to apply."
+ },
+ {
+  "id": "strafing-breath",
+  "isToggle": false,
+  "note": "Action requiring War Rider Stance to be active; temporarily enlarges that stance's aura during one movement."
+ },
+ {
+  "id": "ive-been-here-before",
+  "isToggle": false,
+  "note": "Mythic exploration benefit tied to a region, ending when you enter a new region; not a stance."
+ },
+ {
+  "id": "scroll-thaumaturgy",
+  "isToggle": false,
+  "note": "Always-on passive allowing scroll activation of any tradition; no on/off decision."
+ },
+ {
+  "id": "one-more-activation",
+  "isToggle": false,
+  "note": "Once-per-day extra item activation; not a stance."
+ },
+ {
+  "id": "petrified-skin",
+  "isToggle": false,
+  "note": "Passive aftermath ability: a stone fist unarmed attack always available, with a conditional die-size increase and Con-modifier physical resistance only below half HP. The 'petrified form' is a permanent, involuntary state you can't end, not a toggle."
+ },
+ {
+  "id": "curse-maelstrom-dedication",
+  "isToggle": false,
+  "note": "The curse maelstrom state is entered by triggers (accepting a misfortune reroll, a foe's misfortune, a failed curse save) and ends at the end of the encounter; not a freely toggled stance."
+ },
+ {
+  "id": "psychic-duelist-dedication",
+  "isToggle": false,
+  "note": "Passive +2 circumstance to psychic-duel initiative plus a benefit chosen per duel; scoped to psychic duels, not a stance."
+ },
+ {
+  "id": "instigate-psychic-duel",
+  "isToggle": false,
+  "note": "Once-per-day action to force a psychic duel; a subsystem, not a stance."
+ },
+ {
+  "id": "cruel-piercing",
+  "isToggle": false,
+  "note": "Grants the Puncture Flesh action while in Golden Erinys Stance; a rider on that stance, not a stance itself."
+ },
+ {
+  "id": "wrathful-presence",
+  "isToggle": false,
+  "note": "Fear aura lasting 1 minute or until Dismissed; a timed emotion effect, not a stance."
+ },
+ {
+  "id": "trample-sarangay",
+  "isToggle": false,
+  "note": "A Trample movement activity; not a stance."
+ },
+ {
+  "id": "judgement-of-the-monolith",
+  "isToggle": false,
+  "note": "Ka stone item activation (Ring of Truth effect / Talking Corpse); affects an item and a target, not a stance."
+ },
+ {
+  "id": "riptide-undersea-privateer",
+  "isToggle": false,
+  "note": "Attack/manipulate action requiring Anchor Stance and a target near water; not itself a stance."
+ },
+ {
+  "id": "inner-fire-monk",
+  "isToggle": false,
+  "note": "Passive rider on Stoked Flame Stance (cold+fire resistance equal to half your level, Wis-mod fire damage to those who touch you); the resistances belong to that stance's toggle, not to a new one."
+ },
+ {
+  "id": "aon-judgment-of-the-monolith",
+  "isToggle": false,
+  "note": "Duplicate of Judgement of the Monolith: a ka stone activation, not a stance."
+ },
+ {
+  "id": "aon-wombat-style",
+  "isToggle": true,
+  "form": false,
+  "strikes": [
+   {
+    "name": "Wombat Butt",
+    "dice": 1,
+    "die": "d8",
+    "damageType": "bludgeoning",
+    "group": "brawling",
+    "traits": [
+     "hampering",
+     "nonlethal",
+     "parry",
+     "shove",
+     "unarmed"
+    ]
+   }
+  ],
+  "note": "1-action monk stance (no printed Requirements). While in Wombat Stance the only Strikes you can make are wombat butt unarmed attacks, and you can't be flanked by enemies of your level or lower."
+ },
+ {
+  "id": "aon-wombat-burrow",
+  "isToggle": false,
+  "note": "Passive rider while in Wombat Stance: Burrow Speed equal to your Incredible Movement bonus (earth/soil only). No separate toggle."
+ },
+ {
+  "id": "final-gate",
+  "isToggle": false,
+  "note": "Kineticist class feature about Channel Elements functioning while you're unable to act; not a stance."
+ },
+ {
+  "id": "master-detective",
+  "isToggle": false,
+  "note": "Passive investigator capstone about clues in new locations; 'enter' refers to locations, not a stance."
+ },
+ {
+  "id": "animist-apparition-spellcasting",
+  "isToggle": false,
+  "note": "Spellcasting rules for prepared/vessel spells; a spellcasting feature, not a stance."
+ },
+ {
+  "id": "aloof-firmament",
+  "isToggle": false,
+  "note": "Passive magus rider while in Arcane Cascade stance (Quick Jump benefits; movement doesn't trigger reactions); belongs to that stance, no separate toggle."
+ },
+ {
+  "id": "curse-of-engulfing-flames",
+  "isToggle": false,
+  "note": "Oracle curse effect that fires automatically while you have the cursebound condition (persistent fire damage, fire immunity/resistance suppressed) — no player on/off decision, so not a stance."
+ },
+ {
+  "id": "inexorable-iron",
+  "isToggle": false,
+  "note": "Magus hybrid study; a conditional rider ON Arcane Cascade (temp HP = half level when you enter/start turns in that stance while two-handing a melee weapon). Arcane Cascade is the stance, not this feature."
+ },
+ {
+  "id": "laughing-shadow",
+  "isToggle": false,
+  "note": "Magus hybrid study; grants +5 ft (+10 ft unarmored) status bonus to Speeds and increased Arcane Cascade extra damage only WHILE in Arcane Cascade stance. It modifies that stance rather than being its own toggle."
+ },
+ {
+  "id": "of-verse-unbroken",
+  "isToggle": false,
+  "note": "Exemplar feature: Spark Transcendence rider lasting only until the start of your next turn, and it benefits allies (free-action Sustain), not you."
+ },
+ {
+  "id": "resurgent-maelstrom",
+  "isToggle": false,
+  "note": "Magus hybrid study; mostly always-on improvised-weapon benefits, with the versatile P/S rider applying only while in Arcane Cascade stance. Not its own toggle."
+ },
+ {
+  "id": "sparkling-targe",
+  "isToggle": false,
+  "note": "Magus hybrid study; while in Arcane Cascade with a raised shield, the shield's circumstance AC bonus also applies to saves vs magic. Conditional on Arcane Cascade + Raise a Shield, not a separate stance."
+ },
+ {
+  "id": "the-tangible-dream",
+  "isToggle": false,
+  "note": "Psychic conscious mind: granted spells and figment/amp Sustain effects — sustained spellcasting, not a stance."
+ },
+ {
+  "id": "toxicologist",
+  "isToggle": false,
+  "note": "Alchemist research field: passive field benefit (Activate injury poison as 1 action, poison-trait vials). Always on, no toggle."
+ },
+ {
+  "id": "twisting-tree",
+  "isToggle": false,
+  "note": "Magus hybrid study; staff trait changes are passive, and the free-action grip change only applies while in Arcane Cascade stance. Not its own stance."
+ },
+ {
+  "id": "unfurling-brocade",
+  "isToggle": false,
+  "note": "Magus hybrid study; qi-infused fabric weapon is passive while wielded, and the extra tricks are riders on Arcane Cascade stance."
+ },
+ {
+  "id": "channel-elements",
+  "isToggle": false,
+  "note": "Kineticist aura activation (aura trait, not stance). It does persist until dismissed/deactivated, but grants no AC/strike/resistance benefits of its own and coexists with stance impulses, so it must not join an exclusive stance toggle group."
+ },
+ {
+  "id": "mariners-mien",
+  "isToggle": false,
+  "note": "Item activation granting quickened for 1 minute (or until you leave the vehicle) — a timed activation, not a stance."
+ },
+ {
+  "id": "lesser-mariners-mien",
+  "isToggle": false,
+  "note": "Item activation granting quickened for 1 minute — timed activation, not a stance."
+ },
+ {
+  "id": "moderate-mariners-mien",
+  "isToggle": false,
+  "note": "Item activation granting quickened for 1 minute — timed activation, not a stance."
+ },
+ {
+  "id": "aeon-stone-rainbow-prism",
+  "isToggle": false,
+  "note": "Item activation that captures an image and casts 3rd-rank Illusory Disguise — a spell effect, not a stance."
+ },
+ {
+  "id": "wayfinder-of-rescue",
+  "isToggle": false,
+  "note": "Once-per-day activation to cast Heal on another creature — a spell effect targeting an ally."
+ },
+ {
+  "id": "hummingbird-wayfinder",
+  "isToggle": false,
+  "note": "Activation transforms the ITEM into a hummingbird (Scouting Eye effect); it changes the item, not the character."
+ },
+ {
+  "id": "blessed-tattoo",
+  "isToggle": false,
+  "note": "Once-per-day activation granting the Protection spell effect — a spell effect with a duration."
+ },
+ {
+  "id": "singing-bowl-of-the-versatile-stance",
+  "isToggle": false,
+  "note": "Item whose activation lets OTHER creatures already in a stance swap stances via a reaction; 'stance' is only referenced, and the effect is on others."
+ },
+ {
+  "id": "necklace-of-strangulation",
+  "isToggle": false,
+  "note": "Cursed item that triggers automatically under GM-determined stress (suffocation, 30 damage/turn) — no player-controlled on/off state."
+ },
+ {
+  "id": "axe-of-the-dwarven-lords",
+  "isToggle": false,
+  "note": "Once-per-week activation casting 10th-rank Summon Elemental — sustained/summoned spell effect."
+ },
+ {
+  "id": "rope-of-climbing",
+  "isToggle": false,
+  "note": "Item activation animating the rope — affects the item, not the character."
+ },
+ {
+  "id": "ruby-string",
+  "isToggle": false,
+  "note": "8-hour activation creating a demiplane (create demiplane effect) — a spell effect, not a stance."
+ },
+ {
+  "id": "cordelias-construct-key",
+  "isToggle": false,
+  "note": "Activations that summon a construct / animate an object for 1 hour — creates a separate creature, not a personal stance."
+ },
+ {
+  "id": "cordelias-construct-key-greater",
+  "isToggle": false,
+  "note": "Same as the base key: summons a construct or animates an object for 1 hour; affects a separate creature."
+ },
+ {
+  "id": "fulcrum-lenses",
+  "isToggle": false,
+  "note": "Item activations (bonus Strike, melee spell attack, transfer investiture) — discrete one-off activations."
+ },
+ {
+  "id": "ebon-fulcrum-lens",
+  "isToggle": false,
+  "note": "Investiture effect (insubstantial/incorporeal/drained 2) is passive while invested, and the activations are triggered one-offs with a 24-hour or momentary duration — no on/off stance."
+ },
+ {
+  "id": "sky-piercing-bow",
+  "isToggle": false,
+  "note": "Discrete item activations (teleport arrow, storm rift) — one-off effects."
+ },
+ {
+  "id": "warding-tattoo-wave",
+  "isToggle": false,
+  "note": "Reaction-style activation granting +1 status to AC/saves only until the end of the current turn against the triggering effect."
+ },
+ {
+  "id": "leopards-armor",
+  "isToggle": false,
+  "note": "Once-per-day armor activation: +2 item bonus to Stealth and Demoralize, -2 to Diplomacy/Society, for 1 hour (re-activate to revert). A timed item activation, not a stance."
+ },
+ {
+  "id": "silver-tripod",
+  "isToggle": false,
+  "note": "Item activation stabilizing the affixed weapon for 1 minute — buffs an item, with a duration."
+ },
+ {
+  "id": "toadskin-salve",
+  "isToggle": false,
+  "note": "Triggered activations (mucus splash on a hit; resistance 3 physical against one triggering attack) — one-off reactions."
+ },
+ {
+  "id": "toadskin-salve-greater",
+  "isToggle": false,
+  "note": "Triggered activations (2d4 splash; resistance 5 physical against one triggering attack) — one-off reactions."
+ },
+ {
+  "id": "toadskin-salve-major",
+  "isToggle": false,
+  "note": "Triggered activations (3d4 splash; resistance 8 physical against one triggering attack) — one-off reactions."
+ },
+ {
+  "id": "crown-of-insight",
+  "isToggle": false,
+  "note": "Passive tattoo effect that triggers automatically when you enter an area with unnoticed creatures — always-on, no decision."
+ },
+ {
+  "id": "wardrobe-stone",
+  "isToggle": false,
+  "note": "1-minute activation granting an Illusory Disguise spell effect (outfit only), dismissed as a spell — spell effect, not a stance."
+ },
+ {
+  "id": "wardrobe-stone-lesser",
+  "isToggle": false,
+  "note": "1-minute activation granting an Illusory Disguise spell effect — spell effect, not a stance."
+ },
+ {
+  "id": "wardrobe-stone-moderate",
+  "isToggle": false,
+  "note": "Illusory-disguise activation plus a passive +2 item bonus to an outfit-appropriate Lore skill — neither is a toggled stance."
+ },
+ {
+  "id": "wardrobe-stone-greater",
+  "isToggle": false,
+  "note": "Illusory-disguise activation plus passive +3 item bonuses to sight-based Perception and an outfit Lore skill — not a toggled stance."
+ },
+ {
+  "id": "folding-boat",
+  "isToggle": false,
+  "note": "Activation folds/unfolds the ITEM into a boat; re-activating reverts it. Changes the item, not the character."
+ },
+ {
+  "id": "folding-boat-greater",
+  "isToggle": false,
+  "note": "Activation folds/unfolds the ITEM into a boat; changes the item, not the character."
+ },
+ {
+  "id": "barricade-stone",
+  "isToggle": false,
+  "note": "Activation drops/throws the stone to create a barricade structure — an environmental object, not a personal state."
+ },
+ {
+  "id": "barricade-stone-cylinder",
+  "isToggle": false,
+  "note": "Activation creates a stone cylinder barricade — an environmental object, not a personal state."
+ },
+ {
+  "id": "little-love",
+  "isToggle": false,
+  "note": "Triggered activation on a critical hit letting you Leap/Vault — a one-off movement."
+ },
+ {
+  "id": "life-salt",
+  "isToggle": false,
+  "note": "Consumable thrown as a Strike — a one-off action."
+ },
+ {
+  "id": "alchemical-fuse",
+  "isToggle": false,
+  "note": "Interact activations to attach and light a fuse on a bomb/device — affects an item, one-off."
+ },
+ {
+  "id": "curled-cure-gel",
+  "isToggle": false,
+  "note": "Consumable activated as part of Treat Wounds — a one-off healing boost."
+ },
+ {
+  "id": "ladys-blessing-oil",
+  "isToggle": false,
+  "note": "Consumable activated as part of Administer First Aid — a one-off."
+ },
+ {
+  "id": "tornado-trompo",
+  "isToggle": false,
+  "note": "Item activations (catch the top; unleash a Whirlwind effect) — one-off effects with the spell's own duration."
+ },
+ {
+  "id": "oculus-of-abaddon",
+  "isToggle": false,
+  "note": "Artifact: constant darkvision while socketed (passive) plus discrete magical activations with a corruption save — no stance toggle."
+ },
+ {
+  "id": "passage-pane",
+  "isToggle": false,
+  "note": "Activations for scrying and teleporting to the Boneyard — one-off effects requiring a mounted pane."
+ },
+ {
+  "id": "immovable",
+  "isToggle": false,
+  "note": "Armor rune activation (1/day) that renders YOU immobilized until you Dismiss the Activation. It persists, but it is a self-imposed condition from an item activation with no stance benefits — do not expose it as a stance toggle."
+ },
+ {
+  "id": "blade-byrnie",
+  "isToggle": false,
+  "note": "Activation pulls a link into a +1 striking Dagger — draws a weapon, a one-off Interact substitute."
+ },
+ {
+  "id": "blade-byrnie-greater",
+  "isToggle": false,
+  "note": "Activation pulls a link into a +2 greater striking Dagger — a one-off weapon draw."
+ },
+ {
+  "id": "blade-byrnie-major",
+  "isToggle": false,
+  "note": "Activation pulls a link into a +3 greater striking Dagger — a one-off weapon draw."
+ }
+]
