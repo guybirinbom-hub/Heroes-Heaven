@@ -20,9 +20,32 @@ const read = (p) => readFileSync(join(root, p), 'utf8');
 const db = JSON.parse(read('public/core.json'));
 
 /* ---- what the app ALREADY models, so triage can mark a record done ------------------------- */
+
+/** Every id that resolves to a real record, in any collection — the filter that makes idsIn exact. */
+const RECORD_IDS = new Set(
+  ['feats', 'classFeatures', 'items', 'heritages', 'ancestries', 'backgrounds',
+   'animalCompanions', 'specificFamiliars', 'companionSpecializations', 'deities', 'spells', 'stances']
+    .flatMap((c) => Object.keys(db[c] ?? {})),
+);
+
+/**
+ * Registry keys, verified against core.json.
+ *
+ * The old pattern required a HYPHEN (`[a-z0-9]+(?:-[a-z0-9]+)+`), so every single-word id was
+ * invisible to this report — `pet` and `familiar` are both registered companion grants and were
+ * being counted as gaps, and 105 situational ids like `forlorn` and `pirouette` likewise. Matching
+ * any quoted key instead over-collects field names (`rank`, `options`, `fortitude`), so the result is
+ * filtered to keys that actually resolve to a record. That way the report can neither miss a real
+ * entry nor credit a field name as one.
+ */
 const idsIn = (p) => {
-  try { return new Set([...read(p).matchAll(/["']?([a-z0-9]+(?:-[a-z0-9]+)+)["']?\s*:/g)].map((m) => m[1])); }
-  catch { return new Set(); }
+  let src;
+  // ONLY a missing file is tolerable here. A blanket catch previously swallowed a ReferenceError and
+  // silently reported every registry as empty — a coverage report that fails open is worse than one
+  // that crashes, because the number still looks like an answer.
+  try { src = read(p); } catch { return new Set(); }
+  const keys = [...src.matchAll(/["']([a-z0-9][a-z0-9-]*)["']\s*:/g)].map((m) => m[1]);
+  return new Set(keys.filter((k) => RECORD_IDS.has(k)));
 };
 /** Feature ids that appear in some class's feature list — the class pipeline advances these. */
 const CLASS_FEATURE_IDS = new Set(
@@ -117,8 +140,15 @@ const LANES = [
   },
   {
     id: 'companion',
-    what: 'grants or upgrades a companion/familiar/eidolon',
-    re: /\b(animal companion|familiar|eidolon|construct companion)\b/i,
+    what: 'GRANTS a companion/familiar/eidolon (not merely interacts with one)',
+    /** Only records that CREATE a companion belong here. Matching the bare word "familiar" flagged
+     *  386 records, of which 379 merely interact with a companion you already have (Mature Companion,
+     *  Enhanced Familiar, eidolon evolutions) — all handled by the Companions UI and deliberately
+     *  excluded by the earlier verify pass documented at the top of companionGrants.ts. The remaining
+     *  7 were checked by hand: only `familiar` and `pet` actually grant one, and both are already
+     *  registered. This lane is CLOSED, and the old count was measuring the wrong thing. */
+    re: /\byou (?:gain|get|have) a (?:[a-z-]+ )?(animal companion|familiar|eidolon|pet|construct companion)\b/i,
+    not: /\bif you (?:have|already have) an?\b/i,
     modelled: (r) => MODELLED.companion.has(r.id),
   },
   {

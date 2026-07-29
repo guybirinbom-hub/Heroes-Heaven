@@ -39,12 +39,12 @@ function report() {
 /** Floors for work already done — these may only ever go UP. */
 const REGISTRY_FLOOR: Record<string, number> = {
   featGrants: 8,
-  featGrantsAuto: 281,
-  featPickGrants: 35,
+  featGrantsAuto: 311,
+  featPickGrants: 38,
   featCantripGrants: 51,
-  featFeatGrants: 185,
-  companionGrants: 57,
-  situationalBonuses: 2197,
+  featFeatGrants: 254,
+  companionGrants: 78,
+  situationalBonuses: 2293,
 };
 
 /** Ceilings for work outstanding — these may only ever go DOWN.
@@ -59,8 +59,13 @@ const REGISTRY_FLOOR: Record<string, number> = {
  *                                                revising each against its own rules text: 218
  *                                                shipped, 57 dropped as not-situational or already
  *                                                modelled, 15 escalated to the owner.)
+*  2026-07-29  choices 536 · situational 1018   (both instruments corrected: idsIn required a
+ *                                                HYPHEN, so single-word registry keys like `pet`,
+ *                                                `familiar` and 96 situational ids were invisible and
+ *                                                counted as gaps. Now matched broadly and filtered to
+ *                                                ids that resolve to a real record.)
  *  Lower these when work lands; never raise one to make a red build green. */
-const MISSING_CEILING = { choices: 546, situational: 1114 };
+const MISSING_CEILING = { choices: 536, situational: 1018 };
 
 describe('mechanical coverage ratchet', { timeout: REPORT_TIMEOUT_MS }, () => {
   const r = report();

@@ -1,0 +1,73 @@
+[
+ {
+  "collection": "feats",
+  "id": "familiar",
+  "name": "Familiar",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "companion",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "pet",
+  "name": "Pet",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false
+   },
+   {
+    "lane": "companion",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "oculus-of-abaddon",
+  "name": "Oculus of Abaddon",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true
+   },
+   {
+    "lane": "resource",
+    "modelled": true
+   },
+   {
+    "lane": "toggle",
+    "modelled": false
+   },
+   {
+    "lane": "companion",
+    "modelled": false
+   },
+   {
+    "lane": "defense",
+    "modelled": true
+   }
+  ],
+  "noSignal": false
+ }
+]

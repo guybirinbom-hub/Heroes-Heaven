@@ -32,11 +32,24 @@ const REGISTRY_FILES = {
   companionGrants: 'src/rules/companionGrants.ts',
   situationalBonuses: 'src/rules/situationalBonuses.ts',
 };
+/** Every id that resolves to a real record — the filter that keeps idsIn from crediting field names.
+ *  The list is inline rather than reusing COLLECTIONS, which is declared further down this file. */
+const RECORD_IDS = new Set(
+  ['feats', 'classFeatures', 'items', 'heritages', 'ancestries', 'backgrounds',
+   'animalCompanions', 'specificFamiliars', 'companionSpecializations', 'deities', 'spells', 'stances']
+    .flatMap((c) => Object.keys(db[c] ?? {})),
+);
+
 function idsIn(path) {
   let src;
   try { src = read(path); } catch { return new Set(); }
-  // Registry keys are quoted or bare kebab-case slugs used as object keys.
-  return new Set([...src.matchAll(/["']?([a-z0-9]+(?:-[a-z0-9]+)+)["']?\s*:/g)].map((m) => m[1]));
+  // The old pattern required a HYPHEN, so every single-word registry key was invisible to this
+  // report: `pet` and `familiar` are registered companion grants that counted as gaps, as did 96
+  // situational ids like `forlorn` and `pirouette`. Match any quoted key, then keep only the ones
+  // that resolve to a record — otherwise field names (`rank`, `options`, `fortitude`) get credited
+  // as coverage, which is the same lie in the other direction.
+  const keys = [...src.matchAll(/["']([a-z0-9][a-z0-9-]*)["']\s*:/g)].map((m) => m[1]);
+  return new Set(keys.filter((k) => RECORD_IDS.has(k)));
 }
 const registry = Object.fromEntries(Object.entries(REGISTRY_FILES).map(([k, p]) => [k, idsIn(p)]));
 const situational = registry.situationalBonuses;
