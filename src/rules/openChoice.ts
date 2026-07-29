@@ -10,7 +10,7 @@
  * Spells already had this (SpellChoiceFilter + spellsMatching, used by effect-choices); `from.type
  * 'spell'` delegates to that rather than growing a second spell matcher that could disagree with it.
  */
-import type { ContentDatabase, Feat, OpenChoiceFrom, SpellChoiceFilter } from './types';
+import type { Character, ContentDatabase, Feat, OpenChoiceFrom, SpellChoiceFilter } from './types';
 import { spellsMatching } from './spellChoice';
 
 export interface OpenOption {
@@ -46,7 +46,7 @@ function featsMatching(from: OpenChoiceFrom, content: ContentDatabase): Feat[] {
 export function openChoiceOptions(
   from: OpenChoiceFrom | undefined,
   content: ContentDatabase,
-  opts?: { hideLegacy?: boolean },
+  opts?: { hideLegacy?: boolean; character?: Character },
 ): OpenOption[] {
   if (!from) return [];
   switch (from.type) {
@@ -86,6 +86,84 @@ export function openChoiceOptions(
       return Object.values(content.languages ?? {})
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((l) => ({ id: l.id, name: l.name, note: l.rarity !== 'common' ? l.rarity : undefined }));
+
+    // ---- BUILD-RESOLVED sources: the pool is what this character has -------------------------
+    // Without a character these return [] rather than falling back to all of content, because
+    // offering every spell for "one spell YOU KNOW" would let the player pick one they don't have.
+    case 'own-spell': {
+      const ch = opts?.character;
+      if (!ch) return [];
+      // Track the rank each spell is KNOWN AT, not the spell's base rank. "A spell you know of 5th
+      // rank or lower" is about your repertoire slot: a 1st-rank spell known at 5th is a 5th-rank
+      // pick, and filtering on the base rank would wrongly admit it under a lower ceiling.
+      const knownAt = new Map<string, number>();
+      const note = (id: string, rank: number) => {
+        const prev = knownAt.get(id);
+        if (prev === undefined || rank < prev) knownAt.set(id, rank);
+      };
+      for (const e of ch.spellcasting ?? []) {
+        for (const id of e.cantrips ?? []) note(id, 0);
+        for (const [rank, list] of Object.entries(e.repertoire ?? {})) for (const id of list) note(id, Number(rank));
+        for (const [rank, list] of Object.entries(e.grantedRepertoire ?? {})) for (const id of list) note(id, Number(rank));
+        // Prepared casters know their whole book; today's prepared slots are a loadout, not knowledge.
+      }
+      return [...knownAt.entries()]
+        .filter(([id, rank]) => {
+          if (!content.spells[id]) return false;
+          if (from.rank !== undefined && rank !== from.rank) return false;
+          if (from.minRank !== undefined && rank < from.minRank) return false;
+          if (from.maxRank !== undefined && rank > from.maxRank) return false;
+          if (from.cantripsOnly === true && rank !== 0) return false;
+          if (from.cantripsOnly === false && rank === 0) return false;
+          return true;
+        })
+        .sort((a, b) => a[1] - b[1] || content.spells[a[0]].name.localeCompare(content.spells[b[0]].name))
+        .map(([id, rank]) => ({
+          id,
+          name: content.spells[id].name,
+          note: rank === 0 ? 'Cantrip' : `${rank} rank`,
+          description: content.spells[id].description,
+        }));
+    }
+    case 'own-feat': {
+      const ch = opts?.character;
+      if (!ch) return [];
+      const want = (from.traits ?? []).map((t) => t.toLowerCase());
+      const seen = new Set<string>();
+      return (ch.feats ?? [])
+        .filter((f) => !seen.has(f.featId) && seen.add(f.featId))
+        .map((f) => content.feats[f.featId])
+        .filter((f): f is NonNullable<typeof f> => {
+          if (!f) return false;
+          if (!want.length) return true;
+          const tr = new Set((f.traits ?? []).map((t) => String(t).toLowerCase()));
+          return want.every((t) => tr.has(t));
+        })
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((f) => ({ id: f.id, name: f.name, note: `Level ${f.level}`, description: f.description }));
+    }
+    case 'own-item': {
+      const ch = opts?.character;
+      if (!ch) return [];
+      const out: OpenOption[] = [];
+      const seen = new Set<string>();
+      for (const inv of ch.inventory ?? []) {
+        if (from.investedOnly && !inv.invested) continue;
+        const item = content.items[inv.itemId];
+        if (!item || seen.has(item.id)) continue;
+        if (from.itemType && item.itemType !== from.itemType) continue;
+        seen.add(item.id);
+        out.push({ id: item.id, name: item.name, description: item.description });
+      }
+      return out.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    case 'own-companion': {
+      const ch = opts?.character;
+      if (!ch) return [];
+      return (ch.companions ?? [])
+        .map((cmp) => ({ id: cmp.id, name: cmp.name || cmp.kind || cmp.id }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+    }
     default:
       return [];
   }

@@ -57,3 +57,60 @@ describe('open choice options', () => {
     expect(openChoiceLabel('', c)).toBe('');
   });
 });
+
+/**
+ * BUILD-RESOLVED sources — the pool is what THIS character has.
+ *
+ * Library Robes stores "one spell YOU KNOW of 5th rank or lower"; Fuse Stance combines "two stances
+ * you know". Offering all of content for those would let the player pick something they don't have,
+ * so these resolve against the character and return NOTHING without one.
+ */
+describe('build-resolved open choices', () => {
+  const withSpells = (repertoire: Record<number, string[]>) =>
+    ({ spellcasting: [{ id: 'e', cantrips: [], repertoire }] }) as never;
+
+  it('own-spell draws from the character, not from all of content', () => {
+    const ch = withSpells({ 1: ['guidance'], 5: ['heal'] });
+    const opts = openChoiceOptions({ type: 'own-spell' }, c, { character: ch });
+    expect(opts.map((o) => o.id).sort()).toEqual(['guidance', 'heal']);
+    // The same descriptor against ALL content would be enormous — that is the point of own-*.
+    expect(openChoiceOptions({ type: 'spell' }, c).length).toBeGreaterThan(100);
+  });
+
+  it('own-spell honours the rank ceiling', () => {
+    const ch = withSpells({ 1: ['guidance'], 8: ['heal'] });
+    expect(openChoiceOptions({ type: 'own-spell', maxRank: 5 }, c, { character: ch }).map((o) => o.id)).toEqual(['guidance']);
+  });
+
+  it('own-* returns NOTHING without a character rather than falling back to content', () => {
+    // Falling back would offer spells the character does not know — worse than an empty picker.
+    for (const type of ['own-spell', 'own-feat', 'own-item', 'own-companion'] as const) {
+      expect(openChoiceOptions({ type }, c), type).toEqual([]);
+    }
+  });
+
+  it('own-feat filters the character\u2019s feats by trait', () => {
+    const stanceFeat = Object.values(c.feats).find((f) => (f.traits ?? []).includes('stance'))!;
+    const ch = { feats: [{ featId: stanceFeat.id }, { featId: 'toughness' }] } as never;
+    const opts = openChoiceOptions({ type: 'own-feat', traits: ['stance'] }, c, { character: ch });
+    expect(opts.map((o) => o.id)).toEqual([stanceFeat.id]);
+  });
+
+  it('own-item can require the item to be INVESTED', () => {
+    const ch = {
+      inventory: [
+        { instanceId: 'a', itemId: 'cloak-of-elvenkind', quantity: 1, invested: true },
+        { instanceId: 'b', itemId: 'backpack', quantity: 1 },
+      ],
+    } as never;
+    expect(openChoiceOptions({ type: 'own-item' }, c, { character: ch }).length).toBe(2);
+    expect(openChoiceOptions({ type: 'own-item', investedOnly: true }, c, { character: ch }).map((o) => o.id)).toEqual(['cloak-of-elvenkind']);
+  });
+
+  it('Library Robes stores a spell you know, re-picked each morning', () => {
+    const ch = c.items['library-robes']?.choice;
+    expect(ch?.kind).toBe('open');
+    expect(ch?.daily).toBe(true);
+    expect(ch?.from).toEqual({ type: 'own-spell', maxRank: 5 });
+  });
+});

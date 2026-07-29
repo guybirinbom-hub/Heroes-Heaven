@@ -63,7 +63,7 @@ export function dailyChoicesFor(c: Character, db: ContentDatabase): DailyChoice[
       def.kind === 'array'
         ? (def.options ?? [])
         : def.kind === 'open'
-          ? openChoiceOptions(def.from, db).map((o) => ({ value: o.id, label: o.name, description: o.description }))
+          ? openChoiceOptions(def.from, db, { character: c }).map((o) => ({ value: o.id, label: o.name, description: o.description }))
           : [];
     // An array/open choice with nothing to offer is malformed or unresolvable — skip it rather than
     // render an empty row the player can't answer (and which would block "Prepare for the day").

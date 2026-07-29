@@ -1186,7 +1186,7 @@ export function Builder({
                                     // list is too long to enumerate on the record and would go stale.
                                     (() => {
                                       const keys = choiceKeys(key, def);
-                                      const all = openChoiceOptions(def.from, content, { hideLegacy: build.hideLegacy });
+                                      const all = openChoiceOptions(def.from, content, { hideLegacy: build.hideLegacy, character: featPrereqChar });
                                       return keys.map((k, i) => {
                                         const answers = keys.map((kk) => build.featChoices[kk]);
                                         const taken = new Set(def.distinct ? answers.filter((a, j) => j !== i && a) : []);

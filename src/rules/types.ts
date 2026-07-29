@@ -397,7 +397,13 @@ export interface EffectChoice {
  * second spell matcher that could drift from it.
  */
 export interface OpenChoiceFrom {
-  type: 'spell' | 'feat' | 'weapon' | 'language';
+  /**
+   * Where the legal picks come from. The first four search CONTENT; the `own-` kinds search the
+   * CHARACTER, because several records pick from what you already have — Library Robes takes "one
+   * spell YOU KNOW of 5th rank or lower", Fuse Stance "two stances you already know". Offering the
+   * whole of content for those would let the player choose something they don't have.
+   */
+  type: 'spell' | 'feat' | 'weapon' | 'language' | 'own-spell' | 'own-feat' | 'own-item' | 'own-companion';
   /** spell: allowed traditions / rank window / required traits / cantrip filter. */
   traditions?: Tradition[];
   rank?: number;
@@ -414,6 +420,10 @@ export interface OpenChoiceFrom {
   maxLevel?: number;
   /** weapon: restrict to a proficiency category. */
   weaponCategory?: WeaponCategory;
+  /** own-item: restrict to an item type (weapon / armor / shield / equipment …). */
+  itemType?: string;
+  /** own-item: only items the character has INVESTED (a worn magic item that is actually active). */
+  investedOnly?: boolean;
 }
 
 export interface SpellChoiceFilter {

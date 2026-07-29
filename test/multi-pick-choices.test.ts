@@ -49,6 +49,9 @@ describe('multi-pick choices', () => {
     for (const [id, f] of multi) {
       const def = f.choice!;
       const picks = def.picks!;
+      // `own-*` sources resolve against the CHARACTER, so they are legitimately empty here — Fuse
+      // Stance offers the stances YOU know, which is nothing until you know some.
+      if (def.kind === 'open' && String(def.from?.type ?? '').startsWith('own-')) continue;
       // An 'open' choice has no static list — its options resolve from `from` at render time, so
       // reading def.options would wrongly count zero.
       const opts = def.kind === 'open' ? openChoiceOptions(def.from, c).length : def.options?.length ?? 0;

@@ -30,13 +30,16 @@ describe('choice definitions are well-formed', () => {
     expect(bad.map((x) => `${x.id}(${x.choice.kind})`), 'malformed choice defs').toEqual([]);
   });
 
-  it("every 'open' choice resolves to a NON-EMPTY option list", () => {
+  it("every CONTENT-resolved 'open' choice offers a non-empty list", () => {
     for (const x of all.filter((y) => y.choice.kind === 'open')) {
       expect(x.choice.from, `${x.id} is open but carries no \`from\``).toBeTruthy();
-      // An open picker that resolves to nothing looks broken and blocks the build. Ghost Hunter
-      // nearly shipped exactly that: its printed divination/enchantment/necromancy restriction
-      // matches ZERO spells, because the Remaster deleted school traits from the data.
-      const opts = openChoiceOptions(x.choice.from as never, c);
+      // `own-*` sources draw from the CHARACTER, so an empty list without one is correct — and even
+      // with one, "you know no stances yet" is a legitimate state. Only content-resolved sources
+      // must always offer something. Ghost Hunter nearly shipped an empty content picker: its printed
+      // divination/enchantment/necromancy restriction matches ZERO spells post-Remaster.
+      const from = x.choice.from as { type: string };
+      if (String(from.type).startsWith('own-')) continue;
+      const opts = openChoiceOptions(from as never, c);
       expect(opts.length, `${x.id} resolves to an EMPTY picker`).toBeGreaterThan(0);
     }
   });
