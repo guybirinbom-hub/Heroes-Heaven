@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { content } from './_content';
 import { choiceKeys, choiceOptionsFor } from '../src/rules/build';
+import { openChoiceOptions } from '../src/rules/openChoice';
 import type { FeatChoiceDef } from '../src/rules/types';
 
 const c = content();
@@ -46,9 +47,12 @@ describe('multi-pick choices', () => {
     const multi = Object.entries(c.feats).filter(([, f]) => (f.choice?.picks ?? 1) > 1);
     expect(multi.length).toBeGreaterThanOrEqual(3);
     for (const [id, f] of multi) {
-      const picks = f.choice!.picks!;
-      const opts = f.choice!.options?.length ?? 0;
-      // Picking 3 of 2 would be unsatisfiable, and with `distinct` it would dead-end the builder.
+      const def = f.choice!;
+      const picks = def.picks!;
+      // An 'open' choice has no static list — its options resolve from `from` at render time, so
+      // reading def.options would wrongly count zero.
+      const opts = def.kind === 'open' ? openChoiceOptions(def.from, c).length : def.options?.length ?? 0;
+      // Picking 3 of 2 is unsatisfiable, and with `distinct` it dead-ends the builder.
       expect(opts, `${id} offers ${opts} options for ${picks} picks`).toBeGreaterThan(picks);
     }
   });
