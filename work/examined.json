@@ -1604,7 +1604,17 @@
   "order-explorer",
   "boundless-reprisals",
   "favored-prey",
-  "stealthy-companion"
+  "stealthy-companion",
+  "battle-creed",
+  "warrior-of-legend",
+  "born-of-the-bones-of-the-earth",
+  "dancer-in-the-seasons",
+  "of-verse-unbroken",
+  "plunderer-of-the-hives-riches",
+  "restless-as-the-tide",
+  "trespasser-in-deaths-realm",
+  "whose-cry-is-thunder",
+  "runelord"
  ],
  "spellGrant": [
   "feral-linguist-greater",
@@ -1967,7 +1977,11 @@
   "psyche-salts-greater",
   "fervent-spell",
   "scrap-shot",
-  "flowing-footsteps"
+  "flowing-footsteps",
+  "sequestered-spell",
+  "composition-spells",
+  "link-spells",
+  "seneschal"
  ],
  "resource": [
   "aon-living-statue",

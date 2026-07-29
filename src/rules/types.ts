@@ -609,6 +609,10 @@ export interface ClassFeature extends ContentBase, DefenseGrants {
   actionCost?: ActionCost;
   /** Foundry classification tags (e.g. `armor-innovation-modification`) used to filter selectable options. */
   otherTags?: string[];
+  /** Focus spells the feature grants on reaching its level — Hero's Defiance is a 19th-level champion
+   *  feature whose entire content is "you gain the Hero's Defiance devotion spell". buildCharacter
+   *  reads these; before it did, the feature did nothing even at 20th level. */
+  focusSpells?: string[];
 }
 
 /** A standalone action (Strike, Seek, Demoralize, …) — referenced throughout rules text. */
@@ -814,6 +818,10 @@ export interface Spell extends ContentBase {
 
 interface ItemBase extends ContentBase {
   level: number;
+  /** Innate spells the item grants while INVESTED — a Cloak of Elvenkind lets you cast Ghost Sound,
+   *  a Nosoi Charm casts Sending once a day. Distinct from `heldSpells`, which is the "Activate: Cast
+   *  a Spell" charge system (staves and wands); these are simply available while the item is worn. */
+  innateSpells?: InnateSpellGrant[];
   price?: Price;
   bulk: Bulk;
   usage?: string;

@@ -1816,6 +1816,18 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     ),
     ...featFocusSpells,
     ...(devotionSpell ? [devotionSpell] : []),
+    // Focus spells granted by a CLASS FEATURE the character has reached. This source was missing, so
+    // Hero's Defiance — a 19th-level champion feature whose whole content is "you gain the Hero's
+    // Defiance devotion spell" — did nothing even at 20th. Features are already level-gated, and a
+    // subclass that suppresses one must not still hand out its spell.
+    ...[[cls, build.subclassId], [cls2, build.subclassId2]].flatMap(([c, subId]) => {
+      const klass = c as typeof cls;
+      if (!klass) return [];
+      const dropped = new Set(klass.subclass?.options.find((o) => o.id === subId)?.suppressedFeatures ?? []);
+      return (klass.features ?? [])
+        .filter((f) => f.level <= level && !dropped.has(f.featureId))
+        .flatMap((f) => content.classFeatures[f.featureId]?.focusSpells ?? []);
+    }),
   ];
   // The class that actually supplies the focus pool's tradition/key — the primary if it casts/has a
   // focus profile, otherwise the second class (e.g. fighter + animist → the animist's divine/Wis).
@@ -2608,6 +2620,16 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     for (const g of bgForSpells?.innateSpells ?? []) {
       innateGrants.push(g);
       noteSrc(g.spellId, bgForSpells?.name);
+    }
+    // INVESTED items too — a Cloak of Elvenkind lets you cast Ghost Sound, a Nosoi Charm casts Sending
+    // once a day. Invested (not merely owned), matching how an item's granted FEATS are already read.
+    for (const inv of build.inventory) {
+      if (!inv.invested) continue;
+      const item = content.items[inv.itemId];
+      for (const g of item?.innateSpells ?? []) {
+        innateGrants.push(g);
+        noteSrc(g.spellId, item?.name);
+      }
     }
     for (const f of feats)
       for (const g of content.feats[f.featId]?.innateSpells ?? []) {

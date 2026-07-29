@@ -1,20 +1,6 @@
 [
  {
   "collection": "classFeatures",
-  "id": "shield-block",
-  "name": "Shield Block",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "grantsFeat",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
   "id": "battle-creed",
   "name": "Battle Creed",
   "level": 1,
@@ -53,85 +39,9 @@
  },
  {
   "collection": "classFeatures",
-  "id": "cloistered-cleric",
-  "name": "Cloistered Cleric",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "proficiency",
-    "modelled": false,
-    "examined": true
-   },
-   {
-    "lane": "grantsFeat",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
-  "id": "cultivation-order",
-  "name": "Cultivation Order",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "proficiency",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "grantsFeat",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "spellGrant",
-    "modelled": true,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
   "id": "dancer-in-the-seasons",
   "name": "Dancer in the Seasons",
   "level": 7,
-  "lanes": [
-   {
-    "lane": "grantsFeat",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
-  "id": "first-doctrine-warpriest",
-  "name": "First Doctrine (Warpriest)",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "proficiency",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "grantsFeat",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
-  "id": "improved-familiar-attunement",
-  "name": "Improved Familiar Attunement",
-  "level": 1,
   "lanes": [
    {
     "lane": "grantsFeat",
@@ -165,30 +75,6 @@
     "lane": "toggle",
     "modelled": false,
     "examined": true
-   },
-   {
-    "lane": "grantsFeat",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
-  "id": "palatine-detective",
-  "name": "Palatine Detective",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "choice",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "proficiency",
-    "modelled": false,
-    "examined": false
    },
    {
     "lane": "grantsFeat",
@@ -276,96 +162,10 @@
  },
  {
   "collection": "classFeatures",
-  "id": "shaman",
-  "name": "Shaman",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "grantsFeat",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "defense",
-    "modelled": false,
-    "examined": true
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
-  "id": "spore-order",
-  "name": "Spore Order",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "proficiency",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "grantsFeat",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "spellGrant",
-    "modelled": true,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
   "id": "trespasser-in-deaths-realm",
   "name": "Trespasser In Death's Realm",
   "level": 7,
   "lanes": [
-   {
-    "lane": "grantsFeat",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
-  "id": "war-magic",
-  "name": "War Magic",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "proficiency",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "resource",
-    "modelled": false,
-    "examined": false
-   },
-   {
-    "lane": "grantsFeat",
-    "modelled": false,
-    "examined": false
-   }
-  ],
-  "noSignal": false
- },
- {
-  "collection": "classFeatures",
-  "id": "warpriest",
-  "name": "Warpriest",
-  "level": 1,
-  "lanes": [
-   {
-    "lane": "proficiency",
-    "modelled": false,
-    "examined": false
-   },
    {
     "lane": "grantsFeat",
     "modelled": false,
