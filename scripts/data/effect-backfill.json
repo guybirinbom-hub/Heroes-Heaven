@@ -36084,5 +36084,249 @@
         }
       ]
     }
+  },
+  {
+    "category": "feats",
+    "id": "kizidhar-magic",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "entangling-flora",
+        "tradition": "arcane"
+      },
+      {
+        "spellId": "one-with-plants",
+        "tradition": "arcane"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "horn-and-bone-incantation",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "animal-form",
+        "tradition": "primal"
+      },
+      {
+        "spellId": "humanoid-form",
+        "tradition": "primal"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "seat-of-power",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "cleanse-affliction",
+        "tradition": "divine",
+        "rank": 4
+      },
+      {
+        "spellId": "sound-body",
+        "tradition": "divine",
+        "rank": 4
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "more-real-than-real",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "fabricated-truth",
+        "tradition": "occult"
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "may-death-itself-reconsider",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "breath-of-life",
+        "tradition": "divine",
+        "usesPerDay": 3
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "fey-life",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "summon-fey",
+        "tradition": "primal",
+        "rank": 7,
+        "heightenAt": [
+          {
+            "level": 18,
+            "rank": 8
+          },
+          {
+            "level": 20,
+            "rank": 9
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "blight-survivor",
+    "field": "innateSpells",
+    "value": [
+      {
+        "spellId": "cleanse-affliction",
+        "tradition": "primal",
+        "heightenHalfLevel": true
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "fey-ascension",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "fey-ascension-branch",
+        "prompt": "Fey Ascension — the same fey or animal you chose for Fey Influence",
+        "options": [
+          {
+            "value": "anteater",
+            "label": "Anteater",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "slow",
+                  "tradition": "primal"
+                }
+              ]
+            }
+          },
+          {
+            "value": "cat-sith",
+            "label": "Cat Sith",
+            "note": "Save against misfortune effects targeting you (no spell)."
+          },
+          {
+            "value": "cursed-bluebird",
+            "label": "Cursed Bluebird",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "pest-form",
+                  "tradition": "primal",
+                  "rank": 4
+                }
+              ]
+            }
+          },
+          {
+            "value": "dryad",
+            "label": "Dryad",
+            "note": "Leaves ranged unarmed attack, 1d6 slashing (dart group)."
+          },
+          {
+            "value": "faun",
+            "label": "Faun",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "charm",
+                  "tradition": "primal"
+                },
+                {
+                  "spellId": "sleep",
+                  "tradition": "primal"
+                },
+                {
+                  "spellId": "triple-time",
+                  "tradition": "primal"
+                }
+              ]
+            }
+          },
+          {
+            "value": "gremlin",
+            "label": "Gremlin",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "mad-monkeys",
+                  "tradition": "primal"
+                }
+              ]
+            }
+          },
+          {
+            "value": "monarch",
+            "label": "Monarch",
+            "note": "Manifest butterfly wings 1/day for 10 minutes: fly Speed equal to your Speed."
+          },
+          {
+            "value": "unicorn",
+            "label": "Unicorn",
+            "grant": {
+              "skills": {
+                "medicine": "trained"
+              }
+            },
+            "note": "+2 status to saves vs poison and charm."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "feats",
+    "id": "speakers-defense",
+    "field": "effectChoices",
+    "value": [
+      {
+        "id": "speaker-kind",
+        "prompt": "Are you a Faithspeaker or a Greenspeaker?",
+        "options": [
+          {
+            "value": "faithspeaker",
+            "label": "Faithspeaker (divine)",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "share-life",
+                  "tradition": "divine"
+                },
+                {
+                  "spellId": "status",
+                  "tradition": "divine"
+                }
+              ]
+            }
+          },
+          {
+            "value": "greenspeaker",
+            "label": "Greenspeaker (primal)",
+            "grant": {
+              "innateSpells": [
+                {
+                  "spellId": "entangling-flora",
+                  "tradition": "primal"
+                },
+                {
+                  "spellId": "environmental-endurance",
+                  "tradition": "primal"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
   }
 ]

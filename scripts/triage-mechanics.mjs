@@ -96,6 +96,14 @@ const MODELLED = {
   innateGrant: idsIn('src/rules/featCantripGrants.ts'),
 };
 
+/** Does this record grant a spell through an effect CHOICE — either an open spell filter or a
+ *  closed option list whose picked option carries the grant? Both reach the character's spell pool
+ *  (build.ts chosenInnateGrants); neither is visible in `innateSpells`. */
+const grantsSpellViaChoice = (r) =>
+  (r.effectChoices ?? []).some(
+    (e) => !!e.spellFilter || (e.options ?? []).some((o) => (o.grant?.innateSpells ?? []).length > 0 || (o.grant?.focusSpells ?? []).length > 0),
+  );
+
 /* ---- lane signals ------------------------------------------------------------------------- */
 // Ordered: the FIRST matching lane is the record's primary lane, but all matches are recorded.
 const LANES = [
@@ -166,6 +174,7 @@ const LANES = [
       !!r.limitedUses ||
       !!r.usesUpgrade ||
       (r.innateSpells ?? []).length > 0 ||
+      grantsSpellViaChoice(r) ||
       MODELLED.innateGrant.has(r.id),
   },
   {
@@ -194,6 +203,10 @@ const LANES = [
       // heldSpells is the ITEM shape — a staff/wand/pendant that casts a spell on activation. The
       // Greater Pendant of the Occult already carries {0:[guidance],3:[dream-message]}.
       !!r.heldSpells ||
+      // effectChoices grants spells in TWO shapes, and an audit that knew neither reported eighteen
+      // working records as bare: an open `spellFilter` ("choose a 1st-rank arcane spell, 1/day
+      // innate"), and a closed list whose chosen OPTION carries the grant (Fey Ascension's branches).
+      grantsSpellViaChoice(r) ||
       SUBCLASS_OPTION_SPELLS.has(r.id),
   },
   {

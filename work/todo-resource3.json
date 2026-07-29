@@ -1,0 +1,236 @@
+[
+ {
+  "collection": "feats",
+  "id": "mighty-dragon-shape",
+  "name": "Mighty Dragon Shape",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "determined-lore-seeker",
+  "name": "Determined Lore Seeker",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "unbelievable-luck",
+  "name": "Unbelievable Luck",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "cunning-trickster-mask",
+  "name": "Cunning Trickster Mask",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "kindle-inner-flames",
+  "name": "Kindle Inner Flames",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "improvise-strategy",
+  "name": "Improvise Strategy",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "revolutionary-innovation",
+  "name": "Revolutionary Innovation",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "unlimited-esoterica",
+  "name": "Unlimited Esoterica",
+  "level": 19,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "school-of-unified-magical-theory",
+  "name": "School of Unified Magical Theory",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "sign-bound",
+  "name": "Sign Bound",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "zodiac-bound",
+  "name": "Zodiac Bound",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ }
+]

@@ -1,0 +1,15 @@
+{
+ "resource": {
+  "mighty-dragon-shape": "Retunes an INNATE SPELL frequency (shape-of-the-dragon grants Dragon Form 1/day), which lives on innateSpells.usesPerDay, not on a feat limit.",
+  "determined-lore-seeker": "Same: changes an innate spell's uses per day, not a feat limit.",
+  "unbelievable-luck": "Its target, Accidental Shot, is an Action, not a feat — usesUpgrade can only point at a feat.",
+  "cunning-trickster-mask": "Changes an ACTION COST (free action instead of a single action), not a frequency.",
+  "unlimited-esoterica": "Changes an ACTION COST; the once-per-round frequency it mentions is unchanged.",
+  "school-of-unified-magical-theory": "Changes how often Drain Bonded Item may be used, but it is a subclass option rather than a feat, so it has no usesUpgrade home.",
+  "revolutionary-innovation": "The once-per-round is inside ONE modification's prose (reload as a free action), not the feature's own frequency.",
+  "kindle-inner-flames": "The once-per-round Step belongs to ANYONE who sheds the embers, not to the character.",
+  "improvise-strategy": "The 1/day is a Special clause for a troop with a skirmish bond; a feat-wide limitedUses would wrongly cap the whole feat.",
+  "sign-bound": "A 13-row constellation table pairing a spell with a frequency AND an attribute boost per row — not a pick from a filterable pool, and the boost has nowhere to go.",
+  "zodiac-bound": "Same shape: a 12-row zodiac table, each row a spell + cadence + attribute."
+ }
+}
