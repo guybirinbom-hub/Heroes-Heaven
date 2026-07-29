@@ -1,0 +1,196 @@
+{
+ "confirmed": [
+  {
+   "id": "kizidhar-magic",
+   "collection": "feats",
+   "verdict": "fixed",
+   "reason": "Both spells are named outright, once per day each, tradition arcane as printed. Verified in core.json: entangling-flora (rank 2, arcane+primal) and one-with-plants (rank 2, primal only in its own entry — the feat overrides the tradition to arcane, so tradition:'arcane' follows the printed text). The named cast rank (2nd) equals each spell's own rank, so no `rank` override is emitted; once per day is the default, so no usesPerDay.",
+   "quote": "You can wield the arcane magic of a kizidhar, casting Entangling Flora and One with Plants once per day each as 2nd-rank arcane innate spells.",
+   "innateSpells": [
+    {
+     "spellId": "entangling-flora",
+     "tradition": "arcane"
+    },
+    {
+     "spellId": "one-with-plants",
+     "tradition": "arcane"
+    }
+   ]
+  },
+  {
+   "id": "horn-and-bone-incantation",
+   "collection": "feats",
+   "verdict": "fixed",
+   "reason": "Text names both spells outright. Verified in core.json: animal-form (rank 2, primal) and humanoid-form (rank 2, arcane/occult/primal), both remaster, no legacy duplicates. Printed cast-at rank (2nd) equals each spell's own rank, so no `rank` override is needed; granted as primal per the text. Once per day each = default uses, so usesPerDay omitted. Live core.json record has no innateSpells/effectChoices, so this is a real gap.",
+   "quote": "You gain the ability to cast Animal Form and Humanoid Form as 2nd-rank primal innate spells, each once per day.",
+   "innateSpells": [
+    {
+     "spellId": "animal-form",
+     "tradition": "primal"
+    },
+    {
+     "spellId": "humanoid-form",
+     "tradition": "primal"
+    }
+   ]
+  },
+  {
+   "id": "seat-of-power",
+   "collection": "feats",
+   "verdict": "fixed",
+   "reason": "Both spells named. Verified in core.json: cleanse-affliction (rank 2, divine/occult/primal) and sound-body (rank 2, divine/occult/primal). Text names a 4th-rank cast, which DIFFERS from each spell's own rank 2, so rank: 4 is set on both; tradition divine per the text. CAVEAT for the applier: the text is an EITHER/OR sharing ONE daily use ('Cleanse Affliction ... or Sound Body'), plus it only works inside the demiplane and can only target yourself — this grant gives one use of each per day, which is slightly generous, and the location/self-target restrictions are not modelable. Live core.json record carries no grant, so it is a real gap.",
+   "quote": "Once per day while within your seat of power, you can cast Cleanse Affliction as a 4th-rank innate divine spell or Sound Body as a 4th-rank innate divine spell.",
+   "innateSpells": [
+    {
+     "spellId": "cleanse-affliction",
+     "tradition": "divine",
+     "rank": 4
+    },
+    {
+     "spellId": "sound-body",
+     "tradition": "divine",
+     "rank": 4
+    }
+   ]
+  },
+  {
+   "id": "more-real-than-real",
+   "collection": "feats",
+   "verdict": "fixed",
+   "reason": "Spell named outright. Verified in core.json: fabricated-truth (rank 10, occult, remaster). No cast-at rank is printed, so `rank` is omitted (it casts at its own 10th rank). Once per day = default. Live core.json record has no innateSpells/effectChoices — real gap.",
+   "quote": "You gain the ability to cast Fabricated Truth once per day as an occult innate spell.",
+   "innateSpells": [
+    {
+     "spellId": "fabricated-truth",
+     "tradition": "occult"
+    }
+   ]
+  },
+  {
+   "id": "may-death-itself-reconsider",
+   "collection": "feats",
+   "verdict": "fixed",
+   "reason": "Spell named outright. Verified in core.json: breath-of-life (rank 5, divine, remaster). The printed 5th-rank cast EQUALS the spell's own rank, so `rank` is omitted per the rule. 'up to three times per day' is more than one, so usesPerDay: 3. Live core.json record has no innateSpells/effectChoices — real gap.",
+   "quote": "You gain the ability to cast Breath of Life up to three times per day as a 5th-rank divine innate spell.",
+   "innateSpells": [
+    {
+     "spellId": "breath-of-life",
+     "tradition": "divine",
+     "usesPerDay": 3
+    }
+   ]
+  }
+ ],
+ "refuted": [
+  {
+   "id": "spell-runes",
+   "problem": "Two independent defects.\n\n(1) FALSE PREMISE. The reason states \"Verified 'spell-runes' exists in core.json feats (level 4, archetype) with no innateSpells and no choices today.\" It checked the wrong fields. `public/core.json` feats['spell-runes'].effectChoices ALREADY carries three spellFilter picks — rune-1 (rank 1), rune-2 (rank 2, minLevel 6), rune-3 (rank 3, minLevel 8), each grantAs:'innate' with innate:{tradition:'arcane',usesPerDay:1}. The feat is fully covered, including the exact scaling tiers the agent said \"this single-choice shape cannot carry\". Nothing needs to be written.\n\n(2) WRONG LANE — the proposed shape grants nothing. `{flag,prompt,picks,from}` is FeatChoiceDef (src/rules/types.ts:583, kind:'domains'|'array'|'skills'|'text'|'open'), which only RECORDS a pick; it also omits the required `kind` field. The lane that actually produces a castable innate spell is EffectChoice.spellFilter (types.ts:387) → resolvePick → grantForSpellPick (build.ts:2354, feats fed in at build.ts:2415). SpellChoiceFilter REQUIRES grantAs, and carries `innate` (cadence) and `minLevel` — none of which exist on OpenChoiceFrom. Applied as written this would replace working grants with a silent no-grant, the exact bug this lane exists to close.",
+   "correction": "NO WRITE — already correct in core.json. Existing (and correct) shape for reference:\n{\"id\":\"spell-runes\",\"collection\":\"feats\",\"verdict\":\"already-covered\",\"effectChoices\":[{\"id\":\"rune-1\",\"prompt\":\"Spell rune: choose a 1st-rank arcane spell (cast once per day as an innate spell)\",\"spellFilter\":{\"traditions\":[\"arcane\"],\"rank\":1,\"cantripsOnly\":false,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"arcane\",\"usesPerDay\":1}}},{\"id\":\"rune-2\",\"prompt\":\"Spell rune (6th level): choose a 2nd-rank arcane spell (cast once per day as an innate spell)\",\"spellFilter\":{\"traditions\":[\"arcane\"],\"rank\":2,\"cantripsOnly\":false,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"arcane\",\"usesPerDay\":1},\"minLevel\":6}},{\"id\":\"rune-3\",\"prompt\":\"Spell rune (8th level): choose a 3rd-rank arcane spell (cast once per day as an innate spell)\",\"spellFilter\":{\"traditions\":[\"arcane\"],\"rank\":3,\"cantripsOnly\":false,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"arcane\",\"usesPerDay\":1},\"minLevel\":8}}]}\nFilters resolve non-empty (arcane rank1=120, rank3=112 of 1832 spells)."
+  },
+  {
+   "id": "ornate-tattoo",
+   "problem": "FALSE PREMISE + WRONG LANE. The reason asserts \"'ornate-tattoo' confirmed in core.json (level 5, human ancestry, currently inert)\". It is NOT inert: feats['ornate-tattoo'].effectChoices already contains {id:'ornate-spell', spellFilter:{traditions:['arcane'],rank:1,grantAs:'innate',innate:{tradition:'arcane',usesPerDay:1}}} — the same filter the agent proposes, but in the lane that actually grants. The agent's reasoning about the school restriction (Remaster deleted school traits; core.json has only 2 divination / 4 enchantment / 2 necromancy of 1832) is factually correct and I confirmed it, but the shipped record already handles it the house way: the restriction is carried in the PROMPT text (\"...from the same school as your Arcane Tattoos\") so the player honours it, per the documented `note` convention at types.ts (Ghost Hunter precedent). The proposed replacement drops that prompt wording AND drops the grant, since {flag,prompt,picks,from} is FeatChoiceDef (record-only, missing required `kind`) rather than EffectChoice.spellFilter (grantAs/innate/minLevel).",
+   "correction": "NO WRITE — already correct in core.json:\n{\"id\":\"ornate-tattoo\",\"collection\":\"feats\",\"verdict\":\"already-covered\",\"effectChoices\":[{\"id\":\"ornate-spell\",\"prompt\":\"Choose a 1st-rank arcane spell from the same school as your Arcane Tattoos (1/day innate arcane)\",\"spellFilter\":{\"traditions\":[\"arcane\"],\"rank\":1,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"arcane\",\"usesPerDay\":1}}}]}"
+  },
+  {
+   "id": "virtue-forged-tattoos",
+   "problem": "FALSE PREMISE + WRONG LANE + an ACTIVE REGRESSION.\n\n(1) \"currently inert\" is false — feats['virtue-forged-tattoos'].effectChoices already carries {id:'virtue-spell', spellFilter:{traditions:['arcane'],maxRank:3,cantripsOnly:false,grantAs:'innate',innate:{tradition:'arcane',usesPerDay:1,rank:3}}}.\n\n(2) The agent's central justification is wrong on the facts: it chose rank:3 over maxRank:3 because \"the `from` shape has no cast-at rank, so a lower-rank pick would be granted at its own rank (a downgrade)\". OpenChoiceFrom indeed has no cast-at rank — but that is an artifact of picking the wrong lane. InnateSpellGrant DOES have `rank` (cast-at), and the shipped record uses exactly that: maxRank:3 to admit lower-rank spells plus innate.rank:3 to cast them heightened to 3rd. So the printed clause \"including a lower-rank spell heightened to 3rd level if you wish\" IS expressible and IS already expressed. Writing rank:3 would strip that clause — a net loss of correct behaviour, not a conservative choice.\n\n(3) Same lane error as the others: {flag,prompt,picks,from} is FeatChoiceDef (record-only, no `kind`), not EffectChoice.spellFilter.",
+   "correction": "NO WRITE — already correct, and strictly better than the proposal:\n{\"id\":\"virtue-forged-tattoos\",\"collection\":\"feats\",\"verdict\":\"already-covered\",\"effectChoices\":[{\"id\":\"virtue-spell\",\"prompt\":\"Choose a 3rd-rank arcane spell — or a lower-rank arcane spell heightened to 3rd — from the same school as your Arcane Tattoos (1/day innate arcane)\",\"spellFilter\":{\"traditions\":[\"arcane\"],\"maxRank\":3,\"cantripsOnly\":false,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"arcane\",\"usesPerDay\":1,\"rank\":3}}}]}"
+  },
+  {
+   "id": "spirit-spells",
+   "problem": "FALSE PREMISE + WRONG LANE. \"'spirit-spells' confirmed in core.json (level 4, archetype, currently inert)\" is false: feats['spirit-spells'].effectChoices already carries all THREE tiers — occult-1 (rank 1), occult-2 (rank 2, minLevel 6), occult-3 (rank 3, minLevel 8), each grantAs:'innate', innate:{tradition:'occult',usesPerDay:1} — i.e. exactly the scaling the agent flagged as missing and deferred to \"two more minLevel-gated choices\".\n\nThe agent's trait analysis is accurate as far as it goes (I confirmed: spellsMatching uses `every` for traits, so ['divination','enchantment','necromancy'] would match zero; only aon-detect-alignment among 89 occult rank-1 spells carries any of the three). But the shipped record already resolves this the documented way — the restriction lives in the prompt text (\"...with the divination, enchantment, or necromancy trait\") so the picker stays non-empty and the player honours the clause.\n\nAnd the proposed shape again cannot grant: {flag,prompt,picks,from} is FeatChoiceDef (record-only, missing required `kind`), not EffectChoice.spellFilter.",
+   "correction": "NO WRITE — already correct in core.json:\n{\"id\":\"spirit-spells\",\"collection\":\"feats\",\"verdict\":\"already-covered\",\"effectChoices\":[{\"id\":\"occult-1\",\"prompt\":\"Choose a 1st-rank occult spell with the divination, enchantment, or necromancy trait (cast once per day as an innate spell)\",\"spellFilter\":{\"traditions\":[\"occult\"],\"rank\":1,\"cantripsOnly\":false,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"occult\",\"usesPerDay\":1}}},{\"id\":\"occult-2\",\"prompt\":\"6th level: choose a 2nd-rank occult spell with the divination, enchantment, or necromancy trait (cast once per day as an innate spell)\",\"spellFilter\":{\"traditions\":[\"occult\"],\"rank\":2,\"cantripsOnly\":false,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"occult\",\"usesPerDay\":1},\"minLevel\":6}},{\"id\":\"occult-3\",\"prompt\":\"8th level: choose a 3rd-rank occult spell with the divination, enchantment, or necromancy trait (cast once per day as an innate spell)\",\"spellFilter\":{\"traditions\":[\"occult\"],\"rank\":3,\"cantripsOnly\":false,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"occult\",\"usesPerDay\":1},\"minLevel\":8}}]}"
+  },
+  {
+   "id": "core-attunement",
+   "problem": "FALSE PREMISE + WRONG LANE + a RANK-WINDOW REGRESSION.\n\n(1) \"currently inert\" is false — feats['core-attunement'].effectChoices already carries TWO separate picks: {id:'first-rank', rank:1} and {id:'second-rank', maxRank:2}, both grantAs:'innate' with innate:{tradition:'arcane',usesPerDay:1}.\n\n(2) The proposed collapse into one picks:2 / maxRank:2 picker is wrong even on its own terms, and the agent admits the cost (\"permitting two 2nd-rank picks where one should be 1st\"). The printed text is \"one 1st-rank arcane spell AND one 2nd-rank or lower arcane spell\" — two distinct windows, which the shipped data models exactly. There was no need to trade accuracy away.\n\n(3) EffectChoice has no `picks`/`distinct` field at all (those live on FeatChoiceDef), so picks:2 would be silently ignored and the record would offer a single pick — a second, quieter defect. And as with the rest, {flag,prompt,picks,from} is the record-only FeatChoiceDef lane (missing required `kind`), so it grants nothing.\n\n(4) The **Enhancement** tier is genuinely absent from core.json too — but that is a pre-existing, systemic gap (19 automaton feats carry an \"**Enhancement**\" paragraph and none are modelled; there is no automaton-enhancement feat record to gate on), not something this proposal fixes. Do not invent a minLevel for it.",
+   "correction": "NO WRITE — already correct in core.json, and models the two rank windows the proposal merges:\n{\"id\":\"core-attunement\",\"collection\":\"feats\",\"verdict\":\"already-covered\",\"effectChoices\":[{\"id\":\"first-rank\",\"prompt\":\"Choose a 1st-rank arcane spell to which you have access (cast once per day as an arcane innate spell)\",\"spellFilter\":{\"traditions\":[\"arcane\"],\"rank\":1,\"cantripsOnly\":false,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"arcane\",\"usesPerDay\":1}}},{\"id\":\"second-rank\",\"prompt\":\"Choose a 2nd-rank or lower arcane spell to which you have access (cast once per day as an arcane innate spell)\",\"spellFilter\":{\"traditions\":[\"arcane\"],\"maxRank\":2,\"cantripsOnly\":false,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"arcane\",\"usesPerDay\":1}}}]}\nSeparately: the Automaton **Enhancement** tier remains unmodelled here and in 18 sibling automaton feats — escalate as its own lane rather than guessing a level gate."
+  },
+  {
+   "id": "otherworldly-acumen",
+   "problem": "The reasoning about the tradition being uncomputable is right, but the row is (a) redundant — core.json already has effectChoices [{id:'acumen-spell', prompt:'…same tradition as an innate spell you gained from another elf ancestry feat…', spellFilter:{traditions:['arcane','divine','occult','primal'], rank:2, cantripsOnly:false, grantAs:'innate', innate:{usesPerDay:1}}}] — and (b) under-specified: no grantAs/innate, so nothing states this is a 1/day innate grant. Two smaller points: omitting `traditions` entirely also drops `cantripsOnly:false`, so the picker would offer rank-2-only anyway (harmless), and the printed 'common' restriction is unenforceable (SpellChoiceFilter has no rarity field) — same limitation the shipped entry accepts.",
+   "correction": "SKIP — already covered by the existing 'acumen-spell' effectChoice. If re-emitted, add \"grantAs\":\"innate\",\"innate\":{\"usesPerDay\":1} and keep traditions omitted (or all four) as the shipped entry does."
+  },
+  {
+   "id": "avenging-runelord-dedication",
+   "problem": "Three independent defects. (1) WRONG LANE — it emits `choice` {flag, prompt, picks, from}, which maps to `Feat.choice: FeatChoiceDef` (src/rules/types.ts:582-712). buildCharacter's innate pool (src/rules/build.ts:2660-2710) reads ONLY record.innateSpells, effectChoices→chosenInnateGrants, and FEAT_CANTRIP_GRANTS. `feat.choice` contributes a spell only for kind:'domains' (build.ts:1453). So this record would record a pick and grant NO castable spell — the entire point of the lane is missed. (2) FILTER MASSIVELY BROADER — {traditions:['arcane'], maxRank:6} resolves to 667 spells against a printed 7-name allowlist. (3) The two 'not representable' caveats are FALSE: InnateSpellGrant.heightenHalfLevel exists (types.ts:521-523) and is honoured (build.ts:2720), so 'half your level rounded up' IS expressible; OpenChoiceFrom.minRank also exists (types.ts:415). Its supporting claim is also wrong — advanced-runelord-magic and expanded-runelord-magic in src/rules/featCantripGrants.ts carry ELEVEN and NINE ids, not 'exactly these seven'. All 7 spell ids do exist in core.json (darkvision r2, mystic-armor r1, runic-body r1, runic-weapon r1, see-the-unseen r2, sending r5, truesight r6) — that part is the only sound piece. public/core.json ALREADY holds the correct explicit-option effectChoices for this feat.",
+   "correction": "{\"id\":\"avenging-runelord-dedication\",\"collection\":\"feats\",\"verdict\":\"choice\",\"effectChoices\":[{\"id\":\"avenging-runelord-innate-spell\",\"prompt\":\"Choose your arcane innate spell (1/day, heightened to half your level rounded up)\",\"options\":[{\"value\":\"darkvision\",\"label\":\"Darkvision\",\"grant\":{\"innateSpells\":[{\"spellId\":\"darkvision\",\"tradition\":\"arcane\",\"usesPerDay\":1,\"heightenHalfLevel\":true}]}},{\"value\":\"mystic-armor\",\"label\":\"Mystic Armor\",\"grant\":{\"innateSpells\":[{\"spellId\":\"mystic-armor\",\"tradition\":\"arcane\",\"usesPerDay\":1,\"heightenHalfLevel\":true}]}},{\"value\":\"runic-body\",\"label\":\"Runic Body\",\"grant\":{\"innateSpells\":[{\"spellId\":\"runic-body\",\"tradition\":\"arcane\",\"usesPerDay\":1,\"heightenHalfLevel\":true}]}},{\"value\":\"runic-weapon\",\"label\":\"Runic Weapon\",\"grant\":{\"innateSpells\":[{\"spellId\":\"runic-weapon\",\"tradition\":\"arcane\",\"usesPerDay\":1,\"heightenHalfLevel\":true}]}},{\"value\":\"see-the-unseen\",\"label\":\"See the Unseen\",\"grant\":{\"innateSpells\":[{\"spellId\":\"see-the-unseen\",\"tradition\":\"arcane\",\"usesPerDay\":1,\"heightenHalfLevel\":true}]}},{\"value\":\"sending\",\"label\":\"Sending\",\"grant\":{\"innateSpells\":[{\"spellId\":\"sending\",\"tradition\":\"arcane\",\"usesPerDay\":1,\"heightenHalfLevel\":true}]}},{\"value\":\"truesight\",\"label\":\"Truesight\",\"grant\":{\"innateSpells\":[{\"spellId\":\"truesight\",\"tradition\":\"arcane\",\"usesPerDay\":1,\"heightenHalfLevel\":true}]}}]}]}"
+  },
+  {
+   "id": "fey-life",
+   "problem": "Closest to correct of the seven, but INCOMPLETE, and for a reason the agent asserted falsely. spellId 'summon-fey' does exist in core.json (base rank 1, traditions occult/primal), primal is legal, rank 7 is right, usesPerDay correctly omitted. But the same sentence-group also states 'At 18th level the spell heightens to 8th rank, and at 20th level it heightens to 9th rank', and the agent dropped it claiming it is 'not representable in the innateSpells shape'. That is false: InnateSpellGrant.heightenAt (src/rules/types.ts:524-526) exists precisely for a custom ladder — its own doc comment uses THIS feat's wording ('7th rank, 8th at level 18, 9th at 20') — and build.ts:2722 resolves it (highest step reached wins, never below base). A 20th-level Fey Life would therefore cast Summon Fey at rank 7 instead of 9. This feat is currently absent from core.json (no innateSpells, no effectChoices), so the gap is real and this is the one record that still needs applying.",
+   "correction": "{\"id\":\"fey-life\",\"collection\":\"feats\",\"verdict\":\"fixed\",\"innateSpells\":[{\"spellId\":\"summon-fey\",\"tradition\":\"primal\",\"rank\":7,\"heightenAt\":[{\"level\":18,\"rank\":8},{\"level\":20,\"rank\":9}]}]}"
+  },
+  {
+   "id": "minor-deific-power",
+   "problem": "Wrong lane AND a wrong filter. (1) `choice`/`from` cannot grant an innate spell at all (see avenging-runelord) — as written the feat stays inert. (2) The collapse to picks:2 over {traditions:['divine'], maxRank:1} is not merely 'broader', it is wrong in two directions: maxRank 1 with no cantripsOnly admits rank 0, so a player could take two cantrips or two 1st-rank spells (92 spells offered), and the at-will vs 1/day distinction is lost entirely. (3) The premise behind the collapse — 'the record shape allows only one choice with one from' — is false for this lane: EffectChoice[] (types.ts:309/385) allows N choices per record, each with its own SpellChoiceFilter carrying grantAs:'innate' and a per-choice `innate` cadence template (types.ts:432-451, resolved at build.ts:2350-2356 via grantForSpellPick). minor-magic, spell-runes, core-attunement and axumas-awakening are exact in-data precedents. public/core.json already holds the correct two-choice split (34 divine cantrips / 58 divine 1st-rank). 'Common' rarity is genuinely inexpressible — spellsMatching has no rarity test — so that one caveat stands.",
+   "correction": "{\"id\":\"minor-deific-power\",\"collection\":\"feats\",\"verdict\":\"choice\",\"effectChoices\":[{\"id\":\"cantrip\",\"prompt\":\"Choose a common divine cantrip (cast at will as a divine innate spell)\",\"spellFilter\":{\"traditions\":[\"divine\"],\"cantripsOnly\":true,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"divine\",\"atWill\":true}}},{\"id\":\"rank-1\",\"prompt\":\"Choose a common 1st-rank divine spell (cast once per day as a divine innate spell)\",\"spellFilter\":{\"traditions\":[\"divine\"],\"rank\":1,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"divine\",\"usesPerDay\":1}}}]}"
+  },
+  {
+   "id": "advanced-deific-power",
+   "problem": "Wrong lane (a `choice`/`from` grants no innate spell — build.ts:2660-2710 never reads it) and a filter that does not match the print. picks:2 over {divine, maxRank:3} lets both picks be 3rd-rank, or 2nd, or cantrips (maxRank without cantripsOnly:false admits rank 0). The stated justification is factually wrong on two counts: OpenChoiceFrom.minRank DOES exist (types.ts:415), and the record is not limited to one choice — effectChoices is an ARRAY of EffectChoice, each with its own spellFilter (types.ts:309, spellChoice.ts:31-42). The printed 'one of 2nd rank and one of 3rd rank' is expressed exactly by two choices with rank:2 (84 spells) and rank:3 (55 spells). public/core.json already holds precisely that. Only the 'common' rarity caveat is legitimate.",
+   "correction": "{\"id\":\"advanced-deific-power\",\"collection\":\"feats\",\"verdict\":\"choice\",\"effectChoices\":[{\"id\":\"rank-2\",\"prompt\":\"Choose a common 2nd-rank divine spell (cast once per day as a divine innate spell)\",\"spellFilter\":{\"traditions\":[\"divine\"],\"rank\":2,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"divine\",\"usesPerDay\":1}}},{\"id\":\"rank-3\",\"prompt\":\"Choose a common 3rd-rank divine spell (cast once per day as a divine innate spell)\",\"spellFilter\":{\"traditions\":[\"divine\"],\"rank\":3,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"divine\",\"usesPerDay\":1}}}]}"
+  },
+  {
+   "id": "greater-deific-power",
+   "problem": "Same two defects as advanced-deific-power. `choice`/`from` is the record-only lane and grants nothing castable; picks:2 over {divine, maxRank:5} admits two 5th-rank picks, or cantrips, against a printed 'one of 4th rank and one of 5th rank'. The 'no minRank in this schema' and 'only one choice per record' premises are both false (types.ts:415; types.ts:309 EffectChoice[]). Correct model is two choices, rank:4 (59 divine spells) and rank:5 (53 divine spells), each grantAs:'innate' with a 1/day divine template — which public/core.json already carries. 'Common' rarity remains genuinely inexpressible.",
+   "correction": "{\"id\":\"greater-deific-power\",\"collection\":\"feats\",\"verdict\":\"choice\",\"effectChoices\":[{\"id\":\"rank-4\",\"prompt\":\"Choose a common 4th-rank divine spell (cast once per day as a divine innate spell)\",\"spellFilter\":{\"traditions\":[\"divine\"],\"rank\":4,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"divine\",\"usesPerDay\":1}}},{\"id\":\"rank-5\",\"prompt\":\"Choose a common 5th-rank divine spell (cast once per day as a divine innate spell)\",\"spellFilter\":{\"traditions\":[\"divine\"],\"rank\":5,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"divine\",\"usesPerDay\":1}}}]}"
+  },
+  {
+   "id": "major-deific-power",
+   "problem": "Same two defects, worst case of the three. `choice`/`from` grants nothing castable, and picks:3 over {divine, maxRank:8} would let a player take three 8th-rank divine spells (16 available) where the print grants one each of 6th, 7th and 8th — a straightforward power inflation, not a harmless widening. The justifying premises are false (OpenChoiceFrom.minRank exists at types.ts:415; effectChoices is EffectChoice[] so three per-rank filters are directly expressible). Correct model is three choices at rank:6 (36 divine), rank:7 (26) and rank:8 (16), each grantAs:'innate' 1/day divine — already present in public/core.json. Only the 'common' rarity caveat survives.",
+   "correction": "{\"id\":\"major-deific-power\",\"collection\":\"feats\",\"verdict\":\"choice\",\"effectChoices\":[{\"id\":\"rank-6\",\"prompt\":\"Choose a common 6th-rank divine spell (cast once per day as a divine innate spell)\",\"spellFilter\":{\"traditions\":[\"divine\"],\"rank\":6,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"divine\",\"usesPerDay\":1}}},{\"id\":\"rank-7\",\"prompt\":\"Choose a common 7th-rank divine spell (cast once per day as a divine innate spell)\",\"spellFilter\":{\"traditions\":[\"divine\"],\"rank\":7,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"divine\",\"usesPerDay\":1}}},{\"id\":\"rank-8\",\"prompt\":\"Choose a common 8th-rank divine spell (cast once per day as a divine innate spell)\",\"spellFilter\":{\"traditions\":[\"divine\"],\"rank\":8,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"divine\",\"usesPerDay\":1}}}]}"
+  },
+  {
+   "id": "pirates-pet",
+   "problem": "Wrong lane plus a wrong rank window. (1) `choice`/`from` records a pick but never reaches the innate pool (build.ts:2660-2710), so no spell would be castable. (2) The window is wrong: the text says '1st- or 2nd-rank spell', but {type:'spell', maxRank:2} with no minRank and no cantripsOnly admits CANTRIPS — 700 matching spells instead of 584. The agent's stated reason for omitting minRank ('from has no minRank in this schema') is false; OpenChoiceFrom.minRank is declared at types.ts:415 and SpellChoiceFilter.minRank at types.ts:439, and spellsMatching applies it (spellChoice.ts:19). (3) The grant itself — cast once per day as a PRIMAL innate spell — is nowhere encoded; it belongs in spellFilter.innate. The reasoning that is correct and worth keeping: the character (not the pet) does the casting so this is a legitimate character innate spell; leaving `traditions` off is right because phase-familiar ships with an empty traditions array and a primal filter would exclude it; 'targets your familiar' and 'common' are genuinely unfilterable. The phase-familiar 1/hour alternative is expressible via InnateSpellGrant.usesPer:'hour' (types.ts:518-520, displayed at build.ts:2738) but not per-option inside one open filter — carry it in the prompt. public/core.json already holds the corrected minRank:1 version.",
+   "correction": "{\"id\":\"pirates-pet\",\"collection\":\"feats\",\"verdict\":\"choice\",\"effectChoices\":[{\"id\":\"familiar-spell\",\"prompt\":\"Choose a common 1st- or 2nd-rank spell that targets your familiar (cast once per day as a primal innate spell) — or Phase Familiar instead, which you can cast once per hour\",\"spellFilter\":{\"minRank\":1,\"maxRank\":2,\"grantAs\":\"innate\",\"innate\":{\"tradition\":\"primal\",\"usesPerDay\":1}}}]}"
+  },
+  {
+   "id": "blight-survivor",
+   "problem": "The grant target, spell id, and tradition all check out: it is a background granting the CHARACTER a spell; `cleanse-affliction` EXISTS in public/core.json under `spells` (rank 2, traditions [\"divine\",\"occult\",\"primal\"], Player Core, ORC), so \"primal\" is legal; \"once per day\" correctly left at the default; no `atWill`; no choice; and no second spell is named in the sentence (Natural Medicine is a skill feat, not a spell). The defect is the auto-heighten. The description says \"This spell automatically heightens to a rank equal to half your level, rounded up\", and InnateSpellGrant has a dedicated field for precisely that ladder: `heightenHalfLevel?: boolean` (src/rules/types.ts:521-523), consumed at src/rules/build.ts:2720 as `if (g.heightenHalfLevel) return Math.max(base, Math.ceil(level / 2))`. The agent explicitly reasoned about the auto-heighten and then emitted nothing for it (\"Omitted `rank` because the text gives no fixed cast-at rank\"), so the granted spell would be pinned at its base rank 2 at every level instead of ceil(level/2) — wrong from level 6 onward (rank 3 at 6th, 5 at 10th, 10 at 20th). This is not a judgment call: four sibling background records in the same public/core.json collection already use it for the same wording — scion-of-slayers, tyrant-witness, blessed, knack-for-contraptions (plus heritage homing-drake), e.g. blessed = [{\"spellId\":\"guidance\",\"tradition\":\"divine\",\"atWill\":true,\"heightenHalfLevel\":true}]. The agent's note that the shape cannot carry the level-4 gate is correct — InnateSpellGrant has no minLevel (only SpellChoiceFilter does, types.ts:450) — as is the note about the +4 status bonus to counteract vs fungus afflictions.",
+   "correction": "{\"id\":\"blight-survivor\",\"collection\":\"backgrounds\",\"verdict\":\"fixed\",\"reason\":\"Names one spell explicitly. cleanse-affliction verified in core.json (rank 2, traditions divine/occult/primal, so primal is legal). No fixed cast-at rank is printed; instead the text gives the standard half-level ladder, carried by heightenHalfLevel (build.ts castRank = max(base, ceil(level/2))), so `rank` stays omitted. usesPerDay/usesPer omitted because once per day is the default. Two riders this shape cannot carry, for the caller: the grant is gated to character level 4+ (InnateSpellGrant has no minLevel), and it gives a +4 status bonus to the counteract check against fungus-trait afflictions.\",\"quote\":\"In addition, once you're 4th level, you gain the ability to cast Cleanse Affliction as an innate primal spell once per day. This spell automatically heightens to a rank equal to half your level, rounded up.\",\"innateSpells\":[{\"spellId\":\"cleanse-affliction\",\"tradition\":\"primal\",\"heightenHalfLevel\":true}]}"
+  }
+ ],
+ "eidolon": [
+  {
+   "id": "magical-adept",
+   "reason": "Summoner evolution feat — core.json confirms traits ['evolution','summoner']. Every spell here belongs to the EIDOLON ('Your eidolon can cast them each once per day as innate spells'), and the tradition is the eidolon's, not the character's. Granting these on the character would be a mis-assignment, so flagging rather than emitting. Also note the swap-at-every-even-level clause, which the innate lane does not model."
+  },
+  {
+   "id": "magical-master",
+   "reason": "Summoner evolution feat — core.json confirms traits ['evolution','summoner']. The spells are the EIDOLON's, at the eidolon's tradition, and the selection is defined relative to what the eidolon already has from Magical Adept (one spell of each rank 1-7 it lacks). That is both an eidolon grant and a cross-feat-dependent filter the picker shape cannot express, so flagging rather than mis-assigning to the character."
+  },
+  {
+   "id": "angel-eidolon",
+   "reason": "The spells belong to the EIDOLON, not the summoner: the Angelic Mercy transcendence ability (17th) says 'Your eidolon can cast...'. Granting these to the character would be wrong. Separately, none of the four spell ids exist in core.json (remove-curse, remove-disease, remove-fear, remove-paralysis are all MISSING) — they are pre-Remaster names folded into cleanse-affliction, so even an eidolon-side grant would need remapping. The description text is also truncated mid-sentence ('as 9'), so the cast-at rank is unverifiable from this record."
+  }
+ ],
+ "skipped": [
+  {
+   "id": "fey-ascension",
+   "reason": "Not representable in this lane. Fey Ascension is a BRANCH feat: you gain one of eight named fey/animal packages, and the branch is forced to match the choice already made for Fey Influence (prereq: \"Fey Influence\"). Only four branches grant spells (Anteater = Slow innate primal 1/day; Cursed Bluebird = 4th-rank Pest Form 1/day; Faun = Charm, Sleep and Triple Time innate primal 1/day each; Gremlin = Mad Monkeys innate primal 1/day), the other four grant an unarmed attack, a fly Speed, a reroll or skill/save bonuses. Emitting \"fixed\" would hand every character all six spells, and no spell FILTER can describe a set spanning rank 0-3 across two traditions (Triple Time is a bard composition cantrip with an EMPTY traditions array, so no tradition filter would ever surface it). This needs a fixed-option branch grant like the existing FEAT_CANTRIP_GRANTS['fey-influence'] entry in src/rules/featCantripGrants.ts, keyed to the same fey type. All ids verified present in core.json: slow (rank 3), pest-form (rank 1, cast at 4), charm (1), sleep (1), triple-time (cantrip), mad-monkeys (3)."
+  },
+  {
+   "id": "speakers-defense",
+   "reason": "Not representable in this lane. The grant BRANCHES on whether the character is a Faithspeaker or a Greenspeaker (prereq: \"budding speaker centaur heritage or Speaker in Training\"), and each branch grants a PAIR of spells: Faithspeaker gets Share Life + Status as divine innate 1/day each, Greenspeaker gets Entangling Flora + Environmental Endurance as primal innate 1/day each. \"fixed\" would give a Faithspeaker the primal pair too, and a spell filter cannot express a two-spell package. It should be wired the same way the app already handles the earlier feat — FEAT_CANTRIP_GRANTS['speaker-in-training'] (\"Choose your Speaker path: Bless (Faithspeaker, divine) or Fleet Step (Greenspeaker, primal)\") — ideally keyed off that same pick so the branch is not asked twice. All four ids verified in core.json: share-life (rank 2, divine), status (rank 2, divine/occult/primal), entangling-flora (rank 2), environmental-endurance (rank 2)."
+  },
+  {
+   "id": "esoteric-spellcasting",
+   "reason": "NOT a gap — the chunk extract is stale. The live record in public/core.json ALREADY carries three effectChoices with spellFilter.grantAs === 'innate' (ids first-rank / second-rank / third-rank, traditions ['occult','divine'], ranks 1/2/3, cantripsOnly false, innate.usesPerDay 1, minLevel 6 and 8 gating the later two). Adding a `choice` here would double-grant. The only thing the existing data cannot enforce is 'the same tradition you chose', which the prompt text already warns the player about."
+  },
+  {
+   "id": "dracomancer",
+   "reason": "NOT a gap — the chunk extract is stale. The live core.json record already has effectChoices dracomancer-rank1 and dracomancer-rank2 (spellFilter rank 1 / rank 2, grantAs 'innate', innate.usesPerDay 1, prompts naming the draconic benefactor's dragon-spellcaster list) plus a spellcastingGrant {tradition arcane, keyAbility cha, proficiency trained} covering the trained spell attack/DC clause. Emitting a choice here would duplicate the existing pickers. Note for a future pass: the per-dragon spellcaster spell list is not in core.json and the benefactor's tradition is unknown, so the existing filters are deliberately unrestricted by tradition — that is the best available approximation, not something I should have re-added."
+  },
+  {
+   "id": "elite-dracomancer",
+   "reason": "NOT a gap — the chunk extract is stale. The live core.json record already has effectChoices elite-dracomancer-rank3 and elite-dracomancer-rank4 (spellFilter rank 3 / rank 4, grantAs 'innate', innate.usesPerDay 1, prompts naming the dragon-spellcaster list). Adding a choice would duplicate them. Same caveat as Dracomancer: the dragon-type spell list and the benefactor's tradition are not representable, so the existing pickers are intentionally untraditioned."
+  },
+  {
+   "id": "sign-bound",
+   "reason": "This DOES grant a real innate spell, but it cannot be expressed with the available shapes, so emitting anything here would be wrong. The grant is a fixed 13-row constellation table where each row pairs a specific spell WITH a specific frequency AND a specific attribute boost — not an open player pick from a filterable pool. A `choice` with `from: {traditions:['occult']}` would let the player take any occult spell and would lose the per-row frequency, which is materially over-permissive. It needs a bespoke enumerated picker. All 13 ids VERIFIED present in core.json, with the printed frequency: thrush=ghost-sound (at will), lantern-bearer=light (at will), newlyweds=charm (1/day), bridge=environmental-endurance (1/week), daughter=guidance (at will), rider=marvelous-mount (1/week), patriarch=know-the-way (at will), wagon=tailwind (1/week), pack=speak-with-animals (1/week), mother=clear-mind (1/week), star-gazer=sure-strike (1/week), stranger=message (at will), follower=stabilize (at will). Note two rows conflict with the 'occult innate spell' wording — tailwind is arcane/primal only and speak-with-animals is primal only in core.json — so tradition must be forced to occult per the background text. Also non-cantrips cast at their lowest rank, cantrips heighten to half level, and once per sign's prominent season the cast is free."
+  }
+ ]
+}

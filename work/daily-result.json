@@ -1,0 +1,1043 @@
+{
+ "confirmed": [
+  {
+   "id": "heaven-earth-encompassing-sleeves",
+   "collection": "feats",
+   "def": {
+    "flag": "storageLocation",
+    "prompt": "Store items in the sleeves or the train?",
+    "kind": "array",
+    "options": [
+     {
+      "value": "sleeves",
+      "label": "Sleeves"
+     },
+     {
+      "value": "train",
+      "label": "Train"
+     }
+    ],
+    "note": "The same daily preparations also pick WHICH suit of fine clothing is enchanted (Hardness +level, HP +2x level, ends if a new set is prepared); only the storage location is a closed list, so the garment itself is left unwired."
+   },
+   "quote": "This clothing becomes a set of Sleeves of Storage, allowing you to store items in either the sleeves or the train (you choose which during your daily preparations).",
+   "reason": "The text makes the player pick, every morning, which part of the enchanted garment holds the stored items, and it names a closed two-option list."
+  },
+  {
+   "id": "spirit-familiar-animist",
+   "collection": "feats",
+   "def": {
+    "flag": "familiarApparition",
+    "prompt": "Which apparition manifests as your familiar?",
+    "kind": "text",
+    "note": "The legal answers are the apparitions attuned this morning; there is no apparition filter available in `from`, so this is free text. Leave blank on days you don't manifest a familiar."
+   },
+   "quote": "When you attune to your apparitions during your daily preparations, you can choose to dedicate a small amount of your life force to allow one of them to physically manifest as a familiar, which gains the spirit trait.",
+   "reason": "Each day, when attuning apparitions, the animist picks which single apparition physically manifests as the familiar, and that pick must be remembered until the next preparations."
+  },
+  {
+   "id": "claim-cardinal-domains",
+   "collection": "feats",
+   "def": {
+    "flag": "activeDomain",
+    "prompt": "Which claimed domain is active today?",
+    "kind": "text",
+    "note": "Legal answers are the domains this character has claimed (up to four); no domain filter exists in `from`, so this is free text. A Mythic Point can switch the active domain mid-day, and the retained domain after an overcharge lasts until the next daily preparations."
+   },
+   "quote": "Your mortal form cannot easily contain such power, however—each day during your daily preparations, decide which of your domains you are currently drawing power from; you gain access to this domain for the day and can cast its domain spells as normal, while your ability to access the power of your other domains lies dormant.",
+   "reason": "Each morning the character decides which one of their claimed domains is active, which determines the domain spells available all day and must persist."
+  },
+  {
+   "id": "orichalcum-bond",
+   "collection": "feats",
+   "def": {
+    "flag": "bondedRune",
+    "prompt": "Which property rune does your bond add?",
+    "kind": "text",
+    "note": "Any common weapon property rune of your level or lower (or one you have access to) — it need NOT be a rune you own, and `from` has no rune content filter, so this is free text; it counts against the weapon's property rune limit."
+   },
+   "quote": "When your personal rune is placed on a weapon during your daily preparations, choose a weapon property rune of up to your level that is common or you otherwise have access to.",
+   "reason": "When the personal rune is placed during daily preparations the character picks an extra weapon property rune that lasts until the next preparations, so the day's rune must be stored."
+  },
+  {
+   "id": "blessed-armament",
+   "collection": "classFeatures",
+   "def": {
+    "flag": "blessedRune",
+    "prompt": "Blessed Armament property rune?",
+    "kind": "array",
+    "options": [
+     {
+      "value": "fearsome",
+      "label": "Fearsome"
+     },
+     {
+      "value": "ghost-touch",
+      "label": "Ghost Touch"
+     },
+     {
+      "value": "returning",
+      "label": "Returning"
+     },
+     {
+      "value": "shifting",
+      "label": "Shifting"
+     },
+     {
+      "value": "vitalizing",
+      "label": "Vitalizing"
+     }
+    ],
+    "note": "You can also move the spirit to a different weapon or handwraps during daily preparations."
+   },
+   "quote": "During your daily preparations, you can change the spirit to inhabit a different armament, grant a different rune, or both.",
+   "reason": "The spirit's property rune is re-chosen each morning from a closed five-rune list, so the app must remember which rune is active today."
+  },
+  {
+   "id": "pelt-of-the-beast",
+   "collection": "classFeatures",
+   "def": {
+    "flag": "peltDamageType",
+    "prompt": "Pelt attuned damage type?",
+    "kind": "array",
+    "options": [
+     {
+      "value": "cold",
+      "label": "Cold"
+     },
+     {
+      "value": "electricity",
+      "label": "Electricity"
+     },
+     {
+      "value": "fire",
+      "label": "Fire"
+     },
+     {
+      "value": "poison",
+      "label": "Poison"
+     },
+     {
+      "value": "sonic",
+      "label": "Sonic"
+     }
+    ]
+   },
+   "quote": "When you make your daily preparations, choose cold, electricity, fire, poison, or sonic damage.",
+   "reason": "The pelt attunes to one of five named damage types chosen at daily preparations, granting resistance for the day."
+  },
+  {
+   "id": "library-robes-true",
+   "collection": "items",
+   "def": {
+    "flag": "inscribedSpell",
+    "prompt": "Spell inscribed on the robes?",
+    "kind": "open",
+    "from": {
+     "type": "own-spell",
+     "maxRank": 9
+    },
+    "note": "Using this ability erases any scroll already inscribed on the robe."
+   },
+   "quote": "During your daily preparations, choose one spell you know of 9th rank or lower.",
+   "reason": "Each morning the wearer designates one spell they know of 9th rank or lower to be inscribed on the robes, replacing yesterday's."
+  },
+  {
+   "id": "the-queen-mother",
+   "collection": "items",
+   "def": {
+    "flag": "queenMotherLore",
+    "prompt": "Lore skill granted by The Queen Mother?",
+    "kind": "text",
+    "note": "Must be a Lore skill in which you have no proficiency."
+   },
+   "quote": "You can change your selected Lore once per day as part of your daily preparations, as long as you have *The Queen Mother* invested.",
+   "reason": "The Lore skill the card elevates to master/legendary can be swapped once per day during daily preparations, so today's pick must be stored."
+  }
+ ],
+ "rejected": [
+  {
+   "id": "universal-versatility",
+   "def": {
+    "flag": "schoolSpell",
+    "prompt": "Which school spell today?",
+    "kind": "array",
+    "options": [
+     {
+      "value": "protective-wards",
+      "label": "Abjuration — Protective Wards"
+     },
+     {
+      "value": "fortify-summoning",
+      "label": "Conjuration — Fortify Summoning"
+     },
+     {
+      "value": "diviners-sight",
+      "label": "Divination — Diviner's Sight"
+     },
+     {
+      "value": "charming-push",
+      "label": "Enchantment — Charming Push"
+     },
+     {
+      "value": "force-bolt",
+      "label": "Evocation — Force Bolt"
+     },
+     {
+      "value": "warped-terrain",
+      "label": "Illusion — Warped Terrain"
+     },
+     {
+      "value": "call-of-the-grave",
+      "label": "Necromancy — Call of the Grave"
+     },
+     {
+      "value": "physical-boost",
+      "label": "Transmutation — Physical Boost"
+     }
+    ],
+    "note": "Usable until your next daily preparations; you may swap to a different one of the eight when you Refocus."
+   },
+   "problem": "Two defects. (1) The def omits `daily: true`. `dailyChoicesFor` (src/rules/dailyChoices.ts:59) hard-skips any choice without that flag, and it is the ONLY opt-in the lane has, so this def wires nothing — the pick stays a permanent build answer that survives every rest, which is exactly what the record contradicts (\"until your next daily preparations\"). (2) The record ALREADY carries this exact 8-option choice in core.json (non-daily), so the proposal is a prompt/note reword, not a fix; and scripts/apply-daily-choices.mjs:104 explicitly refuses to write over a record that already has a non-daily choice, so applying it through that script silently SKIPS the feat. The correct edit is to add `daily: true` to the existing choice in place. The eight options themselves check out: all 8 ids resolve in db.spells and all carry the wizard+focus traits (the labels use legacy school names with HH's remastered spell names — Augment Summoning→Fortify Summoning, Charming Words→Charming Push, Protective Ward→Protective Wards — which is correct for this data set). Note also that nothing in src/ reads the `schoolSpell` flag, so the pick is recorded, not granted; that is a pre-existing gap, not a defect of this def.",
+   "correction": "{\"flag\":\"schoolSpell\",\"prompt\":\"Which school spell today?\",\"kind\":\"array\",\"daily\":true,\"options\":[{\"value\":\"protective-wards\",\"label\":\"Abjuration — Protective Wards\"},{\"value\":\"fortify-summoning\",\"label\":\"Conjuration — Fortify Summoning\"},{\"value\":\"diviners-sight\",\"label\":\"Divination — Diviner's Sight\"},{\"value\":\"charming-push\",\"label\":\"Enchantment — Charming Push\"},{\"value\":\"force-bolt\",\"label\":\"Evocation — Force Bolt\"},{\"value\":\"warped-terrain\",\"label\":\"Illusion — Warped Terrain\"},{\"value\":\"call-of-the-grave\",\"label\":\"Necromancy — Call of the Grave\"},{\"value\":\"physical-boost\",\"label\":\"Transmutation — Physical Boost\"}],\"note\":\"Usable until your next daily preparations; when you Refocus you can switch to a different one of the eight.\"}"
+  },
+  {
+   "id": "armor-rune-shifter",
+   "def": {
+    "flag": "shiftedArmorRune",
+    "prompt": "Shift an armor rune into which rune?",
+    "kind": "array",
+    "options": [
+     {
+      "value": "energy-resistant",
+      "label": "Energy-Resistant"
+     },
+     {
+      "value": "raiment",
+      "label": "Raiment"
+     },
+     {
+      "value": "shadow",
+      "label": "Shadow"
+     },
+     {
+      "value": "slick",
+      "label": "Slick"
+     }
+    ],
+    "note": "Suppresses one existing property rune on a suit of armor you carry until your next daily preparations; the armor must meet the temporary rune's prerequisites."
+   },
+   "problem": "The option list is WRONG — it was read off a corrupted string. core.json's description reads \"Energy-Resistant, , Raiment, , Shadow, Slick\": the importer dropped two link labels, and the agent transcribed the four survivors as if that were the printed list. The pristine AoN text (aon-2e-archive/data/by-category/feat/feat-1149.json, Armor Rune Shifter, PF #148 pg. 75) prints SIX: \"energy-resistant, fortification, glamered, invisibility, shadow, or slick\". So the def misses Fortification and Invisibility — both of which exist in core.json as items `fortification` and `invisibility` — and 'Raiment' is HH's remaster name for glamered, so it belongs but is unmarked. A player using this picker would be told two of their six legal choices don't exist. Also missing `daily: true`, so it would not reach the Rest sheet at all (dailyChoices.ts:59). Trigger and ownership are fine: \"Once per day when you make your daily preparations\", \"one suit of armor in your possession\".",
+   "correction": "{\"flag\":\"shiftedArmorRune\",\"prompt\":\"Shift an armor rune into which rune?\",\"kind\":\"array\",\"daily\":true,\"options\":[{\"value\":\"energy-resistant\",\"label\":\"Energy-Resistant\"},{\"value\":\"fortification\",\"label\":\"Fortification\"},{\"value\":\"raiment\",\"label\":\"Raiment\"},{\"value\":\"invisibility\",\"label\":\"Invisibility\"},{\"value\":\"shadow\",\"label\":\"Shadow\"},{\"value\":\"slick\",\"label\":\"Slick\"}],\"note\":\"Suppresses one existing property rune on a suit of armor you carry until your next daily preparations; the armor must meet the temporary rune's prerequisites, and any rune that required the suppressed one is suppressed too.\"}"
+  },
+  {
+   "id": "weapon-rune-shifter",
+   "def": {
+    "flag": "shiftedWeaponRune",
+    "prompt": "Shift a weapon rune into which rune?",
+    "kind": "array",
+    "options": [
+     {
+      "value": "corrosive",
+      "label": "Corrosive"
+     },
+     {
+      "value": "flaming",
+      "label": "Flaming"
+     },
+     {
+      "value": "frost",
+      "label": "Frost"
+     },
+     {
+      "value": "ghost-touch",
+      "label": "Ghost Touch"
+     },
+     {
+      "value": "grievous",
+      "label": "Grievous"
+     },
+     {
+      "value": "returning",
+      "label": "Returning"
+     },
+     {
+      "value": "shock",
+      "label": "Shock"
+     },
+     {
+      "value": "thundering",
+      "label": "Thundering"
+     },
+     {
+      "value": "wounding",
+      "label": "Wounding"
+     }
+    ],
+    "note": "Suppresses one existing property rune on a weapon you carry until your next daily preparations; the weapon must meet the temporary rune's prerequisites."
+   },
+   "problem": "The nine options are exactly right — verified against the pristine AoN text (feat-1150.json): \"corrosive, flaming, frost, ghost touch, grievous, returning, shock, thundering, or wounding\", all nine present, in order, none invented, and every id resolves in db.items. Trigger (\"Once per day during your daily preparations\") and ownership (\"one weapon in your possession\") are correct. The def is nonetheless unsound as written because it omits `daily: true`: dailyChoicesFor (src/rules/dailyChoices.ts:59) skips every choice lacking that flag, so this would be filed as a one-time build decision that never re-asks at Rest — the opposite of \"until you make your next daily preparations\". Add the flag and it is correct.",
+   "correction": "{\"flag\":\"shiftedWeaponRune\",\"prompt\":\"Shift a weapon rune into which rune?\",\"kind\":\"array\",\"daily\":true,\"options\":[{\"value\":\"corrosive\",\"label\":\"Corrosive\"},{\"value\":\"flaming\",\"label\":\"Flaming\"},{\"value\":\"frost\",\"label\":\"Frost\"},{\"value\":\"ghost-touch\",\"label\":\"Ghost Touch\"},{\"value\":\"grievous\",\"label\":\"Grievous\"},{\"value\":\"returning\",\"label\":\"Returning\"},{\"value\":\"shock\",\"label\":\"Shock\"},{\"value\":\"thundering\",\"label\":\"Thundering\"},{\"value\":\"wounding\",\"label\":\"Wounding\"}],\"note\":\"Suppresses one existing property rune on a weapon you carry until your next daily preparations; the weapon must meet the temporary rune's prerequisites, and any rune that required the suppressed one is suppressed too.\"}"
+  },
+  {
+   "id": "bloodline-metamorphosis",
+   "def": {
+    "flag": "swappedSpell",
+    "prompt": "Which spell replaces a repertoire spell?",
+    "kind": "open",
+    "from": {
+     "type": "spell",
+     "maxRank": 9
+    },
+    "note": "Replaces one repertoire spell of the same rank until your next daily preparations; spells granted specifically by your bloodline can't be swapped out."
+   },
+   "problem": "`from: {type:'spell', maxRank:9}` does not match the printed restriction. It resolves to 1,796 of the 1,832 spells in core.json across all four traditions (arcane 777 / occult 628 / primal 581 / divine 437), but a sorcerer's repertoire is locked to ONE bloodline tradition and the incoming spell must be \"another spell of the same rank\" as the one leaving. A static `from` on the record cannot express either constraint (the tradition is per-character), so the picker would offer thousands of illegal picks. Worse, the def records the INCOMING spell and never captures which repertoire spell is swapped OUT, so the answer is unusable and the printed exclusion (\"You can't swap out spells granted specifically by your bloodline\", i.e. grantedRepertoire) can't be honoured. Also missing `daily: true`. The only formulation the engine can state honestly is to pick the OUTGOING spell via `own-spell` — a short, per-character, tradition-correct list — and state the same-rank replacement in `note` (the documented use of `note` for restrictions the app can't enforce, types.ts:606). Trigger (\"When making your daily preparations\") and ownership are otherwise fine.",
+   "correction": "{\"flag\":\"swappedSpell\",\"prompt\":\"Which repertoire spell do you swap out today?\",\"kind\":\"open\",\"daily\":true,\"from\":{\"type\":\"own-spell\",\"maxRank\":9},\"note\":\"Until your next daily preparations it is replaced by another spell of the same rank from your tradition, which you track yourself. Spells granted specifically by your bloodline can't be swapped out.\"}"
+  },
+  {
+   "id": "westyrs-wayfinder-repository",
+   "def": {
+    "flag": "storedSpell",
+    "prompt": "Which 1st-rank spell fills your wayfinder?",
+    "kind": "open",
+    "from": {
+     "type": "own-spell",
+     "rank": 1
+    },
+    "note": "Cast from the wayfinder with the spell's normal actions; once expended it can't be restocked until your next daily preparations."
+   },
+   "problem": "`own-spell` is the right type and `rank: 1` matches \"one 1st-rank spell\", but the picker resolves to an EMPTY list for exactly the caster the text names first. openChoice.ts's own-spell case (lines 104-109) reads only `cantrips`, `repertoire` and `grantedRepertoire` and deliberately ignores `SpellcastingEntry.spellbook` (\"Prepared casters know their whole book; today's prepared slots are a loadout, not knowledge\"). The feat says \"from your spellbook or spell repertoire\", so for a wizard (or any prepared caster) the filter returns nothing, and dailyChoicesFor (dailyChoices.ts:70) then drops the whole row — the player never sees the pick and never learns why. It works only for spontaneous casters. Wiring this needs an engine change first: own-spell must also read `spellcasting[].spellbook` (keyed by the rank it's learned at). Also missing `daily: true`. Trigger (\"When making your daily preparations\") and ownership are correct.",
+   "correction": "{\"flag\":\"storedSpell\",\"prompt\":\"Which 1st-rank spell fills your wayfinder?\",\"kind\":\"open\",\"daily\":true,\"from\":{\"type\":\"own-spell\",\"rank\":1},\"note\":\"Cast it from the wayfinder using the spell's normal actions; once expended it can't be restocked until your next daily preparations.\"}"
+  },
+  {
+   "id": "fused-staff",
+   "def": {
+    "flag": "fusedWeapon",
+    "prompt": "Which weapon is fused to your staff?",
+    "kind": "open",
+    "from": {
+     "type": "own-item",
+     "itemType": "weapon"
+    },
+    "note": "Lasts until your next daily preparations; the pair shares the higher-level weapon potency and striking runes, and you can spend 10 minutes to meld the staff into a different weapon."
+   },
+   "problem": "Several problems. (1) Missing `daily: true`, so it never reaches the Rest sheet. (2) The trigger is not a daily-preparations pick in the way the lane assumes: the text says \"When you prepare a staff\" and explicitly lets you \"spend 10 minutes to separate the two items and meld the staff into a different weapon\" at any time — the fusion merely EXPIRES at your next daily preparations. A once-a-morning picker overstates it unless the note says the pairing can be changed mid-day. (3) The pick is two-sided (which staff AND which weapon) and the def captures only the weapon, which is wrong for a magus carrying more than one staff. (4) The option pool is imprecise: every staff in core.json is `itemType: 'weapon'` (staff-of-the-magi, scrollstaff, acrobats-staff …), so the picker lists the character's staves as fusion targets and nothing prevents fusing a staff to itself. Ownership is otherwise correct and `own-item` is the right type.",
+   "correction": "{\"flag\":\"fusedWeapon\",\"prompt\":\"Which weapon is your staff fused into?\",\"kind\":\"open\",\"daily\":true,\"from\":{\"type\":\"own-item\",\"itemType\":\"weapon\"},\"note\":\"The fusion lasts until your next daily preparations, though you can spend 10 minutes to meld the staff into a different weapon. The pair shares whichever weapon potency and striking rune is higher level. Staves are stored as weapons here, so choose the weapon, not the staff.\"}"
+  },
+  {
+   "id": "flexible-transmogrification",
+   "def": {
+    "flag": "eidolonEvolutionFeat",
+    "prompt": "Which evolution feat for your eidolon?",
+    "kind": "open",
+    "from": {
+     "type": "feat",
+     "maxLevel": 6,
+     "traits": [
+      "evolution"
+     ]
+    },
+    "note": "Your eidolon gains the chosen evolution feat until your next daily preparations."
+   },
+   "problem": "The reading is right and the filter resolves: `{type:'feat', maxLevel:6, traits:['evolution']}` returns 18 feats (advanced-weaponry, energy-heart, expanded-senses, glider-form, alacritous-action, amphibious-form, magical-understudy, ranged-combatant, steed-form, bloodletting-claws, defend-summoner, dual-energy-heart, shrink-down, vibration-sense, blood-frenzy, eidolons-opportunity, eidolons-wrath, phase-out), all category 'class', matching \"one evolution feat of 6th level or lower\"; the trigger (\"during your daily preparations\") and the chooser (the summoner, whose own class feat list evolution feats are) are correct. The def is unsound only because it omits `daily: true`, without which dailyChoicesFor (dailyChoices.ts:59) never surfaces it and the pick is frozen into the build instead of being re-made each morning as the record requires. Worth flagging for the owner: nothing in the engine applies the chosen feat to the eidolon, so this records the answer rather than granting it.",
+   "correction": "{\"flag\":\"eidolonEvolutionFeat\",\"prompt\":\"Which evolution feat for your eidolon?\",\"kind\":\"open\",\"daily\":true,\"from\":{\"type\":\"feat\",\"maxLevel\":6,\"traits\":[\"evolution\"]},\"note\":\"Your eidolon gains the chosen evolution feat until your next daily preparations.\"}"
+  },
+  {
+   "id": "beast-gunner-dedication",
+   "def": {
+    "flag": "bondedBeastGun",
+    "prompt": "Which beast gun is bonded today?",
+    "kind": "open",
+    "from": {
+     "type": "own-item",
+     "itemType": "weapon"
+    },
+    "note": "Must be a beast gun you own and have already performed a ritual hunt with."
+   },
+   "problem": "Trigger and ownership are right (\"each day during your daily preparations\", your own gun), but `from` is wrong and would resolve to an all-wrong list. There is NO beast gun anywhere in public/core.json — a scan of every collection for \"beast gun\"/\"ritual hunt\" returns only 7 feats and the Spellsling action, zero items; the only \"beast\" weapons in db.items are Beast Staff and Staff of the Ruling Beast. So `own-item` + `itemType:'weapon'` offers the character's daggers and longswords, every one of them an illegal pick, and the legal pick can never appear. The ritual-hunt restriction is parked in `note`, which the Rest sheet never renders (DailyChoice in src/rules/dailyChoices.ts carries only key/recordId/recordName/prompt/kind/options — no note field, and CharacterSheet.tsx renders only prompt + options), so the player sees an unqualified weapon list. Also missing `daily: true`: dailyChoicesFor skips any def without it, and the builder renders `.choice` regardless, so as written this becomes a permanent build-time pick — the opposite of the printed rule. The precedent for exactly this record is `call-gun` (\"choose a single crossbow or firearm\") which is wired as free text.",
+   "correction": "{\"flag\":\"bondedBeastGun\",\"prompt\":\"Bonded beast gun today (one you've performed a ritual hunt with)\",\"kind\":\"text\",\"daily\":true,\"note\":\"Must be a beast gun you own and have previously performed a ritual hunt with. Recorded as free text because no beast gun items exist in the app's data, same as Call Gun's bonded weapon.\"}"
+  },
+  {
+   "id": "illusory-identity",
+   "def": {
+    "flag": "investedIdentityItem",
+    "prompt": "Which blank item did you invest?",
+    "kind": "text",
+    "note": "A blank paper, journal, badge, or similar item used to display authority. Only works while you hold it."
+   },
+   "problem": "The rules reading is faithful — explicit \"During your daily preparations\", the character's own item, one item, a blank mundane paper/journal/badge that the app has no data for, so `kind:'text'` is the right shape and the note matches \"This item only works while you are holding it\". The one defect is the missing `daily: true`. Every daily choice already in core.json (environmental-adaptability, mask-of-power, call-gun, quick-study, library-robes, arodens-innovation…) carries it, dailyChoicesFor bails on `if (!def?.daily) continue;`, and nothing in the builder checks the flag — so this def spliced verbatim into `rec.choice` would never appear at Rest and would instead become a once-and-done build-time pick, contradicting the printed trigger. Otherwise sound; the correction is the same def plus the flag.",
+   "correction": "{\"flag\":\"investedIdentityItem\",\"prompt\":\"Which blank item did you invest?\",\"kind\":\"text\",\"daily\":true,\"note\":\"A blank paper, journal, badge, or similar item used to display authority. Only works while you hold it.\"}"
+  },
+  {
+   "id": "elemental-familiar-kineticist",
+   "def": {
+    "flag": "familiarElement",
+    "prompt": "Which element is your familiar today?",
+    "kind": "array",
+    "options": [
+     {
+      "value": "air",
+      "label": "Air"
+     },
+     {
+      "value": "earth",
+      "label": "Earth"
+     },
+     {
+      "value": "fire",
+      "label": "Fire"
+     },
+     {
+      "value": "metal",
+      "label": "Metal"
+     },
+     {
+      "value": "water",
+      "label": "Water"
+     },
+     {
+      "value": "wood",
+      "label": "Wood"
+     }
+    ],
+    "note": "Only an element from your own kinetic gate; the familiar gains that element's trait."
+   },
+   "problem": "The six options are invented, not printed. The record's text never names an element — it says \"one of your kinetic elements\" — so air/earth/fire/metal/water/wood comes from outside the record (they do match the app's own gate ids in db.classes.kineticist.extraChoices.element: air-gate…wood-gate, so the values aren't wrong, but they aren't the record's list either). Worse, the printed restriction is to the character's OWN elements, which the app already knows (c.kineticist.elements, built by kineticistElements() in build.ts), yet a flat array offers all six: a fire-only kineticist is shown Wood as a legal pick. The caveat is in `note`, which the Rest sheet never displays (DailyChoice drops the field), so nothing warns the player. The def also ignores the gating clause \"If you have more than one kinetic element\" — a single-gate kineticist is asked a question the feat does not give them. And `daily: true` is missing, so as written it renders as a build-time pick and never appears at Rest. There is no `own-element` OpenChoiceFrom type, so the honest stopgap is to move the restriction into the prompt, which is the only text that actually renders.",
+   "correction": "{\"flag\":\"familiarElement\",\"prompt\":\"Familiar's element today (only an element of your own kinetic gate)\",\"kind\":\"array\",\"daily\":true,\"options\":[{\"value\":\"air\",\"label\":\"Air\"},{\"value\":\"earth\",\"label\":\"Earth\"},{\"value\":\"fire\",\"label\":\"Fire\"},{\"value\":\"metal\",\"label\":\"Metal\"},{\"value\":\"water\",\"label\":\"Water\"},{\"value\":\"wood\",\"label\":\"Wood\"}],\"note\":\"You can only change the familiar's element if you have more than one kinetic element, and only to an element of your own kinetic gate — the list is not filtered to your gate.\"}"
+  },
+  {
+   "id": "esoteric-polymath",
+   "def": {
+    "flag": "polymathSpell",
+    "prompt": "Which spell from your occult book?",
+    "kind": "open",
+    "from": {
+     "type": "spell",
+     "traditions": [
+      "occult"
+     ]
+    },
+    "note": "Must be a spell written in your book of occult spells (your repertoire plus spells you've Learned). In repertoire = an extra signature spell today; otherwise treat it as in your repertoire until your next daily preparations."
+   },
+   "problem": "`from: {type:'spell', traditions:['occult']}` does not match the printed restriction. The text is \"choose any one spell from your BOOK of occult spells\" — a pool the character already has — but this resolves against all of content: 641 occult spells, including 39 cantrips and 13 of 10th rank, so a 2nd-level bard is shown Summon Draconic Legion as a legal pick. Per the rubric's own rule, a restriction to something the character already has calls for an `own-*` source, and there is no character-relative rank ceiling available (spellsMatching takes no character, and a static maxRank can't track level). The unenforceable part sits in `note`, which the Rest sheet never renders (DailyChoice has no note field), so the picker shows the whole occult list with no visible caveat. `own-spell` is the closest modelled pool (the feat itself puts every repertoire spell in the book, so those picks are always legal and always castable) but it silently deletes the feat's main use — a spell that ISN'T in your repertoire — since the app models no occult spellbook. Free text is the only shape that neither invents legal picks nor hides them, matching quick-study/call-gun precedent. `daily: true` is also missing, so as written this becomes a build-time pick.",
+   "correction": "{\"flag\":\"polymathSpell\",\"prompt\":\"Today's spell from your book of occult spells\",\"kind\":\"text\",\"daily\":true,\"note\":\"Any one spell written in your book of occult spells (your repertoire plus spells you've Learned with Occultism). Already in your repertoire = an extra signature spell today; otherwise treat it as in your repertoire until your next daily preparations. The app doesn't model the occult book, so the spell is recorded by name.\"}"
+  },
+  {
+   "id": "versatile-signature",
+   "def": {
+    "flag": "signatureSwap",
+    "prompt": "Which spell is signature today?",
+    "kind": "open",
+    "from": {
+     "type": "own-spell",
+     "cantripsOnly": false
+    },
+    "note": "Replaces one of your existing signature spells of that same rank."
+   },
+   "problem": "This is a coupled two-part swap that the storage shape cannot express, and it duplicates something the app already models. The text is \"change ONE OF YOUR SIGNATURE SPELLS to a different spell OF THAT RANK from your repertoire\" — that needs both the signature being dropped and the replacement, with a same-rank constraint between them. PlayState.dailyChoices stores one string per key, the Rest sheet renders exactly one picker per choice (no `picks` support in DailyChoice at all), and `from: {type:'own-spell', cantripsOnly:false}` offers every known spell of every rank with no link to the spell being replaced, so the rank rule is silently dropped and the prompt \"Which spell is signature today?\" claims something the record can't deliver. Signature spells are already first-class build state (BuildState.signatures / signatures2, rank -> repertoire spell id, surfaced as entry.signature in build.ts) and the player can edit them there freely; daily answers feed nothing in the engine (grep: dailyChoices is read only by CharacterSheet for display), so a Rest-time answer that disagrees with build.signatures would leave two contradictory statements of which spell is signature, with the build one winning. Recommend not wiring it; the swap belongs in the builder's signature picker. No correction offered because no single-value daily def represents this record honestly.",
+   "correction": ""
+  },
+  {
+   "id": "witchs-charge",
+   "def": {
+    "flag": "witchsCharge",
+    "prompt": "Who is your charge today?",
+    "kind": "text",
+    "note": "The designated creature lasts until your next daily preparations."
+   },
+   "problem": "The rule reading is right (the text says \"During your daily preparations, you can designate one willing creature as your charge\", it is the witch's own pick, one target, and free text is correct because no content collection holds arbitrary creatures — same shape as the existing 'call-gun' entry). The def is nonetheless wrong as written: it omits `daily: true`. `dailyChoicesFor` (src/rules/dailyChoices.ts:59) only surfaces a choice when `def.daily` is truthy, and apply-daily-choices.mjs writes each def verbatim onto `rec.choice`, so this def would land as a BUILD-time text field that is answered once and then survives every rest — the exact opposite of \"These effects persist until your next daily preparations\". Secondary caveat for the parent: the Rest dialog disables \"Prepare for the day\" until every listed choice has an answer (CharacterSheet.tsx:775), and this ability is optional (\"you can designate\"), so the player must type something (e.g. \"none\") to finish a rest.",
+   "correction": "{\"flag\":\"witchsCharge\",\"prompt\":\"Who is your charge today?\",\"kind\":\"text\",\"daily\":true,\"note\":\"The link — awareness of the creature and 30-foot touch-range spellcasting — lasts until your next daily preparations. Leave a dash if you don't designate one today.\"}"
+  },
+  {
+   "id": "paradoxical-mystery",
+   "def": {
+    "flag": "paradoxicalMysterySpell",
+    "prompt": "Revelation spell for today?",
+    "kind": "open",
+    "from": {
+     "type": "spell",
+     "traits": [
+      "focus"
+     ]
+    },
+    "note": "A basic or advanced domain spell from an accessible domain, or an initial or advanced revelation spell from another mystery."
+   },
+   "problem": "`from: {type:'spell', traits:['focus']}` does not match the printed restriction. In public/core.json that filter resolves to ALL 480 focus spells, including 54 sorcerer bloodline spells, 43 wizard curriculum spells, 22 witch hexes, 22 ranger, 18 champion, 16 animist and 15 monk focus spells, plus 73 archetype focus spells (Perfect Strike, Shadow Jump, Magic Warrior Aspect...). None of those is a legal pick: the feat allows only a basic or advanced DOMAIN spell, or an initial or advanced REVELATION spell from another mystery. Domain spells reliably carry the 'cleric' trait (Athletic Rush, Weapon Surge, Moonbeam, Overstuff, Sudden Shift all check out; 138 focus+cleric) and revelation spells the 'oracle' trait (37), so `anyTraits: ['cleric','oracle']` narrows 480 → ~175 and is the closest expressible fit. The def also omits `daily: true`, which would make this level-20 pick a permanent build answer instead of a nightly one. Remaining unenforceable parts (domain access; \"from another mystery\" excludes your own) belong in the note, which is exactly what `note` is documented for.",
+   "correction": "{\"flag\":\"paradoxicalMysterySpell\",\"prompt\":\"Revelation spell for today?\",\"kind\":\"open\",\"daily\":true,\"from\":{\"type\":\"spell\",\"traits\":[\"focus\"],\"anyTraits\":[\"cleric\",\"oracle\"]},\"note\":\"Domain spells and revelation spells are both listed. Pick a basic or advanced domain spell from a domain you have access to, or an initial or advanced revelation spell from a mystery OTHER than your own — the app can't check domain access or which mystery is yours.\"}"
+  },
+  {
+   "id": "arcane-evolution",
+   "def": {
+    "flag": "dailySignatureSpell",
+    "prompt": "Extra signature spell today?",
+    "kind": "open",
+    "from": {
+     "type": "own-spell"
+    },
+    "note": "Must be a spell already in your spell repertoire; it is a signature spell only for that day."
+   },
+   "problem": "This one cannot be wired as data at all, and wiring it would destroy a working grant. The record already carries a build-time choice — core.json has `choice: {flag:'arcaneEvolutionSkill', prompt:'Skill', kind:'skills'}` for \"You become trained in one skill of your choice\" — and a record holds exactly ONE choice (`FeatChoiceDef` on `rec.choice`, read as `rec.choice` in dailyChoices.ts:39). apply-daily-choices.mjs:104 refuses records that already have a non-daily choice for precisely this reason, so the def is either skipped or it clobbers the skill training. Two further defects even if multi-choice support existed: (a) `from: {type:'own-spell'}` with no filter also offers cantrips from the repertoire, which cannot meaningfully be signature spells — it needs `cantripsOnly: false`; (b) the app already models signature spells mechanically (`build.signatures`, one per rank, cast at any rank — Builder.tsx:516), so a recorded-only daily pick would look like it grants the extra signature spell while granting nothing, which is worse than leaving the feat alone. The def also omits `daily: true`. No data-only correction exists; this belongs in the engine backlog (a second, daily choice slot per record) rather than in this batch.",
+   "correction": ""
+  },
+  {
+   "id": "food-preservation",
+   "def": {
+    "flag": "preservedFood",
+    "prompt": "Alchemical food to preserve?",
+    "kind": "open",
+    "from": {
+     "type": "own-item"
+    },
+    "note": "An infused alchemical food item you made with advanced alchemy. Preserve up to 2 if expert in Crafting or Cooking Lore, 3 if master, 5 if legendary; preserving a new item spoils the oldest."
+   },
+   "problem": "The daily-preparations timing is right (Morning Side Dishes creates the alchemical food \"during your daily preparations\" and this feat's last sentence says \"during your daily preparation\"), but `from: {type:'own-item'}` is wrong twice over. First, `own-item` iterates `ch.inventory` only (openChoice.ts:145-159) with no itemType filter, so the picker lists every weapon, armour and piece of gear the character owns. Second, the item it is supposed to list can never appear there: infused items made with Advanced Alchemy live in `PlayState.alchemyPrep` (play.ts:66), not in `inventory`. For a character carrying nothing the whole row is silently dropped, because dailyChoicesFor skips an open choice that resolves to zero options (dailyChoices.ts:70). Separately, the printed count is not 1 — it is 1/2/3/5 by Crafting or Cooking Lore proficiency — and the daily lane cannot express it: `DailyChoice` has no `picks` field, so exactly one answer is collected per key and any `picks` value is ignored. Free text (the 'call-gun'/'quick-study' precedent) is the only honest shape here, with the scaling carried in the note. `daily: true` is also missing.",
+   "correction": "{\"flag\":\"preservedFood\",\"prompt\":\"Alchemical food to preserve?\",\"kind\":\"text\",\"daily\":true,\"note\":\"Name the infused alchemical food you made with advanced alchemy; it won't expire at your next daily preparations. You can preserve 2 items if you're an expert in Crafting or Cooking Lore, 3 if master, 5 if legendary — list the extras here as well. Preserving a new item spoils the oldest.\"}"
+  },
+  {
+   "id": "cutting-without-blade",
+   "def": {
+    "flag": "temporaryIkonFeat",
+    "prompt": "Which ikon feat do you gain today?",
+    "kind": "open",
+    "from": {
+     "type": "feat",
+     "traits": [
+      "ikon"
+     ],
+     "maxLevel": 16
+    },
+    "note": "Any ikon feat of 16th level or lower, not just ones you already have; if the ikon trait isn't indexed, filter on the ikon feat category instead."
+   },
+   "problem": "The filter itself is right — `{type:'feat',traits:['ikon'],maxLevel:16}` resolves to 23 feats in core.json (27 ikon-trait feats, 23 at level 16 or lower), and featsMatching lowercases traits, so it works. The defect is the player-facing `note`. (a) Its fallback is factually false: there is no 'ikon' feat category. Every ikon feat is `category:'class'`; the only categories in core.json are ancestry/class/archetype/skill/general/classfeature/mythic/bonus. Acting on that advice (`featCategory:'ikon'`) would return 0 options, and dailyChoicesFor drops any non-text choice with an empty option list, so the picker would silently vanish. (b) `note` renders as a caveat NEXT TO THE PICKER, so it must be a rule caveat for the player, not a build instruction to the next agent (compare the two notes actually in core.json, on ghost-hunter-dedication and arodens-innovation). The caveat worth printing is the one arodens-innovation prints: many ikon feats have prerequisites and the picker does not check them.",
+   "correction": "{\"flag\":\"temporaryIkonFeat\",\"prompt\":\"Which ikon feat do you gain today?\",\"kind\":\"open\",\"daily\":true,\"from\":{\"type\":\"feat\",\"traits\":[\"ikon\"],\"maxLevel\":16},\"note\":\"Any ikon feat of 16th level or lower, whether or not you already have it. You only gain its benefits if you meet its prerequisites — that is not checked here.\"}"
+  },
+  {
+   "id": "unstable-patronage",
+   "def": {
+    "flag": "patronageSpell",
+    "prompt": "Which spell do you lend as innate magic?",
+    "kind": "open",
+    "from": {
+     "type": "own-spell"
+    },
+    "note": "Rank cap is dynamic (highest rank you can cast -2), so it isn't encoded here. The second half of the choice — which charge receives it — is an ally target and is deliberately not wired."
+   },
+   "problem": "`from:{type:'own-spell'}` cannot see the spells this feat is about, so the picker would offer the wrong list rather than an empty one. The feat requires Seneschal Witch Dedication, whose prerequisite is the 'seneschal witch' class archetype — so the character is always a WITCH, and core.json classes.witch.casting is {type:'prepared', repertoire:false}. A witch's known spells (which build.ts explicitly identifies with the familiar: \"the witch's familiar, 'the source and repository of the spells your patron has bestowed'\") live in `entry.spellbook`. openChoice.ts's own-spell branch reads ONLY `cantrips`, `repertoire` and `grantedRepertoire`, and grantedRepertoire is written only in the spontaneous branch of build.ts. So own-spell resolves to the witch's CANTRIPS ONLY — never the leveled spells the feat exists to lend. Because that list is non-empty, dailyChoicesFor will not skip it; it will render a cantrip-only picker that misstates the rule. Until own-spell learns to read a prepared caster's spellbook this must be free text, the same shape as call-gun.",
+   "correction": "{\"flag\":\"patronageSpell\",\"prompt\":\"Which spell your familiar knows do you lend?\",\"kind\":\"text\",\"daily\":true,\"note\":\"Any spell your familiar knows, of no higher a rank than the highest rank of spells you can cast −2. Which of your charges receives it is an ally choice and isn't tracked here.\"}"
+  },
+  {
+   "id": "celestial-armaments",
+   "def": {
+    "flag": "blessedWeapon",
+    "prompt": "Which weapon carries your celestial blessing?",
+    "kind": "open",
+    "from": {
+     "type": "own-item"
+    },
+    "note": "Weapons you own plus Handwraps of Mighty Blows, so the filter is left as any owned item rather than weapons only."
+   },
+   "problem": "`from:{type:'own-item'}` with no itemType lists EVERY item in the inventory — rations, potions, a backpack, armor — for a feat whose printed restriction is \"Select one weapon or Handwraps of Mighty Blows\". openChoice.ts's own-item branch applies only `investedOnly` and `itemType`, so nothing narrows it. The stated justification is also wrong on the data: Handwraps of Mighty Blows IS itemType 'weapon' in core.json (id handwraps-of-mighty-blows, category 'unarmed' — the same record the strikes subsystem keys off), so `itemType:'weapon'` covers both halves of the printed restriction. The only things it misses are the pre-statted +N handwraps bundles, which were imported as itemType 'equipment'; that belongs in a note, not in a filter that admits every object the character owns.",
+   "correction": "{\"flag\":\"blessedWeapon\",\"prompt\":\"Which weapon carries your celestial blessing?\",\"kind\":\"open\",\"daily\":true,\"from\":{\"type\":\"own-item\",\"itemType\":\"weapon\"},\"note\":\"Handwraps of Mighty Blows are listed here with your weapons. A pre-statted handwraps bundle (+1 striking and the like) is recorded as worn equipment and won't appear — select the plain Handwraps you etch your runes onto.\"}"
+  },
+  {
+   "id": "harbingers-armament",
+   "def": {
+    "flag": "harbingerRune",
+    "prompt": "Today's Harbinger's Armament rune",
+    "kind": "array",
+    "options": [
+     {
+      "value": "fearsome",
+      "label": "Fearsome"
+     },
+     {
+      "value": "ghost-touch",
+      "label": "Ghost Touch"
+     },
+     {
+      "value": "returning",
+      "label": "Returning"
+     },
+     {
+      "value": "shifting",
+      "label": "Shifting"
+     },
+     {
+      "value": "vitalizing",
+      "label": "Vitalizing"
+     }
+    ],
+    "note": "The same daily preparation also selects WHICH weapon (or handwraps of mighty blows) carries the rune — a second own-item/weapon pick if the def format ever allows two per record. The rune ignores the weapon's maximum rune count and lasts 24 hours or until the next daily preparations."
+   },
+   "problem": "Rules content is right — the five runes (Fearsome, Ghost Touch, Returning, Shifting, Vitalizing) are verbatim and exhaustive, and it is a genuine daily-preparations pick. But the def omits `\"daily\": true`, which is the only opt-in the engine reads (dailyChoices.ts:59 `if (!def?.daily) continue`). As written it installs a BUILD-time picker that freezes the rune into the character and never reappears at rest — the exact failure the FeatChoiceDef.daily doc warns about. Second defect: the un-modelled weapon pick is parked in `note`, but DailyChoice never carries `note` to the Rest UI, so the player is never told they also choose the weapon; the note is also developer-facing (\"if the def format ever allows two per record\").",
+   "correction": "{\"flag\":\"harbingerRune\",\"prompt\":\"Rune today (on one weapon or handwraps you choose)\",\"kind\":\"array\",\"daily\":true,\"options\":[{\"value\":\"fearsome\",\"label\":\"Fearsome\"},{\"value\":\"ghost-touch\",\"label\":\"Ghost Touch\"},{\"value\":\"returning\",\"label\":\"Returning\"},{\"value\":\"shifting\",\"label\":\"Shifting\"},{\"value\":\"vitalizing\",\"label\":\"Vitalizing\"}],\"note\":\"The rune lasts 24 hours or until your next daily preparations and doesn't count against the weapon's maximum rune count.\"}"
+  },
+  {
+   "id": "demon-hunter",
+   "def": {
+    "flag": "huntedDemon",
+    "prompt": "Today's hunted kind of demon",
+    "kind": "text",
+    "note": "Free text: any specific demon type (succubus, omox, shemhazian, Treerazer…). First melee hit per round on that demon deals +1d6 spirit damage (2d6 at 13th, 3d6 at 17th)."
+   },
+   "problem": "The reading is correct — \"When you make your daily preparations, choose one kind of demon\" is a real daily pick, the examples are open (\"such as\"), so free text is the honest kind. But the def omits `\"daily\": true`, so the engine treats it as a build-time choice and it never appears on the Rest sheet. The note also mixes rules text with editorial framing and is never displayed for daily choices anyway.",
+   "correction": "{\"flag\":\"huntedDemon\",\"prompt\":\"Kind of demon hunted today\",\"kind\":\"text\",\"daily\":true,\"note\":\"Any specific demon (succubus, omox, shemhazian, Treerazer...). The first melee Strike that hits one of them each round deals +1d6 spirit damage (2d6 at 13th, 3d6 at 17th).\"}"
+  },
+  {
+   "id": "bodyguard",
+   "def": {
+    "flag": "bodyguardCharge",
+    "prompt": "Who is your charge today?",
+    "kind": "text",
+    "note": "A named creature (a party ally), so free text — the roster of allies isn't content the app can filter. The feat also allows a 10-minute re-designation before the next daily preparations."
+   },
+   "problem": "The trigger and ownership check out: \"During your daily preparations, choose one of your allies as your charge\" is the character's own decision and changes the character's own Taunt penalty, and free text is right because the app has no ally roster to filter (`OpenChoiceFrom` offers own-companion but nothing for party allies). The defect is the missing `\"daily\": true` — without it this becomes a permanent build-time answer for a charge the rules let you re-designate every morning (and with 10 minutes' work in between), which is precisely backwards.",
+   "correction": "{\"flag\":\"bodyguardCharge\",\"prompt\":\"Your charge today\",\"kind\":\"text\",\"daily\":true,\"note\":\"Name the ally you've sworn to protect; your Taunt penalty against enemies rises to -2 for your charge. You can take 10 minutes to change your charge before your next daily preparations.\"}"
+  },
+  {
+   "id": "autonomous-arms",
+   "def": {
+    "flag": "autonomousWeapon",
+    "prompt": "Which spear or polearm is infused today?",
+    "kind": "open",
+    "from": {
+     "type": "own-item",
+     "itemType": "weapon"
+    },
+    "note": "Must be a spear or polearm you own; own-item can't filter by weapon group, so the pool is every weapon in your inventory — the restriction lives in the prompt. The granted animated rune doesn't count against the weapon's property-rune maximum."
+   },
+   "problem": "`from: {type:'own-item', itemType:'weapon'}` is the correct source — the text says \"choose one spear or polearm you own\", and own-item is required exactly because the pick is restricted to inventory. `weaponGroup` genuinely isn't filterable (OpenChoiceFrom only has weaponCategory, a proficiency category), and the prompt does carry the spear/polearm restriction, so the picker doesn't misstate the rule. The defect is the missing `\"daily\": true`: dailyChoicesFor skips it and the builder shows it as a one-time pick, so the infused weapon can never be changed at daily preparations.",
+   "correction": "{\"flag\":\"autonomousWeapon\",\"prompt\":\"Spear or polearm infused today\",\"kind\":\"open\",\"daily\":true,\"from\":{\"type\":\"own-item\",\"itemType\":\"weapon\"},\"note\":\"The list shows every weapon you carry - choose a spear or polearm. It gains the animated rune, which doesn't count against its maximum property runes.\"}"
+  },
+  {
+   "id": "warshard-warrior-dedication",
+   "def": {
+    "flag": "warshardWeapon",
+    "prompt": "Today's warshard weapon",
+    "kind": "open",
+    "from": {
+     "type": "own-item",
+     "itemType": "weapon"
+    },
+    "note": "Must be a weapon in your possession you're at least expert with; intelligent weapons and artifacts are excluded. own-item can't check proficiency or exclude artifacts, so those limits stay in the prompt/note. Only one warshard weapon at a time."
+   },
+   "problem": "Two defects. (1) Missing `\"daily\": true`, so the warshard weapon would be frozen at build time even though the text says it holds only \"until you choose a different weapon in your possession during another of your daily preparations\". (2) The printed restrictions — at least EXPERT proficiency, and no intelligent weapons or artifacts — are placed only in `note`, but DailyChoice (dailyChoices.ts:17-28) never carries `note` to the Rest UI, so the player sees an unfiltered list of every weapon they own with the prompt \"Today's warshard weapon\" and no indication any limit exists. own-item itself is the right source (\"one weapon in your possession\"); the limits must move into the prompt, which is the only text the Rest sheet renders.",
+   "correction": "{\"flag\":\"warshardWeapon\",\"prompt\":\"Warshard weapon today (expert proficiency; not intelligent or an artifact)\",\"kind\":\"open\",\"daily\":true,\"from\":{\"type\":\"own-item\",\"itemType\":\"weapon\"},\"note\":\"The list shows every weapon you carry; the proficiency and intelligent/artifact limits aren't checked here. Only one warshard weapon at a time.\"}"
+  },
+  {
+   "id": "transmute-weapon",
+   "def": {
+    "flag": "warshardMaterial",
+    "prompt": "Today's warshard weapon material",
+    "kind": "text",
+    "note": "Free text because the rules allow any precious material (adamantine, dawnsilver, cold iron…) and the text only gives examples; the material's level must be at or below your character level, standard grade requires a level-9+ weapon and high grade a level-15+ weapon. Optional ('you can'), so an empty answer means no transmutation today."
+   },
+   "problem": "Three defects. (1) Missing `\"daily\": true`. (2) The ability is explicitly OPTIONAL (\"you CAN transform the material\"), but the Rest dialog disables \"Prepare for the day\" while any listed choice is unanswered (CharacterSheet.tsx `disabled={needsAsking.some((ch) => !dailyAnswer(ch.key))}`), so as defined it becomes a mandatory field that blocks daily preparations on a day the character doesn't transmute; the note's claim that \"an empty answer means no transmutation today\" is false against the actual UI. (3) The level/grade limits live only in `note`, which is never rendered for daily choices. Free text is the right kind (the materials are examples, \"like adamantine, dawnsilver, or cold iron\").",
+   "correction": "{\"flag\":\"warshardMaterial\",\"prompt\":\"Warshard material today (type none to skip)\",\"kind\":\"text\",\"daily\":true,\"note\":\"Optional. The material and its grade must be your level or lower; standard grade needs a level 9+ weapon, high grade a level 15+ weapon.\"}"
+  },
+  {
+   "id": "warshard-rune",
+   "def": {
+    "flag": "warshardRune",
+    "prompt": "Today's extra warshard rune",
+    "kind": "text",
+    "note": "Intended pool is a FILTER (any COMMON weapon property rune of level <= your character level), but `from` has no content-wide item/rune source — property runes are itemType 'equipment' in core.json and openChoice.ts only resolves spell/feat/weapon/language/own-*. Stored as text so the row renders; upgrade to kind 'open' if a rune filter is added. The rune is dormant unless you wield the warshard weapon with at least 1 unspent Mythic Point."
+   },
+   "problem": "The fallback to `text` is justified — I confirmed property runes are `itemType: 'equipment'` in core.json (fearsome, ghost-touch, animated...) and OpenChoiceFrom.type has no content-wide item source, so no `from` would resolve a non-empty rune list. But three defects stand. (1) Missing `\"daily\": true`. (2) Optional (\"you CAN empower it\"), yet an unanswered choice hard-disables the \"Prepare for the day\" button, so this would block resting. (3) The whole restriction (COMMON rarity, level <= your level) and the dormancy condition sit in a `note` that the Rest sheet never renders — and that note is developer commentary (naming openChoice.ts and core.json itemTypes) in a field the schema documents as player-facing.",
+   "correction": "{\"flag\":\"warshardRune\",\"prompt\":\"Extra warshard rune today (common, your level or lower; type none to skip)\",\"kind\":\"text\",\"daily\":true,\"note\":\"Typed by hand - the app has no list of weapon property runes to pick from. The rune ignores the weapon's maximum property runes, and is dormant unless you wield your warshard weapon with at least 1 unspent Mythic Point.\"}"
+  },
+  {
+   "id": "mind-smith-dedication",
+   "def": {
+    "flag": "mindWeaponDamage",
+    "prompt": "Today's mind weapon damage type",
+    "kind": "array",
+    "options": [
+     {
+      "value": "bludgeoning",
+      "label": "Bludgeoning (club group)"
+     },
+     {
+      "value": "piercing",
+      "label": "Piercing (spear group)"
+     },
+     {
+      "value": "slashing",
+      "label": "Slashing (sword group)"
+     }
+    ],
+    "note": "Sets the mind weapon's damage type AND weapon group for the day (group matters for critical specialization and group-keyed runes/feats). The weapon's base statistics (1d4 agile finesse / 1d6 finesse / 1d8 / 1d10 reach) are a separate build-time choice, not a daily one."
+   },
+   "problem": "The option list is exactly the three the text names, in order, each correctly paired with its weapon group, and the base-statistics list is correctly identified as a separate build-time choice rather than folded in. The defect is the missing `\"daily\": true`: the text says \"Each day during your daily preparations, you can decide...\", so without the flag the damage type/group is frozen into the build and can never be re-decided at rest — and the record would instead render a build-time picker in the Builder.",
+   "correction": "{\"flag\":\"mindWeaponDamage\",\"prompt\":\"Mind weapon damage today\",\"kind\":\"array\",\"daily\":true,\"options\":[{\"value\":\"bludgeoning\",\"label\":\"Bludgeoning (club group)\",\"description\":\"Your mind weapon deals bludgeoning damage and is in the club weapon group.\"},{\"value\":\"piercing\",\"label\":\"Piercing (spear group)\",\"description\":\"Your mind weapon deals piercing damage and is in the spear weapon group.\"},{\"value\":\"slashing\",\"label\":\"Slashing (sword group)\",\"description\":\"Your mind weapon deals slashing damage and is in the sword weapon group.\"}]}"
+  },
+  {
+   "id": "malleable-mental-forge",
+   "def": {
+    "flag": "mindWeaponTraits",
+    "prompt": "Mind weapon traits today",
+    "kind": "array",
+    "picks": 2,
+    "distinct": true,
+    "note": "Options are Mental Forge's list (verified in core.json feats['mental-forge']); today's two replace the pair chosen for Mental Forge.",
+    "options": [
+     {
+      "value": "grapple",
+      "label": "Grapple"
+     },
+     {
+      "value": "modular",
+      "label": "Modular (B, P, or S)"
+     },
+     {
+      "value": "nonlethal",
+      "label": "Nonlethal"
+     },
+     {
+      "value": "shove",
+      "label": "Shove"
+     },
+     {
+      "value": "trip",
+      "label": "Trip"
+     }
+    ]
+   },
+   "problem": "Trigger, ownership and option list are right — the five options match Mental Forge's printed list and core.json feats['mental-forge'].choice exactly, and 'any two weapon traits' does mean picks:2/distinct:true. Two defects. (1) `daily: true` is MISSING. dailyChoicesFor() (src/rules/dailyChoices.ts) short-circuits on `if (!def?.daily) continue`, so this would never reach the Rest sheet — and worse, Builder.tsx:1151 renders `content.feats[picked].choice` with no daily guard, so it would appear as a PERMANENT build-time picker on the level-8 feat card, the exact opposite of the rule. Every one of the 17 already-wired daily defs carries `daily: true` inline (see scripts/apply-daily-choices.mjs). (2) `picks`/`distinct` are inert in the daily lane. DailyChoice is {key, recordId, recordName, prompt, kind, options} — no picks — and PlayState.dailyChoices is Record<string,string> keyed `${recordId}:${flag}` with no `#i` fan-out; choiceKeys()/choiceOptionsFor() (build.ts:343-357) are build-lane only, used against build.featChoices. 0 of the 17 existing daily choices use picks>1. Wired as-is the Rest sheet shows ONE chip row and stores ONE trait for a feat that re-picks two, and the 'Keeping your last choices' summary would report a single trait. Do not wire until dailyChoices.ts + the Rest UI honour picks/distinct.",
+   "correction": "{\"flag\":\"mindWeaponTraits\",\"prompt\":\"Mind weapon traits today\",\"kind\":\"array\",\"daily\":true,\"picks\":2,\"distinct\":true,\"note\":\"Options are Mental Forge's list; today's two replace the pair chosen for Mental Forge.\",\"options\":[{\"value\":\"grapple\",\"label\":\"Grapple\"},{\"value\":\"modular\",\"label\":\"Modular (B, P, or S)\"},{\"value\":\"nonlethal\",\"label\":\"Nonlethal\"},{\"value\":\"shove\",\"label\":\"Shove\"},{\"value\":\"trip\",\"label\":\"Trip\"}]}"
+  },
+  {
+   "id": "starstone-aspirant-dedication",
+   "def": {
+    "flag": "untrainedSkill",
+    "prompt": "Which untrained skill today?",
+    "kind": "array",
+    "note": "Only legal for a skill you're untrained in; grants trained-only skill actions plus +1 circumstance (+2 at 8th, +3 at 15th) until next daily preparations.",
+    "options": [
+     {
+      "value": "acrobatics",
+      "label": "Acrobatics"
+     },
+     {
+      "value": "arcana",
+      "label": "Arcana"
+     },
+     {
+      "value": "athletics",
+      "label": "Athletics"
+     },
+     {
+      "value": "crafting",
+      "label": "Crafting"
+     },
+     {
+      "value": "deception",
+      "label": "Deception"
+     },
+     {
+      "value": "diplomacy",
+      "label": "Diplomacy"
+     },
+     {
+      "value": "intimidation",
+      "label": "Intimidation"
+     },
+     {
+      "value": "medicine",
+      "label": "Medicine"
+     },
+     {
+      "value": "nature",
+      "label": "Nature"
+     },
+     {
+      "value": "occultism",
+      "label": "Occultism"
+     },
+     {
+      "value": "performance",
+      "label": "Performance"
+     },
+     {
+      "value": "religion",
+      "label": "Religion"
+     },
+     {
+      "value": "society",
+      "label": "Society"
+     },
+     {
+      "value": "stealth",
+      "label": "Stealth"
+     },
+     {
+      "value": "survival",
+      "label": "Survival"
+     },
+     {
+      "value": "thievery",
+      "label": "Thievery"
+     }
+    ]
+   },
+   "problem": "The daily trigger and the single pick are correct ('Each day during your daily preparations, choose a skill you're untrained in'), but the option set is invented rather than printed, and the guard against it is invisible. (1) `daily: true` is missing — same consequence as above: skipped by dailyChoicesFor, and rendered by the Builder as a permanent build-time skill picker on a 2nd-level feat. (2) The def hard-codes all 16 core skills (values do match SKILLS in types.ts:34), so it offers every skill the character is already TRAINED in — an illegal pick, and at 2nd level a character is trained in several. It also omits Lores, which ARE skills and are exactly the ones a character is untrained in. (3) The only statement of the restriction is `note`, and the Rest sheet never renders note: DailyChoice carries no note field and the daily-pick block in CharacterSheet.tsx (~lines 705-755) renders prompt + recordName + option chips only. The player sees a bare 16-chip row with no hint of the untrained-only rule. No correct filter is expressible today: kind:'skills' is explicitly excluded from the daily lane ('resolve against the BUILD, not the morning') and its minRank is a floor not a ceiling, and OpenChoiceFrom has no skill type (an unknown from.type returns [], after which dailyChoicesFor drops the choice entirely). Caveat for fairness: feats/arodens-innovation sets a precedent for 'offer the superset + note', so this is a judgement call rather than a flat contradiction — but there the restriction is genuinely uncomputable, whereas here the character's own proficiencies are known.",
+   "correction": "{\"flag\":\"untrainedSkill\",\"prompt\":\"Which skill you're UNTRAINED in today?\",\"kind\":\"array\",\"daily\":true,\"note\":\"Legal only for a skill you're untrained in; the picker cannot filter by your proficiency, so it lists all 16 core skills (Lores are not offered). Grants trained-only skill actions plus +1 circumstance (+2 at 8th, +3 at 15th) until your next daily preparations.\",\"options\":[{\"value\":\"acrobatics\",\"label\":\"Acrobatics\"},{\"value\":\"arcana\",\"label\":\"Arcana\"},{\"value\":\"athletics\",\"label\":\"Athletics\"},{\"value\":\"crafting\",\"label\":\"Crafting\"},{\"value\":\"deception\",\"label\":\"Deception\"},{\"value\":\"diplomacy\",\"label\":\"Diplomacy\"},{\"value\":\"intimidation\",\"label\":\"Intimidation\"},{\"value\":\"medicine\",\"label\":\"Medicine\"},{\"value\":\"nature\",\"label\":\"Nature\"},{\"value\":\"occultism\",\"label\":\"Occultism\"},{\"value\":\"performance\",\"label\":\"Performance\"},{\"value\":\"religion\",\"label\":\"Religion\"},{\"value\":\"society\",\"label\":\"Society\"},{\"value\":\"stealth\",\"label\":\"Stealth\"},{\"value\":\"survival\",\"label\":\"Survival\"},{\"value\":\"thievery\",\"label\":\"Thievery\"}]}"
+  },
+  {
+   "id": "blessing-of-the-devoted",
+   "def": {
+    "flag": "blessedArmamentRune",
+    "prompt": "Blessed armament rune today",
+    "kind": "array",
+    "note": "Blessed Armament blessing only. The same daily preparations also let the champion move the blessing to a different weapon or handwraps — that armament designation is not captured by this flag.",
+    "options": [
+     {
+      "value": "fearsome",
+      "label": "Fearsome"
+     },
+     {
+      "value": "ghost-touch",
+      "label": "Ghost Touch"
+     },
+     {
+      "value": "returning",
+      "label": "Returning"
+     },
+     {
+      "value": "shifting",
+      "label": "Shifting"
+     },
+     {
+      "value": "vitalizing",
+      "label": "Vitalizing"
+     }
+    ]
+   },
+   "problem": "The rune list is exact (Fearsome, Ghost Touch, Returning, Shifting, Vitalizing), the trigger is explicit, and one rune is the right count — but the def is attached to the WRONG RECORD, and `daily: true` is missing. `blessing-of-the-devoted` is handed to EVERY champion at level 3 (classes.champion.features = [{level:3, featureId:'blessing-of-the-devoted'}]). The blessing itself is picked from the class extraChoice group `blessing` added by scripts/apply-champion-blessing.mjs, whose options are three separate classFeature records — blessed-armament, blessed-shield, blessed-swiftness — each of which reaches ownedFeatureIds via c.classChoices (derive.ts:1018-1020). dailyChoicesFor has no conditional gate, so a def on blessing-of-the-devoted prompts Blessed Shield and Blessed Swiftness champions too, and the 'Prepare for the day' button is DISABLED while any unanswered choice exists — an unskippable morning prompt for a rune they do not have. classFeatures['blessed-armament'] carries the identical printed text (same rune list, same daily sentence), has no existing `choice`, and gates perfectly. Also: the reason's 'nothing in the build currently records it' is true of the rune but stale about the blessing — that picker already exists as a class extraChoice.",
+   "correction": "ATTACH TO classFeatures['blessed-armament'], NOT 'blessing-of-the-devoted'. Def: {\"flag\":\"blessedArmamentRune\",\"prompt\":\"Blessed armament rune today\",\"kind\":\"array\",\"daily\":true,\"note\":\"The same daily preparations also let you move the blessing to a different weapon or handwraps — that armament designation is not captured by this flag.\",\"options\":[{\"value\":\"fearsome\",\"label\":\"Fearsome\"},{\"value\":\"ghost-touch\",\"label\":\"Ghost Touch\"},{\"value\":\"returning\",\"label\":\"Returning\"},{\"value\":\"shifting\",\"label\":\"Shifting\"},{\"value\":\"vitalizing\",\"label\":\"Vitalizing\"}]}"
+  },
+  {
+   "id": "offensive-boost",
+   "def": {
+    "flag": "boostedWeapon",
+    "prompt": "Which weapon carries your boost?",
+    "kind": "open",
+    "note": "Armor innovation only. This is a SECOND def on the record — do not overwrite the existing non-daily `offensiveBoost` build choice, which is switched with downtime, not daily.",
+    "from": {
+     "type": "own-item",
+     "itemType": "weapon"
+    }
+   },
+   "problem": "The text does name a daily designation ('your melee Strikes with one weapon you choose during daily preparations'), but the def is not wireable as specified. (1) There is no such thing as 'a SECOND def on the record'. A record carries ONE `choice` (FeatChoiceDef, singular — dailyChoices.ts ownedRecords reads rec.choice; multi-choice build data lives in the separate `effectChoices` array, build.ts:2417). Writing this def onto offensive-boost overwrites the existing offensiveBoost def — precisely what the note forbids. The lane's own applier already encodes this rule: scripts/apply-daily-choices.mjs SKIPS any record where `rec.choice && !rec.choice.daily` ('already has a non-daily choice'). (2) Conditionality. offensive-boost is a level-9 feature of EVERY inventor (classes.inventor.features), and innovation type is the SUBCLASS (classes.inventor.subclass.options = armor-innovation / construct-innovation / light-mortar-innovation / weapon-innovation); there is no offensive-boost-<innovation> variant record. With no gate in dailyChoicesFor, weapon- and construct-innovation inventors get a mandatory prompt that blocks 'Prepare for the day' for a designation the text gives only to armor innovations. (3) `daily: true` is missing. (4) Minor: the printed restriction is MELEE Strikes with one weapon; from {own-item, itemType:'weapon'} also offers ranged weapons and OpenChoiceFrom has no melee filter (weaponCategory is a proficiency category, not melee/ranged). It does resolve non-empty when the character owns any weapon (item.itemType==='weapon' exists on 1,039 items) and dailyChoicesFor safely skips it when they own none. No data-only fix exists: the only conditionally-gated record is `armor-innovation` (a subclass option id that is also a classFeature id, so it lands in ownedFeatureIds for armor inventors only), but it is a level-1 feature, so it would ask the question eight levels before Offensive Boost exists. Needs either a second def slot on records or a conditional gate in the daily lane first. FYI the record's description also ends with a Foundry authoring artifact ('*Note: The included effect is only needed for construct innovations and armor innovations for selecting their daily preparation weapon.*') that is not game text.",
+   "correction": ""
+  },
+  {
+   "id": "viridian-crown",
+   "def": {
+    "flag": "crownAttribute",
+    "prompt": "Attribute the Viridian Crown increases?",
+    "kind": "array",
+    "options": [
+     {
+      "value": "charisma",
+      "label": "Charisma"
+     },
+     {
+      "value": "wisdom",
+      "label": "Wisdom"
+     }
+    ]
+   },
+   "problem": "The pick cannot change anything and would contradict the sheet. items['viridian-crown'] already carries apexAttribute:'cha', and play.ts itemApex() applies that hardcoded Charisma bump while the crown is invested; FeatChoiceDef options carry no grants, so a player who picks Wisdom at rest would still see Charisma raised. The values are also wrong for the app's vocabulary — attributes are AbilityId keys ('cha'/'wis'), not 'charisma'/'wisdom'. Do not wire until itemApex() reads the daily answer for this item.",
+   "correction": "{\"flag\":\"crownAttribute\",\"prompt\":\"Attribute the Viridian Crown increases today\",\"kind\":\"array\",\"daily\":true,\"options\":[{\"value\":\"cha\",\"label\":\"Charisma\"},{\"value\":\"wis\",\"label\":\"Wisdom\"}]}"
+  },
+  {
+   "id": "fortune-cord",
+   "def": {
+    "flag": "loadedCoinType",
+    "prompt": "Coin type loaded on the fortune cord?",
+    "kind": "array",
+    "options": [
+     {
+      "value": "copper",
+      "label": "Copper (corrosive / acid)"
+     },
+     {
+      "value": "silver",
+      "label": "Silver (shock / electricity)"
+     },
+     {
+      "value": "gold",
+      "label": "Gold (flaming / fire)"
+     },
+     {
+      "value": "platinum",
+      "label": "Platinum (frost / cold)"
+     }
+    ],
+    "note": "Merchant's Bludgeon requires at least 50 coins loaded."
+   },
+   "problem": "Loading coins is conditional in the text ('If you load up to 100 coins onto a fortune cord as part of your daily preparations'), but every wired daily choice is MANDATORY: CharacterSheet.tsx disables the Prepare button while any needsAsking entry is unanswered ('Make each of today's choices first'). With only four coin types offered, the player must assert a coin load every single morning and can never say 'I loaded nothing'. Also, the 50-coin requirement sits in `note`, which the Rest sheet never renders (DailyChoice carries only prompt/kind/options) — per-option `description` is what surfaces, as the chip tooltip.",
+   "correction": "{\"flag\":\"loadedCoinType\",\"prompt\":\"Coins loaded on the fortune cord today\",\"kind\":\"array\",\"daily\":true,\"options\":[{\"value\":\"none\",\"label\":\"None loaded\",\"description\":\"You loaded no coins; neither activation is available until your next daily preparations.\"},{\"value\":\"copper\",\"label\":\"Copper\",\"description\":\"Merchant's Bludgeon gains the corrosive rune (requires at least 50 coins loaded); Fling Coins deals acid damage.\"},{\"value\":\"silver\",\"label\":\"Silver\",\"description\":\"Merchant's Bludgeon gains the shock rune (requires at least 50 coins loaded); Fling Coins deals electricity damage.\"},{\"value\":\"gold\",\"label\":\"Gold\",\"description\":\"Merchant's Bludgeon gains the flaming rune (requires at least 50 coins loaded); Fling Coins deals fire damage.\"},{\"value\":\"platinum\",\"label\":\"Platinum\",\"description\":\"Merchant's Bludgeon gains the frost rune (requires at least 50 coins loaded); Fling Coins deals cold damage.\"}]}"
+  },
+  {
+   "id": "professional-letter-writer",
+   "def": {
+    "flag": "dailyLanguage",
+    "prompt": "Extra language known today?",
+    "kind": "open",
+    "from": {
+     "type": "language"
+    }
+   },
+   "problem": "Unwireable as proposed: the record already carries a non-daily build choice (choice.skillFeat = Specialty Crafting / Multilingual, shown in the chunk as `existingChoice`), and a record holds exactly ONE `choice` (Feat/Background `choice?: FeatChoiceDef`). Writing the daily language def would delete the skill-feat pick the background's own text grants; scripts/apply-daily-choices.mjs explicitly refuses this case ('already has a non-daily choice') and would skip the record. The language def itself is textually faithful (daily preparations, character's own, `from:{type:'language'}` resolves non-empty against content.languages), so this needs schema/engine support for a second, daily choice slot — not a data edit.",
+   "correction": ""
+  },
+  {
+   "id": "runelord-researcher",
+   "def": {
+    "flag": "thassilonianSchool",
+    "prompt": "Thassilonian school focused on today?",
+    "kind": "array",
+    "options": [
+     {
+      "value": "envy",
+      "label": "Envy"
+     },
+     {
+      "value": "gluttony",
+      "label": "Gluttony"
+     },
+     {
+      "value": "greed",
+      "label": "Greed"
+     },
+     {
+      "value": "lust",
+      "label": "Lust"
+     },
+     {
+      "value": "pride",
+      "label": "Pride"
+     },
+     {
+      "value": "sloth",
+      "label": "Sloth"
+     },
+     {
+      "value": "wrath",
+      "label": "Wrath"
+     }
+    ],
+    "note": "The record's description is truncated after \"Envy\"; the remaining six schools are the standard Thassilonian sins and their listed effects should be re-checked against the full entry."
+   },
+   "problem": "Six of the seven options were not in the text that was read — the chunk's description is cut off mid-word after 'Envy' (2200 of 2797 chars) — so gluttony/greed/lust/pride/sloth/wrath were asserted from outside the record, and the def's own `note` admits the data is unverified. (I checked the full record: the seven schools happen to be right.) Two real defects remain: the labels drop the 'listed effect' each school protects against, which is the entire mechanical content of the +1 status bonus, and Wrath carries a nested 'choose one' damage type a flat array cannot express. Also `note` is never rendered on the Rest sheet, so a caveat placed there is invisible; per-option `description` is what shows (chip tooltip).",
+   "correction": "{\"flag\":\"thassilonianSchool\",\"prompt\":\"Thassilonian school focused on today (+1 status to saves, 8 hours)\",\"kind\":\"array\",\"daily\":true,\"options\":[{\"value\":\"envy\",\"label\":\"Envy\",\"description\":\"Any effect with the incapacitation trait (+2 instead against foes higher level than you).\"},{\"value\":\"gluttony\",\"label\":\"Gluttony\",\"description\":\"Death effects and void.\"},{\"value\":\"greed\",\"label\":\"Greed\",\"description\":\"Polymorph, and effects that can cause enfeebled, clumsy, or petrified.\"},{\"value\":\"lust\",\"label\":\"Lust\",\"description\":\"Emotion effects.\"},{\"value\":\"pride\",\"label\":\"Pride\",\"description\":\"Illusion effects.\"},{\"value\":\"sloth\",\"label\":\"Sloth\",\"description\":\"Effects that cause paralysis, slow, stun, or penalties to your Speed.\"},{\"value\":\"wrath\",\"label\":\"Wrath\",\"description\":\"Effects that deal one damage type of your choice: acid, cold, electricity, fire, or sonic.\"}]}"
+  }
+ ],
+ "skipped": [
+  {
+   "id": "spellmaster-dedication",
+   "reason": "It only grants permission to re-edit a build choice that belongs to a different feat (Wayfinder Resonance Tinkerer); there is no separate per-day state to store beyond that feat's own cantrip selection."
+  },
+  {
+   "id": "foolproof-instructions",
+   "reason": "The entire benefit lands on an ally (an ally rolls, an ally casts) rather than on the character's own sheet, and the target ally and GM-set DC are not enumerable in-app."
+  },
+  {
+   "id": "master-summoner",
+   "reason": "Designating a spell slot is part of the spell-slot preparation the app already models; it changes the slot table rather than storing a discrete named pick."
+  },
+  {
+   "id": "true-transmogrification",
+   "reason": "An unbounded 'any number' rebuild of evolution feat slots — that is a build edit the feat picker already owns, not one discrete answer worth storing as a daily flag."
+  },
+  {
+   "id": "contingency-gadgets",
+   "reason": "The daily-preparations act is deliberately NOT choosing (leaving a gadget undeclared); the actual gadget is named later in play via an Interact action, so there is no answer at prep time, and gadget preparation itself is normal prep."
+  },
+  {
+   "id": "ubiquitous-overdrive",
+   "reason": "The thing chosen is a set of other party members, which the app has no roster to enumerate, and ally-targeted picks were deferred at the user's request."
+  },
+  {
+   "id": "repurposed-parts",
+   "reason": "No choice is made during daily preparations — the phrase only points at snares already prepared (normal snare prep), and the substitute snare is picked on the fly in play."
+  },
+  {
+   "id": "eclectic-polymath",
+   "reason": "It only changes how the Esoteric Polymath pick carries over; the answer is a permanent repertoire swap (a spell you lose access to), which lives in the repertoire itself rather than as separate per-day state."
+  },
+  {
+   "id": "unlimited-pluripotency",
+   "reason": "Swapping which surki heritage (and its evolution) you have is a build-level re-selection the builder already models, not a discrete per-day value stored alongside the build."
+  },
+  {
+   "id": "radiant-armament",
+   "reason": "This feat only adds runes to the option list of Blessed Armament's existing daily rune choice; the stored pick belongs to that feature, and the runes named here are only part of the legal list."
+  },
+  {
+   "id": "solid-lead",
+   "reason": "The solid lead is designated during play when you give up a lead; daily preparations only offer a keep-or-clear of that existing designation, not a morning pick with an enumerable answer."
+  },
+  {
+   "id": "student-of-the-dueling-arts",
+   "reason": "Swapping any number of duelist archetype feats is unbounded build retraining that the builder's feat selection already holds, with no single per-day answer to store."
+  },
+  {
+   "id": "acquired-tolerance",
+   "reason": "Daily preparations only mark when the poison lock resets; the poison type is fixed by which save you rerolled in play, not chosen in the morning."
+  },
+  {
+   "id": "pei-zing-adept",
+   "reason": "The recipients are allies rather than the character, and the feat only scales how many people an existing administer activity can reach; there is no enumerable thing the character stores for the day."
+  },
+  {
+   "id": "patron-reborn",
+   "reason": "The patron-type choice is a permanent build decision made when the feat is taken, and the daily-preparations clause only cross-references Witch's Charge selection rather than asking for a new morning choice."
+  },
+  {
+   "id": "chosen-ward",
+   "reason": "The thing chosen each day is an ally (a party member), not an enumerable game option the app can offer or resolve, and ally-target picks are out of scope."
+  },
+  {
+   "id": "bloc-tactics",
+   "reason": "The daily selection is a variable-sized set of other creatures to disguise, which is an ally/target choice with no enumerable answer for the character's own sheet."
+  },
+  {
+   "id": "acclimated-mount",
+   "reason": "The terrain is a one-off choice made when the feat is taken; daily preparations only let an expert in Survival re-pick it, so it belongs to the build (a feat choice), not to per-day state."
+  },
+  {
+   "id": "hydras-bond",
+   "reason": "The pick designates a level-scaled roster of OTHER willing creatures whose benefits accrue to those creatures — the ally/NPC-designation shape the owner explicitly deferred in work/choice-lane/DECISIONS.md §3 — and a 'half your level' count can't be expressed as a fixed picks value."
+  },
+  {
+   "id": "advanced-runic-mind-smithing",
+   "reason": "It only widens the option list of the already-wired daily pick on runic-mind-smithing (flag `mindWeaponRune`) and adds a mid-day 10-minute swap, so a second picker would ask the same morning question twice; the correct fix is to extend runic-mind-smithing's options with the greater runes plus holy/unholy at 16th level."
+  },
+  {
+   "id": "infinite-invention",
+   "reason": "It merely lets build decisions already stored on the character (innovation type, modifications, offensive boost) be changed daily and auto-repairs the innovation; there is no extra per-day answer to store."
+  },
+  {
+   "id": "reflow-elements",
+   "reason": "This is free daily retraining of an impulse feat — the answer lives in the character's stored feat selections, so a separate daily flag would record a swap that never actually takes effect."
+  },
+  {
+   "id": "apparition-attunement",
+   "reason": "The app already models attunement as a build multi-pick (classes.animist.extraChoices 'apparition', pickByLevel {1:2,7:3,15:4}) plus build.primaryApparition, because the picks drive the apparition spell repertoire and Lore skills; a daily picker would be inert and duplicate it."
+  },
+  {
+   "id": "third-apparition",
+   "reason": "It only raises the number of apparitions chosen by Apparition Attunement (already handled by pickByLevel 7:3 in the animist extraChoices group); it adds no separate stored answer."
+  },
+  {
+   "id": "fourth-apparition",
+   "reason": "Same as Third Apparition — a count modifier on the existing Apparition Attunement build pick (pickByLevel 15:4), not a distinct daily choice."
+  },
+  {
+   "id": "mutagenic-flashback",
+   "reason": "The mutagen is picked at the moment the once-per-day ability is used, not during daily preparations; \"since your last daily preparations\" only bounds the eligible window."
+  }
+ ]
+}

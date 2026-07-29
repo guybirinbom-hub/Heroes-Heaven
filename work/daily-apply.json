@@ -1,0 +1,856 @@
+[
+ {
+  "id": "heaven-earth-encompassing-sleeves",
+  "collection": "feats",
+  "def": {
+   "flag": "storageLocation",
+   "prompt": "Store items in the sleeves or the train?",
+   "kind": "array",
+   "options": [
+    {
+     "value": "sleeves",
+     "label": "Sleeves"
+    },
+    {
+     "value": "train",
+     "label": "Train"
+    }
+   ],
+   "note": "The same daily preparations also pick WHICH suit of fine clothing is enchanted (Hardness +level, HP +2x level, ends if a new set is prepared); only the storage location is a closed list, so the garment itself is left unwired.",
+   "daily": true
+  },
+  "src": "confirmed"
+ },
+ {
+  "id": "spirit-familiar-animist",
+  "collection": "feats",
+  "def": {
+   "flag": "familiarApparition",
+   "prompt": "Which apparition manifests as your familiar?",
+   "kind": "text",
+   "note": "The legal answers are the apparitions attuned this morning; there is no apparition filter available in `from`, so this is free text. Leave blank on days you don't manifest a familiar.",
+   "daily": true
+  },
+  "src": "confirmed"
+ },
+ {
+  "id": "claim-cardinal-domains",
+  "collection": "feats",
+  "def": {
+   "flag": "activeDomain",
+   "prompt": "Which claimed domain is active today?",
+   "kind": "text",
+   "note": "Legal answers are the domains this character has claimed (up to four); no domain filter exists in `from`, so this is free text. A Mythic Point can switch the active domain mid-day, and the retained domain after an overcharge lasts until the next daily preparations.",
+   "daily": true
+  },
+  "src": "confirmed"
+ },
+ {
+  "id": "orichalcum-bond",
+  "collection": "feats",
+  "def": {
+   "flag": "bondedRune",
+   "prompt": "Which property rune does your bond add?",
+   "kind": "text",
+   "note": "Any common weapon property rune of your level or lower (or one you have access to) — it need NOT be a rune you own, and `from` has no rune content filter, so this is free text; it counts against the weapon's property rune limit.",
+   "daily": true
+  },
+  "src": "confirmed"
+ },
+ {
+  "id": "blessed-armament",
+  "collection": "classFeatures",
+  "def": {
+   "flag": "blessedRune",
+   "prompt": "Blessed Armament property rune?",
+   "kind": "array",
+   "options": [
+    {
+     "value": "fearsome",
+     "label": "Fearsome"
+    },
+    {
+     "value": "ghost-touch",
+     "label": "Ghost Touch"
+    },
+    {
+     "value": "returning",
+     "label": "Returning"
+    },
+    {
+     "value": "shifting",
+     "label": "Shifting"
+    },
+    {
+     "value": "vitalizing",
+     "label": "Vitalizing"
+    }
+   ],
+   "note": "You can also move the spirit to a different weapon or handwraps during daily preparations.",
+   "daily": true
+  },
+  "src": "confirmed"
+ },
+ {
+  "id": "pelt-of-the-beast",
+  "collection": "classFeatures",
+  "def": {
+   "flag": "peltDamageType",
+   "prompt": "Pelt attuned damage type?",
+   "kind": "array",
+   "options": [
+    {
+     "value": "cold",
+     "label": "Cold"
+    },
+    {
+     "value": "electricity",
+     "label": "Electricity"
+    },
+    {
+     "value": "fire",
+     "label": "Fire"
+    },
+    {
+     "value": "poison",
+     "label": "Poison"
+    },
+    {
+     "value": "sonic",
+     "label": "Sonic"
+    }
+   ],
+   "daily": true
+  },
+  "src": "confirmed"
+ },
+ {
+  "id": "library-robes-true",
+  "collection": "items",
+  "def": {
+   "flag": "inscribedSpell",
+   "prompt": "Spell inscribed on the robes?",
+   "kind": "open",
+   "from": {
+    "type": "own-spell",
+    "maxRank": 9
+   },
+   "note": "Using this ability erases any scroll already inscribed on the robe.",
+   "daily": true
+  },
+  "src": "confirmed"
+ },
+ {
+  "id": "the-queen-mother",
+  "collection": "items",
+  "def": {
+   "flag": "queenMotherLore",
+   "prompt": "Lore skill granted by The Queen Mother?",
+   "kind": "text",
+   "note": "Must be a Lore skill in which you have no proficiency.",
+   "daily": true
+  },
+  "src": "confirmed"
+ },
+ {
+  "id": "universal-versatility",
+  "def": {
+   "flag": "schoolSpell",
+   "prompt": "Which school spell today?",
+   "kind": "array",
+   "daily": true,
+   "options": [
+    {
+     "value": "protective-wards",
+     "label": "Abjuration — Protective Wards"
+    },
+    {
+     "value": "fortify-summoning",
+     "label": "Conjuration — Fortify Summoning"
+    },
+    {
+     "value": "diviners-sight",
+     "label": "Divination — Diviner's Sight"
+    },
+    {
+     "value": "charming-push",
+     "label": "Enchantment — Charming Push"
+    },
+    {
+     "value": "force-bolt",
+     "label": "Evocation — Force Bolt"
+    },
+    {
+     "value": "warped-terrain",
+     "label": "Illusion — Warped Terrain"
+    },
+    {
+     "value": "call-of-the-grave",
+     "label": "Necromancy — Call of the Grave"
+    },
+    {
+     "value": "physical-boost",
+     "label": "Transmutation — Physical Boost"
+    }
+   ],
+   "note": "Usable until your next daily preparations; when you Refocus you can switch to a different one of the eight."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "armor-rune-shifter",
+  "def": {
+   "flag": "shiftedArmorRune",
+   "prompt": "Shift an armor rune into which rune?",
+   "kind": "array",
+   "daily": true,
+   "options": [
+    {
+     "value": "energy-resistant",
+     "label": "Energy-Resistant"
+    },
+    {
+     "value": "fortification",
+     "label": "Fortification"
+    },
+    {
+     "value": "raiment",
+     "label": "Raiment"
+    },
+    {
+     "value": "invisibility",
+     "label": "Invisibility"
+    },
+    {
+     "value": "shadow",
+     "label": "Shadow"
+    },
+    {
+     "value": "slick",
+     "label": "Slick"
+    }
+   ],
+   "note": "Suppresses one existing property rune on a suit of armor you carry until your next daily preparations; the armor must meet the temporary rune's prerequisites, and any rune that required the suppressed one is suppressed too."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "weapon-rune-shifter",
+  "def": {
+   "flag": "shiftedWeaponRune",
+   "prompt": "Shift a weapon rune into which rune?",
+   "kind": "array",
+   "daily": true,
+   "options": [
+    {
+     "value": "corrosive",
+     "label": "Corrosive"
+    },
+    {
+     "value": "flaming",
+     "label": "Flaming"
+    },
+    {
+     "value": "frost",
+     "label": "Frost"
+    },
+    {
+     "value": "ghost-touch",
+     "label": "Ghost Touch"
+    },
+    {
+     "value": "grievous",
+     "label": "Grievous"
+    },
+    {
+     "value": "returning",
+     "label": "Returning"
+    },
+    {
+     "value": "shock",
+     "label": "Shock"
+    },
+    {
+     "value": "thundering",
+     "label": "Thundering"
+    },
+    {
+     "value": "wounding",
+     "label": "Wounding"
+    }
+   ],
+   "note": "Suppresses one existing property rune on a weapon you carry until your next daily preparations; the weapon must meet the temporary rune's prerequisites, and any rune that required the suppressed one is suppressed too."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "bloodline-metamorphosis",
+  "def": {
+   "flag": "swappedSpell",
+   "prompt": "Which repertoire spell do you swap out today?",
+   "kind": "open",
+   "daily": true,
+   "from": {
+    "type": "own-spell",
+    "maxRank": 9
+   },
+   "note": "Until your next daily preparations it is replaced by another spell of the same rank from your tradition, which you track yourself. Spells granted specifically by your bloodline can't be swapped out."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "westyrs-wayfinder-repository",
+  "def": {
+   "flag": "storedSpell",
+   "prompt": "Which 1st-rank spell fills your wayfinder?",
+   "kind": "open",
+   "daily": true,
+   "from": {
+    "type": "own-spell",
+    "rank": 1
+   },
+   "note": "Cast it from the wayfinder using the spell's normal actions; once expended it can't be restocked until your next daily preparations."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "fused-staff",
+  "def": {
+   "flag": "fusedWeapon",
+   "prompt": "Which weapon is your staff fused into?",
+   "kind": "open",
+   "daily": true,
+   "from": {
+    "type": "own-item",
+    "itemType": "weapon"
+   },
+   "note": "The fusion lasts until your next daily preparations, though you can spend 10 minutes to meld the staff into a different weapon. The pair shares whichever weapon potency and striking rune is higher level. Staves are stored as weapons here, so choose the weapon, not the staff."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "flexible-transmogrification",
+  "def": {
+   "flag": "eidolonEvolutionFeat",
+   "prompt": "Which evolution feat for your eidolon?",
+   "kind": "open",
+   "daily": true,
+   "from": {
+    "type": "feat",
+    "maxLevel": 6,
+    "traits": [
+     "evolution"
+    ]
+   },
+   "note": "Your eidolon gains the chosen evolution feat until your next daily preparations."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "beast-gunner-dedication",
+  "def": {
+   "flag": "bondedBeastGun",
+   "prompt": "Bonded beast gun today (one you've performed a ritual hunt with)",
+   "kind": "text",
+   "daily": true,
+   "note": "Must be a beast gun you own and have previously performed a ritual hunt with. Recorded as free text because no beast gun items exist in the app's data, same as Call Gun's bonded weapon."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "illusory-identity",
+  "def": {
+   "flag": "investedIdentityItem",
+   "prompt": "Which blank item did you invest?",
+   "kind": "text",
+   "daily": true,
+   "note": "A blank paper, journal, badge, or similar item used to display authority. Only works while you hold it."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "elemental-familiar-kineticist",
+  "def": {
+   "flag": "familiarElement",
+   "prompt": "Familiar's element today (only an element of your own kinetic gate)",
+   "kind": "array",
+   "daily": true,
+   "options": [
+    {
+     "value": "air",
+     "label": "Air"
+    },
+    {
+     "value": "earth",
+     "label": "Earth"
+    },
+    {
+     "value": "fire",
+     "label": "Fire"
+    },
+    {
+     "value": "metal",
+     "label": "Metal"
+    },
+    {
+     "value": "water",
+     "label": "Water"
+    },
+    {
+     "value": "wood",
+     "label": "Wood"
+    }
+   ],
+   "note": "You can only change the familiar's element if you have more than one kinetic element, and only to an element of your own kinetic gate — the list is not filtered to your gate."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "esoteric-polymath",
+  "def": {
+   "flag": "polymathSpell",
+   "prompt": "Today's spell from your book of occult spells",
+   "kind": "text",
+   "daily": true,
+   "note": "Any one spell written in your book of occult spells (your repertoire plus spells you've Learned with Occultism). Already in your repertoire = an extra signature spell today; otherwise treat it as in your repertoire until your next daily preparations. The app doesn't model the occult book, so the spell is recorded by name."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "witchs-charge",
+  "def": {
+   "flag": "witchsCharge",
+   "prompt": "Who is your charge today?",
+   "kind": "text",
+   "daily": true,
+   "note": "The link — awareness of the creature and 30-foot touch-range spellcasting — lasts until your next daily preparations. Leave a dash if you don't designate one today."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "paradoxical-mystery",
+  "def": {
+   "flag": "paradoxicalMysterySpell",
+   "prompt": "Revelation spell for today?",
+   "kind": "open",
+   "daily": true,
+   "from": {
+    "type": "spell",
+    "traits": [
+     "focus"
+    ],
+    "anyTraits": [
+     "cleric",
+     "oracle"
+    ]
+   },
+   "note": "Domain spells and revelation spells are both listed. Pick a basic or advanced domain spell from a domain you have access to, or an initial or advanced revelation spell from a mystery OTHER than your own — the app can't check domain access or which mystery is yours."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "food-preservation",
+  "def": {
+   "flag": "preservedFood",
+   "prompt": "Alchemical food to preserve?",
+   "kind": "text",
+   "daily": true,
+   "note": "Name the infused alchemical food you made with advanced alchemy; it won't expire at your next daily preparations. You can preserve 2 items if you're an expert in Crafting or Cooking Lore, 3 if master, 5 if legendary — list the extras here as well. Preserving a new item spoils the oldest."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "cutting-without-blade",
+  "def": {
+   "flag": "temporaryIkonFeat",
+   "prompt": "Which ikon feat do you gain today?",
+   "kind": "open",
+   "daily": true,
+   "from": {
+    "type": "feat",
+    "traits": [
+     "ikon"
+    ],
+    "maxLevel": 16
+   },
+   "note": "Any ikon feat of 16th level or lower, whether or not you already have it. You only gain its benefits if you meet its prerequisites — that is not checked here."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "unstable-patronage",
+  "def": {
+   "flag": "patronageSpell",
+   "prompt": "Which spell your familiar knows do you lend?",
+   "kind": "text",
+   "daily": true,
+   "note": "Any spell your familiar knows, of no higher a rank than the highest rank of spells you can cast −2. Which of your charges receives it is an ally choice and isn't tracked here."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "celestial-armaments",
+  "def": {
+   "flag": "blessedWeapon",
+   "prompt": "Which weapon carries your celestial blessing?",
+   "kind": "open",
+   "daily": true,
+   "from": {
+    "type": "own-item",
+    "itemType": "weapon"
+   },
+   "note": "Handwraps of Mighty Blows are listed here with your weapons. A pre-statted handwraps bundle (+1 striking and the like) is recorded as worn equipment and won't appear — select the plain Handwraps you etch your runes onto."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "harbingers-armament",
+  "def": {
+   "flag": "harbingerRune",
+   "prompt": "Rune today (on one weapon or handwraps you choose)",
+   "kind": "array",
+   "daily": true,
+   "options": [
+    {
+     "value": "fearsome",
+     "label": "Fearsome"
+    },
+    {
+     "value": "ghost-touch",
+     "label": "Ghost Touch"
+    },
+    {
+     "value": "returning",
+     "label": "Returning"
+    },
+    {
+     "value": "shifting",
+     "label": "Shifting"
+    },
+    {
+     "value": "vitalizing",
+     "label": "Vitalizing"
+    }
+   ],
+   "note": "The rune lasts 24 hours or until your next daily preparations and doesn't count against the weapon's maximum rune count."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "demon-hunter",
+  "def": {
+   "flag": "huntedDemon",
+   "prompt": "Kind of demon hunted today",
+   "kind": "text",
+   "daily": true,
+   "note": "Any specific demon (succubus, omox, shemhazian, Treerazer...). The first melee Strike that hits one of them each round deals +1d6 spirit damage (2d6 at 13th, 3d6 at 17th)."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "bodyguard",
+  "def": {
+   "flag": "bodyguardCharge",
+   "prompt": "Your charge today",
+   "kind": "text",
+   "daily": true,
+   "note": "Name the ally you've sworn to protect; your Taunt penalty against enemies rises to -2 for your charge. You can take 10 minutes to change your charge before your next daily preparations."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "autonomous-arms",
+  "def": {
+   "flag": "autonomousWeapon",
+   "prompt": "Spear or polearm infused today",
+   "kind": "open",
+   "daily": true,
+   "from": {
+    "type": "own-item",
+    "itemType": "weapon"
+   },
+   "note": "The list shows every weapon you carry - choose a spear or polearm. It gains the animated rune, which doesn't count against its maximum property runes."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "warshard-warrior-dedication",
+  "def": {
+   "flag": "warshardWeapon",
+   "prompt": "Warshard weapon today (expert proficiency; not intelligent or an artifact)",
+   "kind": "open",
+   "daily": true,
+   "from": {
+    "type": "own-item",
+    "itemType": "weapon"
+   },
+   "note": "The list shows every weapon you carry; the proficiency and intelligent/artifact limits aren't checked here. Only one warshard weapon at a time."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "transmute-weapon",
+  "def": {
+   "flag": "warshardMaterial",
+   "prompt": "Warshard material today (type none to skip)",
+   "kind": "text",
+   "daily": true,
+   "note": "Optional. The material and its grade must be your level or lower; standard grade needs a level 9+ weapon, high grade a level 15+ weapon."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "warshard-rune",
+  "def": {
+   "flag": "warshardRune",
+   "prompt": "Extra warshard rune today (common, your level or lower; type none to skip)",
+   "kind": "text",
+   "daily": true,
+   "note": "Typed by hand - the app has no list of weapon property runes to pick from. The rune ignores the weapon's maximum property runes, and is dormant unless you wield your warshard weapon with at least 1 unspent Mythic Point."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "mind-smith-dedication",
+  "def": {
+   "flag": "mindWeaponDamage",
+   "prompt": "Mind weapon damage today",
+   "kind": "array",
+   "daily": true,
+   "options": [
+    {
+     "value": "bludgeoning",
+     "label": "Bludgeoning (club group)",
+     "description": "Your mind weapon deals bludgeoning damage and is in the club weapon group."
+    },
+    {
+     "value": "piercing",
+     "label": "Piercing (spear group)",
+     "description": "Your mind weapon deals piercing damage and is in the spear weapon group."
+    },
+    {
+     "value": "slashing",
+     "label": "Slashing (sword group)",
+     "description": "Your mind weapon deals slashing damage and is in the sword weapon group."
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "malleable-mental-forge",
+  "def": {
+   "flag": "mindWeaponTraits",
+   "prompt": "Mind weapon traits today",
+   "kind": "array",
+   "daily": true,
+   "picks": 2,
+   "distinct": true,
+   "note": "Options are Mental Forge's list; today's two replace the pair chosen for Mental Forge.",
+   "options": [
+    {
+     "value": "grapple",
+     "label": "Grapple"
+    },
+    {
+     "value": "modular",
+     "label": "Modular (B, P, or S)"
+    },
+    {
+     "value": "nonlethal",
+     "label": "Nonlethal"
+    },
+    {
+     "value": "shove",
+     "label": "Shove"
+    },
+    {
+     "value": "trip",
+     "label": "Trip"
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "starstone-aspirant-dedication",
+  "def": {
+   "flag": "untrainedSkill",
+   "prompt": "Which skill you're UNTRAINED in today?",
+   "kind": "array",
+   "daily": true,
+   "note": "Legal only for a skill you're untrained in; the picker cannot filter by your proficiency, so it lists all 16 core skills (Lores are not offered). Grants trained-only skill actions plus +1 circumstance (+2 at 8th, +3 at 15th) until your next daily preparations.",
+   "options": [
+    {
+     "value": "acrobatics",
+     "label": "Acrobatics"
+    },
+    {
+     "value": "arcana",
+     "label": "Arcana"
+    },
+    {
+     "value": "athletics",
+     "label": "Athletics"
+    },
+    {
+     "value": "crafting",
+     "label": "Crafting"
+    },
+    {
+     "value": "deception",
+     "label": "Deception"
+    },
+    {
+     "value": "diplomacy",
+     "label": "Diplomacy"
+    },
+    {
+     "value": "intimidation",
+     "label": "Intimidation"
+    },
+    {
+     "value": "medicine",
+     "label": "Medicine"
+    },
+    {
+     "value": "nature",
+     "label": "Nature"
+    },
+    {
+     "value": "occultism",
+     "label": "Occultism"
+    },
+    {
+     "value": "performance",
+     "label": "Performance"
+    },
+    {
+     "value": "religion",
+     "label": "Religion"
+    },
+    {
+     "value": "society",
+     "label": "Society"
+    },
+    {
+     "value": "stealth",
+     "label": "Stealth"
+    },
+    {
+     "value": "survival",
+     "label": "Survival"
+    },
+    {
+     "value": "thievery",
+     "label": "Thievery"
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "viridian-crown",
+  "def": {
+   "flag": "crownAttribute",
+   "prompt": "Attribute the Viridian Crown increases today",
+   "kind": "array",
+   "daily": true,
+   "options": [
+    {
+     "value": "cha",
+     "label": "Charisma"
+    },
+    {
+     "value": "wis",
+     "label": "Wisdom"
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "fortune-cord",
+  "def": {
+   "flag": "loadedCoinType",
+   "prompt": "Coins loaded on the fortune cord today",
+   "kind": "array",
+   "daily": true,
+   "options": [
+    {
+     "value": "none",
+     "label": "None loaded",
+     "description": "You loaded no coins; neither activation is available until your next daily preparations."
+    },
+    {
+     "value": "copper",
+     "label": "Copper",
+     "description": "Merchant's Bludgeon gains the corrosive rune (requires at least 50 coins loaded); Fling Coins deals acid damage."
+    },
+    {
+     "value": "silver",
+     "label": "Silver",
+     "description": "Merchant's Bludgeon gains the shock rune (requires at least 50 coins loaded); Fling Coins deals electricity damage."
+    },
+    {
+     "value": "gold",
+     "label": "Gold",
+     "description": "Merchant's Bludgeon gains the flaming rune (requires at least 50 coins loaded); Fling Coins deals fire damage."
+    },
+    {
+     "value": "platinum",
+     "label": "Platinum",
+     "description": "Merchant's Bludgeon gains the frost rune (requires at least 50 coins loaded); Fling Coins deals cold damage."
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "runelord-researcher",
+  "def": {
+   "flag": "thassilonianSchool",
+   "prompt": "Thassilonian school focused on today (+1 status to saves, 8 hours)",
+   "kind": "array",
+   "daily": true,
+   "options": [
+    {
+     "value": "envy",
+     "label": "Envy",
+     "description": "Any effect with the incapacitation trait (+2 instead against foes higher level than you)."
+    },
+    {
+     "value": "gluttony",
+     "label": "Gluttony",
+     "description": "Death effects and void."
+    },
+    {
+     "value": "greed",
+     "label": "Greed",
+     "description": "Polymorph, and effects that can cause enfeebled, clumsy, or petrified."
+    },
+    {
+     "value": "lust",
+     "label": "Lust",
+     "description": "Emotion effects."
+    },
+    {
+     "value": "pride",
+     "label": "Pride",
+     "description": "Illusion effects."
+    },
+    {
+     "value": "sloth",
+     "label": "Sloth",
+     "description": "Effects that cause paralysis, slow, stun, or penalties to your Speed."
+    },
+    {
+     "value": "wrath",
+     "label": "Wrath",
+     "description": "Effects that deal one damage type of your choice: acid, cold, electricity, fire, or sonic."
+    }
+   ]
+  },
+  "src": "corrected"
+ }
+]
