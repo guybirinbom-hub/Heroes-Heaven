@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { content } from './_content';
+import { buildCharacter, emptyBuild } from '../src/rules/build';
 
 const c = content();
 
@@ -76,5 +77,33 @@ describe('innate spell grants', () => {
     ];
     for (const id of wired) expect(grantsInnate(c.feats[id]), `${id} grants nothing`).toBe(true);
     expect(grantsInnate(c.backgrounds['blight-survivor'])).toBe(true);
+  });
+});
+
+/**
+ * The data existing is not the same as the spell REACHING the character. These build a character and
+ * look for the spell in their innate entry — the only proof that the grant is wired end to end.
+ */
+describe('granted innate spells reach the character', () => {
+  const withFeat = (featId: string, level = 20) =>
+    buildCharacter(
+      { ...emptyBuild(), classId: 'fighter', subclassId: null, level, ancestryId: 'human', keyAbility: 'str', featPicks: { [`${level}:general:0`]: featId } },
+      c,
+    );
+
+  const innateIds = (ch: ReturnType<typeof buildCharacter>) =>
+    ch.spellcasting.filter((e) => e.type === 'innate').flatMap((e) => [...(e.cantrips ?? []), ...Object.values(e.repertoire ?? {}).flat()]);
+
+  it('More Real Than Real puts Fabricated Truth in the innate list', () => {
+    expect(innateIds(withFeat('more-real-than-real'))).toContain('fabricated-truth');
+  });
+
+  it('Fey Life puts Summon Fey there', () => {
+    expect(innateIds(withFeat('fey-life'))).toContain('summon-fey');
+  });
+
+  it('a character without the feat has neither', () => {
+    const plain = buildCharacter({ ...emptyBuild(), classId: 'fighter', level: 20, ancestryId: 'human', keyAbility: 'str' }, c);
+    expect(innateIds(plain)).not.toContain('fabricated-truth');
   });
 });
