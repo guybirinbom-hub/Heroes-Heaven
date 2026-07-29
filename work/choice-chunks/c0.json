@@ -1,0 +1,107 @@
+[
+ {
+  "collection": "feats",
+  "id": "wayfinder-resonance-tinkerer",
+  "name": "Wayfinder Resonance Tinkerer",
+  "level": 4,
+  "description": "You can use the unusual resonance of your *wayfinder* to grant it additional effects. Choose one cantrip from the arcane, divine, occult, or primal list. You can activate your *wayfinder* to cast that cantrip at will. As normal, this cantrip is heightened to a spell rank equal to half your level rounded up. Additionally, you can Activate your *wayfinder* with a ⟨1⟩ (envision) activation to transform it into a nondescript pin or brooch to hide your affiliation with the Pathfinder Society. This transformation lasts for 1 hour."
+ },
+ {
+  "collection": "feats",
+  "id": "secret-speech",
+  "name": "Secret Speech",
+  "level": 1,
+  "description": "Choose a secret society (such as the Lacunafex or the Bellflower Network). You've learned that society's secret cant or jargon, enabling you to share hidden messages when signing or speaking with others who've also learned it. If an observer succeeds at a Perception check against your Deception DC when you do this, they realize you are passing a message but fail to discern its content, unless they subsequently succeed at a Society check against your Deception DC. On a critical success, they learn not only the message, but also who you're passing the message to. **Special** You can take this feat multiple times. You learn the secret speech of a different society each time."
+ },
+ {
+  "collection": "feats",
+  "id": "spell-mastery",
+  "name": "Spell Mastery",
+  "level": 20,
+  "description": "You have mastered a handful of spells to such a degree that you can cast them even if you haven't prepared them in advance. Select any four spells of 9th rank or lower that are in your spellbook; each spell you select must be of a different rank. These spells are automatically prepared when you make your daily preparations, and you gain an extra spell slot for each spell. You can select a different combination of spells by spending 1 week of downtime studying your spellbook and retraining your mastered spells."
+ },
+ {
+  "collection": "feats",
+  "id": "syncretism",
+  "name": "Syncretism",
+  "level": 1,
+  "description": "You have come to see the overlap between two deities' teachings. Choose a second deity. You must meet their alignment requirements, and you are subject to their edicts and anathema. If you are a cloistered cleric, select one of that deity's domains, gaining the benefits of the Expanded Domain Initiate feat with that domain. If you are a warpriest, you gain the favored weapon of that deity as a second favored weapon, and it gains the benefits of feats and abilities you have that affect your deity's favored weapon, such as Deadly Simplicity. If you have a different doctrine than cloistered cleric or warpriest, either apply whichever of the above options is most appropriate for your doctrine, or, at the GM's discretion, add a benefit from the second deity more closely tied to your doctrine."
+ },
+ {
+  "collection": "feats",
+  "id": "divine-access",
+  "name": "Divine Access",
+  "level": 4,
+  "description": "Divine Access Source Advanced Player's Guide pg. 79 Your ability to tap into divine magic surpasses the spells traditionally available to you (the divine spell list). Choose one deity who grants one of your mystery's granted domains. Add up to three cleric spells of your choice granted by that deity to your spell list. You can select from these spells when you add or swap spells in your spell repertoire. Special You can select this feat more than once. You can't choose the same spells more than once, but you can choose a different domain or a different deity with the same domain you've previously selected with this feat."
+ },
+ {
+  "collection": "feats",
+  "id": "ancestral-weaponry",
+  "name": "Ancestral Weaponry",
+  "level": 2,
+  "description": "You blend monastic techniques with the ancestral fighting styles of your people. Choose an ancestry for which you have access to all weapons with that trait. For you, melee weapons with that ancestry trait and either the agile or finesse trait gain the monk trait."
+ },
+ {
+  "collection": "feats",
+  "id": "jalmeri-heavenseeker-dedication",
+  "name": "Jalmeri Heavenseeker Dedication",
+  "level": 4,
+  "description": "You become trained in either Acrobatics or Occultism; if you were already trained in both these skills, you become an expert in one of them instead. You gain the Qi Spells monk feat, which grants you a qi spell and a focus pool of 1 Focus Point that you can recover using the Refocus activity as a monk does. If you already have the Qi Spells feat, you can instead choose a single 1st‐level monk feat. --- **Special** You can't select another dedication feat until you gain two other feats from the or archetypes."
+ },
+ {
+  "collection": "feats",
+  "id": "eldritch-researcher-dedication",
+  "name": "Eldritch Researcher Dedication",
+  "level": 2,
+  "description": "You gain the ability to cast a single arcane or occult cantrip of your choice (which is heightened to a spell rank equal to half your level rounded up). If you weren't already, you become trained in that tradition's spell DCs and spell attack rolls with Intelligence as your spellcasting ability. Regardless of whether you choose an arcane or occult cantrip, you also become an expert in your choice of either Arcana or Occultism. You also gain a +1 circumstance bonus to checks you attempt with the chosen skill when Investigating or Identifying Magic."
+ },
+ {
+  "collection": "feats",
+  "id": "standby-spell",
+  "name": "Standby Spell",
+  "level": 8,
+  "description": "You've honed one spell as your favored combat technique, and you've practiced it enough that you no longer need to prepare it to cast it. Choose a spell in your spellbook that you could use with Spellstrike and that has a level no higher than the highest-level magus spell slot you have. You can Cast this Spell without having it prepared ahead of time by expending a spell slot of a sufficient level to cast your chosen spell. You can change this spell whenever you add new spells to your spellbook, or by studying your spellbook for 1 hour."
+ },
+ {
+  "collection": "feats",
+  "id": "advanced-weaponry",
+  "name": "Advanced Weaponry",
+  "level": 1,
+  "description": "Your eidolon's attack evolves. Choose one of your eidolon's starting melee unarmed attacks. It gains one of the following traits, chosen when you gain the feat: disarm, grapple, nonlethal, shove, trip, or versatile bludgeoning, piercing, or slashing."
+ },
+ {
+  "collection": "feats",
+  "id": "dual-studies",
+  "name": "Dual Studies",
+  "level": 1,
+  "description": "You and your eidolon have some skills you practice on your own. Choose two skills. Your eidolon becomes trained in one of those skills and you become trained in the other skill. At 7th level, you each become an expert in the chosen skills. These skill proficiencies are not shared between you and your eidolon."
+ },
+ {
+  "collection": "feats",
+  "id": "eidolons-wrath",
+  "name": "Eidolon's Wrath",
+  "level": 6,
+  "description": "Your eidolon gains the Eidolon's Wrath focus spell, which it casts, instead of you. You determine the damage type when you gain the feat: acid, cold, electricity, fire, sonic, vitality, or void. If your eidolon is a celestial, fiend, or monitor with an alignment other than true neutral, you can choose a damage type in its alignment. Increase the number of Focus Points in your focus pool by 1. As normal, your eidolon shares your Focus Points."
+ },
+ {
+  "collection": "feats",
+  "id": "magical-adept",
+  "name": "Magical Adept",
+  "level": 8,
+  "description": "Your eidolon gains more magic. Choose one 2nd-rank spell and one 1st-rank spell of your eidolon's tradition. Your eidolon can cast them each once per day as innate spells. At every even level after you take this feat, your eidolon can swap one of these innate spells for a new innate spell that's 2 or more levels lower than your highest-rank spell slot."
+ },
+ {
+  "collection": "feats",
+  "id": "grasping-limbs",
+  "name": "Grasping Limbs",
+  "level": 12,
+  "description": "Your eidolon grabs enemies. Choose one of the eidolon's unarmed attacks with the grapple trait. It gains the Grab action on that unarmed attack."
+ },
+ {
+  "collection": "feats",
+  "id": "magical-master",
+  "name": "Magical Master",
+  "level": 18,
+  "description": "Your eidolon gains a bevy of lower-rank spells. Choose an innate spell of your eidolon's tradition of each of the spell ranks from 1 to 7 in which your eidolon doesn't currently have an innate spell from Magical Adept. Your eidolon can cast each once per day as innate spells. You can swap these spells at every even level, but your eidolon can never know more than one spell of each spell rank 1 through 7"
+ }
+]

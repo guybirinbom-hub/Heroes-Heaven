@@ -1,0 +1,2122 @@
+[
+ {
+  "collection": "feats",
+  "id": "wayfinder-resonance-tinkerer",
+  "name": "Wayfinder Resonance Tinkerer",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "secret-speech",
+  "name": "Secret Speech",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "spell-mastery",
+  "name": "Spell Mastery",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "syncretism",
+  "name": "Syncretism",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "divine-access",
+  "name": "Divine Access",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "ancestral-weaponry",
+  "name": "Ancestral Weaponry",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "jalmeri-heavenseeker-dedication",
+  "name": "Jalmeri Heavenseeker Dedication",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "eldritch-researcher-dedication",
+  "name": "Eldritch Researcher Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "standby-spell",
+  "name": "Standby Spell",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "advanced-weaponry",
+  "name": "Advanced Weaponry",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "dual-studies",
+  "name": "Dual Studies",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "eidolons-wrath",
+  "name": "Eidolon's Wrath",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "magical-adept",
+  "name": "Magical Adept",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "grasping-limbs",
+  "name": "Grasping Limbs",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "magical-master",
+  "name": "Magical Master",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "summoner-dedication",
+  "name": "Summoner Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "shadow-reservoir",
+  "name": "Shadow Reservoir",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "dual-form-weapon",
+  "name": "Dual-Form Weapon",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "vehicle-mechanic-dedication",
+  "name": "Vehicle Mechanic Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "sniping-duo-dedication",
+  "name": "Sniping Duo Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "captivator-dedication",
+  "name": "Captivator Dedication",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "basic-captivator-spellcasting",
+  "name": "Basic Captivator Spellcasting",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "heightened-captivation",
+  "name": "Heightened Captivation",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "spell-trickster-dedication",
+  "name": "Spell Trickster Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "irezoko-tattoo",
+  "name": "Irezoko Tattoo",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "adapted-cantrip",
+  "name": "Adapted Cantrip",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "unconventional-weaponry",
+  "name": "Unconventional Weaponry",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "adaptive-adept",
+  "name": "Adaptive Adept",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "scion-of-many-planes",
+  "name": "Scion of Many Planes",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "elf-atavism",
+  "name": "Elf Atavism",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "rites-of-convocation",
+  "name": "Rites of Convocation",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "split-slot",
+  "name": "Split Slot",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "cleric-dedication",
+  "name": "Cleric Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "witch-dedication",
+  "name": "Witch Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "companion",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "additional-lore",
+  "name": "Additional Lore",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "adopted-ancestry",
+  "name": "Adopted Ancestry",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "pet",
+  "name": "Pet",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "companion",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "improbable-elixirs",
+  "name": "Improbable Elixirs",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "diverse-mystery",
+  "name": "Diverse Mystery",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "greater-crossblooded-evolution",
+  "name": "Greater Crossblooded Evolution",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "bloodline-mutation",
+  "name": "Bloodline Mutation",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "settlement-scholastics",
+  "name": "Settlement Scholastics",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "cavalier-dedication",
+  "name": "Cavalier Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "companion",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "eldritch-archer-dedication",
+  "name": "Eldritch Archer Dedication",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "magic-ammunition",
+  "name": "Magic Ammunition",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "terrain-scout",
+  "name": "Terrain Scout",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "samsaran-weapon-memory",
+  "name": "Samsaran Weapon Memory",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "inherit-the-dreaming-heirloom",
+  "name": "Inherit the Dreaming Heirloom",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "natural-mutagen",
+  "name": "Natural Mutagen",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "signature-weapon",
+  "name": "Signature Weapon",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "relinquish-control",
+  "name": "Relinquish Control",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "animist-dedication",
+  "name": "Animist Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "patron-reborn",
+  "name": "Patron Reborn",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "defense",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "mythic-magic",
+  "name": "Mythic Magic",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "marshall-fiendish-forces",
+  "name": "Marshall Fiendish Forces",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "beast-lord-dedication",
+  "name": "Beast Lord Dedication",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "gird-champion",
+  "name": "Gird Champion",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "sanctified-relic",
+  "name": "Sanctified Relic",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "assume-godhood",
+  "name": "Assume Godhood",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "expanded-domain-initiate",
+  "name": "Expanded Domain Initiate",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "free-heart",
+  "name": "Free Heart",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "peerless-mascot-companion",
+  "name": "Peerless Mascot Companion",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "awakened-power",
+  "name": "Awakened Power",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "greater-awakened-power",
+  "name": "Greater Awakened Power",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "draconic-acolyte-dedication",
+  "name": "Draconic Acolyte Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "expert-skysage-divination",
+  "name": "Expert Skysage Divination",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "master-skysage-divination",
+  "name": "Master Skysage Divination",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "psychic-dedication",
+  "name": "Psychic Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "echo-of-the-fallen",
+  "name": "Echo of the Fallen",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "talons-mark",
+  "name": "Talon's Mark",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "breakthrough-innovation",
+  "name": "Breakthrough Innovation",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "blessing-of-the-devoted",
+  "name": "Blessing of the Devoted",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "divine-access",
+  "name": "Divine Access",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "implement-adept",
+  "name": "Implement Adept",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "implement-paragon",
+  "name": "Implement Paragon",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "adept-benefit-wand",
+  "name": "Adept Benefit (Wand)",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "armor-innovation",
+  "name": "Armor Innovation",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "construct-eidolon",
+  "name": "Construct Eidolon",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "demon-eidolon",
+  "name": "Demon Eidolon",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "dragon-deviant-classification",
+  "name": "Dragon Deviant Classification",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "dragon-instinct",
+  "name": "Dragon Instinct",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "eldritch-trickster",
+  "name": "Eldritch Trickster",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "elemental-magic",
+  "name": "Elemental Magic",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "elemental-school",
+  "name": "Elemental School",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "light-mortar-innovation",
+  "name": "Light Mortar Innovation",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "medium",
+  "name": "Medium",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-infusions-bomber",
+  "name": "Perpetual Infusions (Bomber)",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-infusions-chirurgeon",
+  "name": "Perpetual Infusions (Chirurgeon)",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-infusions-mutagenist",
+  "name": "Perpetual Infusions (Mutagenist)",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-infusions-toxicologist",
+  "name": "Perpetual Infusions (Toxicologist)",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-bomber",
+  "name": "Perpetual Perfection (Bomber)",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-chirurgeon",
+  "name": "Perpetual Perfection (Chirurgeon)",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-mutagenist",
+  "name": "Perpetual Perfection (Mutagenist)",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-toxicologist",
+  "name": "Perpetual Perfection (Toxicologist)",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-bomber",
+  "name": "Perpetual Potency (Bomber)",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-chirurgeon",
+  "name": "Perpetual Potency (Chirurgeon)",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-mutagenist",
+  "name": "Perpetual Potency (Mutagenist)",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-toxicologist",
+  "name": "Perpetual Potency (Toxicologist)",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "weapon-innovation",
+  "name": "Weapon Innovation",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "shield-augmentation",
+  "name": "Shield Augmentation",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "ancestral-embrace",
+  "name": "Ancestral Embrace",
+  "level": 26,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo",
+  "name": "Faith Tattoo",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo-greater",
+  "name": "Faith Tattoo (Greater)",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo-major",
+  "name": "Faith Tattoo (Major)",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo-true",
+  "name": "Faith Tattoo (True)",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "possibility-tome",
+  "name": "Possibility Tome",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "storied-skin",
+  "name": "Storied Skin",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "ancestors-call",
+  "name": "Ancestors' Call",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-ancestors-call",
+  "name": "Ancestors' Call",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "beastkin",
+  "name": "Beastkin",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "adaptive-anadi",
+  "name": "Adaptive Anadi",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "versatile-human",
+  "name": "Versatile Human",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "born-of-item",
+  "name": "Born of Item",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "magical-experiment",
+  "name": "Magical Experiment",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "deities",
+  "id": "lurlup",
+  "name": "Lurlup",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ }
+]

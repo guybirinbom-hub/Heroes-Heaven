@@ -1,0 +1,107 @@
+[
+ {
+  "collection": "feats",
+  "id": "free-heart",
+  "name": "Free Heart",
+  "level": 1,
+  "description": "You follow all your passions, unlimited in creativity and zeal. Choose a common background that relates to a passion you've pursued; you're trained in the skills and gain the skill feat associated with that background in addition to those in your normal background. As usual for backgrounds, if you would gain the trained proficiency rank for one of these skill from your class at 1st level, you instead become trained in another skill of your choice."
+ },
+ {
+  "collection": "feats",
+  "id": "peerless-mascot-companion",
+  "name": "Peerless Mascot Companion",
+  "level": 16,
+  "description": "As veterans of countless battles, you and your companion share an indomitable strength. The companion you gained with Commander's Companion is now a specialized animal companion. You can select one of the usual specializations or the peerless mascot specialization. A commander's companion with the peerless mascot specialization gains the following benefits. - It gains a 30-foot aura that grants the same benefits as your banner, effectively acting as a second banner. If you have your actual banner affixed to your companion, the aura is a single 60-foot aura (this includes the increased aura benefit from Battle-Tested Companion). If you later gain the Glorious Banner feat, your banner has a 100-foot aura while it is affixed to your peerless mascot companion. - It gains the beast trait. - Its Intelligence modifier increases by 2 and its Wisdom modifier increases by 1. - It is an expert in Warfare Lore. - It can speak one language that you also speak (chosen at the time you gain this feat). - Its maximum Hit Points increase by 20, increasing to 25 at 18th level, and 30 at 20th level. - Its mastery of all kinds of battlefields grants it a climb Speed and swim Speed equal to its land Speed; if it already had a Speed that was greater than its land Speed, then it has a climb Speed, swim Speed, and land Speed that are all equal to the highest Speed it has."
+ },
+ {
+  "collection": "feats",
+  "id": "awakened-power",
+  "name": "Awakened Power",
+  "level": 4,
+  "description": "Your power spontaneously evolves or reconfigures itself. You gain one awakening benefit for a deviant feat of 4th level or lower. --- **Special** You can take this feat multiple times. Each time you do, choose a different deviant feat of 4th level or lower, and gain one of its awakening benefits."
+ },
+ {
+  "collection": "feats",
+  "id": "greater-awakened-power",
+  "name": "Greater Awakened Power",
+  "level": 10,
+  "description": "Your power undergoes yet another awakening. You gain one awakening benefit for a deviant feat of 10th level or lower. --- **Special** You can take this feat multiple times. Each time you do, choose a different deviant feat of 10th level or lower, and gain one of its awakening benefits."
+ },
+ {
+  "collection": "feats",
+  "id": "draconic-acolyte-dedication",
+  "name": "Draconic Acolyte Dedication",
+  "level": 2,
+  "description": "As an acolyte of dragonkind, you have an item known as a draconic gift that you can use to summon a portion of the magical essence of the dragon you received it from. Choose a with a trait that matches the trained skill you used to qualify for this feat (arcane for Arcana, primal for Nature, occult for Occultism, and divine for Religion). You can't change your draconic benefactor later. You gain the Additional Lore feat for Dragon Lore. If you were already trained in Dragon Lore, you also become trained in a Lore skill of your choice. You gain a *draconic gift*, a palm-sized magic item of negligible Bulk with a level equal to your level and a trait matching your draconic benefactor's tradition. Choose this item's appearance when you take this feat. This item is linked to your spirit, so if you ever lose possession of it (whether by dropping it or having it stolen from your person), it appears back in your possession at the beginning of your next turn. Finally, you gain the Channel Draconic Essence action and Draconic Salvation reaction. These and all other actions from this archetype gain the tradition trait of your draconic benefactor."
+ },
+ {
+  "collection": "feats",
+  "id": "expert-skysage-divination",
+  "name": "Expert Skysage Divination",
+  "level": 10,
+  "description": "Your studies of the stars have taught you about the mysteries of the cosmos. You choose one of the following 4th-rank spells to add to your spell repertoire: or Read Omens. At 12th level, choose one of the following 5th-rank spells to add to your spell repertoire: Mind Probe or Scouting Eye. At 14th level, choose one of the following 6th-rank spells to add to your spell repertoire: Scrying or Truesight. You become an expert with spell attack rolls and spell DCs for occult spells."
+ },
+ {
+  "collection": "feats",
+  "id": "master-skysage-divination",
+  "name": "Master Skysage Divination",
+  "level": 16,
+  "description": "You unlock the most powerful secrets hidden in the stars above. You choose one of the following 7th-rank spells to add to your spell repertoire: or True Target. At 18th level, add Pinpoint to your spell repertoire, and at 20th level, add Foresight to your spell repertoire. You gain master proficiency with spell attack rolls and spell DCs for occult spells."
+ },
+ {
+  "collection": "feats",
+  "id": "psychic-dedication",
+  "name": "Psychic Dedication",
+  "level": 2,
+  "description": "You feel something awaken within your mind. You become trained in Occultism; if you were already trained in Occultism, you become trained in a skill of your choice. You cast spells like a psychic and gain the Cast a Spell activity; as you don't have a subconscious mind class feature, your thoughtforms are simple intentions. Choose a conscious mind. You gain a spell repertoire with one standard psi cantrip of your choice from your conscious mind, which you cast as a psi cantrip. You gain the normal benefits for this psi cantrip, but not any other benefits from the conscious mind. You're trained in the spell attack modifier and spell DC statistics. Your key spellcasting attribute for psychic archetype spells is the attribute you used to qualify for the archetype, and they are occult psychic spells."
+ },
+ {
+  "collection": "feats",
+  "id": "echo-of-the-fallen",
+  "name": "Echo of the Fallen",
+  "level": 4,
+  "description": "With the utmost gratitude for your help in releasing them from their unearthly coil, a tiny sliver of a ghostly entity has remained attached to you. This manifests as an echo of their former self that follows you around and that you and anyone capable of casting divine or occult spells can see and speak with. When you take this feat, work with your GM to choose one martial weapon and one skill (or an advanced weapon if you're trained in all martial weapons) that are appropriate for the spirit; once you've chosen the weapon and skill, you can't change them. You gain the Accept Echo action."
+ },
+ {
+  "collection": "feats",
+  "id": "talons-mark",
+  "name": "Talon's Mark",
+  "level": 6,
+  "description": "**Requirements** You have a magical or mundane tattoo. --- On the rare occasions that Twilight Talons need to identify themselves as members of the organization, many rely on an easily concealed tattoo to reveal their allegiance. Choose a tattoo you have. If the tattoo wasn't already a magic item, it becomes a level 6 item with the invested, occult, and tattoo traits. It also gains the Twist Design and Adopt Persona abilities."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "breakthrough-innovation",
+  "name": "Breakthrough Innovation",
+  "level": 7,
+  "description": "You've made a breakthrough in your field of study and discovered a powerful new way to enhance your innovation. Choose a breakthrough modification of your innovation's type to apply to your innovation. You can choose an initial modification of your innovation's type instead if you prefer. ### Breakthrough Armor Modifications - **Antimagic Plating** Whether you used some clever adaptation of the magic-negating skymetal known as noqual or created magical protections of your own design, you've strengthened your armor against magic. While wearing the armor, you gain a +1 circumstance bonus to all saving throws against spells and to AC against spells. Against spells that target the armor directly (like heat metal), you instead gain a +4 circumstance bonus to all saving throws and to AC. - **Camouflage Pigmentation (Subterfuge Suit Only)** You've modified your armor's exterior to let you blend into your surroundings with ease, as long as you stay still. While wearing your armor, you can Hide even without cover or concealment, as the pigmentation shifts to match your surroundings. - **Dense Plating** You have encased your armor in robust plating. While wearing your armor, you gain resistance to slashing damage equal to half your level. - **Enhanced Resistance** You've improved upon your initial modification's ability to resist damage. The resistance from your initial armor modification adds your full level, instead of half your level (for instance, phlogistonic regulator's resistance would increase to your level). If you have more than one initial modification that gives resistance, choose which one this applies to. - **Heavy Construction (Power Suit Only)** You've expanded your innovation into a heavy bulwark, and your groundbreaking design ensures you don't take any of the drawbacks for such heavy defenses. Your innovation becomes heavy armor, and your proficiency in your innovation armor (but no other heavy armor) advances to be equal to your proficiency in medium armor. If your Strength modifier is at least +3, you remove the Speed penalty entirely instead of reducing it to –5 feet. The armor's adjusted statistics are: *AC Bonus* +5; *Dex Cap* +1; *Check Penalty* –"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "blessing-of-the-devoted",
+  "name": "Blessing of the Devoted",
+  "level": 3,
+  "description": "Your deity blesses your service with a boon. This might come in the form of a spirit that visits you and inhabits your items or body, a mysterious divine tattoo upon your body, or the like. Choose one of the following blessings, or any other to which you have access. **Blessed Armament**: Select one weapon or handwraps of mighty blows. You gain that armament's critical specialization effect, and you grant the armament a property rune of your choice from the following list: Fearsome, Ghost Touch, Returning, Shifting, or Vitalizing. During your daily preparations, you can change the spirit to inhabit a different armament, grant a different rune, or both. **Blessed Shield:** In your hands, a shield gains the minor Reinforcing rune. As you go up in level, the shield gains the reinforcing rune of your level (lesser at 7th level, moderate at 10th level, greater at 13th level, major at 16th level, and supreme at 19th level). If your shield already has the appropriate reinforcing rune for your level, or if it's a Sturdy Shield of the same level as the appropriate reinforcing rune, the shield's Hardness instead increases by 1. **Blessed Swiftness:** You gain a +5-foot status bonus to Speed. If you're mounted, your mount gains the bonus instead. In addition, when the movement of one of your allies triggers an enemy's reaction while the ally is in your champion's aura, the ally gains a +2 status bonus to all defenses against that reaction."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "divine-access",
+  "name": "Divine Access",
+  "level": 11,
+  "description": "Your mystery offers you strange access to spells typically reserved for more conventional worshippers. Choose one deity who grants one of your mystery's granted domains. Add up to three cleric spells of your choice granted by that deity to your spell list, and to your spell repertoire as soon as you can cast spells of the appropriate rank."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "implement-adept",
+  "name": "Implement Adept",
+  "level": 7,
+  "description": "You have deepened your connection to one of your implements, unlocking its adept power. Choose one of your implements and gain the adept benefit for that implement."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "implement-paragon",
+  "name": "Implement Paragon",
+  "level": 17,
+  "description": "You have unlocked the last secrets of an implement. Choose one of your implements that already gained the adept benefit; you gain the paragon benefit for that implement."
+ }
+]

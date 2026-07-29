@@ -1,0 +1,107 @@
+[
+ {
+  "collection": "feats",
+  "id": "summoner-dedication",
+  "name": "Summoner Dedication",
+  "level": 2,
+  "description": "You've formed a bond with an eidolon, an entity that manifests in a physical body only through its link to your life force. Your bond may be tenuous, but that doesn't make your connection any less special. You gain an eidolon as well as the Manifest Eidolon activity. Due to your tenuous link, you can't gain or use tandem actions. Because you don't have Act Together, only you or your eidolon can perform an exploration activity at one time, so for instance you couldn't both be Searching or Investigating. Your eidolon is trained in unarmed attacks and unarmored defense, and shares your proficiency rank for Perception, saving throws, and skill checks. Choose an eidolon type. You become trained in your eidolon's listed skills. For each of those skills that you are already trained in, you become trained in a different skill of your choice. Your eidolon's initial ability scores are reduced. It starts with a 16 in any ability score listed at 18 for its eidolon array. It otherwise gains the statistics listed for an eidolon of that type. At 5th level, the eidolon's ability score that was reduced to 16 increases to 18, before applying ability boosts. At levels 5, 10, 15, and 20, your eidolon also gets four ability boosts, which follow the same rules as yours."
+ },
+ {
+  "collection": "feats",
+  "id": "shadow-reservoir",
+  "name": "Shadow Reservoir",
+  "level": 10,
+  "description": "Your own shadow speaks to you, providing knowledge of spells and a reservoir of magical power. Your shadow reservoir contains a single spell of each spell rank at least 2 levels lower than the highest-rank spell you can cast from your spell slots. This spell must come from your spell list, you must have access to it, and it must require a spell attack roll or a saving throw. These spells don't need to be prepared and aren't in your repertoire. Regardless of the way in which you cast spells, you can spontaneously cast a spell from your shadow reservoir by using one of your spell slots of the same rank. If you're a prepared spellcaster, you lose the spell you prepared in that slot. Spells cast from your shadow reservoir gain the shadow trait, and affected creatures might be able to disbelieve them. If the spell requires an attack roll, use the higher of the target's AC or their Will DC. If the spell requires a saving throw, the target uses their Will saving throw or the spell's normal saving throw, whichever is higher. Each time a creature fails its saving throw against a spell cast from your reservoir, you gain a small tattoo inked on your flesh out of pure shadowstuff. If you have more than one source of spells you can cast with spell slots, such as if you're a spellcaster with a multiclass archetype, choose one source of spells for your shadow reservoir."
+ },
+ {
+  "collection": "feats",
+  "id": "dual-form-weapon",
+  "name": "Dual-Form Weapon",
+  "level": 4,
+  "description": "Your innovation has replaceable interlocking pieces that you can use to transform it into another type of weapon. When you select this feat, choose a level 0 weapon. It must be either a common weapon or another to which you have access. This weapon becomes your innovation's second configuration. Select a new set of weapon modifications for this new configuration. You can spend two Interact actions to switch your weapon innovation between the two configurations. These actions don't need to be taken consecutively, but if you've provided the first and not the second, the weapon is non-functional as it is stranded between states. Your weapon's Bulk is always the greater Bulk of the two configurations, regardless of which configuration it's in—if one weapon is smaller than the other, you still need to keep any weapon parts on hand. Any runes on your weapon innovation affect the second weapon configuration as long as it would normally qualify for them."
+ },
+ {
+  "collection": "feats",
+  "id": "vehicle-mechanic-dedication",
+  "name": "Vehicle Mechanic Dedication",
+  "level": 2,
+  "description": "You are adept at designing and maintaining mechanical vehicles, and you lavish your attention and ingenuity on one vehicle in particular. You become an expert in Crafting, and you choose one vehicle you own—or your party owns collectively—to be your signature vehicle: the vehicle you spend time customizing to grant it various advantages. You can spend 1 week of downtime with a new vehicle to designate it as your signature vehicle instead. Due to your amazing customizations and adjustments, pilots gain a +1 circumstance bonus to any piloting checks they make to control your signature vehicle. If you are a master in Crafting, this bonus increases to +2."
+ },
+ {
+  "collection": "feats",
+  "id": "sniping-duo-dedication",
+  "name": "Sniping Duo Dedication",
+  "level": 2,
+  "description": "When you take this dedication, choose one willing, non-minion ally to act as your spotter. This character does not need to specialize in ranged attacks; a melee partner can be just as effective and maybe even preferable depending on your preferred tactics and weaponry! As part of your training in this archetype, you train your spotter in the necessary habits and techniques to use your abilities automatically; your spotter doesn't need to spend any feats of their own to grant the effects. You only gain the benefits of your Sniping Duo archetype feats if both you and your spotter are alive and conscious. You and your spotter don't grant your foes lesser cover against one another's Strikes. Whenever you or your spotter successfully Strikes a target, the other member of your duo gains a +1 circumstance bonus per weapon damage die on the damage roll of their next Strike made against that target before the end of their next turn. You can change your designated spotter by spending 3 days of downtime training with another ally to teach them your techniques and signals."
+ },
+ {
+  "collection": "feats",
+  "id": "captivator-dedication",
+  "name": "Captivator Dedication",
+  "level": 4,
+  "description": "Your ability to captivate others borders on the preternatural. You are seldom at a loss in social situations, and you can create minor enchantments or illusions. Choose Deception or Diplomacy. You become trained in that skill, or become an expert if you were already trained. Choose two cantrips from the occult list; each cantrip must be from either the enchantment or illusion school. You gain access to the Cast a Spell activity and can cast these spells as occult innate spells. You're trained in occult spell attack rolls and spell DCs. If you have a hand free, you can usually replace material components with somatic components, so you don't need to use a spell component pouch. Your key spellcasting ability for these spells is Charisma."
+ },
+ {
+  "collection": "feats",
+  "id": "basic-captivator-spellcasting",
+  "name": "Basic Captivator Spellcasting",
+  "level": 4,
+  "description": "Your innate ability to fascinate others develops into full-fledged spellcasting. This spellcasting comes naturally and instinctively to you, rather than as a product of training. Choose a 1st-rank occult spell from either the enchantment or illusion school. You can Cast this Spell as an occult innate spell. At 6th level, you gain a 2nd-rank spell, and at 8th level, you gain a 3rd-rank spell. Each of these spells must be from either the enchantment or illusion school."
+ },
+ {
+  "collection": "feats",
+  "id": "heightened-captivation",
+  "name": "Heightened Captivation",
+  "level": 8,
+  "description": "You can infuse your enchantments and illusions with more power. Choose one of your spells granted by captivator archetype feats; this spell can't be from your highest level of non-cantrip captivator spells. The spell you choose is heightened to the highest level of captivator spell you can cast, not including cantrips. You can't later change the spell that is heightened by this feat. **Special** You can select this feat more than once. Each time you select it, you choose a different spell."
+ },
+ {
+  "collection": "feats",
+  "id": "spell-trickster-dedication",
+  "name": "Spell Trickster Dedication",
+  "level": 2,
+  "description": "Your experience with magic and its traditions lets you specialize in the casting of certain spells, customizing familiar spells to create novel effects. Whenever you gain a feat from this archetype, you either learn to modify the effects of a single spell, or you change one of the modifications from a previous feat. Each time you Cast the Spell corresponding to the feat you chose, you decide whether to cast its normal or modified version. You can only apply one modification to a spell at a time, even if you know more than one modification for that spell. Besides modifications mentioned in the feat, the spell functions as normal. Choose up to two 4th-level spell trickster archetype feats for which you meet the spell-casting prerequisite. You gain those feats, ignoring their level prerequisite. **Special** You can't select another dedication feat until you have gained two other feats from the archetype. The two feats you gain from taking the dedication don't count toward this total."
+ },
+ {
+  "collection": "feats",
+  "id": "irezoko-tattoo",
+  "name": "Irezoko Tattoo",
+  "level": 4,
+  "description": "**Access** You are a member of the College of Mysteries --- Your face bears an intricate magical tattoo known as the *irezoko*, a badge of your understanding of your chosen field of magic and a recognition of your advancement within Absalom's College of Mysteries. Choose a class that you are a member of that grants you access to a focus pool. When you take this feat, it gains the trait that applies to your chosen class. Once per day, you may concentrate upon the pattern of your *irezoko* to recover 1 Focus Point as a three-action activity."
+ },
+ {
+  "collection": "feats",
+  "id": "adapted-cantrip",
+  "name": "Adapted Cantrip",
+  "level": 1,
+  "description": "Through study of multiple magical traditions, you've altered a spell to suit your spellcasting style. Choose one cantrip from a magical tradition other than your own. If you prepare spells, you can choose this spell when you prepare your cantrips, in addition to your other options. If you have a spell repertoire, replace one of your cantrips known with the chosen spell. You can cast this cantrip as a spell of your class's tradition. If you swap or retrain this cantrip later, you can choose its replacement from the same alternate tradition or a different one."
+ },
+ {
+  "collection": "feats",
+  "id": "unconventional-weaponry",
+  "name": "Unconventional Weaponry",
+  "level": 1,
+  "description": "You've familiarized yourself with a particular weapon, potentially from another ancestry or culture. Choose an uncommon simple or martial weapon with a trait corresponding to an ancestry (such as dwarf, goblin, or orc) or that is common in another culture. You gain access to that weapon, and for the purpose of proficiency, you treat it as a simple weapon. If you are trained in all martial weapons, you can instead choose an uncommon advanced weapon that has an ancestry's trait or is common in another culture. You gain access to that weapon and have familiarity with that weapon. For the purpose of proficiency, you treat it as a martial weapon."
+ },
+ {
+  "collection": "feats",
+  "id": "adaptive-adept",
+  "name": "Adaptive Adept",
+  "level": 5,
+  "description": "You've continued adapting your magic to blend your class's tradition with your adapted tradition. Choose a cantrip or 1st-rank spell from the same magical tradition as your cantrip from Adapted Cantrip. You gain that spell, adding it to your spell options just like the cantrip from Adapted Cantrip. You can cast this spell as a spell of your class's magical tradition. If you choose a 1st-rank spell, you don't gain access to the heightened versions of that spell, meaning you can't prepare them if you prepare spells and you can't learn them or select the spell as a signature spell if you have a spell repertoire."
+ },
+ {
+  "collection": "feats",
+  "id": "scion-of-many-planes",
+  "name": "Scion of Many Planes",
+  "level": 5,
+  "description": "The long and complicated history of your bloodline manifests in your ability to draw power from more planar sources than most other nephilim. Choose one nephilim lineage feat that you do not already possess; you gain that feat and all of its benefits, even if you already took a lineage feat at 1st level."
+ },
+ {
+  "collection": "feats",
+  "id": "elf-atavism",
+  "name": "Elf Atavism",
+  "level": 1,
+  "description": "Your elven blood runs particularly strong, granting you features far more elven than those of a typical aiuvarin. You may also have been raised among elves, steeped in your elven ancestors' heritage. You gain the benefits of the elf heritage of your elven parent or ancestors. You typically can't select a heritage that depends on or improves an elven feature you don't have. For example, you couldn't take the Ancient Elf heritage unless your non-elf ancestry also has a lifespan measured in multiple centuries. In these cases, at the GM's discretion, you might gain a different benefit. --- **Special** You can take this feat only at 1st level, and you can't retrain out of this feat or into this feat."
+ }
+]

@@ -1,0 +1,66 @@
+[
+ {
+  "collection": "items",
+  "id": "possibility-tome",
+  "name": "Possibility Tome",
+  "level": 18,
+  "description": "An array of semiprecious stones is set into the ornate silver and beaten copper cover of this thick and weighty tome. If you open the book before it's been activated, its vellum pages are blank and pristine, but once activated, words dance and swim onto the pages before your eyes. **Activate—Skim** 10 minutes (concentrate, manipulate) --- **Effect** As you flip through the book, you think about a broad topic you want to know more about. Choose one skill: Arcana, Crafting, Medicine, Nature, Occultism, Religion, Society, or a single subcategory of Lore. The book's pages fill with information about that skill, though only you can see the information. While the pages are full, you can spend an Interact action perusing the book just before attempting a check to Recall Knowledge with the chosen skill. This grants you a +3 item bonus to the check, and if you roll a critical failure, you get a failure instead. The information within the book disappears after 24 hours or when the tome is activated again."
+ },
+ {
+  "collection": "items",
+  "id": "storied-skin",
+  "name": "Storied Skin",
+  "level": 3,
+  "description": "Your skin becomes a canvas that records history as you learn it. When you receive the tattoo, choose a Lore skill. You can add the visual trait to the Recall Knowledge action in order to study your tattoos, granting you a +1 item bonus to your check using the chosen Lore skill. A storied skin tattoo starts with an icon that represents a central event in your subject of study and is usually placed on the forehead or over the heart. Each time you learn about a major event in the history of that subject, an image, design, or symbol appears on your skin to represent the event. **Activate—Living History** ⟨1⟩ (concentrate) **Frequency** once per minute --- **Effect** The tattoo's design animates for 1 round, crudely portraying some scene associated with the chosen Lore skill."
+ },
+ {
+  "collection": "items",
+  "id": "ancestors-call",
+  "name": "Ancestors' Call",
+  "level": 0,
+  "description": "Ancestors' Call Source Pathfinder #193: Mantle of Gold pg. 85 Aspect Mind Dwarven spirits gravitate toward this relic, and you can call upon them to inhabit you and your allies to impart ancestral secrets. When you gain this gift, choose three common 1st-level dwarf ancestry feats. Activate envision; Frequency once per hour; Effect Select one of the three ancestry feats. You and each ally in a 10-foot-radius burst centered on you gain that feat and the dwarf trait for 1 minute."
+ },
+ {
+  "collection": "items",
+  "id": "aon-ancestors-call",
+  "name": "Ancestors' Call",
+  "level": 0,
+  "description": "Ancestors' Call Aspect Mind Dwarven spirits gravitate toward this relic, and you can call upon them to inhabit you and your allies to impart ancestral secrets. When you gain this gift, choose three common 1st-level dwarf ancestry feats. Activate Single Action envision; Frequency once per hour; Effect Select one of the three ancestry feats. You and each ally in a 10-foot-radius burst centered on you gain that feat and the dwarf trait for 1 minute."
+ },
+ {
+  "collection": "heritages",
+  "id": "beastkin",
+  "name": "Beastkin",
+  "description": "The blood of a beast flows through your veins, granting you the ferocity and might of animals. Only creatures with the humanoid trait can take the beastkin versatile heritage. Choose a type of animal such as bat, eagle, shark, spider, tyrannosaurus, wasp, or wolf. This is the type of animal tied to your heritage and is known as your inherent animal. A beastkin's hybrid form is their natural shape. You gain the beast and beastkin traits, in addition to the traits from your ancestry. You gain the Change Shape ability. You can choose from beastkin feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "collection": "heritages",
+  "id": "adaptive-anadi",
+  "name": "Adaptive Anadi",
+  "description": "You descend from a line of anadi who worked to perfect their transformation magic, allowing them to integrate into a wider variety of cultures. Choose a common, Medium humanoid ancestry. Your human form is replaced with a form that matches this choice. You also gain the Adopted Ancestry feat for your chosen humanoid ancestry."
+ },
+ {
+  "collection": "heritages",
+  "id": "versatile-human",
+  "name": "Versatile Human",
+  "description": "Humanity's versatility and ambition have fueled its ascendance to be the most common ancestry in most nations throughout the world. Select a general feat of your choice for which you meet the prerequisites (as with your ancestry feat, you can select this general feat at any point during character creation)."
+ },
+ {
+  "collection": "heritages",
+  "id": "born-of-item",
+  "name": "Born of Item",
+  "description": "You were an object until the moon breathed life into you. Choose one Lore skill related to what kind of tool you were; for instance, Cooking Lore for a cleaver or Farming Lore for a rake. You become trained in this skill. - **Humanoid Form** You retain memories of the tasks you performed as an object. You gain a +1 circumstance bonus to the Lore skill you obtained through this heritage. - **Yaoguai Form** Your time as a mindless object makes it harder to affect you mentally. If you roll a success on a mental effect, you gain a critical success instead."
+ },
+ {
+  "collection": "backgrounds",
+  "id": "magical-experiment",
+  "name": "Magical Experiment",
+  "description": "At some point in your life, powerful people performed magical experiments on you that changed you permanently. You may have signed up for this voluntarily, but it may have been against your will. You still bear the marks, as well as the abilities. You gain one ability boost. It must be to **Constitution**. You're trained in Occultism and the Academia Lore skill. You gain one special ability as a result of the magical experimentation. Work with the GM to select an appropriate ability from the following list or to come up with another special ability. --- - **Enhanced Senses** You gain low-light vision (or darkvision if you already had low-light vision) and an imprecise sense with a range of 30 feet, such as scent, thoughtsense, tremorsense, or wavesense. - **Resistant Skin** The experiments rendered your skin tougher and resilient to a particular type of damage. You gain resistance equal to half your level (minimum resistance 1) against two of the following types of energy damage, one chosen by you and the other chosen by the GM: acid, cold, electricity, fire, or sonic. - **Touch Telepathy** The experiments to your body allowed you to link minds via touch. You gain telepathy with creatures as long as you are in physical contact. This allows you to communicate mentally with any creatures you're in physical contact with, as long as you both share a language. This doesn't give any special access to their thoughts, and communicates no more information than normal speech would. --- ## Background details **Attribute Boosts** Constitution **Trained Skill** Occultism **Lore** Academia Lore"
+ },
+ {
+  "collection": "deities",
+  "id": "lurlup",
+  "name": "Lurlup",
+  "description": "Not much is known of Lurlup but that he has an endless appetite. Big Eater Brother appears as a typical goblin with dark blue skin and multiple mouths all around his body, such as the ones within his palms and on his lower back. He is a goblin hero-god revered by those who adore eating, though not necessarily because they enjoy the taste of food. Lurlup's followers eat because they enjoy the act of eating, and feel the need to be chewing or having something in their mouth. This means that the two main things they value are a food's texture and temperature. They also find purpose in eating unique things, such as parts from hydras or elementals. **Title** Big Eater Brother **Areas of Concern** Chefs, feasts, hyperphagia **Edicts** Feed upon everything in your surroundings **Anathema** Be fussy with your food, choose one meal over another, waste a meal **Religious Symbol** dented cleaver **Sacred Animal** hippopotamus **Sacred Colors** silver, red --- ## Divine details **Divine Font** Harm **Divine Skill** Intimidation **Favored Weapon** Dagger **Domains** Destruction, Indulgence, Void, Plague **Sanctification** Can be Unholy **Cleric Spells** 1st: Grease, 3rd: Bottomless Stomach, 7th: Planar Palace"
+ }
+]

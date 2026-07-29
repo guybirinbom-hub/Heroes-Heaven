@@ -112,7 +112,19 @@ const LANES = [
     what: 'asks the player to pick something at build time',
     re: /\b(choose|select|pick)\s+(an?|one|two|three|up to|\d+)\b/i,
     not: /\b(choose|select|pick)\s+(a target|one target|a creature|an? adjacent|a square|a direction|a point|a spot|an enemy|an ally|any number)/i,
-    modelled: (r) => !!r.choice || MODELLED.choice.has(r.id),
+    /** `effectChoices` IS a build-time picker — the generic choose-one-of-N lane — and it is where
+     *  every "choose a 1st-rank arcane spell" record already lives. Counting only `choice` and the
+     *  registries reported working pickers (Spell Runes, Ornate Tattoo, …) as gaps. `grantOptions`
+     *  on a class covers the subclass/extra-choice pickers, which are not on the record at all. */
+    /** `abilityBoosts` with a `choice`/`free` entry IS the picker for "choose two attribute boosts" —
+     *  a first-class builder control (BuildState.backgroundBoosts / ancestryBoosts), not something a
+     *  record models itself. Every background prints that sentence, which is why 72 of them read as
+     *  gaps. */
+    modelled: (r) =>
+      !!r.choice ||
+      (r.effectChoices ?? []).length > 0 ||
+      (r.abilityBoosts ?? []).some((b) => b?.kind === 'choice' || b?.kind === 'free') ||
+      MODELLED.choice.has(r.id),
   },
   {
     id: 'situational',

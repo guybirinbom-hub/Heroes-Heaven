@@ -1,0 +1,107 @@
+[
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-bomber",
+  "name": "Perpetual Perfection (Bomber)",
+  "level": 17,
+  "description": "You have perfected your perpetual infusions, allowing you to use Quick Alchemy to create even more powerful items at no cost. The items you can select depend on your research field and must be in your formula book. Choose two 11th-level or lower bombs."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-chirurgeon",
+  "name": "Perpetual Perfection (Chirurgeon)",
+  "level": 17,
+  "description": "You have perfected your perpetual infusions, allowing you to use Quick Alchemy to create even more powerful items at no cost. The items you can select depend on your research field and must be in your formula book. Choose two 11th-level or lower elixirs with the healing trait."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-mutagenist",
+  "name": "Perpetual Perfection (Mutagenist)",
+  "level": 17,
+  "description": "You have perfected your perpetual infusions, allowing you to use Quick Alchemy to create even more powerful items at no cost. The items you can select depend on your research field and must be in your formula book. Choose two 11th-level or lower mutagens."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-toxicologist",
+  "name": "Perpetual Perfection (Toxicologist)",
+  "level": 17,
+  "description": "You have perfected your perpetual infusions, allowing you to use Quick Alchemy to create even more powerful items at no cost. The items you can select depend on your research field and must be in your formula book. Choose two common 11th-level or lower alchemical poisons."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-bomber",
+  "name": "Perpetual Potency (Bomber)",
+  "level": 11,
+  "description": "Your perpetual infusions improve, allowing you to use Quick Alchemy to create more powerful items with no cost. The items you can select depend on your research field and must be in your formula book. Choose two 3rd-level or lower bombs."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-chirurgeon",
+  "name": "Perpetual Potency (Chirurgeon)",
+  "level": 11,
+  "description": "Your perpetual infusions improve, allowing you to use Quick Alchemy to create more powerful items with no cost. The items you can select depend on your research field and must be in your formula book. Choose two 6th level or lower elixirs with the healing trait."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-mutagenist",
+  "name": "Perpetual Potency (Mutagenist)",
+  "level": 11,
+  "description": "Your perpetual infusions improve, allowing you to use Quick Alchemy to create more powerful items with no cost. The items you can select depend on your research field and must be in your formula book. Choose two 3rd level or lower mutagens"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-toxicologist",
+  "name": "Perpetual Potency (Toxicologist)",
+  "level": 11,
+  "description": "Your perpetual infusions improve, allowing you to use Quick Alchemy to create more powerful items with no cost. The items you can select depend on your research field and must be in your formula book. Choose two common 5th-level or lower alchemical poisons."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "weapon-innovation",
+  "name": "Weapon Innovation",
+  "level": 1,
+  "description": "Your innovation is a complex and impossible-looking weapon augmented by numerous mechanisms. It begins with the same statistics as a level 0 simple or martial weapon of your choice. The chosen weapon must be common or you must otherwise have access to it. An innovation weapon can have fundamental and property runes added to it in the same way as an ordinary weapon. Because of the unique features of your innovation, everyone except you is untrained in it, even if they would normally be trained (or better) in simple or martial weapons. If you use the Overdrive action, you can choose to change the additional damage from Overdrive to fire damage. Choose one initial weapon modification to apply to your innovation, either from the following or from other initial weapon modifications to which you have access. These modifications grant additional weapon traits, sometimes with extra abilities. A modification might give your weapon the versatile trait with a damage type that the weapon could already deal, either from its base damage type or from an existing versatile trait. In that case, if you select that modification, you can instead choose to give the weapon the versatile trait for a different damage type: bludgeoning, piercing, or slashing. - **Advanced Design:** Your weapon innovation uses the statistics of a level 0 advanced weapon of your choice. It must be common or you must have access to it. You treat this as a martial weapon for the purposes of proficiency. - **Blunt Shot (ranged only):** Your weapon innovation can file the edges off your ammunition and adjust the blunt force of the shot to deliver an attack that can batter as much as pierce, or even knock an opponent right off their feet. Your innovation gains the concussive and ranged trip traits. - **Complex Simplicity (simple weapon only):** Increase your innovation's weapon damage die by one step (d4 to d6, d6 to d8, d8 to d10, d10 to d12). In addition, it gains two of the following traits of your choice: versatile B, versatile P, versatile S, or razing. - **Dynamic Weighting (one-handed melee weapon only; can't have the agile, attached, or free-hand trait):** Your weapon is modified to be heavier and easi"
+ },
+ {
+  "collection": "items",
+  "id": "shield-augmentation",
+  "name": "Shield Augmentation",
+  "level": 0,
+  "description": "There are numerous methods to modify shields-snarling rods to catch weapons, bladed edges, padding for nonlethal strikes, and so on-but all share basic functionality. A shield augmentation can be etched with weapon runes, much like a shield boss or shield spikes, but doesn't otherwise alter your shield's statistics. A shield bearing an augmentation can't be combined with an attached weapon, like shield spikes. A shield augmentation grants your shield one or more weapon traits, chosen when the augmentation is created. You can either choose to add the backswing or forceful trait, or you can choose two of the following weapon traits: disarm, nonlethal, shove, thrown 10 feet, trip, or versatile S."
+ },
+ {
+  "collection": "items",
+  "id": "ancestral-embrace",
+  "name": "Ancestral Embrace",
+  "level": 26,
+  "description": "This brightly colored *+4 major resilient leather armor* is inscribed with a spiral that has no end or beginning. Though it is a symbol of the ancient religion of Holy Xatramba, it also serves as a religious symbol of Pharasma. When you invest the armor, you gain void resistance 25 and can draw on the power of your ancestors. You gain an ancestry feat from your ancestry; the feat can be any level, but you must meet any other prerequisites of the feat. You lose the feat when the investment ends, and you can select a different feat each time you invest the armor again. --- **Activate** ⟨4⟩ envision **Frequency** once per day **Trigger** You use an ancestry feat that has a limited number of uses per day --- **Effect** You gain an additional use of the ancestry feat. If you do not use it before the next time you make your daily preparations, the use is lost. --- **Activate** ⟨4⟩ envision **Trigger** You begin casting a legend lore ritual to learn legends about your ancestry or about someone of your ancestry --- **Effect** *Ancestral Embrace* reduces the casting time of this ritual to 1 hour, and you don't need secondary casters for this ritual. --- **Activate** ⟨2⟩ command, Interact **Frequency** once per day --- **Effect** The armor casts Avatar, granting these specific additional abilities instead of those associated with a deity: Speed 70 feet, air walk, ignore difficult terrain and greater difficult terrain - **Melee** 1 spear (reach 15 feet, thrown 50 feet), Damage 6d6+6 piercing - **Ranged** 1 blowgun (range 120 feet), Damage 1d6+3 piercing plus 5d6 poison. --- **Destruction** *Ancestral Embrace* crumbles if its wearer intentionally and knowingly kills or desecrates the remains of six generations of their family."
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo",
+  "name": "Faith Tattoo",
+  "level": 4,
+  "description": "**Prerequisites** worshipper of a deity --- You have marked your body to show your devotion to a deity. This tattoo could be the deity's religious symbol, another image that evokes that deity, or another mark you gained through your devotion. The tattoo serves as a silver religious symbol of the deity. Provided you keep the tattoo uncovered, you need not wield it to gain that benefit. When you get the tattoo and aren't sanctified, you can choose to sanctify yourself to your deity. If you cease meeting the prerequisites, the tattoo fades, and you lose its benefits until you perform an Atone ritual and meet the prerequisites thereafter. **Activate** Cast a Spell **Frequency** once per day --- **Effect** The tattoo casts Harm, Heal, or the 1st-rank spell from your deity's cleric spells. You can choose *harm* or *heal* only in accord with the deity's divine font. If the deity allows either spell, choose one the tattoo can cast when you receive the tattoo. The DC for any of these spells is 18."
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo-greater",
+  "name": "Faith Tattoo (Greater)",
+  "level": 8,
+  "description": "**Prerequisites** worshipper of a deity --- You have marked your body to show your devotion to a deity. This tattoo could be the deity's religious symbol, another image that evokes that deity, or another mark you gained through your devotion. The tattoo serves as a silver religious symbol of the deity. Provided you keep the tattoo uncovered, you need not wield it to gain that benefit. When you get the tattoo and aren't sanctified, you can choose to sanctify yourself to your deity. If you cease meeting the prerequisites, the tattoo fades, and you lose its benefits until you perform an Atone ritual and meet the prerequisites thereafter. **Activate** Cast a Spell **Frequency** once per day --- **Effect** The tattoo casts a 3rd-rank Harm, Heal, or the 3rd-rank spell from your deity's cleric spells. You can choose *harm* or *heal* only in accord with the deity's divine font. If the deity allows either spell, choose one the tattoo can cast when you receive the tattoo. The DC for any of these spells is 24."
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo-major",
+  "name": "Faith Tattoo (Major)",
+  "level": 12,
+  "description": "**Prerequisites** worshipper of a deity --- You have marked your body to show your devotion to a deity. This tattoo could be the deity's religious symbol, another image that evokes that deity, or another mark you gained through your devotion. The tattoo serves as a silver religious symbol of the deity. Provided you keep the tattoo uncovered, you need not wield it to gain that benefit. When you get the tattoo and aren't sanctified, you can choose to sanctify yourself to your deity. If you cease meeting the prerequisites, the tattoo fades, and you lose its benefits until you perform an Atone ritual and meet the prerequisites thereafter. **Activate** Cast a Spell **Frequency** once per day --- **Effect** The tattoo casts a 5th-rank Harm, Heal, or the 5th-rank spell from your deity's cleric spells. You can choose *harm* or *heal* only in accord with the deity's divine font. If the deity allows either spell, choose one the tattoo can cast when you receive the tattoo. The DC for any of these spells is 30."
+ },
+ {
+  "collection": "items",
+  "id": "faith-tattoo-true",
+  "name": "Faith Tattoo (True)",
+  "level": 16,
+  "description": "**Prerequisites** worshipper of a deity --- You have marked your body to show your devotion to a deity. This tattoo could be the deity's religious symbol, another image that evokes that deity, or another mark you gained through your devotion. The tattoo serves as a silver religious symbol of the deity. Provided you keep the tattoo uncovered, you need not wield it to gain that benefit. When you get the tattoo and aren't sanctified, you can choose to sanctify yourself to your deity. If you cease meeting the prerequisites, the tattoo fades, and you lose its benefits until you perform an Atone ritual and meet the prerequisites thereafter. **Activate** Cast a Spell **Frequency** once per day --- **Effect** The tattoo casts a 7th-rank Harm, Heal, or the 7th-rank spell from your deity's cleric spells. You can choose *harm* or *heal* only in accord with the deity's divine font. If the deity allows either spell, choose one the tattoo can cast when you receive the tattoo. The DC for any of these spells is 35."
+ }
+]
