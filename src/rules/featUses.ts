@@ -61,6 +61,35 @@ export function spendFeatUse(
   return { ...(featUsesMap ?? {}), [featId]: Math.min(max, spent + 1) };
 }
 
+/**
+ * Periods shorter than a day. `rest()` refills everything, but a "once per round" feat that only came
+ * back at daily preparations would be usable once per DAY — the tracker would be lying in the
+ * restrictive direction. These refill on the encounter/round reset instead.
+ */
+const SUB_DAILY = new Set(['round', 'turn', 'minute', 'hour']);
+
+/** Whether a feat's limit is shorter than a day, and so refills on the encounter reset. */
+export const isSubDaily = (per: string | undefined) => SUB_DAILY.has(String(per));
+
+/**
+ * Clear the spend counts for every SUB-DAILY feat, leaving per-day/week/month uses alone.
+ *
+ * The app has no turn tracker, so this is a deliberate player action ("new encounter") rather than
+ * something inferred. Returns a new map; per-day uses keep their spend so a single encounter reset
+ * can't refill a daily power.
+ */
+export function resetEncounterUses(
+  featUsesMap: Record<string, number> | undefined,
+  featsById: Record<string, { limitedUses?: { per: string } } | undefined>,
+): Record<string, number> {
+  const next: Record<string, number> = {};
+  for (const [featId, spent] of Object.entries(featUsesMap ?? {})) {
+    if (isSubDaily(featsById[featId]?.limitedUses?.per)) continue; // refilled
+    next[featId] = spent;
+  }
+  return next;
+}
+
 /** Give one use back (never below zero spent) — the undo for a misclick. */
 export function refundFeatUse(
   featUsesMap: Record<string, number> | undefined,

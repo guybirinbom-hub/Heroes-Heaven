@@ -1,0 +1,437 @@
+{
+ "natural-illusionist": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "armor-rune-shifter": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "weapon-rune-shifter": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "peafowl-stance": {
+  "max": 1,
+  "per": "round",
+  "coll": "feats"
+ },
+ "impossible-snares": {
+  "max": 1,
+  "per": "minute",
+  "coll": "feats"
+ },
+ "wish-alchemy": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "wayfinder-resonance-infiltrator": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "consult-the-stars": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "critter-shape": {
+  "max": 1,
+  "per": "hour",
+  "coll": "feats"
+ },
+ "strange-script": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "soul-arsenal": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "summon-ensemble": {
+  "max": 1,
+  "per": "turn",
+  "coll": "feats"
+ },
+ "directed-poison": {
+  "max": 1,
+  "per": "round",
+  "coll": "feats"
+ },
+ "irezoko-tattoo": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "drain-soul-cage": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "spell-gem": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "secret-eater": {
+  "max": 1,
+  "per": "hour",
+  "coll": "feats"
+ },
+ "dominion-aura": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "lesser-enhance-venom": {
+  "max": 1,
+  "per": "hour",
+  "coll": "feats"
+ },
+ "eldritch-calm": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "rivethun-spiritual-attunement": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "reckless-abandon-goblin": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "enigmas-knowledge": {
+  "max": 1,
+  "per": "round",
+  "coll": "feats"
+ },
+ "true-shapeshifter": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "monster-hunter": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "linked-focus": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "automatic-knowledge": {
+  "max": 1,
+  "per": "round",
+  "coll": "feats"
+ },
+ "quick-recognition": {
+  "max": 1,
+  "per": "round",
+  "coll": "feats"
+ },
+ "lucky-break": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "quick-stow": {
+  "max": 1,
+  "per": "round",
+  "coll": "feats"
+ },
+ "great-tengu-form": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "solid-lead": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "occult-evolution": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "fabricated-connections": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "medic-dedication": {
+  "max": 1,
+  "per": "hour",
+  "coll": "feats"
+ },
+ "briny-beverage": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "speak-with-the-sleeping": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "and-will-do-so-once-more": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "yaoguai-historian": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "quick-recovery-yaoguai": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "unleash-yaoguai-might": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "legendary-monster": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "spiritual-spellshape-stance": {
+  "max": 1,
+  "per": "turn",
+  "coll": "feats"
+ },
+ "aeonbound": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "ascend": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "pass-vengeful-judgement": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "mystical-flare": {
+  "max": 1,
+  "per": "round",
+  "coll": "feats"
+ },
+ "mystic-life-force": {
+  "max": 1,
+  "per": "hour",
+  "coll": "feats"
+ },
+ "talent-envy": {
+  "max": 1,
+  "per": "minute",
+  "coll": "feats"
+ },
+ "invisible-hand": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "vengful-remnant": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "the-truth-as-i-see-it": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "rally-support": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "esoteric-warden": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "one-more-activation": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "unlimited-demesne": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "wonder-worker": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "morphic-manipulation": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "pact-of-infernal-prowess": {
+  "max": 1,
+  "per": "hour",
+  "coll": "feats"
+ },
+ "advanced-runic-mind-smithing": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "on-borrowed-time": {
+  "max": 1,
+  "per": "round",
+  "coll": "feats"
+ },
+ "drowning-mist": {
+  "max": 1,
+  "per": "round",
+  "coll": "feats"
+ },
+ "adventurous-outfitter": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "as-on-the-board-so-on-the-battlefield": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "submerged-stillness": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "frog-tide": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "internal-cohesion": {
+  "max": 1,
+  "per": "day",
+  "coll": "feats"
+ },
+ "flurry-of-blows": {
+  "max": 1,
+  "per": "turn",
+  "coll": "classFeatures"
+ },
+ "tactics": {
+  "max": 1,
+  "per": "day",
+  "coll": "classFeatures"
+ },
+ "drilled-reactions": {
+  "max": 1,
+  "per": "round",
+  "coll": "classFeatures"
+ },
+ "medium": {
+  "max": 1,
+  "per": "round",
+  "coll": "classFeatures"
+ },
+ "momentum-enhancer": {
+  "max": 1,
+  "per": "round",
+  "coll": "classFeatures"
+ },
+ "paragon-benefit-chalice": {
+  "max": 1,
+  "per": "day",
+  "coll": "classFeatures"
+ },
+ "war-magic": {
+  "max": 1,
+  "per": "round",
+  "coll": "classFeatures"
+ },
+ "mutagenic-flashback": {
+  "max": 1,
+  "per": "day",
+  "coll": "classFeatures"
+ },
+ "bloody-guillotine": {
+  "max": 1,
+  "per": "day",
+  "coll": "classFeatures"
+ },
+ "for-talmandor-for-freedom": {
+  "max": 1,
+  "per": "day",
+  "coll": "classFeatures"
+ },
+ "insta-ballista": {
+  "max": 1,
+  "per": "day",
+  "coll": "classFeatures"
+ },
+ "sanguine-revitalization": {
+  "max": 1,
+  "per": "day",
+  "coll": "classFeatures"
+ },
+ "shift-immanence": {
+  "max": 1,
+  "per": "round",
+  "coll": "classFeatures"
+ },
+ "glimpse-vulnerability": {
+  "max": 1,
+  "per": "round",
+  "coll": "classFeatures"
+ },
+ "drain-bonded-item": {
+  "max": 1,
+  "per": "day",
+  "coll": "classFeatures"
+ },
+ "aquarium-lamp": {
+  "max": 1,
+  "per": "day",
+  "coll": "items"
+ },
+ "scalekeeper-vishkanya": {
+  "max": 1,
+  "per": "day",
+  "coll": "heritages"
+ },
+ "waning-moon-sarangay": {
+  "max": 1,
+  "per": "day",
+  "coll": "heritages"
+ },
+ "wished-alive": {
+  "max": 1,
+  "per": "day",
+  "coll": "backgrounds"
+ },
+ "warded-by-kami": {
+  "max": 1,
+  "per": "day",
+  "coll": "backgrounds"
+ }
+}

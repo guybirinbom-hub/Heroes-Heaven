@@ -4,7 +4,7 @@ import { classFeatureDescription } from '../rules/featureText';
 import { ActionGlyph, isActionCost } from './widgets';
 import { FeatDetail, type FeatEntry } from './FeatDetail';
 import { toPlainText } from './RichText';
-import { featUse, usesLabel, spendFeatUse, refundFeatUse } from '../rules/featUses';
+import { featUse, usesLabel, spendFeatUse, refundFeatUse, resetEncounterUses, isSubDaily } from '../rules/featUses';
 import type { PlayUpdater } from '../rules/play';
 
 const BUCKETS = ['Class', 'Archetype', 'Ancestry & heritage', 'Skill', 'General'];
@@ -320,6 +320,20 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
                             <i className="ti ti-plus" aria-hidden="true" />
                           </button>
                           <span className="ff-uses-per">per {use.per}</span>
+                          {isSubDaily(use.per) && (
+                            <button
+                              type="button"
+                              className="ff-uses-reset"
+                              aria-label={`Reset ${use.name} for a new encounter`}
+                              title="New encounter — refill every per-round/turn/minute/hour use"
+                              onClick={(ev) => {
+                                ev.stopPropagation();
+                                onPlay((p) => ({ ...p, featUses: resetEncounterUses(p.featUses, content.feats) }));
+                              }}
+                            >
+                              <i className="ti ti-refresh" aria-hidden="true" />
+                            </button>
+                          )}
                         </span>
                       );
                     })()}

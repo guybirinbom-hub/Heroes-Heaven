@@ -10399,3 +10399,24 @@ button.strike-name:hover {
 .ff-uses-per {
   opacity: 0.75;
 }
+/* "New encounter" refill, shown only on sub-daily uses (per round/turn/minute/hour). Those cannot
+   wait for a rest — a once-per-round feat that only refilled at daily preparations would be usable
+   once per DAY, i.e. the tracker lying in the restrictive direction. */
+.ff-uses-reset {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: transparent;
+  color: var(--app-text-dim);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  margin-left: 2px;
+}
+.ff-uses-reset:hover {
+  color: var(--app-accent);
+  border-color: var(--app-accent);
+}
