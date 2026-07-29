@@ -94,3 +94,92 @@ describe('inert (recorded-only) choices', () => {
     expect(withChoice).toHaveLength(5);
   });
 });
+
+/**
+ * A CHOICE NOBODY RENDERS IS DEAD DATA.
+ *
+ * Only `feats[id].choice` was ever rendered. `ClassFeature` and `Heritage` did not even DECLARE the
+ * field, so 25 class-feature and 6 heritage choices shipped, appeared in no picker and were answered
+ * by nobody — the same silent failure as a grant naming a spell that doesn't exist.
+ *
+ * The builder now renders both. Items are the remaining surface: an item's pick belongs to the
+ * inventory row (you make it when you acquire or invest the item), which does not exist yet — so the
+ * count is pinned rather than left to drift.
+ */
+describe('every choice has somewhere to be answered', () => {
+  const RENDERED = ['feats', 'classFeatures', 'heritages'] as const;
+
+  it('feats, class features and heritages are all rendered surfaces', () => {
+    for (const col of RENDERED) {
+      const withChoice = Object.values(c[col] as Record<string, { choice?: unknown }>).filter((r) => r.choice);
+      expect(withChoice.length, `${col} should carry choices`).toBeGreaterThan(0);
+    }
+  });
+
+  it('a non-daily ITEM choice has no picker yet — hold the line at the known count', () => {
+    // Daily ones reach the player through the Rest sheet, so they are fine. The rest need an
+    // inventory-row surface: you make an item's pick when you acquire or invest it, not at build time.
+    const stranded = Object.entries(c.items)
+      .filter(([, i]) => i.choice && !i.choice.daily)
+      .map(([id]) => id);
+    expect(stranded.length, `unrendered item choices: ${stranded.join(', ')}`).toBeLessThanOrEqual(10);
+  });
+
+  it('BACKGROUND choices: 30 reach the player another way, 40 do not', () => {
+    // `backgrounds[id].choice` is not rendered either. Some of these are still delivered, by a LOOSER
+    // control — `trainedLoreChoice` (a free-text Lore box), `trainedLoreOptions` or
+    // `trainedSkillChoice` (pickers) — where the record names the exact legal options and the control
+    // does not. I assumed most were covered that way; measuring says fewer than half are.
+    //
+    // Both numbers are pinned so the split is a fact rather than an impression, and so closing the
+    // 40 shows up as this test being tightened.
+    const stranded = Object.entries(c.backgrounds).filter(([, b]) => b.choice && !b.choice.daily);
+    const covered = stranded.filter(([, b]) => b.trainedLoreChoice || (b.trainedLoreOptions ?? []).length || (b.trainedSkillChoice ?? []).length);
+    expect(stranded.length, 'backgrounds carrying an unrendered choice').toBeLessThanOrEqual(70);
+    expect(stranded.length - covered.length, 'of those, ones with no other route to the player').toBeLessThanOrEqual(40);
+  });
+
+  it('no OTHER collection carries a choice with nowhere to go', () => {
+    const bad: string[] = [];
+    for (const col of ['ancestries', 'spells', 'actions'] as const) {
+      for (const [id, r] of Object.entries((c as unknown as Record<string, Record<string, { choice?: { daily?: boolean } }>>)[col] ?? {})) {
+        if (r.choice && !r.choice.daily) bad.push(`${col}/${id}`);
+      }
+    }
+    expect(bad).toEqual([]);
+  });
+});
+
+/**
+ * A Lore skill that does not exist.
+ *
+ * "You're trained in Legal Lore or Underworld Lore" was imported as ONE subject, so seven characters
+ * were trained in "Legal-lore-or-underworld Lore" and were never asked which they had.
+ */
+describe('background Lore subjects are real', () => {
+  it('no trainedLore is two subjects glued together', () => {
+    const bad = Object.entries(c.backgrounds)
+      .filter(([, b]) => b.trainedLore && /-or-|_or_|\bor\b/i.test(b.trainedLore))
+      .map(([id, b]) => `${id}: "${b.trainedLore}"`);
+    expect(bad).toEqual([]);
+  });
+
+  it('the either/or ones offer both subjects', () => {
+    expect(c.backgrounds['squire'].trainedLoreOptions).toEqual(['heraldry', 'warfare']);
+    expect(c.backgrounds['squire'].trainedLore).toBeUndefined();
+    expect(c.backgrounds['ex-con-token-guard'].trainedLoreOptions).toEqual(['legal', 'underworld']);
+  });
+
+  it('an OPEN second half becomes free text instead', () => {
+    // Free Spirit offers "Settlement Lore or a terrain Lore" — the second is a category, not a subject.
+    expect(c.backgrounds['free-spirit'].trainedLoreChoice).toBe(true);
+    expect(c.backgrounds['free-spirit'].trainedLoreOptions).toBeUndefined();
+  });
+
+  it('a background never offers both controls at once', () => {
+    const both = Object.entries(c.backgrounds)
+      .filter(([, b]) => b.trainedLoreChoice && (b.trainedLoreOptions ?? []).length)
+      .map(([id]) => id);
+    expect(both).toEqual([]);
+  });
+});

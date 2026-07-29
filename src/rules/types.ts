@@ -551,6 +551,12 @@ export interface Heritage extends ContentBase, DefenseGrants {
    *  (Deep Fetchling: cold/void; Elementheart Kobold: an element's damage type). The choice is stored in
    *  BuildState.heritageResistanceChoice. */
   choiceResistance?: { options: { value: string; label: string }[]; halfLevel: boolean };
+  /**
+   * A pick the heritage asks for that isn't a resistance ("choose a type of animal" — Beastkin;
+   * "choose a patron" — Forge-Blessed Dwarf). Undeclared until now, so six heritages shipped a choice
+   * that nothing rendered. Answered on the heritage step, stored under `heritage:<id>`.
+   */
+  choice?: FeatChoiceDef;
 }
 
 export interface Background extends ContentBase {
@@ -569,6 +575,14 @@ export interface Background extends ContentBase {
    *  the subject in the builder (Lore is free-text). Stored in BuildState.backgroundLore →
    *  lore:<typed> trained. */
   trainedLoreChoice?: boolean;
+  /**
+   * "Legal Lore OR Underworld Lore" — a choice between two NAMED subjects, not free text.
+   *
+   * Seven backgrounds had the two subjects concatenated into `trainedLore` by the importer, so the
+   * character was trained in a Lore that does not exist ("Legal-lore-or-underworld Lore") and the
+   * player was never asked. Rendered where `trainedLoreChoice` is, as a picker instead of a text box.
+   */
+  trainedLoreOptions?: string[];
   /** Skill/general feat(s) granted by the background. Usually one, but two backgrounds grant a PAIR —
    *  Eagle Hunter ("the Pet general feat AND the Train Animal skill feat") and Returned — and a single
    *  string silently dropped the second. Read it through `backgroundGrantedFeats()`, never directly. */
@@ -712,6 +726,17 @@ export interface ClassFeature extends ContentBase, DefenseGrants {
    *  feature whose entire content is "you gain the Hero's Defiance devotion spell". buildCharacter
    *  reads these; before it did, the feature did nothing even at 20th level. */
   focusSpells?: string[];
+  /**
+   * A pick the feature itself asks for ("choose a damage type", "choose a Thassilonian school").
+   *
+   * The field was never DECLARED here, which is why nothing rendered it: 25 class-feature choices
+   * shipped in core.json, were shown in no picker and answered by nobody. The builder now renders it
+   * on the level where the feature is gained, storing under `feature:<id>`; a `daily` one is left to
+   * the Rest sheet instead.
+   */
+  choice?: FeatChoiceDef;
+  /** "Choose one of N" the player resolves in the builder, each option carrying its own grant. */
+  effectChoices?: EffectChoice[];
 }
 
 /** A standalone action (Strike, Seek, Demoralize, …) — referenced throughout rules text. */

@@ -2366,6 +2366,37 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           <p className="setup-hint">Resistance to the chosen damage type equal to half your level (minimum 1).</p>
         </SubCard>
       )}
+      {/* A heritage that asks for a pick of its own ("choose a type of animal" — Beastkin; "choose a
+          patron" — Forge-Blessed Dwarf). Six heritages shipped one and none was ever rendered, because
+          Heritage never declared the field. Stored beside the feat answers under `heritage:<id>`. */}
+      {heritage?.choice &&
+        (() => {
+          const def = heritage.choice!;
+          const key = `heritage:${heritage.id}`;
+          return (
+            <SubCard icon="ti-adjustments" label={def.prompt}>
+              {def.kind === 'text' ? (
+                <input
+                  className="txt"
+                  type="text"
+                  placeholder={`${def.prompt}…`}
+                  value={build.featChoices[key] ?? ''}
+                  onChange={(e) => actions.setFeatChoice(key, e.target.value)}
+                />
+              ) : (
+                <PopupSelect
+                  title={def.prompt}
+                  placeholder={`${def.prompt}…`}
+                  value={build.featChoices[key] ?? ''}
+                  onChange={(v) => actions.setFeatChoice(key, v)}
+                  options={(def.options ?? []).map((o) => ({ value: o.value, label: o.label, description: o.description }))}
+                />
+              )}
+              {def.note && <p className="setup-hint">{def.note}</p>}
+              {def.inert && <p className="setup-hint">{def.inert}</p>}
+            </SubCard>
+          );
+        })()}
       {/* A heritage that grants a PICKED feat (Ancient Elf → a multiclass dedication of another class,
           waiving its level prerequisite). Same lane as the feat pick-grants, keyed by heritage id. */}
       {build.heritageId &&
@@ -2476,8 +2507,22 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
           />
         </SubCard>
       )}
+      {/* "Legal Lore OR Underworld Lore" — two NAMED subjects, so a picker rather than a text box.
+          These shipped with both subjects concatenated into one fake Lore ("Legal-lore-or-underworld
+          Lore") and no question asked. */}
+      {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && (background.trainedLoreOptions ?? []).length > 0 && (
+        <SubCard icon="ti-bulb" label="Background Lore">
+          <PopupSelect
+            title="Background Lore"
+            placeholder="Choose a Lore…"
+            value={build.backgroundLore ?? ''}
+            onChange={(v) => actions.patch({ backgroundLore: v })}
+            options={background.trainedLoreOptions!.map((s) => ({ value: s, label: `${cap(s)} Lore` }))}
+          />
+        </SubCard>
+      )}
       {/* A "choose a Lore" background: Lore is free-text, so let the player type any subject. */}
-      {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && background.trainedLoreChoice && (
+      {background && build.backgroundId !== CUSTOM_BACKGROUND_ID && background.trainedLoreChoice && !(background.trainedLoreOptions ?? []).length && (
         <SubCard icon="ti-bulb" label="Background Lore">
           <input
             className="lvl-lore-input"

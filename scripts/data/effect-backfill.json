@@ -40162,5 +40162,107 @@
       ],
       "inert": "Recorded only. Adopted Ancestry itself is already granted for you, but the app does not unlock the chosen ancestry's feats in the feat list."
     }
+  },
+  {
+    "category": "backgrounds",
+    "id": "ex-con-token-guard",
+    "field": "trainedLore",
+    "value": null
+  },
+  {
+    "category": "backgrounds",
+    "id": "ex-con-token-guard",
+    "field": "trainedLoreOptions",
+    "value": [
+      "legal",
+      "underworld"
+    ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "grizzled-muckrucker",
+    "field": "trainedLore",
+    "value": null
+  },
+  {
+    "category": "backgrounds",
+    "id": "grizzled-muckrucker",
+    "field": "trainedLoreOptions",
+    "value": [
+      "labor",
+      "underworld"
+    ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "harbor-guard-moonlighter",
+    "field": "trainedLore",
+    "value": null
+  },
+  {
+    "category": "backgrounds",
+    "id": "harbor-guard-moonlighter",
+    "field": "trainedLoreOptions",
+    "value": [
+      "sailing",
+      "hunting"
+    ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "sally-guard-neophyte",
+    "field": "trainedLore",
+    "value": null
+  },
+  {
+    "category": "backgrounds",
+    "id": "sally-guard-neophyte",
+    "field": "trainedLoreOptions",
+    "value": [
+      "hunting",
+      "stabling"
+    ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "sleepless-suns-star",
+    "field": "trainedLore",
+    "value": null
+  },
+  {
+    "category": "backgrounds",
+    "id": "sleepless-suns-star",
+    "field": "trainedLoreOptions",
+    "value": [
+      "gladiatorial",
+      "genealogy"
+    ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "squire",
+    "field": "trainedLore",
+    "value": null
+  },
+  {
+    "category": "backgrounds",
+    "id": "squire",
+    "field": "trainedLoreOptions",
+    "value": [
+      "heraldry",
+      "warfare"
+    ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "free-spirit",
+    "field": "trainedLore",
+    "value": null
+  },
+  {
+    "category": "backgrounds",
+    "id": "free-spirit",
+    "field": "trainedLoreChoice",
+    "value": true
   }
 ]

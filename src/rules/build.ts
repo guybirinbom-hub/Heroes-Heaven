@@ -1288,8 +1288,15 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const bgTrainedSkill = backgroundTrainedSkill(build, background);
   if (bgTrainedSkill) (skills[bgTrainedSkill] = 'trained'), locked.add(bgTrainedSkill);
   if (background?.trainedLore) skills[`lore:${background.trainedLore}`] = 'trained';
+  // "Legal Lore OR Underworld Lore": two NAMED subjects, so the answer is one of them rather than
+  // free text. Unpicked defaults to the first, as every other unanswered choice in the builder does.
+  const loreOptions = background?.trainedLoreOptions ?? [];
+  if (loreOptions.length) {
+    const picked = loreOptions.includes(build.backgroundLore ?? '') ? build.backgroundLore! : loreOptions[0];
+    skills[`lore:${picked}` as ProficiencyKey] = 'trained';
+  }
   // A "choose a Lore" background: the player types the subject (Lore is free-text).
-  if (background?.trainedLoreChoice && build.backgroundLore?.trim()) {
+  if (background?.trainedLoreChoice && !loreOptions.length && build.backgroundLore?.trim()) {
     const subj = build.backgroundLore.trim().toLowerCase().replace(/\s*lore$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
     if (subj) skills[`lore:${subj}` as ProficiencyKey] = 'trained';
   }

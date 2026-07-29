@@ -39,7 +39,7 @@ import { FEAT_PICK_GRANTS, pickableFeats } from '../rules/featPickGrants';
 import { FEAT_FEAT_GRANTS } from '../rules/featFeatGrants';
 import { spellsMatching } from '../rules/spellChoice';
 import { FEAT_CANTRIP_GRANTS } from '../rules/featCantripGrants';
-import type { ContentDatabase, Feat, FeatCategory, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
+import type { ContentDatabase, Feat, FeatCategory, FeatChoiceDef, ProficiencyKey, ProficiencyRank, SaveId } from '../rules/types';
 import { ABILITIES, PROFICIENCY_RANKS, SKILLS } from '../rules/types';
 import { AbilitySelect, CampaignAttachCard, CampaignOptionsCard, ChoiceDetails, FullStats, LanguageEditor, OptionsCard, OriginPickers, OverridesCard, PopupSelect, SearchSelect, SetupCard, SetupUnlockedChoices, SnareFormulasCard, SourcesCard, SkillEditor, AttributeEditor, SubCard, VariantRulesCard, cap, loreKey, loreLabel, useBuilderActions } from './shared';
 import { hasSnareCrafting } from '../rules/snareFormulas';
@@ -243,6 +243,116 @@ export function Builder({
   // The built character, used to evaluate feat prerequisites in the picker and the stats rail.
   // Memoized so the full per-level build pipeline runs once per build change, not 2–3× per render.
   const featPrereqChar = useMemo(() => buildCharacter(build, ovContent), [build, ovContent]);
+
+  /**
+   * Render one build-time choice picker.
+   *
+   * Extracted from the feat path so the SAME control can serve an owned class feature or a heritage.
+   * Only `feats[id].choice` was ever rendered, so a choice on any other record was stored in the data,
+   * shown in no picker, and answered by nobody — 25 class-feature choices shipped that way.
+   *
+   * `key` is the storage slot in build.featChoices: a feat uses its level slot, a feature uses
+   * `feature:<id>`, a heritage `heritage:<id>`. Multi-pick fans out from it via choiceKeys().
+   */
+  const renderChoice = (def: FeatChoiceDef, key: string) => {
+                              // Annotated because the three branches below are structurally different and the
+                              // generic in choiceOptionsFor would otherwise narrow away `label`.
+                              const opts: { value: string; label: string; description?: string }[] =
+                                def.kind === 'domains'
+                                  ? ((build.deityId ? content.deities[build.deityId]?.domains : undefined) ?? []).map((d) => ({
+                                      value: d,
+                                      label: cap(d),
+                                    }))
+                                  : def.kind === 'skills'
+                                    ? // "Choose a skill you're trained in" (Assurance and friends). The eligible set
+                                      // depends on the BUILD and grows with it, so it can't be enumerated on the
+                                      // record — resolve it from the character being built. Lores are included
+                                      // because they are skills the rules let you choose.
+                                      trainedSkillOptions(featPrereqChar, def.minRank ?? 'trained')
+                                    : def.options ?? [];
+                              return (
+                                <SubCard icon="ti-adjustments" label={featChoicePrompt(def.prompt)}>
+                                  {def.kind === 'text' ? (
+                                    // No option list exists for these (Kingdom skills, leadership roles):
+                                    // the app has no Kingmaker data, and typing one from memory would be
+                                    // inventing content. The player supplies the word; we record it.
+                                    <input
+                                      className="txt"
+                                      type="text"
+                                      placeholder={`${featChoicePrompt(def.prompt)}…`}
+                                      value={build.featChoices[key] ?? ''}
+                                      onChange={(e) => actions.setFeatChoice(key, e.target.value)}
+                                    />
+                                  ) : def.kind === 'open' ? (
+                                    // An OPEN set ("any 1st-level dwarf ancestry feat") is resolved
+                                    // against content at render time and searched, because the legal
+                                    // list is too long to enumerate on the record and would go stale.
+                                    (() => {
+                                      const keys = choiceKeys(key, def);
+                                      const all = openChoiceOptions(def.from, content, { hideLegacy: build.hideLegacy, character: featPrereqChar });
+                                      return keys.map((k, i) => {
+                                        const answers = keys.map((kk) => build.featChoices[kk]);
+                                        const taken = new Set(def.distinct ? answers.filter((a, j) => j !== i && a) : []);
+                                        return (
+                                          <SearchSelect
+                                            key={k}
+                                            bare
+                                            label={featChoicePrompt(def.prompt)}
+                                            placeholder={`Search ${def.from?.type ?? 'options'}…`}
+                                            value={build.featChoices[k] ?? null}
+                                            onChange={(v) => actions.setFeatChoice(k, v)}
+                                            options={all.filter((o) => !taken.has(o.id))}
+                                          />
+                                        );
+                                      });
+                                    })()
+                                  ) : (
+                                    // "Choose two DIFFERENT terrains" needs one picker per pick. A
+                                    // single-pick choice still uses the bare slot key, so characters
+                                    // saved before multi-pick existed are unaffected.
+                                    (() => {
+                                      const keys = choiceKeys(key, def);
+                                      const answers = keys.map((k) => build.featChoices[k]);
+                                      return keys.map((k, i) => (
+                                        <PopupSelect
+                                          key={k}
+                                          title={featChoicePrompt(def.prompt)}
+                                          placeholder={
+                                            keys.length > 1
+                                              ? `${featChoicePrompt(def.prompt)} ${i + 1} of ${keys.length}…`
+                                              : `${featChoicePrompt(def.prompt)}…`
+                                          }
+                                          value={build.featChoices[k] ?? ''}
+                                          onChange={(v) => actions.setFeatChoice(k, v)}
+                                          options={choiceOptionsFor(opts, def, answers, i).map((o) => ({
+                                            value: o.value,
+                                            label: featChoiceLabel(o.label),
+                                            description: (o as { description?: string }).description,
+                                          }))}
+                                        />
+                                      ));
+                                    })()
+                                  )}
+                                  {/* A restriction the app cannot enforce — name the part that is on the
+                                      player, instead of silently offering a wider list than the rules allow. */}
+                                  {def.note && (
+                                    <div className="choice-inert">
+                                      <i className="ti ti-alert-circle" aria-hidden="true" />
+                                      <span>{def.note}</span>
+                                    </div>
+                                  )}
+                                  {/* A pick that records but grants nothing must say so — the owner's rule
+                                      is "never silently show a pick that does nothing". */}
+                                  {def.inert && (
+                                    <div className="choice-inert">
+                                      <i className="ti ti-info-circle" aria-hidden="true" />
+                                      <span>{def.inert}</span>
+                                    </div>
+                                  )}
+                                </SubCard>
+                              );
+  };
+
   // Divine font (cleric): the deity's allowed heal/harm options + the resolved slot count.
   const hasFontFeature = !!casterCls?.features?.some((f) => f.featureId === 'divine-font');
   const fontOptions = ((build.deityId ? content.deities[build.deityId]?.divineFont : undefined) ?? []) as (
@@ -977,6 +1087,14 @@ export function Builder({
                                 flavor={classFeatureDescription(content.classFeatures[f.id]?.description, build.classId, content)}
                                 descRefs={content.classFeatures[f.id]?.descRefs}
                               />
+                              {/* A class feature can ask for a pick too ("choose a damage type", "choose a
+                                  Thassilonian school"). Only feats ever rendered one, so class-feature
+                                  choices were stored in the data, shown in no picker and answered by
+                                  nobody. Daily ones are excluded — those belong to the Rest sheet. */}
+                              {(() => {
+                                const def = content.classFeatures[f.id]?.choice;
+                                return def && !def.daily ? renderChoice(def, `feature:${f.id}`) : null;
+                              })()}
                             </div>
                           ))}
                         {/* Level-gated proficiency upgrades from feats taken EARLIER (Brilliant Crafter:
@@ -1153,101 +1271,7 @@ export function Builder({
                             // pick-a-feat picker below — don't also render the inert proficiency-choice dropdown.
                             !(content.feats[picked]!.choice!.flag === 'feat' && FEAT_PICK_GRANTS[picked]) &&
                             (() => {
-                              const def = content.feats[picked]!.choice!;
-                              const opts =
-                                def.kind === 'domains'
-                                  ? ((build.deityId ? content.deities[build.deityId]?.domains : undefined) ?? []).map((d) => ({
-                                      value: d,
-                                      label: cap(d),
-                                    }))
-                                  : def.kind === 'skills'
-                                    ? // "Choose a skill you're trained in" (Assurance and friends). The eligible set
-                                      // depends on the BUILD and grows with it, so it can't be enumerated on the
-                                      // record — resolve it from the character being built. Lores are included
-                                      // because they are skills the rules let you choose.
-                                      trainedSkillOptions(featPrereqChar, def.minRank ?? 'trained')
-                                    : def.options ?? [];
-                              return (
-                                <SubCard icon="ti-adjustments" label={featChoicePrompt(def.prompt)}>
-                                  {def.kind === 'text' ? (
-                                    // No option list exists for these (Kingdom skills, leadership roles):
-                                    // the app has no Kingmaker data, and typing one from memory would be
-                                    // inventing content. The player supplies the word; we record it.
-                                    <input
-                                      className="txt"
-                                      type="text"
-                                      placeholder={`${featChoicePrompt(def.prompt)}…`}
-                                      value={build.featChoices[key] ?? ''}
-                                      onChange={(e) => actions.setFeatChoice(key, e.target.value)}
-                                    />
-                                  ) : def.kind === 'open' ? (
-                                    // An OPEN set ("any 1st-level dwarf ancestry feat") is resolved
-                                    // against content at render time and searched, because the legal
-                                    // list is too long to enumerate on the record and would go stale.
-                                    (() => {
-                                      const keys = choiceKeys(key, def);
-                                      const all = openChoiceOptions(def.from, content, { hideLegacy: build.hideLegacy, character: featPrereqChar });
-                                      return keys.map((k, i) => {
-                                        const answers = keys.map((kk) => build.featChoices[kk]);
-                                        const taken = new Set(def.distinct ? answers.filter((a, j) => j !== i && a) : []);
-                                        return (
-                                          <SearchSelect
-                                            key={k}
-                                            bare
-                                            label={featChoicePrompt(def.prompt)}
-                                            placeholder={`Search ${def.from?.type ?? 'options'}…`}
-                                            value={build.featChoices[k] ?? null}
-                                            onChange={(v) => actions.setFeatChoice(k, v)}
-                                            options={all.filter((o) => !taken.has(o.id))}
-                                          />
-                                        );
-                                      });
-                                    })()
-                                  ) : (
-                                    // "Choose two DIFFERENT terrains" needs one picker per pick. A
-                                    // single-pick choice still uses the bare slot key, so characters
-                                    // saved before multi-pick existed are unaffected.
-                                    (() => {
-                                      const keys = choiceKeys(key, def);
-                                      const answers = keys.map((k) => build.featChoices[k]);
-                                      return keys.map((k, i) => (
-                                        <PopupSelect
-                                          key={k}
-                                          title={featChoicePrompt(def.prompt)}
-                                          placeholder={
-                                            keys.length > 1
-                                              ? `${featChoicePrompt(def.prompt)} ${i + 1} of ${keys.length}…`
-                                              : `${featChoicePrompt(def.prompt)}…`
-                                          }
-                                          value={build.featChoices[k] ?? ''}
-                                          onChange={(v) => actions.setFeatChoice(k, v)}
-                                          options={choiceOptionsFor(opts, def, answers, i).map((o) => ({
-                                            value: o.value,
-                                            label: featChoiceLabel(o.label),
-                                            description: (o as { description?: string }).description,
-                                          }))}
-                                        />
-                                      ));
-                                    })()
-                                  )}
-                                  {/* A restriction the app cannot enforce — name the part that is on the
-                                      player, instead of silently offering a wider list than the rules allow. */}
-                                  {def.note && (
-                                    <div className="choice-inert">
-                                      <i className="ti ti-alert-circle" aria-hidden="true" />
-                                      <span>{def.note}</span>
-                                    </div>
-                                  )}
-                                  {/* A pick that records but grants nothing must say so — the owner's rule
-                                      is "never silently show a pick that does nothing". */}
-                                  {def.inert && (
-                                    <div className="choice-inert">
-                                      <i className="ti ti-info-circle" aria-hidden="true" />
-                                      <span>{def.inert}</span>
-                                    </div>
-                                  )}
-                                </SubCard>
-                              );
+                              return renderChoice(content.feats[picked]!.choice!, key);
                             })()}
                           {/* Dedication skill-training CHOICES ("trained in Acrobatics or Athletics") and
                               the bonus skill feat (Rogue Dedication) — surfaced from FEAT_GRANTS below
