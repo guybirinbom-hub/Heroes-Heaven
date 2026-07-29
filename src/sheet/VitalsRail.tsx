@@ -233,6 +233,13 @@ export function VitalsRail({
       { label: 'Spell DC', value: sc.dc, ref: { kind: 'spell', entryId: entry.id, which: 'dc' } },
       { label: 'Spell attack', value: formatMod(sc.attack), ref: { kind: 'spell', entryId: entry.id, which: 'attack' } },
     );
+    // Spell damage has no total of its own — each spell rolls its own dice — so this tile exists only
+    // to carry conditional bonuses (Dangerous Sorcery, Channeler's Stance). Showing it unconditionally
+    // would put a permanent "varies" next to two real numbers, so it appears only when it has content.
+    const spellDamage: StatRef = { kind: 'spellDamage', entryId: entry.id };
+    if (statHasSituational(character, spellDamage, content)) {
+      defenses.push({ label: 'Spell damage', value: 'varies', ref: spellDamage });
+    }
   }
 
   // Rail cards keyed by id so Customize can reorder / hide them. Conditional cards resolve to null when

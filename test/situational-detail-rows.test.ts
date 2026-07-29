@@ -82,3 +82,60 @@ describe('every starred stat kind lists its situational bonuses', () => {
     });
   }
 });
+
+/**
+ * SPELL DAMAGE is its own surface.
+ *
+ * Records like Dangerous Sorcery ("a status bonus to that spell's damage") were previously filed
+ * against `spell`, which is the spell ATTACK ROLL and the spell DC — neither of which they touch.
+ * The star landed on two numbers the feat does not affect, and the number it does affect had no row.
+ */
+describe('spellDamage', () => {
+  const spellcaster = (featId: string) =>
+    normalizeCharacter({
+      id: 's', name: 'S', level: 5, classId: 'sorcerer', keyAbility: 'cha',
+      abilities: { str: 10, dex: 12, con: 12, int: 10, wis: 10, cha: 18 },
+      feats: [{ featId }],
+      spellcasting: [{ id: 'e1', name: 'Spells', type: 'spontaneous', tradition: 'arcane', keyAbility: 'cha', proficiency: 'trained', cantrips: [] }],
+    });
+
+  it('Dangerous Sorcery stars spell DAMAGE and leaves the attack roll and DC alone', () => {
+    const ch = spellcaster('dangerous-sorcery');
+    expect(statHasSituational(ch, { kind: 'spellDamage', entryId: 'e1' }, c)).toBe(true);
+    expect(statHasSituational(ch, { kind: 'spell', entryId: 'e1', which: 'attack' }, c)).toBe(false);
+    expect(statHasSituational(ch, { kind: 'spell', entryId: 'e1', which: 'dc' }, c)).toBe(false);
+  });
+
+  it('the breakdown has no total of its own — the bonuses ARE the content', () => {
+    const b = explainStat(spellcaster('dangerous-sorcery'), c, { kind: 'spellDamage', entryId: 'e1' });
+    expect(b.parts).toEqual([]);
+    expect(b.totalText).toBe('varies');
+    expect(b.situational?.join(' ')).toContain('Dangerous Sorcery');
+  });
+
+  it('every sorcerer gets the row from Sorcerous Potency, with no feat needed', () => {
+    // The class feature is owned, not chosen, so the row is part of being a sorcerer.
+    const ch = spellcaster('toughness');
+    expect(statHasSituational(ch, { kind: 'spellDamage', entryId: 'e1' }, c)).toBe(true);
+    expect(explainStat(ch, c, { kind: 'spellDamage', entryId: 'e1' }).situational?.join(' ')).toContain('Sorcerous Potency');
+  });
+
+  it('a character with no spell-damage source gets no star, so the row never renders', () => {
+    const fighter = normalizeCharacter({
+      id: 'f', name: 'F', level: 5, classId: 'fighter', keyAbility: 'str',
+      abilities: { str: 18, dex: 12, con: 12, int: 10, wis: 10, cha: 10 },
+      feats: [{ featId: 'toughness' }],
+      spellcasting: [{ id: 'e1', name: 'Spells', type: 'spontaneous', tradition: 'arcane', keyAbility: 'cha', proficiency: 'trained', cantrips: [] }],
+    });
+    expect(statHasSituational(fighter, { kind: 'spellDamage', entryId: 'e1' }, c)).toBe(false);
+  });
+
+  it('"damage rolls" records carry BOTH surfaces on one entry, not two duplicate lines', () => {
+    // Nemesis Name reads "+2 status bonus to damage rolls" — Strikes and spells alike. Splitting that
+    // into two entries would print the same sentence twice to anyone reading either breakdown.
+    const entries = FEAT_SITUATIONAL['nemesis-name'];
+    const both = entries.filter((e) => e.targets.some((t) => t.kind === 'strikeDamage') && e.targets.some((t) => t.kind === 'spellDamage'));
+    expect(both.length).toBe(1);
+    expect(entries.filter((e) => /damage rolls against the creature named/.test(e.when)).length).toBe(1);
+  });
+});

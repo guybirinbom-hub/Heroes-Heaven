@@ -75,6 +75,9 @@ export function StatDetailModal({
 
         <div className="sd-body">
           {editor && <section className="sd-sec sd-editor">{editor}</section>}
+          {/* Spell damage has no computed total — each spell rolls its own — so a "How it's
+              calculated / Total: varies" block with no rows would say nothing. */}
+          {b.parts.length > 0 && (
           <section className="sd-sec">
             <div className="sd-sec-label">How it's calculated</div>
             <div className="sd-calc">
@@ -91,6 +94,7 @@ export function StatDetailModal({
               </div>
             </div>
           </section>
+          )}
 
           {b.situational && b.situational.length > 0 && (
             <section className="sd-sec">

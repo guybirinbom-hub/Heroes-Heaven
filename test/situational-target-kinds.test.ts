@@ -29,6 +29,8 @@ describe('situational target kinds stay in sync with StatRef', () => {
     hp: { kind: 'hp' },
     classDc: { kind: 'classDc' },
     spell: { kind: 'spell', which: 'dc' },
+    // Distinct from `spell`: that is the spell attack roll and the DC, this is the damage a spell deals.
+    spellDamage: { kind: 'spellDamage' },
     ability: { kind: 'ability', ability: 'str' },
   };
 

@@ -21,7 +21,7 @@ import {
   type PlayUpdater,
 } from '../rules/play';
 import { itemCounters, chargesFor, chargeCounterId, chargeCostToCast, canCastFromItem } from '../rules/itemUses';
-import { ActionGlyph } from './widgets';
+import { ActionGlyph, SituationalStar } from './widgets';
 import { ItemDetail } from './ItemDetail';
 import { useEscapeClose } from './useEscapeClose';
 import { useIsMobile } from './useIsMobile';
@@ -34,7 +34,7 @@ import { PinStar } from './PinStar';
 import { useContent } from './ContentContext';
 import { useCustomization } from '../data/customization';
 import { traitDesc, traitLabel } from '../rules/glossary';
-import type { StatRef } from '../rules/explain';
+import { statHasSituational, type StatRef } from '../rules/explain';
 import { spellCostMatches } from '../rules/spellFilter';
 import { heighteningApplies, splitHeightening, scaleDamage, scaleArea } from '../rules/heightening';
 
@@ -1264,22 +1264,30 @@ export function SpellsTab({
                   {main.note && <div className="sc-sub">{main.note}</div>}
                 </div>
               </div>
-              <div
-                className={'tile' + (onOpenStat ? ' openable' : '')}
-                title={onOpenStat ? 'How is this calculated?' : undefined}
-                onClick={onOpenStat ? () => onOpenStat({ kind: 'spell', entryId: main.id, which: 'attack' }) : undefined}
-              >
-                <div className="tlab">Spell attack</div>
-                <div className="tval">{formatMod(sc.attack)}</div>
-              </div>
-              <div
-                className={'tile' + (onOpenStat ? ' openable' : '')}
-                title={onOpenStat ? 'How is this calculated?' : undefined}
-                onClick={onOpenStat ? () => onOpenStat({ kind: 'spell', entryId: main.id, which: 'dc' }) : undefined}
-              >
-                <div className="tlab">Spell DC</div>
-                <div className="tval">{sc.dc}</div>
-              </div>
+              {/* These tiles never carried the situational `*`, so conditional spellcasting bonuses were
+                  invisible here even though the same stats show them in the vitals rail. */}
+              {([
+                { label: 'Spell attack', value: formatMod(sc.attack), ref: { kind: 'spell', entryId: main.id, which: 'attack' } },
+                { label: 'Spell DC', value: sc.dc, ref: { kind: 'spell', entryId: main.id, which: 'dc' } },
+                // Spell damage has no total of its own — each spell rolls its own dice — so this tile
+                // appears only when something actually modifies it (Dangerous Sorcery, Channeler's Stance).
+                ...(statHasSituational(character, { kind: 'spellDamage', entryId: main.id }, content)
+                  ? [{ label: 'Spell damage', value: 'varies', ref: { kind: 'spellDamage', entryId: main.id } }]
+                  : []),
+              ] as { label: string; value: string | number; ref: StatRef }[]).map((t) => (
+                <div
+                  key={t.label}
+                  className={'tile' + (onOpenStat ? ' openable' : '') + (statHasSituational(character, t.ref, content) ? ' has-mode' : '')}
+                  title={onOpenStat ? 'How is this calculated?' : undefined}
+                  onClick={onOpenStat ? () => onOpenStat(t.ref) : undefined}
+                >
+                  <div className="tlab">
+                    {t.label}
+                    {statHasSituational(character, t.ref, content) && <SituationalStar />}
+                  </div>
+                  <div className="tval">{t.value}</div>
+                </div>
+              ))}
             </div>
             {/* On mobile, only the header renders here; ALL sections live under the single
                 page-level tab row below. On desktop, the per-main collapsible rank section. */}

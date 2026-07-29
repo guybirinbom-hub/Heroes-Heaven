@@ -50,6 +50,9 @@ export type StatRef =
   | { kind: 'ac' }
   | { kind: 'classDc' }
   | { kind: 'spell'; entryId: string; which: 'dc' | 'attack' }
+  // Damage dealt by your spells. It has no computed total of its own — the number lives on each
+  // spell — so this row exists purely to hold the conditional bonuses that modify it.
+  | { kind: 'spellDamage'; entryId: string }
   | { kind: 'ability'; ability: AbilityId }
   | { kind: 'hp' }
   | { kind: 'speed' }
@@ -494,6 +497,22 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         description: 'Your spellcasting proficiency sets both your spell attack roll and the DC your targets save against.',
         roll: isDc ? undefined : { label: `${cap(entry.tradition)} spell attack`, modifier: sc.attack },
         situational,
+      };
+    }
+    case 'spellDamage': {
+      const entry = c.spellcasting.find((e) => e.id === ref.entryId) as SpellcastingEntry | undefined;
+      // No parts and no total: unlike every other stat, spell damage is not a single number — each
+      // spell rolls its own. Everything worth showing is in `situational`, which is why the row is
+      // only rendered when there is at least one.
+      return {
+        title: 'Spell damage',
+        subtitle: entry ? `${cap(entry.tradition)} spells` : undefined,
+        totalText: 'varies',
+        parts: [],
+        timeline: [],
+        description:
+          'Damage dealt by your spells is rolled per spell. These effects add to (or subtract from) that roll when their condition is met.',
+        situational: featSituationalStrings(c, db, ref),
       };
     }
     case 'ability': {
