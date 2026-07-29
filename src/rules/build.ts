@@ -47,7 +47,7 @@ import type {
   WeaponRunes,
   PinnedDesc,
 } from './types';
-import type { ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, InnateSpellGrant, ItemPassiveEffects, SourceInfo, SpellSlotBonus, SpellcastingGrant } from './types';
+import type { ClassArchetype, DefenseGrants, EffectChoice, EffectGrant, FeatChoiceDef, InnateSpellGrant, ItemPassiveEffects, SourceInfo, SpellSlotBonus, SpellcastingGrant } from './types';
 import { CHARACTER_SCHEMA_VERSION, PROFICIENCY_RANKS, SKILLS } from './types';
 import { CHOOSABLE_SOURCE_MAPS } from './sources';
 import { abilityMod } from './derive';
@@ -325,6 +325,29 @@ export function backgroundGrantedFeats(bg: Background | undefined): string[] {
   const g = bg?.grantedFeatId;
   if (!g) return [];
   return Array.isArray(g) ? g.filter(Boolean) : [g];
+}
+
+/**
+ * The featChoices keys a choice occupies.
+ *
+ * A single pick keeps the bare slot key, so every character saved before multi-pick existed keeps
+ * working untouched. Only `picks > 1` fans out to `<slotKey>#<i>`.
+ */
+export function choiceKeys(slotKey: string, def: FeatChoiceDef | undefined): string[] {
+  const n = Math.max(1, Math.floor(def?.picks ?? 1));
+  return n === 1 ? [slotKey] : Array.from({ length: n }, (_, i) => `${slotKey}#${i}`);
+}
+
+/** Options still selectable for pick `idx` — with `distinct`, the other picks' answers are removed. */
+export function choiceOptionsFor<T extends { value: string }>(
+  options: T[],
+  def: FeatChoiceDef | undefined,
+  answers: (string | undefined)[],
+  idx: number,
+): T[] {
+  if (!def?.distinct) return options;
+  const taken = new Set(answers.filter((a, i) => i !== idx && a));
+  return options.filter((o) => !taken.has(o.value));
 }
 
 export function resolveBackground(build: BuildState, content: ContentDatabase): Background | undefined {
@@ -1446,8 +1469,20 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     if (!featId || !Number.isFinite(lvl) || lvl > level) continue;
     if (!content.feats[featId]) continue;
     focusSeen.add(featId);
-    const resolved = applyFeatFocus(featId, build.featChoices?.[slotKey]);
-    if (resolved) featChoiceById[slotKey] = resolved;
+    // A multi-pick choice ("choose two different terrains") stores one answer per index; resolve each
+    // and show them joined, so the feat row reads "Terrain Scout (Forest, Swamp)" rather than naming
+    // only the first. applyFeatFocus runs on the FIRST answer, which is the one that can carry a
+    // focus-spell grant — no multi-pick choice in the data grants a spell per pick.
+    const keys = choiceKeys(slotKey, content.feats[featId]?.choice);
+    const values = keys.map((k) => build.featChoices?.[k]).filter(Boolean) as string[];
+    const resolved = applyFeatFocus(featId, values[0]);
+    if (resolved) {
+      const def = content.feats[featId]?.choice;
+      const labels = values.map(
+        (v) => (def?.options?.find((o) => o.value === v)?.label ?? featChoiceLabel(v)),
+      );
+      featChoiceById[slotKey] = labels.length > 1 ? { value: values.join(','), label: labels.join(', ') } : resolved;
+    }
   }
   // BONUS/GRANTED feats contribute focus too — background/heritage/UMT feats, override-added feats,
   // pick-a-feat picks, dedication skill feats, and the FEAT_FEAT_GRANTS closure over everything (Seeker

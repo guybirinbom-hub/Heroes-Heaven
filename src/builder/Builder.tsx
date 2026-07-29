@@ -20,6 +20,8 @@ import {
   levelGrants,
   setupMissing,
   backgroundGrantedFeats,
+  choiceKeys,
+  choiceOptionsFor,
 } from '../rules/build';
 import { confirmDialog } from '../sheet/confirm';
 import { sourceCatalog, enabledBookSet } from '../rules/sources';
@@ -1178,13 +1180,31 @@ export function Builder({
                                       onChange={(e) => actions.setFeatChoice(key, e.target.value)}
                                     />
                                   ) : (
-                                    <PopupSelect
-                                      title={featChoicePrompt(def.prompt)}
-                                      placeholder={`${featChoicePrompt(def.prompt)}…`}
-                                      value={build.featChoices[key] ?? ''}
-                                      onChange={(v) => actions.setFeatChoice(key, v)}
-                                      options={opts.map((o) => ({ value: o.value, label: featChoiceLabel(o.label), description: (o as { description?: string }).description }))}
-                                    />
+                                    // "Choose two DIFFERENT terrains" needs one picker per pick. A
+                                    // single-pick choice still uses the bare slot key, so characters
+                                    // saved before multi-pick existed are unaffected.
+                                    (() => {
+                                      const keys = choiceKeys(key, def);
+                                      const answers = keys.map((k) => build.featChoices[k]);
+                                      return keys.map((k, i) => (
+                                        <PopupSelect
+                                          key={k}
+                                          title={featChoicePrompt(def.prompt)}
+                                          placeholder={
+                                            keys.length > 1
+                                              ? `${featChoicePrompt(def.prompt)} ${i + 1} of ${keys.length}…`
+                                              : `${featChoicePrompt(def.prompt)}…`
+                                          }
+                                          value={build.featChoices[k] ?? ''}
+                                          onChange={(v) => actions.setFeatChoice(k, v)}
+                                          options={choiceOptionsFor(opts, def, answers, i).map((o) => ({
+                                            value: o.value,
+                                            label: featChoiceLabel(o.label),
+                                            description: (o as { description?: string }).description,
+                                          }))}
+                                        />
+                                      ));
+                                    })()
                                   )}
                                   {/* A pick that records but grants nothing must say so — the owner's rule
                                       is "never silently show a pick that does nothing". */}

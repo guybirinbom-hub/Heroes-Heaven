@@ -554,6 +554,14 @@ export interface FeatChoiceDef {
   /** For 'skills': the minimum rank a skill must reach to be offered (default 'trained'). */
   minRank?: ProficiencyRank;
   /**
+   * How many separate answers the record asks for. Default 1. Terrain Scout picks TWO terrains,
+   * Arcane Shroud three. Answers are stored per index (`<slotKey>#<i>`); a single-pick choice keeps
+   * using the bare slot key, so existing saved characters are untouched.
+   */
+  picks?: number;
+  /** The picks must differ ("choose two DIFFERENT terrains") — each picker hides the others' answers. */
+  distinct?: boolean;
+  /**
    * The pick is re-made at DAILY PREPARATIONS ("During your daily preparations, choose…") rather than
    * once when the feat is taken — Environmental Adaptability's cold-or-heat, Mask of Power's spell.
    * These answers live in `PlayState.dailyChoices`, NOT in the build: they change nightly, so a
