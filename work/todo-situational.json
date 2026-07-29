@@ -1,0 +1,6425 @@
+[
+ {
+  "collection": "feats",
+  "id": "dangerous-sorcery",
+  "name": "Dangerous Sorcery",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "tweak-appearances",
+  "name": "Tweak Appearances",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "clans-edge",
+  "name": "Clan's Edge",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "battleforger",
+  "name": "Battleforger",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "amplifying-touch",
+  "name": "Amplifying Touch",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "hireling-manager",
+  "name": "Hireling Manager",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "skyseeker",
+  "name": "Skyseeker",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "archaeologists-warning",
+  "name": "Archaeologist's Warning",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "explosive-death-drop",
+  "name": "Explosive Death Drop",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "hydraulic-maneuvers",
+  "name": "Hydraulic Maneuvers",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "skull-creeper",
+  "name": "Skull Creeper",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "silent-sting",
+  "name": "Silent Sting",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "raise-a-tome",
+  "name": "Raise a Tome",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "stoked-flame-stance",
+  "name": "Stoked Flame Stance",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "vehicle-mechanic-dedication",
+  "name": "Vehicle Mechanic Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "black-powder-boost",
+  "name": "Black Powder Boost",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "reach-for-the-stars",
+  "name": "Reach for the Stars",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "artillerist-dedication",
+  "name": "Artillerist Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "protective-spirit-mask",
+  "name": "Protective Spirit Mask",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "tireless-guides-mask",
+  "name": "Tireless Guide's Mask",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "undying-conviction",
+  "name": "Undying Conviction",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "reanimator-dedication",
+  "name": "Reanimator Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "gravelands-herbalist",
+  "name": "Gravelands Herbalist",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "push-back-the-dead",
+  "name": "Push Back the Dead!",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "stalwart-standard",
+  "name": "Stalwart Standard",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "devoted-guardian",
+  "name": "Devoted Guardian",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "inspiring-resilience",
+  "name": "Inspiring Resilience",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "corpse-killers-defiance",
+  "name": "Corpse-Killer's Defiance",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "zombie-horde",
+  "name": "Zombie Horde",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "bodysnatcher",
+  "name": "Bodysnatcher",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "civil-service",
+  "name": "Civil Service",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "cooperative-leadership",
+  "name": "Cooperative Leadership",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "crush-dissent",
+  "name": "Crush Dissent",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "fortified-fiefs",
+  "name": "Fortified Fiefs",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "free-and-fair",
+  "name": "Free and Fair",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "insider-trading",
+  "name": "Insider Trading",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "inspiring-entertainment",
+  "name": "Inspiring Entertainment",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "quick-recovery-kingdom",
+  "name": "Quick Recovery (Kingdom)",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "fey-ascension",
+  "name": "Fey Ascension",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "contract-negotiator",
+  "name": "Contract Negotiator",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "tunnel-wall",
+  "name": "Tunnel Wall",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "upset-balance",
+  "name": "Upset Balance",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "magnetic-pinions",
+  "name": "Magnetic Pinions",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "consume-power",
+  "name": "Consume Power",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "wormskin",
+  "name": "Wormskin",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "inexorable",
+  "name": "Inexorable",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "burn-it",
+  "name": "Burn It!",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "divine-rebuttal",
+  "name": "Divine Rebuttal",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "magic-hands",
+  "name": "Magic Hands",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "shared-avoidance",
+  "name": "Shared Avoidance",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "shared-clarity",
+  "name": "Shared Clarity",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "assisting-shot",
+  "name": "Assisting Shot",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "guardians-deflection-fighter",
+  "name": "Guardian's Deflection (Fighter)",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "scouts-warning",
+  "name": "Scout's Warning",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "watch-your-back",
+  "name": "Watch Your Back",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "coven-spell",
+  "name": "Coven Spell",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "witchs-broom",
+  "name": "Witch’s Broom",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "irresistible-magic",
+  "name": "Irresistible Magic",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "swift-eel-mount",
+  "name": "Swift Eel Mount",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "begin-stampede",
+  "name": "Begin Stampede",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "uncanny-bombs",
+  "name": "Uncanny Bombs",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "dragon-transformation",
+  "name": "Dragon Transformation",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "vicious-vengeance",
+  "name": "Vicious Vengeance",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "mountain-stance",
+  "name": "Mountain Stance",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "cobra-stance",
+  "name": "Cobra Stance",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "whirling-throw",
+  "name": "Whirling Throw",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "cobra-envenom",
+  "name": "Cobra Envenom",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "meddling-futures",
+  "name": "Meddling Futures",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "derring-do",
+  "name": "Derring-do",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "swashbucklers-speed",
+  "name": "Swashbuckler's Speed",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "celebrity-dedication",
+  "name": "Celebrity Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "endemic-herbs",
+  "name": "Endemic Herbs",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "medic-dedication",
+  "name": "Medic Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "incredible-scout",
+  "name": "Incredible Scout",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "root-magic",
+  "name": "Root Magic",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "perfected-gamtu",
+  "name": "Perfected Gamtu",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "hasty-celebration",
+  "name": "Hasty Celebration",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "unwavering-guide",
+  "name": "Unwavering Guide",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "regional-specialty",
+  "name": "Regional Specialty",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "prepare-elemental-medicine",
+  "name": "Prepare Elemental Medicine",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "acupuncturist",
+  "name": "Acupuncturist",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "cardinal-guardians",
+  "name": "Cardinal Guardians",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "aegis-for-the-innocent",
+  "name": "Aegis for the Innocent",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "chosen-ward",
+  "name": "Chosen Ward",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "creature-of-myth",
+  "name": "Creature of Myth",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "cry-of-rebellion",
+  "name": "Cry of Rebellion",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "you-cant-kill-an-idea",
+  "name": "You Can't Kill an Idea",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "decree-of-prosperity",
+  "name": "Decree of Prosperity",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "sovereigns-blade",
+  "name": "Sovereign's Blade",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "channelers-stance",
+  "name": "Channeler's Stance",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "rise-my-creature",
+  "name": "Rise, My Creature!",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "companion",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "beautiful-knifework",
+  "name": "Beautiful Knifework",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "exigent-aura",
+  "name": "Exigent Aura",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "empowered-onslaught",
+  "name": "Empowered Onslaught",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "cursebreaker",
+  "name": "Cursebreaker",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "mask-of-the-12th-step",
+  "name": "Mask of The 12th Step",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "mask-of-the-15th-step",
+  "name": "Mask of The 15th Step",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "living-god",
+  "name": "Living God",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "commitment-to-liberty",
+  "name": "Commitment to Liberty",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "demon-hunting-companion",
+  "name": "Demon-Hunting Companion",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "companion",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "vellumis-excision",
+  "name": "Vellumis Excision",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "pennant-of-victory",
+  "name": "Pennant of Victory",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "field-propagandist-dedication",
+  "name": "Field Propagandist Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "predispose-settlement",
+  "name": "Predispose Settlement",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "hero-gods-bond",
+  "name": "Hero-God's Bond",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "martyrs-parry",
+  "name": "Martyr's Parry",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "hydras-bond",
+  "name": "Hydra's Bond",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "stages-of-fate",
+  "name": "Stages of Fate",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "dragonet-breath",
+  "name": "Dragonet Breath",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "indomitable-shot",
+  "name": "Indomitable Shot",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "ward-slumber",
+  "name": "Ward Slumber",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "face-your-fears",
+  "name": "Face Your Fears",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "fear-no-pain",
+  "name": "Fear No Pain!",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "swift-support",
+  "name": "Swift Support",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "bounce-boost",
+  "name": "Bounce Boost",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "personalized-poisoning",
+  "name": "Personalized Poisoning",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "snap-out-of-it-marshal",
+  "name": "Snap Out of It! (Marshal)",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "guardians-deflection-swashbuckler",
+  "name": "Guardian's Deflection (Swashbuckler)",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "sorcerous-potency",
+  "name": "Sorcerous Potency",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "commanders-banner",
+  "name": "Commander's Banner",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "choir-politic",
+  "name": "Choir Politic",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "construct-eidolon",
+  "name": "Construct Eidolon",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "devotion-phantom-eidolon",
+  "name": "Devotion Phantom Eidolon",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "elemental-eidolon",
+  "name": "Elemental Eidolon",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "gate-junction",
+  "name": "Gate Junction",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "lantern",
+  "name": "Lantern",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "regalia",
+  "name": "Regalia",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "shield",
+  "name": "Shield",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-distant-grasp",
+  "name": "The Distant Grasp",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-unbound-step",
+  "name": "The Unbound Step",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "wand",
+  "name": "Wand",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "weapon-innovation",
+  "name": "Weapon Innovation",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "elemental-blast",
+  "name": "Elemental Blast",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "gaze-of-the-mantis",
+  "name": "Gaze of the Mantis",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "infiltrators-elixir",
+  "name": "Infiltrator's Elixir",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "swim-fins",
+  "name": "Swim Fins",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "eye-of-the-wise",
+  "name": "Eye of the Wise",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "acrobats-staff",
+  "name": "Acrobat's Staff",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "inspiring-spotlight",
+  "name": "Inspiring Spotlight",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "addiction-suppressant",
+  "name": "Addiction Suppressant",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "addiction-suppressant-lesser",
+  "name": "Addiction Suppressant (Lesser)",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "addiction-suppressant-moderate",
+  "name": "Addiction Suppressant (Moderate)",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "addiction-suppressant-greater",
+  "name": "Addiction Suppressant (Greater)",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "addiction-suppressant-major",
+  "name": "Addiction Suppressant (Major)",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sovereign-steel",
+  "name": "Sovereign Steel",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sovereign-steel-chunk",
+  "name": "Sovereign Steel Chunk",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sovereign-steel-ingot",
+  "name": "Sovereign Steel Ingot",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sovereign-steel-object-standard-grade",
+  "name": "Sovereign Steel Object (Standard-Grade)",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sovereign-steel-object-high-grade",
+  "name": "Sovereign Steel Object (High-Grade)",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sixfingers-elixir",
+  "name": "Sixfingers Elixir",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sixfingers-elixir-lesser",
+  "name": "Sixfingers Elixir (Lesser)",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sixfingers-elixir-moderate",
+  "name": "Sixfingers Elixir (Moderate)",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sixfingers-elixir-greater",
+  "name": "Sixfingers Elixir (Greater)",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "harrow-mat",
+  "name": "Harrow Mat",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "marked-playing-cards",
+  "name": "Marked Playing Cards",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "rubbing-set",
+  "name": "Rubbing Set",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "fixer",
+  "name": "Fixer",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "skeptics-elixir",
+  "name": "Skeptic's Elixir",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "singing-shortbow",
+  "name": "Singing Shortbow",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "singing-shortbow-greater",
+  "name": "Singing Shortbow (Greater)",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "leopards-armor",
+  "name": "Leopard's Armor",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "nosoi-charm",
+  "name": "Nosoi Charm",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "nosoi-charm-greater",
+  "name": "Nosoi Charm (Greater)",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "violet-ray",
+  "name": "Violet Ray",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "duchy-defender",
+  "name": "Duchy Defender",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "malleable-mixture",
+  "name": "Malleable Mixture",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "energy-robe",
+  "name": "Energy Robe",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "noqual",
+  "name": "Noqual",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "noqual-chunk",
+  "name": "Noqual Chunk",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "noqual-ingot",
+  "name": "Noqual Ingot",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "noqual-object-standard-grade",
+  "name": "Noqual Object (Standard-Grade)",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "noqual-object-high-grade",
+  "name": "Noqual Object (High-Grade)",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "noqual-shield",
+  "name": "Noqual Shield",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "exploration-lens",
+  "name": "Exploration Lens",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "red-rib-gill-mask",
+  "name": "Red-Rib Gill Mask",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "spiderfoot-brew-major",
+  "name": "Spiderfoot Brew (Major)",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "qat",
+  "name": "Qat",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "grit",
+  "name": "Grit",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "demon-dust",
+  "name": "Demon Dust",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "succubus-kiss",
+  "name": "Succubus Kiss",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "halcyon-heart",
+  "name": "Halcyon Heart",
+  "level": 21,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "thunder-helm",
+  "name": "Thunder Helm",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "azarim",
+  "name": "Azarim",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "briar",
+  "name": "Briar",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "admirers-bouquet",
+  "name": "Admirer's Bouquet",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "dragonscale-bo-staff",
+  "name": "Dragonscale Bo Staff",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "skunk-bomb-moderate",
+  "name": "Skunk Bomb (Moderate)",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "fury-cocktail",
+  "name": "Fury Cocktail",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "fury-cocktail-lesser",
+  "name": "Fury Cocktail (Lesser)",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "colorful-coating",
+  "name": "Colorful Coating",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "emetic-paste",
+  "name": "Emetic Paste",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "healing-vapor",
+  "name": "Healing Vapor",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sense-dulling-hood",
+  "name": "Sense-Dulling Hood",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "affliction-suppressant",
+  "name": "Affliction Suppressant",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "bendy-arm-mutagen",
+  "name": "Bendy-Arm Mutagen",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "deadweight-mutagen",
+  "name": "Deadweight Mutagen",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sanguine-mutagen",
+  "name": "Sanguine Mutagen",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "living-leaf-weave",
+  "name": "Living Leaf Weave",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "execution-powder",
+  "name": "Execution Powder",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "magnetic-shot",
+  "name": "Magnetic Shot",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "bootstrap-respirator",
+  "name": "Bootstrap Respirator",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "architects-pattern-book",
+  "name": "Architect's Pattern Book",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "bewitching-bloom",
+  "name": "Bewitching Bloom",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "unifying-emblem-skoan-quah",
+  "name": "Unifying Emblem (Skoan-Quah)",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "lightweave-scarf",
+  "name": "Lightweave Scarf",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "lightweave-scarf-greater",
+  "name": "Lightweave Scarf (Greater)",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "beast-staff",
+  "name": "Beast Staff",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "gamblers-staff",
+  "name": "Gambler's Staff",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "fiddle-of-the-maestro",
+  "name": "Fiddle of the Maestro",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "trackless",
+  "name": "Trackless",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "trackless-greater",
+  "name": "Trackless (Greater)",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "ursine-avenger-hood",
+  "name": "Ursine Avenger Hood",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "gelid-shard",
+  "name": "Gelid Shard",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "heartblood-ring",
+  "name": "Heartblood Ring",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "void-fragment",
+  "name": "Void Fragment",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "corruption-cassock",
+  "name": "Corruption Cassock",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "canary-informant-basic-services",
+  "name": "Canary Informant (Basic Services)",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "canary-informant-advanced-services",
+  "name": "Canary Informant (Advanced Services)",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "canary-tail-first-week",
+  "name": "Canary Tail (First Week)",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "canary-tail-second-week",
+  "name": "Canary Tail (Second Week)",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "canary-tail-third-week",
+  "name": "Canary Tail (Third Week)",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "canary-tail-fourth-week",
+  "name": "Canary Tail (Fourth Week)",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "the-publican",
+  "name": "The Publican",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "the-lens-of-the-outreaching-eye",
+  "name": "The Lens of the Outreaching Eye",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "the-survivor",
+  "name": "The Survivor",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "bangles-of-crowns",
+  "name": "Bangles of Crowns",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom",
+  "name": "Words of Wisdom",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom-lesser",
+  "name": "Words of Wisdom (Lesser)",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom-moderate",
+  "name": "Words of Wisdom (Moderate)",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "words-of-wisdom-greater",
+  "name": "Words of Wisdom (Greater)",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "keep-stone-weapon",
+  "name": "Keep Stone Weapon",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "keep-stone-weapon-high-grade",
+  "name": "Keep Stone Weapon (High-Grade)",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "vital-earth",
+  "name": "Vital Earth",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "globe-of-shrouds",
+  "name": "Globe of Shrouds",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "spiny-lodestone",
+  "name": "Spiny Lodestone",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "spiny-lodestone-greater",
+  "name": "Spiny Lodestone (Greater)",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "spiny-lodestone-major",
+  "name": "Spiny Lodestone (Major)",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "conch-of-otherworldly-seas",
+  "name": "Conch of Otherworldly Seas",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "therapeutic-snap-peas",
+  "name": "Therapeutic Snap Peas",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen",
+  "name": "Prey Mutagen",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen-lesser",
+  "name": "Prey Mutagen (Lesser)",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen-moderate",
+  "name": "Prey Mutagen (Moderate)",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen-greater",
+  "name": "Prey Mutagen (Greater)",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "prey-mutagen-major",
+  "name": "Prey Mutagen (Major)",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "demons-knot",
+  "name": "Demon's Knot",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "armor-polishing-kit",
+  "name": "Armor Polishing Kit",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "sanitizing-pin",
+  "name": "Sanitizing Pin",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "detectives-kit",
+  "name": "Detective's Kit",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "disguise-kit-elite-cosmetics",
+  "name": "Disguise Kit (Elite Cosmetics)",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "fishing-tackle-professional",
+  "name": "Fishing Tackle (Professional)",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "antidote",
+  "name": "Antidote",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "antiplague",
+  "name": "Antiplague",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "bombers-eye-elixir",
+  "name": "Bomber's Eye Elixir",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "alacritous-horsehoes",
+  "name": "Alacritous Horsehoes",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "alacritous-horseshoes-greater",
+  "name": "Alacritous Horseshoes (Greater)",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "maestros-instrument",
+  "name": "Maestro's Instrument",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "maestros-instrument-lesser",
+  "name": "Maestro's Instrument (Lesser)",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "maestros-instrument-moderate",
+  "name": "Maestro's Instrument (Moderate)",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "maestros-instrument-greater",
+  "name": "Maestro's Instrument (Greater)",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "fluid-form-staff",
+  "name": "Fluid Form Staff",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "fluid-form-staff-greater",
+  "name": "Fluid Form Staff (Greater)",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "fluid-form-staff-major",
+  "name": "Fluid Form Staff (Major)",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-elemental-power",
+  "name": "Staff of Elemental Power",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-elemental-power-greater",
+  "name": "Staff of Elemental Power (Greater)",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-elemental-power-major",
+  "name": "Staff of Elemental Power (Major)",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-healing",
+  "name": "Staff of Healing",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-healing-greater",
+  "name": "Staff of Healing (Greater)",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-healing-major",
+  "name": "Staff of Healing (Major)",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "staff-of-healing-true",
+  "name": "Staff of Healing (True)",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "verdant-staff",
+  "name": "Verdant Staff",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "verdant-staff-greater",
+  "name": "Verdant Staff (Greater)",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "bracelet-of-dashing",
+  "name": "Bracelet of Dashing",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "diplomats-badge",
+  "name": "Diplomat's Badge",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "lovers-gloves",
+  "name": "Lover's Gloves",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "camouflaging-chromatophores",
+  "name": "Camouflaging Chromatophores",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "camouflaging-chromatophores-lesser",
+  "name": "Camouflaging Chromatophores (Lesser)",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "camouflaging-chromatophores-greater",
+  "name": "Camouflaging Chromatophores (Greater)",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "whip-tail",
+  "name": "Whip Tail",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "arachnolute",
+  "name": "Arachnolute",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "cauthooj-bagpipes",
+  "name": "Cauthooj Bagpipes",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "bombers-eye-elixir-lesser",
+  "name": "Bomber's Eye Elixir (Lesser)",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "bombers-eye-elixir-greater",
+  "name": "Bomber's Eye Elixir (Greater)",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "bestial-mutagen",
+  "name": "Bestial Mutagen",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "drakeheart-mutagen",
+  "name": "Drakeheart Mutagen",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "potion-of-disguise",
+  "name": "Potion of Disguise",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "potion-of-disguise-lesser",
+  "name": "Potion of Disguise (Lesser)",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "potion-of-disguise-moderate",
+  "name": "Potion of Disguise (Moderate)",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "potion-of-disguise-greater",
+  "name": "Potion of Disguise (Greater)",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "berserkers-cloak",
+  "name": "Berserker's Cloak",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "berserkers-cloak-greater",
+  "name": "Berserker's Cloak (Greater)",
+  "level": 19,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "midnight-milk",
+  "name": "Midnight Milk",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "assassins-skin",
+  "name": "Assassin's Skin",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "freedoms-flame",
+  "name": "Freedom's Flame",
+  "level": 21,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "apotheosis-knife",
+  "name": "Apotheosis Knife",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "antifungal-salve",
+  "name": "Antifungal Salve",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "crimson-godsblood-serum",
+  "name": "Crimson Godsblood Serum",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "paws-of-the-grogrisant",
+  "name": "Paws of the Grogrisant",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "essence-forge",
+  "name": "Essence Forge",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "essence-forge-moderate",
+  "name": "Essence Forge (Moderate)",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "essence-forge-greater",
+  "name": "Essence Forge (Greater)",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "psyche-salts",
+  "name": "Psyche Salts",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "draddeths-edge",
+  "name": "Draddeth's Edge",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "gravediggers-call",
+  "name": "Gravedigger's Call",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "greater-swift-standard",
+  "name": "Greater Swift Standard",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "major-swift-standard",
+  "name": "Major Swift Standard",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "benthic-drums",
+  "name": "Benthic Drums",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "blakenshipper",
+  "name": "Blakenshipper",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "booming-bell",
+  "name": "Booming Bell",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "core-bugle",
+  "name": "Core Bugle",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "doom-switch",
+  "name": "Doom Switch",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "feather-of-the-unfounded-bravado",
+  "name": "Feather of the Unfounded Bravado",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "fife-of-the-faithful",
+  "name": "Fife of the Faithful",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "guangu-of-the-steppe",
+  "name": "Guangu of the Steppe",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "horn-of-the-archon",
+  "name": "Horn of the Archon",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "warpipes",
+  "name": "Warpipes",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "medics-armband",
+  "name": "Medic's Armband",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "greater-medics-armband",
+  "name": "Greater Medic’s Armband",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "trusty-helmet",
+  "name": "Trusty Helmet",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "champions-laurels",
+  "name": "Champions Laurels",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "strand-of-the-seven-births",
+  "name": "Strand of the Seven Births",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "anti-dragon-barding",
+  "name": "Anti-Dragon Barding",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "greater-anti-dragon-barding",
+  "name": "Greater Anti-Dragon Barding",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "standard-astrolabe",
+  "name": "Standard Astrolabe",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "mariners-astrolabe",
+  "name": "Mariner's Astrolabe",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "oil-of-corpse-restoration",
+  "name": "Oil of Corpse Restoration",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "paradigm-cube",
+  "name": "Paradigm Cube",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "privacy-ward-fulu",
+  "name": "Privacy Ward Fulu",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "fan-of-falling-words",
+  "name": "Fan of Falling Words",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "lacquered-waist-drum",
+  "name": "Lacquered Waist Drum",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "conrasu-coin",
+  "name": "Conrasu Coin",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "self-emptying-pocket",
+  "name": "Self-Emptying Pocket",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "verdant-poultice",
+  "name": "Verdant Poultice",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "overflowing-life",
+  "name": "Overflowing Life",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "seers-array",
+  "name": "Seer's Array",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "combat-fishing-pole",
+  "name": "Combat Fishing Pole",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "anti-dragon-barding-greater",
+  "name": "Anti-Dragon Barding (Greater)",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "astrolabe-of-the-falling-stars",
+  "name": "Astrolabe of the Falling Stars",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "banner-of-the-restful-greater",
+  "name": "Banner of the Restful (Greater)",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "banner-of-the-restful-major",
+  "name": "Banner of the Restful (Major)",
+  "level": 19,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "conductors-instrument",
+  "name": "Conductor's Instrument",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "dragonscale-staff",
+  "name": "Dragonscale Staff",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "fate-tempters-ring",
+  "name": "Fate Tempter's Ring",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "olfactory-obfuscator-lesser",
+  "name": "Olfactory Obfuscator (Lesser)",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "signifers-mask",
+  "name": "Signifer's Mask",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring-abjuration",
+  "name": "Specialist's Ring (Abjuration)",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring-conjuration",
+  "name": "Specialist's Ring (Conjuration)",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring-divination",
+  "name": "Specialist's Ring (Divination)",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring-enchantment",
+  "name": "Specialist's Ring (Enchantment)",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring-evocation",
+  "name": "Specialist's Ring (Evocation)",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring-illusion",
+  "name": "Specialist's Ring (Illusion)",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring-necromancy",
+  "name": "Specialist's Ring (Necromancy)",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring-transmutation",
+  "name": "Specialist's Ring (Transmutation)",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "specialists-ring",
+  "name": "Specialist's Ring",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "stalwarts-banner-greater",
+  "name": "Stalwart's Banner (Greater)",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "stalwarts-banner-major",
+  "name": "Stalwart's Banner (Major)",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "thieves-tools-concealable",
+  "name": "Thieves' Tools (Concealable)",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-fixer",
+  "name": "Fixer",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-busine-of-divine-reinforcement",
+  "name": "Busine of Divine Reinforcement",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-sleuth-s-pipe",
+  "name": "Sleuth's Pipe",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-keep-stone-weapon",
+  "name": "Keep Stone Weapon",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-alacritous-horsehoes",
+  "name": "Alacritous Horsehoes",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-magical-medals",
+  "name": "Magical Medals",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-emotion-surge",
+  "name": "Emotion Surge",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-seer-s-array",
+  "name": "Seer's Array",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "hopeful-athamaru",
+  "name": "Hopeful Athamaru",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "born-of-celestial",
+  "name": "Born of Celestial",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "born-of-item",
+  "name": "Born of Item",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "mechanical-symbiosis",
+  "name": "Mechanical Symbiosis",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "harrow-chosen",
+  "name": "Harrow-Chosen",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "close-ties",
+  "name": "Close Ties",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "folklore-enthusiast",
+  "name": "Folklore Enthusiast",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "northridge-scholar",
+  "name": "Northridge Scholar",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "outskirt-dweller",
+  "name": "Outskirt Dweller",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "haunted",
+  "name": "Haunted",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "blight-survivor",
+  "name": "Blight Survivor",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "runelord-researcher",
+  "name": "Runelord Researcher",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "reborn-soul",
+  "name": "Reborn Soul",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ }
+]

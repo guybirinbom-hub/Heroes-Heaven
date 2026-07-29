@@ -144,7 +144,15 @@ const LANES = [
     /** `frequency`/`counters` are the ITEM shape (itemUses.ts); `limitedUses` is the FEAT one added
      *  when per-day feat tracking was built. Both count — checking only the item fields would report
      *  every tracked feat as a gap. */
-    modelled: (r) => !!r.frequency || !!r.uses || !!r.counters || !!r.limitedUses,
+    /** Four separate systems track limited use, and the report has to know all four or it calls
+     *  working content a gap:
+     *    frequency / counters  — items, via itemUses.ts (use pips on the inventory row)
+     *    limitedUses           — feats, via PlayState.featUses (added with feat use tracking)
+     *    innateSpells          — "cast X once per day as an innate spell" is tracked by
+     *                            PlayState.innateUsed and reset by rest; 231 of the records still
+     *                            listed here are exactly that, already working. */
+    modelled: (r) =>
+      !!r.frequency || !!r.uses || !!r.counters || !!r.limitedUses || (r.innateSpells ?? []).length > 0,
   },
   {
     id: 'toggle',
