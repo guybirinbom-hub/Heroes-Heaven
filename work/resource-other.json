@@ -1,0 +1,188 @@
+[
+ {
+  "collection": "feats",
+  "id": "ghost-strike",
+  "name": "Ghost Strike",
+  "description": "Once per day, you can infuse a weapon you are carrying with magical energies that allow it to strike true against incorporeal undead. The weapon gains the effects of the ghost touch property rune for 10 minutes. At 10th level, you can apply this effect to two weapons instead of one."
+ },
+ {
+  "collection": "feats",
+  "id": "rampaging-form",
+  "name": "Rampaging Form",
+  "description": "Once per day, when you Change Shape into a fox, you can instead gain the effects of both the canine form of 5th-rank Animal Form and 7th-rank Fiery Body for 1 minute or until you shift back, whichever comes first. You can cast Ignition from the *fiery body* effect even though you're in a battle form. --- **Special** If you are a frozen wind kitsune, your form is ice instead of fire. This changes the immunity and damage from the *fiery body* effect to cold, changes the weakness to fire, and changes *ignition* to Ray of Frost."
+ },
+ {
+  "collection": "feats",
+  "id": "geologic-attunement",
+  "name": "Geologic Attunement",
+  "description": "You tune to the earth and stone around you, extending your senses through it in rippling waves. You gain tremorsense (imprecise) in your kinetic aura. Once per round, you can Point Out a creature you can sense with tremorsense as a free action. --- **Level (13th)** The tremorsense becomes precise."
+ },
+ {
+  "collection": "feats",
+  "id": "kindle-inner-flames",
+  "name": "Kindle Inner Flames",
+  "description": "As a candle can light another, you awaken the latent potential to channel fire in other creatures. You shed faint, glowing embers, as do your allies while they're in your kinetic aura. Anyone shedding these embers gains a +1 status bonus to Reflex saves and Acrobatics checks and can Step as a free action once per round. When an affected creature takes a move action, its Strikes deal an extra 2 damage until the end of its turn. --- **Level (12th)** The status bonus to Reflex saves and Acrobatics checks is +2, and the Strikes gain the *Flaming* rune instead of the extra 2 fire damage."
+ },
+ {
+  "collection": "feats",
+  "id": "drifting-pollen",
+  "name": "Drifting Pollen",
+  "description": "A haze of pollen floats around you. A creature in your kinetic aura when you enter the stance, or who later enters the aura or ends its turn in the aura, attempts at a save against your class DC. On a failure, it's Sickened 1 (Sickened 2 on a critical failure) and dazzled until it's no longer sickened. A creature attempts this save no more than once per round and doesn't attempt a new save if already affected."
+ },
+ {
+  "collection": "feats",
+  "id": "legendary-medic",
+  "name": "Legendary Medic",
+  "description": "You've discovered medical breakthroughs or techniques that achieve miraculous results. Once per day for each target, you can spend 1 hour treating that target and attempt a Medicine check to remove a disease or the blinded, deafened, doomed, or drained condition. Use the DC of the disease or of the spell or effect that created the condition. If the effect's source is an artifact, above 20th level, or similarly powerful, increase the DC by 10."
+ },
+ {
+  "collection": "feats",
+  "id": "harbingers-claw",
+  "name": "Harbinger's Claw",
+  "description": "Harbinger's Claw Source Player Core 2 pg. 35 Frequency once per day Trigger A creature within 60 feet is about to attempt an attack roll or skill check. You caw ominously, cursing the creature with misfortune. The target creature must roll the triggering check twice and take the lower result."
+ },
+ {
+  "collection": "feats",
+  "id": "ricocheting-leap",
+  "name": "Ricocheting Leap",
+  "description": "You quickly use your momentum to topple and spring off of foes. You can use Wall Jump to make additional jumps off of creatures larger than you as if they were walls. Once per turn when you make an additional jump off of a creature in this way, you can also attempt to Shove or Trip that creature as a free action."
+ },
+ {
+  "collection": "feats",
+  "id": "greater-physical-evolution",
+  "name": "Greater Physical Evolution",
+  "description": "You change form readily. Once per day, you can use a sorcerer spell slot to cast any common polymorph battle form spell of the spell slot's rank as if it were a signature spell in your repertoire. You can use the extra spell slot from Primal Evolution instead of a sorcerer spell slot."
+ },
+ {
+  "collection": "feats",
+  "id": "magical-scrounger",
+  "name": "Magical Scrounger",
+  "description": "You can Craft a temporary wondrous item using the magic scrounged from all around. Once per day, you can Cobble Together a temporary magic item. The temporary item must be common, magical, half your level or lower, and be able to be held, wielded, or worn. Any Craft requirements must be provided as normal. You can't Cobble Together a consumable, a rune, or an item with runes. If the item must be worn or affixed, removing it once it's affixed or donned destroys it."
+ },
+ {
+  "collection": "feats",
+  "id": "slay-giants-unseen",
+  "name": "Slay Giants Unseen",
+  "description": "In the darkness, your attacks can bring any red-faced giant to their knees. Once per hour, if you critically succeed at an attack roll against a Large or larger enemy and you're in an area of darkness, unseen hands reach from the shadows and pull the target to the ground, knocking them prone."
+ },
+ {
+  "collection": "feats",
+  "id": "strategist-stance",
+  "name": "Strategist Stance",
+  "description": "You find the most strategic options for you and your allies. When you use this action, attempt a or check. The DC is usually a standard-difficulty DC of your level, but the GM can assign a different DC based on the circumstances. --- **Critical Success** Your marshal's aura increases to a , and it grants you and allies a +1 status bonus to Reflex saving throws. Once per turn, when you succeed or critically succeed at a Recall Knowledge check to gain information about an enemy creature, the target of the Recall Knowledge check becomes off-guard to the next attack made against it by you or an ally in your aura. **Success** As critical success, but your aura's size doesn't increase. **Failure** You fail to enter the stance. **Critical Failure** You fail to enter the stance and can't take this action again for 1 minute."
+ },
+ {
+  "collection": "feats",
+  "id": "fulu-familiar",
+  "name": "Fulu Familiar",
+  "description": "You can imprint your familiar's spiritual essence into a fulu, a small paper charm that can be affixed to objects, creatures, or structures. You gain the Create Familiar Fulu action, which you can use once per day; at 12th level, this increases to twice per day, and at 18th level, it increases to three times per day."
+ },
+ {
+  "collection": "feats",
+  "id": "remake-the-world",
+  "name": "Remake the World",
+  "description": "For the briefest of moments, you can reach into the realm of true gods, gaining the power to shape reality to your will. Once per day, you can create the effects of a divine spell of 8th level or lower. The spell must be common or one to which you otherwise have access, and it costs as many actions as it would typically take to cast. Use your class DC in place of any necessary spell DC and your class DC – 10 in place of any necessary counteract modifier or spell attack modifier. Because you are creating these effects with your godly might rather than Casting a Spell, they can't be dispelled or counteracted, like Strike Rivers, Seize Winds."
+ },
+ {
+  "collection": "feats",
+  "id": "profane-bargain",
+  "name": "Profane Bargain",
+  "description": "You can strike a profane bargain with a willing, sapient creature. That creature promises to never take hostile actions against you, to never lie to you, to never speak of this bargain, and to either perform, or refrain from performing, one other specified task, such as paying you a specified sum every year, gifting you their first-born child, or never speaking. If the target accepts, they verbally make a request. You can choose to twist their request by selecting specific details, as long as you still fulfill the requirements of their request. If the request could be granted by a Wish ritual, you spend 1 Mythic Point and the request is magically granted. As long as the bargain persists, you always know the target's location, can communicate telepathically with the target at any distance, and can see through the target's senses by taking a single action that has the concentrate trait. Once per day, you can take control of the target as an activity that takes three actions and has the concentrate trait. When you do, they become controlled by you for 10 minutes. They have no memory of their time spent under your control. If the target ever breaks the terms of this bargain, you immediately select one of the following punishments: they die, they die and you possess their soul, they become permanently controlled by you, or they become imprisoned in a cell within your realm's dungeon (you must have the Imprison Foe feat to select this final option). A target can only enter into a Profane Bargain with you once—not even the breaking of this bargain, death, a *wish* ritual, or divine intervention frees them of this limitation. You can't make a Profane Bargain with yourself."
+ },
+ {
+  "collection": "feats",
+  "id": "ascended-celestial-dedication",
+  "name": "Ascended Celestial Dedication",
+  "description": "Your Calling has driven you to perform mortal deeds that will result in your ascension to the ranks of celestials. You're headstrong and determined and hardly waver in your resolve; once per hour, you can roll twice and use the higher result on a Will saving throw. If you ever become confused, rather than attack wildly, you become stubbornly immobile, wasting all your actions until the condition ends. Additionally, you emanate a nimbus of light. You shed bright light in a 30-foot radius (and dim light to the next 30 feet). You can suppress or reestablish this light as a single action that has the concentrate trait. As long as your nimbus is active, all allies in the area of your nimbus gain a +1 status bonus to saves against fear. You gain the Bless Ally action."
+ },
+ {
+  "collection": "feats",
+  "id": "guarded-domain",
+  "name": "Guarded Domain",
+  "description": "You and your united companion have elected to become guardians of a particular location or domain. If you spend 1 week of downtime within a settlement or natural area with a 5-mile radius, you and your companion can become guardians of the area and consider it to be your guarded domain. Your guarded domain remains under your protection until you spend more than 1 month outside of your domain, after which you must spend another week of downtime to re-attune to your guarded domain. You can only have one guarded domain at a time, and selecting a new guarded domain immediately ends your protection over the previous guarded domain. If a creature has been in your guarded domain for at least 1 hour while you or your companion are also inside your domain, you or your companion can attempt to Gather Information about the target by spending 1 minute communing with the land or its residents. You attempt this check at mythic proficiency. In addition, once per day as a 3-action activity you can spend a Mythic Point to instantly teleport yourself and your united companion to a location you are aware of within your domain. This is a teleportation effect."
+ },
+ {
+  "collection": "feats",
+  "id": "decree-of-banisment",
+  "name": "Decree of Banisment",
+  "description": "Decree of Banisment Source War of Immortals pg. 135 Archetype Prophesied Monarch Frequency once per day Prerequisites Prophesied Monarch Dedication You assume a demeanor of authority and decree banishment upon a foe who has defied your authority. Speak your decree; a creature you designate within 60 feet who can hear your decree must succeed at a Will saving throw against your class DC or spell DC (whichever is higher) or spend its next turn moving as far away from you as it possibly can; this includes using magic or special movement modes, if it has any, to expedite its retreat. If the target attempts to move back within 60 feet of you at any time in the next week, it must succeed at a Will saving throw against your class DC or spell DC (whichever is higher) or the attempt fails, any movement ends, and any actions or spell slots used in the attempt (such as if the target were attempting to magically approach you) are wasted. When you speak a Decree of Banishment, you can spend 1 Mythic Point as part of the action to have all friendly creatures and even the land itself within a 10-mile radius of you at that moment to reject the banished target. Within the affected area for the next month, the target has a –4 penalty to all Diplomacy checks to Gather Information or Make an Impression, all Intimidation checks to Coerce, and all Survival checks to Subsist. If the target defies your Decree of Banishment and continues to operate within the area, you hear about their activities the next time you encounter a group of friendly creatures with 10 or more members. You can have only one target affected by this month-long banishment at a time; if you inflict a month-long banishment on another target, the effects on the first target end."
+ },
+ {
+  "collection": "feats",
+  "id": "automatic-writing",
+  "name": "Automatic Writing",
+  "description": "**Frequency** once per day When confronted with the unknown, you can receive knowledge beyond your own experience via written messages delivered by your hand. You spend 10 minutes seated while holding a writing utensil, using it to make small circular motions as you open your mind to the forces around you. You receive information as your hand writes on its own, guided by spirits. At the end of these 10 minutes, Recall Knowledge with any Lore skill in which you are not trained, using your Occultism modifier instead of your modifier with that skill. The strain of this spirit channeling leaves you Stupefied 1 for the next 10 minutes."
+ },
+ {
+  "collection": "feats",
+  "id": "spray-ink",
+  "name": "Spray Ink",
+  "description": "Spray Ink Source High Seas pg. 20 Frequency once per hour Prerequisites Cecaelia Merfolk heritage Trigger A creature hits you with a melee Strike. Your body provides you with natural defenses common to other creatures of the sea. You spray ink against the triggering creature. The creature becomes dazzled while the ink remains. The creature can use an Interact action to remove the ink. Spray Ink leads to... Hallucinogenic Ink"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "revolutionary-innovation",
+  "name": "Revolutionary Innovation",
+  "description": "You are an unparalleled genius and have discovered a technique that will revolutionize your chosen field—or at least for the time being, your innovation! Choose a revolutionary modification to apply to your innovation. You can also choose an initial or breakthrough modification of the same type instead, if you prefer. ### Revolutionary Armor Modifications - **Automated Impediments:** Your armor uses electromagnetic fields, subharmonic distortions, or other techniques to make it difficult for those close to you to move unless you allow it. While wearing your armor, all spaces adjacent to you are difficult terrain for your enemies. - **Energy Barrier:** Your armor's defenses ablate any kind of energy coming your way. While wearing your armor, you gain resistance to all energy damage (acid, cold, electricity, fire, force, sonic, vitality, and void damage) equal to 2 + half your level. You must have the harmonic oscillator, metallic reactance, or phlogistonic regulator modification to select this modification. - **Incredible Resistance:** You've improved upon your breakthrough modification's ability to resist damage. Choose one of the following breakthrough modifications your innovation has: dense plating, layered mesh, or tensile absorption. Increase the resistance you gain from that modification to be equal to your level, instead of half your level. - **Multisensory Mask (subterfuge suit only):** You've built a multisensory mask over your armor that protects you by distorting your figure from all senses, leaving behind only a hazy image, muffled sounds, and so forth. While wearing the armor, you gain concealment against all creatures, even if they are using a nonvisual precise sense, such as a bat's echolocation. As normal for effects that leave your location obvious, you"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "demon-eidolon",
+  "name": "Demon Eidolon",
+  "description": "Your eidolon is a demon, born of mortal sin congealed amid the chaos and evil of the Abyss, using its link to you to spread chaos at your side. Choose an associated sin for your demon. Demon eidolons have appearances as varied as the infinite Abyss. While demons are inherently untrustworthy, your demon eidolon has reached an accord with you and generally keeps it, though that doesn't mean your eidolon isn't actively working to bring your life deeper into its associated sin. Though a true demon, your demon eidolon's link to you as a mortal prevents them from casting the abyssal pact ritual, even if they somehow learn it. **Tradition** divine **Traits** demon, eidolon, fiend **Alignment** must be chaotic evil **Home Plane** The Abyss --- **Size** Medium or Small **Suggested Attacks** claw (slashing), jaws (piercing), horn (piercing), tail (bludgeoning), tentacle (bludgeoning), wing (bludgeoning) **Wrecker Demon** Str 18, Dex 14, Con 16, Int 10, Wis 8, Cha 12; +2 AC (+3 Dex cap) **Tempter Demon** Str 12, Dex 18, Con 12, Int 10, Wis 10, Cha 16; +1 AC (+4 Dex cap) **Skills** Intimidation, Religion **Senses** darkvision **Language** Abyssal **Speed** 25 feet --- **Eidolon Abilities** *Initial* demonic strikes; *Symbiosis* visions of sin; *Transcendence* blasphemous decree ## Demonic Strikes Your eidolon's attacks are corrupted by the Abyss and imbued with pure evil and shifting chaos. All your eidolon's unarmed Strikes deal an extra 1 evil damage; as usual, this extra damage harms only good creatures or those with a weakness to evil damage. Additionally, choose one of your eidolon's unarmed attacks that deals physical damage; it gains the versatile trait for a different type of physical damage you choose. ## Visions of Sin 7th Your demon is born of sin and can project the sin"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "patron-theme",
+  "name": "Patron Theme",
+  "description": "When your patron first makes contact, they usually reveal little more of themself than glimpses or specific manifestations—you might see eyes from the shadows of the forest or hear a wordless voice echoing across the frozen tundra before your familiar makes itself known. Your patron's true identity might be a powerful hag, a fey lord, a deity or demigod, an archdevil, or a similarly powerful entity, or perhaps multiple such figures working in tandem, but that identity is for you to attempt to discover as you learn more of your patron's lessons. Some patrons are multifaceted, appearing in different guises, and granting different powers to different witches. In some cases, the witch may know of their patron's identity, but have some other aspect shrouded in uncertainty; they might know their patron's name but not motive, or perhaps even if they know the patron's identity, they have been cursed to never reveal it to others. Your patron's theme determines the following. **Spell List** You use this magical tradition and spell list. **Patron Skill** You become trained in the skill associated with your patron's magical tradition. **Initial Lesson** This is the first lesson your patron teaches you and is unique to your patron. **Familiar Ability** One of your familiar's two bonus abilities is always the one listed here, a mark of your patron's indelible influence. The benefit can occur only once per round when you Cast or Sustain a hex, and you can choose whether it occurs before or after the effects of Casting or Sustaining the hex."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "psychopomp-eidolon",
+  "name": "Psychopomp Eidolon",
+  "description": "Your eidolon is a psychopomp, a creature whose sworn duty is to usher souls safely to the afterlife and maintain the courts of the dead. Psychopomp eidolons have a variety of appearances, but since they often traffic with mortals, their form typically includes an elaborate mask. You and your psychopomp eidolon share an important fate together, whether it relates directly to your own soul or to a mission that will somehow protect the souls of others. **Tradition** divine **Traits** eidolon, monitor, psychopomp **Alignment** must be true neutral **Home Plane** The Boneyard --- **Size** Medium **Suggested Attacks** beak (piercing), claw (slashing), fist (bludgeoning), jaws (piercing), unarmed attacks shaped like a weapon **Soul Guardian** Str 18, Dex 14, Con 16, Int 10, Wis 12, Cha 8; +2 AC (+3 Dex cap) **Scribe of the Dead** Str 12, Dex 18, Con 12, Int 14, Wis 12, Cha 10; +1 AC (+4 Dex cap) **Skills** Intimidation, Religion **Senses** darkvision **Language** Requian **Speed** 25 feet --- **Eidolon Abilities***Initial *spirit touch*; Symbiosis *hidden watcher*; Transcendence *spirit taker ## Spirit Touch Your eidolon's attacks possess a psychopomp's ability to harm the living and the dead. Your eidolon's unarmed Strikes affect incorporeal creatures as though etched with a Ghost Touch property rune and deal an extra 1 void damage to living creatures and an extra 1 vitality damage to undead. ## Hidden Watcher 7th Your eidolon can render both of you unseen. Once per hour, it can cast targeting you, them, or both of you at once. If the spell targeted both of you, the spell ends for both of you if either of you uses a hostile action. ## Spirit Taker 17th Your eidolon is particularly capable when it comes to handling bodiless spirits and putting undead to their final rest. Your "
+ },
+ {
+  "collection": "classFeatures",
+  "id": "cry-havoc",
+  "name": "Cry Havoc!",
+  "description": "**Frequency** once per day --- Your squad rallies with a resounding clangor that drowns out all other sounds of war. Choose an enemy you are observing and signal all squadmates within the aura of your commander's banner. All squadmates can Stride up to twice their Speed directly toward the target as a reaction, yelling and trampling. When any squadmate enters a square adjacent to any enemy, that enemy must attempt a save against your class DC or take 2d6 bludgeoning damage and 2d6 sonic damage damage, plus an additional 2d6 bludgeoning and 2d6 sonic damage for every squadmate participating in Cry Havoc! (enemies who critically fail are deafened for 1 round). Regardless of the outcome, the enemy is then temporarily immune to any further damage from Cry Havoc! for 24 hours. Squadmates can use Cry Havoc! while Burrowing, Climbing, Flying, or Swimming instead of Striding if they have the corresponding movement type."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "executioners-volley",
+  "name": "Executioner's Volley",
+  "description": "**Frequency** once per day --- You command your squadmates to act as a lethal firing squad. You and each squadmate within the aura of your commander's banner can attempt a ranged Strike as a reaction against a single target you choose; combine the damage from all attacks for the purpose of resistances and weaknesses. If the designated target is a living creature, these attacks gain the death trait. If the designated target dies as a result of this tactic, all other enemies within the affected area of your commander's banner must succeed at a save against your class DC or be Frightened 2; this is an emotion, fear, and mental effect. --- **Special** If one of your squadmates knows or has prepared a cantrip with a range of 30 feet or more that deals damage and requires 2 or fewer actions to cast, they can cast it targeting the designated enemy instead of taking the other actions normally granted by this tactic, gaining all other listed benefits."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "valkyries-charge",
+  "name": "Valkyrie's Charge",
+  "description": "**Frequency** once per day --- You and your allies defy death and defeat to make a glorious final charge. You restore Hit Points to each squadmate within the aura of your commander's banner; this effect has the healing trait. If an affected ally was unconscious due to their Hit Points being reduced to 0, they can immediately Stand and pick up any dropped weapons as a free action. Then, each affected squadmate can, as a free action, Stride up to twice their Speed directly toward an enemy they are observing; if they end this movement with an enemy within their reach, they can attempt to Strike that enemy as a reaction. Squadmates can use Valkyrie's Charge while Burrowing, Climbing, Flying, or Swimming instead of Striding if they have the corresponding movement type."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "drink-from-the-chalice",
+  "name": "Drink from the Chalice",
+  "description": "**Frequency** once per round **Requirements** You are holding your chalice implement. --- You drink from the liquid that slowly collects in your chalice or administer it to an adjacent ally. The drinker chooses whether to take a small sip or to drain the contents. - **Sip** A sip grants the drinker an amount of temporary Hit Points equal to your level (minimum 3) that last until the end of your next turn. - **Drain** (healing, vitality) Drinking deep instead heals the drinker 3 Hit Points for each level you have. After the chalice is drained, it's left with only its slowly collecting dregs; the chalice can't be drained again, though it can still be sipped from. If 10 minutes pass without anyone drinking from the chalice, it refills itself and can be drained again. If the drinker has void healing, it can still heal in this way, and the effect has the void trait instead of healing and vitality."
+ },
+ {
+  "collection": "heritages",
+  "id": "fey-touched-gnome",
+  "name": "Fey-touched Gnome",
+  "description": "The blood of the fey flows through your veins, saturating you with their magic and making you truly one of them. You gain the fey trait, in addition to the gnome and humanoid traits. Choose one cantrip from the primal spell list. You can cast this spell as a primal innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up. You can change this cantrip to a different one from the same list once per day by meditating to realign yourself with the First World; this is a 10-minute activity that has the concentrate trait."
+ },
+ {
+  "collection": "heritages",
+  "id": "sharp-eared-catfolk",
+  "name": "Sharp-Eared Catfolk",
+  "description": "You were born with big, expressive ears that move with your moods and perk up at any unexpected sound. You gain a +2 circumstance bonus to locate undetected creatures that you could hear within 30 feet with a Seek action. As long as you're aware of a creature via sound, once per round, your ears can help you Point Out the creature to all allies as a free action."
+ },
+ {
+  "collection": "heritages",
+  "id": "shadow-of-the-courtier",
+  "name": "Shadow of the Courtier",
+  "description": "Your shadow dances alongside you. You gain the Impressive Performance skill feat, allowing you to Make an Impression using Performance instead of Diplomacy. Once per day, if you fail, but not critically fail, a check to Make an Impression, you can play it off as part of a performance, allowing you to reroll the check; this is a fortune effect."
+ }
+]

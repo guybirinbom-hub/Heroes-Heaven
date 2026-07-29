@@ -38,6 +38,13 @@ export const usesLabel = (u: { max: number; per: string; every?: number }) =>
 export function effectiveUses(c: Character, feat: Feat | undefined, db?: ContentDatabase): (LimitedUses & { upgradedBy?: string }) | null {
   if (!feat) return null;
   let lim = feat.limitedUses;
+  // A count that grows with level ("at 12th this increases to twice per day") — the highest step the
+  // character has reached wins, and `max` is the value before the first step.
+  if (lim?.maxByLevel) {
+    let max = lim.max;
+    for (const [lvl, n] of Object.entries(lim.maxByLevel)) if (c.level >= Number(lvl) && n > max) max = n;
+    lim = { ...lim, max };
+  }
   if (!db) return lim ?? null;
   for (const f of c.feats ?? []) {
     const up = db.feats[f.featId]?.usesUpgrade;

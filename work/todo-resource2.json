@@ -1,0 +1,1606 @@
+[
+ {
+  "collection": "feats",
+  "id": "spell-runes",
+  "name": "Spell Runes",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "ornate-tattoo",
+  "name": "Ornate Tattoo",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "virtue-forged-tattoos",
+  "name": "Virtue-Forged Tattoos",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "mighty-dragon-shape",
+  "name": "Mighty Dragon Shape",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "determined-lore-seeker",
+  "name": "Determined Lore Seeker",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "spirit-spells",
+  "name": "Spirit Spells",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "ghost-strike",
+  "name": "Ghost Strike",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "rampaging-form",
+  "name": "Rampaging Form",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "magical-adept",
+  "name": "Magical Adept",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "magical-master",
+  "name": "Magical Master",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "inner-fire-som",
+  "name": "Inner Fire (SoM)",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "core-attunement",
+  "name": "Core Attunement",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "unbelievable-luck",
+  "name": "Unbelievable Luck",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "cunning-trickster-mask",
+  "name": "Cunning Trickster Mask",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "enhanced-psychopomp-familiar",
+  "name": "Enhanced Psychopomp Familiar",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "fey-ascension",
+  "name": "Fey Ascension",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "axumas-awakening",
+  "name": "Axuma's Awakening",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "fearsome-familiar",
+  "name": "Fearsome Familiar",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "geologic-attunement",
+  "name": "Geologic Attunement",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "kindle-inner-flames",
+  "name": "Kindle Inner Flames",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "ignite-the-sun",
+  "name": "Ignite the Sun",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "drifting-pollen",
+  "name": "Drifting Pollen",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "steam-knight",
+  "name": "Steam Knight",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "kizidhar-magic",
+  "name": "Kizidhar Magic",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "otherworldly-acumen",
+  "name": "Otherworldly Acumen",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "garland-spell",
+  "name": "Garland Spell",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "legendary-medic",
+  "name": "Legendary Medic",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "unusual-treatment",
+  "name": "Unusual Treatment",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "speakers-defense",
+  "name": "Speaker's Defense",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "evolved-spellhorn",
+  "name": "Evolved Spellhorn",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "resplendent-spellhorn",
+  "name": "Resplendent Spellhorn",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "harbingers-claw",
+  "name": "Harbinger's Claw",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "ricocheting-leap",
+  "name": "Ricocheting Leap",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "greater-physical-evolution",
+  "name": "Greater Physical Evolution",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "magical-scrounger",
+  "name": "Magical Scrounger",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "slay-giants-unseen",
+  "name": "Slay Giants Unseen",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "horn-and-bone-incantation",
+  "name": "Horn and Bone Incantation",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "strategist-stance",
+  "name": "Strategist Stance",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "fulu-familiar",
+  "name": "Fulu Familiar",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "seal-of-the-golden-dragon",
+  "name": "Seal of the Golden Dragon",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "remake-the-world",
+  "name": "Remake the World",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "seat-of-power",
+  "name": "Seat of Power",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "profane-bargain",
+  "name": "Profane Bargain",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "ascended-celestial-dedication",
+  "name": "Ascended Celestial Dedication",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "guarded-domain",
+  "name": "Guarded Domain",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "decree-of-banisment",
+  "name": "Decree of Banisment",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "esoteric-spellcasting",
+  "name": "Esoteric Spellcasting",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "more-real-than-real",
+  "name": "More Real than Real",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "may-death-itself-reconsider",
+  "name": "May Death Itself Reconsider",
+  "level": 20,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "dracomancer",
+  "name": "Dracomancer",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "elite-dracomancer",
+  "name": "Elite Dracomancer",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "avenging-runelord-dedication",
+  "name": "Avenging Runelord Dedication",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "fey-life",
+  "name": "Fey Life",
+  "level": 16,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "automatic-writing",
+  "name": "Automatic Writing",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "minor-deific-power",
+  "name": "Minor Deific Power",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "advanced-deific-power",
+  "name": "Advanced Deific Power",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "greater-deific-power",
+  "name": "Greater Deific Power",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "major-deific-power",
+  "name": "Major Deific Power",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "improvise-strategy",
+  "name": "Improvise Strategy",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "spray-ink",
+  "name": "Spray Ink",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "pirates-pet",
+  "name": "Pirate's Pet",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "inner-fire-monk",
+  "name": "Inner Fire (Monk)",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "revolutionary-innovation",
+  "name": "Revolutionary Innovation",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "unlimited-esoterica",
+  "name": "Unlimited Esoterica",
+  "level": 19,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "angel-eidolon",
+  "name": "Angel Eidolon",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "demon-eidolon",
+  "name": "Demon Eidolon",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "patron-theme",
+  "name": "Patron Theme",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "psychopomp-eidolon",
+  "name": "Psychopomp Eidolon",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "school-of-unified-magical-theory",
+  "name": "School of Unified Magical Theory",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "swarm-eidolon",
+  "name": "Swarm Eidolon",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "cry-havoc",
+  "name": "Cry Havoc!",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "executioners-volley",
+  "name": "Executioner's Volley",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "valkyries-charge",
+  "name": "Valkyrie's Charge",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "primal-howl",
+  "name": "Primal Howl",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "act-together",
+  "name": "Act Together",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "sickening-assault",
+  "name": "Sickening Assault",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "wyrms-breath",
+  "name": "Wyrm's Breath",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "drink-from-the-chalice",
+  "name": "Drink from the Chalice",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "patrons-claim",
+  "name": "Patron's Claim",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "patrons-presence",
+  "name": "Patron's Presence",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "fey-touched-gnome",
+  "name": "Fey-touched Gnome",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "sharp-eared-catfolk",
+  "name": "Sharp-Eared Catfolk",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "shadow-of-the-courtier",
+  "name": "Shadow of the Courtier",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "sign-bound",
+  "name": "Sign Bound",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "zodiac-bound",
+  "name": "Zodiac Bound",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "blight-survivor",
+  "name": "Blight Survivor",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ }
+]

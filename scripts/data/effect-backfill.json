@@ -34981,5 +34981,225 @@
       "max": 1,
       "per": "hour"
     }
+  },
+  {
+    "category": "feats",
+    "id": "ghost-strike",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "rampaging-form",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "geologic-attunement",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "round"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "ricocheting-leap",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "turn"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "greater-physical-evolution",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "magical-scrounger",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "slay-giants-unseen",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "hour"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "strategist-stance",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "turn"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "remake-the-world",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "profane-bargain",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "ascended-celestial-dedication",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "hour"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "guarded-domain",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "decree-of-banisment",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "automatic-writing",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "spray-ink",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "hour"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "harbingers-claw",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "fulu-familiar",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day",
+      "maxByLevel": {
+        "12": 2,
+        "18": 3
+      }
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "patron-theme",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "round"
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "cry-havoc",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "executioners-volley",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "valkyries-charge",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "classFeatures",
+    "id": "drink-from-the-chalice",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "round"
+    }
+  },
+  {
+    "category": "heritages",
+    "id": "sharp-eared-catfolk",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "round"
+    }
+  },
+  {
+    "category": "heritages",
+    "id": "shadow-of-the-courtier",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
   }
 ]

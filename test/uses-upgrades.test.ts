@@ -90,3 +90,39 @@ describe('uses upgrades', () => {
     expect(both).toEqual([]);
   });
 });
+
+/**
+ * A count that GROWS with level. Only Fulu Familiar prints one ("once per day; at 12th twice, at
+ * 18th three times"), but a flat max would be a rules error from level 12 on — cheaper to model than
+ * to document as wrong.
+ */
+describe('level-scaling use counts', () => {
+  const at = (level: number) =>
+    featUse(
+      normalizeCharacter({
+        id: 'f', name: 'F', level, classId: 'witch', keyAbility: 'int',
+        abilities: { str: 10, dex: 12, con: 12, int: 18, wis: 12, cha: 10 },
+        feats: [{ featId: 'fulu-familiar' }],
+      }),
+      c.feats['fulu-familiar'],
+      c,
+    )!.max;
+
+  it('steps at 12th and 18th, not before', () => {
+    expect([at(4), at(11), at(12), at(17), at(18), at(20)]).toEqual([1, 1, 2, 2, 3, 3]);
+  });
+
+  it('a flat limit is unaffected by level', () => {
+    const flat = (level: number) =>
+      featUse(
+        normalizeCharacter({
+          id: 'g', name: 'G', level, classId: 'fighter', keyAbility: 'str',
+          abilities: { str: 18, dex: 12, con: 12, int: 10, wis: 10, cha: 10 },
+          feats: [{ featId: 'ghost-strike' }],
+        }),
+        c.feats['ghost-strike'],
+        c,
+      )!.max;
+    expect([flat(1), flat(20)]).toEqual([1, 1]);
+  });
+});

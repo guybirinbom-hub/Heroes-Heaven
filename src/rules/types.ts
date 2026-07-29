@@ -504,6 +504,10 @@ export interface LimitedUses {
   per: 'round' | 'turn' | 'minute' | 'hour' | 'day' | 'week' | 'month';
   /** Period multiplier; absent means 1. */
   every?: number;
+  /** Cumulative max by character level, when the count grows ("once per day; at 12th twice, at 18th
+   *  three times" — Fulu Familiar). The highest entry the character has reached wins; `max` is the
+   *  value below the first entry. Rare, but a flat `max` would be a rules error at high level. */
+  maxByLevel?: Record<number, number>;
 }
 
 export interface InnateSpellGrant {
