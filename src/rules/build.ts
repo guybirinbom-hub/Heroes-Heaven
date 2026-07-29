@@ -2093,6 +2093,27 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
     for (const fc of [...feats]) grantSources.push({ id: fc.featId, grants: content.feats[fc.featId]?.grantsFeats });
     // An invested item can grant a bonus feat too (The Survivor → Diehard).
     for (const inv of build.inventory) if (inv.invested) grantSources.push({ id: inv.itemId, grants: content.items[inv.itemId]?.grantsFeats });
+    // …and so can a CLASS FEATURE: Improved Familiar Attunement grants the Familiar feat (without it a
+    // wizard with that thesis got no familiar at all), Cloistered Cleric grants Domain Initiate, the
+    // Shield Block feature grants the Shield Block feat. This source was missing entirely, so those
+    // grants did nothing however the record was written.
+    for (const [c, subId] of [[cls, build.subclassId], [cls2, build.subclassId2]] as const) {
+      if (!c) continue;
+      // A subclass can REMOVE a feature (cleric Battle Creed drops Resolute Faith); a removed feature
+      // must not still hand out its feat.
+      const dropped = new Set(c.subclass?.options.find((o) => o.id === subId)?.suppressedFeatures ?? []);
+      for (const f of c.features) {
+        if (f.level > level || dropped.has(f.featureId)) continue;
+        grantSources.push({ id: f.featureId, grants: content.classFeatures[f.featureId]?.grantsFeats });
+      }
+    }
+    // …and the chosen OPTIONS, which is where several of these actually live: a wizard's thesis
+    // (Improved Familiar Attunement → the Familiar feat) and a cleric's doctrine (Cloistered Cleric →
+    // Domain Initiate) are picks, not entries in the class's level-by-level feature list. Their option
+    // id matches the classFeatures record that carries the grant.
+    for (const o of grantOptions) {
+      grantSources.push({ id: o.id, grants: content.classFeatures[o.id]?.grantsFeats });
+    }
     for (const src of grantSources) {
       for (const gid of src.grants ?? []) {
         if (takenFeats.has(gid) || !content.feats[gid]) continue;

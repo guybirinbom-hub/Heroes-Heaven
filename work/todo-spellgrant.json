@@ -1,0 +1,301 @@
+[
+ {
+  "collection": "feats",
+  "id": "sequestered-spell",
+  "name": "Sequestered Spell",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "songbirds-call",
+  "name": "Songbird's Call",
+  "level": 8,
+  "lanes": [
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "link-spells",
+  "name": "Link Spells",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "composition-spells",
+  "name": "Composition Spells",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "heros-defiance",
+  "name": "Hero's Defiance",
+  "level": 19,
+  "lanes": [
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "seneschal",
+  "name": "Seneschal",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "hunters-brooch",
+  "name": "Hunter's Brooch",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "nosoi-charm",
+  "name": "Nosoi Charm",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "nosoi-charm-greater",
+  "name": "Nosoi Charm (Greater)",
+  "level": 18,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "pendant-of-the-occult",
+  "name": "Pendant of the Occult",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "pendant-of-the-occult-greater",
+  "name": "Pendant of the Occult (Greater)",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "passage-charm",
+  "name": "Passage Charm",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "generals-word",
+  "name": "General's Word",
+  "level": 14,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "pact-of-the-herald-and-host",
+  "name": "Pact of the Herald and Host",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "living-storm",
+  "name": "Living Storm",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "cloak-of-elvenkind",
+  "name": "Cloak of Elvenkind",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ }
+]

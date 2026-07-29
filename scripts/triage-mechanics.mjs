@@ -204,7 +204,8 @@ const laneArg = process.argv.indexOf('--lane');
 const outArg = process.argv.indexOf('--out');
 if (laneArg > -1) {
   const want = process.argv[laneArg + 1];
-  const rows = ledger.filter((e) => e.lanes.some((l) => l.lane === want && !l.modelled));
+  // Only genuinely UNEXAMINED records — otherwise every re-run hands back the pile already decided.
+  const rows = ledger.filter((e) => e.lanes.some((l) => l.lane === want && !l.modelled && !l.examined));
   const payload = JSON.stringify(rows, null, 1);
   if (outArg > -1) {
     const p = join(root, process.argv[outArg + 1]);

@@ -220,7 +220,15 @@ describe('deriveBuildFromCharacter — the hand-authored seed (Kyra)', () => {
     expect(reb.classId).toBe('cleric');
     expect(reb.subclassId).toBe(kyra.subclassId);
     expect(reb.details.deityId).toBe('sarenrae');
-    expect(reb.feats.map((f) => f.featId).sort()).toEqual(kyra.feats.map((f) => f.featId).sort());
+    // Compare only the feats the PLAYER picked. Kyra is a Cloistered Cleric, whose First Doctrine
+    // grants Domain Initiate automatically — the rebuild now adds it, so an exact comparison against
+    // the hand-authored seed (written before class features could grant feats) fails on a feat that
+    // SHOULD be there. Granted feats are derived, not chosen, so they aren't part of the round-trip.
+    const picked = (fs: { featId: string; grantedBy?: string }[]) =>
+      fs.filter((f) => !f.grantedBy).map((f) => f.featId).sort();
+    expect(picked(reb.feats)).toEqual(picked(kyra.feats));
+    // …and the grant really did happen.
+    expect(reb.feats.some((f) => f.featId === 'domain-initiate')).toBe(true);
     // Kyra is hand-authored with more languages than her Int budgets, so the rules-based rebuild
     // may clamp a bonus language; assert no spurious languages appear (recovered ⊆ original).
     expect(kyra.languages).toEqual(expect.arrayContaining(reb.languages));

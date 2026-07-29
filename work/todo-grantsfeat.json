@@ -1,0 +1,415 @@
+[
+ {
+  "collection": "classFeatures",
+  "id": "shield-block",
+  "name": "Shield Block",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "battle-creed",
+  "name": "Battle Creed",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "born-of-the-bones-of-the-earth",
+  "name": "Born of the Bones of the Earth",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "cloistered-cleric",
+  "name": "Cloistered Cleric",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "cultivation-order",
+  "name": "Cultivation Order",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "dancer-in-the-seasons",
+  "name": "Dancer in the Seasons",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "first-doctrine-warpriest",
+  "name": "First Doctrine (Warpriest)",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "improved-familiar-attunement",
+  "name": "Improved Familiar Attunement",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "moderate-creed",
+  "name": "Moderate Creed",
+  "level": 9,
+  "lanes": [
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "of-verse-unbroken",
+  "name": "Of Verse Unbroken",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "palatine-detective",
+  "name": "Palatine Detective",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "plunderer-of-the-hives-riches",
+  "name": "Plunderer of the Hive's Riches",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "restless-as-the-tide",
+  "name": "Restless as the Tide",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "runelord",
+  "name": "Runelord",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "scar-of-the-survivor",
+  "name": "Scar of the Survivor",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "shaman",
+  "name": "Shaman",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "spore-order",
+  "name": "Spore Order",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "trespasser-in-deaths-realm",
+  "name": "Trespasser In Death's Realm",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "war-magic",
+  "name": "War Magic",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "warpriest",
+  "name": "Warpriest",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "warrior-of-legend",
+  "name": "Warrior of Legend",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "whose-cry-is-thunder",
+  "name": "Whose Cry is Thunder",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ }
+]
