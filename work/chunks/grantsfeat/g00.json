@@ -1,0 +1,387 @@
+[
+ {
+  "id": "dwarven-weapon-expertise",
+  "collection": "feats",
+  "name": "Dwarven Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency for battle axes, picks, warhammers, and all dwarven weapons in which you are trained."
+ },
+ {
+  "id": "elven-weapon-expertise",
+  "collection": "feats",
+  "name": "Elven Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in longbows, composite longbows, longswords, rapiers, shortbows, composite shortbows, and all elf weapons in which you are trained."
+ },
+ {
+  "id": "gnome-weapon-expertise",
+  "collection": "feats",
+  "name": "Gnome Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the glaive, kukri, and all gnome weapons in which you are trained."
+ },
+ {
+  "id": "goblin-weapon-expertise",
+  "collection": "feats",
+  "name": "Goblin Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the dogslicer, horsechopper, and all goblin weapons in which you are trained."
+ },
+ {
+  "id": "halfling-weapon-expertise",
+  "collection": "feats",
+  "name": "Halfling Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the sling, halfling sling staff, shortsword, and all halfling weapons in which you are trained."
+ },
+ {
+  "id": "unconventional-expertise",
+  "collection": "feats",
+  "name": "Unconventional Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in the weapon you chose for Unconventional Weaponry."
+ },
+ {
+  "id": "orc-weapon-expertise",
+  "collection": "feats",
+  "name": "Orc Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the falchion, the greataxe, and all orc weapons in which you are trained."
+ },
+ {
+  "id": "garden-path",
+  "collection": "feats",
+  "name": "Garden Path",
+  "level": 8,
+  "text": "When you and any of your crop are Avoiding Notice, you can choose one member of your crop to temporarily gain the benefits of the Quiet Allies skill feat until the group is no longer Avoiding Notice."
+ },
+ {
+  "id": "sociable",
+  "collection": "feats",
+  "name": "Sociable",
+  "level": 1,
+  "text": "You are trained in Diplomacy (or another skill of your choice if you were already trained in Diplomacy), and you gain the Hobnobber skill feat."
+ },
+ {
+  "id": "forge-days-rest",
+  "collection": "feats",
+  "name": "Forge-Day's Rest",
+  "level": 1,
+  "text": "As long as you rest for 12 hours, you gain the effects of the Fast Recovery general feat and you can go 20 hours without resting before becoming fatigued."
+ },
+ {
+  "id": "elemental-wrath",
+  "collection": "feats",
+  "name": "Elemental Wrath",
+  "level": 1,
+  "text": "When you gain this feat, select acid, cold, electricity, or fire."
+ },
+ {
+  "id": "natural-performer",
+  "collection": "feats",
+  "name": "Natural Performer",
+  "level": 1,
+  "text": "You become trained in Performance and gain one 1st-level Performance skill feat."
+ },
+ {
+  "id": "formation-master",
+  "collection": "feats",
+  "name": "Formation Master",
+  "level": 13,
+  "text": "Hobgoblin allies adjacent to you and at least one other hobgoblin ally also gain the bonuses from your Formation Training feat."
+ },
+ {
+  "id": "hobgoblin-weapon-expertise",
+  "collection": "feats",
+  "name": "Hobgoblin Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency rank in all weapons you are trained in from Hobgoblin Weapon Familiarity."
+ },
+ {
+  "id": "invoke-the-crimson-oath",
+  "collection": "feats",
+  "name": "Invoke the Crimson Oath",
+  "level": 8,
+  "text": "Your knight reclaimant focus spells are divine spells; when you gain this feat, you become trained in divine spell attacks and spell DCs."
+ },
+ {
+  "id": "magaambyan-attendant-dedication",
+  "collection": "feats",
+  "name": "Magaambyan Attendant Dedication",
+  "level": 2,
+  "text": "When you gain this feat, choose to affiliate with the Cascade Bearers, Emerald Boughs, Rain-Scribes, Tempest-Sun Mages, or Uzunjati. --- **Special** You cannot select another dedication feat other than Halcyon Speaker Dedication until you have gained two other feats from the or archetype."
+ },
+ {
+  "id": "cascade-bearers-flexibility",
+  "collection": "feats",
+  "name": "Cascade Bearer's Flexibility",
+  "level": 6,
+  "text": "Until the end of your turn, you gain a single spellshape feat from the druid class or the wizard class that has a level requirement of no more than half your level."
+ },
+ {
+  "id": "ultimate-flexibility",
+  "collection": "feats",
+  "name": "Ultimate Flexibility",
+  "level": 20,
+  "text": "When you gain a fighter feat using combat flexibility, you gain three fighter feats instead of two. While the first feat must still be 8th level or lower, the second feat can be up to 14th level, and the third feat can be up to 18th level. You can use the first feat to meet the prerequisites of the second or third feats and the second feat to meet the prerequisites of the third feat."
+ },
+ {
+  "id": "specialized-companion",
+  "collection": "feats",
+  "name": "Specialized Companion",
+  "level": 18,
+  "text": "76 Archetype Animal Trainer Prerequisites Splendid Companion The animal companion you gain from the Animal Trainer Dedication feat gains one specialization of your choice."
+ },
+ {
+  "id": "catfolk-weapon-expertise",
+  "collection": "feats",
+  "name": "Catfolk Weapon Expertise",
+  "level": 13,
+  "text": "11 Prerequisites Catfolk Weapon Familiarity Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency rank in all weapons you are trained in from Catfolk Weapon Familiarity."
+ },
+ {
+  "id": "animal-feature",
+  "collection": "feats",
+  "name": "Animal Feature",
+  "level": 4,
+  "text": "Animal Feature Source Advanced Player's Guide pg. You gain the animal feature warden spell."
+ },
+ {
+  "id": "ancestral-blood-magic",
+  "collection": "feats",
+  "name": "Ancestral Blood Magic",
+  "level": 1,
+  "text": "You gain your blood magic effect when you cast a non-cantrip spell you gained from a heritage or an ancestry feat, in addition to the normal circumstances that trigger your blood magic."
+ },
+ {
+  "id": "wild-strider",
+  "collection": "feats",
+  "name": "Wild Strider",
+  "level": 12,
+  "text": "You gain the ranger's Wild Stride class feature."
+ },
+ {
+  "id": "shadow-sneak-attack",
+  "collection": "feats",
+  "name": "Shadow Sneak Attack",
+  "level": 10,
+  "text": "You gain the Sneak Attack class feature, except you deal 1d6 precision damage regardless of your level."
+ },
+ {
+  "id": "viking-weapon-specialist",
+  "collection": "feats",
+  "name": "Viking Weapon Specialist",
+  "level": 6,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency rank in the above four weapons."
+ },
+ {
+  "id": "shall-not-falter-shall-not-rout",
+  "collection": "feats",
+  "name": "Shall Not Falter, Shall Not Rout",
+  "level": 10,
+  "text": "Your knight reclaimant focus spells are divine spells; when you gain this feat, you become trained in divine spell attacks and spell DCs and your spellcasting ability is Charisma."
+ },
+ {
+  "id": "suns-fury",
+  "collection": "feats",
+  "name": "Sun's Fury",
+  "level": 6,
+  "text": "Your Bright Lion focus spells are divine spells; when you gain this feat, if you aren't already, you become trained in divine spell attacks and spell DCs, using Charisma as your spellcasting ability score."
+ },
+ {
+  "id": "bestiary-scholar",
+  "collection": "feats",
+  "name": "Bestiary Scholar",
+  "level": 10,
+  "text": "When you gain this feat, choose one of the following skills in which you have attained master proficiency: Arcana, Crafting, Nature, Occultism, or Religion."
+ },
+ {
+  "id": "masterful-obfuscation",
+  "collection": "feats",
+  "name": "Masterful Obfuscation",
+  "level": 10,
+  "text": "When you gain this feat, choose one skill with the Recall Knowledge action in which you have attained master proficiency. When you Lie in this way, attempt your skill check using the skill you selected when you gained this feat instead of Deception, applying all bonuses or penalties related from the selected skill to the check. According to all credible scholars, cold iron will do the trick.\" Once a creature realizes you've used masterful obfuscation to Lie to them, either from a failed check or due to later discovering the falsehood, you can't use this "
+ },
+ {
+  "id": "determined-lore-seeker",
+  "collection": "feats",
+  "name": "Determined Lore Seeker",
+  "level": 12,
+  "text": "When you gain this feat, choose one of the innate spells granted by the Lore Seeker feat: comprehend language, restore senses, or see invisibility."
+ },
+ {
+  "id": "kreightons-cognitive-crossover",
+  "collection": "feats",
+  "name": "Kreighton's Cognitive Crossover",
+  "level": 4,
+  "text": "**Trigger** You gain no information from a Recall Knowledge check (usually because you failed the secret check) using one of the two skills you chose for this feat. --- **Special** When you gain this feat, choose two of the following skills: Arcana, Crafting, Lore (any one), Medicine, Nature, Occultism, Religion, or Society."
+ },
+ {
+  "id": "idyllkin",
+  "collection": "feats",
+  "name": "Idyllkin",
+  "level": 1,
+  "text": "You know the Fey language and gain the Natural Medicine skill feat."
+ },
+ {
+  "id": "vanths-weapon-expertise",
+  "collection": "feats",
+  "name": "Vanth's Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in bo staves, longbows, composite longbows, scythes, and staves."
+ },
+ {
+  "id": "slither",
+  "collection": "feats",
+  "name": "Slither",
+  "level": 1,
+  "text": "You gain the Quick Squeeze skill feat, even if you're not trained in Acrobatics."
+ },
+ {
+  "id": "kobold-weapon-expertise",
+  "collection": "feats",
+  "name": "Kobold Weapon Expertise",
+  "level": 13,
+  "text": "39 Prerequisites Kobold Weapon Familiarity Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the crossbow, greatpick, light pick, pick, and spear, as well as any kobold weapons in which you are trained."
+ },
+ {
+  "id": "beastbrood",
+  "collection": "feats",
+  "name": "Beastbrood",
+  "level": 1,
+  "text": "You also gain the Courtly Graces skill feat."
+ },
+ {
+  "id": "riftmarked",
+  "collection": "feats",
+  "name": "Riftmarked",
+  "level": 1,
+  "text": "You also gain the Oddity Identification skill feat."
+ },
+ {
+  "id": "shackleborn",
+  "collection": "feats",
+  "name": "Shackleborn",
+  "level": 1,
+  "text": "You gain the Fast Recovery feat, even if you don't meet the prerequisites."
+ },
+ {
+  "id": "animal-senses",
+  "collection": "feats",
+  "name": "Animal Senses",
+  "level": 1,
+  "text": "You must have low-light vision before you can gain darkvision with this feat. If your inherent animal doesn't typically have a specific type of sense, you can't gain that sense with this feat. --- **Special** You can select this feat multiple times, choosing a different sense each time."
+ },
+ {
+  "id": "greater-animal-senses",
+  "collection": "feats",
+  "name": "Greater Animal Senses",
+  "level": 5,
+  "text": "If your inherent animal doesn't typically have a specific type of sense, you can't gain the sense with this feat. --- **Special** You can select this feat multiple times, either choosing a different sense or improving an imprecise sense granted by this feat to a precise sense."
+ },
+ {
+  "id": "animal-shape",
+  "collection": "feats",
+  "name": "Animal Shape",
+  "level": 17,
+  "text": "When you gain this feat, choose either Aerial Form, Animal Form, Dinosaur Form, or Insect Form; after you choose a form, you can't change the form. If you have the Critter Shape feat, you can choose to gain the effects of a 4th-rank Pest Form, can remain in critter shape indefinitely, and can return to your critter shape at any time after leaving the shape, just as you can with Animal Shape."
+ },
+ {
+  "id": "animal-swiftness",
+  "collection": "feats",
+  "name": "Animal Swiftness",
+  "level": 17,
+  "text": "If your inherent animal doesn't typically have a specific type of Speed, you can't gain it with this feat."
+ },
+ {
+  "id": "genie-weapon-expertise",
+  "collection": "feats",
+  "name": "Genie Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in Falchions, Ranseurs, Scimitars, Tridents, and all geniekin weapons in which you are trained."
+ },
+ {
+  "id": "gemsoul",
+  "collection": "feats",
+  "name": "Gemsoul",
+  "level": 1,
+  "text": "You gain the Impressive Performance skill feat."
+ },
+ {
+  "id": "miresoul",
+  "collection": "feats",
+  "name": "Miresoul",
+  "level": 1,
+  "text": "You gain the Quick Squeeze skill feat."
+ },
+ {
+  "id": "foxfire",
+  "collection": "feats",
+  "name": "Foxfire",
+  "level": 1,
+  "text": "Choose either electricity or fire when you gain this feat."
+ },
+ {
+  "id": "heros-wings",
+  "collection": "feats",
+  "name": "Hero's Wings",
+  "level": 9,
+  "text": "You gain a +2 circumstance bonus on all Diplomacy and Intimidation checks against sprites and gain the benefits of the Glad-Hand skill feat against other sprites, without taking a –5 penalty to your Diplomacy check."
+ },
+ {
+  "id": "azarketi-weapon-expertise",
+  "collection": "feats",
+  "name": "Azarketi Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency in Crossbows, Hand Crossbows, Longspears, Spears, Tridents, and all azarketi weapons in which you are trained."
+ },
+ {
+  "id": "entwined-energy-ki",
+  "collection": "feats",
+  "name": "Entwined Energy Ki",
+  "level": 10,
+  "text": "When you gain this feat, choose either acid, cold, electricity, fire, or sonic damage. **Special** At the GM's discretion, this feat can alter other qi spells."
+ },
+ {
+  "id": "butterflys-sting",
+  "collection": "feats",
+  "name": "Butterfly's Sting",
+  "level": 6,
+  "text": "You gain the Sneak Attack class feature."
+ },
+ {
+  "id": "conrasu-weapon-expertise",
+  "collection": "feats",
+  "name": "Conrasu Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency for Composite Shortbow, Glaive, Longspear, Longsword, Shortbow, Spear, and all conrasu weapons(Buugeng) in which you are trained."
+ },
+ {
+  "id": "gnoll-weapon-expertise",
+  "collection": "feats",
+  "name": "Gnoll Weapon Expertise",
+  "level": 13,
+  "text": "113 Prerequisites Gnoll Weapon Practicality Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in flails, khopeshes, mambeles, spears, and war flails."
+ },
+ {
+  "id": "grippli-weapon-expertise",
+  "collection": "feats",
+  "name": "Grippli Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the blowgun, hatchet, scythe, shortbow, composite shortbow, or grippli weapons in which you are trained."
+ },
+ {
+  "id": "advanced-weaponry",
+  "collection": "feats",
+  "name": "Advanced Weaponry",
+  "level": 1,
+  "text": "It gains one of the following traits, chosen when you gain the feat: disarm, grapple, nonlethal, shove, trip, or versatile bludgeoning, piercing, or slashing."
+ },
+ {
+  "id": "skilled-partner",
+  "collection": "feats",
+  "name": "Skilled Partner",
+  "level": 4,
+  "text": "Your eidolon gains a 1st-level skill feat and a 2nd-level or lower skill feat. At 7th level, your eidolon gains an additional skill feat, of 7th level or lower."
+ }
+]

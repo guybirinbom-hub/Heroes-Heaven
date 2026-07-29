@@ -10,7 +10,7 @@
  * class-slot Archetypes toggle / behind a campaign toggle / simply not valid for this slot).
  */
 import type { BuildState } from './build';
-import { kineticistElements, resolveBackground } from './build';
+import { backgroundGrantedFeats, kineticistElements, resolveBackground } from './build';
 import { maxTakes } from './featGrants';
 import type { ContentDatabase, Feat, FeatCategory } from './types';
 
@@ -36,8 +36,9 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
   // feat therefore stays offered until the whole build holds maxTakes() copies of it.
   const taken = new Map<string, number>();
   for (const [k, v] of Object.entries(build.featPicks)) if (v && k !== currentKey) taken.set(v, (taken.get(v) ?? 0) + 1);
-  const granted = resolveBackground(build, content)?.grantedFeatId;
-  if (granted) taken.set(granted, (taken.get(granted) ?? 0) + 1);
+  for (const granted of backgroundGrantedFeats(resolveBackground(build, content))) {
+    taken.set(granted, (taken.get(granted) ?? 0) + 1);
+  }
   return Object.values(content.feats).filter((f) => {
     // Skip `aon-` scrapes that duplicate a canonical feat of the same name — they would offer the
     // SAME feat twice in one picker. They stay in the db, so a feat already picked still resolves.

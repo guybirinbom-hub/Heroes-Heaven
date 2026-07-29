@@ -1,0 +1,387 @@
+[
+ {
+  "id": "inexplicably-expelled",
+  "collection": "backgrounds",
+  "name": "Inexplicably Expelled",
+  "level": null,
+  "text": "You gain the Alchemical Crafting skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Crafting **Lore** Academia Lore **Skill Feat** Alchemical Crafting"
+ },
+ {
+  "id": "ratted-out-gun-runner",
+  "collection": "backgrounds",
+  "name": "Ratted-Out Gun Runner",
+  "level": null,
+  "text": "You gain the Experienced Smuggler skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Stealth **Lore** Firearm Lore **Skill Feat** Experienced Smuggler"
+ },
+ {
+  "id": "snubbed-out-stoolie",
+  "collection": "backgrounds",
+  "name": "Snubbed Out Stoolie",
+  "level": null,
+  "text": "You gain the Lie to Me skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Deception **Lore** Underworld Lore **Skill Feat** Lie To Me"
+ },
+ {
+  "id": "wanted-witness",
+  "collection": "backgrounds",
+  "name": "Wanted Witness",
+  "level": null,
+  "text": "You gain the Read Lips skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Society **Lore** Alkenstar Lore **Skill Feat** Read Lips"
+ },
+ {
+  "id": "curandero",
+  "collection": "backgrounds",
+  "name": "Curandero",
+  "level": null,
+  "text": "You gain the Inoculation skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Medicine **Lore** Herbalism Lore **Skill Feat** Inoculation"
+ },
+ {
+  "id": "grave-robber",
+  "collection": "backgrounds",
+  "name": "Grave Robber",
+  "level": null,
+  "text": "You gain the Experienced Smuggler skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Stealth **Lore** Underworld Lore **Skill Feat** Experienced Smuggler"
+ },
+ {
+  "id": "haunted-citizen",
+  "collection": "backgrounds",
+  "name": "Haunted Citizen",
+  "level": null,
+  "text": "You gain the No Cause for Alarm skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Diplomacy **Skill Feat** No Cause For Alarm"
+ },
+ {
+  "id": "necromancers-apprentice",
+  "collection": "backgrounds",
+  "name": "Necromancer's Apprentice",
+  "level": null,
+  "text": "You gain the Quick Identification skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Arcana **Lore** Necromancy Lore **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "night-watch",
+  "collection": "backgrounds",
+  "name": "Night Watch",
+  "level": null,
+  "text": "You gain the Quick Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Intimidation **Skill Feat** Quick Coercion"
+ },
+ {
+  "id": "pyre-tender",
+  "collection": "backgrounds",
+  "name": "Pyre Tender",
+  "level": null,
+  "text": "You gain the Alchemical Crafting skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Funeral Lore **Skill Feat** Alchemical Crafting"
+ },
+ {
+  "id": "once-bitten",
+  "collection": "backgrounds",
+  "name": "Once Bitten",
+  "level": null,
+  "text": "You gain the Battle Medicine skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Medicine **Lore** Undead Lore **Skill Feat** Battle Medicine"
+ },
+ {
+  "id": "ozem-experience",
+  "collection": "backgrounds",
+  "name": "Ozem Experience",
+  "level": null,
+  "text": "You gain the Courtly Graces skill feat. --- ## Background details **Attribute Boosts** Intelligence or Strength, one free **Trained Skill** Society **Lore** Warfare Lore **Skill Feat** Courtly Graces"
+ },
+ {
+  "id": "pillar",
+  "collection": "backgrounds",
+  "name": "Pillar",
+  "level": null,
+  "text": "You gain the Additional Lore skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Lore** Labor Lore **Skill Feat** Additional Lore"
+ },
+ {
+  "id": "reclaimed",
+  "collection": "backgrounds",
+  "name": "Reclaimed",
+  "level": null,
+  "text": "You gain the Group Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Intimidation **Lore** Crimson Reclaimers Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "sentinel-reflectance",
+  "collection": "backgrounds",
+  "name": "Sentinel Reflectance",
+  "level": null,
+  "text": "You gain the No Cause for Alarm skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Diplomacy **Lore** Shining Sentinels Lore **Skill Feat** No Cause For Alarm"
+ },
+ {
+  "id": "relentless-dedication",
+  "collection": "backgrounds",
+  "name": "Relentless Dedication",
+  "level": null,
+  "text": "You're trained in the Warfare Lore skill, and you gain the Canny Acumen feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Lore** Warfare Lore **Skill Feat** Canny Acumen"
+ },
+ {
+  "id": "able-carter",
+  "collection": "backgrounds",
+  "name": "Able Carter",
+  "level": null,
+  "text": "You gain a skill feat: Charming Liar if you chose Deception or Hobnobber if you chose Diplomacy."
+ },
+ {
+  "id": "construction-occultist",
+  "collection": "backgrounds",
+  "name": "Construction Occultist",
+  "level": null,
+  "text": "You gain a skill feat: Hefty Hauler if you chose Athletics or Oddity Identification if you chose Occultism."
+ },
+ {
+  "id": "food-trader",
+  "collection": "backgrounds",
+  "name": "Food Trader",
+  "level": null,
+  "text": "You gain a skill feat: Seasoned if you chose Crafting or Streetwise if you chose Society."
+ },
+ {
+  "id": "money-counter",
+  "collection": "backgrounds",
+  "name": "Money Counter",
+  "level": null,
+  "text": "You gain a skill feat: Eye for Numbers if you chose Society or Subtle Theft if you chose Thievery."
+ },
+ {
+  "id": "propaganda-promoter",
+  "collection": "backgrounds",
+  "name": "Propaganda Promoter",
+  "level": null,
+  "text": "You gain a skill feat: Steady Balance if you chose Acrobatics or Impressive Performance if you chose Performance."
+ },
+ {
+  "id": "sun-dancer",
+  "collection": "backgrounds",
+  "name": "Sun Dancer",
+  "level": null,
+  "text": "You gain the Fascinating Performance skill feat. If you use this feat outdoors in direct sunlight, you gain a +1 circumstance bonus to the skill check. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Performance **Skill Feat** Fascinating Performance"
+ },
+ {
+  "id": "friendly-darkmoon-kobold",
+  "collection": "backgrounds",
+  "name": "Friendly Darkmoon Kobold",
+  "level": null,
+  "text": "You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Diplomacy **Lore** Kobold Lore **Skill Feat** Group Impression"
+ },
+ {
+  "id": "borderlands-pioneer",
+  "collection": "backgrounds",
+  "name": "Borderlands Pioneer",
+  "level": null,
+  "text": "You gain the Train Animal skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Nature **Skill Feat** Train Animal"
+ },
+ {
+  "id": "brevic-noble",
+  "collection": "backgrounds",
+  "name": "Brevic Noble",
+  "level": null,
+  "text": "You gain the Specialty Crafting skill feat. You gain the skill feat. You gain the Underwater Marauder skill feat. You gain the Terrain Expertise skill feat.(choose your terrain from aquatic, forest, mountain, plains, or swamp). You gain the Group Impression skill feat. You gain the Charming Liar skill feat."
+ },
+ {
+  "id": "brevic-outcast",
+  "collection": "backgrounds",
+  "name": "Brevic Outcast",
+  "level": null,
+  "text": "You take a -1 penalty on all Charisma-based skill checks attempted when dealing with members of the nobility, but gain the Haughty Obstinacy human ancestry feat, even if you aren't a human. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Skill Feat** Haughty Obstinacy"
+ },
+ {
+  "id": "issian-patriot",
+  "collection": "backgrounds",
+  "name": "Issian Patriot",
+  "level": null,
+  "text": "You gain the Streetwise skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Society **Lore** Legal Lore **Skill Feat** Streetwise"
+ },
+ {
+  "id": "local-brigand",
+  "collection": "backgrounds",
+  "name": "Local Brigand",
+  "level": null,
+  "text": "You gain the Group Coercion skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Intimidation **Lore** Banditry Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "rostlander",
+  "collection": "backgrounds",
+  "name": "Rostlander",
+  "level": null,
+  "text": "You gain the Hefty Hauler skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Farming Lore **Skill Feat** Hefty Hauler"
+ },
+ {
+  "id": "glorianas-fixer",
+  "collection": "backgrounds",
+  "name": "Gloriana's Fixer",
+  "level": null,
+  "text": "You gain the Subtle Theft skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Thievery **Lore** Underworld Lore **Skill Feat** Subtle Theft"
+ },
+ {
+  "id": "almas-clerk",
+  "collection": "backgrounds",
+  "name": "Almas Clerk",
+  "level": null,
+  "text": "You gain the Glean Contents skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Lore** Legal Lore **Skill Feat** Glean Contents"
+ },
+ {
+  "id": "friend-of-greensteeples",
+  "collection": "backgrounds",
+  "name": "Friend of Greensteeples",
+  "level": null,
+  "text": "You're trained in your choice of the Deception or Society skills, and gain the Assurance skill feat with your chosen skill. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Skill Feat** Assurance"
+ },
+ {
+  "id": "guest-of-sedeq-lodge",
+  "collection": "backgrounds",
+  "name": "Guest of Sedeq Lodge",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "sandswept-survivor",
+  "collection": "backgrounds",
+  "name": "Sandswept Survivor",
+  "level": null,
+  "text": "You gain the Terrain Expertise skill feat with underground terrain. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Survival **Skill Feat** Terrain Expertise"
+ },
+ {
+  "id": "gold-falls-regular",
+  "collection": "backgrounds",
+  "name": "Gold Falls Regular",
+  "level": null,
+  "text": "You gain the Impressive Performance skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Performance **Skill Feat** Impressive Performance"
+ },
+ {
+  "id": "firebrand-follower",
+  "collection": "backgrounds",
+  "name": "Firebrand Follower",
+  "level": null,
+  "text": "You gain the Assurance skill feat in your chosen skill."
+ },
+ {
+  "id": "free-spirit",
+  "collection": "backgrounds",
+  "name": "Free Spirit",
+  "level": null,
+  "text": "You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Survival **Lore** Settlement Or Terrain Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "runner",
+  "collection": "backgrounds",
+  "name": "Runner",
+  "level": null,
+  "text": "You gain the Quick Jump skill feat. --- ## Background details **Attribute Boosts** Intelligence or Strength, one free **Trained Skill** Athletics **Skill Feat** Quick Jump"
+ },
+ {
+  "id": "thrill-seeker",
+  "collection": "backgrounds",
+  "name": "Thrill-Seeker",
+  "level": null,
+  "text": "You gain the Combat Climber skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Engineering Lore **Skill Feat** Combat Climber"
+ },
+ {
+  "id": "unremarkable",
+  "collection": "backgrounds",
+  "name": "Unremarkable",
+  "level": null,
+  "text": "You gain the Lengthy Diversion skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Deception **Lore** Acting Lore **Skill Feat** Lengthy Diversion"
+ },
+ {
+  "id": "bookish-providence",
+  "collection": "backgrounds",
+  "name": "Bookish Providence",
+  "level": null,
+  "text": "You gain the skill feat, are trained in the Academia Lore skill, and gain the Recall Under Pressure free action. --- ## Background details **Attribute Boosts** Intelligence, one free **Skill Feat** Multilingual"
+ },
+ {
+  "id": "crown-of-chaos",
+  "collection": "backgrounds",
+  "name": "Crown of Chaos",
+  "level": null,
+  "text": "You gain the Charming Liar skill feat and are trained in a Lore about a specific terrain, as befits where you spent most of your childhood growing up. --- ## Background details **Attribute Boosts** Charisma, one free **Skill Feat** Charming Liar"
+ },
+ {
+  "id": "hammered-by-fate",
+  "collection": "backgrounds",
+  "name": "Hammered by Fate",
+  "level": null,
+  "text": "You gain the Hefty Hauler skill feat and are trained in one of the following Lore skills, as fits your history: Daemon Lore, Demon Lore, or Devil Lore. --- ## Background details **Attribute Boosts** Strength, one free **Skill Feat** Hefty Hauler"
+ },
+ {
+  "id": "keys-to-destiny",
+  "collection": "backgrounds",
+  "name": "Keys to Destiny",
+  "level": null,
+  "text": "You gain the Assurance skill feat and are trained in one of the following Lore skills associated with a profession, as befits your history: Art Lore, Engineering Lore, Farming Lore, Herbalism Lore, Labor Lore, Mercantile Lore, Scribing Lore, Theater Lore, or Warfare Lore. --- ## Background details **Attribute Boosts** Dexterity, one free **Skill Feat** Assurance"
+ },
+ {
+  "id": "shielded-fortune",
+  "collection": "backgrounds",
+  "name": "Shielded Fortune",
+  "level": null,
+  "text": "You gain the Toughness general feat and also gain the Fated Not to Die free action."
+ },
+ {
+  "id": "writ-in-the-stars",
+  "collection": "backgrounds",
+  "name": "Writ in the Stars",
+  "level": null,
+  "text": "You gain the Pilgrim's Token skill feat (this token need not be from a faith and could simply be a good luck charm) and are trained in the Fortune-Telling Lore skill. --- ## Background details **Attribute Boosts** Wisdom, one free **Lore** Fortune Telling Lore **Skill Feat** Pilgrim's Token"
+ },
+ {
+  "id": "highborn-snoop",
+  "collection": "backgrounds",
+  "name": "Highborn Snoop",
+  "level": null,
+  "text": "You gain the Courtly Graces skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Society **Lore** Guild Lore **Skill Feat** Courtly Graces"
+ },
+ {
+  "id": "union-representative",
+  "collection": "backgrounds",
+  "name": "Union Representative",
+  "level": null,
+  "text": "You gain the Contract Negotiator skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Diplomacy **Lore** Legal Lore **Skill Feat** Contract Negotiator"
+ },
+ {
+  "id": "fightbreaker",
+  "collection": "backgrounds",
+  "name": "Fightbreaker",
+  "level": null,
+  "text": "You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Diplomacy **Skill Feat** Group Impression"
+ },
+ {
+  "id": "alloysmith",
+  "collection": "backgrounds",
+  "name": "Alloysmith",
+  "level": null,
+  "text": "You gain the Specialty Crafting skill feat with the blacksmithing specialty."
+ },
+ {
+  "id": "crystal-healer",
+  "collection": "backgrounds",
+  "name": "Crystal Healer",
+  "level": null,
+  "text": "You gain the Natural Medicine skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Nature **Lore** Plane Of Earth Lore **Skill Feat** Natural Medicine"
+ },
+ {
+  "id": "deep-sea-diver",
+  "collection": "backgrounds",
+  "name": "Deep-Sea Diver",
+  "level": null,
+  "text": "You gain the Underwater Marauder skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Athletics **Lore** Plane Of Water Lore **Skill Feat** Underwater Marauder"
+ },
+ {
+  "id": "dendrologist",
+  "collection": "backgrounds",
+  "name": "Dendrologist",
+  "level": null,
+  "text": "You gain the Terrain Expertise skill feat for forests. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Survival **Lore** Plane Of Wood Lore **Skill Feat** Terrain Expertise"
+ },
+ {
+  "id": "fire-warden",
+  "collection": "backgrounds",
+  "name": "Fire Warden",
+  "level": null,
+  "text": "You gain the Breath Control feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Plane Of Fire Lore **Skill Feat** Breath Control"
+ },
+ {
+  "id": "sky-rider",
+  "collection": "backgrounds",
+  "name": "Sky Rider",
+  "level": null,
+  "text": "You gain the Cat Fall skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Acrobatics **Lore** Plane Of Air Lore **Skill Feat** Cat Fall"
+ }
+]

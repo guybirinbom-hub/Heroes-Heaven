@@ -1,0 +1,387 @@
+[
+ {
+  "id": "animal-rage",
+  "collection": "feats",
+  "name": "Animal Rage",
+  "level": 8,
+  "text": "You gain the effects of the 3rd-rank Animal Form spell except you use your own statistics, temporary Hit Points, and unarmed attacks instead of those granted by animal form."
+ },
+ {
+  "id": "minor-magic",
+  "collection": "feats",
+  "name": "Minor Magic",
+  "level": 2,
+  "text": "You gain the Cast a Spell activity, your key spellcasting ability is Charisma, and you're trained in spell attack rolls and DCs for the tradition you chose."
+ },
+ {
+  "id": "dangerous-sorcery",
+  "collection": "feats",
+  "name": "Dangerous Sorcery",
+  "level": 1,
+  "text": "When you Cast a Spell from your spell slots, if the spell deals damage and doesn’t have a duration, you gain a status bonus to that spell’s damage equal to the spell’s level."
+ },
+ {
+  "id": "hand-of-the-apprentice",
+  "collection": "feats",
+  "name": "Hand of the Apprentice",
+  "level": 1,
+  "text": "You gain the hand of the apprentice universalist spell. Universalist spells are a type of focus spell, much like school spells. You start with a focus pool of 1 Focus Point. See here for more information about focus spells."
+ },
+ {
+  "id": "silent-spell",
+  "collection": "feats",
+  "name": "Silent Spell",
+  "level": 4,
+  "text": "Silent Spell Source Core Rulebook pg. 210 Prerequisites Conceal Spell You’ve learned how to cast many of your spells without speaking the words of power you would normally need to provide. If the next action you use is Casting a Spell that has a verbal component and at least one other component, you can remove the verbal component. This makes the spell quieter and allows you to cast it in areas where sound can’t carry. However, the spell still has visual manifestations, so this doesn’t make the spell any less obvious to someone who sees you casting it. W"
+ },
+ {
+  "id": "advanced-red-mantis-magic",
+  "collection": "feats",
+  "name": "Advanced Red Mantis Magic",
+  "level": 6,
+  "text": "You gain a 2nd-level spell slot that you can use to prepare a spell from your Red Mantis assassin spellbook. You gain a 3rd-level spell slot that you can use to prepare a spell from your Red Mantis assassin spellbook. You gain a 4th-level spell slot that you can use to prepare a spell from your Red Mantis assassin spellbook."
+ },
+ {
+  "id": "perfect-ki-adept",
+  "collection": "feats",
+  "name": "Perfect Ki Adept",
+  "level": 6,
+  "text": "You gain the appropriate qi spell for your School of Perfection: Unblinking Flame Revelation for Unblinking Flame, Unbreaking Wave Advance for Unbreaking Waves, Unfolding Wind Rush for Unfolding Wind, or Untwisting Iron Buffer for Untwisting Iron. Increase the number of Focus Points in your focus pool by 1."
+ },
+ {
+  "id": "spell-runes",
+  "collection": "feats",
+  "name": "Spell Runes",
+  "level": 4,
+  "text": "Choose a 1st-rank arcane spell. You gain a spell rune on your body corresponding to the chosen spell, which you can cast once per day as an innate spell. At 6th level, you gain a spell rune corresponding to a 2nd-rank arcane spell, and at 8th level, you gain a spell rune corresponding to a 3rd-rank arcane spell."
+ },
+ {
+  "id": "greater-spell-runes",
+  "collection": "feats",
+  "name": "Greater Spell Runes",
+  "level": 10,
+  "text": "You gain more powerful spell runes. You gain a spell rune corresponding to a 4th-rank arcane spell. At 12th level, you gain a spell rune corresponding to a 5th-rank arcane spell, and at 14th level, you gain a spell rune corresponding to a 6th-rank arcane spell."
+ },
+ {
+  "id": "silvers-refrain",
+  "collection": "feats",
+  "name": "Silver's Refrain",
+  "level": 12,
+  "text": "You learn the Silver's Refrain composition cantrip, which aids you when fighting devils."
+ },
+ {
+  "id": "ornate-tattoo",
+  "collection": "feats",
+  "name": "Ornate Tattoo",
+  "level": 5,
+  "text": "Choose a 1st-rank arcane spell from the same school as your Arcane Tattoos, either a common spell or another to which you have access. You can cast that spell once per day as an innate arcane spell."
+ },
+ {
+  "id": "virtue-forged-tattoos",
+  "collection": "feats",
+  "name": "Virtue-Forged Tattoos",
+  "level": 9,
+  "text": "Choose a 3rd-rank arcane spell from the same school as your Arcane Tattoos, either a common spell or another to which you have access, including a lower-rank spell heightened to 3rd level if you wish. You can cast that spell once per day as an innate arcane spell."
+ },
+ {
+  "id": "intuitive-illusions",
+  "collection": "feats",
+  "name": "Intuitive Illusions",
+  "level": 5,
+  "text": "You immediately gain the effects of a Sustain a Spell action to extend the duration of one of your active illusion spells."
+ },
+ {
+  "id": "cascade-bearers-spellcasting",
+  "collection": "feats",
+  "name": "Cascade Bearer's Spellcasting",
+  "level": 10,
+  "text": "You can select halcyon spells from the divine or occult spell lists in additional to the arcane or primal spell lists, though they are still halcyon spells (so you choose when casting if they are arcane or primal spells). You gain a halcyon cantrip and a halcyon 1st-rank spell."
+ },
+ {
+  "id": "halcyon-speaker-dedication",
+  "collection": "feats",
+  "name": "Halcyon Speaker Dedication",
+  "level": 6,
+  "text": "In addition to being able to cast your halcyon spells via your arcane or primal spell slots, you also gain a 1st-rank halcyon spell slot. You can use your halcyon spell slots to spontaneously cast your halcyon spells."
+ },
+ {
+  "id": "dualistic-synergy",
+  "collection": "feats",
+  "name": "Dualistic Synergy",
+  "level": 8,
+  "text": "If your next action is to Cast a Spell from your spell slots, you gain a benefit. If the spell is arcane, you can attempt a skill check to Recall Knowledge with a +1 status bonus to the check after casting the spell, or a +2 status bonus if the spell is 7th rank or higher. If the spell is primal, you gain a number of temporary Hit Points equal to the spell's rank for 1 round. If the spell is a halcyon spell, you gain both benefits."
+ },
+ {
+  "id": "halcyon-spellcasting-initiate",
+  "collection": "feats",
+  "name": "Halcyon Spellcasting Initiate",
+  "level": 10,
+  "text": "You also gain a 2nd-rank halcyon spell slot and a 3rd-rank halcyon spell slot. These and all future halcyon spell slots work like the 1st-rank halcyon spell slot you gained from Halcyon Speaker Dedication."
+ },
+ {
+  "id": "flexible-halcyon-spellcasting",
+  "collection": "feats",
+  "name": "Flexible Halcyon Spellcasting",
+  "level": 12,
+  "text": "You gain one more common halcyon spell of each level of halcyon spell you can cast other than your highest (you do not gain an additional cantrip). You also gain one additional halcyon spell slot for each level of halcyon spell you can cast, other than the highest."
+ },
+ {
+  "id": "halcyon-spellcasting-adept",
+  "collection": "feats",
+  "name": "Halcyon Spellcasting Adept",
+  "level": 14,
+  "text": "You also gain a 4th-rank halcyon spell slot and a 5th-rank halcyon spell slot. Your proficiency rank in either arcane or primal spell DCs and spell attack rolls advances from trained to expert."
+ },
+ {
+  "id": "halcyon-spellcasting-sage",
+  "collection": "feats",
+  "name": "Halcyon Spellcasting Sage",
+  "level": 18,
+  "text": "You also gain a 6th-rank halcyon spell slot and a 7th-rank halcyon spell slot. Your proficiency rank in either arcane or primal spell DCs and spell attack rolls advances from expert to master."
+ },
+ {
+  "id": "synergistic-spell",
+  "collection": "feats",
+  "name": "Synergistic Spell",
+  "level": 20,
+  "text": "You combine your synergy and spells into a fantastic web of magic, allowing you to cast two spells at once. If the next action you use is to Cast a Spell from one of your halcyon spell slots, after that spell resolves, you can Cast another Spell as a free action. This spell must be cast from one of your halcyon spell slots and be a spell that would normally take two actions to cast."
+ },
+ {
+  "id": "surreptitious-spellcaster",
+  "collection": "feats",
+  "name": "Surreptitious Spellcaster",
+  "level": 8,
+  "text": "You've learned that it pays for a Pathfinder to be able to cast spells without being noticed. You gain the Conceal Spell wizard class feat, though it's not a wizard feat for you. You also gain a +2 circumstance bonus to Stealth checks to Conceal a Spell and to Deception checks to conceal verbal components."
+ },
+ {
+  "id": "absorb-spell",
+  "collection": "feats",
+  "name": "Absorb Spell",
+  "level": 14,
+  "text": "**Frequency** once per 10 minutes **Trigger** You critically succeed at a saving throw against a foe's spell, and that spell is of a level you can normally cast. --- You absorb a spell and store it in your body. If you are a spontaneous spellcaster, you can cast the triggering spell once during the next 10 minutes, even if it's not on your spell list as if it were in your repertoire. If you are a prepared spellcaster, you can replace one of your prepared spells of the same rank with the absorbed spell, but you must cast the absorbed spell within 10 minut"
+ },
+ {
+  "id": "spell-mastery",
+  "collection": "feats",
+  "name": "Spell Mastery",
+  "level": 20,
+  "text": "You have mastered a handful of spells to such a degree that you can cast them even if you haven't prepared them in advance. Select any four spells of 9th rank or lower that are in your spellbook; each spell you select must be of a different rank. These spells are automatically prepared when you make your daily preparations, and you gain an extra spell slot for each spell."
+ },
+ {
+  "id": "endurance-of-the-rooted-tree",
+  "collection": "feats",
+  "name": "Endurance of the Rooted Tree",
+  "level": 20,
+  "text": "In addition, you can cast the Wholeness of Body ki spell almost effortlessly. You can cast it as a free action that triggers at the start of your turn."
+ },
+ {
+  "id": "loaner-spell",
+  "collection": "feats",
+  "name": "Loaner Spell",
+  "level": 8,
+  "text": "During your daily preparations, you can gain the assistance of an allied prepared spellcaster to prepare one spell for the day. The spell can be up to 3rd level. Your ally must be able to prepare and cast it, and the spell must have a Targets entry or an area. Your ally loses a spell slot of the corresponding spell rank, and you gain the ability to cast the prepared spell once that day. When you Cast the Spell, use your class DC for any saving throws required by the spell, and your class DC - 10 as a spell attack roll modifier."
+ },
+ {
+  "id": "steal-spell",
+  "collection": "feats",
+  "name": "Steal Spell",
+  "level": 16,
+  "text": "When you use Legendary Thief to steal the impossible, you can steal a prepared spell or spontaneous spell from a foe. The spell is randomly selected from the highest-rank spells the foe knows that have a target or area, to a maximum of 8th-rank spells; the target loses the appropriate spell slot as if they had cast it themself. You can Cast the Spell once within the next 1d4 rounds, after which the fleeting magic fades; this otherwise works the same as casting a Loaner Spell."
+ },
+ {
+  "id": "ancestral-mage",
+  "collection": "feats",
+  "name": "Ancestral Mage",
+  "level": 10,
+  "text": "Add any innate spells you have from a heritage or an ancestry feat to your spell repertoire, meaning you can cast them using your spell slots."
+ },
+ {
+  "id": "shadow-magic",
+  "collection": "feats",
+  "name": "Shadow Magic",
+  "level": 10,
+  "text": "You gain the ability to fuse and play with shadows by using focus spells specific to shadowdancers. You learn a shadowdancer focus spell of your choice: Dance of Darkness or Shadow Jump. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can Refocus by meditating within an area of dim light or darkness. Shadowdancer focus spells are occult spells. You become trained in occult spell attack rolls and spell DCs, and your spellcasting ability for these spells is Charisma."
+ },
+ {
+  "id": "determined-lore-seeker",
+  "collection": "feats",
+  "name": "Determined Lore Seeker",
+  "level": 12,
+  "text": "You've mastered useful spells that let you find hidden truths others might miss, and a preferred spell comes naturally to you. You can cast this spell three times per day instead of once per day. When you cast any of the spells granted by Lore Seeker as innate spells, they gain additional effects. When you cast comprehend language, the spell is heightened to 4th level. When you cast restore senses,the spell is heightened to half your level, rounded up. When you cast see invisibility, for the duration of the spell you can use an action, which has the conc"
+ },
+ {
+  "id": "retain-absorbed-spell",
+  "collection": "feats",
+  "name": "Retain Absorbed Spell",
+  "level": 18,
+  "text": "When you absorb a spell using the Absorb Spell reaction, you utilize secret, techniques that allow you to retain the power and knowledge necessary to cast the spell repeatedly-potentially for a greater period of time. If you're a spontaneous caster, you can cast the triggering spell up to three times instead of once. If you're a prepared spellcaster, you can replace up to three of your prepared spells of the same rank with the absorbed spell instead of one. Either way, you can choose to retain the absorbed spell for the next hour instead of the next 10 m"
+ },
+ {
+  "id": "westyrs-wayfinder-repository",
+  "collection": "feats",
+  "name": "Westyr's Wayfinder Repository",
+  "level": 6,
+  "text": "**Requirements** You have at least one 1st-rank spell slot and a wayfinder. When making your daily preparations, you can choose one 1st-rank spell from your spellbook or spell repertoire and store it in your wayfinder. You can cast this spell from the wayfinder using the normal actions required. Once the spell has been cast, it is expended, and you must make your next daily preparations to store another spell in your wayfinder."
+ },
+ {
+  "id": "ghost-hunter-dedication",
+  "collection": "feats",
+  "name": "Ghost Hunter Dedication",
+  "level": 2,
+  "text": "Choose two cantrips from the occult spell list. Each cantrip must have the divination, enchantment, or necromancy trait. You can cast these spells as innate occult spells. You gain access to the Cast a Spell activity if you didn't have it already. You're trained in occult spell attack rolls and spell DCs. You can usually replace material components with somatic components, so you don't need a spell component pouch."
+ },
+ {
+  "id": "spirit-spells",
+  "collection": "feats",
+  "name": "Spirit Spells",
+  "level": 4,
+  "text": "Choose a 1st-rank occult spell. You can Cast this Spell as an innate occult spell. At 6th level, you gain a 2nd-rank occult spell, and at 8th level, you gain a 3rd-rank occult spell. You can cast each of these spells once per day"
+ },
+ {
+  "id": "advanced-seeker-of-truths",
+  "collection": "feats",
+  "name": "Advanced Seeker of Truths",
+  "level": 12,
+  "text": "You gain an advanced domain spell from one domain you selected with Seeker of Truths. Increase the number of Focus Points in your focus pool by 1. --- **Special** You can take this feat up to three times, each time selecting a different advanced domain spell from a domain you selected with Seeker of Truths."
+ },
+ {
+  "id": "true-gaze",
+  "collection": "feats",
+  "name": "True Gaze",
+  "level": 17,
+  "text": "**Frequency** once per hour --- When you focus your eyes carefully, your gaze can pierce through all obfuscations, even magical ones. When you use True Gaze, you gain the effects of a 6th-rank Truesight spell, using your modifier for the counteract check."
+ },
+ {
+  "id": "strikers-scroll",
+  "collection": "feats",
+  "name": "Striker's Scroll",
+  "level": 4,
+  "text": "You can attach a scroll to your weapon or *Handwraps of Mighty Blows* to blend its spell into an attack, carefully folding it around a part of the weapon or sealing it to the weapon's surface. You can Cast the Spell from the scroll as part of a Spellstrike, assuming the spell is one you could normally use with Spellstrike. You can't Cast the Spell in any other way while it's affixed, though you can use Affix a Talisman again to remove the scroll and use it as a normal—if a bit crumpled-scroll."
+ },
+ {
+  "id": "standby-spell",
+  "collection": "feats",
+  "name": "Standby Spell",
+  "level": 8,
+  "text": "You've honed one spell as your favored combat technique, and you've practiced it enough that you no longer need to prepare it to cast it. Choose a spell in your spellbook that you could use with Spellstrike and that has a level no higher than the highest-level magus spell slot you have. You can Cast this Spell without having it prepared ahead of time by expending a spell slot of a sufficient level to cast your chosen spell. You can change this spell whenever you add new spells to your spellbook, or by studying your spellbook for 1 hour."
+ },
+ {
+  "id": "magical-understudy",
+  "collection": "feats",
+  "name": "Magical Understudy",
+  "level": 2,
+  "text": "Your eidolon evolves to cast spells. It gains the Cast a Spell activity and learns two cantrips of its tradition, which it can cast as innate spells."
+ },
+ {
+  "id": "reinforce-eidolon",
+  "collection": "feats",
+  "name": "Reinforce Eidolon",
+  "level": 2,
+  "text": "You gain the Reinforce Eidolon link cantrip."
+ },
+ {
+  "id": "magical-adept",
+  "collection": "feats",
+  "name": "Magical Adept",
+  "level": 8,
+  "text": "Choose one 2nd-rank spell and one 1st-rank spell of your eidolon's tradition. Your eidolon can cast them each once per day as innate spells. At every even level after you take this feat, your eidolon can swap one of these innate spells for a new innate spell that's 2 or more levels lower than your highest-rank spell slot."
+ },
+ {
+  "id": "magus-dedication",
+  "collection": "feats",
+  "name": "Magus Dedication",
+  "level": 2,
+  "text": "You cast spells like a magus, gaining a spellbook with four common arcane cantrips of your choice. You gain the Cast a Spell activity. Each time you gain a spell slot of a new level from the magus archetype, add a spell of that rank or lower to your spellbook. You're trained in arcane spell attack rolls and spell DCs."
+ },
+ {
+  "id": "hybrid-study-spell",
+  "collection": "feats",
+  "name": "Hybrid Study Spell",
+  "level": 4,
+  "text": "Gain the conflux spell from a hybrid study of your choice. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can Refocus by studying your spellbook and performing a physical regimen."
+ },
+ {
+  "id": "basic-summoner-spellcasting",
+  "collection": "feats",
+  "name": "Basic Summoner Spellcasting",
+  "level": 6,
+  "text": "You gain the Cast a Spell activity. You become trained in spell attack rolls and spell DCs of that tradition. You gain a spell repertoire and two cantrips. Each time you gain a spell slot of a new rank from the summoner archetype, add a spell of that rank or lower to your repertoire. Each time you lose spell slots of a particular rank, remove those spells from your repertoire."
+ },
+ {
+  "id": "cathartic-mage-dedication",
+  "collection": "feats",
+  "name": "Cathartic Mage Dedication",
+  "level": 2,
+  "text": "If you don't already cast spells from spell slots, you learn to cast spontaneous spells and gain the Cast a Spell activity. You gain a spell repertoire with one cantrip of your choice, from a spell list of your choice. You choose this cantrip from the common spells on your chosen spell list or from other spells to which you have access on that list. You're trained in spell attack rolls and spell DCs for that tradition. If you can already cast spells from spell slots, you learn one additional cantrip from your spellcasting tradition. If you're a prepared "
+ },
+ {
+  "id": "basic-cathartic-spellcasting",
+  "collection": "feats",
+  "name": "Basic Cathartic Spellcasting",
+  "level": 4,
+  "text": "Each time you gain a spell slot of a new rank from this archetype, add a spell of that spell rank from your chosen tradition to your repertoire-either a common spell or another spell you've learned or discovered."
+ },
+ {
+  "id": "cathartic-focus-spell",
+  "collection": "feats",
+  "name": "Cathartic Focus Spell",
+  "level": 4,
+  "text": "You learn the focus spell listed under your emotion's entry. You can cast it only while in emotional fervor. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can Refocus while you use Settle Emotions."
+ },
+ {
+  "id": "advanced-elemental-spell",
+  "collection": "feats",
+  "name": "Advanced Elemental Spell",
+  "level": 6,
+  "text": "You gain an advanced order spell associated with your order: - if you're a member of the flame order, you gain Combustion; - if you're a member of the stone order, you gain Stone Lance; - if you're a member of the storm order, you gain Powerful Inhalation; - if you're a member of the wave order, you gain Pulverizing Cascade. Increase the number of Focus Points in your focus pool by 1."
+ },
+ {
+  "id": "geomancer-dedication",
+  "collection": "feats",
+  "name": "Geomancer Dedication",
+  "level": 2,
+  "text": "You feel a deep connection to the world no matter where you are, a phenomenon known as \"terrain attunement.\" When you expend a spell slot to cast a spell with a trait that corresponds to the type of terrain you are currently in (as listed below), you gain the terrain attunement effect for that type of terrain. In this case, you choose only one terrain attunement effect, even if the spell has traits that would apply to each terrain type. If they do, when you cast the spell you apply the listed effect to all enemies who are either adjacent to you, in the a"
+ },
+ {
+  "id": "basic-spellcasting",
+  "collection": "feats",
+  "name": "Basic Spellcasting",
+  "level": 4,
+  "text": "You increase your ability to cast spells. You gain the benefits granted by spellcasting archetypes, gaining a spell repertoire. Each time you gain a spell slot of a new level from the basic, expert, and master spellcasting benefits from pervasive magic feats, add a spell of the appropriate spell rank to your repertoire: a common spell of the magical tradition matching your trait, or another spell of that tradition that you have learned or discovered."
+ },
+ {
+  "id": "shadow-reservoir",
+  "collection": "feats",
+  "name": "Shadow Reservoir",
+  "level": 10,
+  "text": "Your shadow reservoir contains a single spell of each spell rank at least 2 levels lower than the highest-rank spell you can cast from your spell slots. This spell must come from your spell list, you must have access to it, and it must require a spell attack roll or a saving throw. Regardless of the way in which you cast spells, you can spontaneously cast a spell from your shadow reservoir by using one of your spell slots of the same rank. If you're a prepared spellcaster, you lose the spell you prepared in that slot. Spells cast from your shadow reservo"
+ },
+ {
+  "id": "secrets-of-shadow",
+  "collection": "feats",
+  "name": "Secrets of Shadow",
+  "level": 12,
+  "text": "Your shadow reservoir gains an additional spell 1 rank below the highest rank spell you can cast, in addition to the spells it already contains for all the levels below that. You gain void resistance equal to the highest rank of spell you can cast from spell slots; if you have void healing (or are otherwise harmed by vitality damage and not void damage), you instead gain vitality resistance in the same amount."
+ },
+ {
+  "id": "soulforger-dedication",
+  "collection": "feats",
+  "name": "Soulforger Dedication",
+  "level": 2,
+  "text": "Once while the armament is manifested, you can cast harm as an innate spell, with a level equal to half your level rounded up. You can cast Heal once as an innate spell with a level equal to half your level rounded up. *Corruption Flaw* Reduce all healing you would receive or grant with a spell by half your level. If you're 5th level or higher, you can cast Dispel Magic once as an innate spell. The spell rank is equal to 1 lower than half your level rounded up (2nd level if you're 5th or 6th level, and so on)."
+ },
+ {
+  "id": "nantambu-chime-ringer-dedication",
+  "collection": "feats",
+  "name": "Nantambu Chime-Ringer Dedication",
+  "level": 2,
+  "text": "You gain a single arcane or occult cantrip of your choice, heightened to a spell rank equal to half your level, rounded up. If you weren't already, you become trained in that tradition's spell DCs and spell attack rolls, with Intelligence as your spellcasting ability if you choose arcane or Charisma as your spellcasting ability if you choose occult."
+ },
+ {
+  "id": "beast-gunner-dedication",
+  "collection": "feats",
+  "name": "Beast Gunner Dedication",
+  "level": 6,
+  "text": "You learn to cast spontaneous spells and gain the Cast a Spell activity. You gain a spell repertoire with one cantrip of your choice, from either the arcane or primal spell list. You choose this cantrip from the common spells on your chosen spell list or from other spells you have access to on the list. This cantrip must require a spell attack roll. You're trained in the spell attack modifier and spell DC statistics. If you already cast arcane or primal spells from spell slots, you learn one additional cantrip from that tradition. If you're a prepared ca"
+ }
+]

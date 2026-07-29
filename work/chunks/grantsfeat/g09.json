@@ -1,0 +1,387 @@
+[
+ {
+  "id": "unsponsored",
+  "collection": "backgrounds",
+  "name": "Unsponsored",
+  "level": null,
+  "text": "You gain a skill feat: Group Impression if you chose Diplomacy or Intimidating Glare if you chose Intimidation."
+ },
+ {
+  "id": "academy-dropout",
+  "collection": "backgrounds",
+  "name": "Academy Dropout",
+  "level": null,
+  "text": "You gain the Dubious Knowledge skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Arcana **Lore** Academia Lore **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "eidolon-contact",
+  "collection": "backgrounds",
+  "name": "Eidolon Contact",
+  "level": null,
+  "text": "You gain the Dubious Knowledge skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "false-medium",
+  "collection": "backgrounds",
+  "name": "False Medium",
+  "level": null,
+  "text": "You gain the Deceptive Worship skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Occultism **Lore** Fortune Telling Lore **Skill Feat** Deceptive Worship"
+ },
+ {
+  "id": "magical-merchant",
+  "collection": "backgrounds",
+  "name": "Magical Merchant",
+  "level": null,
+  "text": "You gain the Crafter's Appraisal skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Crafting **Lore** Mercantile Lore **Skill Feat** Crafter's Appraisal"
+ },
+ {
+  "id": "magical-misfit",
+  "collection": "backgrounds",
+  "name": "Magical Misfit",
+  "level": null,
+  "text": "You gain the Trick Magic Item skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Arcana **Lore** Underworld Lore **Skill Feat** Trick Magic Item"
+ },
+ {
+  "id": "musical-prodigy",
+  "collection": "backgrounds",
+  "name": "Musical Prodigy",
+  "level": null,
+  "text": "You gain the Virtuosic Performer skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Performance **Lore** Music Lore **Skill Feat** Virtuosic Performer"
+ },
+ {
+  "id": "occult-librarian",
+  "collection": "backgrounds",
+  "name": "Occult Librarian",
+  "level": null,
+  "text": "You gain the Schooled in Secrets skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Occultism **Lore** Academia Lore **Skill Feat** Schooled In Secrets"
+ },
+ {
+  "id": "plant-whisperer",
+  "collection": "backgrounds",
+  "name": "Plant Whisperer",
+  "level": null,
+  "text": "You gain the Natural Medicine skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Nature **Lore** Plant Lore **Skill Feat** Natural Medicine"
+ },
+ {
+  "id": "street-preacher",
+  "collection": "backgrounds",
+  "name": "Street Preacher",
+  "level": null,
+  "text": "You gain the Dubious Knowledge skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Religion **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "student-of-magic",
+  "collection": "backgrounds",
+  "name": "Student of Magic",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Lore** Academia Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "mystic-tutor",
+  "collection": "backgrounds",
+  "name": "Mystic Tutor",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Lore** Academia Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "surge-investigator",
+  "collection": "backgrounds",
+  "name": "Surge Investigator",
+  "level": null,
+  "text": "You gain the Terrain Expertise skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Lore** Magical Terrain Lore **Skill Feat** Terrain Expertise"
+ },
+ {
+  "id": "anti-tech-activist",
+  "collection": "backgrounds",
+  "name": "Anti-Tech Activist",
+  "level": null,
+  "text": "You gain the Group Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Intimidation **Lore** Guild Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "clockfighter",
+  "collection": "backgrounds",
+  "name": "Clockfighter",
+  "level": null,
+  "text": "You gain the Experienced Professional skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Crafting **Lore** Gladitorial Lore **Skill Feat** Experienced Professional"
+ },
+ {
+  "id": "clockwork-researcher",
+  "collection": "backgrounds",
+  "name": "Clockwork Researcher",
+  "level": null,
+  "text": "You gain the Crafter's Appraisal skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Society **Lore** Engineering Lore **Skill Feat** Crafter's Appraisal"
+ },
+ {
+  "id": "codebreaker",
+  "collection": "backgrounds",
+  "name": "Codebreaker",
+  "level": null,
+  "text": "You gain the Glean Contents skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Society **Lore** Cryptography Lore **Skill Feat** Glean Contents"
+ },
+ {
+  "id": "disciple-of-the-gear",
+  "collection": "backgrounds",
+  "name": "Disciple of the Gear",
+  "level": null,
+  "text": "You gain the Quick Repair skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Crafting **Skill Feat** Quick Repair"
+ },
+ {
+  "id": "driver",
+  "collection": "backgrounds",
+  "name": "Driver",
+  "level": null,
+  "text": "You gain the Assurance skill feat with the chosen lore. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Acrobatics **Skill Feat** Assurance"
+ },
+ {
+  "id": "hounded-thief",
+  "collection": "backgrounds",
+  "name": "Hounded Thief",
+  "level": null,
+  "text": "You gain the Pickpocket skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Thievery **Lore** Underworld Lore **Skill Feat** Pickpocket"
+ },
+ {
+  "id": "junker",
+  "collection": "backgrounds",
+  "name": "Junker",
+  "level": null,
+  "text": "You gain the Hefty Hauler skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Athletics **Skill Feat** Hefty Hauler"
+ },
+ {
+  "id": "mechanic",
+  "collection": "backgrounds",
+  "name": "Mechanic",
+  "level": null,
+  "text": "You gain the Quick Repair skill feat. --- ## Background details **Attribute Boosts** Intelligence or Strength, one free **Trained Skill** Crafting **Lore** Engineering Lore **Skill Feat** Quick Repair"
+ },
+ {
+  "id": "medicinal-clocksmith",
+  "collection": "backgrounds",
+  "name": "Medicinal Clocksmith",
+  "level": null,
+  "text": "You gain the Risky Surgery skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Medicine **Lore** Engineering Lore **Skill Feat** Risky Surgery"
+ },
+ {
+  "id": "printer",
+  "collection": "backgrounds",
+  "name": "Printer",
+  "level": null,
+  "text": "You gain the skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Lore** Scribing Lore **Skill Feat** Multilingual"
+ },
+ {
+  "id": "saboteur",
+  "collection": "backgrounds",
+  "name": "Saboteur",
+  "level": null,
+  "text": "You gain the Concealing Legerdemain skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Thievery **Lore** Engineering Lore **Skill Feat** Concealing Legerdemain"
+ },
+ {
+  "id": "toymaker",
+  "collection": "backgrounds",
+  "name": "Toymaker",
+  "level": null,
+  "text": "You gain the Specialty Crafting skill feat, choosing Artistry, Blacksmithing, Glassmaking, Leatherworking, Tailoring, or Woodworking as your specialty."
+ },
+ {
+  "id": "tech-reliant",
+  "collection": "backgrounds",
+  "name": "Tech-Reliant",
+  "level": null,
+  "text": "You gain the Battle Medicine skill feat, and a +1 circumstance bonus to saving throws against spells. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Crafting **Skill Feat** Battle Medicine"
+ },
+ {
+  "id": "back-alley-doctor",
+  "collection": "backgrounds",
+  "name": "Back-Alley Doctor",
+  "level": null,
+  "text": "You gain the Risky Surgery skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Medicine **Lore** Underworld Lore **Skill Feat** Risky Surgery"
+ },
+ {
+  "id": "cannoneer",
+  "collection": "backgrounds",
+  "name": "Cannoneer",
+  "level": null,
+  "text": "You gain the Hefty Hauler skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Athletics **Lore** Warfare Lore **Skill Feat** Hefty Hauler"
+ },
+ {
+  "id": "deputy",
+  "collection": "backgrounds",
+  "name": "Deputy",
+  "level": null,
+  "text": "You gain the Experienced Tracker skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Survival **Lore** Hunting Lore **Skill Feat** Experienced Tracker"
+ },
+ {
+  "id": "fireworks-performer",
+  "collection": "backgrounds",
+  "name": "Fireworks Performer",
+  "level": null,
+  "text": "You gain the Fascinating Performance skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Performance **Lore** Fireworks Lore **Skill Feat** Fascinating Performance"
+ },
+ {
+  "id": "gunsmith",
+  "collection": "backgrounds",
+  "name": "Gunsmith",
+  "level": null,
+  "text": "You gain the Quick Repair skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Engineering Lore **Skill Feat** Quick Repair"
+ },
+ {
+  "id": "hired-killer",
+  "collection": "backgrounds",
+  "name": "Hired Killer",
+  "level": null,
+  "text": "You gain the Terrain Stalker skill feat, choosing a terrain appropriate for where you make your kills. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Stealth **Lore** Underworld Lore **Skill Feat** Terrain Stalker"
+ },
+ {
+  "id": "farmsteader",
+  "collection": "backgrounds",
+  "name": "Farmsteader",
+  "level": null,
+  "text": "You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Survival **Lore** Farming Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "junk-collector",
+  "collection": "backgrounds",
+  "name": "Junk Collector",
+  "level": null,
+  "text": "You gain the Crafter's Appraisal skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Skill Feat** Crafter's Appraisal"
+ },
+ {
+  "id": "saloon-entertainer",
+  "collection": "backgrounds",
+  "name": "Saloon Entertainer",
+  "level": null,
+  "text": "You gain the Virtuosic Performer skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Performance **Skill Feat** Virtuosic Performer"
+ },
+ {
+  "id": "spotter",
+  "collection": "backgrounds",
+  "name": "Spotter",
+  "level": null,
+  "text": "Elevation, velocity, and concealment-these are all vital factors that need to be considered to pull off a feat of true marksmanship, and no sniper would be able to function without an experienced spotter. You gain the Terrain Stalker skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Stealth **Lore** Scouting Lore **Skill Feat** Terrain Stalker"
+ },
+ {
+  "id": "undertaker",
+  "collection": "backgrounds",
+  "name": "Undertaker",
+  "level": null,
+  "text": "You gain the Forensic Acumen skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Medicine **Skill Feat** Forensic Acumen"
+ },
+ {
+  "id": "wandering-preacher",
+  "collection": "backgrounds",
+  "name": "Wandering Preacher",
+  "level": null,
+  "text": "You gain the Pilgrim's Token skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Religion **Skill Feat** Pilgrim's Token"
+ },
+ {
+  "id": "waste-walker",
+  "collection": "backgrounds",
+  "name": "Waste Walker",
+  "level": null,
+  "text": "You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Survival **Lore** Mana Wastes Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "alkenstar-outlaw",
+  "collection": "backgrounds",
+  "name": "Alkenstar Outlaw",
+  "level": null,
+  "text": "You gain the Subtle Theft skill feat. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Thievery **Lore** Underworld Lore **Skill Feat** Subtle Theft"
+ },
+ {
+  "id": "alkenstar-sojourner",
+  "collection": "backgrounds",
+  "name": "Alkenstar Sojourner",
+  "level": null,
+  "text": "You gain the Streetwise skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Lore** Engineering Lore **Skill Feat** Streetwise"
+ },
+ {
+  "id": "circuit-judge",
+  "collection": "backgrounds",
+  "name": "Circuit Judge",
+  "level": null,
+  "text": "You gain the Lie to Me skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Deception **Lore** Legal Lore **Skill Feat** Lie To Me"
+ },
+ {
+  "id": "goldhand-arms-dealer",
+  "collection": "backgrounds",
+  "name": "Goldhand Arms Dealer",
+  "level": null,
+  "text": "You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Diplomacy **Lore** Mercantile Lore **Skill Feat** Group Impression"
+ },
+ {
+  "id": "press-ganged-g-g",
+  "collection": "backgrounds",
+  "name": "Press-Ganged (G&G)",
+  "level": null,
+  "text": "You gain the Armor Assist skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Labor Lore **Skill Feat** Armor Assist"
+ },
+ {
+  "id": "sheriff",
+  "collection": "backgrounds",
+  "name": "Sheriff",
+  "level": null,
+  "text": "You gain the Group Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Intimidation **Lore** Hunting Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "tall-tale",
+  "collection": "backgrounds",
+  "name": "Tall Tale",
+  "level": null,
+  "text": "You gain the Impressive Performance skill feat. You can gain the Leverage Connections skill feat later without being expert in Society or having Courtly Graces-this represents less traditional social connections and more the way that your legend has spread, and you've learned to leverage your legend, with people wanting to meet you and see you for themselves. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Performance **Skill Feat** Impressive Performance"
+ },
+ {
+  "id": "broken-tusk-recruiter",
+  "collection": "backgrounds",
+  "name": "Broken Tusk Recruiter",
+  "level": null,
+  "text": "You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Diplomacy **Lore** Hillcross Lore **Skill Feat** Group Impression"
+ },
+ {
+  "id": "ex-mendevian-crusader",
+  "collection": "backgrounds",
+  "name": "Ex-Mendevian Crusader",
+  "level": null,
+  "text": "You gain the Pilgrim's Token skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Religion **Lore** Demon Lore **Skill Feat** Pilgrim's Token"
+ },
+ {
+  "id": "megafauna-hunter",
+  "collection": "backgrounds",
+  "name": "Megafauna Hunter",
+  "level": null,
+  "text": "You gain the Titan Wrestler skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Athletics **Lore** Hunting Lore **Skill Feat** Titan Wrestler"
+ },
+ {
+  "id": "mammoth-herder",
+  "collection": "backgrounds",
+  "name": "Mammoth Herder",
+  "level": null,
+  "text": "You gain the Train Animal skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Nature **Lore** Herding Lore **Skill Feat** Train Animal"
+ },
+ {
+  "id": "northland-forager",
+  "collection": "backgrounds",
+  "name": "Northland Forager",
+  "level": null,
+  "text": "You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Survival **Lore** Herbalism Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "songsinger-in-training",
+  "collection": "backgrounds",
+  "name": "Songsinger in Training",
+  "level": null,
+  "text": "You gain the Impressive Performance skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Performance **Lore** Geneaology Lore **Skill Feat** Impressive Performance"
+ },
+ {
+  "id": "banished-brighite",
+  "collection": "backgrounds",
+  "name": "Banished Brighite",
+  "level": null,
+  "text": "You gain the Quick Identification skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Religion **Lore** Brigh Lore **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "framed-in-ferrous-quarter",
+  "collection": "backgrounds",
+  "name": "Framed in Ferrous Quarter",
+  "level": null,
+  "text": "You gain the Specialty Crafting skill feat. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Crafting **Lore** Engineering Lore **Skill Feat** Specialty Crafting"
+ }
+]

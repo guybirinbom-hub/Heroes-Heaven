@@ -1,0 +1,387 @@
+[
+ {
+  "id": "mirror-shield",
+  "collection": "feats",
+  "name": "Mirror Shield",
+  "level": 10,
+  "text": "**Trigger** An opponent casting a spell that targets you critically fails a spell attack roll against your AC. --- You reflect the spell back against its caster. If you can cast spells, you can choose to make a spell attack roll instead. If you succeed, your opponent takes the effects of a successful spell attack roll for their own spell (or the effects of a critical success if your attack roll was a critical success)."
+ },
+ {
+  "id": "initiate-warden",
+  "collection": "feats",
+  "name": "Initiate Warden",
+  "level": 1,
+  "text": "You gain your choice of one warden spell from these initial warden spells (or another you have access to). Gravity Weapon Heal Companion Magic Hide --- **Special** You can take this feat multiple times, choosing a different initial warden spell each time."
+ },
+ {
+  "id": "advanced-warden",
+  "collection": "feats",
+  "name": "Advanced Warden",
+  "level": 4,
+  "text": "You gain your choice of one warden spell from the advanced warden spells. Animal Feature Enlarge Companion Hunter's Luck Soothing Mist --- **Special** You can take this feat multiple times, choosing a different advanced warden spell each time."
+ },
+ {
+  "id": "masterful-warden",
+  "collection": "feats",
+  "name": "Masterful Warden",
+  "level": 6,
+  "text": "You gain your choice of one warden spell from the master warden spells. Ephemeral Tracking Ranger's Bramble --- **Special** You can take this feat multiple times, choosing a different master warden spell each time."
+ },
+ {
+  "id": "peerless-warden",
+  "collection": "feats",
+  "name": "Peerless Warden",
+  "level": 10,
+  "text": "You gain your choice of one warden spell from the peerless warden spells. Hunter's Vision Terrain Transposition --- **Special** You can take this feat multiple times, choosing a different peerless warden spell each time."
+ },
+ {
+  "id": "siphon-power",
+  "collection": "feats",
+  "name": "Siphon Power",
+  "level": 16,
+  "text": "During your turn, you can cast one spell your familiar knows that was granted by your patron or lessons without spending a spell slot to do so (or even having it prepared). The spell must be at least 1 rank lower than your highest-rank witch spell slot. --- **Special** This feat has the trait corresponding to the tradition of spells you cast (arcane, divine, occult, or primal)."
+ },
+ {
+  "id": "patrons-truth",
+  "collection": "feats",
+  "name": "Patron's Truth",
+  "level": 20,
+  "text": "You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "advanced-school-spell",
+  "collection": "feats",
+  "name": "Advanced School Spell",
+  "level": 8,
+  "text": "You gain access to the advanced teachings of your arcane institution, learning a powerful new school spell. You gain the advanced school spell for your arcane school."
+ },
+ {
+  "id": "second-thoughts",
+  "collection": "feats",
+  "name": "Second Thoughts",
+  "level": 18,
+  "text": "**Trigger** You cast a mental spell that targets one creature, and it critically succeeds at its Will save. You can Cast the triggering Spell a second time, targeting a different creature, without expanding an additional spell slot. You can do so only until the end of your next turn, and you can't use Second Thoughts on it after the second casting of the spell."
+ },
+ {
+  "id": "archwizards-might",
+  "collection": "feats",
+  "name": "Archwizard's Might",
+  "level": 20,
+  "text": "You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "bard-dedication",
+  "collection": "feats",
+  "name": "Bard Dedication",
+  "level": 2,
+  "text": "You cast spells like a bard and gain the Cast a Spell activity. You gain a spell repertoire with two common cantrips from the occult spell list or any other occult cantrips you've learned or discovered. You're trained in the spell attack modifier and spell DC statistics. You can take that muse's feats, but you don't gain the starting feat, spell or any other abilities the choice of muse grants."
+ },
+ {
+  "id": "basic-bard-spellcasting",
+  "collection": "feats",
+  "name": "Basic Bard Spellcasting",
+  "level": 4,
+  "text": "Each time you gain a spell slot of a new rank from the bard archetype, add a common occult spell of the appropriate rank, or another appropriate occult spell you learned or discovered, to your repertoire."
+ },
+ {
+  "id": "anthemic-performance",
+  "collection": "feats",
+  "name": "Anthemic Performance",
+  "level": 8,
+  "text": "You gain the Courageous Anthem composition cantrip."
+ },
+ {
+  "id": "occult-breadth",
+  "collection": "feats",
+  "name": "Occult Breadth",
+  "level": 8,
+  "text": "Your repertoire expands, and you can cast more occult spells each day. Increase the number of spells in your repertoire and the number of spell slots you gain from bard archetype feats by 1 for each spell rank other than your two highest spell slots."
+ },
+ {
+  "id": "cleric-dedication",
+  "collection": "feats",
+  "name": "Cleric Dedication",
+  "level": 2,
+  "text": "You cast spells like a cleric. You gain the Cast a Spell activity. You can prepare two common cantrips each day from the divine spell list or any other divine cantrips you have access to. You're trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "druid-dedication",
+  "collection": "feats",
+  "name": "Druid Dedication",
+  "level": 2,
+  "text": "You cast spells like a druid. You gain the Cast a Spell activity. You can prepare two common cantrips each day from the primal spell list or any other primal cantrips you learn or discover. You're trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "order-spell",
+  "collection": "feats",
+  "name": "Order Spell",
+  "level": 4,
+  "text": "You gain the initial order spell from your order. This is a focus spell, granting you a focus pool or expanding that pool."
+ },
+ {
+  "id": "ranger-dedication",
+  "collection": "feats",
+  "name": "Ranger Dedication",
+  "level": 2,
+  "text": "If you gain a warden spell through this archetype, you become trained in spell attacks and spell DCs."
+ },
+ {
+  "id": "witch-dedication",
+  "collection": "feats",
+  "name": "Witch Dedication",
+  "level": 2,
+  "text": "You cast spells like a witch. You gain the Cast a Spell activity. You can prepare one cantrip each day from your familiar. You're trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "basic-witch-spellcasting",
+  "collection": "feats",
+  "name": "Basic Witch Spellcasting",
+  "level": 4,
+  "text": "Each time you gain a spell slot of a new rank from the witch archetype, add two common spells of that rank to your familiar."
+ },
+ {
+  "id": "patrons-breadth",
+  "collection": "feats",
+  "name": "Patron's Breadth",
+  "level": 8,
+  "text": "You can cast more spells each day. Increase the spell slots you gain from witch archetype feats by 1 for each spell rank other than your two highest spell ranks."
+ },
+ {
+  "id": "wizard-dedication",
+  "collection": "feats",
+  "name": "Wizard Dedication",
+  "level": 2,
+  "text": "You cast spells like a wizard, gaining a spellbook with four common arcane cantrips of your choice. You gain the Cast a Spell activity. You're trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "arcane-school-spell",
+  "collection": "feats",
+  "name": "Arcane School Spell",
+  "level": 4,
+  "text": "You gain your school's initial school spell. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can Refocus by studying."
+ },
+ {
+  "id": "basic-wizard-spellcasting",
+  "collection": "feats",
+  "name": "Basic Wizard Spellcasting",
+  "level": 4,
+  "text": "Each time you gain a spell slot of a new rank from the wizard archetype, add two common spells of that rank to your spellbook."
+ },
+ {
+  "id": "true-senses",
+  "collection": "feats",
+  "name": "True Senses",
+  "level": 17,
+  "text": "You can heighten your senses to non-magically gain the effects of a 6th-rank Truesight spell for 10 minutes."
+ },
+ {
+  "id": "sequestered-spell",
+  "collection": "feats",
+  "name": "Sequestered Spell",
+  "level": 1,
+  "text": "You consumed so much of a type of magic as a larva that you can now cast it purely on instinct. Choose one cantrip from the spell list of your magiphage ability. You can cast this cantrip as an innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "songbirds-call",
+  "collection": "feats",
+  "name": "Songbird's Call",
+  "level": 8,
+  "text": "You learn the Songbird's Call composition spell."
+ },
+ {
+  "id": "emergency-regeneration",
+  "collection": "feats",
+  "name": "Emergency Regeneration",
+  "level": 16,
+  "text": "You gain the effects of a 7th-rank Regenerate spell."
+ },
+ {
+  "id": "rat-form",
+  "collection": "feats",
+  "name": "Rat Form",
+  "level": 9,
+  "text": "You gain the effects of a 1st-rank Pest Form spell, but you must assume the battle form of a Tiny rat."
+ },
+ {
+  "id": "deitys-domain",
+  "collection": "feats",
+  "name": "Deity's Domain",
+  "level": 1,
+  "text": "You gain the domain's initial domain spell as a devotion spell."
+ },
+ {
+  "id": "advanced-deitys-domain",
+  "collection": "feats",
+  "name": "Advanced Deity's Domain",
+  "level": 8,
+  "text": "You gain an advanced domain spell from the domain you chose with Deity's Domain as a devotion spell."
+ },
+ {
+  "id": "harmonize-self",
+  "collection": "feats",
+  "name": "Harmonize Self",
+  "level": 4,
+  "text": "You gain the Harmonize Self qi spell."
+ },
+ {
+  "id": "clinging-shadows-initiate",
+  "collection": "feats",
+  "name": "Clinging Shadows Initiate",
+  "level": 8,
+  "text": "You gain the Clinging Shadows Stance qi spell. While entering the stance is a qi spell, the shadow grasp attacks it grants are not, so you can use them as often as you like while in the stance."
+ },
+ {
+  "id": "wild-winds-initiate",
+  "collection": "feats",
+  "name": "Wild Winds Initiate",
+  "level": 8,
+  "text": "You gain the Wild Winds Stance qi spell. While entering the stance is a qi spell, the wind crash Strikes the stance grants are not, so you can use them as often as you like while in the stance."
+ },
+ {
+  "id": "wind-jump",
+  "collection": "feats",
+  "name": "Wind Jump",
+  "level": 10,
+  "text": "You gain the Wind Jump qi spell."
+ },
+ {
+  "id": "shadows-web",
+  "collection": "feats",
+  "name": "Shadow's Web",
+  "level": 14,
+  "text": "You gain the Shadow's Web qi spell."
+ },
+ {
+  "id": "domain-acumen",
+  "collection": "feats",
+  "name": "Domain Acumen",
+  "level": 2,
+  "text": "Choose one of the domains associated with your mystery for which you don't already have an initial domain spell. You gain an initial domain spell from that domain, which you cast as a revelation spell. --- **Special** You can select this feat multiple times, selecting a different domain each time and gaining its domain spell as a revelation spell."
+ },
+ {
+  "id": "meddling-futures",
+  "collection": "feats",
+  "name": "Meddling Futures",
+  "level": 2,
+  "text": "**3 Sage** You must attempt to Cast a Spell. You gain a status bonus to the spell's damage or healing equal to the spell's rank, or equal to the spell's rank + 3 if you are at least cursebound 3."
+ },
+ {
+  "id": "advanced-revelation",
+  "collection": "feats",
+  "name": "Advanced Revelation",
+  "level": 6,
+  "text": "You learn the advanced revelation spell associated with your mystery."
+ },
+ {
+  "id": "domain-fluency",
+  "collection": "feats",
+  "name": "Domain Fluency",
+  "level": 12,
+  "text": "Choose one of the domains associated with your mystery for which you have an initial domain spell. You gain an advanced domain spell from that domain, which you cast as a revelation spell."
+ },
+ {
+  "id": "epiphany-at-the-crossroads",
+  "collection": "feats",
+  "name": "Epiphany at the Crossroads",
+  "level": 12,
+  "text": "You gain the effects of an Augury spell in a strange, near-death vision."
+ },
+ {
+  "id": "greater-revelation",
+  "collection": "feats",
+  "name": "Greater Revelation",
+  "level": 12,
+  "text": "You gain your mystery's greater revelation spell"
+ },
+ {
+  "id": "blaze-of-revelation",
+  "collection": "feats",
+  "name": "Blaze of Revelation",
+  "level": 18,
+  "text": "On each of your turns during that time, you can cast one revelation spell without spending Focus Points. At the end of the minute, the durations of any revelation spells you cast during that time end, and you must attempt a save."
+ },
+ {
+  "id": "divine-effusion",
+  "collection": "feats",
+  "name": "Divine Effusion",
+  "level": 18,
+  "text": "Twice per day, you can cast a spell after you've run out of spell slots of the appropriate spell rank; the two spells you cast with this feat must be of different spell ranks."
+ },
+ {
+  "id": "oracular-providence",
+  "collection": "feats",
+  "name": "Oracular Providence",
+  "level": 20,
+  "text": "You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "paradoxical-mystery",
+  "collection": "feats",
+  "name": "Paradoxical Mystery",
+  "level": 20,
+  "text": "Each day during your daily preparations, choose one basic or advanced domain spell from any domain from *Player Core*, one of the domains granted by your mystery, another domain to which you have access, or any initial or advanced revelation spell from another mystery. You gain that spell as a revelation spell until your next daily preparations."
+ },
+ {
+  "id": "divine-evolution",
+  "collection": "feats",
+  "name": "Divine Evolution",
+  "level": 4,
+  "text": "You gain an additional spell slot of your highest level, which you can use only to cast your choice of Heal or Harm. You can cast either of these spells using that spell slot, even if they aren't in your spell repertoire."
+ },
+ {
+  "id": "primal-evolution",
+  "collection": "feats",
+  "name": "Primal Evolution",
+  "level": 4,
+  "text": "You gain an additional spell slot of your highest rank, which you can use only to cast Summon Animal or Summon Plant or Fungus. You can cast either of these spells using that spell slot, even if it they aren't in your spell repertoire."
+ },
+ {
+  "id": "advanced-bloodline",
+  "collection": "feats",
+  "name": "Advanced Bloodline",
+  "level": 6,
+  "text": "You gain the advanced bloodline spell associated with your bloodline."
+ },
+ {
+  "id": "greater-bloodline",
+  "collection": "feats",
+  "name": "Greater Bloodline",
+  "level": 10,
+  "text": "You gain the greater bloodline spell associated with your bloodline."
+ },
+ {
+  "id": "greater-vital-evolution",
+  "collection": "feats",
+  "name": "Greater Vital Evolution",
+  "level": 16,
+  "text": "Twice per day, you can cast a spell after you've run out of spell slots of the appropriate spell rank; the two spells you cast with this feat must be of different spell ranks."
+ },
+ {
+  "id": "echoing-spell",
+  "collection": "feats",
+  "name": "Echoing Spell",
+  "level": 18,
+  "text": "You time the components of your spell with exacting precision, setting up a resonance that duplicates the spell's effects. If your next action is to Cast a Spell of 4th rank or lower that has no duration, the spell's energy reverberates and echoes. You can Cast the Spell a second time before the end of your next turn without expending a spell slot."
+ },
+ {
+  "id": "bloodline-perfection",
+  "collection": "feats",
+  "name": "Bloodline Perfection",
+  "level": 20,
+  "text": "You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "champion-dedication",
+  "collection": "feats",
+  "name": "Champion Dedication",
+  "level": 2,
+  "text": "If you later gain a devotion spell, you become trained in spell attack modifier and spell DC."
+ },
+ {
+  "id": "devout-magic",
+  "collection": "feats",
+  "name": "Devout Magic",
+  "level": 4,
+  "text": "You gain a devotion spell of your choice listed in the devotion spells class feature, following the same restrictions listed there."
+ }
+]

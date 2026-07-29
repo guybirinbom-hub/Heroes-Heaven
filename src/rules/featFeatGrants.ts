@@ -249,7 +249,6 @@ export const FEAT_FEAT_GRANTS: Record<string, string[]> = {
   'seer': ['apparition-sense'],
   'shadow-of-the-courtier': ['impressive-performance'],
   'shield': ['shield-block'],
-  'shield-block': ['shield-block'],
   'shoreline-strix': ['underwater-marauder'],
   'shortshanks-hobgoblin': ['ride'],
   'sister-of-the-golden-erinys-dedication': ['additional-lore'],

@@ -1,0 +1,387 @@
+[
+ {
+  "id": "basic-beast-gunner-spellcasting",
+  "collection": "feats",
+  "name": "Basic Beast Gunner Spellcasting",
+  "level": 8,
+  "text": "Each time you gain a spell slot of a new rank from this archetype, add a spell of the appropriate spell rank to your repertoire, either a common spell of your chosen tradition or another spell of that tradition you've learned or discovered."
+ },
+ {
+  "id": "spellshot-dedication",
+  "collection": "feats",
+  "name": "Spellshot Dedication",
+  "level": 2,
+  "text": "You cast arcane spells like a wizard, gaining a spellbook with four common arcane cantrips of your choice. You gain the Cast a Spell activity. You're trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "captivator-dedication",
+  "collection": "feats",
+  "name": "Captivator Dedication",
+  "level": 4,
+  "text": "Choose two cantrips from the occult list; each cantrip must be from either the enchantment or illusion school. You gain access to the Cast a Spell activity and can cast these spells as occult innate spells. You're trained in occult spell attack rolls and spell DCs. If you have a hand free, you can usually replace material components with somatic components, so you don't need to use a spell component pouch."
+ },
+ {
+  "id": "basic-captivator-spellcasting",
+  "collection": "feats",
+  "name": "Basic Captivator Spellcasting",
+  "level": 4,
+  "text": "Choose a 1st-rank occult spell from either the enchantment or illusion school. You can Cast this Spell as an occult innate spell. At 6th level, you gain a 2nd-rank spell, and at 8th level, you gain a 3rd-rank spell."
+ },
+ {
+  "id": "captivating-intensity",
+  "collection": "feats",
+  "name": "Captivating Intensity",
+  "level": 6,
+  "text": "You can cast each occult innate spell granted by captivator archetype feats one additional time per day. You can do this for spells of all levels granted, other than your two highest spell ranks from non-cantrip captivator spells. If you have Heightened Captivation, you can Cast the chosen Spell a second time each day, though one of the two times you cast it, it's heightened two levels lower than your highest level of non-cantrip captivator spells, as long as the spell can be cast at that spell rank."
+ },
+ {
+  "id": "expert-captivator-spellcasting",
+  "collection": "feats",
+  "name": "Expert Captivator Spellcasting",
+  "level": 10,
+  "text": "You learn a 4th-rank occult spell. At 12th level, you learn a 5th-rank spell, and at 14th level, you learn a 6th-rank spell. You Cast these Spells as occult innate spells. You become an expert with spell attack rolls and spell DCs for occult spells."
+ },
+ {
+  "id": "effortless-captivation",
+  "collection": "feats",
+  "name": "Effortless Captivation",
+  "level": 14,
+  "text": "You immediately gain the effects of the Sustain a Spell action, which you can use only to extend the duration of an enchantment or illusion spell."
+ },
+ {
+  "id": "master-captivator-spellcasting",
+  "collection": "feats",
+  "name": "Master Captivator Spellcasting",
+  "level": 16,
+  "text": "You learn a 7th-rank occult spell. At 18th level, you learn an 8th-rank spell, and at 20th level, you learn a 9th-rank spell. You cast these spells as occult innate spells. You become a master with spell attack rolls and spell DCs for occult spells."
+ },
+ {
+  "id": "blessing-of-the-sun-gods",
+  "collection": "feats",
+  "name": "Blessing of the Sun Gods",
+  "level": 4,
+  "text": "You gain an initial domain spell for that domain. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can regain using the Refocus activity to pray to the Old Sun Gods; if you already have a focus pool, increase the number of Focus Points in your focus pool by 1. Your Bright Lion focus spells are divine spells; you become trained in divine spell attacks and spell DCs, using Charisma as your spellcasting ability score. **Special** You can select this feat multiple times, selecting a different domain each time and gaining its d"
+ },
+ {
+  "id": "greater-sun-blessing",
+  "collection": "feats",
+  "name": "Greater Sun Blessing",
+  "level": 12,
+  "text": "You gain an advanced domain spell from a domain you chose with Blessing of the Sun Gods. Increase the number of Focus Points in your focus pool by 1. Each time you do so, you must select a different domain for which you have an initial domain spell from Blessing of the Sun Gods."
+ },
+ {
+  "id": "hallowed-initiate",
+  "collection": "feats",
+  "name": "Hallowed Initiate",
+  "level": 4,
+  "text": "You've expanded your focus spellcasting to techniques used by clerics and wizards. You gain an additional focus spell, either the necromancer school spell Call of the Grave or the initial domain spell of the death domain, Death's Call. Increase the number of Focus Points in your focus pool by 1. **Special** You can select this feat a second time, choosing the other initial focus spell."
+ },
+ {
+  "id": "advanced-hallowed-spell",
+  "collection": "feats",
+  "name": "Advanced Hallowed Spell",
+  "level": 8,
+  "text": "You gain an advanced focus spell, either the necromancer advanced school spell Life Siphon or the advanced domain spell of the death domain, Eradicate Undeath. Increase the number of Focus Points in your focus pool by 1. If you choose *life siphon*, it triggers when you expend spell slots from your class even if they aren't wizard spell slots. **Special** You can select this feat a second time, choosing the other advanced focus spell."
+ },
+ {
+  "id": "deathly-secrets",
+  "collection": "feats",
+  "name": "Deathly Secrets",
+  "level": 6,
+  "text": "You learn either the Eyes of the Dead or Subjugate Undead focus spell. If you don't already have one, you gain a focus pool of 1 Focus Point, which you can Refocus by meditating over the earthly remains of a dead sentient creature. Focus spells granted by the reanimator archetype are from the same tradition as those used to meet the archetype's prerequisite. Each time, you learn a different spell and your focus pool increases by 1 Focus Point."
+ },
+ {
+  "id": "greater-deathly-secrets",
+  "collection": "feats",
+  "name": "Greater Deathly Secrets",
+  "level": 10,
+  "text": "You learn either the Malignant Sustenance or Grasping Grave focus spell. Your focus pool increases by 1 point. Each time, you learn a different spell and your focus pool increases by 1 Focus Point."
+ },
+ {
+  "id": "bat-form",
+  "collection": "feats",
+  "name": "Bat Form",
+  "level": 10,
+  "text": "You gain the effects of a 4th-rank Pest Form spell. At 14th level, you can choose to spend two actions instead of one to gain the effects of a 4th- or 5th-rank Aerial Form spell instead (bat form only)."
+ },
+ {
+  "id": "fey-ascension",
+  "collection": "feats",
+  "name": "Fey Ascension",
+  "level": 9,
+  "text": "- **Anteater** You become an expert in primal DCs and spell attack rolls. You can cast Slow as an innate primal spell once per day. For Foundry automation we have assumed a 20-foot range increment, to be in line with similar abilities.* - **Faun** You can cast Charm, Sleep, and Triple Time as innate primal spells once per day each. Whenever you cast one of these spells, you can Step or Stride as part of the activity. - **Gremlin** You become an expert in primal DCs and spell attack rolls. You can cast Mad Monkeys as an innate primal spell once per day."
+ },
+ {
+  "id": "perfect-ki-expert",
+  "collection": "feats",
+  "name": "Perfect Ki Expert",
+  "level": 10,
+  "text": "You gain an appropriate qi spell for your School of Perfection: Unblinking Flame Aura for Unblinking Flame, Unbreaking Wave Vapor for Unbreaking Waves, Unfolding Wind Buffet for Unfolding Wind, or Untwisting Iron Roots for Untwisting Iron. Increase the number of Focus Points in your focus pool by 1. You become an expert in occult spell DCs and occult spell attack rolls."
+ },
+ {
+  "id": "perfect-ki-exemplar",
+  "collection": "feats",
+  "name": "Perfect Ki Exemplar",
+  "level": 14,
+  "text": "You gain an appropriate qi spell for your School of Perfection: Unblinking Flame Emblem for Unblinking Flame, Unbreaking Wave Barrier for Unbreaking Waves, Unfolding Wind Blitz for Unfolding Wind, or Untwisting Iron Augmentation for Untwisting Iron. Increase the number of Focus Points in your focus pool by 1. You become an expert in occult spell DCs and occult spell attack rolls."
+ },
+ {
+  "id": "perfect-ki-grandmaster",
+  "collection": "feats",
+  "name": "Perfect Ki Grandmaster",
+  "level": 18,
+  "text": "You gain an appropriate qi spell for your School of Perfection: Unblinking Flame Ignition for Unblinking Flame, Unbreaking Wave Containment for Unbreaking Waves, Unfolding Wind Crash for Unfolding Wind, or Untwisting Iron Pillar for Untwisting Iron. Increase the number of Focus Points in your focus pool by 1. You become a master in occult spell DCs and occult spell attack rolls."
+ },
+ {
+  "id": "great-bear",
+  "collection": "feats",
+  "name": "Great Bear",
+  "level": 12,
+  "text": "You can spend an additional action when using Ursine Avenger Form to gain the effects of a 1st-rank Enlarge spell, which lasts for the spell's normal duration or until you leave your Ursine Avenger Form, whichever comes first."
+ },
+ {
+  "id": "snowcaster",
+  "collection": "feats",
+  "name": "Snowcaster",
+  "level": 4,
+  "text": "Each time you gain a spell slot of a new level from this archetype, add a spell of the appropriate spell rank (including heightened versions of lower-rank spells) to your repertoire, either a common spell of the arcane tradition that has the cold trait or another cold spell you have access to."
+ },
+ {
+  "id": "helts-spelldance",
+  "collection": "feats",
+  "name": "Helt's Spelldance",
+  "level": 8,
+  "text": "Ostentatiously performing, you move across the battlefield, taking foes aback and creating an opening for your spell. After your movement, you can Cast a Spell. If you used one Stride, you can cast either a 1-action or a 2-action spell; if you used two Strides, you can only cast a 1-action spell. If you critically succeed on your check against any creature, they take a –1 circumstance penalty to their saving throws against any spell you cast as part of your Helt's Spelldance due to your distracting performance."
+ },
+ {
+  "id": "elemental-apotheosis",
+  "collection": "feats",
+  "name": "Elemental Apotheosis",
+  "level": 18,
+  "text": "You gain any Speeds listed in the Elemental Form spell for your element and gain darkvision if you don't already have it."
+ },
+ {
+  "id": "furnace-form",
+  "collection": "feats",
+  "name": "Furnace Form",
+  "level": 12,
+  "text": "You gain the benefits of the Fiery Body spell (except the ability to cast ignition) until the end of your next turn."
+ },
+ {
+  "id": "alloy-flesh-and-steel",
+  "collection": "feats",
+  "name": "Alloy Flesh and Steel",
+  "level": 14,
+  "text": "You gain the benefits of the Ferrous Form spell (except you can't cast *needle darts*) until the end of your next turn."
+ },
+ {
+  "id": "return-to-the-sea",
+  "collection": "feats",
+  "name": "Return to the Sea",
+  "level": 4,
+  "text": "For 10 minutes, it gains the effects of a Feet to Fins spell, can breathe water, and gets a +1 status bonus to AC and saves against any creature with the amphibious, aquatic, or water trait."
+ },
+ {
+  "id": "stonebound-magic",
+  "collection": "feats",
+  "name": "Stonebound Magic",
+  "level": 6,
+  "text": "You gain Scatter Scree as a primal innate cantrip. At 8th level, you gain One with Stone as a primal innate spell once per day. At 10th level, you gain Shape Stone as a primal innate spell once per day. At 12th level, you gain Wall of Stone as a primal innate spell once per day."
+ },
+ {
+  "id": "otherworldly-acumen",
+  "collection": "feats",
+  "name": "Otherworldly Acumen",
+  "level": 9,
+  "text": "Choose one common 2nd-rank spell from the same tradition as an innate spell you previously gained from another elf ancestry feat (from the arcane list if you have Otherworldly Magic, for example). You can cast that spell as an innate spell once per day, using the same tradition as the list you chose the spell from. By spending 1 day of downtime, you can change the spell you chose to a different common 2nd-rank spell from the same tradition."
+ },
+ {
+  "id": "adapted-cantrip",
+  "collection": "feats",
+  "name": "Adapted Cantrip",
+  "level": 1,
+  "text": "Through study of multiple magical traditions, you've altered a spell to suit your spellcasting style. Choose one cantrip from a magical tradition other than your own. If you prepare spells, you can choose this spell when you prepare your cantrips, in addition to your other options. If you have a spell repertoire, replace one of your cantrips known with the chosen spell. You can cast this cantrip as a spell of your class's tradition. If you swap or retrain this cantrip later, you can choose its replacement from the same alternate tradition or a different "
+ },
+ {
+  "id": "adaptive-adept",
+  "collection": "feats",
+  "name": "Adaptive Adept",
+  "level": 5,
+  "text": "Choose a cantrip or 1st-rank spell from the same magical tradition as your cantrip from Adapted Cantrip. You gain that spell, adding it to your spell options just like the cantrip from Adapted Cantrip. You can cast this spell as a spell of your class's magical tradition. If you choose a 1st-rank spell, you don't gain access to the heightened versions of that spell, meaning you can't prepare them if you prepare spells and you can't learn them or select the spell as a signature spell if you have a spell repertoire."
+ },
+ {
+  "id": "hymn-of-healing",
+  "collection": "feats",
+  "name": "Hymn of Healing",
+  "level": 1,
+  "text": "You learn the Hymn of Healing composition spell, which imbues your music with rich melodies that help your allies recover from harm."
+ },
+ {
+  "id": "loremasters-etude",
+  "collection": "feats",
+  "name": "Loremaster's Etude",
+  "level": 2,
+  "text": "You learn the Loremaster's Etude composition spell."
+ },
+ {
+  "id": "song-of-strength",
+  "collection": "feats",
+  "name": "Song of Strength",
+  "level": 2,
+  "text": "You learn the Song of Strength composition cantrip."
+ },
+ {
+  "id": "uplifting-overture",
+  "collection": "feats",
+  "name": "Uplifting Overture",
+  "level": 2,
+  "text": "You learn the Uplifting Overture composition cantrip, which aids your allies' skills with the inspiring nature of your performance."
+ },
+ {
+  "id": "courageous-advance",
+  "collection": "feats",
+  "name": "Courageous Advance",
+  "level": 4,
+  "text": "If your next action is to cast the Courageous Anthem composition cantrip, one ally of your choice who gains a status bonus from the spell can immediately use their reaction to Stride."
+ },
+ {
+  "id": "rallying-anthem",
+  "collection": "feats",
+  "name": "Rallying Anthem",
+  "level": 4,
+  "text": "You learn the Rallying Anthem composition cantrip, which protects you and allies."
+ },
+ {
+  "id": "triple-time",
+  "collection": "feats",
+  "name": "Triple Time",
+  "level": 4,
+  "text": "You learn the Triple Time composition cantrip, which speeds up you and your allies for a round."
+ },
+ {
+  "id": "defensive-coordination",
+  "collection": "feats",
+  "name": "Defensive Coordination",
+  "level": 6,
+  "text": "If your next action is to cast the Rallying Anthem composition cantrip, you can Raise a Shield, and one ally of your choice who gains a status bonus from the spell can immediately use their reaction to Raise a Shield."
+ },
+ {
+  "id": "dirge-of-doom",
+  "collection": "feats",
+  "name": "Dirge of Doom",
+  "level": 6,
+  "text": "You learn the Dirge of Doom composition cantrip, which frightens your enemies and keeps them from fully recovering from their fear."
+ },
+ {
+  "id": "song-of-marching",
+  "collection": "feats",
+  "name": "Song of Marching",
+  "level": 6,
+  "text": "You learn the Song of Marching composition cantrip, which enables you and your allies to cross vast distances without strain."
+ },
+ {
+  "id": "courageous-assault",
+  "collection": "feats",
+  "name": "Courageous Assault",
+  "level": 10,
+  "text": "If your next action is to cast the Courageous Anthem composition cantrip, one ally of your choice who gains a status bonus from the spell can immediately use their reaction to make a melee Strike."
+ },
+ {
+  "id": "ode-to-ouroboros",
+  "collection": "feats",
+  "name": "Ode to Ouroboros",
+  "level": 10,
+  "text": "You learn the Ode to Ouroboros composition spell, which enables you to temporarily spare your allies from death."
+ },
+ {
+  "id": "allegro",
+  "collection": "feats",
+  "name": "Allegro",
+  "level": 14,
+  "text": "You learn the Allegro composition cantrip."
+ },
+ {
+  "id": "soothing-ballad",
+  "collection": "feats",
+  "name": "Soothing Ballad",
+  "level": 14,
+  "text": "You learn the Soothing Ballad composition spell."
+ },
+ {
+  "id": "courageous-onslaught",
+  "collection": "feats",
+  "name": "Courageous Onslaught",
+  "level": 16,
+  "text": "If your next action is to cast the Courageous Anthem composition cantrip, one ally of your choice who gains a status bonus from the spell can immediately use their reaction to Stride and then make a melee Strike."
+ },
+ {
+  "id": "studious-capacity",
+  "collection": "feats",
+  "name": "Studious Capacity",
+  "level": 16,
+  "text": "Your continued study of occult magic has increased your magical capacity, allowing you to cast spells even when it seems impossible. You can cast one spell each day even after you've run out of spell slots of the appropriate spell rank, but you can't use this ability to cast a spell of your highest spell rank."
+ },
+ {
+  "id": "fatal-aria",
+  "collection": "feats",
+  "name": "Fatal Aria",
+  "level": 20,
+  "text": "You learn the Fatal Aria composition spell."
+ },
+ {
+  "id": "perfect-encore",
+  "collection": "feats",
+  "name": "Perfect Encore",
+  "level": 20,
+  "text": "You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "pied-piping",
+  "collection": "feats",
+  "name": "Pied Piping",
+  "level": 20,
+  "text": "You learn the Pied Piping composition spell, which enables you to control the actions of weak-minded individuals."
+ },
+ {
+  "id": "domain-initiate",
+  "collection": "feats",
+  "name": "Domain Initiate",
+  "level": 1,
+  "text": "Your deity bestows a special spell related to their powers. You gain an initial domain spell for that domain, a spell unique to the domain and not available to other clerics. Domain spells are a type of focus spell. It costs 1 Focus Point to cast a focus spell, and you start with a focus pool of 1 Focus Point. You refill your focus pool during your daily preparations, and you can regain 1 Focus Point by spending 10 minutes using the Refocus activity to pray to your deity or do service toward their causes. Focus spells are automatically heightened to half"
+ },
+ {
+  "id": "advanced-domain",
+  "collection": "feats",
+  "name": "Advanced Domain",
+  "level": 8,
+  "text": "You gain an advanced domain spell from one of your domains for which you have an initial domain spell. Each time, you must select a different advanced domain spell."
+ },
+ {
+  "id": "maker-of-miracles",
+  "collection": "feats",
+  "name": "Maker of Miracles",
+  "level": 20,
+  "text": "You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "leshy-familiar-secrets",
+  "collection": "feats",
+  "name": "Leshy Familiar Secrets",
+  "level": 4,
+  "text": "- **Verdant Burst** When your familiar dies, it releases its primal energy to cast the 3-action version of Heal, heightened to a rank 1 lower than your highest-rank spell slot. The *heal* spell gains a status bonus equal to twice the spell's rank to the Hit Points it restores to plants. You must be able to cast 2nd-rank spells using spell slots to select this familiar ability."
+ },
+ {
+  "id": "order-magic",
+  "collection": "feats",
+  "name": "Order Magic",
+  "level": 4,
+  "text": "You have delved deeper into the teaching of a new order, gaining access to a coveted order spell. You gain the initial order spell from that order."
+ },
+ {
+  "id": "hierophants-power",
+  "collection": "feats",
+  "name": "Hierophant's Power",
+  "level": 20,
+  "text": "You gain an additional 10th-rank spell slot."
+ }
+]

@@ -1,0 +1,387 @@
+[
+ {
+  "id": "dhampir",
+  "collection": "heritages",
+  "name": "Dhampir",
+  "level": null,
+  "text": "You can select from dhampir feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "dragonblood",
+  "collection": "heritages",
+  "name": "Dragonblood",
+  "level": null,
+  "text": "You can choose from dragonblood feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "duskwalker",
+  "collection": "heritages",
+  "name": "Duskwalker",
+  "level": null,
+  "text": "You can select from duskwalker feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "hungerseed",
+  "collection": "heritages",
+  "name": "Hungerseed",
+  "level": null,
+  "text": "You can select from hungerseed feats and feats from your other parent's ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "kijimuna-gnome",
+  "collection": "heritages",
+  "name": "Kijimuna Gnome",
+  "level": null,
+  "text": "You gain the Combat Climber feat, and if you roll a success on the Athletics check to Climb, you get a critical success instead."
+ },
+ {
+  "id": "makari-lizardfolk",
+  "collection": "heritages",
+  "name": "Makari Lizardfolk",
+  "level": null,
+  "text": "The tradition of any spells or magical abilities you gain from a lizardfolk heritage or ancestry feat is divine instead of its normal tradition (usually primal)."
+ },
+ {
+  "id": "gandharva",
+  "collection": "heritages",
+  "name": "Gandharva",
+  "level": null,
+  "text": "Due to your celestial connection, the tradition of any spells or magical abilities you gain from a sprite heritage or ancestry feat is divine instead of its normal tradition."
+ },
+ {
+  "id": "steadfast-tanuki",
+  "collection": "heritages",
+  "name": "Steadfast Tanuki",
+  "level": null,
+  "text": "You gain your choice of Everyday Form or Teakettle Form as a bonus ancestry feat."
+ },
+ {
+  "id": "born-of-celestial",
+  "collection": "heritages",
+  "name": "Born of Celestial",
+  "level": null,
+  "text": "Due to your residual divine power, the tradition of any spells or magical abilities you gain from a yaoguai heritage or ancestry feat is divine instead of its normal tradition (usually occult)."
+ },
+ {
+  "id": "born-of-elements",
+  "collection": "heritages",
+  "name": "Born of Elements",
+  "level": null,
+  "text": "Due to your natural connection, the tradition of any spells or magical abilities you gain from a yaoguai heritage or ancestry feat is primal instead of its normal tradition (usually occult)."
+ },
+ {
+  "id": "reflection",
+  "collection": "heritages",
+  "name": "Reflection",
+  "level": null,
+  "text": "The GM might require you to roll a Deception check in other circumstances, such as if you're mirror-risen and interacting with someone who has seen an accurate likeness of your progenitor and might notice a distinguishing feature on the reverse side. You can choose from reflection feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "battle-trained-human-bb",
+  "collection": "heritages",
+  "name": "Battle-Trained Human (BB)",
+  "level": null,
+  "text": "In addition, you gain the Diehard feat."
+ },
+ {
+  "id": "naari",
+  "collection": "heritages",
+  "name": "Naari",
+  "level": null,
+  "text": "You can choose from naari feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "aon-half-elf",
+  "collection": "heritages",
+  "name": "Half-Elf",
+  "level": null,
+  "text": "In addition, you can select elf, half-elf, and human feats whenever you gain an ancestry feat."
+ },
+ {
+  "id": "aon-half-orc",
+  "collection": "heritages",
+  "name": "Half-Orc",
+  "level": null,
+  "text": "In addition, you can select orc, half-orc, and human feats whenever you gain an ancestry feat."
+ },
+ {
+  "id": "aon-aasimar",
+  "collection": "heritages",
+  "name": "Aasimar",
+  "level": null,
+  "text": "You can choose from aasimar feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "aon-tiefling",
+  "collection": "heritages",
+  "name": "Tiefling",
+  "level": null,
+  "text": "You descend from fiends or bear the mark of the fiendish realms, manifesting as some unusual feature that belies your heritage, such as horns or a tail. You can choose from tiefling feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "aon-aphorite",
+  "collection": "heritages",
+  "name": "Aphorite",
+  "level": null,
+  "text": "You can choose from aphorite feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "aon-ganzi",
+  "collection": "heritages",
+  "name": "Ganzi",
+  "level": null,
+  "text": "You can choose from ganzi feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "aon-ifrit",
+  "collection": "heritages",
+  "name": "Ifrit",
+  "level": null,
+  "text": "You can choose from ifrit feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "lesser-scion",
+  "collection": "backgrounds",
+  "name": "Lesser Scion",
+  "level": null,
+  "text": "You gain the Hobnobber skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Diplomacy **Lore** Heraldry Lore **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "lost-and-alone",
+  "collection": "backgrounds",
+  "name": "Lost and Alone",
+  "level": null,
+  "text": "You gain the Intimidating Glare skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Intimidation **Lore** Warfare Lore **Skill Feat** Intimidating Glare"
+ },
+ {
+  "id": "missionary",
+  "collection": "backgrounds",
+  "name": "Missionary",
+  "level": null,
+  "text": "You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Diplomacy **Lore** Scribing Lore **Skill Feat** Group Impression"
+ },
+ {
+  "id": "teamster",
+  "collection": "backgrounds",
+  "name": "Teamster",
+  "level": null,
+  "text": "You gain the Train Animal skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Nature **Lore** Mercantile Lore **Skill Feat** Train Animal"
+ },
+ {
+  "id": "dragon-scholar",
+  "collection": "backgrounds",
+  "name": "Dragon Scholar",
+  "level": null,
+  "text": "You gain the Intimidating Glare skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Intimidation **Lore** Dragon Lore **Skill Feat** Intimidating Glare"
+ },
+ {
+  "id": "emancipated",
+  "collection": "backgrounds",
+  "name": "Emancipated",
+  "level": null,
+  "text": "You gain the Terrain Stalker skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Stealth **Lore** Kintargo Lore **Skill Feat** Terrain Stalker"
+ },
+ {
+  "id": "haunting-vision",
+  "collection": "backgrounds",
+  "name": "Haunting Vision",
+  "level": null,
+  "text": "You gain the Student of the Canon skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Religion **Lore** Dahak Lore **Skill Feat** Student of the Canon"
+ },
+ {
+  "id": "hellknight-historian",
+  "collection": "backgrounds",
+  "name": "Hellknight Historian",
+  "level": null,
+  "text": "You gain the Courtly Graces skill feat. --- ## Background details **Attribute Boosts** Intelligence or Strength, one free **Trained Skill** Society **Lore** Architecture Lore **Skill Feat** Courtly Graces"
+ },
+ {
+  "id": "local-scion",
+  "collection": "backgrounds",
+  "name": "Local Scion",
+  "level": null,
+  "text": "You gain the Specialty Crafting skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Crafting **Lore** Breachill Lore **Skill Feat** Specialty Crafting"
+ },
+ {
+  "id": "out-of-towner",
+  "collection": "backgrounds",
+  "name": "Out-of-Towner",
+  "level": null,
+  "text": "You gain the Hobnobber skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Diplomacy **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "reputation-seeker",
+  "collection": "backgrounds",
+  "name": "Reputation Seeker",
+  "level": null,
+  "text": "You gain the Terrain Expertise skill feat (underground if you have Darklands Lore, desert if you have Desert Lore, or forest if you have Jungle Lore). --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Survival **Skill Feat** Terrain Expertise"
+ },
+ {
+  "id": "returning-descendant",
+  "collection": "backgrounds",
+  "name": "Returning Descendant",
+  "level": null,
+  "text": "You gain the Pickpocket skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Thievery **Lore** Engineering Lore **Skill Feat** Pickpocket"
+ },
+ {
+  "id": "truth-seeker",
+  "collection": "backgrounds",
+  "name": "Truth Seeker",
+  "level": null,
+  "text": "You gain the Lie to Me skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Deception **Lore** Politics Lore **Skill Feat** Lie To Me"
+ },
+ {
+  "id": "pathfinder-hopeful",
+  "collection": "backgrounds",
+  "name": "Pathfinder Hopeful",
+  "level": null,
+  "text": "You gain the Additional Lore skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Society **Lore** Pathfinder Society Lore **Skill Feat** Additional Lore"
+ },
+ {
+  "id": "trade-consortium-underling",
+  "collection": "backgrounds",
+  "name": "Trade Consortium Underling",
+  "level": null,
+  "text": "You gain the Experienced Professional skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Society **Lore** Business Lore **Skill Feat** Experienced Professional"
+ },
+ {
+  "id": "grand-council-bureaucrat",
+  "collection": "backgrounds",
+  "name": "Grand Council Bureaucrat",
+  "level": null,
+  "text": "You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Diplomacy **Lore** Government Lore **Skill Feat** Group Impression"
+ },
+ {
+  "id": "child-of-the-puddles",
+  "collection": "backgrounds",
+  "name": "Child of the Puddles",
+  "level": null,
+  "text": "You gain the Steady Balance skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Acrobatics **Lore** Absalom Lore **Skill Feat** Steady Balance"
+ },
+ {
+  "id": "freed-slave-of-absalom",
+  "collection": "backgrounds",
+  "name": "Freed Slave of Absalom",
+  "level": null,
+  "text": "You gain the Streetwise skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Society **Lore** Absalom Lore **Skill Feat** Streetwise"
+ },
+ {
+  "id": "inlander",
+  "collection": "backgrounds",
+  "name": "Inlander",
+  "level": null,
+  "text": "You gain the Survey Wildlife skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Survival **Skill Feat** Survey Wildlife"
+ },
+ {
+  "id": "menagerie-dung-sweeper",
+  "collection": "backgrounds",
+  "name": "Menagerie Dung Sweeper",
+  "level": null,
+  "text": "You gain the Train Animal skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Nature **Lore** Animal Lore **Skill Feat** Train Animal"
+ },
+ {
+  "id": "diobel-pearl-diver",
+  "collection": "backgrounds",
+  "name": "Diobel Pearl Diver",
+  "level": null,
+  "text": "You gain the Underwater Marauder skill feat. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Athletics **Lore** Ocean Lore **Skill Feat** Underwater Marauder"
+ },
+ {
+  "id": "aspiring-river-monarch",
+  "collection": "backgrounds",
+  "name": "Aspiring River Monarch",
+  "level": null,
+  "text": "You gain the Courtly Graces skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Society **Lore** Politics Lore **Skill Feat** Courtly Graces"
+ },
+ {
+  "id": "razmiran-faithful",
+  "collection": "backgrounds",
+  "name": "Razmiran Faithful",
+  "level": null,
+  "text": "You gain the Group Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Intimidation **Lore** Razmir Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "sarkorian-reclaimer",
+  "collection": "backgrounds",
+  "name": "Sarkorian Reclaimer",
+  "level": null,
+  "text": "You gain the Battle Medicine skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Medicine **Lore** Abyssal Lore **Skill Feat** Battle Medicine"
+ },
+ {
+  "id": "rostland-partisan",
+  "collection": "backgrounds",
+  "name": "Rostland Partisan",
+  "level": null,
+  "text": "You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Diplomacy **Lore** Politics Lore **Skill Feat** Group Impression"
+ },
+ {
+  "id": "wonder-taster",
+  "collection": "backgrounds",
+  "name": "Wonder Taster",
+  "level": null,
+  "text": "You gain the Alchemical Crafting skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Crafting **Lore** Alchemical Lore **Skill Feat** Alchemical Crafting"
+ },
+ {
+  "id": "issian-partisan",
+  "collection": "backgrounds",
+  "name": "Issian Partisan",
+  "level": null,
+  "text": "You gain the Charming Liar skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Deception **Lore** Underworld Lore **Skill Feat** Charming Liar"
+ },
+ {
+  "id": "belkzen-slayer",
+  "collection": "backgrounds",
+  "name": "Belkzen Slayer",
+  "level": null,
+  "text": "You gain the Intimidating Glare skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Intimidation **Lore** Orc Lore **Skill Feat** Intimidating Glare"
+ },
+ {
+  "id": "onyx-trader",
+  "collection": "backgrounds",
+  "name": "Onyx Trader",
+  "level": null,
+  "text": "You gain the skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Society **Lore** Mercantile Lore **Skill Feat** Multilingual"
+ },
+ {
+  "id": "lastwall-survivor",
+  "collection": "backgrounds",
+  "name": "Lastwall Survivor",
+  "level": null,
+  "text": "You gain the Battle Medicine skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Medicine **Lore** Undead Lore **Skill Feat** Battle Medicine"
+ },
+ {
+  "id": "molthuni-mercenary",
+  "collection": "backgrounds",
+  "name": "Molthuni Mercenary",
+  "level": null,
+  "text": "You gain the Experienced Professional skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Mercenary Lore **Skill Feat** Experienced Professional"
+ },
+ {
+  "id": "cursed-family",
+  "collection": "backgrounds",
+  "name": "Cursed Family",
+  "level": null,
+  "text": "You gain the Oddity Identification skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Occultism **Lore** Curse Lore **Skill Feat** Oddity Identification"
+ },
+ {
+  "id": "ustalavic-academic",
+  "collection": "backgrounds",
+  "name": "Ustalavic Academic",
+  "level": null,
+  "text": "You gain the Skill Training skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Crafting **Lore** Academia Lore **Skill Feat** Skill Training"
+ },
+ {
+  "id": "whispering-way-scion",
+  "collection": "backgrounds",
+  "name": "Whispering Way Scion",
+  "level": null,
+  "text": "You gain the Student of the Canon skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Religion **Lore** Undead Lore **Skill Feat** Student of the Canon"
+ },
+ {
+  "id": "sarkorian-survivor",
+  "collection": "backgrounds",
+  "name": "Sarkorian Survivor",
+  "level": null,
+  "text": "You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Survival **Lore** Sarkorian History Lore **Skill Feat** Forager"
+ }
+]

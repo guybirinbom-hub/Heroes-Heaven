@@ -1,0 +1,128 @@
+[
+ {
+  "id": "foreign-aid",
+  "collection": "backgrounds",
+  "name": "Foreign Aid",
+  "level": null,
+  "text": "You gain the No Cause for Alarm skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Diplomacy **Lore** Lore Skill Pertaining To Your Place Of Origin **Skill Feat** No Cause for Alarm"
+ },
+ {
+  "id": "goblinblood-survivor",
+  "collection": "backgrounds",
+  "name": "Goblinblood Survivor",
+  "level": null,
+  "text": "You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Survival **Lore** Goblin Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "isgeri-reclaimer",
+  "collection": "backgrounds",
+  "name": "Isgeri Reclaimer",
+  "level": null,
+  "text": "You gain the Terrain Stalker skill feat in either rubble or underbrush. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Stealth **Lore** Isger Lore **Skill Feat** Terrain Stalker"
+ },
+ {
+  "id": "deckhand",
+  "collection": "backgrounds",
+  "name": "Deckhand",
+  "level": null,
+  "text": "You gain the Cat Fall skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Acrobatics **Lore** Sailing Lore **Skill Feat** Cat Fall"
+ },
+ {
+  "id": "anti-thrune-saboteur",
+  "collection": "backgrounds",
+  "name": "Anti-Thrune Saboteur",
+  "level": null,
+  "text": "If you chose Deception, you gain the Lengthy Diversion skill feat. If you chose Thievery, you gain the Dirty Trick skill feat."
+ },
+ {
+  "id": "defiant-noble",
+  "collection": "backgrounds",
+  "name": "Defiant Noble",
+  "level": null,
+  "text": "You gain the Courtly Graces skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Society **Lore** Cheliax Lore **Skill Feat** Courtly Graces"
+ },
+ {
+  "id": "hell-hunted",
+  "collection": "backgrounds",
+  "name": "Hell-Hunted",
+  "level": null,
+  "text": "You gain the Terrain Stalker skill feat. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Stealth **Lore** Devil Lore **Skill Feat** Terrain Stalker"
+ },
+ {
+  "id": "post-guard-of-all-trades",
+  "collection": "backgrounds",
+  "name": "Post Guard of All Trades",
+  "level": null,
+  "text": "You gain the Dubious Knowledge skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Performance **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "wish-for-riches",
+  "collection": "backgrounds",
+  "name": "Wish for Riches",
+  "level": null,
+  "text": "If you choose dragon, you gain the Consume Energy deviant feat with the cold type. If you choose leech, you gain the Borrowed Ability deviant feat. You gain the Subtle Theft skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Thievery **Lore** Games Lore **Skill Feat** Subtle Theft"
+ },
+ {
+  "id": "historical-reenactor",
+  "collection": "backgrounds",
+  "name": "Historical Reenactor",
+  "level": null,
+  "text": "If you selected Performance, you gain the Impressive Performance skill feat. If you chose Society, you gain the Dubious Knowledge skill feat."
+ },
+ {
+  "id": "reclaimer-investigator",
+  "collection": "backgrounds",
+  "name": "Reclaimer Investigator",
+  "level": null,
+  "text": "You gain the Oddity Identification skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Occultism **Lore** Crimson Reclaimers Lore **Skill Feat** Oddity Identification"
+ },
+ {
+  "id": "refugee-fall-of-plaguestone",
+  "collection": "backgrounds",
+  "name": "Refugee (Fall of Plaguestone)",
+  "level": null,
+  "text": "You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Survival **Lore** Hunting Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "refugee-pc2",
+  "collection": "backgrounds",
+  "name": "Refugee (PC2)",
+  "level": null,
+  "text": "You gain the Streetwise skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Society **Skill Feat** Streetwise"
+ },
+ {
+  "id": "aon-post-guard-of-all-trade",
+  "collection": "backgrounds",
+  "name": "Post Guard of All Trade",
+  "level": null,
+  "text": "You gain the Dubious Knowledge skill feat."
+ },
+ {
+  "id": "aon-reclaimed-investigator",
+  "collection": "backgrounds",
+  "name": "Reclaimed Investigator",
+  "level": null,
+  "text": "You gain the Oddity Identification skill feat."
+ },
+ {
+  "id": "aon-muesello-s-student",
+  "collection": "backgrounds",
+  "name": "Muesello's Student",
+  "level": null,
+  "text": "You gain the Crafter's Appraisal skill feat."
+ },
+ {
+  "id": "aon-historical-reeanactor",
+  "collection": "backgrounds",
+  "name": "Historical Reeanactor",
+  "level": null,
+  "text": "If you selected Performance, you gain the Impressive Performance skill feat. If you chose Society, you gain the Dubious Knowledge skill feat."
+ },
+ {
+  "id": "aon-wishes-for-riches",
+  "collection": "backgrounds",
+  "name": "Wishes for Riches",
+  "level": null,
+  "text": "If you choose dragon, you gain the Consume Energy deviant feat with the cold type. If you choose leech, you gain the Borrowed Ability deviant feat. You gain the Subtle Theft skill feat."
+ }
+]

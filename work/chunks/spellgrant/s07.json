@@ -1,0 +1,310 @@
+[
+ {
+  "id": "cloak-of-elvenkind",
+  "collection": "items",
+  "name": "Cloak of Elvenkind",
+  "level": 7,
+  "text": "The cloak allows you to cast the Ghost Sound cantrip as an arcane innate spell. --- **Activate** ⟨2⟩ Interact **Frequency** once per day --- **Effect** You draw the hood up and gain the effects of , with the spell's normal duration or until you pull the hood back down, whichever comes first."
+ },
+ {
+  "id": "feral-linguist-greater",
+  "collection": "items",
+  "name": "Feral Linguist (Greater)",
+  "level": 8,
+  "text": "**Activate** Cast a Spell (add 1 action) --- This wooden whistle is stuffed with cotton and carved with images of bellowing stags, howling wolves, and chirping birds. You can blow on this whistle to use it as a catalyst when casting an Animal Form spell. Once during the spell's duration, you can cast either a spell of 4th-rank or lower or a cantrip of any level, ignoring the inability to cast spells while in your battle form."
+ },
+ {
+  "id": "gamtu-hat",
+  "collection": "items",
+  "name": "Gamtu Hat",
+  "level": 5,
+  "text": "**Activate—Hat Trick** ⟨2⟩ (manipulate) --- **Effect** You tap the hat and gain the effects of a 2nd-rank spell, which lasts for the spell's normal duration, until the hat is removed, or until the hat's normal duration runs out, whichever comes first. After the spell ends, the gamtu disappears."
+ },
+ {
+  "id": "aon-noqual-armor",
+  "collection": "items",
+  "name": "Noqual Armor",
+  "level": 12,
+  "text": "While wearing noqual armor, you gain a +1 circumstance bonus to AC against spell attack rolls. If you Cast a Spell while wearing noqual armor, you must succeed at a DC 5 flat check or the spell fails."
+ },
+ {
+  "id": "aon-fervent-spell",
+  "collection": "items",
+  "name": "Fervent Spell",
+  "level": 0,
+  "text": "Fervent Spell Aspect Emotion Prerequisite fervor gift While the relic's fervor gift lasts, you have access to the spell provided by the emotional state, which you can cast using your own spell slots. Activate Single Action (concentrate, manipulate) Effect The relic Casts the Spell associated with its emotional fervor at the spell's lowest rank."
+ },
+ {
+  "id": "aon-scrap-shot",
+  "collection": "items",
+  "name": "Scrap Shot",
+  "level": 0,
+  "text": "Make a spell attack roll with your relic against a target within 30 feet. If the target is wearing metal armor or is made of metal, you gain a +1 circumstance bonus to your spell attack roll, and the target becomes clumsy 1 until the start of your next turn as the scrap adheres to the target."
+ },
+ {
+  "id": "aon-flowing-footsteps",
+  "collection": "items",
+  "name": "Flowing Footsteps",
+  "level": 0,
+  "text": "You gain the effects of the water walk spell, and the ability to breathe water."
+ },
+ {
+  "id": "empty-sky-kitsune",
+  "collection": "heritages",
+  "name": "Empty Sky Kitsune",
+  "level": null,
+  "text": "You gain the Kitsune Spell Familiarity ancestry feat."
+ },
+ {
+  "id": "rite-of-invocation",
+  "collection": "heritages",
+  "name": "Rite of Invocation",
+  "level": null,
+  "text": "You gain one cantrip from the arcane or occult spell list. You can cast this spell as an innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "spellkeeper-shisk",
+  "collection": "heritages",
+  "name": "Spellkeeper Shisk",
+  "level": null,
+  "text": "Your magical knowledge allows you to cast simple spells. You gain one cantrip from that magical tradition's spell list. You can cast this spell as an innate spell at will, as a spell of your chosen tradition. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "mage-automaton",
+  "collection": "heritages",
+  "name": "Mage Automaton",
+  "level": null,
+  "text": "You gain one cantrip from the arcane spell list. You can cast this spell as an arcane innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "ragdyan-vanara",
+  "collection": "heritages",
+  "name": "Ragdyan Vanara",
+  "level": null,
+  "text": "You gain one cantrip from the divine spell list; this cantrip can't deal damage or otherwise cause direct harm. You can cast this spell as a divine innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "forge-blessed-dwarf",
+  "collection": "heritages",
+  "name": "Forge-Blessed Dwarf",
+  "level": null,
+  "text": "You can cast the 1st-rank spell they grant clerics (such as Soothe if your family's patron is Bolka) as an innate divine spell once per week."
+ },
+ {
+  "id": "fey-touched-gnome",
+  "collection": "heritages",
+  "name": "Fey-touched Gnome",
+  "level": null,
+  "text": "Choose one cantrip from the primal spell list. You can cast this spell as a primal innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up. You can change this cantrip to a different one from the same list once per day by meditating to realign yourself with the First World; this is a 10-minute activity that has the concentrate trait."
+ },
+ {
+  "id": "wellspring-gnome",
+  "collection": "heritages",
+  "name": "Wellspring Gnome",
+  "level": null,
+  "text": "You gain one cantrip from that magical tradition's spell list. You can cast this spell as an innate spell at will, as a spell of your chosen tradition. A cantrip is heightened to a spell rank equal to half your level rounded up. Whenever you gain a primal innate spell from a gnome ancestry feat, change its tradition from primal to your chosen tradition."
+ },
+ {
+  "id": "budding-speaker-centaur",
+  "collection": "heritages",
+  "name": "Budding Speaker Centaur",
+  "level": null,
+  "text": "You gain one cantrip from the chosen spell list. You can cast this spell as an innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "spellhorn-kobold",
+  "collection": "heritages",
+  "name": "Spellhorn Kobold",
+  "level": null,
+  "text": "Choose one common cantrip from the arcane spell list. You can Cast this Spell as an arcane innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up. You are trained in the spell attack modifier and spell DC statistics, and your key spellcasting attribute is Charisma."
+ },
+ {
+  "id": "makari-lizardfolk",
+  "collection": "heritages",
+  "name": "Makari Lizardfolk",
+  "level": null,
+  "text": "You gain your choice of the Divine Lance or Forbidding Ward cantrips, which you can cast as a divine innate cantrip at will. A cantrip is heightened to a spell rank equal to half your level rounded up. When you cast this cantrip, it loses the manipulate trait, as you cast purely by roaring and flaring your trunk."
+ },
+ {
+  "id": "oracular-samsaran",
+  "collection": "heritages",
+  "name": "Oracular Samsaran",
+  "level": null,
+  "text": "You gain one cantrip from that magical tradition's spell list. You can Cast this Spell as an innate spell at will, as a spell of your chosen tradition. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "shadow-of-the-hermit",
+  "collection": "heritages",
+  "name": "Shadow of the Hermit",
+  "level": null,
+  "text": "Choose one cantrip from the occult spell list. You can cast this spell as an occult innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "respite-of-loam-and-leaf",
+  "collection": "heritages",
+  "name": "Respite of Loam and Leaf",
+  "level": null,
+  "text": "Your vow grants you the land's spiritual power; you gain one cantrip from the primal spell list. You can cast this spell as an innate primal spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "born-of-celestial",
+  "collection": "heritages",
+  "name": "Born of Celestial",
+  "level": null,
+  "text": "Choose one cantrip from the divine spell list. You can cast this spell as an innate divine cantrip at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "born-of-elements",
+  "collection": "heritages",
+  "name": "Born of Elements",
+  "level": null,
+  "text": "You can cast this spell as an innate primal cantrip at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "plane-hopper-jotunborn",
+  "collection": "heritages",
+  "name": "Plane-Hopper Jotunborn",
+  "level": null,
+  "text": "You gain one cantrip from the occult spell list. You can cast this spell as an occult innate spell at will. A cantrip is heightened to a spell rank equal to half your level rounded up."
+ },
+ {
+  "id": "magaambya-academic",
+  "collection": "backgrounds",
+  "name": "Magaambya Academic",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Lore** Academia Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "rivethun-adherent",
+  "collection": "backgrounds",
+  "name": "Rivethun Adherent",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Occultism **Lore** Spirit Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "demon-slayer",
+  "collection": "backgrounds",
+  "name": "Demon Slayer",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Religion **Lore** Demon Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "learned-guard-prodigy",
+  "collection": "backgrounds",
+  "name": "Learned Guard Prodigy",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Lore** Legal Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "spell-seeker",
+  "collection": "backgrounds",
+  "name": "Spell Seeker",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Lore** Library Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "student-of-magic",
+  "collection": "backgrounds",
+  "name": "Student of Magic",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Lore** Academia Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "seer-of-the-dead",
+  "collection": "backgrounds",
+  "name": "Seer of the Dead",
+  "level": null,
+  "text": "You gain the effects of the Spirit Sense spell at all times."
+ },
+ {
+  "id": "mystic-tutor",
+  "collection": "backgrounds",
+  "name": "Mystic Tutor",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Lore** Academia Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "scion-of-slayers",
+  "collection": "backgrounds",
+  "name": "Scion of Slayers",
+  "level": null,
+  "text": "Over the generations, this single-minded focus has begun to manifest in uncanny ways during combat. You can cast Vitality Lash as an innate divine cantrip. You can use Intelligence as your spellcasting ability for this innate spell."
+ },
+ {
+  "id": "tyrant-witness",
+  "collection": "backgrounds",
+  "name": "Tyrant Witness",
+  "level": null,
+  "text": "You can cast Vitality Lash as a divine innate cantrip. As normal, the cantrip heightens to half your level rounded up."
+ },
+ {
+  "id": "astrological-augur",
+  "collection": "backgrounds",
+  "name": "Astrological Augur",
+  "level": null,
+  "text": "Your readings might primarily focus on the Cosmic Caravan, or perhaps you use other stars to guide you, like the zodiac of Tian Xia. You can cast Augury as a divine innate spell once per week, and the spell's effects can see up to 1 hour in the future rather than 30 minutes."
+ },
+ {
+  "id": "eclipseborn",
+  "collection": "backgrounds",
+  "name": "Eclipseborn",
+  "level": null,
+  "text": "You can cast Ill Omen as an occult innate spell once per day. After you Cast this Spell, but before you regain the ability to cast it the following day, the GM can force you to reroll a successful saving throw, attack roll, or skill check as misfortune finds its way back to you. If this effect causes you to fail the associated saving throw, attack roll, or skill check, you can cast *ill omen* again a second time that day."
+ },
+ {
+  "id": "sign-bound",
+  "collection": "backgrounds",
+  "name": "Sign Bound",
+  "level": null,
+  "text": "Your associated constellation determines one of the ability boosts you gain and an innate spell. You also gain the ability to cast an occult innate spell, as determined by your sign. The frequency with which you can cast this spell is listed below; cantrips can be used as often as you wish. As normal, you cast non-cantrip innate spells at the lowest level available to that spell, such as 2nd level for speak with animals, and cantrips are heightened to half your level. Additionally, once during the prominent time for your sign (such as 12 Pharast-18 Gozra"
+ },
+ {
+  "id": "guest-of-sedeq-lodge",
+  "collection": "backgrounds",
+  "name": "Guest of Sedeq Lodge",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "elementally-infused",
+  "collection": "backgrounds",
+  "name": "Elementally Infused",
+  "level": null,
+  "text": "You also gain a cantrip according to your chosen plane: **Air:** Gale Blast **Earth:** Scatter Scree **Fire:** Ignition **Metal:** Needle Darts **Water:** Spout **Wood:** Root Reading You can cast this spell as a primal innate spell at will."
+ },
+ {
+  "id": "blessed",
+  "collection": "backgrounds",
+  "name": "Blessed",
+  "level": null,
+  "text": "Either you can cast Guidance as a divine innate spell at will, or you gain a similar blessing determined by the GM."
+ },
+ {
+  "id": "zodiac-bound",
+  "collection": "backgrounds",
+  "name": "Zodiac Bound",
+  "level": null,
+  "text": "Your associated constellation determines one of the attribute boosts you gain and an innate spell. You also gain the ability to cast a divine innate spell, as determined by your sign. The frequency with which you can cast this spell is listed below; cantrips can be used as often as you wish. As normal, you cast non-cantrip innate spells at the lowest rank available to that spell, such as 2nd rank for *water breathing*, and cantrips are heightened to half your level. Additionally, once during the prominent time for your sign (typically once per year), you"
+ },
+ {
+  "id": "knack-for-contraptions",
+  "collection": "backgrounds",
+  "name": "Knack for Contraptions",
+  "level": null,
+  "text": "You can cast Live Wire as an arcane innate cantrip. As normal, the cantrip heightens to half your level rounded up."
+ },
+ {
+  "id": "combat-chaplain",
+  "collection": "backgrounds",
+  "name": "Combat Chaplain",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Religion **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "local-savior",
+  "collection": "backgrounds",
+  "name": "Local Savior",
+  "level": null,
+  "text": "As part of your heroic services to your hometown, one of the deities whose presence is strong there has granted you a divine cantrip that you can cast as a divine innate spell at will. This cantrip is heightened to a spell rank equal to half your level rounded up. Choose either Shield or Stabilize as your divine innate cantrip. Choose either Message or Read Aura as your divine innate cantrip. Choose either Forbidding Ward or Guidance as your divine innate cantrip. Choose either Haunting Hymn or Summon Instrument as your divine innate cantrip. Choose eith"
+ }
+]

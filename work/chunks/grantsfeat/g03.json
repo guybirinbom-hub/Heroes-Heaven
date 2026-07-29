@@ -1,0 +1,387 @@
+[
+ {
+  "id": "advanced-flair",
+  "collection": "feats",
+  "name": "Advanced Flair",
+  "level": 6,
+  "text": "You gain one swashbuckler feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another swashbuckler feat."
+ },
+ {
+  "id": "contortionist",
+  "collection": "feats",
+  "name": "Contortionist",
+  "level": 4,
+  "text": "You gain the Quick Squeeze skill feat, and if you're a master in Acrobatics, you can Squeeze at full Speed."
+ },
+ {
+  "id": "bounty-hunter-dedication",
+  "collection": "feats",
+  "name": "Bounty Hunter Dedication",
+  "level": 2,
+  "text": "If you already have Hunt Prey, you gain the Monster Hunter feat in addition to the other benefits of this feat."
+ },
+ {
+  "id": "familiar-master-dedication",
+  "collection": "feats",
+  "name": "Familiar Master Dedication",
+  "level": 2,
+  "text": "If you already have a familiar, you gain the Enhanced Familiar feat."
+ },
+ {
+  "id": "pirate-combat-training",
+  "collection": "feats",
+  "name": "Pirate Combat Training",
+  "level": 4,
+  "text": "You gain either the Combat Climber or Underwater Marauder skill feat, even if you do not meet its prerequisites."
+ },
+ {
+  "id": "sentinel-dedication",
+  "collection": "feats",
+  "name": "Sentinel Dedication",
+  "level": 2,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in any type of armor (but not unarmored defense), you also gain that proficiency in the armor types granted to you by this feat. If you have a class feature that grants you expert proficiency in unarmored defense and you're 13th level or higher, you also become an expert in the armor types granted to you by this feat."
+ },
+ {
+  "id": "social-purview",
+  "collection": "feats",
+  "name": "Social Purview",
+  "level": 4,
+  "text": "You gain that archetype's dedication feat and can select feats from that archetype, even if you haven't yet gained enough feats in the vigilante archetype to take another dedication feat. These feats become part of your social identity and gain the social trait-for instance, a fighter vigilante could take the Wizard Dedication feat and have a wizard social identity."
+ },
+ {
+  "id": "fisheye",
+  "collection": "feats",
+  "name": "Fisheye",
+  "level": 1,
+  "text": "If you eat the left eye of a fish, you gain the Breath Control feat for the next hour, and that feat's benefits apply against effects that have the olfactory trait in addition to those that have the inhaled trait. As this feat is temporary, you can't use it as a prerequisite for a permanent character option like a feat or access to a spell."
+ },
+ {
+  "id": "inherit-the-dreaming-heirloom",
+  "collection": "feats",
+  "name": "Inherit the Dreaming Heirloom",
+  "level": 1,
+  "text": "When you gain this feat, select one Lore skill about a profession and one about a type of environment, such as Accounting Lore and Forest Lore."
+ },
+ {
+  "id": "morphic-strike",
+  "collection": "feats",
+  "name": "Morphic Strike",
+  "level": 1,
+  "text": "- **Animal** 1 claw (agile, finesse), Damage 1d6 slashing - **Celestial** 1 spirit touch (magical, sanctified, spirit), Damage 1d4 spirit - **Elements** 1 elemental current (magical), Damage 1d4; this ability deals the same damage type and gains the same elemental traits of the cantrip you gained from your heritage - **Object** 1 striking surface (sweep), Damage 1d8 bludgeoning or slashing (chosen when you gain this feat) - **Vegetation** 1 root (reach), Damage 1d6 bludgeoning"
+ },
+ {
+  "id": "natural-mutagen",
+  "collection": "feats",
+  "name": "Natural Mutagen",
+  "level": 1,
+  "text": "When you gain this feat, select a common 1st-level mutagen."
+ },
+ {
+  "id": "special-sentinel-technique",
+  "collection": "feats",
+  "name": "Special Sentinel Technique",
+  "level": 4,
+  "text": "When you gain this feat, decide a name for your technique, which becomes the spell's incantation. --- **Special** You can take this feat a second time, gaining the focus spell that you didn't gain the first time."
+ },
+ {
+  "id": "apparition-stabilization",
+  "collection": "feats",
+  "name": "Apparition Stabilization",
+  "level": 6,
+  "text": "When you gain the third apparition class feature, this DC is reduced to 13, and when you gain the fourth apparition class feature, this DC is reduced to 10."
+ },
+ {
+  "id": "extract-vow-of-nonviolence",
+  "collection": "feats",
+  "name": "Extract Vow of Nonviolence",
+  "level": 12,
+  "text": "--- **Special** When you gain this feat, choose cold iron, duskwood, dawnsilver, or silver."
+ },
+ {
+  "id": "battleblooded",
+  "collection": "feats",
+  "name": "Battleblooded",
+  "level": 1,
+  "text": "You also gain the Intimidating Glare skill feat."
+ },
+ {
+  "id": "spiritual-awakening",
+  "collection": "feats",
+  "name": "Spiritual Awakening",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level animist feat."
+ },
+ {
+  "id": "animists-power",
+  "collection": "feats",
+  "name": "Animist's Power",
+  "level": 6,
+  "text": "You gain one animist feat. You can't use this feat to gain animist feats with the wandering trait. --- **Special** You can select this feat more than once. Each time you select it, you gain another animist feat."
+ },
+ {
+  "id": "basic-glory",
+  "collection": "feats",
+  "name": "Basic Glory",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level exemplar feat."
+ },
+ {
+  "id": "advanced-glory",
+  "collection": "feats",
+  "name": "Advanced Glory",
+  "level": 6,
+  "text": "You gain an exemplar feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another exemplar feat."
+ },
+ {
+  "id": "patron-reborn",
+  "collection": "feats",
+  "name": "Patron Reborn",
+  "level": 20,
+  "text": "An allied witch you can observe who has that patron counts as and gains the benefits of your Witch's Charge feat, even if you did not select them as your charge during your daily preparations."
+ },
+ {
+  "id": "mythic-magic",
+  "collection": "feats",
+  "name": "Mythic Magic",
+  "level": 8,
+  "text": "When you gain this feat, choose up to three spells of 1st or 2nd rank that take no more than 3 actions to cast and that are either instantaneous or have a duration of 10 minutes or less. You gain the Cast a Spell activity only for spells cast with this feat; you don't otherwise gain the typical benefits of being a spellcaster."
+ },
+ {
+  "id": "ascend",
+  "collection": "feats",
+  "name": "Ascend",
+  "level": 14,
+  "text": "When you gain this feat, you can choose to sprout wings, if desired; these wings are permanent."
+ },
+ {
+  "id": "godling-dedication",
+  "collection": "feats",
+  "name": "Godling Dedication",
+  "level": 12,
+  "text": "When you gain this feat, choose one willing ally to be your hierophant. You gain expert proficiency in spell modifier and spell DC, and your spellcasting ability for these spells is your choice of Wisdom or Charisma, decided when you gain this feat."
+ },
+ {
+  "id": "claim-cardinal-domains",
+  "collection": "feats",
+  "name": "Claim Cardinal Domains",
+  "level": 14,
+  "text": "When you gain this feat, you can choose not to lay claim to one or more domains immediately, instead leaving the space open until later in your story."
+ },
+ {
+  "id": "gird-champion",
+  "collection": "feats",
+  "name": "Gird Champion",
+  "level": 16,
+  "text": "When you gain this feat, choose one type of weapon with special significance to you, such as a longsword or a sickle."
+ },
+ {
+  "id": "rivethun-emissary-dedication",
+  "collection": "feats",
+  "name": "Rivethun Emissary Dedication",
+  "level": 2,
+  "text": "**Access** Followers of Rivethun have access to this feat. Your Rivethun focus spells are divine spells; when you gain this feat, you become trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "emissary-familiar",
+  "collection": "feats",
+  "name": "Emissary Familiar",
+  "level": 4,
+  "text": "If you already have a familiar, you gain the Enhanced Familiar feat."
+ },
+ {
+  "id": "unfettered-growth",
+  "collection": "feats",
+  "name": "Unfettered Growth",
+  "level": 13,
+  "text": "Select one of the following benefits when you gain this feat. --- **Special** This feat gains the trait for your ancestry."
+ },
+ {
+  "id": "potent-nectar",
+  "collection": "feats",
+  "name": "Potent Nectar",
+  "level": 17,
+  "text": "Select one of the following benefits when you gain this feat. --- **Special** This feat gains the trait for your ancestry."
+ },
+ {
+  "id": "tattooed-historian-dedication",
+  "collection": "feats",
+  "name": "Tattooed Historian Dedication",
+  "level": 2,
+  "text": "You gain a Storied Skin for free upon gaining this feat (or another magical tattoo of 2nd level or lower if you already have storied skin)."
+ },
+ {
+  "id": "inscribed-with-elders-deeds",
+  "collection": "feats",
+  "name": "Inscribed with Elders' Deeds",
+  "level": 6,
+  "text": "During your daily preparations, you can reconfigure part of your storied skin to depict a specific orc hero, granting you a 1st-level ancestry feat with the orc trait until you prepare again; this ancestry feat cannot require any physiological feature you lack, as determined by the GM. Since this feat is temporary, you can't use it as a prerequisite for permanent character options, such as for a feat. At 13th level, you can instead gain a 5th-level ancestry feat with the orc trait."
+ },
+ {
+  "id": "haunting-memories",
+  "collection": "feats",
+  "name": "Haunting Memories",
+  "level": 8,
+  "text": "You also gain one skill feat with a minimum requirement of your new rank in the chosen skill. For the purpose of meeting level prerequisites for this feat, your level is equal to half your level. This proficiency and feat last until you make your daily preparations again."
+ },
+ {
+  "id": "wylderheart-dedication",
+  "collection": "feats",
+  "name": "Wylderheart Dedication",
+  "level": 2,
+  "text": "You gain the Additional Lore skill feat for Demon Lore."
+ },
+ {
+  "id": "free-heart",
+  "collection": "feats",
+  "name": "Free Heart",
+  "level": 1,
+  "text": "Choose a common background that relates to a passion you've pursued; you're trained in the skills and gain the skill feat associated with that background in addition to those in your normal background."
+ },
+ {
+  "id": "lion-blade-dedication",
+  "collection": "feats",
+  "name": "Lion Blade Dedication",
+  "level": 2,
+  "text": "You also gain the Additional Lore skill feat for Espionage Lore."
+ },
+ {
+  "id": "jotunborn-lore",
+  "collection": "feats",
+  "name": "Jotunborn Lore",
+  "level": 1,
+  "text": "You also gain the Additional Lore general feat for Jotunborn Lore. --- **Special** If you have the Sage Jotunborn heritage, you gain the Additional Lore feat a second time for a lore of your choice."
+ },
+ {
+  "id": "officers-education",
+  "collection": "feats",
+  "name": "Officer's Education",
+  "level": 8,
+  "text": "You become trained in two skills you are not already trained in, become an expert in one skill you are currently trained in, learn one common language you do not already know, and gain any one general feat that you meet the prerequisites for. --- **Special** You can take this feat twice, gaining its benefits each time."
+ },
+ {
+  "id": "peerless-mascot-companion",
+  "collection": "feats",
+  "name": "Peerless Mascot Companion",
+  "level": 16,
+  "text": "If you later gain the Glorious Banner feat, your banner has a 100-foot aura while it is affixed to your peerless mascot companion. - It can speak one language that you also speak (chosen at the time you gain this feat)."
+ },
+ {
+  "id": "commander-dedication",
+  "collection": "feats",
+  "name": "Commander Dedication",
+  "level": 2,
+  "text": "You gain the tactics class feature like a commander and gain your own folio; this folio contains two common mobility or offensive tactics of your choosing."
+ },
+ {
+  "id": "basic-field-training",
+  "collection": "feats",
+  "name": "Basic Field Training",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level commander feat."
+ },
+ {
+  "id": "advanced-field-training",
+  "collection": "feats",
+  "name": "Advanced Field Training",
+  "level": 6,
+  "text": "You gain a commander feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another commander feat."
+ },
+ {
+  "id": "guardian-dedication",
+  "collection": "feats",
+  "name": "Guardian Dedication",
+  "level": 2,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in any type of armor (but not unarmored defense), you also gain that proficiency in the armor types granted to you by this feat. If you have a class feature that grants you expert proficiency in unarmored defense and you're 13th level or higher, you also become an expert in the armor types granted to you by this feat."
+ },
+ {
+  "id": "basic-defender",
+  "collection": "feats",
+  "name": "Basic Defender",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level guardian feat."
+ },
+ {
+  "id": "advanced-defender",
+  "collection": "feats",
+  "name": "Advanced Defender",
+  "level": 6,
+  "text": "You gain one guardian feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another guardian feat."
+ },
+ {
+  "id": "aldori-duelist-dedication",
+  "collection": "feats",
+  "name": "Aldori Duelist Dedication",
+  "level": 2,
+  "text": "You gain the Additional Lore feat for Dueling Lore; if you were already trained in Dueling Lore, you also become trained in a Lore skill of your choice."
+ },
+ {
+  "id": "poisoned-sticks-and-stones",
+  "collection": "feats",
+  "name": "Poisoned Sticks and Stones",
+  "level": 6,
+  "text": "--- **Special** If you later gain the Poison Weapon feat (such as from the poisoner archetype or the rogue multiclass archetype), you can apply your injury poisons to any weapon that is normally a valid receptacle for injury poisons, but you do not gain additional simple injury poisons during your daily preparations."
+ },
+ {
+  "id": "arcana-of-iron",
+  "collection": "feats",
+  "name": "Arcana of Iron",
+  "level": 6,
+  "text": "If you gain the Weapon Expertise class feature, your proficiency in martial and advanced weapons increases to expert."
+ },
+ {
+  "id": "spellshield",
+  "collection": "feats",
+  "name": "Spellshield",
+  "level": 8,
+  "text": "You gain the Arcane Bond class feature and the Drain Bonded Item action."
+ },
+ {
+  "id": "captain-dedication",
+  "collection": "feats",
+  "name": "Captain Dedication",
+  "level": 2,
+  "text": "You also gain your choice of the Group Impression or the Group Coercion skill feat. If you already have both of these skill feats, you gain another 1st-level skill feat for which you qualify. --- **Special** Once you have a follower, you can never take a feat or class feature that grants an animal companion or another companion that prevents you from having an animal companion."
+ },
+ {
+  "id": "hero-gods-bond",
+  "collection": "feats",
+  "name": "Hero-God's Bond",
+  "level": 6,
+  "text": "When you gain this feat, select an ally."
+ },
+ {
+  "id": "awakened-power",
+  "collection": "feats",
+  "name": "Awakened Power",
+  "level": 4,
+  "text": "You gain one awakening benefit for a deviant feat of 4th level or lower. --- **Special** You can take this feat multiple times. Each time you do, choose a different deviant feat of 4th level or lower, and gain one of its awakening benefits."
+ },
+ {
+  "id": "greater-awakened-power",
+  "collection": "feats",
+  "name": "Greater Awakened Power",
+  "level": 10,
+  "text": "You gain one awakening benefit for a deviant feat of 10th level or lower. --- **Special** You can take this feat multiple times. Each time you do, choose a different deviant feat of 10th level or lower, and gain one of its awakening benefits."
+ },
+ {
+  "id": "draconic-paragon",
+  "collection": "feats",
+  "name": "Draconic Paragon",
+  "level": 9,
+  "text": "You gain additional effects for the prerequisite kobold feat."
+ },
+ {
+  "id": "warshard-warrior-dedication",
+  "collection": "feats",
+  "name": "Warshard Warrior Dedication",
+  "level": 12,
+  "text": "Your gain the Mythic Strike feat, but you can only use it with your warshard weapon. Whenever you make a Strike with your warshard weapon at mythic proficiency, you double the amount of additional damage you deal with the weapon specialization class feature."
+ },
+ {
+  "id": "this-is-what-its-like-to-die",
+  "collection": "feats",
+  "name": "This is What It's Like to Die",
+  "level": 17,
+  "text": "When you gain this feat, choose any two of the following damage types: acid, bludgeoning, cold, electricity, fire, piercing, poison, slashing, or sonic."
+ }
+]

@@ -1,0 +1,387 @@
+[
+ {
+  "id": "eidolons-wrath",
+  "collection": "feats",
+  "name": "Eidolon's Wrath",
+  "level": 6,
+  "text": "You determine the damage type when you gain the feat: acid, cold, electricity, fire, sonic, vitality, or void."
+ },
+ {
+  "id": "flexible-transmogrification",
+  "collection": "feats",
+  "name": "Flexible Transmogrification",
+  "level": 12,
+  "text": "Each day, choose one evolution feat of 6th level or lower during your daily preparations. Your eidolon gains that feat until your next daily preparations."
+ },
+ {
+  "id": "basic-martial-magic",
+  "collection": "feats",
+  "name": "Basic Martial Magic",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level magus feat of your choice."
+ },
+ {
+  "id": "advanced-martial-magic",
+  "collection": "feats",
+  "name": "Advanced Martial Magic",
+  "level": 6,
+  "text": "You gain one magus feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another magus feat."
+ },
+ {
+  "id": "basic-synergy",
+  "collection": "feats",
+  "name": "Basic Synergy",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level summoner feat of your choice."
+ },
+ {
+  "id": "advanced-synergy",
+  "collection": "feats",
+  "name": "Advanced Synergy",
+  "level": 6,
+  "text": "You gain one summoner feat. **Special** You can select this feat more than once. Each time you select it, you gain another summoner feat."
+ },
+ {
+  "id": "signature-synergy",
+  "collection": "feats",
+  "name": "Signature Synergy",
+  "level": 14,
+  "text": "You gain one evolution feat from the following list: - Airborne Form - Burrowing Form - Ever-Vigilant Senses - Hulking Size For the purpose of meeting its prerequisites, your summoner level is equal to your character level - 4."
+ },
+ {
+  "id": "automaton-armament",
+  "collection": "feats",
+  "name": "Automaton Armament",
+  "level": 1,
+  "text": "Your body can be reconfigured; you can select this feat at any level, and you can retrain into or out of this feat or change the type of attack you gain. Increase the damage die of the unarmed attack you gain from this feat by one step (from 1d4 to 1d6, or from 1d6 to 1d8)."
+ },
+ {
+  "id": "lesser-augmentation",
+  "collection": "feats",
+  "name": "Lesser Augmentation",
+  "level": 9,
+  "text": "You can spend one week of downtime to change the enhancement you gain with this feat. **Enhancement** You gain the enhancement benefits of another 1st- or 5th-level automaton ancestry feat."
+ },
+ {
+  "id": "greater-augmentation",
+  "collection": "feats",
+  "name": "Greater Augmentation",
+  "level": 17,
+  "text": "You can spend one week of downtime to change the enhancement you gain with this feat."
+ },
+ {
+  "id": "basic-breakthrough",
+  "collection": "feats",
+  "name": "Basic Breakthrough",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level inventor feat of your choice."
+ },
+ {
+  "id": "advanced-breakthrough",
+  "collection": "feats",
+  "name": "Advanced Breakthrough",
+  "level": 6,
+  "text": "You gain one inventor feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another inventor feat."
+ },
+ {
+  "id": "basic-shooting",
+  "collection": "feats",
+  "name": "Basic Shooting",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level gunslinger feat of your choice."
+ },
+ {
+  "id": "advanced-shooting",
+  "collection": "feats",
+  "name": "Advanced Shooting",
+  "level": 6,
+  "text": "You gain one gunslinger feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another gunslinger feat."
+ },
+ {
+  "id": "executioner-weapon-training",
+  "collection": "feats",
+  "name": "Executioner Weapon Training",
+  "level": 4,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency with a given weapon or weapons, you also gain that proficiency for these weapons."
+ },
+ {
+  "id": "lions-might",
+  "collection": "feats",
+  "name": "Lion's Might",
+  "level": 4,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in certain weapons, you also gain that proficiency rank with lion scythes and sun slings."
+ },
+ {
+  "id": "cunning-trickster-mask",
+  "collection": "feats",
+  "name": "Cunning Trickster Mask",
+  "level": 20,
+  "text": "If you don't have the Conceal Spell feat, you gain it as a bonus feat, allowing you to disguise your spellcasting from others' eyes. If you already have the Conceal Spell feat, you can use Conceal Spell once per round as a free action instead of as a single action."
+ },
+ {
+  "id": "sacred-spells",
+  "collection": "feats",
+  "name": "Sacred Spells",
+  "level": 4,
+  "text": "When you gain this feat, you can retrain existing spells to replace them with ones on this list. - If you're a spontaneous spellcaster with the signature spells class feature, add two of the spells from the list of sacred spells to your repertoire. When you gain the ability to cast a new rank of spells, you can choose to switch the spells from this feat to any other spells from the list."
+ },
+ {
+  "id": "for-love-for-lightning",
+  "collection": "feats",
+  "name": "For Love, For Lightning",
+  "level": 12,
+  "text": "Your knight reclaimant focus spells are divine spells; when you gain this feat, you become trained in divine spell attacks and spell DCs."
+ },
+ {
+  "id": "the-harder-they-fall-ranger",
+  "collection": "feats",
+  "name": "The Harder They Fall (Ranger)",
+  "level": 8,
+  "text": "Once he gains the Magical Crafting feat at 4th level, he begins to craft specialized ammunition and runes for weapons. As long as his attitude toward the PCs is at least friendly, he shares these discoveries with them, unlocking the following ranger class feats and items as soon as his level equals the level of the feat or item."
+ },
+ {
+  "id": "roll-with-it-ranger",
+  "collection": "feats",
+  "name": "Roll with It (Ranger)",
+  "level": 12,
+  "text": "Once he gains the Magical Crafting feat at 4th level, he begins to craft specialized ammunition and runes for weapons. As long as his attitude toward the PCs is at least friendly, he shares these discoveries with them, unlocking the following ranger class feats and items as soon as his level equals the level of the feat or item."
+ },
+ {
+  "id": "kingdom-assurance",
+  "collection": "feats",
+  "name": "Kingdom Assurance",
+  "level": 1,
+  "text": "Special You can select this feat multiple times. Each time, choose a different skill and gain the benefits of this feat for that skill."
+ },
+ {
+  "id": "molten-wit",
+  "collection": "feats",
+  "name": "Molten Wit",
+  "level": 1,
+  "text": "You either become trained in Deception and gain the Charming Liar skill feat, or you become trained in Diplomacy and gain the Group Impression skill feat. If you're already trained in one of these skills, you must take the other and can choose from either skill feat. If you're trained in both skills, you become trained in a different skill of your choice instead and can choose from either skill feat."
+ },
+ {
+  "id": "ghoran-weapon-expertise",
+  "collection": "feats",
+  "name": "Ghoran Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the glaive, greatclub, hatchet, scythe, sickle, and ghoran weapons in which you're trained."
+ },
+ {
+  "id": "whitecape",
+  "collection": "feats",
+  "name": "Whitecape",
+  "level": 1,
+  "text": "You gain the Steady Balance skill feat, even if you aren't trained in Acrobatics, and you can Step into difficult terrain caused by uneven ground. **Special** You can take this feat only at 1st level, and you can't retrain out of or into this feat."
+ },
+ {
+  "id": "vanara-weapon-expertise",
+  "collection": "feats",
+  "name": "Vanara Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the bo staff, chakram, katar, panabas, urumi, and all vanara weapons in which you're trained."
+ },
+ {
+  "id": "debilitating-venom",
+  "collection": "feats",
+  "name": "Debilitating Venom",
+  "level": 5,
+  "text": "When you gain this feat, select one of the following debilitations. - **Hampering** (level 5) **Stage 1** –5-foot status penalty to Speed **Stage 2** –5-foot status penalty to Speed **Stage 3** –10-foot status penalty to Speed - **Stumbling** (level 5) **Stage 1** no adjustment **Stage 2** off-guard **Stage 3** off-guard and a –5-foot penalty to Speed **Special** You can select this feat a second time to gain the other debilitation."
+ },
+ {
+  "id": "vishkanya-weapon-expertise",
+  "collection": "feats",
+  "name": "Vishkanya Weapon Expertise",
+  "level": 13,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in a given weapon or weapons, you also gain that proficiency in the blowgun, fighting fan, kris, kukri, shuriken, and all vishkanyan weapons in which you are trained."
+ },
+ {
+  "id": "mountain-skin",
+  "collection": "feats",
+  "name": "Mountain Skin",
+  "level": 4,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in any armor (but not unarmored defense), you also gain that proficiency rank in the armor types granted to you by this feat."
+ },
+ {
+  "id": "elemental-overlap",
+  "collection": "feats",
+  "name": "Elemental Overlap",
+  "level": 8,
+  "text": "Gain a composite impulse feat that includes your kinetic element. The feat's level must be lower than the level at which you selected Elemental Overlap. --- **Special** You can select this feat more than once, choosing a different impulse feat each time."
+ },
+ {
+  "id": "woodworker",
+  "collection": "feats",
+  "name": "Woodworker",
+  "level": 1,
+  "text": "You gain the Specialty Crafting skill feat for woodworking."
+ },
+ {
+  "id": "gildedsoul",
+  "collection": "feats",
+  "name": "Gildedsoul",
+  "level": 1,
+  "text": "If you're trained in Society, you also gain the Courtly Graces skill feat."
+ },
+ {
+  "id": "through-the-gate",
+  "collection": "feats",
+  "name": "Through the Gate",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level kineticist feat of your choice."
+ },
+ {
+  "id": "advanced-element-control",
+  "collection": "feats",
+  "name": "Advanced Element Control",
+  "level": 6,
+  "text": "You gain one kineticist feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another kineticist feat."
+ },
+ {
+  "id": "add-element",
+  "collection": "feats",
+  "name": "Add Element",
+  "level": 10,
+  "text": "You gain an impulse feat for that element."
+ },
+ {
+  "id": "stonemasons-eye",
+  "collection": "feats",
+  "name": "Stonemason's Eye",
+  "level": 1,
+  "text": "If you're already trained in Crafting, you instead gain the Specialty Crafting skill feat for stonemasonry."
+ },
+ {
+  "id": "general-training",
+  "collection": "feats",
+  "name": "General Training",
+  "level": 1,
+  "text": "You gain a 1st-level general feat. You must meet the feat's prerequisites, but if you select this feat during character creation, you can select the feat later in the process in order to determine which prerequisites you meet. --- **Special** You can select this feat multiple times, choosing a different feat each time."
+ },
+ {
+  "id": "natural-ambition",
+  "collection": "feats",
+  "name": "Natural Ambition",
+  "level": 1,
+  "text": "You gain a 1st-level class feat for your class. You must meet the prerequisites, but you can select the feat later in the character creation process in order to determine which prerequisites you meet."
+ },
+ {
+  "id": "multitalented",
+  "collection": "feats",
+  "name": "Multitalented",
+  "level": 9,
+  "text": "You gain a 2nd-level multiclass dedication feat, even if you normally couldn't take another dedication feat until you take more feats from your current archetype. If you have the aiuvarin versatile heritage, you don't need to meet the feat's attribute modifier prerequisites."
+ },
+ {
+  "id": "advanced-general-training",
+  "collection": "feats",
+  "name": "Advanced General Training",
+  "level": 13,
+  "text": "You gain a general feat of 7th level or lower. You must meet the feat's prerequisites. --- **Special** You can select this feat multiple times, choosing a different feat each time."
+ },
+ {
+  "id": "orc-lore",
+  "collection": "feats",
+  "name": "Orc Lore",
+  "level": 1,
+  "text": "You also gain the Additional Lore general feat for Orc Lore."
+ },
+ {
+  "id": "ferocious-beasts",
+  "collection": "feats",
+  "name": "Ferocious Beasts",
+  "level": 13,
+  "text": "All animal companions, pets, familiars, and bonded animals you have gain the Orc Ferocity feat, and gain one reaction per round they can use only for Orc Ferocity. If you have the Undying Ferocity ancestry feat, all animal companions, pets, familiars, and bonded animals you have also gain the benefits of that feat when using the Orc Ferocity reaction."
+ },
+ {
+  "id": "hag-claws",
+  "collection": "feats",
+  "name": "Hag Claws",
+  "level": 1,
+  "text": "You can select this feat anytime you would gain an ancestry feat, but you can't retrain out of it."
+ },
+ {
+  "id": "angelkin",
+  "collection": "feats",
+  "name": "Angelkin",
+  "level": 1,
+  "text": "You know the Empyrean language, and you gain the skill feat."
+ },
+ {
+  "id": "grimspawn",
+  "collection": "feats",
+  "name": "Grimspawn",
+  "level": 1,
+  "text": "You gain the Diehard general feat."
+ },
+ {
+  "id": "hellspawn",
+  "collection": "feats",
+  "name": "Hellspawn",
+  "level": 1,
+  "text": "You also gain the Lie to Me skill feat."
+ },
+ {
+  "id": "pitborn",
+  "collection": "feats",
+  "name": "Pitborn",
+  "level": 1,
+  "text": "You also gain any one common 1st-level skill feat with a prerequisite of trained in Athletics, as reflects the manifestation of your fiendish blood."
+ },
+ {
+  "id": "scion-of-many-planes",
+  "collection": "feats",
+  "name": "Scion of Many Planes",
+  "level": 5,
+  "text": "Choose one nephilim lineage feat that you do not already possess; you gain that feat and all of its benefits, even if you already took a lineage feat at 1st level."
+ },
+ {
+  "id": "multifarious-muse",
+  "collection": "feats",
+  "name": "Multifarious Muse",
+  "level": 2,
+  "text": "You gain a 1st-level feat that requires that muse, and your muse is now also a muse of that type, allowing you to take feats with the other muse as a prerequisite. --- **Special** You can take this feat multiple times."
+ },
+ {
+  "id": "sap-life",
+  "collection": "feats",
+  "name": "Sap Life",
+  "level": 2,
+  "text": "If you aren't a living creature, you gain no benefit from this feat."
+ },
+ {
+  "id": "warpriests-armor",
+  "collection": "feats",
+  "name": "Warpriest’s Armor",
+  "level": 2,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in medium armor, you also gain that proficiency in heavy armor."
+ },
+ {
+  "id": "order-explorer",
+  "collection": "feats",
+  "name": "Order Explorer",
+  "level": 2,
+  "text": "You gain a 1st-level feat that lists that order as a prerequisite, and you are now a member of that order for the purpose of meeting feat prerequisites. --- **Special** You can take this feat multiple times."
+ },
+ {
+  "id": "boundless-reprisals",
+  "collection": "feats",
+  "name": "Boundless Reprisals",
+  "level": 20,
+  "text": "At the start of each enemy's turn, you gain a reaction you can use only during that turn for any reaction from a fighter feat or class feature. At the start of each enemy's turn, you gain a reaction you can use only during that turn for any reaction from a guardian feat or class feature."
+ },
+ {
+  "id": "favored-prey",
+  "collection": "feats",
+  "name": "Favored Prey",
+  "level": 4,
+  "text": "When you gain this feat, choose animals, beasts, dragons, or both fungi and plants as your favored prey."
+ },
+ {
+  "id": "stealthy-companion",
+  "collection": "feats",
+  "name": "Stealthy Companion",
+  "level": 14,
+  "text": "Your animal companion gains the benefit of the Camouflage feat."
+ }
+]

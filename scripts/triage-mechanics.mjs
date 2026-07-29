@@ -93,7 +93,10 @@ const LANES = [
     id: 'grantsFeat',
     what: 'gives the character another feat or feature',
     re: /\b(you gain|you also gain|gains?) (?:the )?[A-Z][\w' -]+ (?:feat|feature)\b|\bgain a \w+ feat\b/i,
-    modelled: (r) => MODELLED.grantsFeat.has(r.id),
+    /** Same over-count as proficiency: 408 of the 409 flagged BACKGROUNDS already carry
+     *  grantedFeatId, and records carry their own grantsFeats. Checking only the registry
+     *  reported working content as a gap. */
+    modelled: (r) => MODELLED.grantsFeat.has(r.id) || !!r.grantsFeats || !!r.grantedFeatId,
   },
   {
     id: 'spellGrant',

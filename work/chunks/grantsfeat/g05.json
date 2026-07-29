@@ -1,0 +1,387 @@
+[
+ {
+  "id": "school-of-unified-magical-theory",
+  "collection": "classFeatures",
+  "name": "School of Unified Magical Theory",
+  "level": 1,
+  "text": "Instead, you gain an additional 1st-level wizard class feat, and you add one 1st-rank spell of your choice to your spellbook to represent your diverse studies."
+ },
+ {
+  "id": "second-gates-threshold",
+  "collection": "classFeatures",
+  "name": "Second Gate's Threshold",
+  "level": 9,
+  "text": "Gain an impulse feat of your level or lower for one of your kinetic elements; if you have more than one element, you can choose a composite impulse. If you have no valid options for the feat-typically because you have one kinetic element and devoted your class feats to gaining that element's impulses-you can instead select any kineticist class feat of your level or lower for which you meet the prerequisites. Gain an impulse feat of your level or lower with the trait of that element. You can't select a composite impulse feat with this feat selection."
+ },
+ {
+  "id": "seer",
+  "collection": "classFeatures",
+  "name": "Seer",
+  "level": 1,
+  "text": "You gain the Apparition Sense feat."
+ },
+ {
+  "id": "shaman",
+  "collection": "classFeatures",
+  "name": "Shaman",
+  "level": 1,
+  "text": "You gain the Spirit Familiar feat. At 2nd level, you gain the Enhanced Familiar feat. You gain the Incredible Familiar feat."
+ },
+ {
+  "id": "shield",
+  "collection": "classFeatures",
+  "name": "Shield",
+  "level": 1,
+  "text": "### **Initiate Benefit** You gain the Shield Block general feat."
+ },
+ {
+  "id": "spore-order",
+  "collection": "classFeatures",
+  "name": "Spore Order",
+  "level": 1,
+  "text": "You also gain the Leshy Familiar druid feat, but you must create a fungus leshy. --- **Order Skill** Intimidation **Druid Feat** Leshy Familiar **Order Spell** Mushroom Patch **Anathema** Committing wanton cruelty to molds or fungi, killing molds or fungi unnecessarily, or interfering with the natural processes of decay, is anathema to your order."
+ },
+ {
+  "id": "third-gates-threshold",
+  "collection": "classFeatures",
+  "name": "Third Gate's Threshold",
+  "level": 13,
+  "text": "Gain an impulse feat of your level or lower for one of your kinetic elements; if you have more than one element, you can choose a composite impulse. If you have no valid options for the feat-typically because you have one kinetic element and devoted your class feats to gaining that element's impulses-you can instead select any kineticist class feat of your level or lower for which you meet the prerequisites. Gain an impulse feat of your level or lower with the trait of that element. You can't select a composite impulse feat with this feat selection."
+ },
+ {
+  "id": "trespasser-in-deaths-realm",
+  "collection": "classFeatures",
+  "name": "Trespasser In Death's Realm",
+  "level": 7,
+  "text": "You gain the Energized Spark feat, with your choice of either vitality or void damage."
+ },
+ {
+  "id": "vindicator",
+  "collection": "classFeatures",
+  "name": "Vindicator",
+  "level": 1,
+  "text": "You must select Vindicator Dedication as your 2nd-level class feat. If your deity's favored weapon is a simple weapon or unarmed attack with a damage die smaller than d6, you gain the Deadly Simplicity feat. ## Trackless Journey 5th Vindicators can choose to gain the benefits of this class feature in either urban or natural terrain, chosen at the time the class feature is gained. ## Masterful Hunter 17th The masterful hunter class feature gives an additional benefit based on your hunter's edge."
+ },
+ {
+  "id": "war-magic",
+  "collection": "classFeatures",
+  "name": "War Magic",
+  "level": 1,
+  "text": "If you choose this class archetype, you must select War Mage Dedication as your 2nd-level class feat. You gain the Shield Block general feat at 1st level. You gain the war magic class feature at 1st level. You do not gain the Defensive Robes feature at 13th level."
+ },
+ {
+  "id": "warpriest",
+  "collection": "classFeatures",
+  "name": "Warpriest",
+  "level": 1,
+  "text": "You gain the Shield Block general feat, a reaction to reduce damage with a shield. If your deity's favored weapon is a simple weapon or an unarmed attack, you gain the Deadly Simplicity cleric feat. At 13th level, if you gain the Divine Defense class feature, you also gain expert proficiency in light and medium armor."
+ },
+ {
+  "id": "warrior-of-legend",
+  "collection": "classFeatures",
+  "name": "Warrior of Legend",
+  "level": 1,
+  "text": "You must select Warrior of Legend Dedication as your 2nd-level class feat. You don't gain Shield Block as a class feature. You gain Diehard as a bonus feat, but you become Doomed 2 whenever you take damage from your cursed weakness (unless your doomed value is already higher)."
+ },
+ {
+  "id": "whose-cry-is-thunder",
+  "collection": "classFeatures",
+  "name": "Whose Cry is Thunder",
+  "level": 7,
+  "text": "You gain the Energized Spark feat for your choice of electricity or sonic."
+ },
+ {
+  "id": "wit",
+  "collection": "classFeatures",
+  "name": "Wit",
+  "level": 1,
+  "text": "You are trained in Diplomacy and gain the Bon Mot skill feat."
+ },
+ {
+  "id": "nudging-whisper",
+  "collection": "classFeatures",
+  "name": "Nudging Whisper",
+  "level": 1,
+  "text": "If your next action is to Request, you gain the effects of the Shameless Request feat, and if your next action is to Lie, you gain the effects of the feat."
+ },
+ {
+  "id": "dragons-breath",
+  "collection": "items",
+  "name": "Dragon's Breath",
+  "level": 4,
+  "text": "Activate envision (metamagic) Requirements You're receiving a bonus to AC from your dragon's breath cape or shield; Effect If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-1st-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (1st-Level Spell)",
+  "level": 4,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-2nd-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (2nd-Level Spell)",
+  "level": 6,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-3rd-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (3rd-Level Spell)",
+  "level": 8,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-4th-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (4th-Level Spell)",
+  "level": 10,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-5th-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (5th-Level Spell)",
+  "level": 12,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-6th-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (6th-Level Spell)",
+  "level": 14,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-7th-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (7th-Level Spell)",
+  "level": 16,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-8th-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (8th-Level Spell)",
+  "level": 18,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-9th-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (9th-Level Spell)",
+  "level": 20,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "ancestral-embrace",
+  "collection": "items",
+  "name": "Ancestral Embrace",
+  "level": 26,
+  "text": "You gain an ancestry feat from your ancestry; the feat can be any level, but you must meet any other prerequisites of the feat. You lose the feat when the investment ends, and you can select a different feat each time you invest the armor again. --- **Activate** ⟨4⟩ envision **Frequency** once per day **Trigger** You use an ancestry feat that has a limited number of uses per day --- **Effect** You gain an additional use of the ancestry feat."
+ },
+ {
+  "id": "the-paladin",
+  "collection": "items",
+  "name": "The Paladin",
+  "level": 20,
+  "text": "As long as you have *The Paladin* invested, you gain the Shield Block general feat. If you already possess this feat, you gain an additional reaction at the start of your turn that can only be used to Shield Block."
+ },
+ {
+  "id": "the-survivor",
+  "collection": "items",
+  "name": "The Survivor",
+  "level": 20,
+  "text": "When you have *The Survivor* invested, you gain Diehard as a bonus feat. If you already possess this feat, you gain a +2 item bonus to all recovery checks."
+ },
+ {
+  "id": "the-tangled-briar",
+  "collection": "items",
+  "name": "The Tangled Briar",
+  "level": 20,
+  "text": "As long as you have *The Tangled Briar* invested, you gain Toughness as a bonus feat. If you already possess this feat, increase your maximum Hit Points by twice your level."
+ },
+ {
+  "id": "the-peacock",
+  "collection": "items",
+  "name": "The Peacock",
+  "level": 20,
+  "text": "As long as you have *The Peacock* invested, you can react to sudden changes more swiftly, and gain Incredible Initiative as a bonus feat. If you already possess this feat, you gain a +2 item bonus on all initiative checks."
+ },
+ {
+  "id": "affinity-stones",
+  "collection": "items",
+  "name": "Affinity Stones",
+  "level": 9,
+  "text": "Each set of affinity stones typically comes as a pair of gems set into worn items such as hilts, necklaces, or rings, though some sets of affinity stones feature additional gems. - Non-dwarves gain the benefits of a 1st- or 5th-level ancestry feat with the dwarf trait, and dwarves gain the benefits one 1st- or 5th-level ancestry feat with a trait corresponding to the ancestry of another person with which the affinity stones are invested. You can't use these feats to meet prerequisites, but the benefits of the feats otherwise function as if you had taken "
+ },
+ {
+  "id": "flame-navette",
+  "collection": "items",
+  "name": "Flame Navette",
+  "level": 16,
+  "text": "When you activate the navette, you gain the benefit of the fighter's class feat, with a counteract rank of 8 and a counteract modifier of +22. If you have the Determination feat, you can use your own modifier if it's better."
+ },
+ {
+  "id": "vashus-ninth-life",
+  "collection": "items",
+  "name": "Vashu's Ninth Life",
+  "level": 9,
+  "text": "You gain the benefits of the Diehard feat for 1 minute."
+ },
+ {
+  "id": "fascinating",
+  "collection": "items",
+  "name": "Fascinating",
+  "level": 0,
+  "text": "198 Aspect Artistry You gain the Fascinating Performance skill feat while wearing or wielding the relic, even if you don't meet its prerequisites."
+ },
+ {
+  "id": "ancestors-call",
+  "collection": "items",
+  "name": "Ancestors' Call",
+  "level": 0,
+  "text": "You and each ally in a 10-foot-radius burst centered on you gain that feat and the dwarf trait for 1 minute."
+ },
+ {
+  "id": "aon-fascinating",
+  "collection": "items",
+  "name": "Fascinating",
+  "level": 0,
+  "text": "Fascinating Aspect Artistry You gain the Fascinating Performance skill feat while wearing or wielding the relic, even if you don't meet its prerequisites."
+ },
+ {
+  "id": "aon-ancestors-call",
+  "collection": "items",
+  "name": "Ancestors' Call",
+  "level": 0,
+  "text": "You and each ally in a 10-foot-radius burst centered on you gain that feat and the dwarf trait for 1 minute."
+ },
+ {
+  "id": "tailed-goblin",
+  "collection": "heritages",
+  "name": "Tailed Goblin",
+  "level": null,
+  "text": "You gain a +2 circumstance bonus to Athletics checks to Climb, you gain Combat Climber as a bonus feat, and you reduce the number of free hands required to climb or Trip by one."
+ },
+ {
+  "id": "beastkin",
+  "collection": "heritages",
+  "name": "Beastkin",
+  "level": null,
+  "text": "You can choose from beastkin feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "oread",
+  "collection": "heritages",
+  "name": "Oread",
+  "level": null,
+  "text": "You can choose from oread feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "suli",
+  "collection": "heritages",
+  "name": "Suli",
+  "level": null,
+  "text": "You can choose from suli feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "sylph",
+  "collection": "heritages",
+  "name": "Sylph",
+  "level": null,
+  "text": "You can choose from sylph feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "undine",
+  "collection": "heritages",
+  "name": "Undine",
+  "level": null,
+  "text": "You can choose from undine feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "cataphract-fleshwarp",
+  "collection": "heritages",
+  "name": "Cataphract Fleshwarp",
+  "level": null,
+  "text": "You gain the Armor Proficiency feat. If your class makes you trained in all types of armor, you instead become trained in Athletics (or a skill of your choice if you're already trained in Athletics) and gain the Armor Assist skill feat."
+ },
+ {
+  "id": "nascent",
+  "collection": "heritages",
+  "name": "Nascent",
+  "level": null,
+  "text": "You gain a 1st-level kashrishi ancestry feat for which you meet the prerequisites, if any."
+ },
+ {
+  "id": "trogloshi",
+  "collection": "heritages",
+  "name": "Trogloshi",
+  "level": null,
+  "text": "You gain the Crystal Luminescence ancestry feat."
+ },
+ {
+  "id": "old-blood-vishkanya",
+  "collection": "heritages",
+  "name": "Old-Blood Vishkanya",
+  "level": null,
+  "text": "You become trained in Society (or another skill of your choice if you're already trained in Society), and you gain your choice of the Courtly Graces or Streetwise feat."
+ },
+ {
+  "id": "ardande",
+  "collection": "heritages",
+  "name": "Ardande",
+  "level": null,
+  "text": "You can choose from ardande feats, geniekin feats, and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "talos",
+  "collection": "heritages",
+  "name": "Talos",
+  "level": null,
+  "text": "You can choose from talos feats, geniekin feats, and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "ancient-elf",
+  "collection": "heritages",
+  "name": "Ancient Elf",
+  "level": null,
+  "text": "You gain the multiclass dedication feat for that class, even though you don't meet its level prerequisite. You must still meet its other prerequisites to gain the feat."
+ },
+ {
+  "id": "wellspring-gnome",
+  "collection": "heritages",
+  "name": "Wellspring Gnome",
+  "level": null,
+  "text": "Whenever you gain a primal innate spell from a gnome ancestry feat, change its tradition from primal to your chosen tradition."
+ },
+ {
+  "id": "changeling",
+  "collection": "heritages",
+  "name": "Changeling",
+  "level": null,
+  "text": "You can select from changeling feats and feats from your other parent's ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "nephilim",
+  "collection": "heritages",
+  "name": "Nephilim",
+  "level": null,
+  "text": "You can choose from nephilim feats and feats from your ancestry whenever you gain an ancestry feat."
+ },
+ {
+  "id": "aiuvarin",
+  "collection": "heritages",
+  "name": "Aiuvarin",
+  "level": null,
+  "text": "In addition, when you gain an ancestry feat, you can choose from aiuvarin and elf feats in addition to those from your ancestry."
+ },
+ {
+  "id": "dromaar",
+  "collection": "heritages",
+  "name": "Dromaar",
+  "level": null,
+  "text": "When you gain an ancestry feat, you can choose from dromaar and orc feats in addition to those from your ancestry."
+ }
+]

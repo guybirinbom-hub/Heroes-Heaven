@@ -1,0 +1,387 @@
+[
+ {
+  "id": "oracle-dedication",
+  "collection": "feats",
+  "name": "Oracle Dedication",
+  "level": 2,
+  "text": "You cast spells like an oracle and gain the Cast a Spell activity. You gain a spell repertoire with two cantrips, either common divine cantrips or other divine cantrips you learn or discover. You're trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "basic-oracle-spellcasting",
+  "collection": "feats",
+  "name": "Basic Oracle Spellcasting",
+  "level": 4,
+  "text": "When you gain a spell slot of a new rank from the oracle archetype, add a common divine spell or another divine spell you have learned or discovered (including the granted spells associated with your mystery) to your repertoire, of that spell rank."
+ },
+ {
+  "id": "first-revelation",
+  "collection": "feats",
+  "name": "First Revelation",
+  "level": 4,
+  "text": "You gain your mystery's initial revelation spell. If you don't have one, you gain a focus pool of 1 Focus Point."
+ },
+ {
+  "id": "sorcerer-dedication",
+  "collection": "feats",
+  "name": "Sorcerer Dedication",
+  "level": 2,
+  "text": "You cast spells like a sorcerer. You gain access to the Cast a Spell activity. You gain a spell repertoire with two common cantrips from the spell list associated with your bloodline, from the spells granted by your bloodline, or any other cantrips of that tradition you learn or discover. You're trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "basic-sorcerer-spellcasting",
+  "collection": "feats",
+  "name": "Basic Sorcerer Spellcasting",
+  "level": 4,
+  "text": "Each time you gain a spell slot of a new level from the sorcerer archetype, add a spell of the appropriate spell rank to your repertoire: a common spell of your bloodline's tradition, one of your bloodline's granted spells, or another spell you have learned or discovered."
+ },
+ {
+  "id": "basic-bloodline-spell",
+  "collection": "feats",
+  "name": "Basic Bloodline Spell",
+  "level": 4,
+  "text": "You gain your bloodline's initial bloodline spell. If you don't already have one, you also gain a focus pool of 1 Focus Point, which you can Refocus without any special effort."
+ },
+ {
+  "id": "beastmaster-dedication",
+  "collection": "feats",
+  "name": "Beastmaster Dedication",
+  "level": 2,
+  "text": "Certain beastmaster feats give you focus spells. When you gain your first beastmaster focus spell, you become trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "eldritch-archer-dedication",
+  "collection": "feats",
+  "name": "Eldritch Archer Dedication",
+  "level": 6,
+  "text": "If you don't already cast spells from spell slots, you learn to cast spontaneous spells and gain the Cast a Spell activity. You gain a spell repertoire with one cantrip of your choice, from a tradition of your choice. You choose a common cantrip or other cantrip to which you have access. This cantrip must require a spell attack roll and come from your chosen tradition. You're trained in spell attack modifier and spell DC. Regardless of whether you can already cast spells or gained the ability from this dedication, you gain the Eldritch Shot activity."
+ },
+ {
+  "id": "basic-eldritch-archer-spellcasting",
+  "collection": "feats",
+  "name": "Basic Eldritch Archer Spellcasting",
+  "level": 8,
+  "text": "Each time you gain a spell slot of a new level from this archetype, add a spell of the appropriate spell rank to your repertoire, either a common spell of your chosen tradition or another spell of that tradition you have learned or discovered."
+ },
+ {
+  "id": "basic-red-mantis-magic",
+  "collection": "feats",
+  "name": "Basic Red Mantis Magic",
+  "level": 4,
+  "text": "You gain the Cast a Spell activity. You can prepare two common cantrips each day from the divine spell list or any other divine cantrips you have access to. You're trained in the spell attack modifier and spell DC statistics. If you gain a Focus Pool from any Red Mantis Assassin class feats, you can Refocus by praying to Achaekek or researching your assigned kill. In addition to preparing spells from the divine spell list, you can prepare spells from this school. Regardless of their usual magic tradition, when you prepare spells from this school, they ar"
+ },
+ {
+  "id": "morphic-strike",
+  "collection": "feats",
+  "name": "Morphic Strike",
+  "level": 1,
+  "text": "- **Animal** 1 claw (agile, finesse), Damage 1d6 slashing - **Celestial** 1 spirit touch (magical, sanctified, spirit), Damage 1d4 spirit - **Elements** 1 elemental current (magical), Damage 1d4; this ability deals the same damage type and gains the same elemental traits of the cantrip you gained from your heritage - **Object** 1 striking surface (sweep), Damage 1d8 bludgeoning or slashing (chosen when you gain this feat) - **Vegetation** 1 root (reach), Damage 1d6 bludgeoning"
+ },
+ {
+  "id": "legendary-monster",
+  "collection": "feats",
+  "name": "Legendary Monster",
+  "level": 17,
+  "text": "You gain the effects of the Fly spell."
+ },
+ {
+  "id": "cosmic-cocktail",
+  "collection": "feats",
+  "name": "Cosmic Cocktail",
+  "level": 14,
+  "text": "You gain the effects of a Truesight spell for 10 minutes."
+ },
+ {
+  "id": "cardinal-guardians",
+  "collection": "feats",
+  "name": "Cardinal Guardians",
+  "level": 14,
+  "text": "You focus your divine magic to allow your apparitions to work in concert using the magic from one to weaken an enemy against the power of the next. Whenever you succeed at a spell attack with an apparition spell or vessel spell, or when a creature fails its save against such a spell, you gain a +2 status bonus to your spell attack modifier against that creature with spells granted by any of your other apparitions, and it takes a –2 status penalty to its saves against such spells."
+ },
+ {
+  "id": "true-channel-spell",
+  "collection": "feats",
+  "name": "True Channel Spell",
+  "level": 20,
+  "text": "You gain a single 10th-rank spell slot and can prepare a spell in that slot using animist spellcasting. You can't use 10th-rank slots with abilities that give you more spell slots or that let you cast spells without expending spell slots."
+ },
+ {
+  "id": "animist-dedication",
+  "collection": "feats",
+  "name": "Animist Dedication",
+  "level": 2,
+  "text": "You have formed a bond with an apparition and can cast divine spells. You gain the Cast a Spell activity. You can prepare two common cantrips each day from the divine spell list or any other divine cantrips you have access to, including the cantrip listed in your apparition's apparition spells. You're trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "apparition-magic",
+  "collection": "feats",
+  "name": "Apparition Magic",
+  "level": 8,
+  "text": "You can cast more divine spells each day. You gain 1 additional spell slot from animist archetype feats for each spell rank other than your two highest animist spell slots."
+ },
+ {
+  "id": "bloodrager-dedication",
+  "collection": "feats",
+  "name": "Bloodrager Dedication",
+  "level": 2,
+  "text": "You gain a spell repertoire with two cantrips of your choice, from either the arcane or divine spell list. You choose these cantrips from the common spells for your tradition or from other spells you have access to on that tradition's spell list. At least one cantrip must require a spell attack roll. You're trained in spell attack modifier and spell DC. Spells in your repertoire gain the rage trait while you are raging, and when you Cast a Spell from your repertoire, you become Drained 1 (or increase the value of your drained condition by 1); you can red"
+ },
+ {
+  "id": "rising-blood-magic",
+  "collection": "feats",
+  "name": "Rising Blood Magic",
+  "level": 4,
+  "text": "Each time you gain a spell slot of a new rank from the bloodrager archetype, add a common spell of the appropriate tradition and rank to your repertoire. In addition, when you Cast a Spell from your repertoire and you are at least Drained 1, increase the extra damage dealt by that spell from Rage by 1."
+ },
+ {
+  "id": "spelldrinker",
+  "collection": "feats",
+  "name": "Spelldrinker",
+  "level": 8,
+  "text": "**Frequency** once per hour --- You temporarily add a 3rd-rank spell to your spell repertoire, as determined by the type of creature whose blood you just drank (see table below). If the creature has more than one of the listed traits, choose one and gain the appropriate spell. If the granted spell is not on your chosen tradition's list, you cast the spell as though it was from your chosen tradition. The spell is removed from your spell repertoire after 24 hours, the next time you use Spelldrinker, or when you next make your daily preparations, whichever "
+ },
+ {
+  "id": "exultant-blood-magic",
+  "collection": "feats",
+  "name": "Exultant Blood Magic",
+  "level": 18,
+  "text": "Increase the spell slots you gain from the bloodrager archetype feats by 1 for each spell rank. In addition, when you Cast a Spell from your repertoire and you are at least Drained 2, double the extra damage dealt by that spell from Rage instead."
+ },
+ {
+  "id": "patrons-glamour",
+  "collection": "feats",
+  "name": "Patron's Glamour",
+  "level": 4,
+  "text": "You gain Illusory Disguise as an innate spell of your patron's tradition, automatically heightened to the rank of your witch cantrips, but you can use it only to disguise yourself as the humanoid representation of your patron."
+ },
+ {
+  "id": "patrons-whisper",
+  "collection": "feats",
+  "name": "Patron's Whisper",
+  "level": 10,
+  "text": "You gain Message as an innate cantrip of your former patron's tradition."
+ },
+ {
+  "id": "vindicators-judgement",
+  "collection": "feats",
+  "name": "Vindicator's Judgement",
+  "level": 10,
+  "text": "You gain the vindicator’s judgment focus spell."
+ },
+ {
+  "id": "mythic-magic",
+  "collection": "feats",
+  "name": "Mythic Magic",
+  "level": 8,
+  "text": "When you gain this feat, choose up to three spells of 1st or 2nd rank that take no more than 3 actions to cast and that are either instantaneous or have a duration of 10 minutes or less. You can spend a Mythic Point to cast any of those spells for their normal action cost and use mythic proficiency to determine your spell attack rolls and spell DCs, and the spells are automatically heightened to a rank equal to half your level (rounded up). If you don't normally have the ability to cast spells, you use Charisma as your spellcasting attribute modifier; ot"
+ },
+ {
+  "id": "godling-dedication",
+  "collection": "feats",
+  "name": "Godling Dedication",
+  "level": 12,
+  "text": "If your hierophant is not trained in spell attack modifier and spell DC, they become trained for as long as they are your designated hierophant. You learn the initial domain spell for this domain. You gain a pool of Focus Points with 1 Focus Point and you can Refocus by taking 10 minutes to replenish your divine energy from the planes beyond. You gain expert proficiency in spell modifier and spell DC, and your spellcasting ability for these spells is your choice of Wisdom or Charisma, decided when you gain this feat. Your hierophant also gains the Cast a"
+ },
+ {
+  "id": "claim-cardinal-domains",
+  "collection": "feats",
+  "name": "Claim Cardinal Domains",
+  "level": 14,
+  "text": "Your mortal form cannot easily contain such power, however—each day during your daily preparations, decide which of your domains you are currently drawing power from; you gain access to this domain for the day and can cast its domain spells as normal, while your ability to access the power of your other domains lies dormant. You learn the advanced domain spell for any domain that you have claimed with your godling abilities."
+ },
+ {
+  "id": "assume-godhood",
+  "collection": "feats",
+  "name": "Assume Godhood",
+  "level": 20,
+  "text": "You can serve as the deity for classes with a deity feature, such as clerics, empowering them to cast divine spells with their class features. You gain the Intercession Spell ability, allowing you to directly provide the magic that your hierophant uses to enact your miracles. In this deific form, you cannot move, act, or speak normally, though you still grant spells to your followers and can perceive and affect them using your godling abilities like Receive Prayers or Intercession Spell, regardless of range."
+ },
+ {
+  "id": "channelers-stance",
+  "collection": "feats",
+  "name": "Channeler's Stance",
+  "level": 1,
+  "text": "While in this stance, whenever you cast or Sustain an apparition spell or vessel spell that deals energy damage, you gain a status bonus to the spell's damage equal to the spell's rank. Each time you Cast a Spell that has the vitality or void traits and that restores Hit Points while in this stance, the spells' targets gain a status bonus to the initial amount of healing received equal to the spell's rank."
+ },
+ {
+  "id": "spell-woven-shot",
+  "collection": "feats",
+  "name": "Spell-Woven Shot",
+  "level": 4,
+  "text": "You gain the Spell-Woven Shot activity."
+ },
+ {
+  "id": "listeners-boon",
+  "collection": "feats",
+  "name": "Listener's Boon",
+  "level": 4,
+  "text": "You gain the trained proficiency rank in spell attack modifier and spell DC, increasing to expert at 11th level. --- **Special** You can select this feat multiple times, selecting a different domain each time and gaining its domain spell."
+ },
+ {
+  "id": "sin-reservoir",
+  "collection": "feats",
+  "name": "Sin Reservoir",
+  "level": 8,
+  "text": "When you do, you gain one additional spell slot of any spell level up to two levels below the highest-level wizard spell you can cast."
+ },
+ {
+  "id": "creed-magic",
+  "collection": "feats",
+  "name": "Creed Magic",
+  "level": 8,
+  "text": "You've expanded your divine capabilities, granting you magic that better supports your combat focus. You gain two special 2nd-rank creed spell slots, which can be used to prepare Resist Energy, See the Unseen, Sure Strike, and Water Breathing as divine spells. At 10th level, the extra slots increase to 3rd rank and you add Haste and Heroism to the spells you can prepare in your creed spell slots."
+ },
+ {
+  "id": "esoteric-spellcasting",
+  "collection": "feats",
+  "name": "Esoteric Spellcasting",
+  "level": 4,
+  "text": "Choose a 1st-rank occult or divine spell. You can cast this spell once per day as an innate spell. At 6th level, you gain a 2nd-rank spell of the same tradition you chose, and at 8th level, you gain a 3rd-rank spell, also of that tradition."
+ },
+ {
+  "id": "greater-esoteric-spellcasting",
+  "collection": "feats",
+  "name": "Greater Esoteric Spellcasting",
+  "level": 12,
+  "text": "You become an expert in the spell attack modifier and spell DC statistics. Also, choose a tradition from which you can cast innate spells due to the Esoteric Spellcasting feat. You also gain a 4th-rank spell of that tradition as an innate spell you can cast once a day. At 12th level, you gain a 5th-rank spell, and at 14th level, you gain a 6th-rank spell, both of the same tradition."
+ },
+ {
+  "id": "open-the-blazing-eye",
+  "collection": "feats",
+  "name": "Open the Blazing Eye",
+  "level": 10,
+  "text": "**Frequency** once per day --- Thanks to your diligence in the study of divine and occult mysteries, you can focus to temporarily attain a perception beyond the ordinary. For 1 minute, you gain the benefits of a See the Unseen spell."
+ },
+ {
+  "id": "domain-spirit",
+  "collection": "feats",
+  "name": "Domain Spirit",
+  "level": 6,
+  "text": "You gain the initial domain spell for that domain. This domain spell is a Rivethun focus spell."
+ },
+ {
+  "id": "advanced-domain-spirit",
+  "collection": "feats",
+  "name": "Advanced Domain Spirit",
+  "level": 10,
+  "text": "You gain the advanced domain spell from the domain granted by your domain spirit."
+ },
+ {
+  "id": "rivethun-involutionist-dedication",
+  "collection": "feats",
+  "name": "Rivethun Involutionist Dedication",
+  "level": 2,
+  "text": "You cast spells and gain the Cast a Spell activity. You gain a spell repertoire with two common cantrips from the divine spell list or any other divine cantrips you've learned or discovered. You're trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "basic-rivethun-spellcasting",
+  "collection": "feats",
+  "name": "Basic Rivethun Spellcasting",
+  "level": 4,
+  "text": "Each time you gain a spell slot of a new rank from the Rivethun involutionist archetype, add a common divine spell of the appropriate rank, another appropriate divine spell you learned or discovered, or any other divine spell to which you have access, to your repertoire."
+ },
+ {
+  "id": "prophet-of-kalistrade-dedication",
+  "collection": "feats",
+  "name": "Prophet of Kalistrade Dedication",
+  "level": 2,
+  "text": "Additionally, if you don't already cast spells from spell slots, you learn to cast spontaneous spells and gain the Cast a Spell activity. You gain a spell repertoire with two common occult cantrips, plus either or Read Aura. You're trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "basic-prophet-spellcasting",
+  "collection": "feats",
+  "name": "Basic Prophet Spellcasting",
+  "level": 4,
+  "text": "Each time you gain a spell slot of a new rank from the prophet of Kalistrade archetype, add a common occult spell of the appropriate rank, or another appropriate occult spell you've learned or discovered, to your repertoire."
+ },
+ {
+  "id": "wylderheart-dedication",
+  "collection": "feats",
+  "name": "Wylderheart Dedication",
+  "level": 2,
+  "text": "Certain wylderheart feats give you focus spells. When you gain your first wylderheart focus spell, you become trained in the spell attack modifier and spell DC statistics."
+ },
+ {
+  "id": "shattered-sacrament",
+  "collection": "feats",
+  "name": "Shattered Sacrament",
+  "level": 14,
+  "text": "When you cast a halcyon spell, you can choose for it to be a divine spell instead of arcane or primal. You gain a halcyon cantrip and a 1st-rank halcyon spell."
+ },
+ {
+  "id": "shield-spell-reinforcement",
+  "collection": "feats",
+  "name": "Shield Spell Reinforcement",
+  "level": 4,
+  "text": "If your next action is to cast the Shield cantrip, you use your shield as a locus to cast the spell, raising a magical barrier in the form of a large force projection of your worn shield. You can choose for an adjacent ally to gain the benefits of the *shield* spell instead of yourself. If the ally would take damage from a physical attack while protected by your *shield* cantrip, you can use your reaction to Shield Block with the spell on their behalf."
+ },
+ {
+  "id": "dracomancer",
+  "collection": "feats",
+  "name": "Dracomancer",
+  "level": 9,
+  "text": "Choose one 1st-rank spell and one 2nd-rank spell from those listed for a dragon spellcaster of your draconic benefactor's type, (for example, Fear and for a conspirator dragon benefactor). You can cast each of these spells once per day as innate spells of the same tradition as your draconic benefactor. You gain the trained proficiency rank in the spell attack modifier and spell DC statistics, and your key spellcasting attribute is Charisma."
+ },
+ {
+  "id": "oatia-skysage-dedication",
+  "collection": "feats",
+  "name": "Oatia Skysage Dedication",
+  "level": 2,
+  "text": "You learn to cast spontaneous spells and gain the Cast a Spell activity. You gain a spell repertoire with two of the following cantrips of your choice: Detect Magic, Guidance, Know the Way, or Read Aura. You cast these spells as occult spells as you draw on the stars and night sky. You're trained in occult spell attack rolls and spell DCs."
+ },
+ {
+  "id": "master-skysage-divination",
+  "collection": "feats",
+  "name": "Master Skysage Divination",
+  "level": 16,
+  "text": "You choose one of the following 7th-rank spells to add to your spell repertoire: or True Target. At 18th level, add Pinpoint to your spell repertoire, and at 20th level, add Foresight to your spell repertoire. You gain master proficiency with spell attack rolls and spell DCs for occult spells."
+ },
+ {
+  "id": "avenging-runelord-dedication",
+  "collection": "feats",
+  "name": "Avenging Runelord Dedication",
+  "level": 12,
+  "text": "You gain the ability to cast an arcane spell as an innate spell. This spell must be chosen from the following list: Darkvision, Mystic Armor, Runic Body, Runic Weapon, See the Unseen, Sending, or Truesight; alternatively, you can choose any spell of 6th rank or lower from the sin spells listed for your chosen sin. You can cast this spell as an arcane innate spell once per day. The spell is automatically heightened to a spell rank equal to half your level rounded up. Use mythic proficiency to determine any attack rolls or spell DCs."
+ },
+ {
+  "id": "reliable-magic",
+  "collection": "feats",
+  "name": "Reliable Magic",
+  "level": 14,
+  "text": "When you Cast a Spell from a scroll you can spend a Mythic Point as a free action. The spell is cast at mythic proficiency. Once you cast the spell using this ability, attempt a . You can Cast a Spell from this scroll again, but if you do so you cannot enhance it in any way (such as by using this feat), and the scroll is destroyed."
+ },
+ {
+  "id": "dark-personas-presence",
+  "collection": "feats",
+  "name": "Dark Persona's Presence",
+  "level": 8,
+  "text": "A creature must attempt a save against your spell DC the first time it enters the emanation, or if it's in the emanation when you take this action; it doesn't need to attempt a save again, even if it leaves the emanation and returns. You can Cast a Spell only if it can directly damage an enemy or object or can impose a detrimental condition or penalty on one."
+ },
+ {
+  "id": "foreseen-failure",
+  "collection": "feats",
+  "name": "Foreseen Failure",
+  "level": 12,
+  "text": "**Frequency** once per day **Trigger** A spell you cast has no effect because you critically failed all your spell attack rolls or because all targets critically succeeded at their saving throws. --- You see your spell fail to take hold to disastrous end, then snap back to reality—it was all a precognition, and you know to try a different spell. Your spell is expended, but you can Cast a Spell that requires the same number of actions as the triggering spell or fewer to cast. The second spell must be a different spell than the first."
+ },
+ {
+  "id": "conscious-spell-specialization",
+  "collection": "feats",
+  "name": "Conscious Spell Specialization",
+  "level": 14,
+  "text": "You gain an additional spell slot of 1st, 2nd, 3rd, and 4th ranks. You can use these spell slots to cast only a spell granted by your conscious mind. At 18th level, you also gain an additional 5th-rank spell slot, with the same restrictions."
+ },
+ {
+  "id": "mind-over-matter",
+  "collection": "feats",
+  "name": "Mind over Matter",
+  "level": 20,
+  "text": "You gain an additional 10th-rank spell slot."
+ },
+ {
+  "id": "psychic-dedication",
+  "collection": "feats",
+  "name": "Psychic Dedication",
+  "level": 2,
+  "text": "You cast spells like a psychic and gain the Cast a Spell activity; as you don't have a subconscious mind class feature, your thoughtforms are simple intentions. You gain a spell repertoire with one standard psi cantrip of your choice from your conscious mind, which you cast as a psi cantrip. You gain the normal benefits for this psi cantrip, but not any other benefits from the conscious mind. You're trained in the spell attack modifier and spell DC statistics."
+ }
+]

@@ -1,0 +1,387 @@
+[
+ {
+  "id": "aerialist",
+  "collection": "backgrounds",
+  "name": "Aerialist",
+  "level": null,
+  "text": "You gain the Cat Fall skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Acrobatics **Lore** Rope Lore **Skill Feat** Cat Fall"
+ },
+ {
+  "id": "animal-wrangler",
+  "collection": "backgrounds",
+  "name": "Animal Wrangler",
+  "level": null,
+  "text": "You gain a skill feat: Titan Wrestler if you chose Athletics, or Train Animal if you chose Nature."
+ },
+ {
+  "id": "barker",
+  "collection": "backgrounds",
+  "name": "Barker",
+  "level": null,
+  "text": "You gain the Group Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Intimidation **Lore** Crowd Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "blow-in",
+  "collection": "backgrounds",
+  "name": "Blow-In",
+  "level": null,
+  "text": "You gain a skill feat: Lengthy Diversion if you chose Deception, or Subtle Theft if you chose Thievery."
+ },
+ {
+  "id": "butcher",
+  "collection": "backgrounds",
+  "name": "Butcher",
+  "level": null,
+  "text": "You gain the Read Lips skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Society **Lore** Mercantile Lore **Skill Feat** Read Lips"
+ },
+ {
+  "id": "circus-born",
+  "collection": "backgrounds",
+  "name": "Circus Born",
+  "level": null,
+  "text": "You gain the Experienced Professional skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Performance **Lore** Circus Lore **Skill Feat** Experienced Professional"
+ },
+ {
+  "id": "mystic-seer",
+  "collection": "backgrounds",
+  "name": "Mystic Seer",
+  "level": null,
+  "text": "You gain the Arcane Sense skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Arcana **Lore** Scam Lore **Skill Feat** Arcane Sense"
+ },
+ {
+  "id": "rigger",
+  "collection": "backgrounds",
+  "name": "Rigger",
+  "level": null,
+  "text": "You gain the Combat Climber skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Athletics **Lore** Circus Lore **Skill Feat** Combat Climber"
+ },
+ {
+  "id": "finadar-leshy",
+  "collection": "backgrounds",
+  "name": "Finadar Leshy",
+  "level": null,
+  "text": "You gain the Intimidating Glare skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Intimidation **Lore** Abyssal Lore **Skill Feat** Intimidating Glare"
+ },
+ {
+  "id": "dreamer-of-the-verdant-moon",
+  "collection": "backgrounds",
+  "name": "Dreamer of the Verdant Moon",
+  "level": null,
+  "text": "You gain the Ravening's Desperation skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Survival **Lore** Zevgavizeb Lore **Skill Feat** Ravening's Desperation"
+ },
+ {
+  "id": "iolite-trainee-hobgoblin",
+  "collection": "backgrounds",
+  "name": "Iolite Trainee Hobgoblin",
+  "level": null,
+  "text": "You gain the Sign Language skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Society **Lore** Warfare Lore **Skill Feat** Sign Language"
+ },
+ {
+  "id": "early-explorer",
+  "collection": "backgrounds",
+  "name": "Early Explorer",
+  "level": null,
+  "text": "You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Survival **Lore** Pathfinder Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "shadow-war-survivor",
+  "collection": "backgrounds",
+  "name": "Shadow War Survivor",
+  "level": null,
+  "text": "You gain the Streetwise skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Society **Lore** Absalom Lore **Skill Feat** Streetwise"
+ },
+ {
+  "id": "shadow-lodge-defector",
+  "collection": "backgrounds",
+  "name": "Shadow Lodge Defector",
+  "level": null,
+  "text": "You gain the Lie to Me skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Deception **Lore** Underworld Lore **Skill Feat** Lie To Me"
+ },
+ {
+  "id": "ruby-phoenix-enthusiast",
+  "collection": "backgrounds",
+  "name": "Ruby Phoenix Enthusiast",
+  "level": null,
+  "text": "You gain the Combat Climber skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Athletics **Lore** Gladatorial Lore **Skill Feat** Combat Climber"
+ },
+ {
+  "id": "thassilonian-delver",
+  "collection": "backgrounds",
+  "name": "Thassilonian Delver",
+  "level": null,
+  "text": "You gain the Arcane Sense skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Arcana **Lore** Thassilonian History Lore **Skill Feat** Arcane Sense"
+ },
+ {
+  "id": "demon-slayer",
+  "collection": "backgrounds",
+  "name": "Demon Slayer",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Religion **Lore** Demon Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "scholar-of-the-sky-key",
+  "collection": "backgrounds",
+  "name": "Scholar of the Sky Key",
+  "level": null,
+  "text": "You gain the Quick Repair skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Crafting **Lore** Engineering Lore **Skill Feat** Quick Repair"
+ },
+ {
+  "id": "former-aspis-agent",
+  "collection": "backgrounds",
+  "name": "Former Aspis Agent",
+  "level": null,
+  "text": "You gain the Group Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Intimidation **Lore** Aspis Consortium Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "savior-of-air",
+  "collection": "backgrounds",
+  "name": "Savior of Air",
+  "level": null,
+  "text": "You gain the Cat Fall skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Acrobatics **Skill Feat** Cat Fall"
+ },
+ {
+  "id": "faction-opportunist",
+  "collection": "backgrounds",
+  "name": "Faction Opportunist",
+  "level": null,
+  "text": "You gain the Hobnobber skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Diplomacy **Lore** Guild Lore **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "tapestry-refugee",
+  "collection": "backgrounds",
+  "name": "Tapestry Refugee",
+  "level": null,
+  "text": "You gain the Assurance skill feat with the skill you chose to become trained in (Medicine or Stealth)."
+ },
+ {
+  "id": "ex-con-token-guard",
+  "collection": "backgrounds",
+  "name": "Ex-Con Token Guard",
+  "level": null,
+  "text": "You gain the Pickpocket skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Thievery **Lore** Legal Lore Or Underworld **Skill Feat** Pickpocket"
+ },
+ {
+  "id": "godless-graycloak",
+  "collection": "backgrounds",
+  "name": "Godless Graycloak",
+  "level": null,
+  "text": "You gain the Quick Identification feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Religion **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "grizzled-muckrucker",
+  "collection": "backgrounds",
+  "name": "Grizzled Muckrucker",
+  "level": null,
+  "text": "You gain the Experienced Tracker skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Survival **Lore** Labor Lore Or Underworld **Skill Feat** Experienced Tracker"
+ },
+ {
+  "id": "harbor-guard-moonlighter",
+  "collection": "backgrounds",
+  "name": "Harbor Guard Moonlighter",
+  "level": null,
+  "text": "You gain the Quick Jump skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Sailing Lore Or Hunting **Skill Feat** Quick Jump"
+ },
+ {
+  "id": "learned-guard-prodigy",
+  "collection": "backgrounds",
+  "name": "Learned Guard Prodigy",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Lore** Legal Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "political-scion",
+  "collection": "backgrounds",
+  "name": "Political Scion",
+  "level": null,
+  "text": "You gain the Hobnobber skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Diplomacy **Lore** Legal Lore **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "sleepless-suns-star",
+  "collection": "backgrounds",
+  "name": "Sleepless Suns Star",
+  "level": null,
+  "text": "You gain the skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Society **Lore** Gladatorial Lore Or Genealogy **Skill Feat** Multilingual"
+ },
+ {
+  "id": "undercover-lotus-guard",
+  "collection": "backgrounds",
+  "name": "Undercover Lotus Guard",
+  "level": null,
+  "text": "You gain the Charming Liar skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Deception **Lore** Art Lore And Underworld **Skill Feat** Charming Liar"
+ },
+ {
+  "id": "harrow-led",
+  "collection": "backgrounds",
+  "name": "Harrow-Led",
+  "level": null,
+  "text": "You gain the Dubious Knowledge skill feat. --- ## Background details **Attribute Boosts** two free **Lore** Harrow Lore **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "archaeologist",
+  "collection": "backgrounds",
+  "name": "Archaeologist",
+  "level": null,
+  "text": "You gain the Additional Lore skill feat related to an ancient culture or the history of a culture you've studied (such as Azlanti Lore or Osirian History Lore). --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Society **Lore** Architecture Lore **Skill Feat** Additional Lore"
+ },
+ {
+  "id": "pathfinder-recruiter",
+  "collection": "backgrounds",
+  "name": "Pathfinder Recruiter",
+  "level": null,
+  "text": "You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Diplomacy **Skill Feat** Group Impression"
+ },
+ {
+  "id": "spell-seeker",
+  "collection": "backgrounds",
+  "name": "Spell Seeker",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Lore** Library Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "trailblazer",
+  "collection": "backgrounds",
+  "name": "Trailblazer",
+  "level": null,
+  "text": "You gain the Terrain Expertise skill feat with one terrain you've explored (such as forest or underground). --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Survival **Lore** Cartography Lore **Skill Feat** Terrain Expertise"
+ },
+ {
+  "id": "translator",
+  "collection": "backgrounds",
+  "name": "Translator",
+  "level": null,
+  "text": "You gain the skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Lore** Scribing Lore **Skill Feat** Multilingual"
+ },
+ {
+  "id": "sewer-dragon",
+  "collection": "backgrounds",
+  "name": "Sewer Dragon",
+  "level": null,
+  "text": "You gain the Snare Crafting skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Kobold Lore **Skill Feat** Snare Crafting"
+ },
+ {
+  "id": "hookclaw-digger",
+  "collection": "backgrounds",
+  "name": "Hookclaw Digger",
+  "level": null,
+  "text": "You gain the Improvise Tool skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Crafting **Lore** Mining Lore **Skill Feat** Improvise Tool"
+ },
+ {
+  "id": "bibliophile",
+  "collection": "backgrounds",
+  "name": "Bibliophile",
+  "level": null,
+  "text": "You gain the Arcane Sense skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Arcana **Lore** Library Lore **Skill Feat** Arcane Sense"
+ },
+ {
+  "id": "eldritch-anatomist",
+  "collection": "backgrounds",
+  "name": "Eldritch Anatomist",
+  "level": null,
+  "text": "You gain the Assurance skill feat with Medicine."
+ },
+ {
+  "id": "fogfen-tale-teller",
+  "collection": "backgrounds",
+  "name": "Fogfen Tale-Teller",
+  "level": null,
+  "text": "You gain the Titan Wrestler skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Athletics **Lore** Swamp Lore **Skill Feat** Titan Wrestler"
+ },
+ {
+  "id": "market-runner",
+  "collection": "backgrounds",
+  "name": "Market Runner",
+  "level": null,
+  "text": "You gain the Hobnobber skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Diplomacy **Lore** Otari Lore **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "ruin-delver",
+  "collection": "backgrounds",
+  "name": "Ruin Delver",
+  "level": null,
+  "text": "You gain the Cat Fall skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Acrobatics **Lore** Roseguard Lore **Skill Feat** Cat Fall"
+ },
+ {
+  "id": "starwatcher",
+  "collection": "backgrounds",
+  "name": "Starwatcher",
+  "level": null,
+  "text": "You gain the Dubious Knowledge skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Occultism **Lore** Astrology Lore **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "witchlight-follower",
+  "collection": "backgrounds",
+  "name": "Witchlight Follower",
+  "level": null,
+  "text": "You gain the Terrain Expertise skill feat with both swamp terrain and subterranean bodies of water."
+ },
+ {
+  "id": "abadars-avenger",
+  "collection": "backgrounds",
+  "name": "Abadar's Avenger",
+  "level": null,
+  "text": "You gain the Assurance skill feat with Religion."
+ },
+ {
+  "id": "attention-addict",
+  "collection": "backgrounds",
+  "name": "Attention Addict",
+  "level": null,
+  "text": "You gain the Impressive Performance skill feat --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Performance **Lore** Gladiatorial Lore **Skill Feat** Impressive Performance"
+ },
+ {
+  "id": "newcomer-in-need",
+  "collection": "backgrounds",
+  "name": "Newcomer in Need",
+  "level": null,
+  "text": "You gain the Streetwise skill feat. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Society **Lore** Goka Lore **Skill Feat** Streetwise"
+ },
+ {
+  "id": "ruby-phoenix-fanatic",
+  "collection": "backgrounds",
+  "name": "Ruby Phoenix Fanatic",
+  "level": null,
+  "text": "You gain the Dubious Knowledge skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Lore** Axis Lore **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "second-chance-champion",
+  "collection": "backgrounds",
+  "name": "Second Chance Champion",
+  "level": null,
+  "text": "You gain the Cat Fall skill feat --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Acrobatics **Lore** Gladiatorial Lore **Skill Feat** Cat Fall"
+ },
+ {
+  "id": "undercover-contender",
+  "collection": "backgrounds",
+  "name": "Undercover Contender",
+  "level": null,
+  "text": "You gain the Lengthy Diversion skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Deception **Lore** Underworld Lore **Skill Feat** Lengthy Diversion"
+ },
+ {
+  "id": "sponsored-by-family",
+  "collection": "backgrounds",
+  "name": "Sponsored by Family",
+  "level": null,
+  "text": "You gain a skill feat: Hobnobber if you chose Diplomacy or Eye for Numbers if you chose Society."
+ },
+ {
+  "id": "sponsored-by-teacher-ot",
+  "collection": "backgrounds",
+  "name": "Sponsored by Teacher Ot",
+  "level": null,
+  "text": "You gain a skill feat: Survey Wildlife if you chose Survival or Impressive Performance if you chose Performance."
+ },
+ {
+  "id": "sponsored-by-a-stranger",
+  "collection": "backgrounds",
+  "name": "Sponsored by a Stranger",
+  "level": null,
+  "text": "You gain your choice of the Dubious Knowledge or Quick Identification skill feat."
+ },
+ {
+  "id": "sponsored-by-a-village",
+  "collection": "backgrounds",
+  "name": "Sponsored by a Village",
+  "level": null,
+  "text": "You gain a skill feat: Crafter's Appraisal if you chose Crafting or Forager if you chose Survival."
+ }
+]

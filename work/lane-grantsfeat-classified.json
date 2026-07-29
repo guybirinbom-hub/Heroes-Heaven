@@ -1,0 +1,5543 @@
+[
+ {
+  "id": "bard-dedication",
+  "grants": false,
+  "note": "Explicitly says you do NOT gain the muse's starting feat; no feat granted."
+ },
+ {
+  "id": "basic-muses-whispers",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st/2nd-level bard feat."
+ },
+ {
+  "id": "advanced-muses-whispers",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a bard feat (repeatable)."
+ },
+ {
+  "id": "basic-dogma",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st/2nd-level cleric feat."
+ },
+ {
+  "id": "advanced-dogma",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a cleric feat (repeatable)."
+ },
+ {
+  "id": "basic-wilding",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st/2nd-level druid feat."
+ },
+ {
+  "id": "advanced-wilding",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a druid feat (repeatable)."
+ },
+ {
+  "id": "basic-maneuver",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st/2nd-level fighter feat."
+ },
+ {
+  "id": "advanced-maneuver",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a fighter feat (repeatable)."
+ },
+ {
+  "id": "basic-hunters-trick",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st/2nd-level ranger feat."
+ },
+ {
+  "id": "advanced-hunters-trick",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a ranger feat (repeatable)."
+ },
+ {
+  "id": "rogue-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "Grants a skill feat of the player's choice plus the Surprise Attack class feature (not a feat)."
+ },
+ {
+  "id": "basic-trickery",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st/2nd-level rogue feat."
+ },
+ {
+  "id": "sneak-attacker",
+  "grants": false,
+  "note": "Grants the Sneak Attack class feature, not a feat."
+ },
+ {
+  "id": "advanced-trickery",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a rogue feat (repeatable)."
+ },
+ {
+  "id": "skill-mastery-rogue",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a skill feat tied to a chosen skill; repeatable up to five times."
+ },
+ {
+  "id": "uncanny-dodge",
+  "grants": false,
+  "note": "Grants the Deny Advantage class feature, not a feat."
+ },
+ {
+  "id": "basic-witchcraft",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st/2nd-level witch feat."
+ },
+ {
+  "id": "advanced-witchcraft",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a witch feat (repeatable)."
+ },
+ {
+  "id": "basic-arcana",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st/2nd-level wizard feat."
+ },
+ {
+  "id": "advanced-arcana",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a wizard feat (repeatable)."
+ },
+ {
+  "id": "ancestral-paragon",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a 1st-level ancestry feat."
+ },
+ {
+  "id": "pet",
+  "grants": false,
+  "note": "Only discusses retraining this feat to swap pets; no feat granted."
+ },
+ {
+  "id": "natural-senses",
+  "grants": false,
+  "note": "Grants a choice of sense, not a feat."
+ },
+ {
+  "id": "seasong",
+  "grants": true,
+  "feats": [
+   "virtuosic-performer"
+  ],
+  "note": "\"you gain the Virtuosic Performer skill feat for singing\" — named, unconditional; id verified in core.json feats (category skill)."
+ },
+ {
+  "id": "animal-strength",
+  "grants": false,
+  "note": "Rune-transfer and crit damage on animal-feature unarmed attacks; no feat granted."
+ },
+ {
+  "id": "runtsage",
+  "grants": true,
+  "feats": [
+   "adopted-ancestry"
+  ],
+  "note": "\"You gain the Adopted Ancestry general feat\" (goblin) — id verified in core.json feats; the additional 1st-level goblin ancestry feat is a player choice handled elsewhere."
+ },
+ {
+  "id": "war-conditioning",
+  "grants": false,
+  "note": "Choice of climb or swim Speed, not a feat."
+ },
+ {
+  "id": "bone-magic",
+  "grants": false,
+  "note": "Only chooses the tradition of innate spells; no feat granted."
+ },
+ {
+  "id": "invulnerable-rager",
+  "grants": false,
+  "note": "Heavy armor proficiency scaling, not a feat."
+ },
+ {
+  "id": "empiricists-eye",
+  "grants": false,
+  "note": "Blind-Fight is named only as a conditional benefit extended to allies."
+ },
+ {
+  "id": "monastic-archer-stance",
+  "grants": false,
+  "note": "Grants bow proficiency that scales with monk class features; no feat granted."
+ },
+ {
+  "id": "basic-concoction",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st/2nd-level alchemist feat."
+ },
+ {
+  "id": "advanced-concoction",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks an alchemist feat (repeatable)."
+ },
+ {
+  "id": "basic-fury",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st/2nd-level barbarian feat."
+ },
+ {
+  "id": "advanced-fury",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a barbarian feat (repeatable)."
+ },
+ {
+  "id": "champion-dedication",
+  "grants": false,
+  "note": "Armor proficiency scaling only; no feat granted."
+ },
+ {
+  "id": "basic-devotion",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st/2nd-level champion feat."
+ },
+ {
+  "id": "devout-magic",
+  "grants": false,
+  "note": "Grants a devotion (focus) spell of choice, not a feat."
+ },
+ {
+  "id": "advanced-devotion",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a champion feat (repeatable)."
+ },
+ {
+  "id": "devout-blessing",
+  "grants": false,
+  "note": "Grants the blessing of the devoted class feature, not a feat."
+ },
+ {
+  "id": "investigator-dedication",
+  "grants": false,
+  "note": "Grants the On the Case class feature (Pursue a Lead / Clue In), not a feat."
+ },
+ {
+  "id": "basic-deduction",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st/2nd-level investigator feat."
+ },
+ {
+  "id": "advanced-deduction",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks an investigator feat (repeatable)."
+ },
+ {
+  "id": "keen-recollection",
+  "grants": false,
+  "note": "Grants the Keen Recollection class feature, not a feat."
+ },
+ {
+  "id": "skill-mastery",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a skill feat tied to a chosen skill; repeatable up to five times."
+ },
+ {
+  "id": "monk-dedication",
+  "grants": false,
+  "note": "Trained in unarmed attacks + Powerful Fist class feature; no feat granted."
+ },
+ {
+  "id": "basic-kata",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st/2nd-level monk feat."
+ },
+ {
+  "id": "advanced-kata",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a monk feat (repeatable)."
+ },
+ {
+  "id": "basic-mysteries",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st/2nd-level oracle feat."
+ },
+ {
+  "id": "advanced-mysteries",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks an oracle feat (repeatable)."
+ },
+ {
+  "id": "basic-blood-potency",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st/2nd-level sorcerer feat."
+ },
+ {
+  "id": "advanced-blood-potency",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a sorcerer feat (repeatable)."
+ },
+ {
+  "id": "basic-flair",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st/2nd-level swashbuckler feat."
+ },
+ {
+  "id": "finishing-precision",
+  "grants": false,
+  "note": "Grants the Precise Strike class feature (reduced), not a feat."
+ },
+ {
+  "id": "dhampir",
+  "grants": false,
+  "isChoice": false,
+  "note": "Only expands the pool you may pick ancestry feats from (dhampir + ancestry); no specific feat granted."
+ },
+ {
+  "id": "dragonblood",
+  "grants": false,
+  "isChoice": false,
+  "note": "Expands the ancestry-feat option pool only; no named feat."
+ },
+ {
+  "id": "duskwalker",
+  "grants": false,
+  "isChoice": false,
+  "note": "Expands the ancestry-feat option pool only; no named feat."
+ },
+ {
+  "id": "hungerseed",
+  "grants": false,
+  "isChoice": false,
+  "note": "Expands the ancestry-feat option pool (hungerseed + other parent's ancestry); no named feat."
+ },
+ {
+  "id": "kijimuna-gnome",
+  "grants": true,
+  "feats": [
+   "combat-climber"
+  ],
+  "note": "\"You gain the Combat Climber feat\" - unconditional; combat-climber verified in core.json."
+ },
+ {
+  "id": "makari-lizardfolk",
+  "grants": false,
+  "isChoice": false,
+  "note": "Changes the tradition of spells gained from heritage/ancestry feats; grants no feat."
+ },
+ {
+  "id": "gandharva",
+  "grants": false,
+  "isChoice": false,
+  "note": "Tradition swap for sprite heritage/ancestry-feat magic; grants no feat."
+ },
+ {
+  "id": "steadfast-tanuki",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"your choice of Everyday Form or Teakettle Form\" - player picks between two feats (everyday-form / teakettle-form both exist), so this needs a builder picker."
+ },
+ {
+  "id": "born-of-celestial",
+  "grants": false,
+  "isChoice": false,
+  "note": "Tradition swap (occult -> divine) only; grants no feat."
+ },
+ {
+  "id": "born-of-elements",
+  "grants": false,
+  "isChoice": false,
+  "note": "Tradition swap (occult -> primal) only; grants no feat."
+ },
+ {
+  "id": "reflection",
+  "grants": false,
+  "isChoice": false,
+  "note": "Deception-check flavor plus expanded ancestry-feat option pool; no named feat."
+ },
+ {
+  "id": "battle-trained-human-bb",
+  "grants": true,
+  "feats": [
+   "diehard"
+  ],
+  "note": "\"you gain the Diehard feat\" - unconditional; diehard verified in core.json."
+ },
+ {
+  "id": "naari",
+  "grants": false,
+  "isChoice": false,
+  "note": "Expands the ancestry-feat option pool only; no named feat."
+ },
+ {
+  "id": "aon-half-elf",
+  "grants": false,
+  "isChoice": false,
+  "note": "Lets you select elf/half-elf/human feats when you gain an ancestry feat; option expansion, not a grant."
+ },
+ {
+  "id": "aon-half-orc",
+  "grants": false,
+  "isChoice": false,
+  "note": "Lets you select orc/half-orc/human feats; option expansion, not a grant."
+ },
+ {
+  "id": "aon-aasimar",
+  "grants": false,
+  "isChoice": false,
+  "note": "Expands the ancestry-feat option pool only; no named feat."
+ },
+ {
+  "id": "aon-tiefling",
+  "grants": false,
+  "isChoice": false,
+  "note": "Expands the ancestry-feat option pool only; no named feat."
+ },
+ {
+  "id": "aon-aphorite",
+  "grants": false,
+  "isChoice": false,
+  "note": "Expands the ancestry-feat option pool only; no named feat."
+ },
+ {
+  "id": "aon-ganzi",
+  "grants": false,
+  "isChoice": false,
+  "note": "Expands the ancestry-feat option pool only; no named feat."
+ },
+ {
+  "id": "aon-ifrit",
+  "grants": false,
+  "isChoice": false,
+  "note": "Expands the ancestry-feat option pool only; no named feat."
+ },
+ {
+  "id": "lesser-scion",
+  "grants": true,
+  "feats": [
+   "hobnobber"
+  ],
+  "note": "Background skill feat Hobnobber, confirmed by both the prose and the **Skill Feat** line; hobnobber verified."
+ },
+ {
+  "id": "lost-and-alone",
+  "grants": true,
+  "feats": [
+   "intimidating-glare"
+  ],
+  "note": "Background skill feat Intimidating Glare; intimidating-glare verified."
+ },
+ {
+  "id": "missionary",
+  "grants": true,
+  "feats": [
+   "group-impression"
+  ],
+  "note": "Background skill feat Group Impression; group-impression verified."
+ },
+ {
+  "id": "teamster",
+  "grants": true,
+  "feats": [
+   "train-animal"
+  ],
+  "note": "Background skill feat Train Animal; train-animal verified."
+ },
+ {
+  "id": "dragon-scholar",
+  "grants": true,
+  "feats": [
+   "intimidating-glare"
+  ],
+  "note": "Background skill feat Intimidating Glare; verified."
+ },
+ {
+  "id": "emancipated",
+  "grants": true,
+  "feats": [
+   "terrain-stalker"
+  ],
+  "note": "Background skill feat Terrain Stalker; terrain-stalker verified (its own terrain sub-choice is internal to the feat)."
+ },
+ {
+  "id": "haunting-vision",
+  "grants": true,
+  "feats": [
+   "student-of-the-canon"
+  ],
+  "note": "Background skill feat Student of the Canon; verified."
+ },
+ {
+  "id": "hellknight-historian",
+  "grants": true,
+  "feats": [
+   "courtly-graces"
+  ],
+  "note": "Background skill feat Courtly Graces; verified."
+ },
+ {
+  "id": "local-scion",
+  "grants": true,
+  "feats": [
+   "specialty-crafting"
+  ],
+  "note": "Background skill feat Specialty Crafting; verified."
+ },
+ {
+  "id": "out-of-towner",
+  "grants": true,
+  "feats": [
+   "hobnobber"
+  ],
+  "note": "Background skill feat Hobnobber; verified."
+ },
+ {
+  "id": "reputation-seeker",
+  "grants": true,
+  "feats": [
+   "terrain-expertise"
+  ],
+  "note": "Terrain Expertise is granted unconditionally; only WHICH terrain depends on your Lore. terrain-expertise verified."
+ },
+ {
+  "id": "returning-descendant",
+  "grants": true,
+  "feats": [
+   "pickpocket"
+  ],
+  "note": "Background skill feat Pickpocket; verified."
+ },
+ {
+  "id": "truth-seeker",
+  "grants": true,
+  "feats": [
+   "lie-to-me"
+  ],
+  "note": "Background skill feat Lie to Me; core.json id is lie-to-me (name \"Lie to Me\")."
+ },
+ {
+  "id": "pathfinder-hopeful",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "Background skill feat Additional Lore; verified (the Lore subject is a sub-choice inside the feat)."
+ },
+ {
+  "id": "trade-consortium-underling",
+  "grants": true,
+  "feats": [
+   "experienced-professional"
+  ],
+  "note": "Background skill feat Experienced Professional; verified."
+ },
+ {
+  "id": "grand-council-bureaucrat",
+  "grants": true,
+  "feats": [
+   "group-impression"
+  ],
+  "note": "Background skill feat Group Impression; verified."
+ },
+ {
+  "id": "child-of-the-puddles",
+  "grants": true,
+  "feats": [
+   "steady-balance"
+  ],
+  "note": "Background skill feat Steady Balance; verified."
+ },
+ {
+  "id": "freed-slave-of-absalom",
+  "grants": true,
+  "feats": [
+   "streetwise"
+  ],
+  "note": "Background skill feat Streetwise; verified."
+ },
+ {
+  "id": "inlander",
+  "grants": true,
+  "feats": [
+   "survey-wildlife"
+  ],
+  "note": "Background skill feat Survey Wildlife; verified."
+ },
+ {
+  "id": "menagerie-dung-sweeper",
+  "grants": true,
+  "feats": [
+   "train-animal"
+  ],
+  "note": "Background skill feat Train Animal; verified."
+ },
+ {
+  "id": "diobel-pearl-diver",
+  "grants": true,
+  "feats": [
+   "underwater-marauder"
+  ],
+  "note": "Background skill feat Underwater Marauder; verified."
+ },
+ {
+  "id": "aspiring-river-monarch",
+  "grants": true,
+  "feats": [
+   "courtly-graces"
+  ],
+  "note": "Background skill feat Courtly Graces; verified."
+ },
+ {
+  "id": "razmiran-faithful",
+  "grants": true,
+  "feats": [
+   "group-coercion"
+  ],
+  "note": "Background skill feat Group Coercion; verified."
+ },
+ {
+  "id": "sarkorian-reclaimer",
+  "grants": true,
+  "feats": [
+   "battle-medicine"
+  ],
+  "note": "Background skill feat Battle Medicine; verified."
+ },
+ {
+  "id": "rostland-partisan",
+  "grants": true,
+  "feats": [
+   "group-impression"
+  ],
+  "note": "Background skill feat Group Impression; verified."
+ },
+ {
+  "id": "wonder-taster",
+  "grants": true,
+  "feats": [
+   "alchemical-crafting"
+  ],
+  "note": "Background skill feat Alchemical Crafting; verified."
+ },
+ {
+  "id": "issian-partisan",
+  "grants": true,
+  "feats": [
+   "charming-liar"
+  ],
+  "note": "Background skill feat Charming Liar; verified."
+ },
+ {
+  "id": "belkzen-slayer",
+  "grants": true,
+  "feats": [
+   "intimidating-glare"
+  ],
+  "note": "Background skill feat Intimidating Glare; verified."
+ },
+ {
+  "id": "onyx-trader",
+  "grants": true,
+  "feats": [
+   "multilingual"
+  ],
+  "note": "Prose is defective (\"You gain the skill feat.\" - feat name lost in the source text), but the **Skill Feat** field says Multilingual; multilingual verified. Worth fixing the description text separately."
+ },
+ {
+  "id": "lastwall-survivor",
+  "grants": true,
+  "feats": [
+   "battle-medicine"
+  ],
+  "note": "Background skill feat Battle Medicine; verified."
+ },
+ {
+  "id": "molthuni-mercenary",
+  "grants": true,
+  "feats": [
+   "experienced-professional"
+  ],
+  "note": "Background skill feat Experienced Professional; verified."
+ },
+ {
+  "id": "cursed-family",
+  "grants": true,
+  "feats": [
+   "oddity-identification"
+  ],
+  "note": "Background skill feat Oddity Identification; verified."
+ },
+ {
+  "id": "ustalavic-academic",
+  "grants": true,
+  "feats": [
+   "skill-training"
+  ],
+  "note": "Background skill feat Skill Training; skill-training verified (the skill it trains is a sub-choice inside the feat)."
+ },
+ {
+  "id": "whispering-way-scion",
+  "grants": true,
+  "feats": [
+   "student-of-the-canon"
+  ],
+  "note": "Background skill feat Student of the Canon; verified."
+ },
+ {
+  "id": "sarkorian-survivor",
+  "grants": true,
+  "feats": [
+   "forager"
+  ],
+  "note": "Background skill feat Forager; verified."
+ },
+ {
+  "id": "unsponsored",
+  "grants": false,
+  "isChoice": true,
+  "note": "Grants Group Impression OR Intimidating Glare depending on which trained skill the player picked (Diplomacy vs Intimidation) - conditional on a player choice, needs a picker."
+ },
+ {
+  "id": "academy-dropout",
+  "grants": true,
+  "feats": [
+   "dubious-knowledge"
+  ],
+  "note": "\"You gain the Dubious Knowledge skill feat\"; dubious-knowledge verified in core.json feats."
+ },
+ {
+  "id": "eidolon-contact",
+  "grants": true,
+  "feats": [
+   "dubious-knowledge"
+  ],
+  "note": "Unconditional named grant; dubious-knowledge verified."
+ },
+ {
+  "id": "false-medium",
+  "grants": true,
+  "feats": [
+   "deceptive-worship"
+  ],
+  "note": "Unconditional named grant; deceptive-worship verified."
+ },
+ {
+  "id": "magical-merchant",
+  "grants": true,
+  "feats": [
+   "crafters-appraisal"
+  ],
+  "note": "Crafter's Appraisal -> id crafters-appraisal, verified."
+ },
+ {
+  "id": "magical-misfit",
+  "grants": true,
+  "feats": [
+   "trick-magic-item"
+  ],
+  "note": "Unconditional named grant; trick-magic-item verified."
+ },
+ {
+  "id": "musical-prodigy",
+  "grants": true,
+  "feats": [
+   "virtuosic-performer"
+  ],
+  "note": "Unconditional named grant; virtuosic-performer verified."
+ },
+ {
+  "id": "occult-librarian",
+  "grants": true,
+  "feats": [
+   "schooled-in-secrets"
+  ],
+  "note": "Unconditional named grant; schooled-in-secrets verified."
+ },
+ {
+  "id": "plant-whisperer",
+  "grants": true,
+  "feats": [
+   "natural-medicine"
+  ],
+  "note": "Unconditional named grant; natural-medicine verified."
+ },
+ {
+  "id": "street-preacher",
+  "grants": true,
+  "feats": [
+   "dubious-knowledge"
+  ],
+  "note": "Unconditional named grant; dubious-knowledge verified."
+ },
+ {
+  "id": "student-of-magic",
+  "grants": true,
+  "feats": [
+   "recognize-spell"
+  ],
+  "note": "Unconditional named grant; recognize-spell verified."
+ },
+ {
+  "id": "mystic-tutor",
+  "grants": true,
+  "feats": [
+   "recognize-spell"
+  ],
+  "note": "Unconditional named grant; recognize-spell verified."
+ },
+ {
+  "id": "surge-investigator",
+  "grants": true,
+  "feats": [
+   "terrain-expertise"
+  ],
+  "note": "Unconditional named grant; terrain-expertise verified (its own terrain/Lore parameter is internal to the feat)."
+ },
+ {
+  "id": "anti-tech-activist",
+  "grants": true,
+  "feats": [
+   "group-coercion"
+  ],
+  "note": "Unconditional named grant; group-coercion verified."
+ },
+ {
+  "id": "clockfighter",
+  "grants": true,
+  "feats": [
+   "experienced-professional"
+  ],
+  "note": "Unconditional named grant; experienced-professional verified."
+ },
+ {
+  "id": "clockwork-researcher",
+  "grants": true,
+  "feats": [
+   "crafters-appraisal"
+  ],
+  "note": "Unconditional named grant; crafters-appraisal verified."
+ },
+ {
+  "id": "codebreaker",
+  "grants": true,
+  "feats": [
+   "glean-contents"
+  ],
+  "note": "Unconditional named grant; glean-contents verified."
+ },
+ {
+  "id": "disciple-of-the-gear",
+  "grants": true,
+  "feats": [
+   "quick-repair"
+  ],
+  "note": "Unconditional named grant; quick-repair verified."
+ },
+ {
+  "id": "driver",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "\"You gain the Assurance skill feat with the chosen lore\" - the feat is named and unconditional; Assurance's own skill parameter is set to the background's Lore, verified id assurance."
+ },
+ {
+  "id": "hounded-thief",
+  "grants": true,
+  "feats": [
+   "pickpocket"
+  ],
+  "note": "Unconditional named grant; pickpocket verified."
+ },
+ {
+  "id": "junker",
+  "grants": true,
+  "feats": [
+   "hefty-hauler"
+  ],
+  "note": "Unconditional named grant; hefty-hauler verified."
+ },
+ {
+  "id": "mechanic",
+  "grants": true,
+  "feats": [
+   "quick-repair"
+  ],
+  "note": "Unconditional named grant; quick-repair verified."
+ },
+ {
+  "id": "medicinal-clocksmith",
+  "grants": true,
+  "feats": [
+   "risky-surgery"
+  ],
+  "note": "Unconditional named grant; risky-surgery verified."
+ },
+ {
+  "id": "printer",
+  "grants": true,
+  "feats": [
+   "multilingual"
+  ],
+  "note": "Rules sentence is truncated (\"You gain the skill feat.\") but the Background details block names Multilingual; multilingual verified."
+ },
+ {
+  "id": "saboteur",
+  "grants": true,
+  "feats": [
+   "concealing-legerdemain"
+  ],
+  "note": "Unconditional named grant; concealing-legerdemain verified."
+ },
+ {
+  "id": "toymaker",
+  "grants": true,
+  "feats": [
+   "specialty-crafting"
+  ],
+  "note": "Named unconditional grant of Specialty Crafting; the Artistry/Blacksmithing/etc. specialty is the feat's own internal parameter. specialty-crafting verified."
+ },
+ {
+  "id": "tech-reliant",
+  "grants": true,
+  "feats": [
+   "battle-medicine"
+  ],
+  "note": "Grants Battle Medicine (verified) plus a +1 circumstance bonus to saves vs spells, which is a separate situational lane, not a feat."
+ },
+ {
+  "id": "back-alley-doctor",
+  "grants": true,
+  "feats": [
+   "risky-surgery"
+  ],
+  "note": "Unconditional named grant; risky-surgery verified."
+ },
+ {
+  "id": "cannoneer",
+  "grants": true,
+  "feats": [
+   "hefty-hauler"
+  ],
+  "note": "Unconditional named grant; hefty-hauler verified."
+ },
+ {
+  "id": "deputy",
+  "grants": true,
+  "feats": [
+   "experienced-tracker"
+  ],
+  "note": "Unconditional named grant; experienced-tracker verified."
+ },
+ {
+  "id": "fireworks-performer",
+  "grants": true,
+  "feats": [
+   "fascinating-performance"
+  ],
+  "note": "Unconditional named grant; fascinating-performance verified."
+ },
+ {
+  "id": "gunsmith",
+  "grants": true,
+  "feats": [
+   "quick-repair"
+  ],
+  "note": "Unconditional named grant; quick-repair verified."
+ },
+ {
+  "id": "hired-killer",
+  "grants": true,
+  "feats": [
+   "terrain-stalker"
+  ],
+  "note": "Named unconditional grant; the terrain is Terrain Stalker's own internal parameter. terrain-stalker verified."
+ },
+ {
+  "id": "farmsteader",
+  "grants": true,
+  "feats": [
+   "forager"
+  ],
+  "note": "Unconditional named grant; forager verified."
+ },
+ {
+  "id": "junk-collector",
+  "grants": true,
+  "feats": [
+   "crafters-appraisal"
+  ],
+  "note": "Unconditional named grant; crafters-appraisal verified."
+ },
+ {
+  "id": "saloon-entertainer",
+  "grants": true,
+  "feats": [
+   "virtuosic-performer"
+  ],
+  "note": "Unconditional named grant; virtuosic-performer verified."
+ },
+ {
+  "id": "spotter",
+  "grants": true,
+  "feats": [
+   "terrain-stalker"
+  ],
+  "note": "Flavor text's \"feat of true marksmanship\" is prose; the actual grant is the Terrain Stalker skill feat. terrain-stalker verified."
+ },
+ {
+  "id": "undertaker",
+  "grants": true,
+  "feats": [
+   "forensic-acumen"
+  ],
+  "note": "Unconditional named grant; forensic-acumen verified."
+ },
+ {
+  "id": "wandering-preacher",
+  "grants": true,
+  "feats": [
+   "pilgrims-token"
+  ],
+  "note": "Pilgrim's Token -> id pilgrims-token, verified."
+ },
+ {
+  "id": "waste-walker",
+  "grants": true,
+  "feats": [
+   "forager"
+  ],
+  "note": "Unconditional named grant; forager verified."
+ },
+ {
+  "id": "alkenstar-outlaw",
+  "grants": true,
+  "feats": [
+   "subtle-theft"
+  ],
+  "note": "Unconditional named grant; subtle-theft verified."
+ },
+ {
+  "id": "alkenstar-sojourner",
+  "grants": true,
+  "feats": [
+   "streetwise"
+  ],
+  "note": "Unconditional named grant; streetwise verified."
+ },
+ {
+  "id": "circuit-judge",
+  "grants": true,
+  "feats": [
+   "lie-to-me"
+  ],
+  "note": "Unconditional named grant; lie-to-me verified."
+ },
+ {
+  "id": "goldhand-arms-dealer",
+  "grants": true,
+  "feats": [
+   "group-impression"
+  ],
+  "note": "Unconditional named grant; group-impression verified."
+ },
+ {
+  "id": "press-ganged-g-g",
+  "grants": true,
+  "feats": [
+   "armor-assist"
+  ],
+  "note": "Unconditional named grant; armor-assist verified."
+ },
+ {
+  "id": "sheriff",
+  "grants": true,
+  "feats": [
+   "group-coercion"
+  ],
+  "note": "Unconditional named grant; group-coercion verified."
+ },
+ {
+  "id": "tall-tale",
+  "grants": true,
+  "feats": [
+   "impressive-performance"
+  ],
+  "note": "Grants Impressive Performance (verified). The Leverage Connections sentence only waives a prerequisite for taking it later, so it is not a grant."
+ },
+ {
+  "id": "broken-tusk-recruiter",
+  "grants": true,
+  "feats": [
+   "group-impression"
+  ],
+  "note": "Unconditional named grant; group-impression verified."
+ },
+ {
+  "id": "ex-mendevian-crusader",
+  "grants": true,
+  "feats": [
+   "pilgrims-token"
+  ],
+  "note": "Unconditional named grant; pilgrims-token verified."
+ },
+ {
+  "id": "megafauna-hunter",
+  "grants": true,
+  "feats": [
+   "titan-wrestler"
+  ],
+  "note": "Unconditional named grant; titan-wrestler verified."
+ },
+ {
+  "id": "mammoth-herder",
+  "grants": true,
+  "feats": [
+   "train-animal"
+  ],
+  "note": "Unconditional named grant; train-animal verified."
+ },
+ {
+  "id": "northland-forager",
+  "grants": true,
+  "feats": [
+   "forager"
+  ],
+  "note": "Unconditional named grant; forager verified."
+ },
+ {
+  "id": "songsinger-in-training",
+  "grants": true,
+  "feats": [
+   "impressive-performance"
+  ],
+  "note": "Unconditional named grant; impressive-performance verified."
+ },
+ {
+  "id": "banished-brighite",
+  "grants": true,
+  "feats": [
+   "quick-identification"
+  ],
+  "note": "Unconditional named grant; quick-identification verified."
+ },
+ {
+  "id": "framed-in-ferrous-quarter",
+  "grants": true,
+  "feats": [
+   "specialty-crafting"
+  ],
+  "note": "Unconditional named grant; specialty-crafting verified."
+ },
+ {
+  "id": "inexplicably-expelled",
+  "grants": true,
+  "feats": [
+   "alchemical-crafting"
+  ],
+  "note": "\"You gain the Alchemical Crafting skill feat\" — unconditional; matches bg.grantedFeatId."
+ },
+ {
+  "id": "ratted-out-gun-runner",
+  "grants": true,
+  "feats": [
+   "experienced-smuggler"
+  ],
+  "note": "Unconditional named skill feat; id verified in core.json."
+ },
+ {
+  "id": "snubbed-out-stoolie",
+  "grants": true,
+  "feats": [
+   "lie-to-me"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "wanted-witness",
+  "grants": true,
+  "feats": [
+   "read-lips"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "curandero",
+  "grants": true,
+  "feats": [
+   "inoculation"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "grave-robber",
+  "grants": true,
+  "feats": [
+   "experienced-smuggler"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "haunted-citizen",
+  "grants": true,
+  "feats": [
+   "no-cause-for-alarm"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "necromancers-apprentice",
+  "grants": true,
+  "feats": [
+   "quick-identification"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "night-watch",
+  "grants": true,
+  "feats": [
+   "quick-coercion"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "pyre-tender",
+  "grants": true,
+  "feats": [
+   "alchemical-crafting"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "once-bitten",
+  "grants": true,
+  "feats": [
+   "battle-medicine"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "ozem-experience",
+  "grants": true,
+  "feats": [
+   "courtly-graces"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "pillar",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "Full core.json text confirms an unconditional Additional Lore grant (only the trained skill is a choice)."
+ },
+ {
+  "id": "reclaimed",
+  "grants": true,
+  "feats": [
+   "group-coercion"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "sentinel-reflectance",
+  "grants": true,
+  "feats": [
+   "no-cause-for-alarm"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "relentless-dedication",
+  "grants": true,
+  "feats": [
+   "canny-acumen"
+  ],
+  "note": "\"you gain the Canny Acumen feat\" — named and unconditional; Canny Acumen's own save/Perception sub-choice is internal to the feat."
+ },
+ {
+  "id": "able-carter",
+  "grants": false,
+  "isChoice": true,
+  "note": "Charming Liar OR Hobnobber depending on which trained skill the player picks — conditional branch, needs a picker."
+ },
+ {
+  "id": "construction-occultist",
+  "grants": false,
+  "isChoice": true,
+  "note": "Hefty Hauler OR Oddity Identification depending on the player's skill choice."
+ },
+ {
+  "id": "food-trader",
+  "grants": false,
+  "isChoice": true,
+  "note": "Seasoned OR Streetwise depending on the player's skill choice."
+ },
+ {
+  "id": "money-counter",
+  "grants": false,
+  "isChoice": true,
+  "note": "Eye for Numbers OR Subtle Theft depending on the player's skill choice."
+ },
+ {
+  "id": "propaganda-promoter",
+  "grants": false,
+  "isChoice": true,
+  "note": "Steady Balance OR Impressive Performance depending on the player's skill choice."
+ },
+ {
+  "id": "sun-dancer",
+  "grants": true,
+  "feats": [
+   "fascinating-performance"
+  ],
+  "note": "Unconditional grant; the sunlight +1 is a separate situational rider, not a condition on the grant."
+ },
+ {
+  "id": "friendly-darkmoon-kobold",
+  "grants": true,
+  "feats": [
+   "group-impression"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "borderlands-pioneer",
+  "grants": true,
+  "feats": [
+   "train-animal"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "brevic-noble",
+  "grants": false,
+  "isChoice": true,
+  "note": "Full core.json text is a lineage choice (Garess/Lebeda/Lodovka/Medvyed/...), each granting a DIFFERENT feat; the chunk text is those branches concatenated. The stored grantedFeatId=specialty-crafting is only the Garess branch — needs a picker, not an unconditional grant."
+ },
+ {
+  "id": "brevic-outcast",
+  "grants": true,
+  "feats": [
+   "haughty-obstinacy"
+  ],
+  "note": "\"gain the Haughty Obstinacy human ancestry feat, even if you aren't a human\" — unconditional; id verified."
+ },
+ {
+  "id": "issian-patriot",
+  "grants": true,
+  "feats": [
+   "streetwise"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "local-brigand",
+  "grants": true,
+  "feats": [
+   "group-coercion"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "rostlander",
+  "grants": true,
+  "feats": [
+   "hefty-hauler"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "glorianas-fixer",
+  "grants": true,
+  "feats": [
+   "subtle-theft"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "almas-clerk",
+  "grants": true,
+  "feats": [
+   "glean-contents"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "friend-of-greensteeples",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "Assurance is named and always granted; only its skill parameter follows the Deception/Society training choice."
+ },
+ {
+  "id": "guest-of-sedeq-lodge",
+  "grants": true,
+  "feats": [
+   "recognize-spell"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "sandswept-survivor",
+  "grants": true,
+  "feats": [
+   "terrain-expertise"
+  ],
+  "note": "Terrain Expertise named and unconditional (terrain fixed to underground)."
+ },
+ {
+  "id": "gold-falls-regular",
+  "grants": true,
+  "feats": [
+   "impressive-performance"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "firebrand-follower",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "Full text: trained in Athletics or Performance, \"You gain the Assurance skill feat in your chosen skill\" — feat itself always granted."
+ },
+ {
+  "id": "free-spirit",
+  "grants": true,
+  "feats": [
+   "forager"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "runner",
+  "grants": true,
+  "feats": [
+   "quick-jump"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "thrill-seeker",
+  "grants": true,
+  "feats": [
+   "combat-climber"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "unremarkable",
+  "grants": true,
+  "feats": [
+   "lengthy-diversion"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "bookish-providence",
+  "grants": true,
+  "feats": [
+   "multilingual"
+  ],
+  "note": "Prose has a broken link (\"You gain the skill feat\"), but the Background details block and bg.grantedFeatId both name Multilingual; unconditional. Recall Under Pressure is a free action, not a feat."
+ },
+ {
+  "id": "crown-of-chaos",
+  "grants": true,
+  "feats": [
+   "charming-liar"
+  ],
+  "note": "Unconditional named skill feat; the Lore training is separate."
+ },
+ {
+  "id": "hammered-by-fate",
+  "grants": true,
+  "feats": [
+   "hefty-hauler"
+  ],
+  "note": "Unconditional named skill feat; only the Lore skill is a choice."
+ },
+ {
+  "id": "keys-to-destiny",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "Assurance named and unconditional; only the associated Lore skill is a choice."
+ },
+ {
+  "id": "shielded-fortune",
+  "grants": true,
+  "feats": [
+   "toughness"
+  ],
+  "note": "\"You gain the Toughness general feat\" — unconditional; note bg.grantedFeatId is null in core.json, so this grant is currently missing from the data. Fated Not to Die is a free action, not a feat."
+ },
+ {
+  "id": "writ-in-the-stars",
+  "grants": true,
+  "feats": [
+   "pilgrims-token"
+  ],
+  "note": "Unconditional; id is pilgrims-token (no apostrophe form) in core.json."
+ },
+ {
+  "id": "highborn-snoop",
+  "grants": true,
+  "feats": [
+   "courtly-graces"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "union-representative",
+  "grants": true,
+  "feats": [
+   "contract-negotiator"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "fightbreaker",
+  "grants": true,
+  "feats": [
+   "group-impression"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "alloysmith",
+  "grants": true,
+  "feats": [
+   "specialty-crafting"
+  ],
+  "note": "Specialty Crafting named and unconditional (specialty fixed to blacksmithing)."
+ },
+ {
+  "id": "crystal-healer",
+  "grants": true,
+  "feats": [
+   "natural-medicine"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "deep-sea-diver",
+  "grants": true,
+  "feats": [
+   "underwater-marauder"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "dendrologist",
+  "grants": true,
+  "feats": [
+   "terrain-expertise"
+  ],
+  "note": "Terrain Expertise named and unconditional (terrain fixed to forest)."
+ },
+ {
+  "id": "fire-warden",
+  "grants": true,
+  "feats": [
+   "breath-control"
+  ],
+  "note": "\"You gain the Breath Control feat\" — unconditional; id verified."
+ },
+ {
+  "id": "sky-rider",
+  "grants": true,
+  "feats": [
+   "cat-fall"
+  ],
+  "note": "Unconditional named skill feat; id verified."
+ },
+ {
+  "id": "black-market-smuggler",
+  "grants": true,
+  "feats": [
+   "experienced-smuggler"
+  ],
+  "note": "Background unconditionally grants the named Experienced Smuggler skill feat; id verified in core.json feats."
+ },
+ {
+  "id": "desert-tracker",
+  "grants": true,
+  "feats": [
+   "experienced-tracker"
+  ],
+  "note": "Unconditional named grant; experienced-tracker verified."
+ },
+ {
+  "id": "merabite-prodigy",
+  "grants": true,
+  "feats": [
+   "specialty-crafting"
+  ],
+  "note": "Grants Specialty Crafting (specialty fixed as alchemy by the background); specialty-crafting verified."
+ },
+ {
+  "id": "osirionologist",
+  "grants": true,
+  "feats": [
+   "oddity-identification"
+  ],
+  "note": "Unconditional named grant; oddity-identification verified."
+ },
+ {
+  "id": "purveyor-of-the-bizarre",
+  "grants": true,
+  "feats": [
+   "quick-identification"
+  ],
+  "note": "Unconditional named grant; quick-identification verified."
+ },
+ {
+  "id": "secular-medic",
+  "grants": true,
+  "feats": [
+   "battle-medicine"
+  ],
+  "note": "Unconditional named grant; battle-medicine verified."
+ },
+ {
+  "id": "thuvian-unifier",
+  "grants": true,
+  "feats": [
+   "quick-coercion"
+  ],
+  "note": "Unconditional named grant; quick-coercion verified."
+ },
+ {
+  "id": "aspiring-free-captain",
+  "grants": true,
+  "feats": [
+   "group-coercion"
+  ],
+  "note": "Unconditional named grant; group-coercion verified."
+ },
+ {
+  "id": "hermean-expatriate",
+  "grants": true,
+  "feats": [
+   "skill-training"
+  ],
+  "note": "Grants the named Skill Training feat (that feat's own trained-skill pick is internal to it); skill-training verified."
+ },
+ {
+  "id": "mantis-scion",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "Grants Assurance with Stealth fixed by the background — named feat, no player choice; assurance verified."
+ },
+ {
+  "id": "press-ganged-lowg",
+  "grants": true,
+  "feats": [
+   "experienced-professional"
+  ],
+  "note": "Unconditional named grant; experienced-professional verified."
+ },
+ {
+  "id": "scholar-of-the-ancients",
+  "grants": true,
+  "feats": [
+   "quick-identification"
+  ],
+  "note": "Unconditional named grant; quick-identification verified."
+ },
+ {
+  "id": "storm-survivor",
+  "grants": true,
+  "feats": [
+   "forager"
+  ],
+  "note": "Unconditional named grant; forager verified."
+ },
+ {
+  "id": "undersea-enthusiast",
+  "grants": true,
+  "feats": [
+   "underwater-marauder"
+  ],
+  "note": "Unconditional named grant; underwater-marauder verified."
+ },
+ {
+  "id": "alkenstar-tinker",
+  "grants": true,
+  "feats": [
+   "alchemical-crafting"
+  ],
+  "note": "Unconditional named grant; alchemical-crafting verified."
+ },
+ {
+  "id": "geb-crusader",
+  "grants": true,
+  "feats": [
+   "student-of-the-canon"
+  ],
+  "note": "Unconditional named grant; student-of-the-canon verified."
+ },
+ {
+  "id": "mana-wastes-refugee",
+  "grants": true,
+  "feats": [
+   "trick-magic-item"
+  ],
+  "note": "Unconditional named grant; trick-magic-item verified."
+ },
+ {
+  "id": "nexian-mystic",
+  "grants": true,
+  "feats": [
+   "arcane-sense"
+  ],
+  "note": "Unconditional named grant; arcane-sense verified."
+ },
+ {
+  "id": "oenopion-ooze-tender",
+  "grants": true,
+  "feats": [
+   "dubious-knowledge"
+  ],
+  "note": "Unconditional named grant; dubious-knowledge verified."
+ },
+ {
+  "id": "perfection-seeker",
+  "grants": true,
+  "feats": [
+   "cat-fall"
+  ],
+  "note": "Unconditional named grant; cat-fall verified."
+ },
+ {
+  "id": "quick",
+  "grants": true,
+  "feats": [
+   "charming-liar"
+  ],
+  "note": "Unconditional named grant; charming-liar verified."
+ },
+ {
+  "id": "bekyar-restorer",
+  "grants": true,
+  "feats": [
+   "group-impression"
+  ],
+  "note": "Unconditional named grant; group-impression verified."
+ },
+ {
+  "id": "bonuwat-wavetouched",
+  "grants": true,
+  "feats": [
+   "underwater-marauder"
+  ],
+  "note": "Unconditional named grant; underwater-marauder verified."
+ },
+ {
+  "id": "bright-lion",
+  "grants": true,
+  "feats": [
+   "lie-to-me"
+  ],
+  "note": "Unconditional named grant; feat name in core.json is 'Lie to Me' → lie-to-me, verified."
+ },
+ {
+  "id": "magaambya-academic",
+  "grants": true,
+  "feats": [
+   "recognize-spell"
+  ],
+  "note": "Unconditional named grant (only the trained skill Arcana/Nature is a choice, not the feat); recognize-spell verified."
+ },
+ {
+  "id": "senghor-sailor",
+  "grants": true,
+  "feats": [
+   "quick-repair"
+  ],
+  "note": "Unconditional named grant; quick-repair verified."
+ },
+ {
+  "id": "shory-seeker",
+  "grants": true,
+  "feats": [
+   "specialty-crafting"
+  ],
+  "note": "Unconditional named grant of Specialty Crafting; specialty-crafting verified."
+ },
+ {
+  "id": "sodden-scavenger",
+  "grants": true,
+  "feats": [
+   "forager"
+  ],
+  "note": "Unconditional named grant; forager verified."
+ },
+ {
+  "id": "vidrian-reformer",
+  "grants": true,
+  "feats": [
+   "hobnobber"
+  ],
+  "note": "Unconditional named grant; hobnobber verified."
+ },
+ {
+  "id": "atteran-rancher",
+  "grants": true,
+  "feats": [
+   "train-animal"
+  ],
+  "note": "Unconditional named grant; train-animal verified."
+ },
+ {
+  "id": "bellflower-agent",
+  "grants": true,
+  "feats": [
+   "experienced-smuggler"
+  ],
+  "note": "Unconditional named grant; experienced-smuggler verified."
+ },
+ {
+  "id": "chelish-rebel",
+  "grants": true,
+  "feats": [
+   "streetwise"
+  ],
+  "note": "Unconditional named grant; streetwise verified."
+ },
+ {
+  "id": "child-of-westcrown",
+  "grants": true,
+  "feats": [
+   "group-impression"
+  ],
+  "note": "Unconditional named grant; group-impression verified."
+ },
+ {
+  "id": "goblinblood-orphan",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "Grants Assurance with Survival fixed by the background; assurance verified."
+ },
+ {
+  "id": "shadow-haunted",
+  "grants": true,
+  "feats": [
+   "quick-coercion"
+  ],
+  "note": "Unconditional named grant; quick-coercion verified."
+ },
+ {
+  "id": "thrune-loyalist",
+  "grants": true,
+  "feats": [
+   "student-of-the-canon"
+  ],
+  "note": "Unconditional named grant (plus Religion/Hell Lore training, handled by the background pipeline); student-of-the-canon verified."
+ },
+ {
+  "id": "mammoth-speaker",
+  "grants": true,
+  "feats": [
+   "train-animal"
+  ],
+  "note": "Unconditional named grant; train-animal verified."
+ },
+ {
+  "id": "shoanti-name-bearer",
+  "grants": true,
+  "feats": [
+   "combat-climber"
+  ],
+  "note": "Unconditional named grant; combat-climber verified."
+ },
+ {
+  "id": "thassilonian-traveler",
+  "grants": true,
+  "feats": [
+   "dubious-knowledge"
+  ],
+  "note": "Unconditional named grant; dubious-knowledge verified."
+ },
+ {
+  "id": "ulfen-raider",
+  "grants": true,
+  "feats": [
+   "intimidating-glare"
+  ],
+  "note": "Unconditional named grant; intimidating-glare verified."
+ },
+ {
+  "id": "varisian-wanderer",
+  "grants": true,
+  "feats": [
+   "fascinating-performance"
+  ],
+  "note": "Unconditional named grant; fascinating-performance verified."
+ },
+ {
+  "id": "winters-child",
+  "grants": true,
+  "feats": [
+   "arcane-sense"
+  ],
+  "note": "Unconditional named grant; arcane-sense verified."
+ },
+ {
+  "id": "witch-wary",
+  "grants": true,
+  "feats": [
+   "oddity-identification"
+  ],
+  "note": "Unconditional named grant; oddity-identification verified."
+ },
+ {
+  "id": "final-blade-survivor",
+  "grants": true,
+  "feats": [
+   "charming-liar"
+  ],
+  "note": "Unconditional named grant; charming-liar verified."
+ },
+ {
+  "id": "kalistrade-follower",
+  "grants": true,
+  "feats": [
+   "bargain-hunter"
+  ],
+  "note": "Unconditional named grant; bargain-hunter verified."
+ },
+ {
+  "id": "kyonin-emissary",
+  "grants": true,
+  "feats": [
+   "multilingual"
+  ],
+  "note": "Prose lost the link label ('You gain the skill feat'), but core.json's structured Background details field states Skill Feat: Multilingual — unconditional; multilingual verified."
+ },
+ {
+  "id": "lumber-consortium-laborer",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "Grants Assurance with Athletics fixed by the background; assurance verified."
+ },
+ {
+  "id": "rivethun-adherent",
+  "grants": true,
+  "feats": [
+   "recognize-spell"
+  ],
+  "note": "Unconditional named grant; recognize-spell verified."
+ },
+ {
+  "id": "taldan-schemer",
+  "grants": true,
+  "feats": [
+   "hobnobber"
+  ],
+  "note": "Unconditional named grant; hobnobber verified."
+ },
+ {
+  "id": "wildwood-local",
+  "grants": true,
+  "feats": [
+   "natural-medicine"
+  ],
+  "note": "Unconditional named grant; natural-medicine verified."
+ },
+ {
+  "id": "droskari-disciple",
+  "grants": true,
+  "feats": [
+   "skill-training"
+  ],
+  "note": "Unconditional named grant of the Skill Training feat; skill-training verified."
+ },
+ {
+  "id": "aiudara-seeker",
+  "grants": true,
+  "feats": [
+   "quick-identification"
+  ],
+  "note": "Unconditional named grant; quick-identification verified."
+ },
+ {
+  "id": "hermean-heritor",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks between two named feats — Multilingual (per the Background details field; the prose link label is missing) OR Assurance for Society — so it needs a builder picker, not an unconditional grant."
+ },
+ {
+  "id": "legendary-parents",
+  "grants": true,
+  "feats": [
+   "group-coercion"
+  ],
+  "note": "Unconditional named grant; group-coercion verified."
+ },
+ {
+  "id": "touched-by-dahak",
+  "grants": true,
+  "feats": [
+   "titan-wrestler"
+  ],
+  "note": "Unconditional named grant; titan-wrestler verified."
+ },
+ {
+  "id": "dwarven-weapon-expertise",
+  "grants": false,
+  "note": "Grants weapon proficiency scaling, not a feat."
+ },
+ {
+  "id": "elven-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency scaling only, no feat."
+ },
+ {
+  "id": "gnome-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency scaling only, no feat."
+ },
+ {
+  "id": "goblin-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency scaling only, no feat."
+ },
+ {
+  "id": "halfling-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency scaling only, no feat."
+ },
+ {
+  "id": "unconventional-expertise",
+  "grants": false,
+  "note": "Extends proficiency to the Unconventional Weaponry weapon; names that feat only as a reference."
+ },
+ {
+  "id": "orc-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency scaling only, no feat."
+ },
+ {
+  "id": "garden-path",
+  "grants": false,
+  "note": "Temporary, and the Quiet Allies benefit goes to a crop member (ally), not to you."
+ },
+ {
+  "id": "sociable",
+  "grants": true,
+  "feats": [
+   "hobnobber"
+  ],
+  "note": "\"you gain the Hobnobber skill feat\"; core.json feats.hobnobber confirmed (descRefs key \"feats\")."
+ },
+ {
+  "id": "forge-days-rest",
+  "grants": false,
+  "note": "Conditional: only \"as long as you rest for 12 hours\" do you gain the EFFECTS of Fast Recovery; granting fast-recovery outright would wrongly apply it to normal 8-hour rests."
+ },
+ {
+  "id": "elemental-wrath",
+  "grants": false,
+  "note": "Choose a damage type; no feat involved."
+ },
+ {
+  "id": "natural-performer",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"gain one 1st-level Performance skill feat\" — player picks; needs a builder picker."
+ },
+ {
+  "id": "formation-master",
+  "grants": false,
+  "note": "Extends your Formation Training bonuses to hobgoblin allies; no feat gained by you."
+ },
+ {
+  "id": "hobgoblin-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency scaling; Hobgoblin Weapon Familiarity is only referenced as the weapon source."
+ },
+ {
+  "id": "invoke-the-crimson-oath",
+  "grants": false,
+  "note": "Grants focus spells and divine spell proficiency, not a feat."
+ },
+ {
+  "id": "magaambyan-attendant-dedication",
+  "grants": false,
+  "note": "Choose an affiliation; Halcyon Speaker Dedication is only named as an allowed later selection."
+ },
+ {
+  "id": "cascade-bearers-flexibility",
+  "grants": false,
+  "note": "Temporary (until end of turn) and player-chosen spellshape feat; in-play effect, not a build grant."
+ },
+ {
+  "id": "ultimate-flexibility",
+  "grants": false,
+  "note": "Modifies Combat Flexibility's temporary, chosen feats."
+ },
+ {
+  "id": "specialized-companion",
+  "grants": false,
+  "note": "Companion specialization, not a feat for the character; Animal Trainer Dedication is only a prerequisite reference."
+ },
+ {
+  "id": "catfolk-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency scaling; Catfolk Weapon Familiarity referenced as prerequisite/weapon source."
+ },
+ {
+  "id": "animal-feature",
+  "grants": false,
+  "note": "Grants the animal feature warden (focus) spell, not a feat."
+ },
+ {
+  "id": "ancestral-blood-magic",
+  "grants": false,
+  "note": "Expands blood magic triggers; no feat granted."
+ },
+ {
+  "id": "wild-strider",
+  "grants": false,
+  "note": "Grants the ranger's Wild Stride CLASS FEATURE (descRefs key \"classFeatures\"); the only feats-collection \"wild-stride\" id is an unrelated awakened-animal ancestry feat, so no safe target id."
+ },
+ {
+  "id": "shadow-sneak-attack",
+  "grants": false,
+  "note": "Grants the Sneak Attack class feature (classFeatures), not a feat; core.json sneak-attack is a class-feature record."
+ },
+ {
+  "id": "viking-weapon-specialist",
+  "grants": false,
+  "note": "Weapon proficiency scaling only."
+ },
+ {
+  "id": "shall-not-falter-shall-not-rout",
+  "grants": false,
+  "note": "Spell-attack/DC proficiency and spellcasting ability, not a feat."
+ },
+ {
+  "id": "suns-fury",
+  "grants": false,
+  "note": "Spell-attack/DC proficiency for Bright Lion focus spells, not a feat."
+ },
+ {
+  "id": "bestiary-scholar",
+  "grants": false,
+  "note": "Choose a skill you already have master in; no feat."
+ },
+ {
+  "id": "masterful-obfuscation",
+  "grants": false,
+  "note": "Choose a Recall Knowledge skill; no feat granted."
+ },
+ {
+  "id": "determined-lore-seeker",
+  "grants": false,
+  "note": "Choose one innate spell from Lore Seeker (named as prerequisite/source), no feat."
+ },
+ {
+  "id": "kreightons-cognitive-crossover",
+  "grants": false,
+  "note": "Choose two skills; no feat granted."
+ },
+ {
+  "id": "idyllkin",
+  "grants": true,
+  "feats": [
+   "natural-medicine"
+  ],
+  "note": "\"gain the Natural Medicine skill feat\"; core.json feats.natural-medicine (skill, lvl 1) confirmed."
+ },
+ {
+  "id": "vanths-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency scaling only."
+ },
+ {
+  "id": "slither",
+  "grants": true,
+  "feats": [
+   "quick-squeeze"
+  ],
+  "note": "Kobold ancestry feat: \"gain the Quick Squeeze skill feat, even if you're not trained in Acrobatics\"; feats.quick-squeeze confirmed (note core.json also has an unrelated spell with id \"slither\")."
+ },
+ {
+  "id": "kobold-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency scaling only."
+ },
+ {
+  "id": "beastbrood",
+  "grants": true,
+  "feats": [
+   "courtly-graces"
+  ],
+  "note": "Nephilim lineage: trained in Society plus \"You also gain the Courtly Graces skill feat\"; feats.courtly-graces confirmed."
+ },
+ {
+  "id": "riftmarked",
+  "grants": true,
+  "feats": [
+   "oddity-identification"
+  ],
+  "note": "Nephilim lineage: trained in Occultism plus \"You also gain the Oddity Identification skill feat\"; feats.oddity-identification confirmed."
+ },
+ {
+  "id": "shackleborn",
+  "grants": true,
+  "feats": [
+   "fast-recovery"
+  ],
+  "note": "\"You gain the Fast Recovery feat, even if you don't meet the prerequisites\"; feats.fast-recovery (general, lvl 1) confirmed."
+ },
+ {
+  "id": "animal-senses",
+  "grants": false,
+  "note": "Choose a sense; no feat granted."
+ },
+ {
+  "id": "greater-animal-senses",
+  "grants": false,
+  "note": "Improves/adds senses; no feat granted."
+ },
+ {
+  "id": "animal-shape",
+  "grants": false,
+  "note": "Choose a polymorph form; Critter Shape is only referenced conditionally."
+ },
+ {
+  "id": "animal-swiftness",
+  "grants": false,
+  "note": "Grants a Speed type, not a feat."
+ },
+ {
+  "id": "genie-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency scaling only."
+ },
+ {
+  "id": "gemsoul",
+  "grants": true,
+  "feats": [
+   "impressive-performance"
+  ],
+  "note": "Oread lineage: trained in Performance plus \"You gain the Impressive Performance skill feat\"; feats.impressive-performance confirmed."
+ },
+ {
+  "id": "miresoul",
+  "grants": true,
+  "feats": [
+   "quick-squeeze"
+  ],
+  "note": "Oread lineage: \"You gain the Quick Squeeze skill feat\"; feats.quick-squeeze confirmed."
+ },
+ {
+  "id": "foxfire",
+  "grants": false,
+  "note": "Choose electricity or fire; no feat."
+ },
+ {
+  "id": "heros-wings",
+  "grants": false,
+  "note": "Situational — Glad-Hand benefits only against other sprites; not an unconditional grant."
+ },
+ {
+  "id": "azarketi-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency scaling only."
+ },
+ {
+  "id": "entwined-energy-ki",
+  "grants": false,
+  "note": "Choose a damage type for qi spells; no feat."
+ },
+ {
+  "id": "butterflys-sting",
+  "grants": false,
+  "note": "Grants the Sneak Attack CLASS FEATURE (descRefs key \"classFeatures\") with dice frozen at 1d6, not a feat."
+ },
+ {
+  "id": "conrasu-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency scaling only."
+ },
+ {
+  "id": "gnoll-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency scaling; Gnoll Weapon Practicality named as prerequisite."
+ },
+ {
+  "id": "grippli-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency scaling only."
+ },
+ {
+  "id": "advanced-weaponry",
+  "grants": false,
+  "note": "Adds a chosen weapon trait; no feat."
+ },
+ {
+  "id": "skilled-partner",
+  "grants": false,
+  "note": "Your EIDOLON gains skill feats (companion, and player-chosen), not the character."
+ },
+ {
+  "id": "concordance-scout",
+  "grants": true,
+  "feats": [
+   "hobnobber"
+  ],
+  "note": "Unconditional named grant; matches existing background grantedFeatId 'hobnobber'."
+ },
+ {
+  "id": "child-of-notoriety",
+  "grants": false,
+  "isChoice": true,
+  "feats": [],
+  "note": "Either/or by upbringing: Group Impression (Diplomacy path) or Intimidating Glare (Intimidation path) - player picks, needs a builder picker. core.json currently hardcodes grantedFeatId 'group-impression'."
+ },
+ {
+  "id": "clan-associate",
+  "grants": true,
+  "feats": [
+   "multilingual"
+  ],
+  "note": "Text lost the feat link ('You gain the skill feat'), but the Background details block names Multilingual; matches grantedFeatId 'multilingual'."
+ },
+ {
+  "id": "conservator",
+  "grants": false,
+  "isChoice": true,
+  "feats": [],
+  "note": "Conditional on the trained-skill choice: Quick Repair (Crafting) or Assurance (Thievery). core.json hardcodes 'quick-repair'."
+ },
+ {
+  "id": "dedicated-delver",
+  "grants": false,
+  "isChoice": true,
+  "feats": [],
+  "note": "Conditional on the trained-skill choice: Combat Climber (Athletics) or Terrain Expertise/Underground (Survival). core.json hardcodes 'combat-climber'."
+ },
+ {
+  "id": "eclectic-scholar",
+  "grants": true,
+  "feats": [
+   "quick-identification"
+  ],
+  "note": "Unconditional named grant; matches grantedFeatId."
+ },
+ {
+  "id": "close-ties",
+  "grants": true,
+  "feats": [
+   "specialty-crafting"
+  ],
+  "note": "Grants Specialty Crafting (specialty tied to the allied NPC). The trailing Willowshore sibling table is an optional replacement whose default ('Typical') keeps the background feat, so the base grant stands."
+ },
+ {
+  "id": "folklore-enthusiast",
+  "grants": true,
+  "feats": [
+   "oddity-identification"
+  ],
+  "note": "Named grant; Willowshore sibling table is an optional replacement, default keeps it."
+ },
+ {
+  "id": "northridge-scholar",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "Grants the Additional Lore feat (Lore subject is a sub-choice inside that feat, not a feat choice)."
+ },
+ {
+  "id": "outskirt-dweller",
+  "grants": true,
+  "feats": [
+   "terrain-expertise"
+  ],
+  "note": "Terrain Expertise with forest terrain; terrain is a sub-selection of the named feat."
+ },
+ {
+  "id": "southbank-traditionalist",
+  "grants": true,
+  "feats": [
+   "hobnobber"
+  ],
+  "note": "Named grant; matches grantedFeatId."
+ },
+ {
+  "id": "willowshore-urchin",
+  "grants": true,
+  "feats": [
+   "charming-liar"
+  ],
+  "note": "Named grant; matches grantedFeatId."
+ },
+ {
+  "id": "osprey-barnraiser",
+  "grants": true,
+  "feats": [
+   "natural-medicine"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "osprey-fisher",
+  "grants": true,
+  "feats": [
+   "quick-repair"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "osprey-scion",
+  "grants": true,
+  "feats": [
+   "hobnobber"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "osprey-scout",
+  "grants": true,
+  "feats": [
+   "experienced-tracker"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "osprey-scribe",
+  "grants": true,
+  "feats": [
+   "streetwise"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "osprey-spellcaster",
+  "grants": true,
+  "feats": [
+   "quick-identification"
+  ],
+  "note": "Unconditional named grant ('You also gain...')."
+ },
+ {
+  "id": "osprey-warrior",
+  "grants": true,
+  "feats": [
+   "hefty-hauler"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "acolyte",
+  "grants": true,
+  "feats": [
+   "student-of-the-canon"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "acrobat",
+  "grants": true,
+  "feats": [
+   "steady-balance"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "animal-whisperer",
+  "grants": true,
+  "feats": [
+   "train-animal"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "artisan",
+  "grants": true,
+  "feats": [
+   "specialty-crafting"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "artist",
+  "grants": true,
+  "feats": [
+   "specialty-crafting"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "bandit",
+  "grants": true,
+  "feats": [
+   "group-coercion"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "barkeep",
+  "grants": true,
+  "feats": [
+   "hobnobber"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "barrister",
+  "grants": true,
+  "feats": [
+   "group-impression"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "bounty-hunter",
+  "grants": true,
+  "feats": [
+   "experienced-tracker"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "charlatan",
+  "grants": true,
+  "feats": [
+   "charming-liar"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "cook",
+  "grants": true,
+  "feats": [
+   "seasoned"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "criminal",
+  "grants": true,
+  "feats": [
+   "experienced-smuggler"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "cultist",
+  "grants": true,
+  "feats": [
+   "schooled-in-secrets"
+  ],
+  "note": "Unconditional named grant; core.json id is 'schooled-in-secrets' (name 'Schooled in Secrets')."
+ },
+ {
+  "id": "detective",
+  "grants": true,
+  "feats": [
+   "streetwise"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "emissary",
+  "grants": true,
+  "feats": [
+   "multilingual"
+  ],
+  "note": "Text lost the feat link ('You gain the skill feat'), Background details names Multilingual; matches grantedFeatId."
+ },
+ {
+  "id": "entertainer",
+  "grants": true,
+  "feats": [
+   "fascinating-performance"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "farmhand",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "Assurance with Athletics - feat is named unconditionally, the skill is a sub-selection of Assurance."
+ },
+ {
+  "id": "field-medic",
+  "grants": true,
+  "feats": [
+   "battle-medicine"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "fortune-teller",
+  "grants": true,
+  "feats": [
+   "oddity-identification"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "gambler",
+  "grants": true,
+  "feats": [
+   "lie-to-me"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "gladiator",
+  "grants": true,
+  "feats": [
+   "impressive-performance"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "guard",
+  "grants": true,
+  "feats": [
+   "quick-coercion"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "herbalist",
+  "grants": true,
+  "feats": [
+   "natural-medicine"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "hermit",
+  "grants": true,
+  "feats": [
+   "dubious-knowledge"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "hunter",
+  "grants": true,
+  "feats": [
+   "survey-wildlife"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "laborer",
+  "grants": true,
+  "feats": [
+   "hefty-hauler"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "martial-disciple",
+  "grants": false,
+  "isChoice": true,
+  "feats": [],
+  "note": "Cat Fall (Acrobatics) or Quick Jump (Athletics) depending on the trained-skill choice - needs a picker. Note this background has NO grantedFeatId in core.json, so it currently grants nothing."
+ },
+ {
+  "id": "merchant",
+  "grants": true,
+  "feats": [
+   "bargain-hunter"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "miner",
+  "grants": true,
+  "feats": [
+   "terrain-expertise"
+  ],
+  "note": "Terrain Expertise with underground terrain; terrain is a sub-selection of the named feat."
+ },
+ {
+  "id": "noble",
+  "grants": true,
+  "feats": [
+   "courtly-graces"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "nomad",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "Assurance with Survival - feat named unconditionally, skill is a sub-selection."
+ },
+ {
+  "id": "prisoner",
+  "grants": true,
+  "feats": [
+   "experienced-smuggler"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "raised-by-belief",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "Assurance is named unconditionally; only its skill subject varies (the deity's Divine Skill)."
+ },
+ {
+  "id": "sailor",
+  "grants": true,
+  "feats": [
+   "underwater-marauder"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "scholar",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "Assurance is named unconditionally; only its skill subject is chosen (Arcana/Nature/Occultism/Religion)."
+ },
+ {
+  "id": "scout",
+  "grants": true,
+  "feats": [
+   "forager"
+  ],
+  "note": "Unconditional named grant."
+ },
+ {
+  "id": "foreign-aid",
+  "grants": true,
+  "feats": [
+   "no-cause-for-alarm"
+  ],
+  "note": "Background: \"You gain the No Cause for Alarm skill feat.\" Unconditional; id no-cause-for-alarm verified in core.json feats."
+ },
+ {
+  "id": "goblinblood-survivor",
+  "grants": true,
+  "feats": [
+   "forager"
+  ],
+  "note": "Unconditional \"You gain the Forager skill feat.\" id forager verified."
+ },
+ {
+  "id": "isgeri-reclaimer",
+  "grants": true,
+  "feats": [
+   "terrain-stalker"
+  ],
+  "note": "Unconditional grant of Terrain Stalker; the rubble/underbrush pick is an option inside the feat itself, not a choice of which feat. id terrain-stalker verified."
+ },
+ {
+  "id": "deckhand",
+  "grants": true,
+  "feats": [
+   "cat-fall"
+  ],
+  "note": "Unconditional \"You gain the Cat Fall skill feat.\" id cat-fall verified."
+ },
+ {
+  "id": "anti-thrune-saboteur",
+  "grants": false,
+  "isChoice": true,
+  "note": "Conditional on which trained skill you chose: Deception -> Lengthy Diversion, Thievery -> Dirty Trick. Both ids exist (lengthy-diversion, dirty-trick) but the grant is branch-dependent, so it needs a builder picker."
+ },
+ {
+  "id": "defiant-noble",
+  "grants": true,
+  "feats": [
+   "courtly-graces"
+  ],
+  "note": "Unconditional \"You gain the Courtly Graces skill feat.\" id courtly-graces verified."
+ },
+ {
+  "id": "hell-hunted",
+  "grants": true,
+  "feats": [
+   "terrain-stalker"
+  ],
+  "note": "Unconditional \"You gain the Terrain Stalker skill feat.\" id terrain-stalker verified."
+ },
+ {
+  "id": "post-guard-of-all-trades",
+  "grants": true,
+  "feats": [
+   "dubious-knowledge"
+  ],
+  "note": "Unconditional \"You gain the Dubious Knowledge skill feat.\" id dubious-knowledge verified."
+ },
+ {
+  "id": "wish-for-riches",
+  "grants": true,
+  "feats": [
+   "subtle-theft"
+  ],
+  "note": "Subtle Theft is granted unconditionally. The deviant feats (consume-energy / borrowed-ability, both exist in core.json) are conditional on the dragon/leech choice, so they are excluded."
+ },
+ {
+  "id": "historical-reenactor",
+  "grants": false,
+  "isChoice": true,
+  "note": "Branch-dependent: Performance -> Impressive Performance, Society -> Dubious Knowledge. Both ids exist but the grant depends on the skill picked, so it needs a picker."
+ },
+ {
+  "id": "reclaimer-investigator",
+  "grants": true,
+  "feats": [
+   "oddity-identification"
+  ],
+  "note": "Unconditional \"You gain the Oddity Identification skill feat.\" id oddity-identification verified."
+ },
+ {
+  "id": "refugee-fall-of-plaguestone",
+  "grants": true,
+  "feats": [
+   "forager"
+  ],
+  "note": "Unconditional \"You gain the Forager skill feat.\" id forager verified."
+ },
+ {
+  "id": "refugee-pc2",
+  "grants": true,
+  "feats": [
+   "streetwise"
+  ],
+  "note": "Unconditional \"You gain the Streetwise skill feat.\" id streetwise verified."
+ },
+ {
+  "id": "aon-post-guard-of-all-trade",
+  "grants": true,
+  "feats": [
+   "dubious-knowledge"
+  ],
+  "note": "AoN duplicate of post-guard-of-all-trades; unconditional Dubious Knowledge. id verified."
+ },
+ {
+  "id": "aon-reclaimed-investigator",
+  "grants": true,
+  "feats": [
+   "oddity-identification"
+  ],
+  "note": "AoN duplicate of reclaimer-investigator; unconditional Oddity Identification. id verified."
+ },
+ {
+  "id": "aon-muesello-s-student",
+  "grants": true,
+  "feats": [
+   "crafters-appraisal"
+  ],
+  "note": "Unconditional \"You gain the Crafter's Appraisal skill feat.\" core.json id is crafters-appraisal (no apostrophe segment) - verified."
+ },
+ {
+  "id": "aon-historical-reeanactor",
+  "grants": false,
+  "isChoice": true,
+  "note": "AoN duplicate of historical-reenactor; branch-dependent (Performance -> Impressive Performance, Society -> Dubious Knowledge)."
+ },
+ {
+  "id": "aon-wishes-for-riches",
+  "grants": true,
+  "feats": [
+   "subtle-theft"
+  ],
+  "note": "AoN duplicate of wish-for-riches; only Subtle Theft is unconditional. Deviant feats are conditional on the dragon/leech choice and excluded."
+ },
+ {
+  "id": "aerialist",
+  "grants": true,
+  "feats": [
+   "cat-fall"
+  ],
+  "note": "\"You gain the Cat Fall skill feat\"; details table confirms Cat Fall. cat-fall exists in core.json."
+ },
+ {
+  "id": "animal-wrangler",
+  "grants": false,
+  "isChoice": true,
+  "note": "Feat depends on which trained skill you pick (Athletics -> Titan Wrestler, Nature -> Train Animal). Both ids exist but the grant is not a single unconditional feat; needs a picker."
+ },
+ {
+  "id": "barker",
+  "grants": true,
+  "feats": [
+   "group-coercion"
+  ],
+  "note": "Unconditional named grant; group-coercion verified."
+ },
+ {
+  "id": "blow-in",
+  "grants": false,
+  "isChoice": true,
+  "note": "Conditional on skill choice: Lengthy Diversion (Deception) or Subtle Theft (Thievery). Picker lane."
+ },
+ {
+  "id": "butcher",
+  "grants": true,
+  "feats": [
+   "read-lips"
+  ],
+  "note": "Unconditional named grant; read-lips verified."
+ },
+ {
+  "id": "circus-born",
+  "grants": true,
+  "feats": [
+   "experienced-professional"
+  ],
+  "note": "Unconditional named grant; experienced-professional verified."
+ },
+ {
+  "id": "mystic-seer",
+  "grants": true,
+  "feats": [
+   "arcane-sense"
+  ],
+  "note": "Unconditional named grant; arcane-sense verified."
+ },
+ {
+  "id": "rigger",
+  "grants": true,
+  "feats": [
+   "combat-climber"
+  ],
+  "note": "Unconditional named grant; combat-climber verified."
+ },
+ {
+  "id": "finadar-leshy",
+  "grants": true,
+  "feats": [
+   "intimidating-glare"
+  ],
+  "note": "Unconditional named grant; intimidating-glare verified."
+ },
+ {
+  "id": "dreamer-of-the-verdant-moon",
+  "grants": true,
+  "feats": [
+   "ravenings-desperation"
+  ],
+  "note": "Grants Ravening's Desperation; id ravenings-desperation verified in core.json."
+ },
+ {
+  "id": "iolite-trainee-hobgoblin",
+  "grants": true,
+  "feats": [
+   "sign-language"
+  ],
+  "note": "Unconditional named grant; sign-language verified."
+ },
+ {
+  "id": "early-explorer",
+  "grants": true,
+  "feats": [
+   "forager"
+  ],
+  "note": "Unconditional named grant; forager verified."
+ },
+ {
+  "id": "shadow-war-survivor",
+  "grants": true,
+  "feats": [
+   "streetwise"
+  ],
+  "note": "Unconditional named grant; streetwise verified."
+ },
+ {
+  "id": "shadow-lodge-defector",
+  "grants": true,
+  "feats": [
+   "lie-to-me"
+  ],
+  "note": "Grants Lie to Me; id lie-to-me verified."
+ },
+ {
+  "id": "ruby-phoenix-enthusiast",
+  "grants": true,
+  "feats": [
+   "combat-climber"
+  ],
+  "note": "Unconditional named grant; combat-climber verified."
+ },
+ {
+  "id": "thassilonian-delver",
+  "grants": true,
+  "feats": [
+   "arcane-sense"
+  ],
+  "note": "Unconditional named grant; arcane-sense verified."
+ },
+ {
+  "id": "demon-slayer",
+  "grants": true,
+  "feats": [
+   "recognize-spell"
+  ],
+  "note": "Unconditional named grant; recognize-spell verified."
+ },
+ {
+  "id": "scholar-of-the-sky-key",
+  "grants": true,
+  "feats": [
+   "quick-repair"
+  ],
+  "note": "Unconditional named grant; quick-repair verified."
+ },
+ {
+  "id": "former-aspis-agent",
+  "grants": true,
+  "feats": [
+   "group-coercion"
+  ],
+  "note": "Unconditional named grant; group-coercion verified."
+ },
+ {
+  "id": "savior-of-air",
+  "grants": true,
+  "feats": [
+   "cat-fall"
+  ],
+  "note": "Unconditional named grant; cat-fall verified."
+ },
+ {
+  "id": "faction-opportunist",
+  "grants": true,
+  "feats": [
+   "hobnobber"
+  ],
+  "note": "Unconditional named grant; hobnobber verified."
+ },
+ {
+  "id": "tapestry-refugee",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "Assurance is granted unconditionally; only its skill parameter follows the earlier Medicine/Stealth training choice (a within-feat sub-choice, not a different feat)."
+ },
+ {
+  "id": "ex-con-token-guard",
+  "grants": true,
+  "feats": [
+   "pickpocket"
+  ],
+  "note": "Unconditional named grant; pickpocket verified."
+ },
+ {
+  "id": "godless-graycloak",
+  "grants": true,
+  "feats": [
+   "quick-identification"
+  ],
+  "note": "\"You gain the Quick Identification feat\"; details table confirms. quick-identification verified."
+ },
+ {
+  "id": "grizzled-muckrucker",
+  "grants": true,
+  "feats": [
+   "experienced-tracker"
+  ],
+  "note": "Unconditional named grant; experienced-tracker verified."
+ },
+ {
+  "id": "harbor-guard-moonlighter",
+  "grants": true,
+  "feats": [
+   "quick-jump"
+  ],
+  "note": "Unconditional named grant; quick-jump verified."
+ },
+ {
+  "id": "learned-guard-prodigy",
+  "grants": true,
+  "feats": [
+   "recognize-spell"
+  ],
+  "note": "Unconditional named grant (the +1 circumstance bonus is a separate clause); recognize-spell verified."
+ },
+ {
+  "id": "political-scion",
+  "grants": true,
+  "feats": [
+   "hobnobber"
+  ],
+  "note": "Unconditional named grant; hobnobber verified."
+ },
+ {
+  "id": "sleepless-suns-star",
+  "grants": true,
+  "feats": [
+   "multilingual"
+  ],
+  "note": "AoN text drops the feat name (\"You gain the skill feat.\") but its own Background-details table reads **Skill Feat** Multilingual; multilingual verified."
+ },
+ {
+  "id": "undercover-lotus-guard",
+  "grants": true,
+  "feats": [
+   "charming-liar"
+  ],
+  "note": "Unconditional named grant; charming-liar verified."
+ },
+ {
+  "id": "harrow-led",
+  "grants": true,
+  "feats": [
+   "dubious-knowledge"
+  ],
+  "note": "Unconditional named grant; dubious-knowledge verified."
+ },
+ {
+  "id": "archaeologist",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "Additional Lore granted unconditionally; the specific Lore subject is a within-feat parameter."
+ },
+ {
+  "id": "pathfinder-recruiter",
+  "grants": true,
+  "feats": [
+   "group-impression"
+  ],
+  "note": "Unconditional named grant; group-impression verified."
+ },
+ {
+  "id": "spell-seeker",
+  "grants": true,
+  "feats": [
+   "recognize-spell"
+  ],
+  "note": "Unconditional named grant; recognize-spell verified."
+ },
+ {
+  "id": "trailblazer",
+  "grants": true,
+  "feats": [
+   "terrain-expertise"
+  ],
+  "note": "Terrain Expertise granted unconditionally; the terrain is a within-feat parameter."
+ },
+ {
+  "id": "translator",
+  "grants": true,
+  "feats": [
+   "multilingual"
+  ],
+  "note": "AoN text elides the name (\"You gain the skill feat.\"); its Background-details table reads **Skill Feat** Multilingual; multilingual verified."
+ },
+ {
+  "id": "sewer-dragon",
+  "grants": true,
+  "feats": [
+   "snare-crafting"
+  ],
+  "note": "Unconditional named grant; snare-crafting verified."
+ },
+ {
+  "id": "hookclaw-digger",
+  "grants": true,
+  "feats": [
+   "improvise-tool"
+  ],
+  "note": "Unconditional named grant; improvise-tool verified."
+ },
+ {
+  "id": "bibliophile",
+  "grants": true,
+  "feats": [
+   "arcane-sense"
+  ],
+  "note": "Unconditional named grant; arcane-sense verified."
+ },
+ {
+  "id": "eldritch-anatomist",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "Assurance (Medicine) granted unconditionally; assurance verified."
+ },
+ {
+  "id": "fogfen-tale-teller",
+  "grants": true,
+  "feats": [
+   "titan-wrestler"
+  ],
+  "note": "Unconditional named grant; titan-wrestler verified."
+ },
+ {
+  "id": "market-runner",
+  "grants": true,
+  "feats": [
+   "hobnobber"
+  ],
+  "note": "Unconditional named grant; hobnobber verified."
+ },
+ {
+  "id": "ruin-delver",
+  "grants": true,
+  "feats": [
+   "cat-fall"
+  ],
+  "note": "Unconditional named grant; cat-fall verified."
+ },
+ {
+  "id": "starwatcher",
+  "grants": true,
+  "feats": [
+   "dubious-knowledge"
+  ],
+  "note": "Unconditional named grant; dubious-knowledge verified."
+ },
+ {
+  "id": "witchlight-follower",
+  "grants": true,
+  "feats": [
+   "terrain-expertise"
+  ],
+  "note": "Terrain Expertise granted unconditionally, with two fixed terrains (swamp + subterranean water) rather than a choice."
+ },
+ {
+  "id": "abadars-avenger",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "Assurance (Religion) granted unconditionally; assurance verified."
+ },
+ {
+  "id": "attention-addict",
+  "grants": true,
+  "feats": [
+   "impressive-performance"
+  ],
+  "note": "Unconditional named grant; impressive-performance verified."
+ },
+ {
+  "id": "newcomer-in-need",
+  "grants": true,
+  "feats": [
+   "streetwise"
+  ],
+  "note": "Unconditional named grant; streetwise verified."
+ },
+ {
+  "id": "ruby-phoenix-fanatic",
+  "grants": true,
+  "feats": [
+   "dubious-knowledge"
+  ],
+  "note": "Unconditional named grant; dubious-knowledge verified."
+ },
+ {
+  "id": "second-chance-champion",
+  "grants": true,
+  "feats": [
+   "cat-fall"
+  ],
+  "note": "Unconditional named grant; cat-fall verified."
+ },
+ {
+  "id": "undercover-contender",
+  "grants": true,
+  "feats": [
+   "lengthy-diversion"
+  ],
+  "note": "Unconditional named grant; lengthy-diversion verified."
+ },
+ {
+  "id": "sponsored-by-family",
+  "grants": false,
+  "isChoice": true,
+  "note": "Conditional on skill choice: Hobnobber (Diplomacy) or Eye for Numbers (Society). Picker lane."
+ },
+ {
+  "id": "sponsored-by-teacher-ot",
+  "grants": false,
+  "isChoice": true,
+  "note": "Conditional on skill choice: Survey Wildlife (Survival) or Impressive Performance (Performance). Picker lane."
+ },
+ {
+  "id": "sponsored-by-a-stranger",
+  "grants": false,
+  "isChoice": true,
+  "note": "Explicit player choice between Dubious Knowledge and Quick Identification. Picker lane."
+ },
+ {
+  "id": "sponsored-by-a-village",
+  "grants": false,
+  "isChoice": true,
+  "note": "Conditional on skill choice: Crafter's Appraisal (Crafting) or Forager (Survival). Picker lane."
+ },
+ {
+  "id": "town-troublemaker",
+  "grants": true,
+  "feats": [
+   "dirty-trick"
+  ],
+  "note": "\"You gain the Dirty Trick skill feat\" — unconditional; dirty-trick verified in core.json feats."
+ },
+ {
+  "id": "sideshow-scion",
+  "grants": true,
+  "feats": [
+   "acrobatic-performer"
+  ],
+  "note": "Unconditional named grant; acrobatic-performer verified."
+ },
+ {
+  "id": "wandering-libertine",
+  "grants": true,
+  "feats": [
+   "charming-liar"
+  ],
+  "note": "Unconditional named grant; charming-liar verified."
+ },
+ {
+  "id": "badlands-scout",
+  "grants": true,
+  "feats": [
+   "forager"
+  ],
+  "note": "Unconditional named grant; forager verified."
+ },
+ {
+  "id": "belkzen-anthropologist",
+  "grants": true,
+  "feats": [
+   "multilingual"
+  ],
+  "note": "Feat name stripped from text link, but Background details state Skill Feat: Multilingual; multilingual verified."
+ },
+ {
+  "id": "empty-hand-loyalist",
+  "grants": true,
+  "feats": [
+   "quick-coercion"
+  ],
+  "note": "Unconditional named grant; quick-coercion verified."
+ },
+ {
+  "id": "foreign-diplomat",
+  "grants": true,
+  "feats": [
+   "group-impression"
+  ],
+  "note": "Unconditional named grant; group-impression verified."
+ },
+ {
+  "id": "self-made",
+  "grants": true,
+  "feats": [
+   "hefty-hauler"
+  ],
+  "note": "Unconditional named grant; hefty-hauler verified."
+ },
+ {
+  "id": "trade-representative",
+  "grants": true,
+  "feats": [
+   "quick-repair"
+  ],
+  "note": "Unconditional named grant; quick-repair verified."
+ },
+ {
+  "id": "blight-survivor",
+  "grants": true,
+  "feats": [
+   "natural-medicine"
+  ],
+  "note": "Unconditional named grant; natural-medicine verified."
+ },
+ {
+  "id": "demon-hunted",
+  "grants": true,
+  "feats": [
+   "intimidating-glare"
+  ],
+  "note": "Unconditional named grant; intimidating-glare verified."
+ },
+ {
+  "id": "fiendbreaking-pilgrim",
+  "grants": true,
+  "feats": [
+   "quick-identification"
+  ],
+  "note": "Feat grant is unconditional; the Treerazer Lore substitution is a separate situational perk, not a feat."
+ },
+ {
+  "id": "portal-scholar",
+  "grants": true,
+  "feats": [
+   "arcane-sense"
+  ],
+  "note": "Grants arcane-sense; the Restorative Teleportation reaction is background-specific text, not a core.json feat."
+ },
+ {
+  "id": "story-collector",
+  "grants": true,
+  "feats": [
+   "trick-magic-item"
+  ],
+  "note": "Grants trick-magic-item; Opportunistic Accusation is a background reaction, not a feat record."
+ },
+ {
+  "id": "student-of-archery",
+  "grants": true,
+  "feats": [
+   "terrain-stalker"
+  ],
+  "note": "Unconditional named grant; terrain-stalker verified (its own terrain sub-choice is internal to the feat)."
+ },
+ {
+  "id": "child-of-the-colony",
+  "grants": true,
+  "feats": [
+   "survey-wildlife"
+  ],
+  "note": "Unconditional named grant; survey-wildlife verified."
+ },
+ {
+  "id": "company-agent",
+  "grants": true,
+  "feats": [
+   "charming-liar"
+  ],
+  "note": "Unconditional named grant; charming-liar verified."
+ },
+ {
+  "id": "hunted-by-the-night",
+  "grants": true,
+  "feats": [
+   "dubious-knowledge"
+  ],
+  "note": "Unconditional named grant; dubious-knowledge verified."
+ },
+ {
+  "id": "stargazer",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "The feat itself (Assurance) is named and unconditional; only which skill it applies to is chosen — that sub-choice is internal to Assurance."
+ },
+ {
+  "id": "student-of-the-ancients",
+  "grants": true,
+  "feats": [
+   "multilingual"
+  ],
+  "note": "Feat name stripped from text link; Background details state Skill Feat: Multilingual (one language must be Azlanti)."
+ },
+ {
+  "id": "battle-mechanic",
+  "grants": true,
+  "feats": [
+   "quick-repair"
+  ],
+  "note": "Unconditional named grant; quick-repair verified."
+ },
+ {
+  "id": "combat-carpenter",
+  "grants": true,
+  "feats": [
+   "specialty-crafting"
+  ],
+  "note": "Unconditional named grant; specialty-crafting verified."
+ },
+ {
+  "id": "combat-chaplain",
+  "grants": true,
+  "feats": [
+   "recognize-spell"
+  ],
+  "note": "Unconditional named grant; recognize-spell verified."
+ },
+ {
+  "id": "conscript",
+  "grants": true,
+  "feats": [
+   "dubious-knowledge"
+  ],
+  "note": "Unconditional named grant; dubious-knowledge verified."
+ },
+ {
+  "id": "plague-doctor",
+  "grants": true,
+  "feats": [
+   "inoculation"
+  ],
+  "note": "Unconditional named grant; inoculation verified."
+ },
+ {
+  "id": "quartermaster",
+  "grants": true,
+  "feats": [
+   "intimidating-glare"
+  ],
+  "note": "Unconditional named grant; intimidating-glare verified."
+ },
+ {
+  "id": "report-runner",
+  "grants": true,
+  "feats": [
+   "express-rider"
+  ],
+  "note": "Unconditional named grant; express-rider verified."
+ },
+ {
+  "id": "veteran",
+  "grants": true,
+  "feats": [
+   "armor-assist"
+  ],
+  "note": "Unconditional named grant; armor-assist verified."
+ },
+ {
+  "id": "war-orphan",
+  "grants": true,
+  "feats": [
+   "dirty-trick"
+  ],
+  "note": "Unconditional named grant; dirty-trick verified."
+ },
+ {
+  "id": "aeronaut",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "Assurance named and unconditional, fixed to Piloting Lore; assurance verified."
+ },
+ {
+  "id": "arcane-revolutionary",
+  "grants": true,
+  "feats": [
+   "quick-identification"
+  ],
+  "note": "Unconditional named grant; quick-identification verified."
+ },
+ {
+  "id": "battlefield-scrounger",
+  "grants": true,
+  "feats": [
+   "improvise-tool"
+  ],
+  "note": "Unconditional named grant; improvise-tool verified."
+ },
+ {
+  "id": "martial-musician",
+  "grants": true,
+  "feats": [
+   "impressive-performance"
+  ],
+  "note": "Unconditional named grant; impressive-performance verified."
+ },
+ {
+  "id": "beast-seeker",
+  "grants": false,
+  "isChoice": true,
+  "note": "Feat depends on the player's trained-skill pick (Athletics → Titan Wrestler, Thievery → Dirty Trick) — needs a builder picker."
+ },
+ {
+  "id": "child-of-the-polis",
+  "grants": false,
+  "isChoice": true,
+  "note": "Branches on the skill choice (Diplomacy → Bargain Hunter, Society → Streetwise) — not unconditional."
+ },
+ {
+  "id": "glory-hound",
+  "grants": false,
+  "isChoice": true,
+  "note": "Branches on the skill choice (Intimidation → Intimidating Glare, Performance → Impressive Performance)."
+ },
+ {
+  "id": "kartaji-epicurean",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "Unconditional named grant; the lore subject is a sub-choice internal to Additional Lore."
+ },
+ {
+  "id": "obari-wanderer",
+  "grants": false,
+  "isChoice": true,
+  "note": "Branches on the skill choice (Acrobatics → Cat Fall, Survival → Terrain Expertise)."
+ },
+ {
+  "id": "cathedral-child",
+  "grants": true,
+  "feats": [
+   "battle-medicine"
+  ],
+  "note": "Unconditional named grant; battle-medicine verified."
+ },
+ {
+  "id": "curious-apprentice",
+  "grants": true,
+  "feats": [
+   "hefty-hauler"
+  ],
+  "note": "Unconditional named grant; hefty-hauler verified."
+ },
+ {
+  "id": "eager-scofflaw",
+  "grants": true,
+  "feats": [
+   "bon-mot"
+  ],
+  "note": "Unconditional named grant; bon-mot verified."
+ },
+ {
+  "id": "lost-coast-local",
+  "grants": true,
+  "feats": [
+   "hobnobber"
+  ],
+  "note": "Unconditional named grant; hobnobber verified."
+ },
+ {
+  "id": "militia-member",
+  "grants": true,
+  "feats": [
+   "lie-to-me"
+  ],
+  "note": "Unconditional named grant; lie-to-me verified."
+ },
+ {
+  "id": "newcomer",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "Unconditional named grant; lore subject is internal to Additional Lore."
+ },
+ {
+  "id": "runelord-scholar",
+  "grants": true,
+  "feats": [
+   "multilingual"
+  ],
+  "note": "Feat name stripped from text link; details state Skill Feat: Multilingual (one language must be Thassilonian)."
+ },
+ {
+  "id": "scarnetti-connected",
+  "grants": true,
+  "feats": [
+   "charming-liar"
+  ],
+  "note": "Unconditional named grant; charming-liar verified."
+ },
+ {
+  "id": "dreams-of-vengeance",
+  "grants": true,
+  "feats": [
+   "titan-wrestler"
+  ],
+  "note": "Titan Wrestler is granted unconditionally; the Blasting Beams / Titan Swing deviant feats are conditional on a dragon-vs-troll choice and are NOT included."
+ },
+ {
+  "id": "lost-loved-one",
+  "grants": true,
+  "feats": [
+   "multilingual"
+  ],
+  "note": "Skill-feat name stripped from text; details state Multilingual (unconditional). Draining Touch / Ghostly Grasp deviant feats are choice-conditional and excluded."
+ },
+ {
+  "id": "sense-of-belonging",
+  "grants": true,
+  "feats": [
+   "forager"
+  ],
+  "note": "Forager is unconditional; Sonic Dash / Eerie Flicker deviant feats are choice-conditional and excluded."
+ },
+ {
+  "id": "total-power",
+  "grants": true,
+  "feats": [
+   "intimidating-glare"
+  ],
+  "note": "Intimidating Glare unconditional; Blasting Beams / Bone Spikes deviant feats are choice-conditional and excluded."
+ },
+ {
+  "id": "wanderlust",
+  "grants": true,
+  "feats": [
+   "express-rider"
+  ],
+  "note": "Express Rider unconditional; Overclock Senses / Titan Swing deviant feats are choice-conditional and excluded."
+ },
+ {
+  "id": "legacy-of-the-hammer",
+  "grants": true,
+  "feats": [
+   "concealing-legerdemain"
+  ],
+  "note": "Unconditional named grant; concealing-legerdemain verified."
+ },
+ {
+  "id": "archdevil-apostate",
+  "grants": true,
+  "feats": [
+   "student-of-the-canon"
+  ],
+  "note": "Unconditional named grant; student-of-the-canon verified."
+ },
+ {
+  "id": "breachill-survivor",
+  "grants": true,
+  "feats": [
+   "battle-medicine"
+  ],
+  "note": "Unconditional named grant; battle-medicine verified."
+ },
+ {
+  "id": "chelaxian-exile",
+  "grants": true,
+  "feats": [
+   "streetwise"
+  ],
+  "note": "Unconditional named grant; streetwise verified."
+ },
+ {
+  "id": "street-urchin",
+  "grants": true,
+  "feats": [
+   "pickpocket"
+  ],
+  "note": "\"You gain the Pickpocket skill feat\" - named, unconditional; id verified in core.json feats."
+ },
+ {
+  "id": "teacher",
+  "grants": true,
+  "feats": [
+   "experienced-professional"
+  ],
+  "note": "Named skill feat grant; experienced-professional verified in feats."
+ },
+ {
+  "id": "tinker",
+  "grants": true,
+  "feats": [
+   "specialty-crafting"
+  ],
+  "note": "Named skill feat grant; specialty-crafting verified in feats."
+ },
+ {
+  "id": "warrior",
+  "grants": true,
+  "feats": [
+   "intimidating-glare"
+  ],
+  "note": "Named skill feat grant; intimidating-glare verified in feats."
+ },
+ {
+  "id": "astrologer",
+  "grants": true,
+  "feats": [
+   "oddity-identification"
+  ],
+  "note": "Named skill feat grant; oddity-identification verified in feats."
+ },
+ {
+  "id": "barber",
+  "grants": true,
+  "feats": [
+   "risky-surgery"
+  ],
+  "note": "Named skill feat grant; risky-surgery verified in feats."
+ },
+ {
+  "id": "bookkeeper",
+  "grants": true,
+  "feats": [
+   "eye-for-numbers"
+  ],
+  "note": "Named skill feat grant; eye-for-numbers verified in feats."
+ },
+ {
+  "id": "courier",
+  "grants": true,
+  "feats": [
+   "glean-contents"
+  ],
+  "note": "Named skill feat grant; glean-contents verified in feats."
+ },
+ {
+  "id": "insurgent",
+  "grants": true,
+  "feats": [
+   "lengthy-diversion"
+  ],
+  "note": "Named skill feat grant; lengthy-diversion verified in feats."
+ },
+ {
+  "id": "outrider",
+  "grants": true,
+  "feats": [
+   "express-rider"
+  ],
+  "note": "Named skill feat grant; express-rider verified in feats."
+ },
+ {
+  "id": "pilgrim",
+  "grants": true,
+  "feats": [
+   "pilgrims-token"
+  ],
+  "note": "Pilgrim's Token skill feat; core.json has both an item and a feat with id pilgrims-token - the feats-collection entry (category skill) is the target."
+ },
+ {
+  "id": "root-worker",
+  "grants": true,
+  "feats": [
+   "root-magic"
+  ],
+  "note": "Named skill feat grant; root-magic verified in feats."
+ },
+ {
+  "id": "scavenger",
+  "grants": true,
+  "feats": [
+   "forager"
+  ],
+  "note": "Named skill feat grant; forager verified in feats."
+ },
+ {
+  "id": "servant",
+  "grants": true,
+  "feats": [
+   "read-lips"
+  ],
+  "note": "Named skill feat grant; read-lips verified in feats."
+ },
+ {
+  "id": "squire",
+  "grants": true,
+  "feats": [
+   "armor-assist"
+  ],
+  "note": "Named skill feat grant; armor-assist verified in feats."
+ },
+ {
+  "id": "tax-collector",
+  "grants": true,
+  "feats": [
+   "quick-coercion"
+  ],
+  "note": "Named skill feat grant; quick-coercion verified in feats."
+ },
+ {
+  "id": "ward",
+  "grants": true,
+  "feats": [
+   "fascinating-performance"
+  ],
+  "note": "Named skill feat grant; fascinating-performance verified in feats."
+ },
+ {
+  "id": "returned",
+  "grants": true,
+  "feats": [
+   "diehard",
+   "additional-lore"
+  ],
+  "note": "Grants two named feats (Diehard general + Additional Lore, fixed to Boneyard Lore); both ids verified. Additional Lore's Lore subject is preset by the background, not a player pick."
+ },
+ {
+  "id": "royalty",
+  "grants": true,
+  "feats": [
+   "courtly-graces"
+  ],
+  "note": "Courtly Graces granted unconditionally; Leverage Connections is only referenced conditionally (\"if you later gain\") and is NOT granted."
+ },
+ {
+  "id": "acupuncturist",
+  "grants": true,
+  "feats": [
+   "battle-medicine"
+  ],
+  "note": "Named skill feat grant; battle-medicine verified in feats."
+ },
+ {
+  "id": "bachuan-revolutionary",
+  "grants": true,
+  "feats": [
+   "sign-language"
+  ],
+  "note": "Named skill feat grant; sign-language verified in feats (legacy + remaster entries share the id)."
+ },
+ {
+  "id": "gossip",
+  "grants": true,
+  "feats": [
+   "hobnobber"
+  ],
+  "note": "Named skill feat grant; hobnobber verified in feats."
+ },
+ {
+  "id": "jeweler",
+  "grants": true,
+  "feats": [
+   "crafters-appraisal"
+  ],
+  "note": "Named skill feat grant; crafters-appraisal verified in feats."
+ },
+ {
+  "id": "ocean-diver",
+  "grants": true,
+  "feats": [
+   "underwater-marauder"
+  ],
+  "note": "Named skill feat grant; underwater-marauder verified in feats."
+ },
+ {
+  "id": "runaway-noble",
+  "grants": true,
+  "feats": [
+   "bon-mot"
+  ],
+  "note": "Named skill feat grant; bon-mot verified in feats."
+ },
+ {
+  "id": "remittance-agent",
+  "grants": true,
+  "feats": [
+   "experienced-professional"
+  ],
+  "note": "Named skill feat grant; experienced-professional verified in feats."
+ },
+ {
+  "id": "silk-farmer",
+  "grants": true,
+  "feats": [
+   "specialty-crafting"
+  ],
+  "note": "Named skill feat grant; specialty-crafting verified in feats."
+ },
+ {
+  "id": "streetfood-vendor",
+  "grants": true,
+  "feats": [
+   "seasoned"
+  ],
+  "note": "Named skill feat grant; seasoned verified in feats (category skill)."
+ },
+ {
+  "id": "tiffin-box-deliverer",
+  "grants": true,
+  "feats": [
+   "streetwise"
+  ],
+  "note": "Named skill feat grant; streetwise verified in feats."
+ },
+ {
+  "id": "weaver",
+  "grants": true,
+  "feats": [
+   "specialty-crafting"
+  ],
+  "note": "Named skill feat grant; specialty-crafting verified in feats."
+ },
+ {
+  "id": "traveling-gourmand",
+  "grants": true,
+  "feats": [
+   "forager"
+  ],
+  "note": "Named skill feat grant; forager verified in feats."
+ },
+ {
+  "id": "eagle-hunter",
+  "grants": true,
+  "feats": [
+   "pet",
+   "train-animal"
+  ],
+  "note": "Both Pet (general) and Train Animal (skill) are granted unconditionally; the eagle-only restriction limits how they're used, it doesn't gate whether you get them. Both ids verified."
+ },
+ {
+  "id": "fated-rival",
+  "grants": false,
+  "feats": [],
+  "note": "Conditional: Diehard applies only \"so long as you are not in the presence of your rival\", so it is not an unconditional grant."
+ },
+ {
+  "id": "kaiju-stalker",
+  "grants": false,
+  "isChoice": true,
+  "feats": [],
+  "note": "\"one Athletics skill feat of your choice\" - player picks; needs a builder picker."
+ },
+ {
+  "id": "professional-letter-writer",
+  "grants": false,
+  "isChoice": true,
+  "feats": [],
+  "note": "Player chooses between Specialty Crafting and Multilingual - a two-option pick, not a fixed grant."
+ },
+ {
+  "id": "academic-scion",
+  "grants": true,
+  "feats": [
+   "arcane-sense"
+  ],
+  "note": "Named skill feat grant; arcane-sense verified in feats."
+ },
+ {
+  "id": "convocation-scout",
+  "grants": true,
+  "feats": [
+   "group-impression"
+  ],
+  "note": "Named skill feat grant; group-impression verified in feats."
+ },
+ {
+  "id": "ghostwriter",
+  "grants": true,
+  "feats": [
+   "experienced-professional"
+  ],
+  "note": "Named skill feat grant; experienced-professional verified in feats."
+ },
+ {
+  "id": "library-dweller",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "Named skill feat grant (Additional Lore, background fixes it to Library Lore); additional-lore verified in feats."
+ },
+ {
+  "id": "party-scholar",
+  "grants": true,
+  "feats": [
+   "charming-liar"
+  ],
+  "note": "Named skill feat grant; charming-liar verified in feats."
+ },
+ {
+  "id": "respected-mentor",
+  "grants": true,
+  "feats": [
+   "fascinating-performance"
+  ],
+  "note": "Named skill feat grant; fascinating-performance verified in feats."
+ },
+ {
+  "id": "school-medic",
+  "grants": true,
+  "feats": [
+   "battle-medicine"
+  ],
+  "note": "Named skill feat grant; battle-medicine verified in feats."
+ },
+ {
+  "id": "star-athlete",
+  "grants": true,
+  "feats": [
+   "assurance"
+  ],
+  "note": "\"Assurance skill feat with Athletics\" - named feat with its skill parameter preset to Athletics (no player pick); assurance verified in feats."
+ },
+ {
+  "id": "working-student",
+  "grants": true,
+  "feats": [
+   "streetwise"
+  ],
+  "note": "Named skill feat grant; streetwise verified in feats."
+ },
+ {
+  "id": "fey-friend",
+  "grants": true,
+  "feats": [
+   "charming-liar"
+  ],
+  "note": "Named skill feat grant; charming-liar verified in feats."
+ },
+ {
+  "id": "green-faith-pilgrim",
+  "grants": true,
+  "feats": [
+   "natural-medicine"
+  ],
+  "note": "Named skill feat grant; natural-medicine verified in feats."
+ },
+ {
+  "id": "moot-guard",
+  "grants": true,
+  "feats": [
+   "intimidating-glare"
+  ],
+  "note": "Named skill feat grant; intimidating-glare verified in feats."
+ },
+ {
+  "id": "tree-friend",
+  "grants": true,
+  "feats": [
+   "no-cause-for-alarm"
+  ],
+  "note": "No Cause for Alarm granted unconditionally (the Arboreal language is a separate, non-feat perk); id verified in feats."
+ },
+ {
+  "id": "verduran-city-folk",
+  "grants": false,
+  "isChoice": true,
+  "feats": [],
+  "note": "Source text is corrupted in core.json - \"You gain either or Streetwise as a skill feat\" (one option's link was dropped upstream). It is a two-option player choice regardless, so no unconditional named grant; the missing option should be recovered from AoN before wiring a picker."
+ },
+ {
+  "id": "wood-warden",
+  "grants": true,
+  "feats": [
+   "survey-wildlife"
+  ],
+  "note": "Named skill feat grant; survey-wildlife verified in feats."
+ },
+ {
+  "id": "always-chosen-last",
+  "grants": true,
+  "feats": [
+   "streetwise"
+  ],
+  "note": "Named skill feat grant; streetwise verified in feats."
+ },
+ {
+  "id": "amateur-director",
+  "grants": true,
+  "feats": [
+   "group-impression"
+  ],
+  "note": "Named skill feat grant; group-impression verified in feats."
+ },
+ {
+  "id": "art-tutor",
+  "grants": true,
+  "feats": [
+   "crafters-appraisal"
+  ],
+  "note": "Named feat grant; crafters-appraisal verified in feats."
+ },
+ {
+  "id": "bully-or-baiter",
+  "grants": true,
+  "feats": [
+   "intimidating-glare"
+  ],
+  "note": "Named skill feat grant; intimidating-glare verified in feats."
+ },
+ {
+  "id": "supportive-sponsor",
+  "grants": true,
+  "feats": [
+   "battle-medicine"
+  ],
+  "note": "Named skill feat grant; battle-medicine verified in feats."
+ },
+ {
+  "id": "advanced-flair",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"You gain one swashbuckler feat\" — player picks; repeatable. Builder picker lane."
+ },
+ {
+  "id": "contortionist",
+  "grants": true,
+  "feats": [
+   "quick-squeeze"
+  ],
+  "note": "Unconditional \"You gain the Quick Squeeze skill feat\"; quick-squeeze exists in core.json feats."
+ },
+ {
+  "id": "bounty-hunter-dedication",
+  "grants": false,
+  "note": "Monster Hunter is conditional — only \"if you already have Hunt Prey\"."
+ },
+ {
+  "id": "familiar-master-dedication",
+  "grants": false,
+  "note": "Enhanced Familiar is conditional — only if you already had a familiar; base benefit is a familiar, not a feat."
+ },
+ {
+  "id": "pirate-combat-training",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"either the Combat Climber or Underwater Marauder skill feat\" — player picks one of two (both ids exist)."
+ },
+ {
+  "id": "sentinel-dedication",
+  "grants": false,
+  "note": "Full text grants armor proficiencies only; no feat is named."
+ },
+ {
+  "id": "social-purview",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"Choose one archetype... you gain that archetype's dedication feat\" — the specific feat depends on the player's archetype choice."
+ },
+ {
+  "id": "fisheye",
+  "grants": false,
+  "note": "Breath Control is temporary (one hour, after eating a fish eye) and explicitly can't be used as a prerequisite."
+ },
+ {
+  "id": "inherit-the-dreaming-heirloom",
+  "grants": false,
+  "note": "Selects Lore skills, not a feat."
+ },
+ {
+  "id": "morphic-strike",
+  "grants": false,
+  "note": "Grants unarmed attacks by heritage; no feat."
+ },
+ {
+  "id": "natural-mutagen",
+  "grants": false,
+  "note": "Selects a 1st-level mutagen item, not a feat."
+ },
+ {
+  "id": "special-sentinel-technique",
+  "grants": false,
+  "note": "Grants a focus spell (and names it), not a feat."
+ },
+ {
+  "id": "apparition-stabilization",
+  "grants": false,
+  "note": "Scales a DC with the apparition class feature; no feat granted."
+ },
+ {
+  "id": "extract-vow-of-nonviolence",
+  "grants": false,
+  "note": "Choice is a material (cold iron/duskwood/dawnsilver/silver), not a feat."
+ },
+ {
+  "id": "battleblooded",
+  "grants": true,
+  "feats": [
+   "intimidating-glare"
+  ],
+  "note": "Full text: \"You also gain the Intimidating Glare skill feat\" — unconditional; id verified."
+ },
+ {
+  "id": "spiritual-awakening",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"a 1st- or 2nd-level animist feat\" — player picks."
+ },
+ {
+  "id": "animists-power",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"You gain one animist feat\" (no wandering trait) — player picks; repeatable."
+ },
+ {
+  "id": "basic-glory",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"a 1st- or 2nd-level exemplar feat\" — player picks."
+ },
+ {
+  "id": "advanced-glory",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"You gain an exemplar feat\" — player picks; repeatable."
+ },
+ {
+  "id": "patron-reborn",
+  "grants": false,
+  "note": "Benefit applies to an allied witch (counts as your Witch's Charge); nothing granted to you."
+ },
+ {
+  "id": "mythic-magic",
+  "grants": false,
+  "note": "Grants chosen spells and Cast a Spell, not a feat."
+ },
+ {
+  "id": "ascend",
+  "grants": false,
+  "note": "Optional wings; no feat named."
+ },
+ {
+  "id": "godling-dedication",
+  "grants": false,
+  "note": "Grants a domain spell, focus pool and spellcasting proficiency; hierophant is an ally. No feat."
+ },
+ {
+  "id": "claim-cardinal-domains",
+  "grants": false,
+  "note": "Claims domains; no feat named."
+ },
+ {
+  "id": "gird-champion",
+  "grants": false,
+  "note": "Chooses a weapon type; no feat named."
+ },
+ {
+  "id": "rivethun-emissary-dedication",
+  "grants": false,
+  "note": "Grants an activity, a focus spell and spell proficiency; no feat."
+ },
+ {
+  "id": "emissary-familiar",
+  "grants": false,
+  "note": "Enhanced Familiar only \"if you already have a familiar\" — conditional."
+ },
+ {
+  "id": "unfettered-growth",
+  "grants": false,
+  "note": "Choose one of several inline benefits; no feat named."
+ },
+ {
+  "id": "potent-nectar",
+  "grants": false,
+  "note": "Choose one of several inline benefits; no feat named."
+ },
+ {
+  "id": "tattooed-historian-dedication",
+  "grants": false,
+  "note": "Grants the Storied Skin magical tattoo (an item), not a feat."
+ },
+ {
+  "id": "inscribed-with-elders-deeds",
+  "grants": false,
+  "isChoice": true,
+  "note": "Temporary daily-prep pick of a 1st-level (later 5th) orc ancestry feat; explicitly can't be a prerequisite."
+ },
+ {
+  "id": "haunting-memories",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks a skill feat and it lasts only until next daily preparations — temporary choice lane."
+ },
+ {
+  "id": "wylderheart-dedication",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "\"You gain the Additional Lore skill feat for Demon Lore\" — unconditional; additional-lore verified in core.json (Lore subject is Demon Lore)."
+ },
+ {
+  "id": "free-heart",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses a common background; the granted skill feat is whatever that background carries — indirect choice."
+ },
+ {
+  "id": "lion-blade-dedication",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "\"You also gain the Additional Lore skill feat for Espionage Lore\" — unconditional; id verified."
+ },
+ {
+  "id": "jotunborn-lore",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "\"You also gain the Additional Lore general feat for Jotunborn Lore\" — unconditional; the second Additional Lore (Sage Jotunborn heritage) is conditional and omitted."
+ },
+ {
+  "id": "officers-education",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"any one general feat that you meet the prerequisites for\" — player picks."
+ },
+ {
+  "id": "peerless-mascot-companion",
+  "grants": false,
+  "note": "Companion benefits; Glorious Banner is only referenced conditionally (\"if you later gain\")."
+ },
+ {
+  "id": "commander-dedication",
+  "grants": false,
+  "note": "Grants the tactics class feature/folio/banner — class-feature pipeline, not a feat."
+ },
+ {
+  "id": "basic-field-training",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"a 1st- or 2nd-level commander feat\" — player picks."
+ },
+ {
+  "id": "advanced-field-training",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"You gain a commander feat\" — player picks; repeatable."
+ },
+ {
+  "id": "guardian-dedication",
+  "grants": false,
+  "note": "Full text grants Athletics/class DC/armor proficiency and the Taunt action; no feat named."
+ },
+ {
+  "id": "basic-defender",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"a 1st- or 2nd-level guardian feat\" — player picks."
+ },
+ {
+  "id": "advanced-defender",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"You gain one guardian feat\" — player picks; repeatable."
+ },
+ {
+  "id": "aldori-duelist-dedication",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "\"You gain the Additional Lore feat for Dueling Lore\" — unconditional; only the extra Lore training is conditional."
+ },
+ {
+  "id": "poisoned-sticks-and-stones",
+  "grants": false,
+  "note": "Poison Weapon is only referenced conditionally (\"if you later gain\")."
+ },
+ {
+  "id": "arcana-of-iron",
+  "grants": false,
+  "note": "Weapon proficiency scaling tied to a class feature; no feat granted."
+ },
+ {
+  "id": "spellshield",
+  "grants": false,
+  "note": "Grants the Arcane Bond class feature and Drain Bonded Item action — class-feature lane, and no arcane-bond feat exists in core.json."
+ },
+ {
+  "id": "captain-dedication",
+  "grants": false,
+  "isChoice": true,
+  "note": "\"your choice of the Group Impression or the Group Coercion skill feat\" (fallback: another 1st-level skill feat) — player picks."
+ },
+ {
+  "id": "hero-gods-bond",
+  "grants": false,
+  "note": "Selects an ally; no feat granted."
+ },
+ {
+  "id": "awakened-power",
+  "grants": false,
+  "note": "Grants an \"awakening benefit\" of a chosen deviant feat, not the feat itself."
+ },
+ {
+  "id": "greater-awakened-power",
+  "grants": false,
+  "note": "Grants an \"awakening benefit\" of a chosen deviant feat, not the feat itself."
+ },
+ {
+  "id": "draconic-paragon",
+  "grants": false,
+  "note": "Adds extra effects to the prerequisite kobold feat you already have; no new feat."
+ },
+ {
+  "id": "warshard-warrior-dedication",
+  "grants": true,
+  "feats": [
+   "mythic-strike"
+  ],
+  "note": "\"You gain the Mythic Strike feat\" — unconditional grant (usage is restricted to the warshard weapon, but the feat itself is given); mythic-strike verified in core.json."
+ },
+ {
+  "id": "this-is-what-its-like-to-die",
+  "grants": false,
+  "note": "Chooses two damage types; no feat named."
+ },
+ {
+  "id": "basic-thoughtform",
+  "grants": false,
+  "isChoice": true,
+  "note": "'a 1st- or 2nd-level psychic feat of your choice' - player picks."
+ },
+ {
+  "id": "advanced-thoughtform",
+  "grants": false,
+  "isChoice": true,
+  "note": "'You gain one psychic feat' - unnamed, player picks (repeatable)."
+ },
+ {
+  "id": "basic-thaumaturgy",
+  "grants": false,
+  "isChoice": true,
+  "note": "'a 1st- or 2nd-level thaumaturge feat of your choice' - player picks."
+ },
+ {
+  "id": "advanced-thaumaturgy",
+  "grants": false,
+  "isChoice": true,
+  "note": "'You gain one thaumaturge feat' - unnamed, player picks (repeatable)."
+ },
+ {
+  "id": "magical-knowledge",
+  "grants": false,
+  "isChoice": true,
+  "note": "'a skill feat associated with each of the skills you chose' - player picks (one per chosen skill)."
+ },
+ {
+  "id": "future-spell-learning",
+  "grants": false,
+  "note": "Adds spells / allows retraining one repertoire spell; no feat is granted."
+ },
+ {
+  "id": "hellknight-dedication",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "'you gain the Additional Lore general feat for Hell Lore' - named, unconditional; the Hell Lore subject is a parameter of Additional Lore (verified id additional-lore)."
+ },
+ {
+  "id": "armigers-protection",
+  "grants": false,
+  "note": "Grants armor proficiency and a free suit of Hellknight armor; names no feat."
+ },
+ {
+  "id": "golden-legionnaire-dedication",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "'You also gain the Additional Lore general feat for Warfare Lore' - named, unconditional (verified id additional-lore)."
+ },
+ {
+  "id": "arodens-innovation",
+  "grants": false,
+  "isChoice": true,
+  "note": "Daily-preparations choice of a general feat 3rd level or lower, and only until next preparations - temporary + player-picked."
+ },
+ {
+  "id": "mortal-possibility",
+  "grants": false,
+  "isChoice": true,
+  "note": "'a skill feat of your choice for that skill' - player picks."
+ },
+ {
+  "id": "friend-of-the-sea",
+  "grants": true,
+  "feats": [
+   "pet"
+  ],
+  "note": "'You gain the Pet general feat' - named, unconditional (verified id pet)."
+ },
+ {
+  "id": "pirates-pet",
+  "grants": true,
+  "feats": [
+   "pet"
+  ],
+  "note": "'You gain the Pet general feat' - named, unconditional (verified id pet)."
+ },
+ {
+  "id": "specialized-companion-animal-trainer",
+  "grants": false,
+  "note": "Grants an animal companion specialization (companion, not a character feat)."
+ },
+ {
+  "id": "aon-kingdom-assurance",
+  "grants": false,
+  "note": "Kingdom feat; the repeatable 'Special' clause chooses a skill, not a feat."
+ },
+ {
+  "id": "evolution-feat",
+  "grants": false,
+  "isChoice": true,
+  "note": "Summoner class feature: player selects an evolution feat for the eidolon; no named feat."
+ },
+ {
+  "id": "gates-threshold",
+  "grants": false,
+  "isChoice": true,
+  "note": "'Gain an impulse feat of your level or lower' - player picks."
+ },
+ {
+  "id": "druidic-order",
+  "grants": false,
+  "note": "Grants 'this 1st-level druid feat' - which feat depends on the chosen order; the per-order records (e.g. cultivation-order) carry the actual named grant."
+ },
+ {
+  "id": "voice-of-nature",
+  "grants": false,
+  "isChoice": true,
+  "note": "'your choice of the Animal Empathy or Plant Empathy druid feat' - a two-way player choice, not a single named grant."
+ },
+ {
+  "id": "combat-flexibility",
+  "grants": false,
+  "isChoice": true,
+  "note": "Daily-preparations fighter feat of 8th level or lower, usable only until next preparations - temporary + player-picked."
+ },
+ {
+  "id": "alchemy",
+  "grants": true,
+  "feats": [
+   "alchemical-crafting"
+  ],
+  "note": "'You gain the Alchemical Crafting feat' - named, unconditional at 1st level (verified id alchemical-crafting)."
+ },
+ {
+  "id": "skillful-lessons",
+  "grants": false,
+  "isChoice": true,
+  "note": "Extra skill feats at odd levels, restricted to certain skills but still player-picked."
+ },
+ {
+  "id": "mystery",
+  "grants": false,
+  "note": "'You gain this 1st-level oracle feat' - the feat depends on the chosen mystery; no single named feat in this record."
+ },
+ {
+  "id": "stylish-tricks",
+  "grants": false,
+  "isChoice": true,
+  "note": "Additional skill feat for Acrobatics or the style skill - player picks."
+ },
+ {
+  "id": "tactics",
+  "grants": false,
+  "note": "Only mentions the Tactical Expansion feat as a way to add tactics; no grant."
+ },
+ {
+  "id": "angel-eidolon",
+  "grants": false,
+  "note": "Aura/environmental-protection evolution text; no feat grant."
+ },
+ {
+  "id": "avenger",
+  "grants": false,
+  "note": "'You must select Avenger Dedication as your 2nd-level class feat' is a mandated spend of a class-feat slot, not a bonus grant; rest is proficiency/sneak-attack text."
+ },
+ {
+  "id": "battle-creed",
+  "grants": true,
+  "feats": [],
+  "leveled": [
+   {
+    "feat": "reactive-strike",
+    "minLevel": 9
+   }
+  ],
+  "note": "Deadly Simplicity is conditional on the deity's favored weapon (excluded). 'Moderate Creed (9th): You gain Reactive Strike as a cleric feat' is unconditional but level-gated - verified id reactive-strike. NOTE: overlaps with the separate moderate-creed classFeature record, so guard against double-granting."
+ },
+ {
+  "id": "battledancer",
+  "grants": true,
+  "feats": [
+   "fascinating-performance"
+  ],
+  "note": "'You are trained in Performance and gain the Fascinating Performance skill feat' - named, unconditional (verified id fascinating-performance)."
+ },
+ {
+  "id": "born-of-the-bones-of-the-earth",
+  "grants": true,
+  "feats": [
+   "energized-spark"
+  ],
+  "note": "'You gain the Energized Spark feat for your choice of earth or fire' - the feat is named; the element is a parameter Energized Spark itself asks you to choose (verified id energized-spark)."
+ },
+ {
+  "id": "catharsis-emotion",
+  "grants": false,
+  "note": "Only describes the focus spell you get IF you take the Cathartic Focus Spell archetype feat - conditional/reference."
+ },
+ {
+  "id": "cloistered-cleric",
+  "grants": true,
+  "feats": [
+   "domain-initiate"
+  ],
+  "note": "'First Doctrine (1st): You gain the Domain Initiate cleric feat' - named, unconditional at 1st level (verified id domain-initiate; domain selection is internal to that feat)."
+ },
+ {
+  "id": "construct-eidolon",
+  "grants": false,
+  "note": "The EIDOLON gains evolution feats, and they are player-chosen - companion grant + choice."
+ },
+ {
+  "id": "cultivation-order",
+  "grants": true,
+  "feats": [
+   "leshy-familiar"
+  ],
+  "note": "'You also gain the Leshy Familiar druid feat' - named, unconditional (verified id leshy-familiar)."
+ },
+ {
+  "id": "dancer-in-the-seasons",
+  "grants": true,
+  "feats": [
+   "energized-spark"
+  ],
+  "note": "'You gain the Energized Spark feat for your choice of cold, fire, void, or wood' - feat named; damage type is an internal parameter (verified id energized-spark)."
+ },
+ {
+  "id": "eldritch-trickster",
+  "grants": false,
+  "isChoice": true,
+  "note": "'Choose a multiclass archetype... You gain that archetype's dedication feat as a bonus feat' - the specific dedication is player-chosen."
+ },
+ {
+  "id": "experimental-spellshaping",
+  "grants": false,
+  "isChoice": true,
+  "note": "'one 1st-level spellshape wizard feat of your choice' (plus a daily temporary one) - player picks."
+ },
+ {
+  "id": "fey-eidolon",
+  "grants": false,
+  "note": "Magical Understudy / Magical Adept are granted to the EIDOLON, not the character."
+ },
+ {
+  "id": "first-doctrine-warpriest",
+  "grants": true,
+  "feats": [
+   "shield-block"
+  ],
+  "note": "'You gain the Shield Block general feat' is unconditional (verified id shield-block). Deadly Simplicity is conditional on the deity's favored weapon being simple/unarmed, so excluded."
+ },
+ {
+  "id": "fourth-gates-threshold",
+  "grants": false,
+  "isChoice": true,
+  "note": "'Gain an impulse feat of your level or lower' - player picks."
+ },
+ {
+  "id": "fury-instinct",
+  "grants": false,
+  "isChoice": true,
+  "note": "'a bonus 1st-level barbarian feat' - unnamed, player picks."
+ },
+ {
+  "id": "improved-familiar-attunement",
+  "grants": true,
+  "feats": [
+   "familiar"
+  ],
+  "note": "'You gain the Familiar wizard feat' - named, unconditional wizard thesis grant (verified id familiar, has wizard trait)."
+ },
+ {
+  "id": "initial-creed",
+  "grants": false,
+  "note": "Only feat mentioned is Deadly Simplicity, conditional on the deity's favored weapon being a simple weapon or unarmed attack."
+ },
+ {
+  "id": "light-mortar-innovation",
+  "grants": false,
+  "note": "Mandates spending the 2nd-level class feat on Munitions Master Dedication and shifts class-feature levels; no bonus feat granted."
+ },
+ {
+  "id": "liturgist",
+  "grants": true,
+  "feats": [
+   "circle-of-spirits"
+  ],
+  "note": "'Song of Invocation (1st): You gain the Circle of Spirits feat' - named, unconditional at 1st level (verified id circle-of-spirits)."
+ },
+ {
+  "id": "medium",
+  "grants": true,
+  "feats": [
+   "relinquish-control"
+  ],
+  "note": "'Invocation of Unity (1st): You gain the Relinquish Control feat' - named, unconditional at 1st level (verified id relinquish-control)."
+ },
+ {
+  "id": "moderate-creed",
+  "grants": true,
+  "feats": [
+   "reactive-strike"
+  ],
+  "note": "'You gain Reactive Strike as a cleric feat' - named, unconditional; this classFeature is itself level 9 so no leveled entry needed (verified id reactive-strike)."
+ },
+ {
+  "id": "of-verse-unbroken",
+  "grants": true,
+  "feats": [
+   "energized-spark"
+  ],
+  "note": "'You gain the Energized Spark feat for your choice of sonic or vitality' - feat named; damage type is an internal parameter (verified id energized-spark)."
+ },
+ {
+  "id": "oracular-curse",
+  "grants": false,
+  "note": "'a cursebound oracle feat determined by your Mystery' - the actual feat varies by mystery; no named feat here."
+ },
+ {
+  "id": "palatine-detective",
+  "grants": true,
+  "feats": [
+   "quick-identification"
+  ],
+  "note": "Esoterica Methodology REPLACES the normal methodology choice ('Instead of choosing a methodology... you have the esoterica methodology'), so 'you gain the Quick Identification skill feat' is unconditional (verified id quick-identification)."
+ },
+ {
+  "id": "plunderer-of-the-hives-riches",
+  "grants": true,
+  "feats": [
+   "energized-spark"
+  ],
+  "note": "'You gain the Energized Spark feat, with your choice of either poison or sonic' - feat named; damage type is an internal parameter (verified id energized-spark)."
+ },
+ {
+  "id": "rascal",
+  "grants": true,
+  "feats": [
+   "dirty-trick"
+  ],
+  "note": "'You are trained in Thievery and gain the Dirty Trick general feat' - named, unconditional (verified id dirty-trick, general/skill)."
+ },
+ {
+  "id": "restless-as-the-tide",
+  "grants": true,
+  "feats": [
+   "energized-spark"
+  ],
+  "note": "'You gain the Energized Spark feat for your choice of water or cold' - feat named; damage type is an internal parameter (verified id energized-spark)."
+ },
+ {
+  "id": "runelord",
+  "grants": true,
+  "feats": [],
+  "leveled": [
+   {
+    "feat": "advanced-school-spell",
+    "minLevel": 8
+   }
+  ],
+  "note": "'You gain Advanced School Spell as a bonus feat at 8th level' - named and unconditional but level-gated (verified id advanced-school-spell, level 8 wizard feat)."
+ },
+ {
+  "id": "scar-of-the-survivor",
+  "grants": true,
+  "feats": [
+   "diehard"
+  ],
+  "note": "'You gain the benefits of the Diehard feat and a +1 status bonus to Fortitude saves' - unconditional immanence benefit of the ikon; wording is 'benefits of' rather than 'gain the feat', but effect is identical (verified id diehard)."
+ },
+ {
+  "id": "school-of-unified-magical-theory",
+  "grants": false,
+  "isChoice": true,
+  "note": "Grants an extra 1st-level wizard class feat the player picks, not a named feat."
+ },
+ {
+  "id": "second-gates-threshold",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player selects an impulse feat (or any kineticist class feat) of their level or lower."
+ },
+ {
+  "id": "seer",
+  "grants": true,
+  "feats": [
+   "apparition-sense"
+  ],
+  "note": "Invocation of Sight (1st): 'You gain the Apparition Sense feat.' apparition-sense verified in core.json (already present in FEAT_FEAT_GRANTS)."
+ },
+ {
+  "id": "shaman",
+  "grants": true,
+  "feats": [
+   "spirit-familiar-animist"
+  ],
+  "leveled": [
+   {
+    "feat": "enhanced-familiar",
+    "minLevel": 2
+   },
+   {
+    "feat": "incredible-familiar",
+    "minLevel": 9
+   }
+  ],
+  "note": "Animist practice: Spirit Familiar at 1st, Enhanced Familiar at 2nd, Incredible Familiar at 9th (Invocation of Growth). There is no bare 'spirit-familiar' id — the animist version is spirit-familiar-animist (lvl 1, animist trait); spirit-familiar-witch is the wrong one."
+ },
+ {
+  "id": "shield",
+  "grants": true,
+  "feats": [
+   "shield-block"
+  ],
+  "note": "Thaumaturge shield implement, Initiate Benefit: 'You gain the Shield Block general feat.' Already in FEAT_FEAT_GRANTS."
+ },
+ {
+  "id": "spore-order",
+  "grants": true,
+  "feats": [
+   "leshy-familiar"
+  ],
+  "note": "Druid spore order: 'You also gain the Leshy Familiar druid feat' (fungus leshy is a flavor restriction on the familiar, not a condition on the grant)."
+ },
+ {
+  "id": "third-gates-threshold",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player selects an impulse feat (or any kineticist class feat) of their level or lower."
+ },
+ {
+  "id": "trespasser-in-deaths-realm",
+  "grants": true,
+  "feats": [
+   "energized-spark"
+  ],
+  "note": "Level-7 exemplar feature: 'You gain the Energized Spark feat' — unconditional; only the damage type (vitality/void) is chosen, not the feat."
+ },
+ {
+  "id": "vindicator",
+  "grants": false,
+  "note": "Deadly Simplicity is conditional on the deity's favored weapon being simple/unarmed with a die smaller than d6. Vindicator Dedication is a mandatory 2nd-level class-feat SELECTION, not a free grant. Target id would be deadly-simplicity if the conditional lane wants it."
+ },
+ {
+  "id": "war-magic",
+  "grants": true,
+  "feats": [
+   "shield-block"
+  ],
+  "note": "War Mage class archetype: 'You gain the Shield Block general feat at 1st level.' The War Mage Dedication is a required 2nd-level feat selection, not a grant, so it's excluded."
+ },
+ {
+  "id": "warpriest",
+  "grants": true,
+  "feats": [
+   "shield-block"
+  ],
+  "note": "Cleric warpriest First Doctrine grants Shield Block unconditionally. The Deadly Simplicity half is conditional on the deity's favored weapon being simple/unarmed, so it's left out."
+ },
+ {
+  "id": "warrior-of-legend",
+  "grants": true,
+  "feats": [
+   "diehard"
+  ],
+  "note": "'You gain Diehard as a bonus feat' — the doomed drawback is a side effect, not a condition. The Warrior of Legend Dedication is a required 2nd-level selection, not a grant."
+ },
+ {
+  "id": "whose-cry-is-thunder",
+  "grants": true,
+  "feats": [
+   "energized-spark"
+  ],
+  "note": "Level-7 exemplar feature: 'You gain the Energized Spark feat' — only the damage type (electricity/sonic) is chosen."
+ },
+ {
+  "id": "wit",
+  "grants": true,
+  "feats": [
+   "bon-mot"
+  ],
+  "note": "Swashbuckler wit style: 'trained in Diplomacy and gain the Bon Mot skill feat.' Already in FEAT_FEAT_GRANTS."
+ },
+ {
+  "id": "nudging-whisper",
+  "grants": false,
+  "note": "Only grants the EFFECTS of Shameless Request for a single following action — temporary, not the feat."
+ },
+ {
+  "id": "dragons-breath",
+  "grants": false,
+  "note": "Activation gives the next spell the effects of Widen Spell — temporary spellshape effect, not the feat."
+ },
+ {
+  "id": "dragons-breath-1st-level-spell",
+  "grants": false,
+  "note": "Same as dragons-breath: temporary Widen Spell effect on activation."
+ },
+ {
+  "id": "dragons-breath-2nd-level-spell",
+  "grants": false,
+  "note": "Same as dragons-breath: temporary Widen Spell effect on activation."
+ },
+ {
+  "id": "dragons-breath-3rd-level-spell",
+  "grants": false,
+  "note": "Same as dragons-breath: temporary Widen Spell effect on activation."
+ },
+ {
+  "id": "dragons-breath-4th-level-spell",
+  "grants": false,
+  "note": "Same as dragons-breath: temporary Widen Spell effect on activation."
+ },
+ {
+  "id": "dragons-breath-5th-level-spell",
+  "grants": false,
+  "note": "Same as dragons-breath: temporary Widen Spell effect on activation."
+ },
+ {
+  "id": "dragons-breath-6th-level-spell",
+  "grants": false,
+  "note": "Same as dragons-breath: temporary Widen Spell effect on activation."
+ },
+ {
+  "id": "dragons-breath-7th-level-spell",
+  "grants": false,
+  "note": "Same as dragons-breath: temporary Widen Spell effect on activation."
+ },
+ {
+  "id": "dragons-breath-8th-level-spell",
+  "grants": false,
+  "note": "Same as dragons-breath: temporary Widen Spell effect on activation."
+ },
+ {
+  "id": "dragons-breath-9th-level-spell",
+  "grants": false,
+  "note": "Same as dragons-breath: temporary Widen Spell effect on activation."
+ },
+ {
+  "id": "ancestral-embrace",
+  "grants": false,
+  "isChoice": true,
+  "note": "Invested armor grants an ancestry feat of the PLAYER'S choice (any level, prerequisites still apply) and it's lost when investment ends — needs an item-scoped picker, not a fixed id."
+ },
+ {
+  "id": "the-paladin",
+  "grants": true,
+  "feats": [
+   "shield-block"
+  ],
+  "note": "Harrow Court artifact with the invested trait: 'As long as you have The Paladin invested, you gain the Shield Block general feat.' build.ts:2086 already gates item grantsFeats on inv.invested, so this is safe."
+ },
+ {
+  "id": "the-survivor",
+  "grants": true,
+  "feats": [
+   "diehard"
+  ],
+  "note": "Invested Harrow Court artifact: 'you gain Diehard as a bonus feat' (this is the exact case the item grant lane cites in build.ts)."
+ },
+ {
+  "id": "the-tangled-briar",
+  "grants": true,
+  "feats": [
+   "toughness"
+  ],
+  "note": "Invested Harrow Court artifact: 'you gain Toughness as a bonus feat.' toughness verified in core.json."
+ },
+ {
+  "id": "the-peacock",
+  "grants": true,
+  "feats": [
+   "incredible-initiative"
+  ],
+  "note": "Invested Harrow Court artifact: 'gain Incredible Initiative as a bonus feat.' incredible-initiative verified in core.json."
+ },
+ {
+  "id": "affinity-stones",
+  "grants": false,
+  "isChoice": true,
+  "note": "Grants the BENEFITS of a 1st- or 5th-level ancestry feat the wearer chooses (dwarf trait, or a partner's ancestry) and explicitly can't be used to meet prerequisites — a picker, not a fixed grant."
+ },
+ {
+  "id": "flame-navette",
+  "grants": false,
+  "note": "On activation you gain the benefit of Determination once (with fixed counteract values); the feat is also merely named as a comparison for using your own modifier. Temporary."
+ },
+ {
+  "id": "vashus-ninth-life",
+  "grants": false,
+  "note": "'benefits of the Diehard feat for 1 minute' — explicitly temporary."
+ },
+ {
+  "id": "fascinating",
+  "grants": true,
+  "feats": [
+   "fascinating-performance"
+  ],
+  "note": "Relic gift: 'You gain the Fascinating Performance skill feat while wearing or wielding the relic, even if you don't meet its prerequisites.' fascinating-performance verified. Caveat: this record has no invested trait/usage, so the invested-item gate in build.ts may never fire for it — the parent may need to route relic gifts through a different hook."
+ },
+ {
+  "id": "ancestors-call",
+  "grants": false,
+  "note": "You and allies gain a (chosen) dwarf feat for 1 minute — temporary and ally-facing."
+ },
+ {
+  "id": "aon-fascinating",
+  "grants": true,
+  "feats": [
+   "fascinating-performance"
+  ],
+  "note": "Duplicate AoN record of 'fascinating'; same grant of fascinating-performance while wearing/wielding the relic. Same relic-gift gating caveat."
+ },
+ {
+  "id": "aon-ancestors-call",
+  "grants": false,
+  "note": "Duplicate AoN record of 'ancestors-call'; temporary, ally-facing."
+ },
+ {
+  "id": "tailed-goblin",
+  "grants": true,
+  "feats": [
+   "combat-climber"
+  ],
+  "note": "Goblin heritage: 'you gain Combat Climber as a bonus feat.' Heritage grantsFeats is already an engine-supported source (build.ts:2083)."
+ },
+ {
+  "id": "beastkin",
+  "grants": false,
+  "note": "Only widens the ancestry-feat list (beastkin feats become selectable); no feat granted."
+ },
+ {
+  "id": "oread",
+  "grants": false,
+  "note": "Only widens the ancestry-feat list; no feat granted."
+ },
+ {
+  "id": "suli",
+  "grants": false,
+  "note": "Only widens the ancestry-feat list; no feat granted."
+ },
+ {
+  "id": "sylph",
+  "grants": false,
+  "note": "Only widens the ancestry-feat list; no feat granted."
+ },
+ {
+  "id": "undine",
+  "grants": false,
+  "note": "Only widens the ancestry-feat list; no feat granted."
+ },
+ {
+  "id": "cataphract-fleshwarp",
+  "grants": false,
+  "note": "Conditional on class: armor-proficiency normally, but if your class trains you in ALL armor types (fighter/champion) you instead get a skill training plus armor-assist. Both ids exist in core.json (armor-proficiency, armor-assist) — needs a class-conditional lane, so I did not assert an unconditional grant."
+ },
+ {
+  "id": "nascent",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player picks any 1st-level kashrishi ancestry feat they qualify for."
+ },
+ {
+  "id": "trogloshi",
+  "grants": true,
+  "feats": [
+   "crystal-luminescence"
+  ],
+  "note": "'You gain the Crystal Luminescence ancestry feat' — verified lvl 1, kashrishi trait. Already in FEAT_FEAT_GRANTS."
+ },
+ {
+  "id": "old-blood-vishkanya",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses Courtly Graces OR Streetwise (both ids exist), plus a conditional skill-training swap."
+ },
+ {
+  "id": "ardande",
+  "grants": false,
+  "note": "Only widens the ancestry-feat list (ardande + geniekin feats); no feat granted."
+ },
+ {
+  "id": "talos",
+  "grants": false,
+  "note": "Only widens the ancestry-feat list (talos + geniekin feats); no feat granted."
+ },
+ {
+  "id": "ancient-elf",
+  "grants": false,
+  "isChoice": true,
+  "note": "Player chooses a class and gains THAT class's multiclass dedication — an open-ended dedication picker, not a fixed id."
+ },
+ {
+  "id": "wellspring-gnome",
+  "grants": false,
+  "note": "Only retunes the tradition of innate spells from gnome ancestry feats; grants no feat."
+ },
+ {
+  "id": "changeling",
+  "grants": false,
+  "note": "Only widens the ancestry-feat list; no feat granted."
+ },
+ {
+  "id": "nephilim",
+  "grants": false,
+  "note": "Only widens the ancestry-feat list; no feat granted."
+ },
+ {
+  "id": "aiuvarin",
+  "grants": false,
+  "note": "Only widens the ancestry-feat list (aiuvarin + elf feats); no feat granted."
+ },
+ {
+  "id": "dromaar",
+  "grants": false,
+  "note": "Only widens the ancestry-feat list (dromaar + orc feats); no feat granted."
+ },
+ {
+  "id": "eidolons-wrath",
+  "grants": false,
+  "note": "Grants a breath-weapon-style eidolon action with a damage-type choice; no feat is granted."
+ },
+ {
+  "id": "flexible-transmogrification",
+  "grants": false,
+  "note": "Eidolon gains a self-chosen evolution feat that resets each day - temporary, companion-scoped, and a choice."
+ },
+ {
+  "id": "basic-martial-magic",
+  "grants": false,
+  "isChoice": true,
+  "note": "'a 1st- or 2nd-level magus feat of your choice' - builder picker."
+ },
+ {
+  "id": "advanced-martial-magic",
+  "grants": false,
+  "isChoice": true,
+  "note": "'You gain one magus feat' (repeatable) - player picks."
+ },
+ {
+  "id": "basic-synergy",
+  "grants": false,
+  "isChoice": true,
+  "note": "'a 1st- or 2nd-level summoner feat of your choice' - builder picker."
+ },
+ {
+  "id": "advanced-synergy",
+  "grants": false,
+  "isChoice": true,
+  "note": "'You gain one summoner feat' (repeatable) - player picks."
+ },
+ {
+  "id": "signature-synergy",
+  "grants": false,
+  "isChoice": true,
+  "note": "Pick one evolution feat from a fixed list of four (Airborne Form / Burrowing Form / Ever-Vigilant Senses / Hulking Size) - still a player choice."
+ },
+ {
+  "id": "automaton-armament",
+  "grants": false,
+  "note": "Grants a configurable unarmed attack with an upgraded damage die, not a feat."
+ },
+ {
+  "id": "lesser-augmentation",
+  "grants": false,
+  "note": "AoN text: 'You gain the enhancement benefits of one of your 1st- or 5th-level automaton ancestry feats' - re-grants the enhancement portion of a feat you already have; no new feat, and it is a pick."
+ },
+ {
+  "id": "greater-augmentation",
+  "grants": false,
+  "note": "AoN text: enhancement benefits of one of your existing 1st/5th/9th/13th-level automaton ancestry feats - benefits only, not a feat."
+ },
+ {
+  "id": "basic-breakthrough",
+  "grants": false,
+  "isChoice": true,
+  "note": "'a 1st- or 2nd-level inventor feat of your choice' - builder picker."
+ },
+ {
+  "id": "advanced-breakthrough",
+  "grants": false,
+  "isChoice": true,
+  "note": "'You gain one inventor feat' (repeatable) - player picks."
+ },
+ {
+  "id": "basic-shooting",
+  "grants": false,
+  "isChoice": true,
+  "note": "'a 1st- or 2nd-level gunslinger feat of your choice' - builder picker."
+ },
+ {
+  "id": "advanced-shooting",
+  "grants": false,
+  "isChoice": true,
+  "note": "'You gain one gunslinger feat' (repeatable) - player picks."
+ },
+ {
+  "id": "executioner-weapon-training",
+  "grants": false,
+  "note": "Weapon proficiency-progression rider, not a feat grant."
+ },
+ {
+  "id": "lions-might",
+  "grants": false,
+  "note": "Weapon proficiency-progression rider (lion scythes / sun slings), not a feat grant."
+ },
+ {
+  "id": "cunning-trickster-mask",
+  "grants": true,
+  "feats": [
+   "conceal-spell"
+  ],
+  "note": "'If you don't have the Conceal Spell feat, you gain it as a bonus feat' - the only branch is 'you already have it', so you always end up with conceal-spell (verified in core.json feats, level 2 class feat)."
+ },
+ {
+  "id": "sacred-spells",
+  "grants": false,
+  "note": "Adds spells to a list/repertoire; no feat involved."
+ },
+ {
+  "id": "for-love-for-lightning",
+  "grants": false,
+  "note": "Makes focus spells divine + trained in divine spell attacks/DCs - proficiency, not a feat."
+ },
+ {
+  "id": "the-harder-they-fall-ranger",
+  "grants": false,
+  "note": "The captured text is adventure prose about an NPC unlocking feats for the party; the record itself is a ranger feat that grants no feat."
+ },
+ {
+  "id": "roll-with-it-ranger",
+  "grants": false,
+  "note": "Same adventure NPC boilerplate as The Harder They Fall; no feat grant in the feat's own rules."
+ },
+ {
+  "id": "kingdom-assurance",
+  "grants": false,
+  "note": "Repeatable choice of a kingdom SKILL, not of a feat."
+ },
+ {
+  "id": "molten-wit",
+  "grants": false,
+  "isChoice": true,
+  "note": "Either Deception + Charming Liar OR Diplomacy + Group Impression, and the fallback branches let you choose from either feat - a player pick between two named skill feats (charming-liar and group-impression both exist in core.json)."
+ },
+ {
+  "id": "ghoran-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency-progression rider, not a feat grant."
+ },
+ {
+  "id": "whitecape",
+  "grants": true,
+  "feats": [
+   "steady-balance"
+  ],
+  "note": "'You gain the Steady Balance skill feat, even if you aren't trained in Acrobatics' - unconditional; steady-balance verified in core.json feats (skill, level 1)."
+ },
+ {
+  "id": "vanara-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency-progression rider, not a feat grant."
+ },
+ {
+  "id": "debilitating-venom",
+  "grants": false,
+  "note": "Choose a debilitation (Hampering/Stumbling) - not a feat."
+ },
+ {
+  "id": "vishkanya-weapon-expertise",
+  "grants": false,
+  "note": "Weapon proficiency-progression rider, not a feat grant."
+ },
+ {
+  "id": "mountain-skin",
+  "grants": false,
+  "note": "Armor proficiency-progression rider, not a feat grant."
+ },
+ {
+  "id": "elemental-overlap",
+  "grants": false,
+  "isChoice": true,
+  "note": "'Gain a composite impulse feat that includes your kinetic element' - player picks from a filtered pool."
+ },
+ {
+  "id": "woodworker",
+  "grants": true,
+  "feats": [
+   "specialty-crafting"
+  ],
+  "note": "AoN: 'You gain the Specialty Crafting skill feat for woodworking' - unconditional (the conditional clause only covers the Crafting training). specialty-crafting verified in core.json feats; the woodworking specialization is a sub-choice inside that feat."
+ },
+ {
+  "id": "gildedsoul",
+  "grants": false,
+  "note": "AoN: 'If you're trained in Society, you also gain the Courtly Graces skill feat' - conditional on a Diplomacy-or-Society choice, so not unconditional. courtly-graces does exist in core.json if a conditional lane is added later."
+ },
+ {
+  "id": "through-the-gate",
+  "grants": false,
+  "isChoice": true,
+  "note": "'a 1st- or 2nd-level kineticist feat of your choice' - builder picker."
+ },
+ {
+  "id": "advanced-element-control",
+  "grants": false,
+  "isChoice": true,
+  "note": "'You gain one kineticist feat' (repeatable) - player picks."
+ },
+ {
+  "id": "add-element",
+  "grants": false,
+  "isChoice": true,
+  "note": "'You gain an impulse feat for that element' - player picks the element and the impulse feat."
+ },
+ {
+  "id": "stonemasons-eye",
+  "grants": false,
+  "note": "AoN: 'You become trained in Crafting. If you're already trained in Crafting, you INSTEAD gain the Specialty Crafting skill feat for stonemasonry' - strictly conditional."
+ },
+ {
+  "id": "general-training",
+  "grants": false,
+  "isChoice": true,
+  "note": "'You gain a 1st-level general feat' - repeatable player pick (already handled by the pick-a-feat picker lane)."
+ },
+ {
+  "id": "natural-ambition",
+  "grants": false,
+  "isChoice": true,
+  "note": "'a 1st-level class feat for your class' - player pick."
+ },
+ {
+  "id": "multitalented",
+  "grants": false,
+  "isChoice": true,
+  "note": "'a 2nd-level multiclass dedication feat' - player picks which dedication."
+ },
+ {
+  "id": "advanced-general-training",
+  "grants": false,
+  "isChoice": true,
+  "note": "'a general feat of 7th level or lower' - repeatable player pick."
+ },
+ {
+  "id": "orc-lore",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "AoN: 'You also gain the Additional Lore general feat for Orc Lore' - unconditional (the conditional clause only covers Athletics/Survival training). additional-lore verified in core.json feats (skill, level 1); Orc Lore is its sub-selection."
+ },
+ {
+  "id": "ferocious-beasts",
+  "grants": false,
+  "note": "Grants Orc Ferocity to your animal companions/familiars/pets, not to you - companion-scoped."
+ },
+ {
+  "id": "hag-claws",
+  "grants": false,
+  "note": "Grants claw unarmed attacks; the quoted text is only the retraining Special clause. No feat granted."
+ },
+ {
+  "id": "angelkin",
+  "grants": true,
+  "feats": [
+   "multilingual"
+  ],
+  "note": "core.json's description is DEFECTIVE - it reads 'you gain the skill feat' with the feat name stripped and has no descRefs. AoN feat-4542 (Player Core p.79) gives the full text: 'you gain the Multilingual skill feat'. multilingual verified in core.json feats (skill, level 1). Worth fixing the core.json description too."
+ },
+ {
+  "id": "grimspawn",
+  "grants": true,
+  "feats": [
+   "diehard"
+  ],
+  "note": "AoN feat-4543: 'You gain the Diehard general feat' - unconditional. diehard verified in core.json feats (general, level 1)."
+ },
+ {
+  "id": "hellspawn",
+  "grants": true,
+  "feats": [
+   "lie-to-me"
+  ],
+  "note": "AoN feat-4544: 'You also gain the Lie to Me skill feat' - unconditional (the conditional clause only covers the Deception training). lie-to-me verified in core.json feats (skill, level 1)."
+ },
+ {
+  "id": "pitborn",
+  "grants": false,
+  "isChoice": true,
+  "note": "'any one common 1st-level skill feat with a prerequisite of trained in Athletics' - filtered player pick."
+ },
+ {
+  "id": "scion-of-many-planes",
+  "grants": false,
+  "isChoice": true,
+  "note": "'Choose one nephilim lineage feat that you do not already possess' - player pick (would transitively grant that lineage's own feat, e.g. grimspawn -> diehard)."
+ },
+ {
+  "id": "multifarious-muse",
+  "grants": false,
+  "isChoice": true,
+  "note": "'a 1st-level feat that requires that muse' - player picks the muse and the feat."
+ },
+ {
+  "id": "sap-life",
+  "grants": false,
+  "note": "Healing rider on a spell/impulse; the quoted line is only the undead-exclusion caveat. No feat granted."
+ },
+ {
+  "id": "warpriests-armor",
+  "grants": false,
+  "note": "Armor proficiency-progression rider (medium -> heavy), not a feat grant."
+ },
+ {
+  "id": "order-explorer",
+  "grants": false,
+  "isChoice": true,
+  "note": "'a 1st-level feat that lists that order as a prerequisite' - player picks the order and the feat."
+ },
+ {
+  "id": "boundless-reprisals",
+  "grants": false,
+  "note": "Grants extra reactions usable for existing fighter/guardian feats; no feat is granted."
+ },
+ {
+  "id": "favored-prey",
+  "grants": false,
+  "note": "Choose a creature category as favored prey - not a feat."
+ },
+ {
+  "id": "stealthy-companion",
+  "grants": false,
+  "note": "'Your animal companion gains the benefit of the Camouflage feat' - companion-scoped, and benefit-only."
+ }
+]

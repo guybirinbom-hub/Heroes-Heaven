@@ -1,0 +1,114 @@
+[
+ {
+  "id": "kijimuna-gnome",
+  "grants": true,
+  "feats": [
+   "combat-climber"
+  ],
+  "note": "\"You gain the Combat Climber feat\" - unconditional; combat-climber verified in core.json."
+ },
+ {
+  "id": "battle-trained-human-bb",
+  "grants": true,
+  "feats": [
+   "diehard"
+  ],
+  "note": "\"you gain the Diehard feat\" - unconditional; diehard verified in core.json."
+ },
+ {
+  "id": "wylderheart-dedication",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "\"You gain the Additional Lore skill feat for Demon Lore\" — unconditional; additional-lore verified in core.json (Lore subject is Demon Lore)."
+ },
+ {
+  "id": "lion-blade-dedication",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "\"You also gain the Additional Lore skill feat for Espionage Lore\" — unconditional; id verified."
+ },
+ {
+  "id": "jotunborn-lore",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "\"You also gain the Additional Lore general feat for Jotunborn Lore\" — unconditional; the second Additional Lore (Sage Jotunborn heritage) is conditional and omitted."
+ },
+ {
+  "id": "aldori-duelist-dedication",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "\"You gain the Additional Lore feat for Dueling Lore\" — unconditional; only the extra Lore training is conditional."
+ },
+ {
+  "id": "warshard-warrior-dedication",
+  "grants": true,
+  "feats": [
+   "mythic-strike"
+  ],
+  "note": "\"You gain the Mythic Strike feat\" — unconditional grant (usage is restricted to the warshard weapon, but the feat itself is given); mythic-strike verified in core.json."
+ },
+ {
+  "id": "hellknight-dedication",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "'you gain the Additional Lore general feat for Hell Lore' - named, unconditional; the Hell Lore subject is a parameter of Additional Lore (verified id additional-lore)."
+ },
+ {
+  "id": "golden-legionnaire-dedication",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "'You also gain the Additional Lore general feat for Warfare Lore' - named, unconditional (verified id additional-lore)."
+ },
+ {
+  "id": "friend-of-the-sea",
+  "grants": true,
+  "feats": [
+   "pet"
+  ],
+  "note": "'You gain the Pet general feat' - named, unconditional (verified id pet)."
+ },
+ {
+  "id": "pirates-pet",
+  "grants": true,
+  "feats": [
+   "pet"
+  ],
+  "note": "'You gain the Pet general feat' - named, unconditional (verified id pet)."
+ },
+ {
+  "id": "tailed-goblin",
+  "grants": true,
+  "feats": [
+   "combat-climber"
+  ],
+  "note": "Goblin heritage: 'you gain Combat Climber as a bonus feat.' Heritage grantsFeats is already an engine-supported source (build.ts:2083)."
+ },
+ {
+  "id": "cunning-trickster-mask",
+  "grants": true,
+  "feats": [
+   "conceal-spell"
+  ],
+  "note": "'If you don't have the Conceal Spell feat, you gain it as a bonus feat' - the only branch is 'you already have it', so you always end up with conceal-spell (verified in core.json feats, level 2 class feat)."
+ },
+ {
+  "id": "orc-lore",
+  "grants": true,
+  "feats": [
+   "additional-lore"
+  ],
+  "note": "AoN: 'You also gain the Additional Lore general feat for Orc Lore' - unconditional (the conditional clause only covers Athletics/Survival training). additional-lore verified in core.json feats (skill, level 1); Orc Lore is its sub-selection."
+ }
+]

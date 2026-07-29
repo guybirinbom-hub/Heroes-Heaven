@@ -31,6 +31,7 @@ import {
   fixedBoosts,
   resolveBackground,
   subclassKeyAbility,
+  backgroundGrantedFeats,
 } from '../rules/build';
 import { cantripsKnown } from '../rules/spellcasting';
 import { abpSkillBudget } from '../rules/abp';
@@ -2430,9 +2431,13 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                       : ''}
                   </span>
                 )}
-                {background.grantedFeatId && content.feats[background.grantedFeatId] && (
-                  <span className="cc-g"><i className="ti ti-medal" aria-hidden="true" /> {content.feats[background.grantedFeatId].name}</span>
-                )}
+                {backgroundGrantedFeats(background)
+                  .filter((id) => content.feats[id])
+                  .map((id) => (
+                    <span className="cc-g" key={id}>
+                      <i className="ti ti-medal" aria-hidden="true" /> {content.feats[id].name}
+                    </span>
+                  ))}
               </div>
             }
           />

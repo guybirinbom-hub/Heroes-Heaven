@@ -1,0 +1,387 @@
+[
+ {
+  "id": "hunters-brooch",
+  "collection": "items",
+  "name": "Hunter's Brooch",
+  "level": 4,
+  "text": "While wearing this silver religious symbol of Erastil, you can cast the Vitality Lash cantrip as an innate divine spell."
+ },
+ {
+  "id": "nosoi-charm",
+  "collection": "items",
+  "name": "Nosoi Charm",
+  "level": 12,
+  "text": "You can cast Sending once per day as a divine innate spell."
+ },
+ {
+  "id": "nosoi-charm-greater",
+  "collection": "items",
+  "name": "Nosoi Charm (Greater)",
+  "level": 18,
+  "text": "You can cast Sending once per day as a divine innate spell."
+ },
+ {
+  "id": "pistol-of-wonder",
+  "collection": "items",
+  "name": "Pistol of Wonder",
+  "level": 13,
+  "text": "If an entry lists a spell, the pistol Casts that Spell at the indicated level (or at its lowest level, if no level is listed). You make any decisions for a spell cast by the pistol unless otherwise indicated, except that it must only target the creature you chose, or the creature you chose must be the center of the spell's area, if it has an area but no targets. If the spell's range is less than 60 feet, increase the range to 60 feet. Any spell DC required is DC 29, and any spell attack modifier required is +21. If the pistol casts a spell on you, you do"
+ },
+ {
+  "id": "peacemaker",
+  "collection": "items",
+  "name": "Peacemaker",
+  "level": 6,
+  "text": "When you activate the talisman, you gain the effects of a Sanctuary spell (DC 20) lasting for 1 minute."
+ },
+ {
+  "id": "wand-of-fey-flames",
+  "collection": "items",
+  "name": "Wand of Fey Flames",
+  "level": 7,
+  "text": "**Activate** Cast a Spell **Frequency** once per day, plus overcharge --- **Effect** You cast Faerie Fire. For the duration of the spell, you can use the limning flames as a source for your magic. Creatures affected by your *faerie fire* must succeed at a Will save against your spell DC or take a - 2 status penalty to their Will saves against enchantment and illusions spells as long as they are affected by *faerie fire*. You can cast an enchantment or illusion spell on such a creature up to a distance twice the spell's normal range. If the spell has a ra"
+ },
+ {
+  "id": "dragons-breath",
+  "collection": "items",
+  "name": "Dragon's Breath",
+  "level": 4,
+  "text": "Activate envision (metamagic) Requirements You're receiving a bonus to AC from your dragon's breath cape or shield; Effect If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat. Dragon's Breath (1st-Level Spell) Source Grand Bazaar pg. 88 Price 100 gp Dragon's Breath (2nd-Level Spell) Source Grand Bazaar pg. 88 Price 250 gp Dragon's Breath (3rd-Level Spell) Source Grand Bazaar pg. 88 Price 500 gp Dragon's Breath (4th-Leve"
+ },
+ {
+  "id": "dragons-breath-1st-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (1st-Level Spell)",
+  "level": 4,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-2nd-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (2nd-Level Spell)",
+  "level": 6,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-3rd-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (3rd-Level Spell)",
+  "level": 8,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-4th-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (4th-Level Spell)",
+  "level": 10,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-5th-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (5th-Level Spell)",
+  "level": 12,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-6th-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (6th-Level Spell)",
+  "level": 14,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-7th-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (7th-Level Spell)",
+  "level": 16,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-8th-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (8th-Level Spell)",
+  "level": 18,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "dragons-breath-9th-level-spell",
+  "collection": "items",
+  "name": "Dragon's Breath (9th-Level Spell)",
+  "level": 20,
+  "text": "--- **Activate** ⟨4⟩ envision (spellshape) **Requirements** You're receiving a bonus to AC from your *dragon's breath* cape or shield --- **Effect** If your next action is to Cast a Spell with an area of effect that deals the same type of damage as the depicted dragon's breath weapon, the spell gains the effects of the Widen Spell feat."
+ },
+ {
+  "id": "noqual-armor",
+  "collection": "items",
+  "name": "Noqual Armor",
+  "level": 12,
+  "text": "While wearing noqual armor, you gain a +1 circumstance bonus to AC against spell attack rolls. If you Cast a Spell while wearing noqual armor, you must succeed at a DC 5 flat check or the spell fails."
+ },
+ {
+  "id": "noqual-armor-standard-grade",
+  "collection": "items",
+  "name": "Noqual Armor (Standard-Grade)",
+  "level": 12,
+  "text": "While wearing noqual armor, you gain a +1 circumstance bonus to AC against spell attack rolls. If you Cast a Spell while wearing noqual armor, you must succeed at a DC 5 flat check or the spell fails."
+ },
+ {
+  "id": "noqual-armor-high-grade",
+  "collection": "items",
+  "name": "Noqual Armor (High-Grade)",
+  "level": 19,
+  "text": "While wearing noqual armor, you gain a +1 circumstance bonus to AC against spell attack rolls. If you Cast a Spell while wearing noqual armor, you must succeed at a DC 5 flat check or the spell fails."
+ },
+ {
+  "id": "roaring-potion",
+  "collection": "items",
+  "name": "Roaring Potion",
+  "level": 8,
+  "text": "Activate (concentrate) Effect You gain the effects of a bullhorn spell. 90 Price 550 gp Bulk L You gain the effects of a 5th-rank bullhorn spell. 90 Price 3,600 gp Bulk L You gain the effects of a 7th-rank bullhorn spell."
+ },
+ {
+  "id": "roaring-potion-lesser",
+  "collection": "items",
+  "name": "Roaring Potion (Lesser)",
+  "level": 8,
+  "text": "--- **Activate** ⟨1⟩ (concentrate) **Effect** You gain the effects of a Bullhorn spell."
+ },
+ {
+  "id": "roaring-potion-moderate",
+  "collection": "items",
+  "name": "Roaring Potion (Moderate)",
+  "level": 13,
+  "text": "--- **Activate** ⟨1⟩ (concentrate) **Effect** You gain the effects of a 5th-rank Bullhorn spell."
+ },
+ {
+  "id": "roaring-potion-greater",
+  "collection": "items",
+  "name": "Roaring Potion (Greater)",
+  "level": 18,
+  "text": "--- **Activate** ⟨1⟩ (concentrate) **Effect** You gain the effects of a 7th-rank Bullhorn spell."
+ },
+ {
+  "id": "dragonclaw-scutcheon",
+  "collection": "items",
+  "name": "Dragonclaw Scutcheon",
+  "level": 16,
+  "text": "When you Activate any of these talismans, you gain the ability to cast an 8th-rank Dragon Breath focus spell () as an innate spell once before the end of your next turn. Use the dragon type that matches the talismans; you can Cast the Spell this way without spending a Focus Point."
+ },
+ {
+  "id": "spellstriker-staff",
+  "collection": "items",
+  "name": "Spellstriker Staff",
+  "level": 7,
+  "text": "--- **Activate** ⟨4⟩ (concentrate) **Frequency** once per hour **Trigger** You use Spellstrike with a non-cantrip spell and miss with the Strike --- **Effect** An explosion of magical energy—stored up for the Spellstrike—explodes out. All creatures in a take 1d6 damage per rank of the spell, with a save against your spell DC. This damage is the same type the spell would have dealt, and the activation gains that trait; if the spell would have dealt multiple types of damage, choose one of them. --- **Activate** Cast a Spell **Effect** You expend a number o"
+ },
+ {
+  "id": "spellstriker-staff-greater",
+  "collection": "items",
+  "name": "Spellstriker Staff (Greater)",
+  "level": 11,
+  "text": "--- **Activate** ⟨4⟩ (concentrate) **Frequency** once per hour **Trigger** You use Spellstrike with a non-cantrip spell and miss with the Strike --- **Effect** An explosion of magical energy—stored up for the Spellstrike—explodes out. All creatures in a take 1d6 damage per rank of the spell, with a save against your spell DC. This damage is the same type the spell would have dealt, and the activation gains that trait; if the spell would have dealt multiple types of damage, choose one of them. --- **Activate** Cast a Spell **Effect** You expend a number o"
+ },
+ {
+  "id": "spellstriker-staff-major",
+  "collection": "items",
+  "name": "Spellstriker Staff (Major)",
+  "level": 16,
+  "text": "--- **Activate** ⟨4⟩ (concentrate) **Frequency** once per hour **Trigger** You use Spellstrike with a non-cantrip spell and miss with the Strike --- **Effect** An explosion of magical energy—stored up for the Spellstrike—explodes out. All creatures in a take 1d6 damage per rank of the spell, with a save against your spell DC. This damage is the same type the spell would have dealt, and the activation gains that trait; if the spell would have dealt multiple types of damage, choose one of them. --- **Activate** Cast a Spell **Effect** You expend a number o"
+ },
+ {
+  "id": "phoenix-cinder",
+  "collection": "items",
+  "name": "Phoenix Cinder",
+  "level": 16,
+  "text": "You can cast Ignition as an innate spell, and you have access to the following activation."
+ },
+ {
+  "id": "the-deck-of-destiny",
+  "collection": "items",
+  "name": "The Deck of Destiny",
+  "level": 25,
+  "text": "Additionally, divination effects you create gain a +4 item bonus to their DC and to spell attack rolls."
+ },
+ {
+  "id": "affinity-stones",
+  "collection": "items",
+  "name": "Affinity Stones",
+  "level": 9,
+  "text": "- You are always aware of each other and permanently gain the effects of the Status spell."
+ },
+ {
+  "id": "fan-of-soothing-winds",
+  "collection": "items",
+  "name": "Fan of Soothing Winds",
+  "level": 11,
+  "text": "The fan casts a 3-action Heal spell with an area of a instead of a ; the save DC for an undead creature is 28. This spell gains the air trait. The rank of the spell depends on which bead you're turning: the first two beads cast 4th-rank *heal*, the center two cast 3rd-rank *heal*, and the last two cast 2nd-rank *heal*."
+ },
+ {
+  "id": "fan-of-soothing-winds-greater",
+  "collection": "items",
+  "name": "Fan of Soothing Winds (Greater)",
+  "level": 15,
+  "text": "The fan casts a 3-action Heal spell with an area of a instead of a ; the save DC for an undead creature is 34. This spell gains the air trait. The rank of the spell depends on which bead you're turning: the first two beads cast 6th-rank *heal*, the center two cast 5th-rank *heal*, and the last two cast 4th-rank *heal*."
+ },
+ {
+  "id": "invisibility-potion",
+  "collection": "items",
+  "name": "Invisibility Potion",
+  "level": 4,
+  "text": "Upon drinking it, you gain the effects of a 2nd-rank spell."
+ },
+ {
+  "id": "potion-of-leaping",
+  "collection": "items",
+  "name": "Potion of Leaping",
+  "level": 5,
+  "text": "**Activate** ⟨1⟩ (manipulate) --- For 1 minute after you drink this fizzy potion, whenever you Leap, you gain the effect of the 1st-rank Jump spell."
+ },
+ {
+  "id": "potion-of-undetectability",
+  "collection": "items",
+  "name": "Potion of Undetectability",
+  "level": 18,
+  "text": "You also gain the effects of a 4th-rank spell, which protects against See the Unseen spells of 8th rank and lower and has a DC of 36 against Truesight."
+ },
+ {
+  "id": "truesight-potion",
+  "collection": "items",
+  "name": "Truesight Potion",
+  "level": 16,
+  "text": "You gain the benefits of a 7th-rank Truesight spell that has a counteract modifier of 1d20+25."
+ },
+ {
+  "id": "headwrap-of-wisdom",
+  "collection": "items",
+  "name": "Headwrap of Wisdom",
+  "level": 17,
+  "text": "You gain the effects of an Augury spell, except that you receive the result from your own instincts rather than an external source."
+ },
+ {
+  "id": "pendant-of-the-occult",
+  "collection": "items",
+  "name": "Pendant of the Occult",
+  "level": 3,
+  "text": "While wearing the pendant, you gain a +1 item bonus to Occultism checks, and you can cast the Guidance cantrip as an occult innate spell."
+ },
+ {
+  "id": "pendant-of-the-occult-greater",
+  "collection": "items",
+  "name": "Pendant of the Occult (Greater)",
+  "level": 9,
+  "text": "While wearing the pendant, you gain a +2 item bonus to Occultism checks, and you can cast the Guidance cantrip as an occult innate spell. **Activate—Dream Message** 10 minutes (concentrate, manipulate) **Frequency** once per day --- **Effect** You cast a 4th-rank Dream Message spell."
+ },
+ {
+  "id": "third-eye",
+  "collection": "items",
+  "name": "Third Eye",
+  "level": 19,
+  "text": "You continuously see magic auras, as a 9th-rank Detect Magic spell, except you see the location of all auras within 30 feet, not just the strongest. **Activate—Truesight** ⟨2⟩ (concentrate) **Frequency** once per day --- **Effect** You gain the effects of an 8th-rank Truesight spell."
+ },
+ {
+  "id": "the-hollow-star",
+  "collection": "items",
+  "name": "The Hollow Star",
+  "level": 9,
+  "text": "--- **Activate** ⟨5⟩ (divination) **Trigger** You cast a spell or use an effect that has the linguistic trait **Effect** You speak in Aklo when using the linguistic spell or effect, even if you don't normally speak Aklo. If the spell or effect requires a spell attack roll, you gain a +1 item bonus to the roll. If the spell or effect can be resisted with a saving throw, all saves against the effect suffer a –1 item penalty."
+ },
+ {
+  "id": "jian-of-lifes-duality",
+  "collection": "items",
+  "name": "Jian of Life's Duality",
+  "level": 13,
+  "text": "*Life's duality* gains a light charge when you use a spell, skill check, or ability to restore at least 10 Hit Points to an ally. You cast a 3-action 5th-rank Harm spell if you have 3 dark charges or a 3-action 5th-rank Heal spell if you have 3 light charges ()."
+ },
+ {
+  "id": "final-scalecloak",
+  "collection": "items",
+  "name": "Final Scalecloak",
+  "level": 20,
+  "text": "--- **Activate—Commune with Kaiju** ⟨2⟩ (concentrate, manipulate, primal) **Frequency** once per day **Effect** Spend a Mythic Point; you gain the effects of a 6th-rank Telepathy spell but can use it only to communicate with Gargantuan animals and beasts."
+ },
+ {
+  "id": "passage-charm",
+  "collection": "items",
+  "name": "Passage Charm",
+  "level": 10,
+  "text": "While wearing a *passage charm*, you can cast Darkness as an innate occult spell twice per day. The *passage charm* casts 5th-rank Wall of Stone, except the spell loses the earth trait, gains the shadow trait, and has a duration of 24 hours, and the wall is created from solid shadows, rather than stone."
+ },
+ {
+  "id": "greater-feral-linguist",
+  "collection": "items",
+  "name": "Greater Feral Linguist",
+  "level": 8,
+  "text": "78 Usage held in 1 hand Bulk L Activate Cast a Spell (add 1 action) This wooden whistle is stuffed with cotton and carved with images of bellowing stags, howling wolves, and chirping birds. You can blow on this whistle to use it as a catalyst when casting an animal form spell. When you do, you gain the listed benefit for the duration of the spell. 78 Price 3 gp You retain the ability to speak, though this doesn’t allow you to cast spells. Once during the spell’s duration, you can cast either a spell of 4th-rank or lower or a cantrip of any level, ignorin"
+ },
+ {
+  "id": "psyche-salts",
+  "collection": "items",
+  "name": "Psyche Salts",
+  "level": 5,
+  "text": "The creature gains the effect of a clear mind spell and a +1 item bonus to saving throws against mental effects for 10 minutes. 81 Price 30 gp The psyche salts grants the effects of a 2nd-rank clear mind spell, with a +11 counteract check modifier. 81 Price 150 gp The psyche salts grants the effects of a 4th-rank clear mind spell, with a +17 counteract check modifier. 81 Price 3,000 gp The psyche salts grants the effects of an 8th-rank clear mind spell, with a +27 counteract check modifier."
+ },
+ {
+  "id": "psyche-salts-lesser",
+  "collection": "items",
+  "name": "Psyche Salts (Lesser)",
+  "level": 5,
+  "text": "The creature gains the effect of a 2nd-rank Clear Mind spell with a +11 counteract check modifier and a +1 item bonus to saving throws against mental effects for 10 minutes."
+ },
+ {
+  "id": "psyche-salts-moderate",
+  "collection": "items",
+  "name": "Psyche Salts (Moderate)",
+  "level": 9,
+  "text": "The creature gains the effect of a 4th-rank Clear Mind spell with a +17 counteract check modifier and a +2 item bonus to saving throws against mental effects for 10 minutes."
+ },
+ {
+  "id": "psyche-salts-greater",
+  "collection": "items",
+  "name": "Psyche Salts (Greater)",
+  "level": 17,
+  "text": "The creature gains the effect of a 8th-rank Clear Mind spell with a +27 counteract check modifier and a +3 item bonus to saving throws against mental effects for 10 minutes."
+ },
+ {
+  "id": "generals-word",
+  "collection": "items",
+  "name": "General's Word",
+  "level": 14,
+  "text": "While wielding the weapon, you can cast Bullhorn as a 1st-rank cantrip at will."
+ },
+ {
+  "id": "pact-of-the-herald-and-host",
+  "collection": "items",
+  "name": "Pact of the Herald and Host",
+  "level": 6,
+  "text": "You can cast fear as an innate spell once per day, with the spell's tradition matching that of your bound dragon. They can choose to speak in any language you or they know, though they can't use your voice to cast spells or activate items. Each creature in the area must attempt a basic saving throw against the higher of your class DC or spell DC."
+ },
+ {
+  "id": "fervent-spell",
+  "collection": "items",
+  "name": "Fervent Spell",
+  "level": 0,
+  "text": "Fervent Spell Source Treasure Vault (Remastered) pg. 199 Aspect Emotion Prerequisite fervor gift While the relic's fervor gift lasts, you have access to the spell provided by the emotional state, which you can cast using your own spell slots. Activate (concentrate, manipulate) Effect The relic Casts the Spell associated with its emotional fervor at the spell's lowest rank."
+ },
+ {
+  "id": "scrap-shot",
+  "collection": "items",
+  "name": "Scrap Shot",
+  "level": 0,
+  "text": "Make a spell attack roll with your relic against a target within 30 feet. If the target is wearing metal armor or is made of metal, you gain a +1 circumstance bonus to your spell attack roll, and the target becomes clumsy 1 until the start of your next turn as the scrap adheres to the target."
+ },
+ {
+  "id": "living-storm",
+  "collection": "items",
+  "name": "Living Storm",
+  "level": 0,
+  "text": "In addition, a creature that Strikes you with a melee attack takes 5 electricity damage, and you can cast 5th-rank lightning bolt as an innate spell."
+ },
+ {
+  "id": "flowing-footsteps",
+  "collection": "items",
+  "name": "Flowing Footsteps",
+  "level": 0,
+  "text": "You gain the effects of the water walk spell, and the ability to breathe water."
+ }
+]

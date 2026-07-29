@@ -1,0 +1,387 @@
+[
+ {
+  "id": "town-troublemaker",
+  "collection": "backgrounds",
+  "name": "Town Troublemaker",
+  "level": null,
+  "text": "You gain the Dirty Trick skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Thievery **Lore** Underworld Lore **Skill Feat** Dirty Trick"
+ },
+ {
+  "id": "sideshow-scion",
+  "collection": "backgrounds",
+  "name": "Sideshow Scion",
+  "level": null,
+  "text": "You gain the Acrobatic Performer skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Acrobatics **Lore** Games Lore **Skill Feat** Acrobatic Performer"
+ },
+ {
+  "id": "wandering-libertine",
+  "collection": "backgrounds",
+  "name": "Wandering Libertine",
+  "level": null,
+  "text": "You gain the Charming Liar skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Deception **Lore** Shelyn Lore **Skill Feat** Charming Liar"
+ },
+ {
+  "id": "badlands-scout",
+  "collection": "backgrounds",
+  "name": "Badlands Scout",
+  "level": null,
+  "text": "You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Survival **Lore** Badlands Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "belkzen-anthropologist",
+  "collection": "backgrounds",
+  "name": "Belkzen Anthropologist",
+  "level": null,
+  "text": "You gain the skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Society **Lore** Orc Pantheon Lore **Skill Feat** Multilingual"
+ },
+ {
+  "id": "empty-hand-loyalist",
+  "collection": "backgrounds",
+  "name": "Empty Hand Loyalist",
+  "level": null,
+  "text": "You gain the Quick Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Intimidation **Lore** Belkzen Lore **Skill Feat** Quick Coercion"
+ },
+ {
+  "id": "foreign-diplomat",
+  "collection": "backgrounds",
+  "name": "Foreign Diplomat",
+  "level": null,
+  "text": "You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Diplomacy **Lore** Heraldry Lore **Skill Feat** Group Impression"
+ },
+ {
+  "id": "self-made",
+  "collection": "backgrounds",
+  "name": "Self-Made",
+  "level": null,
+  "text": "You gain the Hefty Hauler skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Athletics **Skill Feat** Hefty Hauler"
+ },
+ {
+  "id": "trade-representative",
+  "collection": "backgrounds",
+  "name": "Trade Representative",
+  "level": null,
+  "text": "You gain the Quick Repair skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Mercantile Lore **Skill Feat** Quick Repair"
+ },
+ {
+  "id": "blight-survivor",
+  "collection": "backgrounds",
+  "name": "Blight Survivor",
+  "level": null,
+  "text": "You gain the Natural Medicine skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Nature **Lore** Fungus Lore **Skill Feat** Natural Medicine"
+ },
+ {
+  "id": "demon-hunted",
+  "collection": "backgrounds",
+  "name": "Demon Hunted",
+  "level": null,
+  "text": "You gain the Intimidating Glare skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Intimidation **Lore** Warfare Lore **Skill Feat** Intimidating Glare"
+ },
+ {
+  "id": "fiendbreaking-pilgrim",
+  "collection": "backgrounds",
+  "name": "Fiendbreaking Pilgrim",
+  "level": null,
+  "text": "You gain the Quick Identification skill feat, can use Treerazer Lore checks in place of Perception when you attempt to Seek or Sense the Motive of a creature you suspect of being an agent of Treerazer. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Religion **Lore** Treerazer Lore **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "portal-scholar",
+  "collection": "backgrounds",
+  "name": "Portal Scholar",
+  "level": null,
+  "text": "You gain the Arcane Sense skill feat, and also gain the Restorative Teleportation reaction. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Arcana **Lore** Architecture Lore **Skill Feat** Arcane Sense"
+ },
+ {
+  "id": "story-collector",
+  "collection": "backgrounds",
+  "name": "Story Collector",
+  "level": null,
+  "text": "You gain the Trick Magic Item skill feat, as well as the Opportunistic Accusation reaction. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Occultism **Lore** Demon Lore **Skill Feat** Trick Magic Item"
+ },
+ {
+  "id": "student-of-archery",
+  "collection": "backgrounds",
+  "name": "Student of Archery",
+  "level": null,
+  "text": "You gain the Terrain Stalker skill feat and have focused your abilities on a specific type of ranged weapon. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Stealth **Lore** Warfare Lore **Skill Feat** Terrain Stalker"
+ },
+ {
+  "id": "child-of-the-colony",
+  "collection": "backgrounds",
+  "name": "Child of the Colony",
+  "level": null,
+  "text": "You gain the Survey Wildlife skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Survival **Lore** Island Lore **Skill Feat** Survey Wildlife"
+ },
+ {
+  "id": "company-agent",
+  "collection": "backgrounds",
+  "name": "Company Agent",
+  "level": null,
+  "text": "You gain the Charming Liar skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Deception **Lore** Accounting Lore **Skill Feat** Charming Liar"
+ },
+ {
+  "id": "hunted-by-the-night",
+  "collection": "backgrounds",
+  "name": "Hunted by the Night",
+  "level": null,
+  "text": "You gain the Dubious Knowledge skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Stealth **Lore** Vampire Lore **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "stargazer",
+  "collection": "backgrounds",
+  "name": "Stargazer",
+  "level": null,
+  "text": "You're trained in your choice of the Arcana, Nature, or Occultism skill, and gain the Assurance skill feat in your chosen skill."
+ },
+ {
+  "id": "student-of-the-ancients",
+  "collection": "backgrounds",
+  "name": "Student of the Ancients",
+  "level": null,
+  "text": "You gain the skill feat; one language gained must be Azlanti and the other can be any common or uncommon language. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Lore** Azlanti Lore **Skill Feat** Multilingual"
+ },
+ {
+  "id": "battle-mechanic",
+  "collection": "backgrounds",
+  "name": "Battle Mechanic",
+  "level": null,
+  "text": "You gain the Quick Repair skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Crafting **Lore** Vehicle Lore **Skill Feat** Quick Repair"
+ },
+ {
+  "id": "combat-carpenter",
+  "collection": "backgrounds",
+  "name": "Combat Carpenter",
+  "level": null,
+  "text": "You gain the Specialty Crafting skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Engineering Lore **Skill Feat** Specialty Crafting"
+ },
+ {
+  "id": "combat-chaplain",
+  "collection": "backgrounds",
+  "name": "Combat Chaplain",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Religion **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "conscript",
+  "collection": "backgrounds",
+  "name": "Conscript",
+  "level": null,
+  "text": "You gain the Dubious Knowledge skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Society **Lore** Warfare Lore **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "plague-doctor",
+  "collection": "backgrounds",
+  "name": "Plague Doctor",
+  "level": null,
+  "text": "You gain the Inoculation skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Medicine **Lore** Herbalism Lore **Skill Feat** Inoculation"
+ },
+ {
+  "id": "quartermaster",
+  "collection": "backgrounds",
+  "name": "Quartermaster",
+  "level": null,
+  "text": "You gain the Intimidating Glare skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Intimidation **Lore** Legal Lore **Skill Feat** Intimidating Glare"
+ },
+ {
+  "id": "report-runner",
+  "collection": "backgrounds",
+  "name": "Report Runner",
+  "level": null,
+  "text": "You gain the Express Rider skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Nature **Lore** Stabling Lore **Skill Feat** Express Rider"
+ },
+ {
+  "id": "veteran",
+  "collection": "backgrounds",
+  "name": "Veteran",
+  "level": null,
+  "text": "You gain the Armor Assist skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Athletics **Lore** Warfare Lore **Skill Feat** Armor Assist"
+ },
+ {
+  "id": "war-orphan",
+  "collection": "backgrounds",
+  "name": "War Orphan",
+  "level": null,
+  "text": "You gain the Dirty Trick skill feat. --- ## Background details **Attribute Boosts** Constitution or Dexterity, one free **Trained Skill** Thievery **Lore** Underworld Lore **Skill Feat** Dirty Trick"
+ },
+ {
+  "id": "aeronaut",
+  "collection": "backgrounds",
+  "name": "Aeronaut",
+  "level": null,
+  "text": "You gain the Assurance skill feat with Piloting Lore."
+ },
+ {
+  "id": "arcane-revolutionary",
+  "collection": "backgrounds",
+  "name": "Arcane Revolutionary",
+  "level": null,
+  "text": "You gain the Quick Identification skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Arcana **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "battlefield-scrounger",
+  "collection": "backgrounds",
+  "name": "Battlefield Scrounger",
+  "level": null,
+  "text": "You gain the Improvise Tool skill feat. --- ## Background details **Attribute Boosts** Intelligence or Strength, one free **Trained Skill** Crafting **Lore** Warfare Lore **Skill Feat** Improvise Tool"
+ },
+ {
+  "id": "martial-musician",
+  "collection": "backgrounds",
+  "name": "Martial Musician",
+  "level": null,
+  "text": "You gain the Impressive Performance skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Performance **Lore** Warfare Lore **Skill Feat** Impressive Performance"
+ },
+ {
+  "id": "beast-seeker",
+  "collection": "backgrounds",
+  "name": "Beast Seeker",
+  "level": null,
+  "text": "If you choose Athletics, you gain the Titan Wrestler skill feat. If you choose Thievery, you gain the Dirty Trick skill feat."
+ },
+ {
+  "id": "child-of-the-polis",
+  "collection": "backgrounds",
+  "name": "Child of the Polis",
+  "level": null,
+  "text": "If you choose Diplomacy, you gain the Bargain Hunter skill feat. If you choose Society, you gain the Streetwise skill feat."
+ },
+ {
+  "id": "glory-hound",
+  "collection": "backgrounds",
+  "name": "Glory Hound",
+  "level": null,
+  "text": "If you choose Intimidation, you gain the Intimidating Glare skill feat. If you choose Performance, you gain the Impressive Performance skill feat."
+ },
+ {
+  "id": "kartaji-epicurean",
+  "collection": "backgrounds",
+  "name": "Kartaji Epicurean",
+  "level": null,
+  "text": "You gain the Additional Lore skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Lore** Cooking Lore **Skill Feat** Additional Lore"
+ },
+ {
+  "id": "obari-wanderer",
+  "collection": "backgrounds",
+  "name": "Obari Wanderer",
+  "level": null,
+  "text": "If you choose Acrobatics, you gain the Cat Fall skill feat. If you choose Survival, you gain the Terrain Expertise skill feat (aquatic or forest terrain is recommended)."
+ },
+ {
+  "id": "cathedral-child",
+  "collection": "backgrounds",
+  "name": "Cathedral Child",
+  "level": null,
+  "text": "You gain the Battle Medicine skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Religion **Lore** Scribing Lore **Skill Feat** Battle Medicine"
+ },
+ {
+  "id": "curious-apprentice",
+  "collection": "backgrounds",
+  "name": "Curious Apprentice",
+  "level": null,
+  "text": "You gain the Hefty Hauler skill feat (carrying around all those books builds muscles, after all!). --- ## Background details **Attribute Boosts** Intelligence or Strength, one free **Trained Skill** Occultism **Lore** Poetry Lore **Skill Feat** Hefty Hauler"
+ },
+ {
+  "id": "eager-scofflaw",
+  "collection": "backgrounds",
+  "name": "Eager Scofflaw",
+  "level": null,
+  "text": "You gain the Bon Mot skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Thievery **Lore** Underworld Lore **Skill Feat** Bon Mot"
+ },
+ {
+  "id": "lost-coast-local",
+  "collection": "backgrounds",
+  "name": "Lost Coast Local",
+  "level": null,
+  "text": "You gain the Hobnobber skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Society **Lore** Sandpoint Lore **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "militia-member",
+  "collection": "backgrounds",
+  "name": "Militia Member",
+  "level": null,
+  "text": "You gain the Lie to Me skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Athletics **Lore** Sailing Lore **Skill Feat** Lie to Me"
+ },
+ {
+  "id": "newcomer",
+  "collection": "backgrounds",
+  "name": "Newcomer",
+  "level": null,
+  "text": "You gain the Additional Lore skill feat—the lore you choose represents the interest and focus of study that drew you to the region. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Diplomacy **Lore** Library Lore **Skill Feat** Additional Lore"
+ },
+ {
+  "id": "runelord-scholar",
+  "collection": "backgrounds",
+  "name": "Runelord Scholar",
+  "level": null,
+  "text": "You gain the skill feat, but one of the languages you gain from this feat must be Thassilonian. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Arcana **Lore** Academia Lore **Skill Feat** Multilingual"
+ },
+ {
+  "id": "scarnetti-connected",
+  "collection": "backgrounds",
+  "name": "Scarnetti-Connected",
+  "level": null,
+  "text": "You gain the Charming Liar skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Intimidation **Lore** Mercantile Lore **Skill Feat** Charming Liar"
+ },
+ {
+  "id": "dreams-of-vengeance",
+  "collection": "backgrounds",
+  "name": "Dreams of Vengeance",
+  "level": null,
+  "text": "If you choose dragon, you gain the Blasting Beams deviant feat with the fire type. If you choose troll, you gain the Titan Swing deviant feat. You gain the Titan Wrestler skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Gladiator Lore **Skill Feat** Titan Wrestler"
+ },
+ {
+  "id": "lost-loved-one",
+  "collection": "backgrounds",
+  "name": "Lost Loved One",
+  "level": null,
+  "text": "If you choose leech, you gain the Draining Touch deviant feat. If you choose wraith, you gain the Ghostly Grasp deviant feat. You gain the skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Society **Lore** Genealogy Lore **Skill Feat** Multilingual"
+ },
+ {
+  "id": "sense-of-belonging",
+  "collection": "backgrounds",
+  "name": "Sense of Belonging",
+  "level": null,
+  "text": "If you choose flicker, you gain the Sonic Dash deviant feat. If you choose wraith, you gain the Eerie Flicker deviant feat. You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Survival **Lore** Scouting Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "total-power",
+  "collection": "backgrounds",
+  "name": "Total Power",
+  "level": null,
+  "text": "If you choose dragon, you gain the Blasting Beams deviant feat with the electricity type. If you choose troll, you gain the Bone Spikes deviant feat. You gain the Intimidating Glare skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Intimidation **Lore** Legal Lore **Skill Feat** Intimidating Glare"
+ },
+ {
+  "id": "wanderlust",
+  "collection": "backgrounds",
+  "name": "Wanderlust",
+  "level": null,
+  "text": "If you choose flicker, you gain the Overclock Senses deviant feat. If you choose troll, you gain the Titan Swing deviant feat. You gain the Express Rider skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Nature **Lore** Stabling Lore **Skill Feat** Express Rider"
+ },
+ {
+  "id": "legacy-of-the-hammer",
+  "collection": "backgrounds",
+  "name": "Legacy of the Hammer",
+  "level": null,
+  "text": "You gain the Concealing Legerdemain skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Thievery **Lore** Engineering Lore **Skill Feat** Concealing Legerdemain"
+ },
+ {
+  "id": "archdevil-apostate",
+  "collection": "backgrounds",
+  "name": "Archdevil Apostate",
+  "level": null,
+  "text": "You gain the Student of the Canon skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Religion **Lore** Devil Lore **Skill Feat** Student of the Canon"
+ },
+ {
+  "id": "breachill-survivor",
+  "collection": "backgrounds",
+  "name": "Breachill Survivor",
+  "level": null,
+  "text": "You gain the Battle Medicine skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Medicine **Lore** Warfare Lore **Skill Feat** Battle Medicine"
+ },
+ {
+  "id": "chelaxian-exile",
+  "collection": "backgrounds",
+  "name": "Chelaxian Exile",
+  "level": null,
+  "text": "You gain the Streetwise skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Society **Lore** Underworld Lore **Skill Feat** Streetwise"
+ }
+]

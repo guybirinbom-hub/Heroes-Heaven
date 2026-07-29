@@ -1,0 +1,387 @@
+[
+ {
+  "id": "bard-dedication",
+  "collection": "feats",
+  "name": "Bard Dedication",
+  "level": 2,
+  "text": "You can take that muse's feats, but you don't gain the starting feat, spell or any other abilities the choice of muse grants."
+ },
+ {
+  "id": "basic-muses-whispers",
+  "collection": "feats",
+  "name": "Basic Muse's Whispers",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level bard feat."
+ },
+ {
+  "id": "advanced-muses-whispers",
+  "collection": "feats",
+  "name": "Advanced Muse's Whispers",
+  "level": 6,
+  "text": "You gain one bard feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another bard feat."
+ },
+ {
+  "id": "basic-dogma",
+  "collection": "feats",
+  "name": "Basic Dogma",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level cleric feat."
+ },
+ {
+  "id": "advanced-dogma",
+  "collection": "feats",
+  "name": "Advanced Dogma",
+  "level": 6,
+  "text": "You gain one cleric feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another cleric feat."
+ },
+ {
+  "id": "basic-wilding",
+  "collection": "feats",
+  "name": "Basic Wilding",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level druid feat."
+ },
+ {
+  "id": "advanced-wilding",
+  "collection": "feats",
+  "name": "Advanced Wilding",
+  "level": 6,
+  "text": "You gain one druid feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another druid feat."
+ },
+ {
+  "id": "basic-maneuver",
+  "collection": "feats",
+  "name": "Basic Maneuver",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level fighter feat."
+ },
+ {
+  "id": "advanced-maneuver",
+  "collection": "feats",
+  "name": "Advanced Maneuver",
+  "level": 6,
+  "text": "You gain a fighter feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another fighter feat."
+ },
+ {
+  "id": "basic-hunters-trick",
+  "collection": "feats",
+  "name": "Basic Hunter's Trick",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level ranger feat."
+ },
+ {
+  "id": "advanced-hunters-trick",
+  "collection": "feats",
+  "name": "Advanced Hunter's Trick",
+  "level": 6,
+  "text": "You gain one ranger feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another ranger feat."
+ },
+ {
+  "id": "rogue-dedication",
+  "collection": "feats",
+  "name": "Rogue Dedication",
+  "level": 2,
+  "text": "You gain a skill feat and the rogue's Surprise Attack class feature."
+ },
+ {
+  "id": "basic-trickery",
+  "collection": "feats",
+  "name": "Basic Trickery",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level rogue feat."
+ },
+ {
+  "id": "sneak-attacker",
+  "collection": "feats",
+  "name": "Sneak Attacker",
+  "level": 4,
+  "text": "You gain the Sneak Attack class feature, except it deals 1d4 damage, increasing to 1d6 at 6th level."
+ },
+ {
+  "id": "advanced-trickery",
+  "collection": "feats",
+  "name": "Advanced Trickery",
+  "level": 6,
+  "text": "You gain one rogue feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another rogue feat."
+ },
+ {
+  "id": "skill-mastery-rogue",
+  "collection": "feats",
+  "name": "Skill Mastery (Rogue)",
+  "level": 8,
+  "text": "You gain a skill feat associated with one of the skills you chose; you must meet all its prerequisites. Special You can select this feat up to five times."
+ },
+ {
+  "id": "uncanny-dodge",
+  "collection": "feats",
+  "name": "Uncanny Dodge",
+  "level": 10,
+  "text": "You gain the Deny Advantage class feature."
+ },
+ {
+  "id": "basic-witchcraft",
+  "collection": "feats",
+  "name": "Basic Witchcraft",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level witch feat of your choice."
+ },
+ {
+  "id": "advanced-witchcraft",
+  "collection": "feats",
+  "name": "Advanced Witchcraft",
+  "level": 6,
+  "text": "You gain one witch feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another witch feat."
+ },
+ {
+  "id": "basic-arcana",
+  "collection": "feats",
+  "name": "Basic Arcana",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level wizard feat of your choice."
+ },
+ {
+  "id": "advanced-arcana",
+  "collection": "feats",
+  "name": "Advanced Arcana",
+  "level": 6,
+  "text": "You gain one wizard feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another wizard feat."
+ },
+ {
+  "id": "ancestral-paragon",
+  "collection": "feats",
+  "name": "Ancestral Paragon",
+  "level": 3,
+  "text": "You gain a 1st-level ancestry feat."
+ },
+ {
+  "id": "pet",
+  "collection": "feats",
+  "name": "Pet",
+  "level": 1,
+  "text": "--- **Special** You can gain a new pet by retraining this feat, releasing any previous pet you have. If you later gain a familiar or other companion that uses the Pet feat, you can immediately retrain this feat."
+ },
+ {
+  "id": "natural-senses",
+  "collection": "feats",
+  "name": "Natural Senses",
+  "level": 1,
+  "text": "(Echolocation allows you to use hearing as a precise sense at the listed range.) If your animal kind doesn't typically have a specific type of sense, you can't gain that sense with this feat. --- **Special** You can take this feat multiple times, choosing a different sense each time."
+ },
+ {
+  "id": "seasong",
+  "collection": "feats",
+  "name": "Seasong",
+  "level": 1,
+  "text": "In addition, you gain the Virtuosic Performer skill feat for singing, and your voice carries equally well above and below water."
+ },
+ {
+  "id": "animal-strength",
+  "collection": "feats",
+  "name": "Animal Strength",
+  "level": 6,
+  "text": "You tap into the primal strength of your animal feature. When you gain a claw or jaws attack from animal feature, you can choose a weapon you're carrying and apply all runes from that weapon (if they're applicable) to that unarmed attack. In addition, when you critically hit with a claw or jaws attack from animal feature, you deal 1d6 damage."
+ },
+ {
+  "id": "runtsage",
+  "collection": "feats",
+  "name": "Runtsage",
+  "level": 5,
+  "text": "You gain the Adopted Ancestry general feat and must select goblin as the feat's chosen ancestry. You also gain one 1st-level goblin ancestry feat."
+ },
+ {
+  "id": "war-conditioning",
+  "collection": "feats",
+  "name": "War Conditioning",
+  "level": 13,
+  "text": "When you gain this feat, you can choose to gain either a climb Speed of 20 feet or a swim Speed of 20 feet."
+ },
+ {
+  "id": "bone-magic",
+  "collection": "feats",
+  "name": "Bone Magic",
+  "level": 1,
+  "text": "--- **Special** Choose when you gain this feat whether your innate spells are primal or occult; this choice applies to all innate spells you gain from lizardfolk ancestry feats that have Bone Magic as a prerequisite."
+ },
+ {
+  "id": "invulnerable-rager",
+  "collection": "feats",
+  "name": "Invulnerable Rager",
+  "level": 8,
+  "text": "Whenever you gain a barbarian class feature that grants you expert or greater proficiency in medium armor, you also gain that proficiency in heavy armor."
+ },
+ {
+  "id": "empiricists-eye",
+  "collection": "feats",
+  "name": "Empiricist's Eye",
+  "level": 12,
+  "text": "--- **Special** If you have the Blind-Fight feat, your allies gain that feat's benefits against any creature that's off-guard due to Empiricist's Eye."
+ },
+ {
+  "id": "monastic-archer-stance",
+  "collection": "feats",
+  "name": "Monastic Archer Stance",
+  "level": 1,
+  "text": "You can use your other monk feats or monk abilities that normally require unarmed attacks with these bows when attacking within half the first range increment (normally 50 feet for a longbow and 30 feet for a shortbow), so long as the feat or ability doesn't require a single, specific Strike. --- **Special** When you select this feat, you become trained in the longbow, shortbow, and any simple and martial bows with the monk trait. If you gain the expert strikes class feature, your proficiency rank for these weapons increases to expert, and if you gain th"
+ },
+ {
+  "id": "basic-concoction",
+  "collection": "feats",
+  "name": "Basic Concoction",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level alchemist feat."
+ },
+ {
+  "id": "advanced-concoction",
+  "collection": "feats",
+  "name": "Advanced Concoction",
+  "level": 6,
+  "text": "You gain one alchemist feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another alchemist feat."
+ },
+ {
+  "id": "basic-fury",
+  "collection": "feats",
+  "name": "Basic Fury",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level barbarian feat."
+ },
+ {
+  "id": "advanced-fury",
+  "collection": "feats",
+  "name": "Advanced Fury",
+  "level": 6,
+  "text": "You gain one barbarian feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another barbarian feat."
+ },
+ {
+  "id": "champion-dedication",
+  "collection": "feats",
+  "name": "Champion Dedication",
+  "level": 2,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in any type of armor (but not unarmored defense), you also gain that proficiency in the armor types granted to you by this feat. If you have a class feature that grants you expert proficiency in unarmored defense and you're 13th level or higher, you also become an expert in the armor types granted to you by this feat."
+ },
+ {
+  "id": "basic-devotion",
+  "collection": "feats",
+  "name": "Basic Devotion",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level champion feat."
+ },
+ {
+  "id": "devout-magic",
+  "collection": "feats",
+  "name": "Devout Magic",
+  "level": 4,
+  "text": "You gain a devotion spell of your choice listed in the devotion spells class feature, following the same restrictions listed there."
+ },
+ {
+  "id": "advanced-devotion",
+  "collection": "feats",
+  "name": "Advanced Devotion",
+  "level": 6,
+  "text": "You gain one champion feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another champion feat."
+ },
+ {
+  "id": "devout-blessing",
+  "collection": "feats",
+  "name": "Devout Blessing",
+  "level": 6,
+  "text": "You gain the blessing of the devoted class feature, choosing from the listed blessings or any other to which you have access."
+ },
+ {
+  "id": "investigator-dedication",
+  "collection": "feats",
+  "name": "Investigator Dedication",
+  "level": 2,
+  "text": "You gain the On the Case class feature, which grants you both the Pursue a Lead activity and Clue In reaction."
+ },
+ {
+  "id": "basic-deduction",
+  "collection": "feats",
+  "name": "Basic Deduction",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level investigator feat of your choice."
+ },
+ {
+  "id": "advanced-deduction",
+  "collection": "feats",
+  "name": "Advanced Deduction",
+  "level": 6,
+  "text": "You gain one investigator feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another investigator feat."
+ },
+ {
+  "id": "keen-recollection",
+  "collection": "feats",
+  "name": "Keen Recollection",
+  "level": 6,
+  "text": "You gain the Keen Recollection class feature."
+ },
+ {
+  "id": "skill-mastery",
+  "collection": "feats",
+  "name": "Skill Mastery",
+  "level": 8,
+  "text": "You gain a skill feat associated with one of the skills you chose; you must meet all its prerequisites. You gain a skill feat associated with one of the skills you chose. --- **Special** You can select this feat up to five times."
+ },
+ {
+  "id": "monk-dedication",
+  "collection": "feats",
+  "name": "Monk Dedication",
+  "level": 2,
+  "text": "You become trained in unarmed attacks and gain the Powerful Fist class feature."
+ },
+ {
+  "id": "basic-kata",
+  "collection": "feats",
+  "name": "Basic Kata",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level monk feat."
+ },
+ {
+  "id": "advanced-kata",
+  "collection": "feats",
+  "name": "Advanced Kata",
+  "level": 6,
+  "text": "You gain one monk feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another monk feat."
+ },
+ {
+  "id": "basic-mysteries",
+  "collection": "feats",
+  "name": "Basic Mysteries",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level oracle feat of your choice."
+ },
+ {
+  "id": "advanced-mysteries",
+  "collection": "feats",
+  "name": "Advanced Mysteries",
+  "level": 6,
+  "text": "You gain one oracle feat. --- **Special** You can select this feat more than once. Each time, you gain another oracle feat."
+ },
+ {
+  "id": "basic-blood-potency",
+  "collection": "feats",
+  "name": "Basic Blood Potency",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level sorcerer feat."
+ },
+ {
+  "id": "advanced-blood-potency",
+  "collection": "feats",
+  "name": "Advanced Blood Potency",
+  "level": 6,
+  "text": "You gain one sorcerer feat. --- **Special** You can select this feat more than once. Each time you do, you gain another sorcerer feat."
+ },
+ {
+  "id": "basic-flair",
+  "collection": "feats",
+  "name": "Basic Flair",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level swashbuckler feat of your choice."
+ },
+ {
+  "id": "finishing-precision",
+  "collection": "feats",
+  "name": "Finishing Precision",
+  "level": 4,
+  "text": "You gain the Precise Strike class feature but you deal 1 addition damage on a hit and 1d6 damage on a finisher."
+ }
+]

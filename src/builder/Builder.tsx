@@ -19,6 +19,7 @@ import {
   trainedSkillOptions,
   levelGrants,
   setupMissing,
+  backgroundGrantedFeats,
 } from '../rules/build';
 import { confirmDialog } from '../sheet/confirm';
 import { sourceCatalog, enabledBookSet } from '../rules/sources';
@@ -990,11 +991,12 @@ export function Builder({
                           </div>
                         ))}
                         {bgFeatAtThisLevel &&
-                          (() => {
-                            const ft = content.feats[bg!.grantedFeatId!];
-                            const nm = ft?.name ?? bg!.grantedFeatId!;
+                          // Eagle Hunter and Returned grant TWO feats — render every one, not the first.
+                          backgroundGrantedFeats(bg).map((gid) => {
+                            const ft = content.feats[gid];
+                            const nm = ft?.name ?? gid;
                             return (
-                              <div className="lvl-gain-block">
+                              <div className="lvl-gain-block" key={gid}>
                                 <div className="lvl-gain">
                                   <i className="ti ti-star lvl-gain-ic" aria-hidden="true" />
                                   <span className="lvl-gain-name">{nm}</span>
@@ -1003,7 +1005,7 @@ export function Builder({
                                 <ChoiceDetails name={nm} flavor={ft?.description} descRefs={ft?.descRefs} />
                               </div>
                             );
-                          })()}
+                          })}
                       </div>
                     </div>
                   )}

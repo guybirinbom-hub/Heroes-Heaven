@@ -1,0 +1,387 @@
+[
+ {
+  "id": "black-market-smuggler",
+  "collection": "backgrounds",
+  "name": "Black Market Smuggler",
+  "level": null,
+  "text": "You gain the Experienced Smuggler skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Stealth **Lore** Underworld Lore **Skill Feat** Experienced Smuggler"
+ },
+ {
+  "id": "desert-tracker",
+  "collection": "backgrounds",
+  "name": "Desert Tracker",
+  "level": null,
+  "text": "You gain the Experienced Tracker skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Survival **Lore** Desert Lore **Skill Feat** Experienced Tracker"
+ },
+ {
+  "id": "merabite-prodigy",
+  "collection": "backgrounds",
+  "name": "Merabite Prodigy",
+  "level": null,
+  "text": "You gain the Specialty Crafting skill feat with alchemy --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Alchemical Lore"
+ },
+ {
+  "id": "osirionologist",
+  "collection": "backgrounds",
+  "name": "Osirionologist",
+  "level": null,
+  "text": "You gain the Oddity Identification skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Occultism **Lore** Ancient Osirion Lore **Skill Feat** Oddity Identification"
+ },
+ {
+  "id": "purveyor-of-the-bizarre",
+  "collection": "backgrounds",
+  "name": "Purveyor of the Bizarre",
+  "level": null,
+  "text": "You gain the Quick Identification skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Arcana **Lore** Mercantile Lore **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "secular-medic",
+  "collection": "backgrounds",
+  "name": "Secular Medic",
+  "level": null,
+  "text": "You gain the Battle Medicine skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Medicine **Lore** Anatomy Lore **Skill Feat** Battle Medicine"
+ },
+ {
+  "id": "thuvian-unifier",
+  "collection": "backgrounds",
+  "name": "Thuvian Unifier",
+  "level": null,
+  "text": "You gain the Quick Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Intimidation **Lore** Politics Lore **Skill Feat** Quick Coercion"
+ },
+ {
+  "id": "aspiring-free-captain",
+  "collection": "backgrounds",
+  "name": "Aspiring Free Captain",
+  "level": null,
+  "text": "You gain the Group Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Intimidation **Lore** Sailing Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "hermean-expatriate",
+  "collection": "backgrounds",
+  "name": "Hermean Expatriate",
+  "level": null,
+  "text": "You gain the Skill Training skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Lore** Dragon Lore **Skill Feat** Skill Training"
+ },
+ {
+  "id": "mantis-scion",
+  "collection": "backgrounds",
+  "name": "Mantis Scion",
+  "level": null,
+  "text": "You gain the Assurance skill feat with Stealth."
+ },
+ {
+  "id": "press-ganged-lowg",
+  "collection": "backgrounds",
+  "name": "Press-Ganged (LOWG)",
+  "level": null,
+  "text": "You gain the Experienced Professional skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Society **Lore** Sailing Lore **Skill Feat** Experienced Professional"
+ },
+ {
+  "id": "scholar-of-the-ancients",
+  "collection": "backgrounds",
+  "name": "Scholar of the Ancients",
+  "level": null,
+  "text": "You gain the Quick Identification skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Arcana **Lore** Azlant Lore **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "storm-survivor",
+  "collection": "backgrounds",
+  "name": "Storm Survivor",
+  "level": null,
+  "text": "You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Survival **Lore** Weather Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "undersea-enthusiast",
+  "collection": "backgrounds",
+  "name": "Undersea Enthusiast",
+  "level": null,
+  "text": "You gain the Underwater Marauder skill feat. --- ## Background details **Attribute Boosts** Constitution or Strength, one free **Trained Skill** Athletics **Lore** Ocean Lore **Skill Feat** Underwater Marauder"
+ },
+ {
+  "id": "alkenstar-tinker",
+  "collection": "backgrounds",
+  "name": "Alkenstar Tinker",
+  "level": null,
+  "text": "You gain the Alchemical Crafting skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Engineering Lore **Skill Feat** Alchemical Crafting"
+ },
+ {
+  "id": "geb-crusader",
+  "collection": "backgrounds",
+  "name": "Geb Crusader",
+  "level": null,
+  "text": "You gain the Student of the Canon skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Religion **Lore** Undead Lore **Skill Feat** Student of the Canon"
+ },
+ {
+  "id": "mana-wastes-refugee",
+  "collection": "backgrounds",
+  "name": "Mana Wastes Refugee",
+  "level": null,
+  "text": "You gain the Trick Magic Item skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Arcana **Lore** Wilderness Lore **Skill Feat** Trick Magic Item"
+ },
+ {
+  "id": "nexian-mystic",
+  "collection": "backgrounds",
+  "name": "Nexian Mystic",
+  "level": null,
+  "text": "You gain the Arcane Sense skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Arcana **Skill Feat** Arcane Sense"
+ },
+ {
+  "id": "oenopion-ooze-tender",
+  "collection": "backgrounds",
+  "name": "Oenopion Ooze-Tender",
+  "level": null,
+  "text": "You gain the Dubious Knowledge skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Crafting **Lore** Ooze Lore **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "perfection-seeker",
+  "collection": "backgrounds",
+  "name": "Perfection Seeker",
+  "level": null,
+  "text": "You gain the Cat Fall skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Acrobatics **Lore** Warfare Lore **Skill Feat** Cat Fall"
+ },
+ {
+  "id": "quick",
+  "collection": "backgrounds",
+  "name": "Quick",
+  "level": null,
+  "text": "You gain the Charming Liar skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Deception **Lore** Undead Lore **Skill Feat** Charming Liar"
+ },
+ {
+  "id": "bekyar-restorer",
+  "collection": "backgrounds",
+  "name": "Bekyar Restorer",
+  "level": null,
+  "text": "You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Diplomacy **Lore** Abyss Lore **Skill Feat** Group Impression"
+ },
+ {
+  "id": "bonuwat-wavetouched",
+  "collection": "backgrounds",
+  "name": "Bonuwat Wavetouched",
+  "level": null,
+  "text": "You gain the Underwater Marauder skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Athletics **Lore** Ocean Lore **Skill Feat** Underwater Marauder"
+ },
+ {
+  "id": "bright-lion",
+  "collection": "backgrounds",
+  "name": "Bright Lion",
+  "level": null,
+  "text": "You gain the Lie to Me skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Deception **Lore** Mzali Lore **Skill Feat** Lie To Me"
+ },
+ {
+  "id": "magaambya-academic",
+  "collection": "backgrounds",
+  "name": "Magaambya Academic",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Lore** Academia Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "senghor-sailor",
+  "collection": "backgrounds",
+  "name": "Senghor Sailor",
+  "level": null,
+  "text": "You gain the Quick Repair skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Crafting **Lore** Sailing Lore **Skill Feat** Quick Repair"
+ },
+ {
+  "id": "shory-seeker",
+  "collection": "backgrounds",
+  "name": "Shory Seeker",
+  "level": null,
+  "text": "You gain the Specialty Crafting skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Crafting **Lore** Shory Lore **Skill Feat** Specialty Crafting"
+ },
+ {
+  "id": "sodden-scavenger",
+  "collection": "backgrounds",
+  "name": "Sodden Scavenger",
+  "level": null,
+  "text": "You gain the Forager skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Survival **Lore** Swamp Lore **Skill Feat** Forager"
+ },
+ {
+  "id": "vidrian-reformer",
+  "collection": "backgrounds",
+  "name": "Vidrian Reformer",
+  "level": null,
+  "text": "You gain the Hobnobber skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Diplomacy **Lore** Politics Lore **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "atteran-rancher",
+  "collection": "backgrounds",
+  "name": "Atteran Rancher",
+  "level": null,
+  "text": "You gain the Train Animal skill feat. --- ## Background details **Attribute Boosts** Dexterity or Strength, one free **Trained Skill** Nature **Lore** Animal Lore **Skill Feat** Train Animal"
+ },
+ {
+  "id": "bellflower-agent",
+  "collection": "backgrounds",
+  "name": "Bellflower Agent",
+  "level": null,
+  "text": "You gain the Experienced Smuggler skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Stealth **Lore** Underworld Lore **Skill Feat** Experienced Smuggler"
+ },
+ {
+  "id": "chelish-rebel",
+  "collection": "backgrounds",
+  "name": "Chelish Rebel",
+  "level": null,
+  "text": "You gain the Streetwise skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Society **Lore** Kintargo Lore **Skill Feat** Streetwise"
+ },
+ {
+  "id": "child-of-westcrown",
+  "collection": "backgrounds",
+  "name": "Child of Westcrown",
+  "level": null,
+  "text": "You gain the Group Impression skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Diplomacy **Lore** Westcrown Lore **Skill Feat** Group Impression"
+ },
+ {
+  "id": "goblinblood-orphan",
+  "collection": "backgrounds",
+  "name": "Goblinblood Orphan",
+  "level": null,
+  "text": "You gain the Assurance skill feat with Survival."
+ },
+ {
+  "id": "shadow-haunted",
+  "collection": "backgrounds",
+  "name": "Shadow Haunted",
+  "level": null,
+  "text": "You gain the Quick Coercion skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Intimidation **Lore** Shadow Plane Lore **Skill Feat** Quick Coercion"
+ },
+ {
+  "id": "thrune-loyalist",
+  "collection": "backgrounds",
+  "name": "Thrune Loyalist",
+  "level": null,
+  "text": "You're trained in the Religion skill and the Hell Lore skill You gain the Student of the Canon skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Religion **Lore** Hell Lore **Skill Feat** Student of the Canon"
+ },
+ {
+  "id": "mammoth-speaker",
+  "collection": "backgrounds",
+  "name": "Mammoth Speaker",
+  "level": null,
+  "text": "You gain the Train Animal skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Nature **Lore** Animal Lore **Skill Feat** Train Animal"
+ },
+ {
+  "id": "shoanti-name-bearer",
+  "collection": "backgrounds",
+  "name": "Shoanti Name-Bearer",
+  "level": null,
+  "text": "You gain the Combat Climber skill feat. --- ## Background details **Attribute Boosts** Strength or Wisdom, one free **Trained Skill** Athletics **Lore** Quah Lore **Skill Feat** Combat Climber"
+ },
+ {
+  "id": "thassilonian-traveler",
+  "collection": "backgrounds",
+  "name": "Thassilonian Traveler",
+  "level": null,
+  "text": "You gain the Dubious Knowledge skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Arcana **Lore** Thassilon Lore **Skill Feat** Dubious Knowledge"
+ },
+ {
+  "id": "ulfen-raider",
+  "collection": "backgrounds",
+  "name": "Ulfen Raider",
+  "level": null,
+  "text": "You gain the Intimidating Glare skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Intimidation **Lore** Sailing Lore **Skill Feat** Intimidating Glare"
+ },
+ {
+  "id": "varisian-wanderer",
+  "collection": "backgrounds",
+  "name": "Varisian Wanderer",
+  "level": null,
+  "text": "You gain the Fascinating Performance skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Performance **Lore** Circus Lore **Skill Feat** Fascinating Performance"
+ },
+ {
+  "id": "winters-child",
+  "collection": "backgrounds",
+  "name": "Winter's Child",
+  "level": null,
+  "text": "You gain the Arcane Sense skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Arcana **Lore** Weather Lore **Skill Feat** Arcane Sense"
+ },
+ {
+  "id": "witch-wary",
+  "collection": "backgrounds",
+  "name": "Witch Wary",
+  "level": null,
+  "text": "You gain the Oddity Identification skill feat. --- ## Background details **Attribute Boosts** Dexterity or Intelligence, one free **Trained Skill** Occultism **Lore** Curse Lore **Skill Feat** Oddity Identification"
+ },
+ {
+  "id": "final-blade-survivor",
+  "collection": "backgrounds",
+  "name": "Final Blade Survivor",
+  "level": null,
+  "text": "You gain the Charming Liar skill feat. --- ## Background details **Attribute Boosts** Charisma or Wisdom, one free **Trained Skill** Deception **Lore** Revolution Lore **Skill Feat** Charming Liar"
+ },
+ {
+  "id": "kalistrade-follower",
+  "collection": "backgrounds",
+  "name": "Kalistrade Follower",
+  "level": null,
+  "text": "You gain the Bargain Hunter skill feat. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Trained Skill** Diplomacy **Lore** Kalistrade Lore **Skill Feat** Bargain Hunter"
+ },
+ {
+  "id": "kyonin-emissary",
+  "collection": "backgrounds",
+  "name": "Kyonin Emissary",
+  "level": null,
+  "text": "You gain the skill feat. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Trained Skill** Society **Lore** Politics Lore **Skill Feat** Multilingual"
+ },
+ {
+  "id": "lumber-consortium-laborer",
+  "collection": "backgrounds",
+  "name": "Lumber Consortium Laborer",
+  "level": null,
+  "text": "You gain the Assurance skill feat with Athletics."
+ },
+ {
+  "id": "rivethun-adherent",
+  "collection": "backgrounds",
+  "name": "Rivethun Adherent",
+  "level": null,
+  "text": "You gain the Recognize Spell skill feat. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Occultism **Lore** Spirit Lore **Skill Feat** Recognize Spell"
+ },
+ {
+  "id": "taldan-schemer",
+  "collection": "backgrounds",
+  "name": "Taldan Schemer",
+  "level": null,
+  "text": "You gain the Hobnobber skill feat. --- ## Background details **Attribute Boosts** Charisma or Constitution, one free **Trained Skill** Diplomacy **Lore** Politics Lore **Skill Feat** Hobnobber"
+ },
+ {
+  "id": "wildwood-local",
+  "collection": "backgrounds",
+  "name": "Wildwood Local",
+  "level": null,
+  "text": "You gain the Natural Medicine skill feat. --- ## Background details **Attribute Boosts** Dexterity or Wisdom, one free **Trained Skill** Nature **Lore** Forest Lore **Skill Feat** Natural Medicine"
+ },
+ {
+  "id": "droskari-disciple",
+  "collection": "backgrounds",
+  "name": "Droskari Disciple",
+  "level": null,
+  "text": "You gain the Skill Training skill feat, and you're trained in the Droskar Lore skill. --- ## Background details **Attribute Boosts** Constitution or Intelligence, one free **Lore** Droskar Lore **Skill Feat** Skill Training"
+ },
+ {
+  "id": "aiudara-seeker",
+  "collection": "backgrounds",
+  "name": "Aiudara Seeker",
+  "level": null,
+  "text": "You gain the Quick Identification skill feat. --- ## Background details **Attribute Boosts** Intelligence or Wisdom, one free **Trained Skill** Arcana **Lore** Portal Lore **Skill Feat** Quick Identification"
+ },
+ {
+  "id": "hermean-heritor",
+  "collection": "backgrounds",
+  "name": "Hermean Heritor",
+  "level": null,
+  "text": "You gain the skill feat or the Assurance skill feat for Society. --- ## Background details **Attribute Boosts** Constitution or Wisdom, one free **Trained Skill** Society **Lore** Legal Lore **Skill Feat** Multilingual"
+ },
+ {
+  "id": "legendary-parents",
+  "collection": "backgrounds",
+  "name": "Legendary Parents",
+  "level": null,
+  "text": "You gain the Group Coercion skill feat. --- ## Background details **Attribute Boosts** Charisma or Dexterity, one free **Trained Skill** Intimidation **Lore** Genealogy Lore **Skill Feat** Group Coercion"
+ },
+ {
+  "id": "touched-by-dahak",
+  "collection": "backgrounds",
+  "name": "Touched by Dahak",
+  "level": null,
+  "text": "You gain the Titan Wrestler skill feat. --- ## Background details **Attribute Boosts** Charisma or Strength, one free **Trained Skill** Athletics **Lore** Dragon Lore **Skill Feat** Titan Wrestler"
+ }
+]

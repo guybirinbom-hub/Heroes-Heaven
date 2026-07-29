@@ -505,8 +505,10 @@ export interface Background extends ContentBase {
    *  the subject in the builder (Lore is free-text). Stored in BuildState.backgroundLore →
    *  lore:<typed> trained. */
   trainedLoreChoice?: boolean;
-  /** A skill feat granted by the background. */
-  grantedFeatId?: string;
+  /** Skill/general feat(s) granted by the background. Usually one, but two backgrounds grant a PAIR —
+   *  Eagle Hunter ("the Pet general feat AND the Train Animal skill feat") and Returned — and a single
+   *  string silently dropped the second. Read it through `backgroundGrantedFeats()`, never directly. */
+  grantedFeatId?: string | string[];
 }
 
 export type FeatCategory =

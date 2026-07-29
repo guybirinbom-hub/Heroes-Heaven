@@ -1,0 +1,387 @@
+[
+ {
+  "id": "basic-thoughtform",
+  "collection": "feats",
+  "name": "Basic Thoughtform",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level psychic feat of your choice."
+ },
+ {
+  "id": "advanced-thoughtform",
+  "collection": "feats",
+  "name": "Advanced Thoughtform",
+  "level": 6,
+  "text": "You gain one psychic feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another psychic feat."
+ },
+ {
+  "id": "basic-thaumaturgy",
+  "collection": "feats",
+  "name": "Basic Thaumaturgy",
+  "level": 4,
+  "text": "You gain a 1st- or 2nd-level thaumaturge feat of your choice."
+ },
+ {
+  "id": "advanced-thaumaturgy",
+  "collection": "feats",
+  "name": "Advanced Thaumaturgy",
+  "level": 6,
+  "text": "You gain one thaumaturge feat. --- **Special** You can select this feat more than once. Each time you select it, you gain another thaumaturge feat."
+ },
+ {
+  "id": "magical-knowledge",
+  "collection": "feats",
+  "name": "Magical Knowledge",
+  "level": 8,
+  "text": "You gain a skill feat associated with each of the skills you chose."
+ },
+ {
+  "id": "future-spell-learning",
+  "collection": "feats",
+  "name": "Future Spell Learning",
+  "level": 8,
+  "text": "If you have a spell repertoire, when you gain this feat you can retrain one spell in it, replacing it with one of the added spells."
+ },
+ {
+  "id": "hellknight-dedication",
+  "collection": "feats",
+  "name": "Hellknight Dedication",
+  "level": 2,
+  "text": "In addition, you gain the Additional Lore general feat for Hell Lore; if you were already trained in Hell Lore, you also become trained in a Lore skill of your choice."
+ },
+ {
+  "id": "armigers-protection",
+  "collection": "feats",
+  "name": "Armiger's Protection",
+  "level": 4,
+  "text": "Whenever you gain a class feature that grants you expert or greater proficiency in any type of armor (but not unarmored defense), you also gain that proficiency in the armor types granted to you by this feat. If you have a class feature that grants you expert proficiency in unarmored defense and you're 13th level or higher, you also become an expert in the armor types granted to you by this feat. In addition, when you choose this feat, you receive a non-magical suit of Hellknight armor of a type you become trained in (Hellknight Breastplate, Hellknight H"
+ },
+ {
+  "id": "golden-legionnaire-dedication",
+  "collection": "feats",
+  "name": "Golden Legionnaire Dedication",
+  "level": 4,
+  "text": "You also gain the Additional Lore general feat for Warfare Lore."
+ },
+ {
+  "id": "arodens-innovation",
+  "collection": "feats",
+  "name": "Aroden's Innovation",
+  "level": 8,
+  "text": "Each day during your daily preparations, choose a general feat of 3rd level or lower. If you meet the feat's prerequisites, you gain the benefits of that feat until your next daily preparations."
+ },
+ {
+  "id": "mortal-possibility",
+  "collection": "feats",
+  "name": "Mortal Possibility",
+  "level": 20,
+  "text": "In addition, you gain a skill feat of your choice for that skill."
+ },
+ {
+  "id": "friend-of-the-sea",
+  "collection": "feats",
+  "name": "Friend of the Sea",
+  "level": 1,
+  "text": "You gain the Pet general feat."
+ },
+ {
+  "id": "pirates-pet",
+  "collection": "feats",
+  "name": "Pirate's Pet",
+  "level": 4,
+  "text": "You gain the Pet general feat."
+ },
+ {
+  "id": "specialized-companion-animal-trainer",
+  "collection": "feats",
+  "name": "Specialized Companion (Animal Trainer)",
+  "level": 18,
+  "text": "The animal companion you gain from the Animal Trainer Dedication feat gains one specialization of your choice."
+ },
+ {
+  "id": "aon-kingdom-assurance",
+  "collection": "feats",
+  "name": "Kingdom Assurance",
+  "level": 1,
+  "text": "**Special** You can select this feat multiple times. Each time, choose a different skill and gain the benefits of this feat for that skill."
+ },
+ {
+  "id": "evolution-feat",
+  "collection": "classFeatures",
+  "name": "Evolution Feat",
+  "level": 1,
+  "text": "Evolution feats are a special type of summoner class feat that allow you to customize your eidolon through your shared link. You gain an evolution feat for your eidolon at 1st level, representing the differences that make it unique from other eidolons of its type. If you retrain this feat, the feat you replace it with must also be an evolution feat."
+ },
+ {
+  "id": "gates-threshold",
+  "collection": "classFeatures",
+  "name": "Gate's Threshold",
+  "level": 5,
+  "text": "Gain an impulse feat of your level or lower for one of your kinetic elements; if you have more than one element, you can choose a composite impulse. If you have no valid options for the feat-typically because you have one kinetic element and devoted your class feats to gaining that element's impulses-you can instead select any kineticist class feat of your level or lower for which you meet the prerequisites. Gain an impulse feat of your level or lower with the trait of that element. You can't select a composite impulse feat with this feat selection."
+ },
+ {
+  "id": "druidic-order",
+  "collection": "classFeatures",
+  "name": "Druidic Order",
+  "level": 1,
+  "text": "Upon becoming a druid, you align yourself with a druidic order, which grants you a class feat, an order spell (see below), and an additional trained skill tied to your order While you'll always be a member of your initial order, it's not unheard of for a druid to request to study with other orders in search of greater understanding of the natural world, and PC druids are among the most likely to blend the powers of different orders. **Druid Feat** You gain this 1st-level druid feat."
+ },
+ {
+  "id": "voice-of-nature",
+  "collection": "classFeatures",
+  "name": "Voice of Nature",
+  "level": 1,
+  "text": "You gain your choice of the Animal Empathy or Plant Empathy druid feat."
+ },
+ {
+  "id": "combat-flexibility",
+  "collection": "classFeatures",
+  "name": "Combat Flexibility",
+  "level": 9,
+  "text": "When you make your daily preparations, you gain one fighter feat of 8th level or lower that you meet the prerequisites for and don't already have. You can use that feat until your next daily preparations."
+ },
+ {
+  "id": "alchemy",
+  "collection": "classFeatures",
+  "name": "Alchemy",
+  "level": 1,
+  "text": "You gain the Alchemical Crafting feat, and you can automatically identify alchemical items that you have the formula for."
+ },
+ {
+  "id": "skillful-lessons",
+  "collection": "classFeatures",
+  "name": "Skillful Lessons",
+  "level": 3,
+  "text": "At 3rd level and every odd-numbered level thereafter, you gain a skill feat. This feat must be for an Intelligence-, Wisdom-, or Charisma-based skill, or for the skill you gained from your methodology."
+ },
+ {
+  "id": "mystery",
+  "collection": "classFeatures",
+  "name": "Mystery",
+  "level": 1,
+  "text": "At 11th level, the divine access class feature also gives you additional slotted spells based on your domains. **Oracle Feat** You gain this 1st-level oracle feat. This is a cursebound feat, so using it aggravates your oracular curse."
+ },
+ {
+  "id": "stylish-tricks",
+  "collection": "classFeatures",
+  "name": "Stylish Tricks",
+  "level": 3,
+  "text": "You also gain an additional skill feat at these levels. This feat must be for Acrobatics or the trained skill from your swashbuckler's style."
+ },
+ {
+  "id": "tactics",
+  "collection": "classFeatures",
+  "name": "Tactics",
+  "level": 1,
+  "text": "When you gain the Expert Tactician class feature, you gain the ability to add expert tactics to your folio; when you gain the Master Tactician class feature, you can add master tactics to your folio; and when you gain the Legendary Tactician class feature, you can add legendary tactics to your folio. You can also add tactics to your folio with the Tactical Expansion feat, though this does not change the number you can have prepared."
+ },
+ {
+  "id": "angel-eidolon",
+  "collection": "classFeatures",
+  "name": "Angel Eidolon",
+  "level": 1,
+  "text": "When you gain the transcendence class feature, this evolves to the full benefits of an astral deva; your eidolon and allies in the aura are protected from environmental damage from any plane, including severe and extreme heat and cold as well as more unusual dangers."
+ },
+ {
+  "id": "avenger",
+  "collection": "classFeatures",
+  "name": "Avenger",
+  "level": 1,
+  "text": "You must select Avenger Dedication as your 2nd-level class feat. You do not gain the Surprise Attack class feature. Whenever you gain a class feature that grants you expert or greater proficiency with simple or martial weapons, you also gain that proficiency rank with your deity's favored weapon. You can deal sneak attack damage to your prey with your deity's favored weapon, in addition to the weapons listed in the sneak attack class feature."
+ },
+ {
+  "id": "battle-creed",
+  "collection": "classFeatures",
+  "name": "Battle Creed",
+  "level": 1,
+  "text": "You must select Battle Harbinger Dedication as your 2nd- level class feat. - You don't gain the Resolute Faith class feature. - You don't gain the Miraculous Spell class feature. If your deity's favored weapon is a simple weapon or an unarmed attack, you gain the Deadly Simplicity cleric feat. At 13th level when you gain the Divine Defense class feature, you also gain expert proficiency in light and medium armor. Moderate Creed (9th): You gain Reactive Strike as a cleric feat."
+ },
+ {
+  "id": "battledancer",
+  "collection": "classFeatures",
+  "name": "Battledancer",
+  "level": 1,
+  "text": "You are trained in Performance and gain the Fascinating Performance skill feat."
+ },
+ {
+  "id": "born-of-the-bones-of-the-earth",
+  "collection": "classFeatures",
+  "name": "Born of the Bones of the Earth",
+  "level": 7,
+  "text": "You gain the Energized Spark feat for your choice of earth or fire."
+ },
+ {
+  "id": "catharsis-emotion",
+  "collection": "classFeatures",
+  "name": "Catharsis Emotion",
+  "level": 2,
+  "text": "**Focus Spell** The focus spell you gain if you select the Cathartic Focus Spell archetype feat."
+ },
+ {
+  "id": "cloistered-cleric",
+  "collection": "classFeatures",
+  "name": "Cloistered Cleric",
+  "level": 1,
+  "text": "**First Doctrine (1st):** You gain the Domain Initiate cleric feat."
+ },
+ {
+  "id": "construct-eidolon",
+  "collection": "classFeatures",
+  "name": "Construct Eidolon",
+  "level": 1,
+  "text": "Choose one additional evolution feat of 6th level or lower. Your eidolon gains that feat. You can Retrain this feat for any other evolution feat of 6th level or lower with only a single day of downtime if you succeed at a Crafting check, with a standard DC of your eidolon's level. Choose an evolution feat of 16th level or lower. Your eidolon gains that feat. You can spend downtime to adjust it using Crafting, just like the feat from reconfigured evolution."
+ },
+ {
+  "id": "cultivation-order",
+  "collection": "classFeatures",
+  "name": "Cultivation Order",
+  "level": 1,
+  "text": "You also gain the Leshy Familiar druid feat. --- **Order Skill** Crafting **Druid Feat** Leshy Familiar **Order Spell** Cornucopia **Anathema** Commit wanton cruelty to plants or fungi or kill them unnecessarily."
+ },
+ {
+  "id": "dancer-in-the-seasons",
+  "collection": "classFeatures",
+  "name": "Dancer in the Seasons",
+  "level": 7,
+  "text": "You gain the Energized Spark feat for your choice of cold, fire, void, or wood."
+ },
+ {
+  "id": "eldritch-trickster",
+  "collection": "classFeatures",
+  "name": "Eldritch Trickster",
+  "level": 1,
+  "text": "Choose a multiclass archetype that has a basic, expert, and master spellcasting feat. You gain that archetype's dedication feat as a bonus feat even though you don't meet its level prerequisite, though you must meet its other prerequisites. For you, the Magical Trickster rogue feat has a prerequisite of 2nd level instead of 4th level."
+ },
+ {
+  "id": "experimental-spellshaping",
+  "collection": "classFeatures",
+  "name": "Experimental Spellshaping",
+  "level": 1,
+  "text": "You gain one 1st-level spellshape wizard feat of your choice. Starting at 4th level, during your daily preparations, you can gain a spellshape wizard feat of your choice that has a level requirement of no more than half your level, which you can use until your next daily preparations."
+ },
+ {
+  "id": "fey-eidolon",
+  "collection": "classFeatures",
+  "name": "Fey Eidolon",
+  "level": 1,
+  "text": "Your eidolon gains the Magical Understudy summoner feat, despite not meeting the prerequisite level, and it can choose fey gift cantrips in addition to primal cantrips. As usual for a feat you are granted by name, you can't retrain Magical Understudy into another feat. Your eidolon gains the Magical Adept feat, despite not meeting the prerequisite level, and can choose from fey gift spells in addition to primal spells."
+ },
+ {
+  "id": "first-doctrine-warpriest",
+  "collection": "classFeatures",
+  "name": "First Doctrine (Warpriest)",
+  "level": 1,
+  "text": "You gain the Shield Block general feat, a reaction to reduce damage with a shield. If your deity's favored weapon is a simple weapon or an unarmed attack, you gain the Deadly Simplicity cleric feat. At 13th level, if you gain the Divine Defense class feature, you also gain expert proficiency in light and medium armor."
+ },
+ {
+  "id": "fourth-gates-threshold",
+  "collection": "classFeatures",
+  "name": "Fourth Gate's Threshold",
+  "level": 17,
+  "text": "Gain an impulse feat of your level or lower for one of your kinetic elements; if you have more than one element, you can choose a composite impulse. If you have no valid options for the feat-typically because you have one kinetic element and devoted your class feats to gaining that element's impulses-you can instead select any kineticist class feat of your level or lower for which you meet the prerequisites. Gain an impulse feat of your level or lower with the trait of that element. You can't select a composite impulse feat with this feat selection."
+ },
+ {
+  "id": "fury-instinct",
+  "collection": "classFeatures",
+  "name": "Fury Instinct",
+  "level": 1,
+  "text": "You gain a bonus 1st-level barbarian feat."
+ },
+ {
+  "id": "improved-familiar-attunement",
+  "collection": "classFeatures",
+  "name": "Improved Familiar Attunement",
+  "level": 1,
+  "text": "You gain the Familiar wizard feat. Your connection with your familiar alters your arcane bond class feature so that you store your magical energy in your familiar, rather than an item you own; you also gain the Drain Familiar free action instead of Drain Bonded Item."
+ },
+ {
+  "id": "initial-creed",
+  "collection": "classFeatures",
+  "name": "Initial Creed",
+  "level": 1,
+  "text": "If your deity's favored weapon is a simple weapon or an unarmed attack, you gain the Deadly Simplicity cleric feat. At 13th level when you gain the Divine Defense class feature, you also gain expert proficiency in light and medium armor."
+ },
+ {
+  "id": "light-mortar-innovation",
+  "collection": "classFeatures",
+  "name": "Light Mortar Innovation",
+  "level": 1,
+  "text": "You must select Munitions Master Dedication as your 2nd-level class feat. ### Inventive Expertise (7th) You gain this class feature at 7th level instead of 9th. ### Inventive Mastery (15th) You gain this class feature at 15th level instead of 17th."
+ },
+ {
+  "id": "liturgist",
+  "collection": "classFeatures",
+  "name": "Liturgist",
+  "level": 1,
+  "text": "You gain the Circle of Spirits feat."
+ },
+ {
+  "id": "medium",
+  "collection": "classFeatures",
+  "name": "Medium",
+  "level": 1,
+  "text": "You gain the Relinquish Control feat. If you have the Supreme Incarnation class feature, you choose which apparition's avatar form you manifest each time you cast the Avatar spell."
+ },
+ {
+  "id": "moderate-creed",
+  "collection": "classFeatures",
+  "name": "Moderate Creed",
+  "level": 9,
+  "text": "You gain Reactive Strike as a cleric feat."
+ },
+ {
+  "id": "of-verse-unbroken",
+  "collection": "classFeatures",
+  "name": "Of Verse Unbroken",
+  "level": 7,
+  "text": "You gain the Energized Spark feat for your choice of sonic or vitality."
+ },
+ {
+  "id": "oracular-curse",
+  "collection": "classFeatures",
+  "name": "Oracular Curse",
+  "level": 1,
+  "text": "At 1st level, you gain a cursebound oracle feat determined by your Mystery, and you can learn additional cursebound abilities through oracle feats."
+ },
+ {
+  "id": "palatine-detective",
+  "collection": "classFeatures",
+  "name": "Palatine Detective",
+  "level": 1,
+  "text": "If you choose this class archetype, you must select Palatine Detective Dedication as your 2nd-level class feat. ## Esoterica Methodology You become trained in Occultism or Religion, and you gain the Quick Identification skill feat."
+ },
+ {
+  "id": "plunderer-of-the-hives-riches",
+  "collection": "classFeatures",
+  "name": "Plunderer of the Hive's Riches",
+  "level": 7,
+  "text": "You gain the Energized Spark feat, with your choice of either poison or sonic damage."
+ },
+ {
+  "id": "rascal",
+  "collection": "classFeatures",
+  "name": "Rascal",
+  "level": 1,
+  "text": "You are trained in Thievery and gain the Dirty Trick general feat."
+ },
+ {
+  "id": "restless-as-the-tide",
+  "collection": "classFeatures",
+  "name": "Restless as the Tide",
+  "level": 7,
+  "text": "You gain the Energized Spark feat for your choice of water or cold."
+ },
+ {
+  "id": "runelord",
+  "collection": "classFeatures",
+  "name": "Runelord",
+  "level": 1,
+  "text": "If you choose this class archetype, you must select Runelord Dedication as your 2nd-level class feat. You gain Advanced School Spell as a bonus feat at 8th level, gaining the advanced school spell for the School of Thassilonian Rune Magic; once you've begun your studies of sin magic, there is no turning back from its allure."
+ },
+ {
+  "id": "scar-of-the-survivor",
+  "collection": "classFeatures",
+  "name": "Scar of the Survivor",
+  "level": 1,
+  "text": "You gain the benefits of the Diehard feat and a +1 status bonus to Fortitude saving throws."
+ }
+]
