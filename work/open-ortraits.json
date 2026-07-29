@@ -1,0 +1,10 @@
+[
+ {
+  "id": "spirit-spells",
+  "coll": "feats",
+  "flag": "spiritSpells",
+  "prompt": "Occult spell",
+  "chooses": "spell",
+  "restrict": "Trait must be divination OR enchantment OR necromancy. Ranks 2 and 3 unlock at character levels 6 and 8."
+ }
+]

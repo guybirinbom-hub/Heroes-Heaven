@@ -391,6 +391,31 @@ export interface EffectChoice {
 }
 
 /** Constrains an open-ended spell choice, and says what taking it grants. */
+/**
+ * What an OPEN build choice draws from. Deliberately a superset of SpellChoiceFilter's shape for the
+ * spell case, so `openChoiceOptions` can delegate to the existing `spellsMatching` rather than grow a
+ * second spell matcher that could drift from it.
+ */
+export interface OpenChoiceFrom {
+  type: 'spell' | 'feat' | 'weapon' | 'language';
+  /** spell: allowed traditions / rank window / required traits / cantrip filter. */
+  traditions?: Tradition[];
+  rank?: number;
+  minRank?: number;
+  maxRank?: number;
+  cantripsOnly?: boolean;
+  /** Required traits, ALL of which must be present — spell traits, or feat traits ('dwarf'). */
+  traits?: string[];
+  /** Traits of which AT LEAST ONE must be present. Several feats read "divination OR enchantment OR
+   *  necromancy"; expressing that as `traits` would demand all three and offer almost nothing. */
+  anyTraits?: string[];
+  /** feat: restrict to a category and a level ceiling ("any 1st-level dwarf ancestry feat"). */
+  featCategory?: FeatCategory;
+  maxLevel?: number;
+  /** weapon: restrict to a proficiency category. */
+  weaponCategory?: WeaponCategory;
+}
+
 export interface SpellChoiceFilter {
   /** Allowed traditions (any if omitted). */
   traditions?: Tradition[];
@@ -537,8 +562,13 @@ export interface FeatChoiceDef {
    *                on the build and changes as it grows.
    *  - 'text'    — free text the player types, for picks whose vocabulary the app has no data for
    *                (Kingmaker's Kingdom skills and leadership roles). Enumerating them from memory
-   *                would be inventing content, so the player supplies the word and it is recorded. */
-  kind: 'domains' | 'array' | 'skills' | 'text';
+   *                would be inventing content, so the player supplies the word and it is recorded.
+   *  - 'open'    — an OPEN set described by `from`: "any 1st-level dwarf ancestry feat", "any common
+   *                language". Resolved against content at render time and shown as a searchable list;
+   *                baking the list into the record would bloat core.json and go stale. */
+  kind: 'domains' | 'array' | 'skills' | 'text' | 'open';
+  /** For 'open': what the player is choosing from. */
+  from?: OpenChoiceFrom;
   options?: { value: string; label: string; description?: string }[];
   /**
    * Why this pick is RECORDED but grants nothing mechanical. Shown to the player next to the choice.
@@ -551,6 +581,14 @@ export interface FeatChoiceDef {
    * keeps working normally.
    */
   inert?: string;
+  /**
+   * A caveat shown WITH the picker, for a choice that works but whose printed restriction can't be
+   * enforced. Ghost Hunter Dedication wants "a cantrip with the divination, enchantment or necromancy
+   * trait" — the Remaster deleted school traits, so filtering on them yields an EMPTY list. The picker
+   * offers the tradition-legal set and says which part of the restriction is on the player to honour.
+   * Distinct from `inert`, which means the pick grants nothing at all.
+   */
+  note?: string;
   /** For 'skills': the minimum rank a skill must reach to be offered (default 'trained'). */
   minRank?: ProficiencyRank;
   /**

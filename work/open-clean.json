@@ -1,0 +1,79 @@
+[
+ {
+  "id": "eldritch-researcher-dedication",
+  "coll": "feats",
+  "flag": "eldritch",
+  "prompt": "Cantrip",
+  "restrict": "The cantrip's tradition determines which tradition you become trained in; the skill pick is explicitly independent of it ('Regardless of whether you choose an arcane or occult cantrip')."
+ },
+ {
+  "id": "esoteric-spellcasting",
+  "coll": "feats",
+  "flag": "esotericSpell",
+  "prompt": "Innate spell",
+  "restrict": "All three picks must be from the SAME tradition as the first pick; taking the feat a second time (maxTakable 2) must use the OTHER tradition."
+ },
+ {
+  "id": "spell-runes",
+  "coll": "feats",
+  "flag": "spellRunes",
+  "prompt": "Spell rune",
+  "restrict": "Arcane tradition; exact rank per slot; the 2nd- and 3rd-rank runes unlock at levels 6 and 8."
+ },
+ {
+  "id": "virtue-forged-tattoos",
+  "coll": "feats",
+  "flag": "virtueSpell",
+  "prompt": "3rd-rank arcane spell",
+  "restrict": "Same school as your Arcane Tattoos (not enforced); rank ≤ 3, cast at rank 3."
+ },
+ {
+  "id": "spell-mastery",
+  "coll": "feats",
+  "flag": "masteredSpells",
+  "prompt": "Mastered spells",
+  "restrict": "Four picks, each of a DIFFERENT rank — a cross-pick validator, not a per-pick filter. Retrainable with 1 week of downtime."
+ },
+ {
+  "id": "magical-master",
+  "coll": "feats",
+  "flag": "eidolonMagicalMaster",
+  "prompt": "Eidolon innate spell (rank 1–7)",
+  "restrict": "One pick per spell rank 1 through 7, SKIPPING any rank in which the eidolon already holds an innate spell from Magical Adept; swappable at every even level; never more than one spell per rank 1–7"
+ },
+ {
+  "id": "basic-captivator-spellcasting",
+  "coll": "feats",
+  "flag": "captivatorSpells",
+  "prompt": "Captivator innate spells",
+  "restrict": "One 1st-rank spell now, one 2nd-rank spell at 6th level, one 3rd-rank spell at 8th level; every one must be occult and enchantment or illusion"
+ },
+ {
+  "id": "otherworldly-acumen",
+  "coll": "feats",
+  "flag": "acumenSpell",
+  "prompt": "2nd-rank innate spell",
+  "restrict": "Rank exactly 2; common rarity only; tradition must match an innate spell already granted by another elf ancestry feat (arcane if that feat was Otherworldly Magic)."
+ },
+ {
+  "id": "adapted-cantrip",
+  "coll": "feats",
+  "flag": "adaptedCantrip",
+  "prompt": "Cantrip from another tradition",
+  "restrict": "Cantrips only (rank 0); must come from a tradition other than your own; requires a spellcasting class feature. Retrainable to a different alternate tradition later."
+ },
+ {
+  "id": "adaptive-adept",
+  "coll": "feats",
+  "flag": "adaptiveAdeptSpell",
+  "prompt": "Cantrip or 1st-rank spell",
+  "restrict": "Rank 0 or 1 only; tradition must equal the tradition of the Adapted Cantrip pick. If a 1st-rank spell is chosen you gain no access to its heightened versions (can't prepare them, can't learn them, can't make it a signature spell)."
+ },
+ {
+  "id": "harrow-chosen",
+  "coll": "backgrounds",
+  "flag": "harrowCantrip",
+  "prompt": "Occult cantrip",
+  "restrict": "Common rarity, occult tradition, cantrip only."
+ }
+]

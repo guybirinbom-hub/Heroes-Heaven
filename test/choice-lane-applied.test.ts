@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { content } from './_content';
+import { openChoiceOptions } from '../src/rules/openChoice';
 
 const c = content();
 
@@ -24,9 +25,20 @@ describe('choice definitions are well-formed', () => {
   });
 
   it('every choice has a flag, a prompt and a kind the builder understands', () => {
-    const KINDS = new Set(['array', 'skills', 'domains', 'text']);
+    const KINDS = new Set(['array', 'skills', 'domains', 'text', 'open']);
     const bad = all.filter((x) => !x.choice.flag || !x.choice.prompt || !KINDS.has(String(x.choice.kind)));
     expect(bad.map((x) => `${x.id}(${x.choice.kind})`), 'malformed choice defs').toEqual([]);
+  });
+
+  it("every 'open' choice resolves to a NON-EMPTY option list", () => {
+    for (const x of all.filter((y) => y.choice.kind === 'open')) {
+      expect(x.choice.from, `${x.id} is open but carries no \`from\``).toBeTruthy();
+      // An open picker that resolves to nothing looks broken and blocks the build. Ghost Hunter
+      // nearly shipped exactly that: its printed divination/enchantment/necromancy restriction
+      // matches ZERO spells, because the Remaster deleted school traits from the data.
+      const opts = openChoiceOptions(x.choice.from as never, c);
+      expect(opts.length, `${x.id} resolves to an EMPTY picker`).toBeGreaterThan(0);
+    }
   });
 
   it("every 'array' choice offers at least two real options", () => {

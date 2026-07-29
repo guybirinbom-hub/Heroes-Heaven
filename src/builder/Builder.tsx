@@ -23,6 +23,7 @@ import {
   choiceKeys,
   choiceOptionsFor,
 } from '../rules/build';
+import { openChoiceOptions } from '../rules/openChoice';
 import { confirmDialog } from '../sheet/confirm';
 import { sourceCatalog, enabledBookSet } from '../rules/sources';
 import { eligibleFeatsForSlot, findHiddenFeatMatches } from '../rules/featSlots';
@@ -1179,6 +1180,29 @@ export function Builder({
                                       value={build.featChoices[key] ?? ''}
                                       onChange={(e) => actions.setFeatChoice(key, e.target.value)}
                                     />
+                                  ) : def.kind === 'open' ? (
+                                    // An OPEN set ("any 1st-level dwarf ancestry feat") is resolved
+                                    // against content at render time and searched, because the legal
+                                    // list is too long to enumerate on the record and would go stale.
+                                    (() => {
+                                      const keys = choiceKeys(key, def);
+                                      const all = openChoiceOptions(def.from, content, { hideLegacy: build.hideLegacy });
+                                      return keys.map((k, i) => {
+                                        const answers = keys.map((kk) => build.featChoices[kk]);
+                                        const taken = new Set(def.distinct ? answers.filter((a, j) => j !== i && a) : []);
+                                        return (
+                                          <SearchSelect
+                                            key={k}
+                                            bare
+                                            label={featChoicePrompt(def.prompt)}
+                                            placeholder={`Search ${def.from?.type ?? 'options'}…`}
+                                            value={build.featChoices[k] ?? null}
+                                            onChange={(v) => actions.setFeatChoice(k, v)}
+                                            options={all.filter((o) => !taken.has(o.id))}
+                                          />
+                                        );
+                                      });
+                                    })()
                                   ) : (
                                     // "Choose two DIFFERENT terrains" needs one picker per pick. A
                                     // single-pick choice still uses the bare slot key, so characters
@@ -1205,6 +1229,14 @@ export function Builder({
                                         />
                                       ));
                                     })()
+                                  )}
+                                  {/* A restriction the app cannot enforce — name the part that is on the
+                                      player, instead of silently offering a wider list than the rules allow. */}
+                                  {def.note && (
+                                    <div className="choice-inert">
+                                      <i className="ti ti-alert-circle" aria-hidden="true" />
+                                      <span>{def.note}</span>
+                                    </div>
                                   )}
                                   {/* A pick that records but grants nothing must say so — the owner's rule
                                       is "never silently show a pick that does nothing". */}
