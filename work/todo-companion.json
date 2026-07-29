@@ -1,0 +1,36 @@
+[
+ {
+  "collection": "items",
+  "id": "oculus-of-abaddon",
+  "name": "Oculus of Abaddon",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "companion",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "defense",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ }
+]

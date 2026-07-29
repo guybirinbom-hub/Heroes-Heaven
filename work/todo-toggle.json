@@ -1,0 +1,30 @@
+[
+ {
+  "collection": "items",
+  "id": "feral-claws",
+  "name": "Feral Claws",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "items",
+  "id": "aon-feral-claws",
+  "name": "Feral Claws",
+  "level": 0,
+  "lanes": [
+   {
+    "lane": "toggle",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ }
+]

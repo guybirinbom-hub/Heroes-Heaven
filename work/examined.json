@@ -2395,10 +2395,13 @@
   "immovable",
   "blade-byrnie",
   "blade-byrnie-greater",
-  "blade-byrnie-major"
+  "blade-byrnie-major",
+  "feral-claws",
+  "aon-feral-claws"
  ],
  "companion": [
-  "__closed-by-hand__"
+  "__closed-by-hand__",
+  "oculus-of-abaddon"
  ],
  "situational": [
   "courageous-advance",

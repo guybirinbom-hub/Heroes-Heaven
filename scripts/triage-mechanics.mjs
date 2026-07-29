@@ -177,6 +177,9 @@ const LANES = [
      *  record in a scanned collection, so they looked unmodelled while working perfectly. */
     modelled: (r) =>
       !!r.focusSpells || !!r.innateSpells || !!r.spellcasting || MODELLED.choice.has(r.id) ||
+      // heldSpells is the ITEM shape — a staff/wand/pendant that casts a spell on activation. The
+      // Greater Pendant of the Occult already carries {0:[guidance],3:[dream-message]}.
+      !!r.heldSpells ||
       SUBCLASS_OPTION_SPELLS.has(r.id),
   },
   {
