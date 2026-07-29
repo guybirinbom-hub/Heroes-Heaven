@@ -4,6 +4,8 @@ import { classFeatureDescription } from '../rules/featureText';
 import { ActionGlyph, isActionCost } from './widgets';
 import { FeatDetail, type FeatEntry } from './FeatDetail';
 import { toPlainText } from './RichText';
+import { featUse, usesLabel, spendFeatUse, refundFeatUse } from '../rules/featUses';
+import type { PlayUpdater } from '../rules/play';
 
 const BUCKETS = ['Class', 'Archetype', 'Ancestry & heritage', 'Skill', 'General'];
 const BUCKET_ICON: Record<string, string> = {
@@ -30,7 +32,7 @@ function featBucket(category: string): string {
   }
 }
 
-export function FeatsTab({ character, content }: { character: Character; content: ContentDatabase }) {
+export function FeatsTab({ character, content, onPlay }: { character: Character; content: ContentDatabase; onPlay?: PlayUpdater }) {
   // Which type sections to show. EMPTY = "All" (everything); otherwise only the picked types.
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const [query, setQuery] = useState('');
@@ -55,6 +57,7 @@ export function FeatsTab({ character, content }: { character: Character; content
     if (!feat) continue;
     entries.push({
       key: `feat:${fc.featId}:${fc.level}`,
+      featId: fc.featId,
       name: (fc.choice ? `${feat.name} (${fc.choice.label})` : feat.name) + pickSuffix(fc.featId),
       level: fc.level,
       traits: feat.traits,
@@ -283,6 +286,43 @@ export function FeatsTab({ character, content }: { character: Character; content
                         </span>
                       ))}
                     </div>
+                    {/* A feat printing "Frequency once per day" used to be text the player had to
+                        remember; items have had use pips for a while, so match that control here.
+                        stopPropagation because the whole row opens the feat detail. */}
+                    {(() => {
+                      const use = e.featId ? featUse(character, content.feats[e.featId]) : null;
+                      if (!use || !onPlay) return null;
+                      const stop = (ev: React.MouseEvent) => ev.stopPropagation();
+                      return (
+                        <span className="ff-uses" title={`${usesLabel(use)} — refills on daily preparations`}>
+                          <i className="ti ti-battery-2" aria-hidden="true" />
+                          <button
+                            aria-label={`Spend a use of ${use.name}`}
+                            disabled={use.current <= 0}
+                            onClick={(ev) => {
+                              stop(ev);
+                              onPlay((p) => ({ ...p, featUses: spendFeatUse(p.featUses, use.featId, use.max) }), `featuses:${use.featId}`);
+                            }}
+                          >
+                            <i className="ti ti-minus" aria-hidden="true" />
+                          </button>
+                          <span className="ff-uses-n">
+                            {use.current}/{use.max}
+                          </span>
+                          <button
+                            aria-label={`Restore a use of ${use.name}`}
+                            disabled={use.current >= use.max}
+                            onClick={(ev) => {
+                              stop(ev);
+                              onPlay((p) => ({ ...p, featUses: refundFeatUse(p.featUses, use.featId) }), `featuses:${use.featId}`);
+                            }}
+                          >
+                            <i className="ti ti-plus" aria-hidden="true" />
+                          </button>
+                          <span className="ff-uses-per">per {use.per}</span>
+                        </span>
+                      );
+                    })()}
                     <div className="ff-desc">{toPlainText(e.description)}</div>
                   </div>
                   <i className="ti ti-chevron-right ff-chev" aria-hidden="true" />

@@ -71,6 +71,13 @@ export interface PlayState {
    * An entry persisting across a rest is exactly what the "reuse my last pick" setting relies on.
    */
   dailyChoices?: Record<string, string>;
+  /**
+   * Uses SPENT against a feat's `limitedUses`, keyed by feat id. Feats with "once per day" had no
+   * tracking at all — only items did — so the player had to remember them. Reset by rest() alongside
+   * focus points and spell slots; sub-daily periods (round/turn/minute/hour) reset there too, since
+   * a rest is the coarsest boundary the sheet models.
+   */
+  featUses?: Record<string, number>;
   /** Notes pages; when set, overrides the build's notes (so the sheet can edit them). */
   notes?: NotePage[];
   /** Conditions on each companion, keyed by companion id. */
@@ -283,6 +290,7 @@ export function applyPlayState(ch: Character, play: PlayState | undefined, conte
     classResources: play.resources ?? ch.classResources ?? {},
     alchemyPrep: play.alchemyPrep ?? ch.alchemyPrep,
     dailyChoices: play.dailyChoices ?? ch.dailyChoices,
+    featUses: play.featUses ?? ch.featUses,
     notes: play.notes ?? ch.notes,
     companionConditions: play.companionConditions ?? ch.companionConditions ?? {},
     companionHp: play.companionHp ?? ch.companionHp ?? {},
@@ -1127,6 +1135,9 @@ export function rest(
     expendedSlots: {},
     slotsUsed: {},
     innateUsed: {},
+    // Per-day feat uses refill with everything else. dailyChoices deliberately does NOT reset here —
+    // it is the answer you keep, which is what the "reuse my last pick" setting relies on.
+    featUses: {},
     conditions: restConditions(play.conditions ?? []),
     companionConditions,
     companionHp,

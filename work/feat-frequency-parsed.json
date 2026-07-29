@@ -1,0 +1,1874 @@
+{
+ "merciful-elixir": {
+  "max": 1,
+  "per": "round"
+ },
+ "eye-of-the-arclords": {
+  "max": 1,
+  "per": "day"
+ },
+ "know-oneself": {
+  "max": 1,
+  "per": "day"
+ },
+ "saoc-astrology": {
+  "max": 3,
+  "per": "day"
+ },
+ "avenge-in-glory": {
+  "max": 1,
+  "per": "day"
+ },
+ "life-giving-magic": {
+  "max": 1,
+  "per": "minute"
+ },
+ "theoretical-acumen": {
+  "max": 1,
+  "per": "day"
+ },
+ "eclectic-obsession": {
+  "max": 1,
+  "per": "day"
+ },
+ "intuitive-illusions": {
+  "max": 1,
+  "per": "day"
+ },
+ "cascade-bearers-flexibility": {
+  "max": 1,
+  "per": "day"
+ },
+ "enduring-debilitation": {
+  "max": 1,
+  "per": "minute"
+ },
+ "sacred-defense": {
+  "max": 1,
+  "per": "hour"
+ },
+ "quicken-heartbeat": {
+  "max": 1,
+  "per": "turn"
+ },
+ "astonishing-explosion": {
+  "max": 1,
+  "per": "minute"
+ },
+ "tenacious-blood-magic": {
+  "max": 1,
+  "per": "minute"
+ },
+ "verdant-presence": {
+  "max": 1,
+  "per": "hour"
+ },
+ "artokuss-fire": {
+  "max": 1,
+  "per": "round"
+ },
+ "boleras-interrogation": {
+  "max": 3,
+  "per": "day"
+ },
+ "remember-your-training": {
+  "max": 1,
+  "per": "day"
+ },
+ "diverse-recognition": {
+  "max": 1,
+  "per": "round"
+ },
+ "swap-investment": {
+  "max": 1,
+  "per": "day"
+ },
+ "communal-sustain": {
+  "max": 1,
+  "per": "round"
+ },
+ "spellmasters-tenacity": {
+  "max": 1,
+  "per": "day"
+ },
+ "flame-jump": {
+  "max": 1,
+  "per": "day"
+ },
+ "purge-sins": {
+  "max": 1,
+  "per": "day"
+ },
+ "aquatic-adaptation": {
+  "max": 1,
+  "per": "day"
+ },
+ "rehydration": {
+  "max": 1,
+  "per": "day"
+ },
+ "inspirit-hazard": {
+  "max": 1,
+  "per": "day"
+ },
+ "maidens-mending": {
+  "max": 1,
+  "per": "minute"
+ },
+ "invoke-the-elements": {
+  "max": 1,
+  "per": "day"
+ },
+ "mothers-mindfulness": {
+  "max": 1,
+  "per": "minute"
+ },
+ "feed-on-pain": {
+  "max": 1,
+  "per": "hour"
+ },
+ "willing-death": {
+  "max": 1,
+  "per": "day"
+ },
+ "calacas-showstopper": {
+  "max": 1,
+  "per": "day"
+ },
+ "olethross-decree": {
+  "max": 1,
+  "per": "day"
+ },
+ "yamarajs-grandeur": {
+  "max": 1,
+  "per": "day"
+ },
+ "spore-cloud": {
+  "max": 1,
+  "per": "hour"
+ },
+ "guided-by-the-stars": {
+  "max": 1,
+  "per": "day"
+ },
+ "mask-of-rejection": {
+  "max": 1,
+  "per": "day"
+ },
+ "hurricane-swing": {
+  "max": 1,
+  "per": "day"
+ },
+ "final-form": {
+  "max": 1,
+  "per": "day"
+ },
+ "nanite-surge": {
+  "max": 1,
+  "per": "hour"
+ },
+ "nanite-shroud": {
+  "max": 1,
+  "per": "day"
+ },
+ "repair-module": {
+  "max": 1,
+  "per": "day"
+ },
+ "revivification-protocol": {
+  "max": 1,
+  "per": "day"
+ },
+ "preemptive-reconfiguration": {
+  "max": 1,
+  "per": "day"
+ },
+ "shadow-sight": {
+  "max": 1,
+  "per": "hour"
+ },
+ "gaping-flesh": {
+  "max": 1,
+  "per": "day"
+ },
+ "charred-remains": {
+  "max": 1,
+  "per": "day"
+ },
+ "scorching-disarm": {
+  "max": 1,
+  "per": "day"
+ },
+ "radiant-burst": {
+  "max": 1,
+  "per": "day"
+ },
+ "blazing-aura": {
+  "max": 1,
+  "per": "day"
+ },
+ "fortify-shield": {
+  "max": 1,
+  "per": "day"
+ },
+ "elemental-assault": {
+  "max": 1,
+  "per": "day"
+ },
+ "wings-of-air": {
+  "max": 1,
+  "per": "day"
+ },
+ "airy-step": {
+  "max": 1,
+  "per": "day"
+ },
+ "tidal-shield": {
+  "max": 1,
+  "per": "day"
+ },
+ "shifting-faces": {
+  "max": 1,
+  "per": "day"
+ },
+ "fox-trick": {
+  "max": 1,
+  "per": "hour"
+ },
+ "fledgling-flight": {
+  "max": 1,
+  "per": "round"
+ },
+ "all-the-time-in-the-world": {
+  "max": 1,
+  "per": "hour"
+ },
+ "ruby-resurrection": {
+  "max": 1,
+  "per": "day"
+ },
+ "scapegoat-parallel-self": {
+  "max": 1,
+  "per": "day"
+ },
+ "worldsphere-gravity": {
+  "max": 1,
+  "per": "hour"
+ },
+ "demonblood-frenzy": {
+  "max": 1,
+  "per": "minute"
+ },
+ "true-gaze": {
+  "max": 1,
+  "per": "hour"
+ },
+ "quill-spray": {
+  "max": 1,
+  "per": "day"
+ },
+ "fountain-of-secrets": {
+  "max": 1,
+  "per": "round"
+ },
+ "rapid-recharge": {
+  "max": 1,
+  "per": "day"
+ },
+ "arcane-shroud": {
+  "max": 1,
+  "per": "turn"
+ },
+ "fiery-retort": {
+  "max": 1,
+  "per": "minute"
+ },
+ "quickened-attunement": {
+  "max": 1,
+  "per": "day"
+ },
+ "fleet-tempo": {
+  "max": 1,
+  "per": "hour"
+ },
+ "no-no-i-created-you": {
+  "max": 1,
+  "per": "minute"
+ },
+ "just-the-thing": {
+  "max": 1,
+  "per": "hour"
+ },
+ "arcane-propulsion": {
+  "max": 1,
+  "per": "day"
+ },
+ "rain-of-bolts": {
+  "max": 1,
+  "per": "day"
+ },
+ "core-rejuvenation": {
+  "max": 1,
+  "per": "day"
+ },
+ "core-cannon": {
+  "max": 1,
+  "per": "day"
+ },
+ "forewarn": {
+  "max": 1,
+  "per": "minute"
+ },
+ "cover-fire": {
+  "max": 1,
+  "per": "round"
+ },
+ "grit-and-tenacity": {
+  "max": 1,
+  "per": "hour"
+ },
+ "dance-of-thunder": {
+  "max": 1,
+  "per": "minute"
+ },
+ "drain-vitality": {
+  "max": 1,
+  "per": "minute"
+ },
+ "controlled-bullet": {
+  "max": 1,
+  "per": "day"
+ },
+ "fulminating-shot": {
+  "max": 1,
+  "per": "round"
+ },
+ "phase-bullet": {
+  "max": 1,
+  "per": "day"
+ },
+ "unexpected-sharpshooter-dedication": {
+  "max": 1,
+  "per": "day"
+ },
+ "lucky-escape": {
+  "max": 1,
+  "per": "day"
+ },
+ "that-was-a-close-one-huh": {
+  "max": 1,
+  "per": "round"
+ },
+ "i-meant-to-do-that": {
+  "max": 1,
+  "per": "hour"
+ },
+ "spark-fist": {
+  "max": 1,
+  "per": "minute"
+ },
+ "crafters-instinct": {
+  "max": 1,
+  "per": "day"
+ },
+ "forge-blessed-shot": {
+  "max": 1,
+  "per": "day"
+ },
+ "gardeners-resolve": {
+  "max": 1,
+  "per": "day"
+ },
+ "histrionic-injury": {
+  "max": 1,
+  "per": "hour"
+ },
+ "reanimating-spark": {
+  "max": 1,
+  "per": "day"
+ },
+ "reactive-charm": {
+  "max": 1,
+  "per": "day"
+ },
+ "look-again": {
+  "max": 1,
+  "per": "day"
+ },
+ "curse-of-the-saumen-kar": {
+  "max": 1,
+  "per": "day"
+ },
+ "stalwart-mind": {
+  "max": 1,
+  "per": "day"
+ },
+ "liberate-soul": {
+  "max": 1,
+  "per": "hour"
+ },
+ "bonds-of-death": {
+  "max": 1,
+  "per": "day"
+ },
+ "ghost-flight": {
+  "max": 1,
+  "per": "day"
+ },
+ "mummys-despair": {
+  "max": 1,
+  "per": "hour"
+ },
+ "storm-shroud": {
+  "max": 1,
+  "per": "hour"
+ },
+ "terrain-form": {
+  "max": 1,
+  "per": "day"
+ },
+ "desiccating-inhalation": {
+  "max": 1,
+  "per": "hour"
+ },
+ "bone-swarm": {
+  "max": 1,
+  "per": "day"
+ },
+ "bat-form": {
+  "max": 1,
+  "per": "hour"
+ },
+ "turn-to-mist": {
+  "max": 1,
+  "per": "hour"
+ },
+ "unkillable": {
+  "max": 1,
+  "per": "hour"
+ },
+ "thwart-evil": {
+  "max": 1,
+  "per": "day"
+ },
+ "chemical-purification": {
+  "max": 1,
+  "per": "round"
+ },
+ "prayer-touched-weapon": {
+  "max": 1,
+  "per": "turn"
+ },
+ "hijack-undead": {
+  "max": 1,
+  "per": "hour"
+ },
+ "graveshift": {
+  "max": 1,
+  "per": "day"
+ },
+ "breath-of-hungry-death": {
+  "max": 1,
+  "per": "hour"
+ },
+ "wrath-of-the-first-ghoul": {
+  "max": 1,
+  "per": "day"
+ },
+ "planar-sidestep": {
+  "max": 1,
+  "per": "day"
+ },
+ "reveal-hidden-self": {
+  "max": 1,
+  "per": "day"
+ },
+ "perfume-cloud": {
+  "max": 1,
+  "per": "hour"
+ },
+ "eternal-memories": {
+  "max": 1,
+  "per": "day"
+ },
+ "look-but-dont-touch": {
+  "max": 1,
+  "per": "day"
+ },
+ "community-knowledge": {
+  "max": 1,
+  "per": "hour"
+ },
+ "well-of-potential": {
+  "max": 1,
+  "per": "day"
+ },
+ "telekinetic-slip": {
+  "max": 1,
+  "per": "day"
+ },
+ "kashrishi-revivification": {
+  "max": 1,
+  "per": "day"
+ },
+ "cleansing-light": {
+  "max": 1,
+  "per": "day"
+ },
+ "hypnotic-lure": {
+  "max": 1,
+  "per": "hour"
+ },
+ "skin-split": {
+  "max": 1,
+  "per": "day"
+ },
+ "serpentcoil-slam": {
+  "max": 1,
+  "per": "minute"
+ },
+ "ragdyas-revelry": {
+  "max": 1,
+  "per": "day"
+ },
+ "ragdyas-dance": {
+  "max": 1,
+  "per": "hour"
+ },
+ "alluring-performance": {
+  "max": 1,
+  "per": "day"
+ },
+ "viper-strike": {
+  "max": 1,
+  "per": "minute"
+ },
+ "venom-purge": {
+  "max": 1,
+  "per": "day"
+ },
+ "greater-enhance-venom": {
+  "max": 1,
+  "per": "minute"
+ },
+ "triggerbrand-blitz": {
+  "max": 1,
+  "per": "minute"
+ },
+ "counterclockwork-focus": {
+  "max": 1,
+  "per": "round"
+ },
+ "unseen-passage": {
+  "max": 1,
+  "per": "day"
+ },
+ "call-ursine-ally": {
+  "max": 1,
+  "per": "hour"
+ },
+ "great-bear": {
+  "max": 1,
+  "per": "hour"
+ },
+ "feeling-your-oats": {
+  "max": 1,
+  "per": "hour"
+ },
+ "living-for-the-applause": {
+  "max": 1,
+  "per": "day"
+ },
+ "show-off": {
+  "max": 1,
+  "per": "minute"
+ },
+ "big-debut": {
+  "max": 1,
+  "per": "day"
+ },
+ "mockingbirds-disarm": {
+  "max": 1,
+  "per": "minute"
+ },
+ "it-was-me-all-along": {
+  "max": 1,
+  "per": "day"
+ },
+ "rupture-stomp": {
+  "max": 1,
+  "per": "day"
+ },
+ "elemental-transformation": {
+  "max": 1,
+  "per": "day"
+ },
+ "flowering-path": {
+  "max": 1,
+  "per": "day"
+ },
+ "wood-ward": {
+  "max": 1,
+  "per": "hour"
+ },
+ "quicksoul": {
+  "max": 1,
+  "per": "day"
+ },
+ "metallic-skin": {
+  "max": 1,
+  "per": "day"
+ },
+ "worms-feast": {
+  "max": 1,
+  "per": "day"
+ },
+ "call-worm-spirit": {
+  "max": 1,
+  "per": "day"
+ },
+ "crimson-breath": {
+  "max": 1,
+  "per": "day"
+ },
+ "universal-longevity": {
+  "max": 1,
+  "per": "day"
+ },
+ "razzle-dazzle": {
+  "max": 1,
+  "per": "hour"
+ },
+ "energized-font": {
+  "max": 1,
+  "per": "day"
+ },
+ "instinctive-obfuscation": {
+  "max": 1,
+  "per": "hour"
+ },
+ "homeward-bound": {
+  "max": 2,
+  "per": "week"
+ },
+ "halfling-luck": {
+  "max": 1,
+  "per": "day"
+ },
+ "shadow-self": {
+  "max": 1,
+  "per": "hour"
+ },
+ "incredible-improvisation": {
+  "max": 1,
+  "per": "day"
+ },
+ "bounce-back": {
+  "max": 1,
+  "per": "day"
+ },
+ "heroic-presence": {
+  "max": 1,
+  "per": "day"
+ },
+ "cloak-of-poison": {
+  "max": 1,
+  "per": "day"
+ },
+ "orc-ferocity": {
+  "max": 1,
+  "per": "day"
+ },
+ "divine-wings": {
+  "max": 1,
+  "per": "day"
+ },
+ "quickened-casting": {
+  "max": 1,
+  "per": "day"
+ },
+ "divine-weapon": {
+  "max": 1,
+  "per": "turn"
+ },
+ "surging-focus": {
+  "max": 1,
+  "per": "day"
+ },
+ "premonition-of-clarity": {
+  "max": 1,
+  "per": "hour"
+ },
+ "remediate": {
+  "max": 1,
+  "per": "hour"
+ },
+ "floral-restoration": {
+  "max": 1,
+  "per": "day"
+ },
+ "raise-menhir": {
+  "max": 1,
+  "per": "hour"
+ },
+ "ley-line-conduit": {
+  "max": 1,
+  "per": "minute"
+ },
+ "determination": {
+  "max": 1,
+  "per": "day"
+ },
+ "wardens-reload": {
+  "max": 1,
+  "per": "round"
+ },
+ "hidden-paragon": {
+  "max": 1,
+  "per": "hour"
+ },
+ "sympathetic-strike": {
+  "max": 1,
+  "per": "round"
+ },
+ "siphon-power": {
+  "max": 1,
+  "per": "day"
+ },
+ "bespell-strikes": {
+  "max": 1,
+  "per": "turn"
+ },
+ "emit-defensive-odor": {
+  "max": 1,
+  "per": "day"
+ },
+ "coral-detoxification": {
+  "max": 1,
+  "per": "hour"
+ },
+ "coral-reserve": {
+  "max": 1,
+  "per": "day"
+ },
+ "coral-lifeline": {
+  "max": 1,
+  "per": "day"
+ },
+ "take-flight": {
+  "max": 1,
+  "per": "round"
+ },
+ "sharpened-senses": {
+  "max": 1,
+  "per": "round"
+ },
+ "true-senses": {
+  "max": 1,
+  "per": "day"
+ },
+ "fierce-competitor": {
+  "max": 1,
+  "per": "day"
+ },
+ "ride-on": {
+  "max": 1,
+  "per": "hour"
+ },
+ "ill-tide": {
+  "max": 1,
+  "per": "day"
+ },
+ "siren-song": {
+  "max": 1,
+  "per": "day"
+ },
+ "tears-of-pearl": {
+  "max": 1,
+  "per": "day"
+ },
+ "pummeling-whirlpool": {
+  "max": 1,
+  "per": "day"
+ },
+ "doom-of-sailors": {
+  "max": 1,
+  "per": "day"
+ },
+ "krakens-call": {
+  "max": 1,
+  "per": "day"
+ },
+ "puzzle-solver": {
+  "max": 1,
+  "per": "hour"
+ },
+ "stone-passage": {
+  "max": 1,
+  "per": "hour"
+ },
+ "phantom-charm": {
+  "max": 1,
+  "per": "day"
+ },
+ "consume-magic": {
+  "max": 1,
+  "per": "hour"
+ },
+ "misty-transformation": {
+  "max": 1,
+  "per": "minute"
+ },
+ "feline-dance": {
+  "max": 1,
+  "per": "hour"
+ },
+ "ferocity-mimicry": {
+  "max": 1,
+  "per": "day"
+ },
+ "emergency-regeneration": {
+  "max": 1,
+  "per": "day"
+ },
+ "cat-nap": {
+  "max": 1,
+  "per": "hour"
+ },
+ "cats-luck": {
+  "max": 1,
+  "per": "day"
+ },
+ "black-cat-curse": {
+  "max": 1,
+  "per": "day"
+ },
+ "caterwaul": {
+  "max": 1,
+  "per": "day"
+ },
+ "cantorian-rejuvenation": {
+  "max": 1,
+  "per": "day"
+ },
+ "cant-fall-here": {
+  "max": 1,
+  "per": "day"
+ },
+ "cantorian-restoration": {
+  "max": 1,
+  "per": "day"
+ },
+ "rallying-cry": {
+  "max": 1,
+  "per": "day"
+ },
+ "ask-the-bones": {
+  "max": 1,
+  "per": "day"
+ },
+ "absorb-strength": {
+  "max": 1,
+  "per": "hour"
+ },
+ "left-hand-blood": {
+  "max": 1,
+  "per": "hour"
+ },
+ "allys-shelter": {
+  "max": 1,
+  "per": "day"
+ },
+ "fleeing-shriek": {
+  "max": 1,
+  "per": "hour"
+ },
+ "winglet-flight": {
+  "max": 1,
+  "per": "round"
+ },
+ "benefactors-majesty": {
+  "max": 1,
+  "per": "day"
+ },
+ "envenom-fangs": {
+  "max": 1,
+  "per": "hour"
+ },
+ "hone-claws": {
+  "max": 1,
+  "per": "hour"
+ },
+ "call-the-swarm": {
+  "max": 1,
+  "per": "day"
+ },
+ "eat-fortune": {
+  "max": 1,
+  "per": "day"
+ },
+ "soaring-flight": {
+  "max": 1,
+  "per": "round"
+ },
+ "tengu-feather-fan": {
+  "max": 1,
+  "per": "day"
+ },
+ "hunters-defense": {
+  "max": 1,
+  "per": "hour"
+ },
+ "vomit-stomach": {
+  "max": 1,
+  "per": "day"
+ },
+ "moisture-bath": {
+  "max": 1,
+  "per": "day"
+ },
+ "form-of-the-bat": {
+  "max": 1,
+  "per": "hour"
+ },
+ "dragons-flight": {
+  "max": 1,
+  "per": "round"
+ },
+ "chance-death": {
+  "max": 1,
+  "per": "day"
+ },
+ "deliberate-death": {
+  "max": 1,
+  "per": "day"
+ },
+ "improvise-admixture": {
+  "max": 1,
+  "per": "day"
+ },
+ "scars-of-steel": {
+  "max": 1,
+  "per": "day"
+ },
+ "spiritual-guides": {
+  "max": 1,
+  "per": "day"
+ },
+ "desperate-prayer": {
+  "max": 1,
+  "per": "day"
+ },
+ "shield-of-reckoning": {
+  "max": 1,
+  "per": "round"
+ },
+ "whodunnit": {
+  "max": 1,
+  "per": "day"
+ },
+ "just-as-planned": {
+  "max": 1,
+  "per": "hour"
+ },
+ "align-qi": {
+  "max": 1,
+  "per": "hour"
+ },
+ "cobra-envenom": {
+  "max": 1,
+  "per": "minute"
+ },
+ "winding-flow": {
+  "max": 1,
+  "per": "round"
+ },
+ "qi-center": {
+  "max": 1,
+  "per": "minute"
+ },
+ "foretell-harm": {
+  "max": 1,
+  "per": "round"
+ },
+ "epiphany-at-the-crossroads": {
+  "max": 1,
+  "per": "day"
+ },
+ "forestall-curse": {
+  "max": 1,
+  "per": "day"
+ },
+ "energy-ward": {
+  "max": 1,
+  "per": "turn"
+ },
+ "bloodline-conduit": {
+  "max": 1,
+  "per": "minute"
+ },
+ "tumbling-opportunist": {
+  "max": 1,
+  "per": "minute"
+ },
+ "archaeologists-luck": {
+  "max": 1,
+  "per": "hour"
+ },
+ "beastmasters-call": {
+  "max": 1,
+  "per": "turn"
+ },
+ "incorporeal-shot": {
+  "max": 1,
+  "per": "day"
+ },
+ "fatal-shot": {
+  "max": 1,
+  "per": "day"
+ },
+ "cadence-call": {
+  "max": 1,
+  "per": "minute"
+ },
+ "path-of-iron": {
+  "max": 1,
+  "per": "minute"
+ },
+ "consult-the-spirits": {
+  "max": 1,
+  "per": "day"
+ },
+ "numb-to-death": {
+  "max": 1,
+  "per": "day"
+ },
+ "crimson-shroud": {
+  "max": 1,
+  "per": "day"
+ },
+ "phantom-resemblance": {
+  "max": 1,
+  "per": "day"
+ },
+ "glorious-gamtu": {
+  "max": 1,
+  "per": "day"
+ },
+ "goblin-club": {
+  "max": 1,
+  "per": "day"
+ },
+ "kishin-rage": {
+  "max": 1,
+  "per": "day"
+ },
+ "fisheye": {
+  "max": 1,
+  "per": "day"
+ },
+ "unassuming-heroes": {
+  "max": 1,
+  "per": "day"
+ },
+ "noble-bloom": {
+  "max": 1,
+  "per": "day"
+ },
+ "all-this-has-happened-before": {
+  "max": 1,
+  "per": "day"
+ },
+ "thousand-year-grudge": {
+  "max": 1,
+  "per": "day"
+ },
+ "memory-of-skill": {
+  "max": 1,
+  "per": "day"
+ },
+ "the-cycle-continues": {
+  "max": 1,
+  "per": "day"
+ },
+ "deflecting-jewel": {
+  "max": 1,
+  "per": "hour"
+ },
+ "paralyzing-jewel": {
+  "max": 1,
+  "per": "day"
+ },
+ "convocation-of-earth-and-moon": {
+  "max": 1,
+  "per": "day"
+ },
+ "hasty-celebration": {
+  "max": 1,
+  "per": "hour"
+ },
+ "many-faces": {
+  "max": 3,
+  "per": "day"
+ },
+ "inherit-the-dreaming-heirloom": {
+  "max": 1,
+  "per": "day"
+ },
+ "dissolutions-sight": {
+  "max": 1,
+  "per": "hour"
+ },
+ "rouse-the-dreaming-relic": {
+  "max": 1,
+  "per": "day"
+ },
+ "sever-the-dreaming-shadow": {
+  "max": 1,
+  "per": "day"
+ },
+ "withstand-the-storm": {
+  "max": 1,
+  "per": "day"
+ },
+ "four-armed-aspect": {
+  "max": 1,
+  "per": "day"
+ },
+ "germination-of-resolve": {
+  "max": 1,
+  "per": "day"
+ },
+ "among-humanity": {
+  "max": 1,
+  "per": "day"
+ },
+ "unnerving-terror": {
+  "max": 1,
+  "per": "day"
+ },
+ "cosmic-cocktail": {
+  "max": 1,
+  "per": "day"
+ },
+ "fermenting-liquors": {
+  "max": 1,
+  "per": "day"
+ },
+ "wisteria-and-peony-reunion": {
+  "max": 1,
+  "per": "hour"
+ },
+ "echoing-violence": {
+  "max": 1,
+  "per": "minute"
+ },
+ "circle-of-spirits": {
+  "max": 1,
+  "per": "round"
+ },
+ "apparitions-enhancement": {
+  "max": 1,
+  "per": "turn"
+ },
+ "apparitions-reflection": {
+  "max": 1,
+  "per": "hour"
+ },
+ "apparitions-quickening": {
+  "max": 1,
+  "per": "round"
+ },
+ "fly-on-shadowed-wings": {
+  "max": 1,
+  "per": "hour"
+ },
+ "eternal-guide": {
+  "max": 1,
+  "per": "week"
+ },
+ "flow-of-war": {
+  "max": 1,
+  "per": "hour"
+ },
+ "battle-hymn-to-the-lost": {
+  "max": 1,
+  "per": "hour"
+ },
+ "raise-island": {
+  "max": 1,
+  "per": "hour"
+ },
+ "rejoice-in-solstice-storm": {
+  "max": 1,
+  "per": "hour"
+ },
+ "fish-from-the-falls-edge": {
+  "max": 1,
+  "per": "day"
+ },
+ "rapid-spark": {
+  "max": 1,
+  "per": "day"
+ },
+ "strike-rivers-seize-winds": {
+  "max": 1,
+  "per": "hour"
+ },
+ "reach-for-immortality": {
+  "max": 1,
+  "per": "day"
+ },
+ "extraplanar-haze": {
+  "max": 1,
+  "per": "day"
+ },
+ "resilient-physiology": {
+  "max": 1,
+  "per": "day"
+ },
+ "towering-presence": {
+  "max": 1,
+  "per": "hour"
+ },
+ "glory-and-valor": {
+  "max": 1,
+  "per": "day"
+ },
+ "alter-resistance": {
+  "max": 1,
+  "per": "hour"
+ },
+ "impose-order": {
+  "max": 1,
+  "per": "day"
+ },
+ "channel-the-godmind": {
+  "max": 1,
+  "per": "day"
+ },
+ "pandemonium-eruption": {
+  "max": 1,
+  "per": "day"
+ },
+ "haft-beatdown": {
+  "max": 1,
+  "per": "minute"
+ },
+ "spelldrinker": {
+  "max": 1,
+  "per": "hour"
+ },
+ "seneschal-spell": {
+  "max": 1,
+  "per": "hour"
+ },
+ "spiritual-secret": {
+  "max": 1,
+  "per": "hour"
+ },
+ "know-thy-doom": {
+  "max": 1,
+  "per": "day"
+ },
+ "summon-mythic-power": {
+  "max": 1,
+  "per": "day"
+ },
+ "consult-celestial-advisor": {
+  "max": 1,
+  "per": "day"
+ },
+ "channel-divine-spark": {
+  "max": 1,
+  "per": "hour"
+ },
+ "you-cant-keep-us-down": {
+  "max": 1,
+  "per": "day"
+ },
+ "bring-into-the-fold": {
+  "max": 1,
+  "per": "day"
+ },
+ "cry-of-rebellion": {
+  "max": 1,
+  "per": "hour"
+ },
+ "break-the-causal-chain": {
+  "max": 1,
+  "per": "month"
+ },
+ "divine-invulnerability": {
+  "max": 1,
+  "per": "day"
+ },
+ "stymie-the-gods": {
+  "max": 1,
+  "per": "hour"
+ },
+ "decree-of-prosperity": {
+  "max": 1,
+  "per": "day"
+ },
+ "decree-of-war": {
+  "max": 1,
+  "per": "day"
+ },
+ "fated-duel": {
+  "max": 1,
+  "per": "week"
+ },
+ "mythic-heightening": {
+  "max": 1,
+  "per": "day"
+ },
+ "rapid-switch": {
+  "max": 1,
+  "per": "round"
+ },
+ "galvanize-spell": {
+  "max": 1,
+  "per": "day"
+ },
+ "stories-of-home": {
+  "max": 1,
+  "per": "day"
+ },
+ "bleak-humorist": {
+  "max": 1,
+  "per": "day"
+ },
+ "ruthless-orator": {
+  "max": 1,
+  "per": "hour"
+ },
+ "maelstrom-flow": {
+  "max": 1,
+  "per": "hour"
+ },
+ "lessons-of-flux": {
+  "max": 1,
+  "per": "hour"
+ },
+ "wave-spiral": {
+  "max": 1,
+  "per": "minute"
+ },
+ "empowered-onslaught": {
+  "max": 1,
+  "per": "round"
+ },
+ "enforce-oath": {
+  "max": 1,
+  "per": "hour"
+ },
+ "retributive-focus": {
+  "max": 1,
+  "per": "day"
+ },
+ "flash-of-omnipresence": {
+  "max": 1,
+  "per": "hour"
+ },
+ "heralds-weapon": {
+  "max": 1,
+  "per": "hour"
+ },
+ "shield-the-faithful": {
+  "max": 1,
+  "per": "hour"
+ },
+ "heraldic-proclamation": {
+  "max": 1,
+  "per": "day"
+ },
+ "deific-font": {
+  "max": 1,
+  "per": "hour"
+ },
+ "ease-the-burden": {
+  "max": 1,
+  "per": "hour"
+ },
+ "challenge-insight": {
+  "max": 1,
+  "per": "day"
+ },
+ "cursebreaker": {
+  "max": 1,
+  "per": "day"
+ },
+ "open-the-blazing-eye": {
+  "max": 1,
+  "per": "day"
+ },
+ "mask-of-the-12th-step": {
+  "max": 3,
+  "per": "day"
+ },
+ "mask-of-the-15th-step": {
+  "max": 1,
+  "per": "day"
+ },
+ "living-god": {
+  "max": 1,
+  "per": "day"
+ },
+ "consult-the-spirits-rivethun-emissary": {
+  "max": 1,
+  "per": "day"
+ },
+ "leverage-anguish": {
+  "max": 1,
+  "per": "day"
+ },
+ "one-with-the-spirits": {
+  "max": 1,
+  "per": "hour"
+ },
+ "irresistible-bloom": {
+  "max": 1,
+  "per": "day"
+ },
+ "gladiators-roar": {
+  "max": 1,
+  "per": "day"
+ },
+ "primadonna": {
+  "max": 1,
+  "per": "hour"
+ },
+ "its-not-over": {
+  "max": 1,
+  "per": "day"
+ },
+ "tempo-shift": {
+  "max": 1,
+  "per": "hour"
+ },
+ "shame-the-sin": {
+  "max": 1,
+  "per": "hour"
+ },
+ "anchoring-arrow": {
+  "max": 1,
+  "per": "hour"
+ },
+ "treehealer": {
+  "max": 1,
+  "per": "day"
+ },
+ "demon-slayer": {
+  "max": 1,
+  "per": "day"
+ },
+ "talmandors-shout": {
+  "max": 1,
+  "per": "day"
+ },
+ "fortunes-favor": {
+  "max": 1,
+  "per": "day"
+ },
+ "hungry-blade": {
+  "max": 1,
+  "per": "day"
+ },
+ "guillotine-blade": {
+  "max": 1,
+  "per": "day"
+ },
+ "elven-persistence": {
+  "max": 1,
+  "per": "day"
+ },
+ "inspiring-recitation": {
+  "max": 1,
+  "per": "hour"
+ },
+ "slowing-strike": {
+  "max": 1,
+  "per": "round"
+ },
+ "caretakers-restoration": {
+  "max": 1,
+  "per": "day"
+ },
+ "plane-stepping-dash": {
+  "max": 1,
+  "per": "day"
+ },
+ "call-the-first-tools": {
+  "max": 1,
+  "per": "day"
+ },
+ "build-the-first-walls": {
+  "max": 1,
+  "per": "day"
+ },
+ "planar-traveler": {
+  "max": 1,
+  "per": "hour"
+ },
+ "armored-courage": {
+  "max": 1,
+  "per": "hour"
+ },
+ "tough-cookie": {
+  "max": 1,
+  "per": "day"
+ },
+ "keep-up-the-good-fight": {
+  "max": 1,
+  "per": "hour"
+ },
+ "one-on-one": {
+  "max": 1,
+  "per": "round"
+ },
+ "invented-vulnerability": {
+  "max": 1,
+  "per": "round"
+ },
+ "invincible-army": {
+  "max": 1,
+  "per": "round"
+ },
+ "dismal-harvest": {
+  "max": 1,
+  "per": "round"
+ },
+ "shift-horde": {
+  "max": 1,
+  "per": "round"
+ },
+ "topple-the-titans": {
+  "max": 1,
+  "per": "minute"
+ },
+ "as-a-thousand-soldiers": {
+  "max": 1,
+  "per": "hour"
+ },
+ "forward-gaze-into-life": {
+  "max": 1,
+  "per": "hour"
+ },
+ "griefs-fury": {
+  "max": 1,
+  "per": "day"
+ },
+ "take-wing": {
+  "max": 1,
+  "per": "round"
+ },
+ "ferocious-will": {
+  "max": 1,
+  "per": "hour"
+ },
+ "reactive-resilience": {
+  "max": 1,
+  "per": "day"
+ },
+ "minor-omen": {
+  "max": 1,
+  "per": "day"
+ },
+ "scholars-hunch": {
+  "max": 1,
+  "per": "hour"
+ },
+ "nights-warning": {
+  "max": 1,
+  "per": "hour"
+ },
+ "starlight-armor": {
+  "max": 1,
+  "per": "day"
+ },
+ "guided-skill": {
+  "max": 1,
+  "per": "day"
+ },
+ "invigorating-breath": {
+  "max": 1,
+  "per": "hour"
+ },
+ "spirit-guide-form": {
+  "max": 1,
+  "per": "day"
+ },
+ "apocalyptic-visions": {
+  "max": 1,
+  "per": "day"
+ },
+ "momentary-respite": {
+  "max": 1,
+  "per": "day"
+ },
+ "on-my-best-day": {
+  "max": 1,
+  "per": "hour"
+ },
+ "to-me": {
+  "max": 1,
+  "per": "day"
+ },
+ "be-right-back": {
+  "max": 1,
+  "per": "day"
+ },
+ "live-off-borrowed-time": {
+  "max": 1,
+  "per": "minute"
+ },
+ "preserve-the-moment": {
+  "max": 1,
+  "per": "day"
+ },
+ "go-with-the-flow": {
+  "max": 1,
+  "per": "day"
+ },
+ "lets-try-that-again": {
+  "max": 1,
+  "per": "day"
+ },
+ "clinging-to-life": {
+  "max": 1,
+  "per": "day"
+ },
+ "indomitable-spirit": {
+  "max": 1,
+  "per": "day"
+ },
+ "release-the-light": {
+  "max": 1,
+  "per": "day"
+ },
+ "see-you-in-hell": {
+  "max": 1,
+  "per": "day"
+ },
+ "psi-burst": {
+  "max": 1,
+  "per": "round"
+ },
+ "psi-strikes": {
+  "max": 1,
+  "per": "turn"
+ },
+ "strain-mind": {
+  "max": 1,
+  "per": "hour"
+ },
+ "foreseen-failure": {
+  "max": 1,
+  "per": "day"
+ },
+ "wandering-thoughts": {
+  "max": 1,
+  "per": "round"
+ },
+ "cranial-detonation": {
+  "max": 1,
+  "per": "round"
+ },
+ "unlimited-potential": {
+  "max": 1,
+  "per": "minute"
+ },
+ "eerie-proclamation": {
+  "max": 1,
+  "per": "hour"
+ },
+ "aura-sight": {
+  "max": 1,
+  "per": "hour"
+ },
+ "skeptics-defense": {
+  "max": 1,
+  "per": "day"
+ },
+ "warped-reflection": {
+  "max": 1,
+  "per": "minute"
+ },
+ "mistaken-identity": {
+  "max": 1,
+  "per": "minute"
+ },
+ "warp-likeness": {
+  "max": 1,
+  "per": "minute"
+ },
+ "mirror-refuge": {
+  "max": 1,
+  "per": "day"
+ },
+ "tap-vitality": {
+  "max": 1,
+  "per": "hour"
+ },
+ "feys-trickery": {
+  "max": 1,
+  "per": "hour"
+ },
+ "vessels-form": {
+  "max": 1,
+  "per": "day"
+ },
+ "purge-of-moments": {
+  "max": 1,
+  "per": "hour"
+ },
+ "timeline-splitting-spell": {
+  "max": 1,
+  "per": "day"
+ },
+ "turn-back-the-clock": {
+  "max": 1,
+  "per": "day"
+ },
+ "guide-the-timeline": {
+  "max": 1,
+  "per": "day"
+ },
+ "superimpose-time-duplicates": {
+  "max": 1,
+  "per": "hour"
+ },
+ "borrow-time": {
+  "max": 1,
+  "per": "minute"
+ },
+ "steal-time": {
+  "max": 1,
+  "per": "hour"
+ },
+ "escape-timeline": {
+  "max": 1,
+  "per": "day"
+ },
+ "reset-the-past": {
+  "max": 1,
+  "per": "day"
+ },
+ "instigate-psychic-duel": {
+  "max": 1,
+  "per": "day"
+ },
+ "ghost-blade": {
+  "max": 1,
+  "per": "hour"
+ },
+ "hellbreakers-resolve": {
+  "max": 1,
+  "per": "hour"
+ },
+ "sense-iniquity": {
+  "max": 1,
+  "per": "hour"
+ },
+ "conjure-hell": {
+  "max": 1,
+  "per": "day"
+ },
+ "march-of-law": {
+  "max": 1,
+  "per": "round"
+ },
+ "unfetter-sight": {
+  "max": 1,
+  "per": "hour"
+ },
+ "frightening-indignation": {
+  "max": 1,
+  "per": "day"
+ },
+ "burn-identity": {
+  "max": 1,
+  "per": "week"
+ },
+ "sundown-street-posturing": {
+  "max": 1,
+  "per": "hour"
+ },
+ "bloom-cabaret-entrance": {
+  "max": 1,
+  "per": "day"
+ },
+ "do-you-know-who-i-am": {
+  "max": 1,
+  "per": "hour"
+ },
+ "iomedaes-valor": {
+  "max": 1,
+  "per": "day"
+ },
+ "float-free": {
+  "max": 1,
+  "per": "round"
+ },
+ "promise-of-pain": {
+  "max": 1,
+  "per": "minute"
+ },
+ "face-your-fears": {
+  "max": 1,
+  "per": "hour"
+ },
+ "repel-darkness": {
+  "max": 1,
+  "per": "hour"
+ },
+ "fear-no-pain": {
+  "max": 1,
+  "per": "day"
+ },
+ "reckless-abandon": {
+  "max": 1,
+  "per": "day"
+ },
+ "quick-stow-ratfolk": {
+  "max": 1,
+  "per": "round"
+ },
+ "harbingers-caw": {
+  "max": 1,
+  "per": "day"
+ },
+ "quick-recovery": {
+  "max": 1,
+  "per": "day"
+ },
+ "even-the-odds-eagle-knight": {
+  "max": 1,
+  "per": "day"
+ },
+ "pass-vengeful-judgment": {
+  "max": 1,
+  "per": "day"
+ },
+ "blessing-of-the-five": {
+  "max": 1,
+  "per": "day"
+ },
+ "seek-injustice": {
+  "max": 1,
+  "per": "day"
+ },
+ "decree-of-banishment": {
+  "max": 1,
+  "per": "day"
+ },
+ "vengeful-remnant": {
+  "max": 1,
+  "per": "day"
+ },
+ "keep-up-the-good-fight-knight-vigilant": {
+  "max": 1,
+  "per": "hour"
+ }
+}

@@ -616,7 +616,7 @@ export function CharacterSheet({
           ) : tab === 'Inventory' ? (
             <InventoryTab character={character} content={content} onPlay={onPlay} onCreateItem={onCreateItem} />
           ) : tab === 'Feats & features' ? (
-            <FeatsTab character={character} content={content} />
+            <FeatsTab character={character} content={content} onPlay={onPlay} />
           ) : tab === 'Details' ? (
             <DetailsTab character={character} content={content} onPlay={onPlay} />
           ) : tab === 'Notes' ? (

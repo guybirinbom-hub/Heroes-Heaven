@@ -567,7 +567,15 @@ export interface Feat extends ContentBase, DefenseGrants {
   category: FeatCategory;
   prerequisites?: string[];
   actionCost?: ActionCost;
+  /** The printed Frequency line, free text ("once per day"). Display only — kept because the homebrew
+   *  editor round-trips it. The TRACKABLE limit is `limitedUses` below. */
   frequency?: string;
+  /**
+   * A structured per-period limit the sheet can actually track. Items have carried one for a while
+   * (item.frequency → use pips via itemUses.ts); feats had nothing, so "once per day" on a feat was
+   * text the player had to remember unaided. Spent uses live in PlayState.featUses and reset at rest.
+   */
+  limitedUses?: { max: number; per: 'round' | 'turn' | 'minute' | 'hour' | 'day' | 'week' | 'month' };
   trigger?: string;
   requirements?: string;
   access?: string;
@@ -1894,6 +1902,8 @@ export interface Character {
   alchemyPrep?: Record<string, number>;
   /** Answers to daily-preparation choices, keyed `${recordId}:${flag}`; overlaid from play-state. */
   dailyChoices?: Record<string, string>;
+  /** Uses spent against each feat's `limitedUses`, by feat id; overlaid from play-state. */
+  featUses?: Record<string, number>;
 
   // --- choices ---
   languages: string[];

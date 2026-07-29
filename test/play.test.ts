@@ -260,7 +260,11 @@ describe('rest', () => {
       conditions: [{ id: 'doomed', value: 1 }],
       pinned: [],
     };
-    expect(rest(p, { level: 5, conMod: 2 })).toEqual({
+    // toMatchObject rather than toEqual: rest() legitimately passes through untouched keys
+    // (companionHp, inventory, resources…), so an exact-shape assertion fails whenever a new field is
+    // added — which says nothing about whether rest is correct. The refill assertions below are the
+    // point, and the "keeps" ones are checked explicitly.
+    expect(rest(p, { level: 5, conMod: 2 })).toMatchObject({
       damage: 2, // 12 − (5 × 2)
       tempHp: 0,
       heroPoints: 0, // session-based, untouched
@@ -270,6 +274,7 @@ describe('rest', () => {
       expendedSlots: {},
       slotsUsed: {},
       innateUsed: {}, // 1/day innate spells refill on rest
+      featUses: {}, // per-day FEAT uses refill too — items always did, feats had no tracking at all
       conditions: [], // doomed 1 → stepped down to 0 → cleared
       pinned: [],
     });

@@ -28,6 +28,9 @@ export interface FeatEntry {
   prerequisites?: string[];
   /** When set, this feat was auto-granted by another feat — the granting feat's display name. */
   grantedBy?: string;
+  /** The core.json feat id, for rows that are real feats (features and heritages leave it unset).
+   *  Needed to look up per-day uses; `key` can't serve, since it embeds the level for uniqueness. */
+  featId?: string;
 }
 
 function cap(s: string): string {

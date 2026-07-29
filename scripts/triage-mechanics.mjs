@@ -111,7 +111,10 @@ const LANES = [
     id: 'resource',
     what: 'a limited-use pool or per-day/per-hour counter',
     re: /\b(once per (?:day|hour|minute|round|turn)|(?:\d+|one|two|three) times? per (?:day|hour)|you can use this (?:ability|feat|action) only once)\b/i,
-    modelled: (r) => !!r.frequency || !!r.uses || !!r.counters,
+    /** `frequency`/`counters` are the ITEM shape (itemUses.ts); `limitedUses` is the FEAT one added
+     *  when per-day feat tracking was built. Both count — checking only the item fields would report
+     *  every tracked feat as a gap. */
+    modelled: (r) => !!r.frequency || !!r.uses || !!r.counters || !!r.limitedUses,
   },
   {
     id: 'toggle',
