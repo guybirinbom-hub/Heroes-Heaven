@@ -80,7 +80,14 @@ const MODELLED = {
     ...idsIn('src/rules/featCantripGrants.ts'),
   ]),
   grantsFeat: idsIn('src/rules/featFeatGrants.ts'),
-  proficiency: new Set([...idsIn('src/rules/featGrants.ts'), ...idsIn('src/rules/featGrantsAuto.ts')]),
+  // featGrantsLane.ts is merged into FEAT_GRANTS just like the other two; omitting it here reported
+  // ~78 already-wired feats (Master Spotter, Juggernaut's Fortitude, Evasiveness…) as gaps. A new
+  // registry file has to be added HERE as well, or the report silently stops seeing it.
+  proficiency: new Set([
+    ...idsIn('src/rules/featGrants.ts'),
+    ...idsIn('src/rules/featGrantsAuto.ts'),
+    ...idsIn('src/rules/featGrantsLane.ts'),
+  ]),
   companion: idsIn('src/rules/companionGrants.ts'),
   situational: idsIn('src/rules/situationalBonuses.ts'),
 };
@@ -117,8 +124,16 @@ const LANES = [
       MODELLED.proficiency.has(r.id) ||
       !!r.skillChoices ||
       !!r.grants ||
-      // backgrounds carry their own training fields
-      !!r.trainedSkills || !!r.trainedLore || !!r.trainedLoreChoice || !!r.trainedSkillChoice ||
+      // Backgrounds carry their own training fields. NOTE the singular `trainedSkill` — checking only
+      // the plural missed 16 of the 18 backgrounds still being reported here.
+      !!r.trainedSkill || !!r.trainedSkills || !!r.trainedLore || !!r.trainedLoreChoice || !!r.trainedSkillChoice ||
+      !!r.loreChoices ||
+      // Heritages express "become trained in Crafting (or another skill if already trained)" as an
+      // effect-choice the builder renders as a picker — that IS the model, not a gap.
+      (r.effectChoices ?? []).some((ec) => /skill|lore|trained/i.test(`${ec.id} ${ec.prompt ?? ''}`)) ||
+      // "Trained in spell attack rolls and spell DCs" is a proficiency too, and it has its own field
+      // that buildCharacter already reads — omitting it here reported wired archetypes as gaps.
+      !!r.spellcastingGrant ||
       // class features are advanced by the class pipeline, not by any registry
       CLASS_FEATURE_IDS.has(r.id),
   },

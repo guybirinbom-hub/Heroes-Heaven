@@ -1,0 +1,1187 @@
+[
+ {
+  "collection": "feats",
+  "id": "summoner-dedication",
+  "name": "Summoner Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "basic-summoner-spellcasting",
+  "name": "Basic Summoner Spellcasting",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "beast-gunner-dedication",
+  "name": "Beast Gunner Dedication",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "perfections-path",
+  "name": "Perfection's Path",
+  "level": 12,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "beastmaster-bond",
+  "name": "Beastmaster Bond",
+  "level": 10,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "eldritch-archer-dedication",
+  "name": "Eldritch Archer Dedication",
+  "level": 6,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "animist-dedication",
+  "name": "Animist Dedication",
+  "level": 2,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "listeners-boon",
+  "name": "Listener's Boon",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "alchemical-sciences-methodology",
+  "name": "Alchemical Sciences Methodology",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "avenger",
+  "name": "Avenger",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "battle-creed",
+  "name": "Battle Creed",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "battledancer",
+  "name": "Battledancer",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "braggart",
+  "name": "Braggart",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "cultivation-order",
+  "name": "Cultivation Order",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "empiricism-methodology",
+  "name": "Empiricism Methodology",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "evasion",
+  "name": "Evasion",
+  "level": 7,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "fencer",
+  "name": "Fencer",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "fifth-doctrine-warpriest",
+  "name": "Fifth Doctrine (Warpriest)",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "final-creed",
+  "name": "Final Creed",
+  "level": 19,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "first-doctrine-warpriest",
+  "name": "First Doctrine (Warpriest)",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "forensic-medicine-methodology",
+  "name": "Forensic Medicine Methodology",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "greater-resolve",
+  "name": "Greater Resolve",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "gymnast",
+  "name": "Gymnast",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "heightened-senses",
+  "name": "Heightened Senses",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "improved-evasion",
+  "name": "Improved Evasion",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "initial-creed",
+  "name": "Initial Creed",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "interrogation-methodology",
+  "name": "Interrogation Methodology",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "iron-will",
+  "name": "Iron Will",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "ki-spells",
+  "name": "Ki Spells",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "lesser-creed",
+  "name": "Lesser Creed",
+  "level": 5,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "major-creed",
+  "name": "Major Creed",
+  "level": 13,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "patron-theme",
+  "name": "Patron Theme",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "psychic-weapon-expertise",
+  "name": "Psychic Weapon Expertise",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "rascal",
+  "name": "Rascal",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "ruffian",
+  "name": "Ruffian",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "runelord",
+  "name": "Runelord",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "scoundrel",
+  "name": "Scoundrel",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "second-doctrine-cloistered-cleric",
+  "name": "Second Doctrine (Cloistered Cleric)",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "second-doctrine-warpriest",
+  "name": "Second Doctrine (Warpriest)",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "spore-order",
+  "name": "Spore Order",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-brave",
+  "name": "The Brave",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-cunning",
+  "name": "The Cunning",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-deft",
+  "name": "The Deft",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-mournful",
+  "name": "The Mournful",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-proud",
+  "name": "The Proud",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "the-radiant",
+  "name": "The Radiant",
+  "level": 3,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "thief",
+  "name": "Thief",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "true-creed",
+  "name": "True Creed",
+  "level": 15,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "vindicator",
+  "name": "Vindicator",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "war-magic",
+  "name": "War Magic",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "warpriest",
+  "name": "Warpriest",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "warrior-of-legend",
+  "name": "Warrior of Legend",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": false,
+    "examined": true
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "wit",
+  "name": "Wit",
+  "level": 1,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "warrior-android",
+  "name": "Warrior Android",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "wisp-fetchling",
+  "name": "Wisp Fetchling",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "skilled-human",
+  "name": "Skilled Human",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "ant-kholo",
+  "name": "Ant Kholo",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "tsukumogami-poppet",
+  "name": "Tsukumogami Poppet",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "respite-of-a-thousand-roofs",
+  "name": "Respite of a Thousand Roofs",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "keeper-jotunborn",
+  "name": "Keeper Jotunborn",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "sage-jotunborn",
+  "name": "Sage Jotunborn",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "weaver-jotunborn",
+  "name": "Weaver Jotunborn",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "situational",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "heritages",
+  "id": "warden-human-bb",
+  "name": "Warden Human (BB)",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "eclipseborn",
+  "name": "Eclipseborn",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "resource",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "spellGrant",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "backgrounds",
+  "id": "banished-celestial",
+  "name": "Banished Celestial",
+  "level": null,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ }
+]

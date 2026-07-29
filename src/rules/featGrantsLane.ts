@@ -31,4 +31,7 @@ export const FEAT_LANE_GRANTS: Record<string, FeatGrant> = {
   'magical-knowledge': {"skillChoices":[{"options":["arcana","nature","occultism","religion"],"rank":"master"},{"options":["arcana","nature","occultism","religion"],"rank":"expert"}]},
   'resolute': {"save":{"will":"master"}},
   'master-spotter-investigator': {"perception":"master"},
+  // Ancestry weapon familiarity: named weapons, not a whole category. All ten ids verified in core.json.
+  'vanara-weapon-familiarity': { weaponFamiliarity: { weapons: ['bo-staff', 'chakram', 'katar', 'panabas', 'urumi'], rank: 'trained' } },
+  'vishkanya-weapon-familiarity': { weaponFamiliarity: { weapons: ['blowgun', 'fighting-fan', 'kris', 'kukri', 'shuriken'], rank: 'trained' } },
 };

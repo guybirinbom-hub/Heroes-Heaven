@@ -26,6 +26,9 @@ const db = JSON.parse(read('public/core.json'));
 const REGISTRY_FILES = {
   featGrants: 'src/rules/featGrants.ts',
   featGrantsAuto: 'src/rules/featGrantsAuto.ts',
+  // Merged into FEAT_GRANTS alongside the other two. A new registry file must be listed here too, or
+  // this report silently stops counting it and calls wired feats gaps.
+  featGrantsLane: 'src/rules/featGrantsLane.ts',
   featPickGrants: 'src/rules/featPickGrants.ts',
   featCantripGrants: 'src/rules/featCantripGrants.ts',
   featFeatGrants: 'src/rules/featFeatGrants.ts',
