@@ -995,7 +995,7 @@ export function Builder({
                         ))}
                         {bgFeatAtThisLevel &&
                           // Eagle Hunter and Returned grant TWO feats — render every one, not the first.
-                          backgroundGrantedFeats(bg).map((gid) => {
+                          backgroundGrantedFeats(bg, build.backgroundSkillChoice).map((gid) => {
                             const ft = content.feats[gid];
                             const nm = ft?.name ?? gid;
                             return (

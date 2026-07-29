@@ -2431,7 +2431,7 @@ export function OriginPickers({ build, actions, content }: EditorProps) {
                       : ''}
                   </span>
                 )}
-                {backgroundGrantedFeats(background)
+                {backgroundGrantedFeats(background, build.backgroundSkillChoice)
                   .filter((id) => content.feats[id])
                   .map((id) => (
                     <span className="cc-g" key={id}>

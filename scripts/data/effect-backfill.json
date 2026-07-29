@@ -36669,5 +36669,50 @@
       "performance",
       "society"
     ]
+  },
+  {
+    "category": "backgrounds",
+    "id": "conservator",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "crafting": "quick-repair",
+      "thievery": "assurance"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "dedicated-delver",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "athletics": "combat-climber",
+      "survival": "terrain-expertise"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "anti-thrune-saboteur",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "deception": "lengthy-diversion",
+      "thievery": "dirty-trick"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "historical-reenactor",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "performance": "impressive-performance",
+      "society": "dubious-knowledge"
+    }
+  },
+  {
+    "category": "backgrounds",
+    "id": "aon-historical-reeanactor",
+    "field": "grantedFeatByChoice",
+    "value": {
+      "performance": "impressive-performance",
+      "society": "dubious-knowledge"
+    }
   }
 ]

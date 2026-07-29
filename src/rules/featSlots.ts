@@ -36,7 +36,7 @@ export function eligibleFeatsForSlot(build: BuildState, content: ContentDatabase
   // feat therefore stays offered until the whole build holds maxTakes() copies of it.
   const taken = new Map<string, number>();
   for (const [k, v] of Object.entries(build.featPicks)) if (v && k !== currentKey) taken.set(v, (taken.get(v) ?? 0) + 1);
-  for (const granted of backgroundGrantedFeats(resolveBackground(build, content))) {
+  for (const granted of backgroundGrantedFeats(resolveBackground(build, content), build.backgroundSkillChoice)) {
     taken.set(granted, (taken.get(granted) ?? 0) + 1);
   }
   return Object.values(content.feats).filter((f) => {

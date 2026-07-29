@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { content } from './_content';
+import { backgroundGrantedFeats } from '../src/rules/build';
 
 const c = content();
 type Patch = { category: string; id: string; field: string; value: unknown };
@@ -110,6 +111,45 @@ describe('background skill choices', () => {
       const text = (b.description ?? '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
       if (!/trained in (?:either )?(?:the )?[A-Z][a-z]+(?: skill)?,? or (?:the )?[A-Z][a-z]+/.test(text)) continue;
       if (b.trainedSkill && !b.trainedSkillChoice) bad.push(`${id} (fixed ${b.trainedSkill})`);
+    }
+    expect(bad).toEqual([]);
+  });
+});
+
+/**
+ * The granted feat must MATCH the skill you picked.
+ *
+ * Five backgrounds print "If you selected X you gain feat A; if you chose Y, feat B". With a flat
+ * `grantedFeatId` they all handed out the first branch's feat whatever the player chose.
+ */
+describe('backgrounds whose feat depends on the skill choice', () => {
+  it('each branch grants its own feat', () => {
+    expect(backgroundGrantedFeats(c.backgrounds['historical-reenactor'], 'performance')).toEqual(['impressive-performance']);
+    expect(backgroundGrantedFeats(c.backgrounds['historical-reenactor'], 'society')).toEqual(['dubious-knowledge']);
+    expect(backgroundGrantedFeats(c.backgrounds['conservator'], 'thievery')).toEqual(['assurance']);
+  });
+
+  it('an unpicked choice falls back to the first offered skill, not to a stale flat value', () => {
+    const bg = c.backgrounds['historical-reenactor'];
+    expect(bg.trainedSkillChoice?.[0]).toBe('performance');
+    expect(backgroundGrantedFeats(bg, null)).toEqual(['impressive-performance']);
+  });
+
+  it('a background without branches is unaffected', () => {
+    const bg = c.backgrounds['spell-seeker'];
+    expect(bg.grantedFeatByChoice).toBeUndefined();
+    expect(backgroundGrantedFeats(bg, 'occultism')).toEqual(['recognize-spell']);
+  });
+
+  it('every branch names a real feat, and covers every offered skill', () => {
+    const bad: string[] = [];
+    for (const [id, bg] of Object.entries(c.backgrounds)) {
+      const map = bg.grantedFeatByChoice;
+      if (!map) continue;
+      for (const s of bg.trainedSkillChoice ?? []) if (!map[s]) bad.push(`${id}: no feat for '${s}'`);
+      for (const [s, f] of Object.entries(map)) {
+        for (const one of ([] as string[]).concat(f)) if (!c.feats[one]) bad.push(`${id}/${s} -> ${one} missing`);
+      }
     }
     expect(bad).toEqual([]);
   });

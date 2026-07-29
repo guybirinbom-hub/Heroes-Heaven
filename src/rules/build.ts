@@ -328,7 +328,17 @@ export function emptyCustomBackground(): CustomBackground {
  *  build's custom ("deep") background — so every consumer treats them identically. */
 /** The feat ids a background grants, normalised. `grantedFeatId` is usually a single string, but Eagle
  *  Hunter and Returned each grant a PAIR of feats and a bare string read dropped the second one. */
-export function backgroundGrantedFeats(bg: Background | undefined): string[] {
+export function backgroundGrantedFeats(bg: Background | undefined, skillChoice?: SkillId | null): string[] {
+  // A background whose feat depends on the skill you chose ("If you selected Performance… if you
+  // chose Society…") replaces the flat grant entirely — otherwise a Society pick would still hand
+  // out the Performance feat. Unpicked falls back to the first offered skill, matching how
+  // `trainedSkillChoice` itself defaults.
+  const byChoice = bg?.grantedFeatByChoice;
+  if (byChoice) {
+    const picked = skillChoice && byChoice[skillChoice] ? skillChoice : bg?.trainedSkillChoice?.[0];
+    const g = picked ? byChoice[picked] : undefined;
+    if (g) return (Array.isArray(g) ? g : [g]).filter(Boolean);
+  }
   const g = bg?.grantedFeatId;
   if (!g) return [];
   return Array.isArray(g) ? g.filter(Boolean) : [g];
@@ -1046,7 +1056,7 @@ export function collectChosenIds(build: BuildState, content: ContentDatabase): S
   for (const v of Object.values(build.featPicks)) add(v);
   for (const v of Object.values(build.featChoices)) add(v);
   for (const arr of Object.values(build.extraChoices)) for (const v of arr) add(v);
-  for (const id of backgroundGrantedFeats(resolveBackground(build, content))) add(id);
+  for (const id of backgroundGrantedFeats(resolveBackground(build, content), build.backgroundSkillChoice)) add(id);
   add(build.heritageFeatId);
   add(build.umtFeatId);
   for (const v of Object.values(build.dedicationSkillFeats ?? {})) add(v);
@@ -1518,7 +1528,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
       focusBonusIds.push(id);
     }
   };
-  for (const id of backgroundGrantedFeats(resolveBackground(build, content))) pushFocusBonus(id);
+  for (const id of backgroundGrantedFeats(resolveBackground(build, content), build.backgroundSkillChoice)) pushFocusBonus(id);
   pushFocusBonus(build.heritageFeatId);
   pushFocusBonus(build.umtFeatId);
   for (const f of build.overrides?.addedFeats ?? []) if ((f.level ?? 1) <= level) pushFocusBonus(f.featId);
@@ -2014,7 +2024,7 @@ export function buildCharacter(build: BuildState, content: ContentDatabase): Cha
   const feats: FeatChoice[] = [];
   const takenFeats = new Set<string>();
   // Eagle Hunter and Returned each grant TWO feats; iterating is what stopped the second being lost.
-  for (const bgFeatId of backgroundGrantedFeats(background)) {
+  for (const bgFeatId of backgroundGrantedFeats(background, build.backgroundSkillChoice)) {
     feats.push({ featId: bgFeatId, level: 1, category: 'skill' });
     takenFeats.add(bgFeatId);
   }
@@ -3378,7 +3388,7 @@ export function deriveBuildFromCharacter(c: Character, content: ContentDatabase)
   // Feats: reconstruct featPicks/featChoices, dropping the background-granted feat (re-injected
   // by buildCharacter). Each feat is placed in a real levelGrants slot of its category so the
   // builder shows it in the right slot; idx is otherwise ignored by buildCharacter.
-  const bgFeat = backgroundGrantedFeats(background)[0];
+  const bgFeat = backgroundGrantedFeats(background, b.backgroundSkillChoice)[0];
   let bgFeatDropped = false;
   // A feat-granting heritage (Versatile Human): the level-1 GENERAL feat is its grant (no class has
   // a general slot at level 1), so recover it into heritageFeatId rather than a slot pick.

@@ -570,6 +570,13 @@ export interface Background extends ContentBase {
    *  Eagle Hunter ("the Pet general feat AND the Train Animal skill feat") and Returned — and a single
    *  string silently dropped the second. Read it through `backgroundGrantedFeats()`, never directly. */
   grantedFeatId?: string | string[];
+  /**
+   * The feat depends on which `trainedSkillChoice` you took — "If you selected Performance, you gain
+   * Impressive Performance; if you chose Society, Dubious Knowledge" (Historical Reenactor). Keyed by
+   * the chosen skill. Five backgrounds print this, and with a flat `grantedFeatId` they all handed
+   * out the FIRST branch's feat whatever you picked.
+   */
+  grantedFeatByChoice?: Record<string, string | string[]>;
 }
 
 export type FeatCategory =
