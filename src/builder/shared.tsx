@@ -3267,7 +3267,9 @@ export function LiveStats({
         <span className="bk">{preview.name || 'New character'}</span>
         <span className="bv">Lv {preview.level}</span>
       </div>
-      <StatLine label="Hit points" value={deriveMaxHp(preview, content)} refTarget={{ kind: 'hp' }} onOpenStat={onOpenStat} />
+      {/* `character` is what lets a row show the situational `*`; leaving it off silently hides every
+          conditional bonus on that stat, which is how HP / Class DC / the spell rows went unmarked. */}
+      <StatLine label="Hit points" value={deriveMaxHp(preview, content)} refTarget={{ kind: 'hp' }} onOpenStat={onOpenStat} character={preview} />
       <StatLine label="Armor class" value={ac.value} rank={ac.rank} refTarget={{ kind: 'ac' }} onOpenStat={onOpenStat} character={preview} />
       <StatLine
         label="Perception"
@@ -3291,7 +3293,7 @@ export function LiveStats({
           />
         );
       })}
-      <StatLine label="Class DC" value={classDc.dc} rank={classDc.rank} refTarget={{ kind: 'classDc' }} onOpenStat={onOpenStat} />
+      <StatLine label="Class DC" value={classDc.dc} rank={classDc.rank} refTarget={{ kind: 'classDc' }} onOpenStat={onOpenStat} character={preview} />
       {spell && entry && (
         <>
           <StatLine
@@ -3300,6 +3302,7 @@ export function LiveStats({
             rank={entry.proficiency}
             refTarget={{ kind: 'spell', entryId: entry.id, which: 'dc' }}
             onOpenStat={onOpenStat}
+            character={preview}
           />
           <StatLine
             label="Spell attack"
@@ -3307,6 +3310,7 @@ export function LiveStats({
             rank={entry.proficiency}
             refTarget={{ kind: 'spell', entryId: entry.id, which: 'attack' }}
             onOpenStat={onOpenStat}
+            character={preview}
           />
         </>
       )}

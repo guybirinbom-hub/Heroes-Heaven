@@ -458,7 +458,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       ];
       const cond = conditionPart(c, key, 'class-dc');
       if (cond) parts.push(cond);
-      const situational = modeAdjust(c, { kind: 'class-dc' }, parts);
+      const situational = [...modeAdjust(c, { kind: 'class-dc' }, parts), ...featSituationalStrings(c, db, ref)];
       return {
         title: 'Class DC',
         subtitle: `${ABIL_LABEL[key]} key attribute`,
@@ -480,7 +480,10 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
       parts.push(profPart(entry.proficiency, lvl, pwl(c)), abilityPart(c, entry.keyAbility));
       const cond = conditionPart(c, entry.keyAbility, isDc ? 'spell-dc' : 'spell-attack');
       if (cond) parts.push(cond);
-      const situational = modeAdjust(c, { kind: isDc ? 'spell-dc' : 'spell-attack' }, parts);
+      const situational = [
+        ...modeAdjust(c, { kind: isDc ? 'spell-dc' : 'spell-attack' }, parts),
+        ...featSituationalStrings(c, db, ref),
+      ];
       return {
         title: isDc ? 'Spell DC' : 'Spell attack',
         subtitle: `${cap(entry.tradition)} · ${ABIL_LABEL[entry.keyAbility]}`,
@@ -519,6 +522,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         parts,
         timeline,
         description: `Your ${ABIL_LABEL[ref.ability]} score is ${score}, giving a ${formatMod(mod)} modifier that feeds attacks, DCs, skills, and saves keyed to ${ABIL_LABEL[ref.ability]}.`,
+        situational: featSituationalStrings(c, db, ref),
       };
     }
     case 'hp': {
@@ -534,6 +538,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
           parts: [{ label: 'Manual maximum (override)', value: max }],
           timeline: [],
           description: DESC.hp,
+          situational: featSituationalStrings(c, db, ref),
         };
       }
       const conMod = abilityMod(c.abilities.con);
@@ -557,6 +562,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         ],
         timeline: [],
         description: DESC.hp,
+        situational: featSituationalStrings(c, db, ref),
       };
     }
     case 'speed': {
@@ -608,6 +614,7 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         description: hasTemp
           ? `Your land Speed is temporarily set to ${effectiveLand} ft (normally ${naturalLand} ft). Reset it to return to your default Speed.`
           : 'Your Speed is how far you Stride, in feet. Land Speed comes from your ancestry and is reduced by heavy armor you lack the Strength for; other movement types come from your ancestry, heritage, or feats.',
+        situational: featSituationalStrings(c, db, ref),
       };
     }
     case 'strikeAttack': {
@@ -660,7 +667,10 @@ export function explainStat(c: Character, db: ContentDatabase, ref: StatRef, bui
         const cond = conditionPart(c, strike.dmgAbility, 'damage');
         if (cond) parts.push(cond);
       }
-      const situational = modeAdjust(c, { kind: 'damage' }, parts);
+      // Feat/item damage bonuses are listed for every Strike, exactly as `strikeAttack` lists attack
+      // bonuses: a target carries no weapon narrowing, so the alternative is to show nothing at all.
+      // The `when` clause on each line is what tells the player whether it applies to this weapon.
+      const situational = [...modeAdjust(c, { kind: 'damage' }, parts), ...featSituationalStrings(c, db, ref)];
       // Surface conditional precision/sneak riders (they aren't in the flat total) alongside the
       // situational mode notes so the breakdown matches the annotated strike row.
       for (const r of strike.conditionalDamage ?? []) situational.push(`+${r.text} — ${r.note}`);
