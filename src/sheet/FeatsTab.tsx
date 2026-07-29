@@ -290,7 +290,9 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
                         remember; items have had use pips for a while, so match that control here.
                         stopPropagation because the whole row opens the feat detail. */}
                     {(() => {
-                      const use = e.featId ? featUse(character, content.feats[e.featId]) : null;
+                      // `content` is passed so a feat that RETUNES this one's frequency (Reliable
+                      // Luck → Cat's Luck once per hour) changes the pips it draws.
+                      const use = e.featId ? featUse(character, content.feats[e.featId], content) : null;
                       if (!use || !onPlay) return null;
                       const stop = (ev: React.MouseEvent) => ev.stopPropagation();
                       return (
@@ -328,7 +330,10 @@ export function FeatsTab({ character, content, onPlay }: { character: Character;
                               title="New encounter — refill every per-round/turn/minute/hour use"
                               onClick={(ev) => {
                                 ev.stopPropagation();
-                                onPlay((p) => ({ ...p, featUses: resetEncounterUses(p.featUses, content.feats) }));
+                                onPlay((p) => ({
+                                  ...p,
+                                  featUses: resetEncounterUses(p.featUses, content.feats, { character, content }),
+                                }));
                               }}
                             >
                               <i className="ti ti-refresh" aria-hidden="true" />

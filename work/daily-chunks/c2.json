@@ -1,0 +1,86 @@
+[
+ {
+  "collection": "feats",
+  "id": "witchs-charge",
+  "name": "Witch's Charge",
+  "level": 6,
+  "existingChoice": null,
+  "description": "You forge a magical link with another creature, granting you awareness of that creature's condition and creating a conduit for spellcasting. During your daily preparations, you can designate one willing creature as your charge. You are always aware of your charge's direction from you, its distance from you, and any conditions affecting it. In addition, you can cast spells with a range of touch on your charge from a range of 30 feet. These effects persist until your next daily preparations. --- **Special** This feat has the trait corresponding to the tradition of spells you cast (arcane, divine, occult, or primal)."
+ },
+ {
+  "collection": "feats",
+  "id": "unlimited-pluripotency",
+  "name": "Unlimited Pluripotency",
+  "level": 17,
+  "existingChoice": null,
+  "description": "Within all surkis is the capacity to be whatever they need to be, and you can tap into that capacity even now. When you sleep, you can choose to enter a pupa state. You sleep so deeply in your pupa that you can't be woken up by loud noises around you, and you lose the benefits of one of your surki heritages overnight. When you emerge and make your daily preparations, you can select a different surki heritage to replace it. If you had one or more evolutions for that heritage, you can choose a different evolution for your new heritage."
+ },
+ {
+  "collection": "feats",
+  "id": "radiant-armament",
+  "name": "Radiant Armament",
+  "level": 10,
+  "existingChoice": null,
+  "description": "Your blessed armament radiates power, further enhancing your chosen weapon. When you choose the weapon for your blessed armament during your daily preparations, add the Astral and Brilliant property runes to the list of effects you can choose from. If you're holy, also add the Holy rune, and if you're unholy, also add the Unholy rune. In addition, you can change the rune you've selected for the day to a different rune from your list as a 10-minute activity that has the concentrate, divine, and exploration traits. Changing the rune doesn't restore abilities that can be used only a limited number of times, such as Holy Healing for the *holy* rune"
+ },
+ {
+  "collection": "feats",
+  "id": "solid-lead",
+  "name": "Solid Lead",
+  "level": 2,
+  "existingChoice": null,
+  "description": "Sometimes your case splinters into smaller mysteries, but you never lose sight of the big picture. Once per day when you give up on the subject of a lead due to using Pursue a Lead again, you can designate the lead you stopped pursuing as your solid lead for the day. Even though you stopped following the solid lead, you can change back to your solid lead any number of times by using a single action, which has the concentrate trait. Doing so ends one of your current leads as normal. During your next daily preparations, you can maintain your solid lead or you can remove it; removing it allows you to designate a new solid lead later that day."
+ },
+ {
+  "collection": "feats",
+  "id": "paradoxical-mystery",
+  "name": "Paradoxical Mystery",
+  "level": 20,
+  "existingChoice": null,
+  "description": "The truest depths of your divine mystery are fathomless and contradictory, granting you changing powers that even you can barely begin to fathom. Each day during your daily preparations, choose one basic or advanced domain spell from any domain from *Player Core*, one of the domains granted by your mystery, another domain to which you have access, or any initial or advanced revelation spell from another mystery. You gain that spell as a revelation spell until your next daily preparations."
+ },
+ {
+  "collection": "feats",
+  "id": "arcane-evolution",
+  "name": "Arcane Evolution",
+  "level": 4,
+  "existingChoice": {
+   "flag": "arcaneEvolutionSkill",
+   "prompt": "Skill",
+   "kind": "skills"
+  },
+  "description": "Your arcane legacy allows you to perceive how magic affects everything. You become trained in one skill of your choice. Additionally, you can use arcane arts to tinker with your selection of spells. During your daily preparations, you can choose one spell in your spell repertoire to be a signature spell that day. You can use the Learn a Spell activity to add more arcane spells to the list you choose from, but if you prepare a spell that isn't in your repertoire, you temporarily add it to your repertoire at the spell rank of your choice instead of making it a signature spell."
+ },
+ {
+  "collection": "feats",
+  "id": "student-of-the-dueling-arts",
+  "name": "Student of the Dueling Arts",
+  "level": 12,
+  "existingChoice": null,
+  "description": "Dueling is your art, and your weapon is your instrument. You have studied and evaluated a great many combat techniques, which you can review each day without fail to ensure you are prepared for any and every situation that may occur. During your daily preparations, you can swap out any number of your duelist archetype feats for other duelist archetype feats of the appropriate level for which you are qualified. You can't swap out Duelist Dedication or Student of the Dueling Arts in this way. In addition, you can enter a stance from a duelist archetype feat you don't have (such as one listed under Additional Feats) by increasing the number of actions it takes to enter the stance by 1 (typically to 2 actions). You must still meet the stance feat's prerequisites."
+ },
+ {
+  "collection": "feats",
+  "id": "acquired-tolerance",
+  "name": "Acquired Tolerance",
+  "level": 8,
+  "existingChoice": null,
+  "description": "**Trigger** You fail a save against a poison. --- A small amount of poison, taken at nonlethal doses, can help the body build up resistance against a more deadly dosage. Reroll the triggering check and use the second result. Once you use Acquired Tolerance, you can continue to use it against the same type of poison that day, but you can't use it against a different type of poison until after you make your next daily preparations. For instance, if you used the reaction on a save against Giant Scorpion Venom, you could use it again against giant scorpion venom even if it came from a different source, but you couldn't use it against Wyvern Poison."
+ },
+ {
+  "collection": "feats",
+  "id": "food-preservation",
+  "name": "Food Preservation",
+  "level": 6,
+  "existingChoice": null,
+  "description": "Your techniques extend the storage life for certain ingredients and food through pickling, alcohol, or fermentation. When you use advanced alchemy to create alchemical food, you can designate one infused item to not automatically expire when you next make your daily preparations. When you preserve another item in this way, the previous item becomes inedible. The number of items you can preserve during your daily preparation and the maximum number of items you can have preserved before spoiling older items increases to two if you're an expert in Crafting or Cooking Lore, to three if you're a master, and to five if you're legendary."
+ },
+ {
+  "collection": "feats",
+  "id": "pei-zing-adept",
+  "name": "Pei Zing Adept",
+  "level": 2,
+  "existingChoice": null,
+  "description": "**Access** Tian Xia origin --- You're practiced at timing preparations to the point where you can treat multiple patients at once. During your daily preparations, you can administer up to two elemental medicines to different recipients. If you're a master in one of the prerequisite skills, you can administer to up to four recipients, and if you're legendary, you can administer to up to eight."
+ }
+]

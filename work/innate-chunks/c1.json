@@ -1,0 +1,51 @@
+[
+ {
+  "collection": "feats",
+  "id": "fey-ascension",
+  "name": "Fey Ascension",
+  "level": 9,
+  "description": "The fey influence on your form and features grows even more powerful and notable. You gain one of the following features and abilities; this must be the same animal or fey type as you chose for Fey Influence. - **Anteater** You become an expert in primal DCs and spell attack rolls. You can cast Slow as an innate primal spell once per day. - **Cat Sith** You laugh off the outraged curses of those you have tricked or wronged. Whenever a creature targets you with a misfortune effect, make a . On a success, you are unaffected. - **Cursed Bluebird** You have enough control over your curse to turn a bane into a minor blessing. Once per day, you can temporarily transform yourself or an ally into a blue bird, as a 4th-rank Pest Form (bird only) targeting one willing creature. - **Dryad** Your hair becomes intermixed with delicate but razor-edged leaves that move as you command. You gain a leaves ranged unarmed attack that deals 1d6 slashing damage. Your leaves are in the dart weapon group and have the magical and unarmed traits. *Note: A range was not provided for this strike in the source. For Foundry automation we have assumed a 20-foot range increment, to be in line with similar abilities.* - **Faun** You can cast Charm, Sleep, and Triple Time as innate primal spells once per day each. Whenever you cast one of these spells, you can Step or Stride as part of the activity. - **Gremlin** You become an expert in primal DCs and spell attack rolls. You can cast Mad Monkeys as an innate primal spell once per day. - **Monarch** Once per day, you gain the ability to manifest a pair of exquisite butterfly wings. These wings remain for 10 minutes. You gain a fly Speed equal to your Speed while you've manifested your wings. - **Unicorn** You become trained in Medicine, or an expert if you were already trained. You gain a +2 status bonus to saves against poison and charm effects. --- **Special** This feat gains the trait appropriate for your ancestry (human for human, goblin for goblin, etc.)."
+ },
+ {
+  "collection": "feats",
+  "id": "axumas-awakening",
+  "name": "Axuma's Awakening",
+  "level": 11,
+  "description": "Choose two cantrips from the arcane spells list. You can cast these cantrips at will as arcane innate spells. A cantrip is heightened to a spell rank equal to half your level rounded up. Then, choose one 1st-rank spell and one 2nd-rank spell from the arcane spells list. You can cast each of these spells once per day as arcane innate spells. Spells gained from this feat must be common spells or spells to which you have access."
+ },
+ {
+  "collection": "feats",
+  "id": "kizidhar-magic",
+  "name": "Kizidhar Magic",
+  "level": 9,
+  "description": "You can wield the arcane magic of a kizidhar, casting Entangling Flora and One with Plants once per day each as 2nd-rank arcane innate spells."
+ },
+ {
+  "collection": "feats",
+  "id": "otherworldly-acumen",
+  "name": "Otherworldly Acumen",
+  "level": 9,
+  "description": "The arcane magic you possess grows in power and complexity. Choose one common 2nd-rank spell from the same tradition as an innate spell you previously gained from another elf ancestry feat (from the arcane list if you have Otherworldly Magic, for example). You can cast that spell as an innate spell once per day, using the same tradition as the list you chose the spell from. Your magic is adaptable. By spending 1 day of downtime, you can change the spell you chose to a different common 2nd-rank spell from the same tradition."
+ },
+ {
+  "collection": "feats",
+  "id": "speakers-defense",
+  "name": "Speaker's Defense",
+  "level": 9,
+  "description": "As a Speaker, you've forged a deep bond with powerful spirits who you can urge to rise up to defend you and your people. If you're a Faithspeaker, you can call on gods or powerful planar beings to cast Share Life and Status, each once per day as innate divine spells; if you're a Greenspeaker, you can call on the forces of nature to cast Entangling Flora and Environmental Endurance, each once per day as innate primal spells."
+ },
+ {
+  "collection": "feats",
+  "id": "evolved-spellhorn",
+  "name": "Evolved Spellhorn",
+  "level": 9,
+  "description": "Your inborn arcane power grows. Choose one common 1st-rank arcane spell and one common 2nd-rank arcane spell. You can cast each of these spells once per day as arcane innate spells."
+ },
+ {
+  "collection": "feats",
+  "id": "resplendent-spellhorn",
+  "name": "Resplendent Spellhorn",
+  "level": 13,
+  "description": "Your magic continues to flourish. Choose one common 3rd-rank arcane spell and one common 4th-rank arcane spell. You can cast each of these spells once per day as arcane innate spells."
+ }
+]

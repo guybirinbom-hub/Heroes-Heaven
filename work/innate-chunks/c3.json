@@ -1,0 +1,51 @@
+[
+ {
+  "collection": "feats",
+  "id": "avenging-runelord-dedication",
+  "name": "Avenging Runelord Dedication",
+  "level": 12,
+  "description": "The call of a long dead runelord has infected your soul and transformed your fate. Choose one of the following sins: envy, gluttony, greed, sloth, or wrath. You become trained in Arcana. If you are already trained in Arcana, you become trained in the skill of your choice. At 14th level, you gain expert proficiency in Arcana. At 16th level, if you gain master proficiency in Arcana. You have familiarity with weapons in the polearm and spear weapon groups—for the purposes of proficiency, you treat any of these that are martial weapons as simple weapons and any that are advanced weapons as martial weapons. You learn the Thassilonian language. You gain the ability to cast an arcane spell as an innate spell. This spell must be chosen from the following list: Darkvision, Mystic Armor, Runic Body, Runic Weapon, See the Unseen, Sending, or Truesight; alternatively, you can choose any spell of 6th rank or lower from the sin spells listed for your chosen sin. You can cast this spell as an arcane innate spell once per day. The spell is automatically heightened to a spell rank equal to half your level rounded up. Use mythic proficiency to determine any attack rolls or spell DCs. Your obsession with revenge allows you to reflexively lash out at those who harm you with blasts of arcane magic. You gain the Runelord's Response reaction."
+ },
+ {
+  "collection": "feats",
+  "id": "fey-life",
+  "name": "Fey Life",
+  "level": 16,
+  "description": "There are some fates worse than death–and you worked to save a fey from one such fate. In return, your life became bound to theirs. Fey magic has since become a part of you, bringing the vibrant colors of the First World to you and all that surrounds you. Your skin, hair, all that you touch, and anything within 5 feet of you changes to the most brilliant hues possible, though the colors fade as you cease to touch an object or you move away. You gain the ability to cast Summon Fey as a 7th-rank primal innate spell once per day. At 18th level the spell heightens to 8th rank, and at 20th level it heightens to 9th rank. The first time you die after gaining this feat, the bond you made with the fey invokes the power of the First World to return you to life. Immediately after dying, you revive, becoming conscious (and wounded as normal) at 27 Hit Points, and you gain the fey trait. Your eyes become a rainbow of colors, and you take on a visual aspect of the fey with whom you are bound, such as by growing wings, horns, or a plantlike body. The change has no mechanical effect; for instance, the wings wouldn't allow you to fly, nor would horns grant a horn unarmed attack. The second time you die, you reawaken in the First World with the full appearance of the fey that was bound to you. You become an NPC, unconcerned with your old mortal life. You can be returned to your previous life in the Universe by having allies spend 3 days building a shrine to the First World, giving three offerings that hold deep sentimental value for you or another, and holding a raucous, three-day long feast. Any time that you die after that, you reawaken again in the First World with no memories of your previous life, and you can only be brought back by powerful magic such as a Wish ritual."
+ },
+ {
+  "collection": "feats",
+  "id": "minor-deific-power",
+  "name": "Minor Deific Power",
+  "level": 4,
+  "description": "Your mental, physical, and spiritual training have granted you access to divine magic that doesn't rely on any other deity or patron. Choose a common divine cantrip and one common 1st-rank divine spell. You can cast the cantrip as a divine innate spell at will and the 1st-rank spell as a divine innate spell once per day."
+ },
+ {
+  "collection": "feats",
+  "id": "advanced-deific-power",
+  "name": "Advanced Deific Power",
+  "level": 8,
+  "description": "Like a muscle, the more you flex your divine power, the stronger it gets. Choose two common divine spells, one of 2nd rank and one of 3rd rank. You can cast each of these spells as divine innate spells once per day."
+ },
+ {
+  "collection": "feats",
+  "id": "greater-deific-power",
+  "name": "Greater Deific Power",
+  "level": 12,
+  "description": "Divine power continues to fill you. Choose two common divine spells, one of 4th rank and one of 5th rank. You can cast each of these spells as divine innate spells once per day."
+ },
+ {
+  "collection": "feats",
+  "id": "major-deific-power",
+  "name": "Major Deific Power",
+  "level": 18,
+  "description": "As your apotheosis into living godhood approaches, you accrue the strongest of divine power. Choose three common divine spells, one of 6th rank, one of 7th rank, and one of 8th rank. You can cast each of these spells as divine innate spells once per day."
+ },
+ {
+  "collection": "feats",
+  "id": "pirates-pet",
+  "name": "Pirate's Pet",
+  "level": 4,
+  "description": "Pirate's Pet Source High Seas pg. 92 Archetype Pirate Prerequisites Pirate Dedication Access You're from the Shackles An animal has become your loyal ally, perhaps after you liberated it from another ship or found it on a remote island. You gain the Pet general feat. Your pet gains an additional pet Shackles Options ability, which you can choose from the standard pet abilities or the following familiar abilities: accompanist, damage avoidance, independent, partner in crime, speech, and valet. In addition, you learn a common 1st- or 2nd-rank spell that targets your familiar, and can cast it once per day as a primal innate spell. You can instead learn phase familiar and can cast it once per hour as a primal innate spell; it’s not a focus spell for you. When you cast the chosen spell, you target your pirate’s pet instead of a familiar."
+ }
+]

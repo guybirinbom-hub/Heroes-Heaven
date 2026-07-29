@@ -8,7 +8,7 @@
  * A feat opts in with `limitedUses: { max, per }`. Spent uses live in PlayState.featUses keyed by feat
  * id — play state, not build state, because they change during a session and refill at rest.
  */
-import type { Character, ContentDatabase, Feat } from './types';
+import type { Character, ContentDatabase, Feat, LimitedUses } from './types';
 
 export interface FeatUse {
   featId: string;
@@ -18,14 +18,46 @@ export interface FeatUse {
   max: number;
   /** 'day', 'hour', … — shown as "1/day" so the cadence is visible without opening the feat. */
   per: string;
+  /** Period multiplier ("1 / 10 minutes"); absent means 1. */
+  every?: number;
+  /** Name of the feat that retuned this limit, when one did — so the pips can say why. */
+  upgradedBy?: string;
 }
 
 /** The period label the sheet shows next to the pips. */
-export const usesLabel = (u: { max: number; per: string }) => `${u.max}/${u.per}`;
+export const usesLabel = (u: { max: number; per: string; every?: number }) =>
+  `${u.max}/${(u.every ?? 1) > 1 ? `${u.every} ${u.per}s` : u.per}`;
+
+/**
+ * The limit that actually applies, after any feat that RETUNES it.
+ *
+ * "You can use Cat's Luck once per hour, rather than once per day" is a second feat rewriting the
+ * first one's frequency. Returns null when an upgrade removes the limit entirely (Eternal Wings:
+ * "at all times") — an untracked ability, not a zero-use one.
+ */
+export function effectiveUses(c: Character, feat: Feat | undefined, db?: ContentDatabase): (LimitedUses & { upgradedBy?: string }) | null {
+  if (!feat) return null;
+  let lim = feat.limitedUses;
+  if (!db) return lim ?? null;
+  for (const f of c.feats ?? []) {
+    const up = db.feats[f.featId]?.usesUpgrade;
+    if (up?.featId !== feat.id) continue;
+    if (up.unlimited) return null;
+    // A partial upgrade keeps whatever it doesn't restate ("three times per day instead of once per
+    // day" changes only the count), so fall back to the base limit field by field.
+    lim = {
+      max: up.max ?? lim?.max ?? 1,
+      per: up.per ?? lim?.per ?? 'day',
+      ...(up.every ?? lim?.every ? { every: up.every ?? lim?.every } : {}),
+    };
+    return { ...lim, upgradedBy: db.feats[f.featId]?.name };
+  }
+  return lim ?? null;
+}
 
 /** Live use state for one feat, or null when that feat has no trackable limit. */
-export function featUse(c: Character, feat: Feat | undefined): FeatUse | null {
-  const lim = feat?.limitedUses;
+export function featUse(c: Character, feat: Feat | undefined, db?: ContentDatabase): FeatUse | null {
+  const lim = effectiveUses(c, feat, db);
   if (!feat || !lim || lim.max <= 0) return null;
   const spent = c.featUses?.[feat.id] ?? 0;
   return {
@@ -35,6 +67,8 @@ export function featUse(c: Character, feat: Feat | undefined): FeatUse | null {
     current: Math.max(0, Math.min(lim.max, lim.max - spent)),
     max: lim.max,
     per: lim.per,
+    ...(lim.every ? { every: lim.every } : {}),
+    ...(lim.upgradedBy ? { upgradedBy: lim.upgradedBy } : {}),
   };
 }
 
@@ -45,7 +79,7 @@ export function featUses(c: Character, db: ContentDatabase): FeatUse[] {
   for (const f of c.feats ?? []) {
     if (seen.has(f.featId)) continue;
     seen.add(f.featId);
-    const use = featUse(c, db.feats[f.featId]);
+    const use = featUse(c, db.feats[f.featId], db);
     if (use) out.push(use);
   }
   return out;
@@ -81,10 +115,16 @@ export const isSubDaily = (per: string | undefined) => SUB_DAILY.has(String(per)
 export function resetEncounterUses(
   featUsesMap: Record<string, number> | undefined,
   featsById: Record<string, { limitedUses?: { per: string } } | undefined>,
+  /** Pass the character + db so a RETUNED frequency counts: Reliable Luck makes Cat's Luck hourly,
+   *  which is sub-daily and so refills here rather than only at rest. */
+  ctx?: { character: Character; content: ContentDatabase },
 ): Record<string, number> {
   const next: Record<string, number> = {};
   for (const [featId, spent] of Object.entries(featUsesMap ?? {})) {
-    if (isSubDaily(featsById[featId]?.limitedUses?.per)) continue; // refilled
+    const per = ctx
+      ? effectiveUses(ctx.character, ctx.content.feats[featId], ctx.content)?.per
+      : featsById[featId]?.limitedUses?.per;
+    if (isSubDaily(per)) continue; // refilled
     next[featId] = spent;
   }
   return next;

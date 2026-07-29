@@ -90,6 +90,10 @@ const MODELLED = {
   ]),
   companion: idsIn('src/rules/companionGrants.ts'),
   situational: idsIn('src/rules/situationalBonuses.ts'),
+  /** "Cast X once per day as an innate spell" is TRACKED once the spell is granted, and for these the
+   *  grant lives in the registry rather than in an `innateSpells` field on the record. 24 records read
+   *  as untracked resources until the resource lane learned about this file. */
+  innateGrant: idsIn('src/rules/featCantripGrants.ts'),
 };
 
 /* ---- lane signals ------------------------------------------------------------------------- */
@@ -150,9 +154,19 @@ const LANES = [
      *    limitedUses           — feats, via PlayState.featUses (added with feat use tracking)
      *    innateSpells          — "cast X once per day as an innate spell" is tracked by
      *                            PlayState.innateUsed and reset by rest; 231 of the records still
-     *                            listed here are exactly that, already working. */
+     *                            listed here are exactly that, already working.
+     *    featCantripGrants.ts  — same as innateSpells, but the SPELL comes from the registry rather
+     *                            than a field on the record (24 more that looked untracked)
+     *    usesUpgrade           — a feat that RETUNES another feat's limit correctly has no limit of
+     *                            its own; without this it reads as an untracked resource */
     modelled: (r) =>
-      !!r.frequency || !!r.uses || !!r.counters || !!r.limitedUses || (r.innateSpells ?? []).length > 0,
+      !!r.frequency ||
+      !!r.uses ||
+      !!r.counters ||
+      !!r.limitedUses ||
+      !!r.usesUpgrade ||
+      (r.innateSpells ?? []).length > 0 ||
+      MODELLED.innateGrant.has(r.id),
   },
   {
     id: 'toggle',

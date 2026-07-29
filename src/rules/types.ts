@@ -492,6 +492,20 @@ export interface Ancestry extends ContentBase {
 }
 
 /** An innate spell a feat/heritage grants (cast at a fixed tradition; cantrips at-will, else 1/day). */
+/**
+ * A trackable per-period use limit.
+ *
+ * `every` covers the periods the rules state as a multiple — "once per 10 minutes" is
+ * `{ max: 1, per: 'minute', every: 10 }`. Without it those had to be rounded to a period the union
+ * happened to name, which would have been a rules error in the player's favour or against it.
+ */
+export interface LimitedUses {
+  max: number;
+  per: 'round' | 'turn' | 'minute' | 'hour' | 'day' | 'week' | 'month';
+  /** Period multiplier; absent means 1. */
+  every?: number;
+}
+
 export interface InnateSpellGrant {
   spellId: string;
   tradition?: string;
@@ -636,7 +650,17 @@ export interface Feat extends ContentBase, DefenseGrants {
    * (item.frequency → use pips via itemUses.ts); feats had nothing, so "once per day" on a feat was
    * text the player had to remember unaided. Spent uses live in PlayState.featUses and reset at rest.
    */
-  limitedUses?: { max: number; per: 'round' | 'turn' | 'minute' | 'hour' | 'day' | 'week' | 'month' };
+  limitedUses?: LimitedUses;
+  /**
+   * This feat RETUNES another feat's limit instead of having one of its own — "You can use Cat's Luck
+   * once per hour, rather than once per day" (Reliable Luck). Thirty feats read like that, and without
+   * this they either did nothing or, if given a `limitedUses` of their own, invented a second pool
+   * next to the one they were supposed to be replacing.
+   *
+   * `unlimited` is for the handful that remove the limit entirely ("at all times, rather than just
+   * once per day" — Eternal Wings).
+   */
+  usesUpgrade?: { featId: string; unlimited?: true } & Partial<LimitedUses>;
   trigger?: string;
   requirements?: string;
   access?: string;

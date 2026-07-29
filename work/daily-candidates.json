@@ -1,0 +1,416 @@
+[
+ {
+  "col": "feats",
+  "id": "universal-versatility",
+  "name": "Universal Versatility",
+  "clause": "During your daily preparations, choose one of the eight school spells gained by 1st-level specialist wizards."
+ },
+ {
+  "col": "feats",
+  "id": "spellmaster-dedication",
+  "name": "Spellmaster Dedication",
+  "clause": "If you have the Wayfinder Resonance Tinkerer feat, you can change the cantrip you chose for that feat each day during your daily preparations."
+ },
+ {
+  "col": "feats",
+  "id": "armor-rune-shifter",
+  "name": "Armor Rune Shifter",
+  "clause": "Once per day when you make your daily preparations, you can focus on a rune's magical energies through a crystal's facets to alter a single property rune on one suit of armor in your possession to suppress its normal effects and make it function as a different property rune."
+ },
+ {
+  "col": "feats",
+  "id": "weapon-rune-shifter",
+  "name": "Weapon-Rune Shifter",
+  "clause": "Once per day during your daily preparations, you can focus on a rune's magical energies through a crystal's facets to alter a single property rune on one weapon in your possession to suppress its normal effects and make it function as a different property rune."
+ },
+ {
+  "col": "feats",
+  "id": "bloodline-metamorphosis",
+  "name": "Bloodline Metamorphosis",
+  "clause": "When making your daily preparations, you can swap out a single spell of 9th rank or lower for another spell of the same rank."
+ },
+ {
+  "col": "feats",
+  "id": "foolproof-instructions",
+  "name": "Foolproof Instructions",
+  "clause": "During your daily preparations, you can select a single scroll and instruct a single ally in its use."
+ },
+ {
+  "col": "feats",
+  "id": "westyrs-wayfinder-repository",
+  "name": "Westyr's Wayfinder Repository",
+  "clause": "When making your daily preparations, you can choose one 1st-rank spell from your spellbook or spell repertoire and store it in your wayfinder."
+ },
+ {
+  "col": "feats",
+  "id": "fused-staff",
+  "name": "Fused Staff",
+  "clause": "The fusion lasts until your next daily preparations, though you can spend 10 minutes to separate the two items and meld the staff into a different weapon."
+ },
+ {
+  "col": "feats",
+  "id": "master-summoner",
+  "name": "Master Summoner",
+  "clause": "During daily preparations, you can designate one of your spell slots to become two summoning slots of the same spell rank, from which you can cast only summoning or incarnate spells."
+ },
+ {
+  "col": "feats",
+  "id": "flexible-transmogrification",
+  "name": "Flexible Transmogrification",
+  "clause": "Each day, choose one evolution feat of 6th level or lower during your daily preparations."
+ },
+ {
+  "col": "feats",
+  "id": "true-transmogrification",
+  "name": "True Transmogrification",
+  "clause": "During your daily preparations, you can swap out any number of your evolution feats, each for a different evolution feat of an appropriate level for which you meet the prerequisites."
+ },
+ {
+  "col": "feats",
+  "id": "contingency-gadgets",
+  "name": "Contingency Gadgets",
+  "clause": "When you prepare your gadgets during your daily preparations, you can choose to leave one of them as a contingency gadget that you keep ready for just this situation, rather than declaring which gadget you're making."
+ },
+ {
+  "col": "feats",
+  "id": "ubiquitous-overdrive",
+  "name": "Ubiquitous Overdrive",
+  "clause": "During your daily preparations, select up to six willing allies."
+ },
+ {
+  "col": "feats",
+  "id": "repurposed-parts",
+  "name": "Repurposed Parts",
+  "clause": "Using two of the snares you prepared for quick deployment during daily preparations, you can quickly deploy a different snare that you know how to Craft, even if you didn't prepare that snare during your daily preparations."
+ },
+ {
+  "col": "feats",
+  "id": "beast-gunner-dedication",
+  "name": "Beast Gunner Dedication",
+  "clause": "You can change your bonded beast gun to another beast gun you own each day during your daily preparations, as long as you've previously performed a ritual hunt associated with the new beast gun."
+ },
+ {
+  "col": "feats",
+  "id": "illusory-identity",
+  "name": "Illusory Identity",
+  "clause": "During your daily preparations, you can choose a blank piece of paper, journal, badge, or similar item normally used to display authority, to magically invest."
+ },
+ {
+  "col": "feats",
+  "id": "elemental-familiar-kineticist",
+  "name": "Elemental Familiar (Kineticist)",
+  "clause": "If you have more than one kinetic element, you can change the element you've selected for your familiar to a different one of your kinetic elements each time you make your daily preparations."
+ },
+ {
+  "col": "feats",
+  "id": "esoteric-polymath",
+  "name": "Esoteric Polymath",
+  "clause": "During your daily preparations, choose any one spell from your book of occult spells."
+ },
+ {
+  "col": "feats",
+  "id": "versatile-signature",
+  "name": "Versatile Signature",
+  "clause": "When you make your daily preparations, you can change one of your signature spells to a different spell of that rank from your repertoire."
+ },
+ {
+  "col": "feats",
+  "id": "eclectic-polymath",
+  "name": "Eclectic Polymath",
+  "clause": "If you add a spell to your repertoire during your daily preparations using Esoteric Polymath, when you prepare again, you can choose to keep the new spell from Esoteric Polymath in your repertoire and instead lose access to another spell of the same rank in your repertoire."
+ },
+ {
+  "col": "feats",
+  "id": "witchs-charge",
+  "name": "Witch's Charge",
+  "clause": "During your daily preparations, you can designate one willing creature as your charge."
+ },
+ {
+  "col": "feats",
+  "id": "unlimited-pluripotency",
+  "name": "Unlimited Pluripotency",
+  "clause": "When you emerge and make your daily preparations, you can select a different surki heritage to replace it."
+ },
+ {
+  "col": "feats",
+  "id": "radiant-armament",
+  "name": "Radiant Armament",
+  "clause": "When you choose the weapon for your blessed armament during your daily preparations, add the Astral and Brilliant property runes to the list of effects you can choose from."
+ },
+ {
+  "col": "feats",
+  "id": "solid-lead",
+  "name": "Solid Lead",
+  "clause": "During your next daily preparations, you can maintain your solid lead or you can remove it; removing it allows you to designate a new solid lead later that day."
+ },
+ {
+  "col": "feats",
+  "id": "paradoxical-mystery",
+  "name": "Paradoxical Mystery",
+  "clause": "Each day during your daily preparations, choose one basic or advanced domain spell from any domain from *Player Core*, one of the domains granted by your mystery, another domain to which you have access, or any initial or advanced revelation spell from another mystery."
+ },
+ {
+  "col": "feats",
+  "id": "arcane-evolution",
+  "name": "Arcane Evolution",
+  "clause": "During your daily preparations, you can choose one spell in your spell repertoire to be a signature spell that day."
+ },
+ {
+  "col": "feats",
+  "id": "student-of-the-dueling-arts",
+  "name": "Student of the Dueling Arts",
+  "clause": "During your daily preparations, you can swap out any number of your duelist archetype feats for other duelist archetype feats of the appropriate level for which you are qualified."
+ },
+ {
+  "col": "feats",
+  "id": "acquired-tolerance",
+  "name": "Acquired Tolerance",
+  "clause": "Once you use Acquired Tolerance, you can continue to use it against the same type of poison that day, but you can't use it against a different type of poison until after you make your next daily preparations."
+ },
+ {
+  "col": "feats",
+  "id": "food-preservation",
+  "name": "Food Preservation",
+  "clause": "When you use advanced alchemy to create alchemical food, you can designate one infused item to not automatically expire when you next make your daily preparations."
+ },
+ {
+  "col": "feats",
+  "id": "pei-zing-adept",
+  "name": "Pei Zing Adept",
+  "clause": "During your daily preparations, you can administer up to two elemental medicines to different recipients."
+ },
+ {
+  "col": "feats",
+  "id": "heaven-earth-encompassing-sleeves",
+  "name": "Heaven-Earth Encompassing Sleeves",
+  "clause": "This clothing becomes a set of Sleeves of Storage, allowing you to store items in either the sleeves or the train (you choose which during your daily preparations)."
+ },
+ {
+  "col": "feats",
+  "id": "spirit-familiar-animist",
+  "name": "Spirit Familiar (Animist)",
+  "clause": "When you attune to your apparitions during your daily preparations, you can choose to dedicate a small amount of your life force to allow one of them to physically manifest as a familiar, which gains the spirit trait."
+ },
+ {
+  "col": "feats",
+  "id": "cutting-without-blade",
+  "name": "Cutting Without Blade",
+  "clause": "Each day during your daily preparations, you can select one ikon feat of 16th level or lower and gain it temporarily for that day."
+ },
+ {
+  "col": "feats",
+  "id": "unstable-patronage",
+  "name": "Unstable Patronage",
+  "clause": "When you finish your daily preparations, choose a spell your familiar knows and one of your charges."
+ },
+ {
+  "col": "feats",
+  "id": "patron-reborn",
+  "name": "Patron Reborn",
+  "clause": "An allied witch you can observe who has that patron counts as and gains the benefits of your Witch's Charge feat, even if you did not select them as your charge during your daily preparations."
+ },
+ {
+  "col": "feats",
+  "id": "celestial-armaments",
+  "name": "Celestial Armaments",
+  "clause": "Select one weapon or Handwraps of Mighty Blows when you make your daily preparations."
+ },
+ {
+  "col": "feats",
+  "id": "chosen-ward",
+  "name": "Chosen Ward",
+  "clause": "During your daily preparations, choose an ally who isn't your united companion."
+ },
+ {
+  "col": "feats",
+  "id": "bloc-tactics",
+  "name": "Bloc Tactics",
+  "clause": "During your daily preparations, you can select a number of targets equal to half your level."
+ },
+ {
+  "col": "feats",
+  "id": "claim-cardinal-domains",
+  "name": "Claim Cardinal Domains",
+  "clause": "Your mortal form cannot easily contain such power, however—each day during your daily preparations, decide which of your domains you are currently drawing power from; you gain access to this domain for the day and can cast its domain spells as normal, while your ability to access the power of your o"
+ },
+ {
+  "col": "feats",
+  "id": "orichalcum-bond",
+  "name": "Orichalcum Bond",
+  "clause": "When your personal rune is placed on a weapon during your daily preparations, choose a weapon property rune of up to your level that is common or you otherwise have access to."
+ },
+ {
+  "col": "feats",
+  "id": "harbingers-armament",
+  "name": "Harbinger's Armament",
+  "clause": "Select one weapon or handwraps of mighty blows when you make your daily preparations."
+ },
+ {
+  "col": "feats",
+  "id": "demon-hunter",
+  "name": "Demon Hunter",
+  "clause": "When you make your daily preparations, choose one kind of demon, such as succubus, omox, shemhazian, or Treerazer."
+ },
+ {
+  "col": "feats",
+  "id": "bodyguard",
+  "name": "Bodyguard",
+  "clause": "During your daily preparations, choose one of your allies as your charge."
+ },
+ {
+  "col": "feats",
+  "id": "acclimated-mount",
+  "name": "Acclimated Mount",
+  "clause": "If you become an expert in Survival, you can pray during your daily preparations each day to change the type of terrain to which your mount is acclimated."
+ },
+ {
+  "col": "feats",
+  "id": "hydras-bond",
+  "name": "Hydra's Bond",
+  "clause": "Following these tactics, during daily preparations, you can select a number of willing creatures equal to half your level to be part of your hydra's bond."
+ },
+ {
+  "col": "feats",
+  "id": "autonomous-arms",
+  "name": "Autonomous Arms",
+  "clause": "When you perform your daily preparations, choose one spear or polearm you own."
+ },
+ {
+  "col": "feats",
+  "id": "warshard-warrior-dedication",
+  "name": "Warshard Warrior Dedication",
+  "clause": "When you make your daily preparations, choose one weapon in your possession in which you have at least expert proficiency. That weapon becomes your warshard weapon until you choose a different weapon in your possession during another of your daily preparations."
+ },
+ {
+  "col": "feats",
+  "id": "transmute-weapon",
+  "name": "Transmute Weapon",
+  "clause": "When you choose a warshard weapon during daily preparations, you can transform the material it's composed of so that the weapon is made of a precious material (like adamantine, dawnsilver, or cold iron)."
+ },
+ {
+  "col": "feats",
+  "id": "warshard-rune",
+  "name": "Warshard Rune",
+  "clause": "When you choose a warshard weapon during your daily preparations, you can empower it with an additional magical effect."
+ },
+ {
+  "col": "feats",
+  "id": "mind-smith-dedication",
+  "name": "Mind Smith Dedication",
+  "clause": "The overall shape and design of your mind weapon can be of your choosing but it has one of the following four basic statistics: - A one-handed weapon that deals 1d4 damage and has the agile and finesse traits - A one-handed weapon that deals 1d6 damage and has the finesse trait - A one-handed weapon"
+ },
+ {
+  "col": "feats",
+  "id": "malleable-mental-forge",
+  "name": "Malleable Mental Forge",
+  "clause": "During your daily preparations, you can choose any two weapon traits from the Mental Forge feat to place on your weapon for 24 hours or until your next daily preparations (whichever comes first), replacing the traits you chose from the Mental Forge feat."
+ },
+ {
+  "col": "feats",
+  "id": "advanced-runic-mind-smithing",
+  "name": "Advanced Runic Mind-Smithing",
+  "clause": "You can etch the greater forms of any runes on the list from the Runic Mind Smithing feat and add them to the list of options you can choose during your daily preparations, as well as the *holy* or *unholy* runes. Once this swap is made, that second rune remains on the weapon until your next daily p"
+ },
+ {
+  "col": "feats",
+  "id": "starstone-aspirant-dedication",
+  "name": "Starstone Aspirant Dedication",
+  "clause": "Each day during your daily preparations, choose a skill you're untrained in."
+ },
+ {
+  "col": "classFeatures",
+  "id": "offensive-boost",
+  "name": "Offensive Boost",
+  "clause": "If your innovation is armor, the boost applies to your melee unarmed Strikes and to your melee Strikes with one weapon you choose during daily preparations; if your innovation is a construct, the boost applies to your construct companion's Strikes; and if your innovation is a weapon, the boost appli"
+ },
+ {
+  "col": "classFeatures",
+  "id": "infinite-invention",
+  "name": "Infinite Invention",
+  "clause": "During your daily preparations, you automatically fix your innovation if it's destroyed or broken, and you can change to a different innovation (armor, construct, weapon, or other type you have access to) and change your modifications and offensive boost."
+ },
+ {
+  "col": "classFeatures",
+  "id": "reflow-elements",
+  "name": "Reflow Elements",
+  "clause": "When you make your daily preparations, you can replace one of your impulse feats with a different impulse feat that has the same elemental trait."
+ },
+ {
+  "col": "classFeatures",
+  "id": "blessing-of-the-devoted",
+  "name": "Blessing of the Devoted",
+  "clause": "During your daily preparations, you can change the spirit to inhabit a different armament, grant a different rune, or both."
+ },
+ {
+  "col": "classFeatures",
+  "id": "apparition-attunement",
+  "name": "Apparition Attunement",
+  "clause": "Each day during your daily preparations, choose two apparitions from the list on page 17 to attune to. When you Refocus, you can change which of your currently attuned apparitions is your primary apparition, selecting from any of the apparitions you attuned to during your daily preparations."
+ },
+ {
+  "col": "classFeatures",
+  "id": "third-apparition",
+  "name": "Third Apparition",
+  "clause": "When you attune to apparitions during your daily preparations, you choose three apparitions to attune to, with one of them being your primary apparition."
+ },
+ {
+  "col": "classFeatures",
+  "id": "fourth-apparition",
+  "name": "Fourth Apparition",
+  "clause": "When you attune to apparitions during your daily preparations, you choose four apparitions to attune to, with one of them being your primary apparition."
+ },
+ {
+  "col": "classFeatures",
+  "id": "blessed-armament",
+  "name": "Blessed Armament",
+  "clause": "During your daily preparations, you can change the spirit to inhabit a different armament, grant a different rune, or both."
+ },
+ {
+  "col": "classFeatures",
+  "id": "pelt-of-the-beast",
+  "name": "Pelt of the Beast",
+  "clause": "When you make your daily preparations, choose cold, electricity, fire, poison, or sonic damage."
+ },
+ {
+  "col": "classFeatures",
+  "id": "mutagenic-flashback",
+  "name": "Mutagenic Flashback",
+  "clause": "Choose one mutagen you've consumed since your last daily preparations."
+ },
+ {
+  "col": "items",
+  "id": "library-robes-true",
+  "name": "Library Robes (True)",
+  "clause": "During your daily preparations, choose one spell you know of 9th rank or lower."
+ },
+ {
+  "col": "items",
+  "id": "the-queen-mother",
+  "name": "The Queen Mother",
+  "clause": "You can change your selected Lore once per day as part of your daily preparations, as long as you have *The Queen Mother* invested."
+ },
+ {
+  "col": "items",
+  "id": "viridian-crown",
+  "name": "Viridian Crown",
+  "clause": "You can change which modifier is adjusted once every 24 hours as you make your daily preparations."
+ },
+ {
+  "col": "items",
+  "id": "fortune-cord",
+  "name": "Fortune Cord",
+  "clause": "If you load up to 100 coins onto a fortune cord as part of your daily preparations, you can Activate the magic item in two different ways until the next time you make your daily preparations, provided all the loaded coins are of the same type."
+ },
+ {
+  "col": "backgrounds",
+  "id": "professional-letter-writer",
+  "name": "Professional Letter Writer",
+  "clause": "During your daily preparations, you can choose one additional language that you know."
+ },
+ {
+  "col": "backgrounds",
+  "id": "runelord-researcher",
+  "name": "Runelord Researcher",
+  "clause": "In addition, during your daily preparations, you can choose one of the following schools of Thassilonian rune magic to focus your mind on, gaining a +1 status bonus to saving throws against the listed effect for the next 8 hours."
+ }
+]

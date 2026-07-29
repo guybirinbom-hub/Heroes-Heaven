@@ -1,0 +1,51 @@
+[
+ {
+  "collection": "feats",
+  "id": "horn-and-bone-incantation",
+  "name": "Horn and Bone Incantation",
+  "level": 9,
+  "description": "You invoke mantras of tellurian rebirth. You gain the ability to cast Animal Form and Humanoid Form as 2nd-rank primal innate spells, each once per day."
+ },
+ {
+  "collection": "feats",
+  "id": "seat-of-power",
+  "name": "Seat of Power",
+  "level": 16,
+  "description": "Your sheer determination has created a demiplane that houses a grand residence which will serve as the heart of your planned realm. You determine the appearance of this seat of power, such as a duskwood longhouse, a crumbling stone castle, an ice tower, or a pagoda constructed from the solidified souls of the damned. You can enter your realm using the Enter Seat Of Power activity. You and any creatures you choose gain three times as many Hit Points when resting within your seat of power. Once per day while within your seat of power, you can cast Cleanse Affliction as a 4th-rank innate divine spell or Sound Body as a 4th-rank innate divine spell. You can target only yourself with these spells."
+ },
+ {
+  "collection": "feats",
+  "id": "esoteric-spellcasting",
+  "name": "Esoteric Spellcasting",
+  "level": 4,
+  "description": "Your study of a variety of esoteric texts and supernatural matters has broadened your mind and improved your spellcasting. Choose a 1st-rank occult or divine spell. You can cast this spell once per day as an innate spell. At 6th level, you gain a 2nd-rank spell of the same tradition you chose, and at 8th level, you gain a 3rd-rank spell, also of that tradition. --- **Special** You can take this feat a second time, choosing spells from the other available tradition."
+ },
+ {
+  "collection": "feats",
+  "id": "more-real-than-real",
+  "name": "More Real than Real",
+  "level": 20,
+  "description": "Your performances aren't just well-known, they're famous across the land and beyond. Your ability to make people believe the stories you perform has taken on supernatural power. You gain the ability to cast Fabricated Truth once per day as an occult innate spell."
+ },
+ {
+  "collection": "feats",
+  "id": "may-death-itself-reconsider",
+  "name": "May Death Itself Reconsider",
+  "level": 20,
+  "description": "Your will is so steadfast that even death can't stop you. You gain the ability to cast Breath of Life up to three times per day as a 5th-rank divine innate spell."
+ },
+ {
+  "collection": "feats",
+  "id": "dracomancer",
+  "name": "Dracomancer",
+  "level": 9,
+  "description": "The power infused into you by your draconic benefactor's presence allows you to manifest their most iconic spells. Choose one 1st-rank spell and one 2nd-rank spell from those listed for a dragon spellcaster of your draconic benefactor's type, (for example, Fear and for a conspirator dragon benefactor). You can cast each of these spells once per day as innate spells of the same tradition as your draconic benefactor. You gain the trained proficiency rank in the spell attack modifier and spell DC statistics, and your key spellcasting attribute is Charisma."
+ },
+ {
+  "collection": "feats",
+  "id": "elite-dracomancer",
+  "name": "Elite Dracomancer",
+  "level": 13,
+  "description": "Your draconic power equals that of a lesser dragon. Choose one 3rd-rank spell and one 4th-rank spell from those listed for a dragon spellcaster of your draconic benefactor's type (for example, and Paralyze for a conspirator dragon benefactor). You can cast each of these spells once per day as innate spells of the same tradition as your draconic benefactor."
+ }
+]

@@ -1,0 +1,82 @@
+[
+ {
+  "collection": "feats",
+  "id": "true-transmogrification",
+  "name": "True Transmogrification",
+  "level": 18,
+  "existingChoice": null,
+  "description": "You transmogrify your eidolon each day. During your daily preparations, you can swap out any number of your evolution feats, each for a different evolution feat of an appropriate level for which you meet the prerequisites. These swaps last until your next daily preparations."
+ },
+ {
+  "collection": "feats",
+  "id": "contingency-gadgets",
+  "name": "Contingency Gadgets",
+  "level": 12,
+  "existingChoice": null,
+  "description": "You are too brilliant to be caught off guard, and you always have just the right gadget for the situation. When you prepare your gadgets during your daily preparations, you can choose to leave one of them as a contingency gadget that you keep ready for just this situation, rather than declaring which gadget you're making. You can pull the contingency gadget out using an Interact action, at which point you must choose which gadget you had prepared as a contingency. If you're legendary in Crafting, you can leave two contingency gadgets during your daily preparations, instead of just one."
+ },
+ {
+  "collection": "feats",
+  "id": "ubiquitous-overdrive",
+  "name": "Ubiquitous Overdrive",
+  "level": 20,
+  "existingChoice": null,
+  "description": "You prepare a variety of incredible gizmos on each of your allies, linking them together through careful modification to enable you to power them up all at once. During your daily preparations, select up to six willing allies. Whenever you Overdrive, you grant the benefits of your overdrive to any of these allies you choose who are within 30 feet of you. The allies don't gain the increased damage from expert, master, or legendary overdrive."
+ },
+ {
+  "collection": "feats",
+  "id": "repurposed-parts",
+  "name": "Repurposed Parts",
+  "level": 10,
+  "existingChoice": null,
+  "description": "You are familiar with the fittings and cogwheels of your snares and can repurpose parts from prepared quick-deploy snares to assemble a new creation on the fly. Using two of the snares you prepared for quick deployment during daily preparations, you can quickly deploy a different snare that you know how to Craft, even if you didn't prepare that snare during your daily preparations."
+ },
+ {
+  "collection": "feats",
+  "id": "beast-gunner-dedication",
+  "name": "Beast Gunner Dedication",
+  "level": 6,
+  "existingChoice": null,
+  "description": "You've unlocked the first hints of your weapon's hidden potential. You treat all beast guns as martial firearms when determining your proficiency with them, even beast guns that are normally advanced weapons. You can change your bonded beast gun to another beast gun you own each day during your daily preparations, as long as you've previously performed a ritual hunt associated with the new beast gun. The beast gun also acts as a conduit, amplifying any latent or active magic power you have. Unlocking this ability allows you to master it with other magical firearms. You learn to cast spontaneous spells and gain the Cast a Spell activity. You gain a spell repertoire with one cantrip of your choice, from either the arcane or primal spell list. You choose this cantrip from the common spells on your chosen spell list or from other spells you have access to on the list. This cantrip must require a spell attack roll. You're trained in the spell attack modifier and spell DC statistics. Your key spellcasting ability for these spells is either Charisma or Intelligence, chosen when you take this feat. If you already cast arcane or primal spells from spell slots, you learn one additional cantrip from that tradition. If you're a prepared caster, you can prepare this spell in addition to your usual cantrips per day; if you're a spontaneous caster, you add this cantrip to your spell repertoire. You also gain Spellsling. **Spellsling** ⟨3⟩"
+ },
+ {
+  "collection": "feats",
+  "id": "illusory-identity",
+  "name": "Illusory Identity",
+  "level": 12,
+  "existingChoice": null,
+  "description": "There are times when skills or looks are not enough to convince someone of your identity, and you instead require adequate documentation. Replicating the methods of the Sapphire Butterfly, you've learned to use magic to forge a new identity as you need it. During your daily preparations, you can choose a blank piece of paper, journal, badge, or similar item normally used to display authority, to magically invest. You can use an Interact action to mentally outline the basic information that is displayed when that item is presented to another creature, such as a name, a title, connection to an existing group or agency, and other basic details. A more complex outline requires more time, at the GM's discretion. That creature must attempt a save against your Deception DC. This item only works while you are holding it and appears blank if anyone else attempts to use it, though you can include others within the details of your outline. --- **Critical Success** The target sees the item as being entirely blank, and becomes immune to this effect until your next daily preparations. **Success** The target sees only the basic information listed out in a simplistic manner, as described in the Interact action. Though not fully convinced, the target plays along, but this worsens the target's attitude toward you by one step. **Failure** The target sees the information presented by the item in the proper format relevant to your situation, with the appropriate language, names, dates, signatures, and other details. **Critical Failure** The target sees the information presented by the item as granting a higher level of authority than anticipated, and immediately treats you with the proper deference. As failure, and the target's attitude toward you immediately improves by one step."
+ },
+ {
+  "collection": "feats",
+  "id": "elemental-familiar-kineticist",
+  "name": "Elemental Familiar (Kineticist)",
+  "level": 1,
+  "existingChoice": null,
+  "description": "A small creature made of elemental matter springs forth from your kinetic gate. This elemental familiar appears to be made of one of your kinetic elements, though it might have unusual or distinguishing aspects. Like other familiars, your elemental familiar can assist you in various tasks and on adventures. You gain an elemental familiar with the trait of one of your kinetic elements. If you have more than one kinetic element, you can change the element you've selected for your familiar to a different one of your kinetic elements each time you make your daily preparations. The familiar uses your Constitution modifier to determine its Perception, Acrobatics, and Stealth modifiers."
+ },
+ {
+  "collection": "feats",
+  "id": "esoteric-polymath",
+  "name": "Esoteric Polymath",
+  "level": 2,
+  "existingChoice": null,
+  "description": "You keep a book of occult spells, similar to a wizard's spellbook, and can use its spells to supplement your spell repertoire. Add all the spells in your repertoire to this book for free. You can use the Occultism skill to Learn Spells and add them to your spellbook by paying the appropriate cost. During your daily preparations, choose any one spell from your book of occult spells. If that spell is already in your spell repertoire, you can treat it as an additional signature spell that day. If it isn't in your repertoire, treat it as though it were until your next daily preparations."
+ },
+ {
+  "collection": "feats",
+  "id": "versatile-signature",
+  "name": "Versatile Signature",
+  "level": 4,
+  "existingChoice": null,
+  "description": "While most bards are known for certain signature performances and spells, you're always tweaking your available repertoire. When you make your daily preparations, you can change one of your signature spells to a different spell of that rank from your repertoire."
+ },
+ {
+  "collection": "feats",
+  "id": "eclectic-polymath",
+  "name": "Eclectic Polymath",
+  "level": 12,
+  "existingChoice": null,
+  "description": "Your flexible mind can quickly shift from one spell to another. If you add a spell to your repertoire during your daily preparations using Esoteric Polymath, when you prepare again, you can choose to keep the new spell from Esoteric Polymath in your repertoire and instead lose access to another spell of the same rank in your repertoire."
+ }
+]

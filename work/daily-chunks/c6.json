@@ -1,0 +1,86 @@
+[
+ {
+  "collection": "classFeatures",
+  "id": "blessed-armament",
+  "name": "Blessed Armament",
+  "level": 1,
+  "existingChoice": null,
+  "description": "Select one weapon or handwraps of mighty blows. You gain that armament's critical specialization effect, and you grant the armament a property rune of your choice from the following list: Fearsome, Ghost Touch, Returning, Shifting, or Vitalizing. During your daily preparations, you can change the spirit to inhabit a different armament, grant a different rune, or both. This rune doesn't count toward the weapon's number of property runes. It can be used even if the weapon already has its maximum number of property runes."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "pelt-of-the-beast",
+  "name": "Pelt of the Beast",
+  "level": 1,
+  "existingChoice": null,
+  "description": "**Usage** worn cloak or belt --- This animal hide, whether worn about the shoulders or waist, is all you need to survive even the harshest elements. When you make your daily preparations, choose cold, electricity, fire, poison, or sonic damage. The pelt attunes to that damage type. **Immanence** You gain resistance equal to half your level to the damage type the pelt is attuned to. You also treat environmental cold and heat effects as one step less severe. **Transcendence—**Survive the Wilds ⟨1⟩ (aura, manipulate, transcendence)"
+ },
+ {
+  "collection": "classFeatures",
+  "id": "mutagenic-flashback",
+  "name": "Mutagenic Flashback",
+  "level": 1,
+  "existingChoice": null,
+  "description": "**Frequency** once per day --- You experience a brief resurgence of a mutagen. Choose one mutagen you've consumed since your last daily preparations. You gain the effects of that mutagen for 1 minute."
+ },
+ {
+  "collection": "items",
+  "id": "library-robes-true",
+  "name": "Library Robes (True)",
+  "level": 19,
+  "existingChoice": null,
+  "description": "These *+3 greater resilient scroll robes* magically store a spell for you. During your daily preparations, choose one spell you know of 9th rank or lower. You inscribe that spell on the robes, as though you had done so using the robes' inscribed trait, but without needing to go through the normal scribing process. You must provide the minimum amount of materials to Craft one scroll of that spell (typically half the Price of a scroll of that level plus any extra cost required for the spell). You don't need to be trained in Crafting, nor do you need the Magical Crafting feat. Using this ability erases any scroll already inscribed on the robe."
+ },
+ {
+  "collection": "items",
+  "id": "the-queen-mother",
+  "name": "The Queen Mother",
+  "level": 20,
+  "existingChoice": null,
+  "description": "**Suit** Stars (Wis) **Alignment** lawful neutral --- *The Queen Mother* is knowledge manifest, but she only shares this knowledge with loyal subjects. When you first invest *The Queen Mother*, choose a Lore skill in which you have no proficiency. As long as you continue to have the Queen Mother invested, you treat that Lore skill as if your proficiency rank with it were a master. If you're at least 15th level, you treat that Lore skill as if you were legendary with it instead. You can change your selected Lore once per day as part of your daily preparations, as long as you have *The Queen Mother* invested. **Activate** ⟨3⟩ command, envision, Interact **Frequency** once per day --- **Effect** You call upon a loyal subject to aid you by holding The Queen Mother out and asking her to send help. You cast Summon Animal or Summon Construct, but with a range of 90 feet. The rank of the spell is one-half your level rounded down."
+ },
+ {
+  "collection": "items",
+  "id": "viridian-crown",
+  "name": "Viridian Crown",
+  "level": 20,
+  "existingChoice": null,
+  "description": "The monarch of Kyonin imparts a sliver of their personality to the artifact when they are crowned ruler of the nation. The crown's precise shape changes with their needs. A paranoid ruler might cause the crown to transform into a cowl, while a gregarious one could cause it to become a lofty piece that displays its beauty. Atop Queen Telandia's brow, the *Viridian Crown* has assumed its current appearance: brimming with life, its blue-green vines moving and rustling on her brow. While the material that comprises the crown seems to be made of living vines, to the touch it is as resilient as dawnsilver. In the spring, buds bloom into crystalline flowers that give the crown a scintillating appearance. These delicate flower petals naturally fall over time as the season advances, and often serve as temporary tokens or gifts to citizens and dignitaries. The petals are art objects worth a few dozen gp each, but the act of selling them is considered crass by Kyonin's people–and their fragility ensures that they crumble to dust before too long anyway. Their use as raw materials in the crafting of consumable magic is a time-honored tradition among elves. If you are the properly anointed ruler of Kyonin, or if that ruler has given you permission to wear the crown for a time, as long as you have the *Viridian Crown* invested, choose either Charisma or Wisdom. The *Viridian Crown* increases the chosen modifier by 1 or increases it to +4, whichever would give you a higher value. You can change which modifier is adjusted once every 24 hours as you make your daily preparations. As long as you have the crown invested, it imparts knowledge of the Fortifying Brew and Resurrect rituals. When you cast either of these (either as a primary or secondary caster) you gain a +3 item bonus to your skill check. --- **Activate—Invoke the Crown** Cast a Spell **Frequency** once per minute **Effect** You cast one of the following spells from the crown at 10th-rank: Cleanse Affliction, Detect Poison, Heal, or Light. --- **Activate—View Subject** 10 minutes (concentrate) **Effect** You focus your thoughts, and the *Viridian Crown* shows you an image of an elf who has accepted your rule. You must "
+ },
+ {
+  "collection": "items",
+  "id": "fortune-cord",
+  "name": "Fortune Cord",
+  "level": 11,
+  "existingChoice": null,
+  "description": "In many parts of Tian Xia, it's tradition to mint coins with holes in the centers for the purpose of being able to thread a cord through them and tie them off for security and ease of transaction. This immaculately braided red cord is made in this tradition and can hold up to 100 coins at any given time. As long as you carry a fortune cord, you gain a +2 item bonus to skill checks to Earn Income. If you load up to 100 coins onto a fortune cord as part of your daily preparations, you can Activate the magic item in two different ways until the next time you make your daily preparations, provided all the loaded coins are of the same type. **Activate—Merchant's Bludgeon** ⟨1⟩ (concentrate) **Frequency** once per day **Requirements** You have at least 50 coins loaded onto the fortune cord --- **Effect** You transform the fortune cord into a *+2 striking nunchaku* for 1 minute. The type of coin loaded onto the cord determines the additional weapon property rune that manifests on this *+2 striking nunchaku*, as follows. - **Copper**: Corrosive - **Silver**: Shock - **Gold**: Flaming - **Platinum**: Frost --- **Activate—Fling Coins** ⟨2⟩ (concentrate, manipulate) --- **Effect** You whip the fortune cord, causing 10 coins loaded onto it to detach and fire at a creature within 100 feet that you can see. That creature takes 4d6 damage ( save); the damage type depends on the type of coins you've loaded. Copper coins deal acid damage, silver coins deal electricity damage, gold coins deal fire damage, and platinum coins deal cold damage."
+ },
+ {
+  "collection": "backgrounds",
+  "id": "professional-letter-writer",
+  "name": "Professional Letter Writer",
+  "existingChoice": {
+   "flag": "skillFeat",
+   "prompt": "Skill feat",
+   "kind": "array",
+   "options": [
+    {
+     "value": "specialty-crafting",
+     "label": "Specialty Crafting"
+    },
+    {
+     "value": "multilingual",
+     "label": "Multilingual"
+    }
+   ]
+  },
+  "description": "You make a living out of reading and writing letters for people who are eager to keep in touch with their loved ones over long distances. Many of these people are semiliterate and can't afford magical communication, such as sending or dream message spells. You aren't always fluent in the many disparate languages you're asked to record, but with your many books and dictionaries, you get by. Your services are important to the community, despite your craft being a rarity Choose two attribute boosts. One must be to **Intelligence** or **Charisma**, and one is a free attribute boost. You're trained in Scribing Lore. You gain one skill feat of your choice between the Specialty Crafting or Multilingual skill feat. During your daily preparations, you can choose one additional language that you know. You can change this language the next time you make your daily preparations. --- ## Background details **Attribute Boosts** Charisma or Intelligence, one free **Lore** Scribing Lore"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "runelord-researcher",
+  "name": "Runelord Researcher",
+  "existingChoice": null,
+  "description": "For thousands of years, the looming monoliths found throughout the Saga Lands were a source of pride, fear, and curiosity, yet the dangers associated with them and the gulf of time itself kept their secrets mostly hidden. When Runelord Karzoug rose from his eons-long slumber in 4707 ar, these ancient secrets became thrust into the light, and Thassilon's legacy became a topic of modern discussion and exploration. The foundation of New Thassilon only strengthened this shift, and now you're one of many who have devoted your studies on the deep history of Thassilon and its runelords—a topic still shrouded in mystery. Whether the focus of your studies has been one of the more recently active runelords, like Karzoug, Alaznist, Belimarius, or Sorshen, or you're focused on one of the more obscure dozens of runelords who ruled during the centuries Thassilon existed, your knowledge has made you an invaluable asset on many adventures in the Saga Lands. It's also attracted Queen Sorshen's attention, and in her invitation to attend the opening ceremonies for the Circle of Open Hands, she made it clear she wants to engage you in several long discussions about the truths of ancient Thassilon, impressing upon you that while the runelords (including herself, she admits) of the ancient era were cruel and domineering, that many of the wonders they created could benefit the modern age–if people could trust that these wonders were safe! With your aid, she hopes to bring these innovations back. Choose two attribute boosts. One must be to **Dexterity** or **Intelligence**, and the other is a free attribute boost. You're trained in Arcana and Academia Lore. When you Recall Knowledge about runelords or ancient Thassilon, you gain a +2 circumstance bonus to the check. You automatically recognize the name and time of rule of any runelord you encounter or see an accurate representation of (such as a painting or statue). In addition, during your daily preparations, you can choose one of the following schools of Thassilonian rune magic to focus your mind on, gaining a +1 status bonus to saving throws against the listed effect for the next 8 hours. - **Envy** any effect that has the incapacit"
+ }
+]

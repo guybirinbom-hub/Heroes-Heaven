@@ -1,0 +1,217 @@
+[
+ {
+  "collection": "feats",
+  "id": "spell-runes",
+  "name": "Spell Runes",
+  "level": 4,
+  "description": "The magical runes on your body grant you several magical abilities. Choose a 1st-rank arcane spell. You gain a spell rune on your body corresponding to the chosen spell, which you can cast once per day as an innate spell. At 6th level, you gain a spell rune corresponding to a 2nd-rank arcane spell, and at 8th level, you gain a spell rune corresponding to a 3rd-rank arcane spell."
+ },
+ {
+  "collection": "feats",
+  "id": "ornate-tattoo",
+  "name": "Ornate Tattoo",
+  "level": 5,
+  "description": "You expand your tattoos to encompass greater magic. Choose a 1st-rank arcane spell from the same school as your Arcane Tattoos, either a common spell or another to which you have access. You can cast that spell once per day as an innate arcane spell."
+ },
+ {
+  "collection": "feats",
+  "id": "virtue-forged-tattoos",
+  "name": "Virtue-Forged Tattoos",
+  "level": 9,
+  "description": "Your tattoos are a work of eldritch genius, a masterpiece of art, magic, and skin. Choose a 3rd-rank arcane spell from the same school as your Arcane Tattoos, either a common spell or another to which you have access, including a lower-rank spell heightened to 3rd level if you wish. You can cast that spell once per day as an innate arcane spell."
+ },
+ {
+  "collection": "feats",
+  "id": "spirit-spells",
+  "name": "Spirit Spells",
+  "level": 4,
+  "description": "Your ability to confront incorporeal menaces develops into full-fledged spellcasting. Choose a 1st-rank occult spell. You can Cast this Spell as an innate occult spell. At 6th level, you gain a 2nd-rank occult spell, and at 8th level, you gain a 3rd-rank occult spell. Each of these spells must have the divination, enchantment, or necromancy trait. You can cast each of these spells once per day"
+ },
+ {
+  "collection": "feats",
+  "id": "magical-adept",
+  "name": "Magical Adept",
+  "level": 8,
+  "description": "Your eidolon gains more magic. Choose one 2nd-rank spell and one 1st-rank spell of your eidolon's tradition. Your eidolon can cast them each once per day as innate spells. At every even level after you take this feat, your eidolon can swap one of these innate spells for a new innate spell that's 2 or more levels lower than your highest-rank spell slot."
+ },
+ {
+  "collection": "feats",
+  "id": "magical-master",
+  "name": "Magical Master",
+  "level": 18,
+  "description": "Your eidolon gains a bevy of lower-rank spells. Choose an innate spell of your eidolon's tradition of each of the spell ranks from 1 to 7 in which your eidolon doesn't currently have an innate spell from Magical Adept. Your eidolon can cast each once per day as innate spells. You can swap these spells at every even level, but your eidolon can never know more than one spell of each spell rank 1 through 7"
+ },
+ {
+  "collection": "feats",
+  "id": "core-attunement",
+  "name": "Core Attunement",
+  "level": 9,
+  "description": "Your core allows you to draw more power from it. Select one 1st-rank arcane spell and one 2nd-rank or lower arcane spell, to which you have access. You can cast your chosen spells as arcane innate spells each once per day. **Enhancement** Your attunement grows stronger. Select one 5th-rank or lower arcane spell and one 6th-rank or lower arcane spell, to which you have access. You can cast them as arcane innate spells each once per day, in addition to the original spells."
+ },
+ {
+  "collection": "feats",
+  "id": "fey-ascension",
+  "name": "Fey Ascension",
+  "level": 9,
+  "description": "The fey influence on your form and features grows even more powerful and notable. You gain one of the following features and abilities; this must be the same animal or fey type as you chose for Fey Influence. - **Anteater** You become an expert in primal DCs and spell attack rolls. You can cast Slow as an innate primal spell once per day. - **Cat Sith** You laugh off the outraged curses of those you have tricked or wronged. Whenever a creature targets you with a misfortune effect, make a . On a success, you are unaffected. - **Cursed Bluebird** You have enough control over your curse to turn a bane into a minor blessing. Once per day, you can temporarily transform yourself or an ally into a blue bird, as a 4th-rank Pest Form (bird only) targeting one willing creature. - **Dryad** Your hair becomes intermixed with delicate but razor-edged leaves that move as you command. You gain a leaves ranged unarmed attack that deals 1d6 slashing damage. Your leaves are in the dart weapon group and have the magical and unarmed traits. *Note: A range was not provided for this strike in the source. For Foundry automation we have assumed a 20-foot range increment, to be in line with similar abilities.* - **Faun** You can cast Charm, Sleep, and Triple Time as innate primal spells once per day each. Whenever you cast one of these spells, you can Step or Stride as part of the activity. - **Gremlin"
+ },
+ {
+  "collection": "feats",
+  "id": "axumas-awakening",
+  "name": "Axuma's Awakening",
+  "level": 11,
+  "description": "Choose two cantrips from the arcane spells list. You can cast these cantrips at will as arcane innate spells. A cantrip is heightened to a spell rank equal to half your level rounded up. Then, choose one 1st-rank spell and one 2nd-rank spell from the arcane spells list. You can cast each of these spells once per day as arcane innate spells. Spells gained from this feat must be common spells or spells to which you have access."
+ },
+ {
+  "collection": "feats",
+  "id": "kizidhar-magic",
+  "name": "Kizidhar Magic",
+  "level": 9,
+  "description": "You can wield the arcane magic of a kizidhar, casting Entangling Flora and One with Plants once per day each as 2nd-rank arcane innate spells."
+ },
+ {
+  "collection": "feats",
+  "id": "otherworldly-acumen",
+  "name": "Otherworldly Acumen",
+  "level": 9,
+  "description": "The arcane magic you possess grows in power and complexity. Choose one common 2nd-rank spell from the same tradition as an innate spell you previously gained from another elf ancestry feat (from the arcane list if you have Otherworldly Magic, for example). You can cast that spell as an innate spell once per day, using the same tradition as the list you chose the spell from. Your magic is adaptable. By spending 1 day of downtime, you can change the spell you chose to a different common 2nd-rank spell from the same tradition."
+ },
+ {
+  "collection": "feats",
+  "id": "speakers-defense",
+  "name": "Speaker's Defense",
+  "level": 9,
+  "description": "As a Speaker, you've forged a deep bond with powerful spirits who you can urge to rise up to defend you and your people. If you're a Faithspeaker, you can call on gods or powerful planar beings to cast Share Life and Status, each once per day as innate divine spells; if you're a Greenspeaker, you can call on the forces of nature to cast Entangling Flora and Environmental Endurance, each once per day as innate primal spells."
+ },
+ {
+  "collection": "feats",
+  "id": "evolved-spellhorn",
+  "name": "Evolved Spellhorn",
+  "level": 9,
+  "description": "Your inborn arcane power grows. Choose one common 1st-rank arcane spell and one common 2nd-rank arcane spell. You can cast each of these spells once per day as arcane innate spells."
+ },
+ {
+  "collection": "feats",
+  "id": "resplendent-spellhorn",
+  "name": "Resplendent Spellhorn",
+  "level": 13,
+  "description": "Your magic continues to flourish. Choose one common 3rd-rank arcane spell and one common 4th-rank arcane spell. You can cast each of these spells once per day as arcane innate spells."
+ },
+ {
+  "collection": "feats",
+  "id": "horn-and-bone-incantation",
+  "name": "Horn and Bone Incantation",
+  "level": 9,
+  "description": "You invoke mantras of tellurian rebirth. You gain the ability to cast Animal Form and Humanoid Form as 2nd-rank primal innate spells, each once per day."
+ },
+ {
+  "collection": "feats",
+  "id": "seat-of-power",
+  "name": "Seat of Power",
+  "level": 16,
+  "description": "Your sheer determination has created a demiplane that houses a grand residence which will serve as the heart of your planned realm. You determine the appearance of this seat of power, such as a duskwood longhouse, a crumbling stone castle, an ice tower, or a pagoda constructed from the solidified souls of the damned. You can enter your realm using the Enter Seat Of Power activity. You and any creatures you choose gain three times as many Hit Points when resting within your seat of power. Once per day while within your seat of power, you can cast Cleanse Affliction as a 4th-rank innate divine spell or Sound Body as a 4th-rank innate divine spell. You can target only yourself with these spells."
+ },
+ {
+  "collection": "feats",
+  "id": "esoteric-spellcasting",
+  "name": "Esoteric Spellcasting",
+  "level": 4,
+  "description": "Your study of a variety of esoteric texts and supernatural matters has broadened your mind and improved your spellcasting. Choose a 1st-rank occult or divine spell. You can cast this spell once per day as an innate spell. At 6th level, you gain a 2nd-rank spell of the same tradition you chose, and at 8th level, you gain a 3rd-rank spell, also of that tradition. --- **Special** You can take this feat a second time, choosing spells from the other available tradition."
+ },
+ {
+  "collection": "feats",
+  "id": "more-real-than-real",
+  "name": "More Real than Real",
+  "level": 20,
+  "description": "Your performances aren't just well-known, they're famous across the land and beyond. Your ability to make people believe the stories you perform has taken on supernatural power. You gain the ability to cast Fabricated Truth once per day as an occult innate spell."
+ },
+ {
+  "collection": "feats",
+  "id": "may-death-itself-reconsider",
+  "name": "May Death Itself Reconsider",
+  "level": 20,
+  "description": "Your will is so steadfast that even death can't stop you. You gain the ability to cast Breath of Life up to three times per day as a 5th-rank divine innate spell."
+ },
+ {
+  "collection": "feats",
+  "id": "dracomancer",
+  "name": "Dracomancer",
+  "level": 9,
+  "description": "The power infused into you by your draconic benefactor's presence allows you to manifest their most iconic spells. Choose one 1st-rank spell and one 2nd-rank spell from those listed for a dragon spellcaster of your draconic benefactor's type, (for example, Fear and for a conspirator dragon benefactor). You can cast each of these spells once per day as innate spells of the same tradition as your draconic benefactor. You gain the trained proficiency rank in the spell attack modifier and spell DC statistics, and your key spellcasting attribute is Charisma."
+ },
+ {
+  "collection": "feats",
+  "id": "elite-dracomancer",
+  "name": "Elite Dracomancer",
+  "level": 13,
+  "description": "Your draconic power equals that of a lesser dragon. Choose one 3rd-rank spell and one 4th-rank spell from those listed for a dragon spellcaster of your draconic benefactor's type (for example, and Paralyze for a conspirator dragon benefactor). You can cast each of these spells once per day as innate spells of the same tradition as your draconic benefactor."
+ },
+ {
+  "collection": "feats",
+  "id": "avenging-runelord-dedication",
+  "name": "Avenging Runelord Dedication",
+  "level": 12,
+  "description": "The call of a long dead runelord has infected your soul and transformed your fate. Choose one of the following sins: envy, gluttony, greed, sloth, or wrath. You become trained in Arcana. If you are already trained in Arcana, you become trained in the skill of your choice. At 14th level, you gain expert proficiency in Arcana. At 16th level, if you gain master proficiency in Arcana. You have familiarity with weapons in the polearm and spear weapon groups—for the purposes of proficiency, you treat any of these that are martial weapons as simple weapons and any that are advanced weapons as martial weapons. You learn the Thassilonian language. You gain the ability to cast an arcane spell as an innate spell. This spell must be chosen from the following list: Darkvision, Mystic Armor, Runic Body, Runic Weapon, See the Unseen, Sending, or Truesight; alternatively, you can choose any spell of 6th rank or lower from the sin spells listed for your chosen sin. You can cast this spell as an arcane innate spell once per day. The spell is automatically heightened to a spell rank equal to half your level rounded up. Use mythic proficiency to determine any attack rolls or spell DCs. Your obsession with revenge allows you to reflexively lash out at those who harm you with blasts of arcane magic. You gain the Runelord's Response reaction."
+ },
+ {
+  "collection": "feats",
+  "id": "fey-life",
+  "name": "Fey Life",
+  "level": 16,
+  "description": "There are some fates worse than death–and you worked to save a fey from one such fate. In return, your life became bound to theirs. Fey magic has since become a part of you, bringing the vibrant colors of the First World to you and all that surrounds you. Your skin, hair, all that you touch, and anything within 5 feet of you changes to the most brilliant hues possible, though the colors fade as you cease to touch an object or you move away. You gain the ability to cast Summon Fey as a 7th-rank primal innate spell once per day. At 18th level the spell heightens to 8th rank, and at 20th level it heightens to 9th rank. The first time you die after gaining this feat, the bond you made with the fey invokes the power of the First World to return you to life. Immediately after dying, you revive, becoming conscious (and wounded as normal) at 27 Hit Points, and you gain the fey trait. Your eyes become a rainbow of colors, and you take on a visual aspect of the fey with whom you are bound, such as by growing wings, horns, or a plantlike body. The change has no mechanical effect; for instance, the wings wouldn't allow you to fly, nor would horns grant a horn unarmed attack. The second time you die, you reawaken in the First World with the full appearance of the fey that was bound to you. You become an NPC, unconcerned with your old mortal life. You can be returned to your previous life in"
+ },
+ {
+  "collection": "feats",
+  "id": "minor-deific-power",
+  "name": "Minor Deific Power",
+  "level": 4,
+  "description": "Your mental, physical, and spiritual training have granted you access to divine magic that doesn't rely on any other deity or patron. Choose a common divine cantrip and one common 1st-rank divine spell. You can cast the cantrip as a divine innate spell at will and the 1st-rank spell as a divine innate spell once per day."
+ },
+ {
+  "collection": "feats",
+  "id": "advanced-deific-power",
+  "name": "Advanced Deific Power",
+  "level": 8,
+  "description": "Like a muscle, the more you flex your divine power, the stronger it gets. Choose two common divine spells, one of 2nd rank and one of 3rd rank. You can cast each of these spells as divine innate spells once per day."
+ },
+ {
+  "collection": "feats",
+  "id": "greater-deific-power",
+  "name": "Greater Deific Power",
+  "level": 12,
+  "description": "Divine power continues to fill you. Choose two common divine spells, one of 4th rank and one of 5th rank. You can cast each of these spells as divine innate spells once per day."
+ },
+ {
+  "collection": "feats",
+  "id": "major-deific-power",
+  "name": "Major Deific Power",
+  "level": 18,
+  "description": "As your apotheosis into living godhood approaches, you accrue the strongest of divine power. Choose three common divine spells, one of 6th rank, one of 7th rank, and one of 8th rank. You can cast each of these spells as divine innate spells once per day."
+ },
+ {
+  "collection": "feats",
+  "id": "pirates-pet",
+  "name": "Pirate's Pet",
+  "level": 4,
+  "description": "Pirate's Pet Source High Seas pg. 92 Archetype Pirate Prerequisites Pirate Dedication Access You're from the Shackles An animal has become your loyal ally, perhaps after you liberated it from another ship or found it on a remote island. You gain the Pet general feat. Your pet gains an additional pet Shackles Options ability, which you can choose from the standard pet abilities or the following familiar abilities: accompanist, damage avoidance, independent, partner in crime, speech, and valet. In addition, you learn a common 1st- or 2nd-rank spell that targets your familiar, and can cast it once per day as a primal innate spell. You can instead learn phase familiar and can cast it once per hour as a primal innate spell; it’s not a focus spell for you. When you cast the chosen spell, you target your pirate’s pet instead of a familiar."
+ },
+ {
+  "collection": "classFeatures",
+  "id": "angel-eidolon",
+  "name": "Angel Eidolon",
+  "level": 1,
+  "description": "Your eidolon is a celestial messenger, a member of the angelic host with a unique link to you, allowing them to carry a special message to the mortal world at your side. Most angel eidolons are roughly humanoid in form, with feathered wings, glowing eyes, halos, or similar angelic features. However, some take the form of smaller angelic servitors like the winged helmet cassisian angel instead. The two of you are destined for an important role in the plans of the celestial realms. Though a true angel, your angel eidolon's link to you as a mortal prevents them from casting the angelic messenger ritual, even if they somehow learn it. **Tradition** divine **Traits** angel, celestial, eidolon **Alignment** must be good, usually neutral good **Home Plane** Nirvana (if NG), Elysium (if CG), or Heaven (if LG) --- **Size** Medium or Small **Suggested Attacks** fist (bludgeoning), wing (bludgeoning), unarmed attacks shaped like a weapon **Angelic Avenger** Str 18, Dex 14, Con 16, Int 8, Wis 12, Cha 10; +2 AC (+3 Dex cap) **Angelic Emissary** Str 12, Dex 18, Con 12, Int 10, Wis 12, Cha 14; +1 AC (+4 Dex cap) **Skills** Diplomacy, Religion **Senses** darkvision **Language** Celestial **Speed** 25 feet --- **Eidolon Abilities** *Initial* hallowed strikes; *Symbiosis* traveler's aura; *Transcendence* angelic mercy ## Hallowed Strikes Your eidolon's attacks are hallowed by the celestial realm"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "sign-bound",
+  "name": "Sign Bound",
+  "description": "You were born under a powerful manifestation of a specific constellation, and its connection to you is obvious. You tend to feel most at ease while your constellation is prominent and can draw upon your sign's influence from time to time. When you gain this background, choose a specific constellation, such as the Thrush or the Wagon. Your associated constellation determines one of the ability boosts you gain and an innate spell. The list includes benefits for the constellations of the Cosmic Caravan, but you might have been born under a different constellation and gain different benefits as determined by the GM. Choose two attribute boosts. One must be to the ability tied to your sign, and one is a free attribute boost. You're trained in Astrology Lore. You also gain the ability to cast an occult innate spell, as determined by your sign. The frequency with which you can cast this spell is listed below; cantrips can be used as often as you wish. As normal, you cast non-cantrip innate spells at the lowest level available to that spell, such as 2nd level for speak with animals, and cantrips are heightened to half your level. Additionally, once during the prominent time for your sign (such as 12 Pharast-18 Gozran for the Bridge), you can cast your sign's spell without expending its normal use. --- **The Thrush** (Dexterity): Ghost Sound; at will **The Lantern Bearer** (Wisdom): Lig"
+ },
+ {
+  "collection": "backgrounds",
+  "id": "blight-survivor",
+  "name": "Blight Survivor",
+  "description": "Centuries ago, the elven witch Silisifex played an important role in the fight against Treerazer. With her deep knowledge, power over primal magic, and abiding faith in Calistria, she was one of the first elves to directly fight against the encroaching fiendish blight that was Tanglebriar. Her discoveries, teachings, and lore have continued to protect and inspire elves to this very day, centuries after she vanished mysteriously on a mission into Tanglebriar back in 3050 ar. Whether you're a primal spellcaster or merely someone whose life was impacted by Tanglebriar's blight, Silisifex's discoveries and methods for combating the demonic corruption of nature has benefited you significantly over the course of your life and may even have saved you from being corrupted yourself. Alternately, you could have had close friends or family members who became corrupted only to have been restored before that corruption could become permanent. Many have succumbed to the influence of Tanglebriar over the ages, but you count yourself as one of the survivors of this corruption. Using your hard-earned experience to help others survive their encounter with the blight has, in part, defined your role in Kyonin or abroad. Choose two attribute boosts. One must be to **Constitution** or **Wisdom**, and one is a free attribute boost. You're trained in the Nature skill and the Fungus Lore skill. You gai"
+ }
+]

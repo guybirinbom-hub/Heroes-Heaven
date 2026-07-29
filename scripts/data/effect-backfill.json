@@ -34756,5 +34756,230 @@
     "id": "cecaelia-merfolk",
     "field": "landSpeedMin",
     "value": 10
+  },
+  {
+    "category": "feats",
+    "id": "incredible-luck-halfling",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "halfling-luck",
+      "max": 1,
+      "per": "hour"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "continuous-assault",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "elemental-assault",
+      "max": 1,
+      "per": "hour"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "unbelievable-escape",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "lucky-escape",
+      "max": 1,
+      "per": "hour"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "incredible-ferocity",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "orc-ferocity",
+      "max": 1,
+      "per": "hour"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "rapid-pheromone-recovery",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "emit-defensive-odor",
+      "max": 1,
+      "per": "hour"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "reliable-luck",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "cats-luck",
+      "max": 1,
+      "per": "hour"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "jinx-glutton",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "eat-fortune",
+      "max": 1,
+      "per": "hour"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "memory-of-mastery",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "memory-of-skill",
+      "max": 1,
+      "per": "hour"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "this-too-shall-pass",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "all-this-will-happen-again",
+      "max": 1,
+      "per": "hour"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "jotuns-restoration",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "caretakers-restoration",
+      "max": 1,
+      "per": "hour"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "stormy-heart",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "invoke-the-elements",
+      "max": 1,
+      "per": "minute",
+      "every": 10
+    }
+  },
+  {
+    "category": "feats",
+    "id": "consistent-surge",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "nanite-surge",
+      "max": 1,
+      "per": "minute",
+      "every": 10
+    }
+  },
+  {
+    "category": "feats",
+    "id": "greater-despair",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "mummys-despair",
+      "max": 1,
+      "per": "minute",
+      "every": 10
+    }
+  },
+  {
+    "category": "feats",
+    "id": "forever-among-humanity",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "among-humanity",
+      "max": 3,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "many-guises-kitsune",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "shifting-faces",
+      "max": 3,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "eternal-wings",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "divine-wings",
+      "unlimited": true
+    }
+  },
+  {
+    "category": "feats",
+    "id": "eternal-wings-nephilim",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "divine-wings",
+      "unlimited": true
+    }
+  },
+  {
+    "category": "feats",
+    "id": "eternal-wings-sylph",
+    "field": "usesUpgrade",
+    "value": {
+      "featId": "wings-of-air",
+      "unlimited": true
+    }
+  },
+  {
+    "category": "feats",
+    "id": "all-this-will-happen-again",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "persistent-mutagen",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "high-speed-regeneration",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "hypnotic-gaze",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "day"
+    }
+  },
+  {
+    "category": "feats",
+    "id": "seasoned-command",
+    "field": "limitedUses",
+    "value": {
+      "max": 1,
+      "per": "hour"
+    }
   }
 ]

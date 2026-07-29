@@ -1,0 +1,120 @@
+[
+ {
+  "collection": "feats",
+  "id": "universal-versatility",
+  "name": "Universal Versatility",
+  "level": 8,
+  "existingChoice": {
+   "flag": "schoolSpell",
+   "prompt": "School spell",
+   "kind": "array",
+   "options": [
+    {
+     "value": "protective-wards",
+     "label": "Abjuration — Protective Wards"
+    },
+    {
+     "value": "fortify-summoning",
+     "label": "Conjuration — Fortify Summoning"
+    },
+    {
+     "value": "diviners-sight",
+     "label": "Divination — Diviner's Sight"
+    },
+    {
+     "value": "charming-push",
+     "label": "Enchantment — Charming Push"
+    },
+    {
+     "value": "force-bolt",
+     "label": "Evocation — Force Bolt"
+    },
+    {
+     "value": "warped-terrain",
+     "label": "Illusion — Warped Terrain"
+    },
+    {
+     "value": "call-of-the-grave",
+     "label": "Necromancy — Call of the Grave"
+    },
+    {
+     "value": "physical-boost",
+     "label": "Transmutation — Physical Boost"
+    }
+   ]
+  },
+  "description": "Universal Versatility Source Core Rulebook pg. 211 Prerequisites universalist wizard; Hand of the Apprentice You can access the fundamental abilities of any school of magic. During your daily preparations, choose one of the eight school spells gained by 1st-level specialist wizards. You can use that school spell until your next daily preparations. When you Refocus, you can choose a different school spell from among those eight school spells, replacing the previous one. Increase the number of Focus Points in your focus pool by 1."
+ },
+ {
+  "collection": "feats",
+  "id": "spellmaster-dedication",
+  "name": "Spellmaster Dedication",
+  "level": 6,
+  "existingChoice": null,
+  "description": "As a Spellmaster, you are adept at identifying magic. You gain a +2 circumstance bonus when you Identify Magic with a skill in which you are trained or better. If you have the Wayfinder Resonance Tinkerer feat, you can change the cantrip you chose for that feat each day during your daily preparations."
+ },
+ {
+  "collection": "feats",
+  "id": "armor-rune-shifter",
+  "name": "Armor Rune Shifter",
+  "level": 10,
+  "existingChoice": null,
+  "description": "You learn the secrets of armor runes by viewing them through gems and can alter them at your discretion. Once per day when you make your daily preparations, you can focus on a rune's magical energies through a crystal's facets to alter a single property rune on one suit of armor in your possession to suppress its normal effects and make it function as a different property rune. You can temporarily alter the rune to function as one of the following runes: Energy-Resistant, , Raiment, , Shadow, Slick. The property rune remains altered until you make your next daily preparations. The armor must meet the prerequisites for the temporary rune, and any other runes that required the suppressed rune are also suppressed while the rune is transformed. The rune is obviously altered, and thus the armor can't be sold as though it had the temporary rune."
+ },
+ {
+  "collection": "feats",
+  "id": "weapon-rune-shifter",
+  "name": "Weapon-Rune Shifter",
+  "level": 10,
+  "existingChoice": null,
+  "description": "You learn how to alter the magic of weapon runes by using a crystal as a focusing component. Once per day during your daily preparations, you can focus on a rune's magical energies through a crystal's facets to alter a single property rune on one weapon in your possession to suppress its normal effects and make it function as a different property rune. You can temporarily alter the rune to function as one of the following runes: Corrosive, Flaming, Frost, Ghost Touch, Grievous, Returning, Shock, Thundering, or Wounding. The property rune remains altered until you make your next daily preparations. The weapon must meet the prerequisites for the temporary rune, and any other runes that required the suppressed rune are also suppressed while the rune is transformed. The rune is obviously altered, and thus the weapon can't be sold as though it had the temporary rune."
+ },
+ {
+  "collection": "feats",
+  "id": "bloodline-metamorphosis",
+  "name": "Bloodline Metamorphosis",
+  "level": 20,
+  "existingChoice": null,
+  "description": "You have learned to manipulate the innate power of your bloodline and adapt it to your needs. When making your daily preparations, you can swap out a single spell of 9th rank or lower for another spell of the same rank. You can't swap out spells granted specifically by your bloodline."
+ },
+ {
+  "collection": "feats",
+  "id": "foolproof-instructions",
+  "name": "Foolproof Instructions",
+  "level": 8,
+  "existingChoice": null,
+  "description": "You feel confident that you can explain your scrolls so well that even your allies can use them... hopefully. During your daily preparations, you can select a single scroll and instruct a single ally in its use. Until your next daily preparations, the ally can attempt to use the scroll with a single action that has the manipulate trait. The ally rolls the skill corresponding to the spellcasting tradition. The GM determines the DC based on the scroll's level, possibly adjusted for the situation. If the spell has a spell attack bonus or a spell DC, use your level as the proficiency bonus and the highest of your ally's Intelligence, Wisdom, or Charisma modifiers. --- **Success** For the rest of the ally's turn, they can spend actions to Cast the Spell. **Failure** The ally misremembers your instructions and can't use the scroll this turn. **Critical Failure** The ally misunderstood your instructions and can't use the scroll."
+ },
+ {
+  "collection": "feats",
+  "id": "westyrs-wayfinder-repository",
+  "name": "Westyr's Wayfinder Repository",
+  "level": 6,
+  "existingChoice": null,
+  "description": "**Requirements** You have at least one 1st-rank spell slot and a wayfinder. --- You can use your wayfinder to store a little extra magic for when you need it most. When making your daily preparations, you can choose one 1st-rank spell from your spellbook or spell repertoire and store it in your wayfinder. You can cast this spell from the wayfinder using the normal actions required. Once the spell has been cast, it is expended, and you must make your next daily preparations to store another spell in your wayfinder."
+ },
+ {
+  "collection": "feats",
+  "id": "fused-staff",
+  "name": "Fused Staff",
+  "level": 8,
+  "existingChoice": null,
+  "description": "When you prepare a staff, you can hold it up to a weapon to merge the two items. You can switch the fused item's form from the weapon to the staff or vice versa as a single action, which has the concentrate trait. When the item is in staff form, you can Cast the Spells from the staff and benefit from any other abilities the staff grants. The staff and the weapon share their fundamental runes, using whichever *weapon potency* and whichever *striking* rune is higher level. They don't share any other runes or specific abilities. You can Cast Spells from the staff as part of a Spellstrike even when the staff is in weapon form. Otherwise, you can't cast the staff's spells while it's in weapon form. The fusion lasts until your next daily preparations, though you can spend 10 minutes to separate the two items and meld the staff into a different weapon. The melding works for you alone. A different wielder can use the staff in its current form but can't transform it, get the benefit of the shared runes, or use its spells for a Spellstrike if it's in weapon form."
+ },
+ {
+  "collection": "feats",
+  "id": "master-summoner",
+  "name": "Master Summoner",
+  "level": 6,
+  "existingChoice": null,
+  "description": "During daily preparations, you can designate one of your spell slots to become two summoning slots of the same spell rank, from which you can cast only summoning or incarnate spells."
+ },
+ {
+  "collection": "feats",
+  "id": "flexible-transmogrification",
+  "name": "Flexible Transmogrification",
+  "level": 12,
+  "existingChoice": null,
+  "description": "You've learned how to transmogrify your eidolon to suit the circumstances of the day. Each day, choose one evolution feat of 6th level or lower during your daily preparations. Your eidolon gains that feat until your next daily preparations."
+ }
+]

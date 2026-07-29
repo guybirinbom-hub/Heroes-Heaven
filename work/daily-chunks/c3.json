@@ -1,0 +1,82 @@
+[
+ {
+  "collection": "feats",
+  "id": "heaven-earth-encompassing-sleeves",
+  "name": "Heaven-Earth Encompassing Sleeves",
+  "level": 4,
+  "existingChoice": null,
+  "description": "Your magic extends to your garments. During your daily preparations, you can weave magic into a single suit of fine or high-fashioned fine clothing with long sleeves or a train, such as a robe or cloak. This clothing becomes a set of Sleeves of Storage, allowing you to store items in either the sleeves or the train (you choose which during your daily preparations). This treatment also makes the clothing more durable; its Hardness increases by an amount equal to your level, and its Hit Points increase by an amount equal to twice your level. These benefits end if you prepare a new set of clothing, if someone else attempts to wear the clothing, or if you lose ownership of the clothing. When it ends, all items stored within the clothes fall into the nearest available space. At 9th level, the clothing becomes Sleeves of Storage (Greater) instead."
+ },
+ {
+  "collection": "feats",
+  "id": "spirit-familiar-animist",
+  "name": "Spirit Familiar (Animist)",
+  "level": 1,
+  "existingChoice": null,
+  "description": "When you attune to your apparitions during your daily preparations, you can choose to dedicate a small amount of your life force to allow one of them to physically manifest as a familiar, which gains the spirit trait. If your familiar is slain or destroyed, you lose all other benefits from the apparition until you remanifest the familiar during your next daily preparations. If you disperse the apparition you have manifested as a familiar, the familiar is destroyed."
+ },
+ {
+  "collection": "feats",
+  "id": "cutting-without-blade",
+  "name": "Cutting Without Blade",
+  "level": 20,
+  "existingChoice": null,
+  "description": "While tales of your divine ikons have spread far and wide, you've realized that, as they are all manifestations of your soul, the object itself is unnecessary. Your ikons disintegrate into golden light. Any ikon feats you've taken now apply to any applicable ikon you have, not just one, and you can immediately retrain any ikon feats you selected more than once. Each day during your daily preparations, you can select one ikon feat of 16th level or lower and gain it temporarily for that day. You can place your divine spark into any object in your possession, even a nonthreatening object like a single strand of grass, to transform it into a fully functional copy of your ikon made out of pure divine radiance. You can do this as a free action immediately before or after Striking with or otherwise using the ikon."
+ },
+ {
+  "collection": "feats",
+  "id": "unstable-patronage",
+  "name": "Unstable Patronage",
+  "level": 14,
+  "existingChoice": null,
+  "description": "You can act as a magical patron for your charges. When you finish your daily preparations, choose a spell your familiar knows and one of your charges. Once before your next daily preparations, that creature can Cast the Spell as an innate spell; this spell can be of no higher a rank than the highest rank of spells you can cast –2."
+ },
+ {
+  "collection": "feats",
+  "id": "patron-reborn",
+  "name": "Patron Reborn",
+  "level": 20,
+  "existingChoice": null,
+  "description": "You have fully realized the ability to serve as a patron. Your newfound abilities enhance your senses, rolling back the veil of a realm hidden to most mortals where great beings vie for unimaginable influence over vast worlds. You gain darkvision, constant Truesight, and the ability to see into all other transitive planes that overlap the one you are in. You can be a patron for other witches. Choose a single type of patron you represent, such as The Resentment or Starless Shadow. An allied witch you can observe who has that patron counts as and gains the benefits of your Witch's Charge feat, even if you did not select them as your charge during your daily preparations. You learn the Wish ritual and can impart that knowledge to your charges. Once per month, when one of your charges performs the *wish* ritual, you can roll the skill check in their place."
+ },
+ {
+  "collection": "feats",
+  "id": "celestial-armaments",
+  "name": "Celestial Armaments",
+  "level": 16,
+  "existingChoice": null,
+  "description": "You imbue a fragment of your divine spark into a weapon, blessing your blade and transforming it into a weapon worthy of the celestial realms. Select one weapon or Handwraps of Mighty Blows when you make your daily preparations. The weapon sheds light like a torch, deals an additional 1d8 spirit damage, and creatures who wield it gain the weapon's critical specialization. When you critically hit a target with the weapon, the target must succeed at a save against your class DC or spell DC (whichever is higher) or be blinded for 1d4 rounds. As a single action that has the concentration trait, you can hold your hand aloft and call this weapon back to your possession; it immediately teleports into your hand. While you're holding this weapon, you can spend 1 Mythic Point as a single action to temporarily grant a blessing to weapons wielded by your allies. Each ally within the bright light of your nimbus when you take this action selects one weapon in their possession. For 1 minute, the selected weapons gain the following benefits: the weapon sheds light like a torch, the weapon deals an additional 1d6 spirit damage, and creatures who wield the weapon gain the weapon's critical specialization."
+ },
+ {
+  "collection": "feats",
+  "id": "chosen-ward",
+  "name": "Chosen Ward",
+  "level": 14,
+  "existingChoice": null,
+  "description": "You have designated an ally to be you and your companion's ward, making it your primary directive to shield them from harm. During your daily preparations, choose an ally who isn't your united companion. While either you or your united companion are adjacent to your ward, you grant them a +1 circumstance bonus to their AC and Reflex saves. When your ward attempts a Reflex saving throw while adjacent to either you or your united companion, you can spend a Mythic Point as a reaction to allow your ward to roll that Reflex save twice and take the better result. This is a fortune effect. --- **Special** If you have the Defend Our Union feat, it can also be triggered when a foe successfully Strikes your ward; if used in this way, the damage to your ward is reduced if your Strike is successful instead."
+ },
+ {
+  "collection": "feats",
+  "id": "bloc-tactics",
+  "name": "Bloc Tactics",
+  "level": 14,
+  "existingChoice": null,
+  "description": "You have experience in undertaking direct action and know how to protect the identity and health of you and your allies when doing so. During your daily preparations, you can select a number of targets equal to half your level. You disguise the targets to hide their identities, which gives them a +4 status bonus to Deception checks to prevent others from seeing through their disguises, and lets them add their level even if untrained. Additionally, the disguises also protect from smoke, fumes, and inhaled substances, giving the targets a +3 status bonus to saving throws against them. The targets can quickly doff or don their disguises with a two-action activity."
+ },
+ {
+  "collection": "feats",
+  "id": "claim-cardinal-domains",
+  "name": "Claim Cardinal Domains",
+  "level": 14,
+  "existingChoice": null,
+  "description": "Your dominion over the divine truths of the world increases. You can lay claim to up to three additional domains, to a total maximum of four. Your mortal form cannot easily contain such power, however—each day during your daily preparations, decide which of your domains you are currently drawing power from; you gain access to this domain for the day and can cast its domain spells as normal, while your ability to access the power of your other domains lies dormant. You learn the advanced domain spell for any domain that you have claimed with your godling abilities. When you gain this feat, you can choose not to lay claim to one or more domains immediately, instead leaving the space open until later in your story. As long as you have one or more domains unclaimed, you can spend a Mythic Point as a single action to claim a domain, even in the heat of battle, immediately making this your active domain. This domain remains a part of your portfolio forever and cannot be changed after this point. You can also spend a Mythic Point to overcharge your divine power, gaining access to all the domains you have claimed for the next minute and passing this access on to your hierophant as normal. After the minute ends, you can choose which of the four domains you retain access to until your next daily preparations."
+ },
+ {
+  "collection": "feats",
+  "id": "orichalcum-bond",
+  "name": "Orichalcum Bond",
+  "level": 18,
+  "existingChoice": null,
+  "description": "The ancient Thassilonians associated sins with different skymetals, and you've adapted that theory to empower your bonded weapon beyond its normal limits. When your personal rune is placed on a weapon during your daily preparations, choose a weapon property rune of up to your level that is common or you otherwise have access to. That rune is also added to the weapon until your next daily preparations. This rune counts against your weapon's limit as normal."
+ }
+]

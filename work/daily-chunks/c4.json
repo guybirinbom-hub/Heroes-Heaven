@@ -1,0 +1,82 @@
+[
+ {
+  "collection": "feats",
+  "id": "harbingers-armament",
+  "name": "Harbinger's Armament",
+  "level": 8,
+  "existingChoice": null,
+  "description": "Your deity grants you extra power that you have learned to channel into your weapons. Select one weapon or handwraps of mighty blows when you make your daily preparations. While in your hands it gains the effect of one property rune. Choose either Fearsome, Ghost Touch, Returning, Shifting, or Vitalizing. This rune does not count toward your maximum rune count, and this choice lasts 24 hours or until you make your next daily preparations, whichever comes first."
+ },
+ {
+  "collection": "feats",
+  "id": "demon-hunter",
+  "name": "Demon Hunter",
+  "level": 9,
+  "existingChoice": null,
+  "description": "The demons of Tanglebriar have long haunted your dreams, just as they have long threatened Kyonin. You have not only studied these fiendish foes well, but have trained extensively to battle the hordes of demons that serve Treerazer and are particularly adept at striking desperate melee blows against them. When you make your daily preparations, choose one kind of demon, such as succubus, omox, shemhazian, or Treerazer. For the remainder of the day, the first time you hit one of those specific demons in a round with a melee Strike, you also deal 1d6 additional spirit damage. At 13th level, the extra damage increases to 2d6 additional spirit damage, and at 17th level, the extra damage increases to 3d6 spirit damage."
+ },
+ {
+  "collection": "feats",
+  "id": "bodyguard",
+  "name": "Bodyguard",
+  "level": 1,
+  "existingChoice": null,
+  "description": "You swear a vow to protect one of your allies at all costs, regardless of the risk this might pose to you. During your daily preparations, choose one of your allies as your charge. When you Taunt, the penalty your taunted enemy takes increases to –2 against your charge. You can take 10 minutes to change who your charge is before your next daily preparations."
+ },
+ {
+  "collection": "feats",
+  "id": "acclimated-mount",
+  "name": "Acclimated Mount",
+  "level": 4,
+  "existingChoice": null,
+  "description": "By the grace of your god, your mount can overcome the natural challenges and hazards present in a specific terrain. Choose aquatic, arctic, desert, forest, mountain, plains, sky, swamp, or underground. Your mount must have a swim Speed to select aquatic, and a fly Speed to select sky. Your mount ignores the effects of difficult terrain while in the selected terrain. If you become an expert in Survival, you can pray during your daily preparations each day to change the type of terrain to which your mount is acclimated."
+ },
+ {
+  "collection": "feats",
+  "id": "hydras-bond",
+  "name": "Hydra's Bond",
+  "level": 4,
+  "existingChoice": null,
+  "description": "When the hero-gods built Pol-Sylirica and its seven armies, they feared betrayal from within. They took inspiration from the multi-headed hydra, and bound the seven armies together with supernatural ties to make them behave as if they shared one body. Following these tactics, during daily preparations, you can select a number of willing creatures equal to half your level to be part of your hydra's bond. Members of the same hydra's bond always know if another member is telling the truth. When a member of the hydra's bond saves against an effect that would have them act against their allies (such as the confused condition, a Dominate spell, or other mental effects that would give an ally the controlled condition), you can spend a Mythic Point to allow that character to attempt the save at mythic proficiency. If a member of the hydra's bond fails a save against such an effect, other members automatically know that the target is controlled or under the influence of a mental effect. In addition, all members of the hydra's bond gain a +2 circumstance bonus to any roll made to counteract that effect."
+ },
+ {
+  "collection": "feats",
+  "id": "autonomous-arms",
+  "name": "Autonomous Arms",
+  "level": 16,
+  "existingChoice": null,
+  "description": "A portion of the ancient grasping spirit that infuses your being spills over into a spear or polearm you carry. When you perform your daily preparations, choose one spear or polearm you own. This weapon becomes infused with arcane magic and fragments of thought—it doesn't become fully intelligent, but it instinctually recognizes you as its wielder and denies its abilities to any other wielder while you live. If your weapon doesn't possess it already, it gains the effects of the animated property rune. This does not count against the maximum number of property runes your weapon can have at one time. You also gain the Call to Hand action."
+ },
+ {
+  "collection": "feats",
+  "id": "warshard-warrior-dedication",
+  "name": "Warshard Warrior Dedication",
+  "level": 12,
+  "existingChoice": null,
+  "description": "When you became infused with a shard of the god of war, you knew in your gut that your destiny would be one for the ages—yet you may not, at first, know the exact way such a destiny would play out. If you still carry the warshard that empowered you, you might carry it as a token or wear it as jewelry—if indeed it's not simply embedded into your body. Regardless, the warshard itself no longer has any intrinsic power of its own, and even if you toss the warshard aside, its gifts do not leave you, nor can another benefit from them. If you throw the warshard away or lose it, your destiny remains unaltered; you have, in effect, become the warshard itself. This power manifests through a weapon you wield. When you make your daily preparations, choose one weapon in your possession in which you have at least expert proficiency. That weapon becomes your warshard weapon until you choose a different weapon in your possession during another of your daily preparations. You can choose a mundane nonmagical weapon, a weapon with magical runes, one made of an unusual material, or even a specific magic weapon such as a storm flash or a bloodletting kukri, but not an intelligent weapon or an artifact like the bastard sword Serithtial or one of the seven swords of sin. While you don't lose access to your warshard warrior feats if your warshard weapon is taken from you or destroyed, note that several of this destiny's feats require you to be wielding your warshard weapon. You can etch or remove runes from a warshard weapon normally. You can have only one warshard weapon at a time. Your gain the Mythic Strike feat, but you can only use it with your warshard weapon. Whenever you make a Strike with your warshard weapon at mythic proficiency, you double the amount of additional damage you deal with the weapon specialization class feature. When you make Crafting checks to Repair your warshard weapon, your treat your proficiency rank in Crafting as legendary for determining how many Hit Points you restore to the item; in addition, if your Crafting result is a critical failure, you get a failure instead. You also gain the Call Warshard Weapon action."
+ },
+ {
+  "collection": "feats",
+  "id": "transmute-weapon",
+  "name": "Transmute Weapon",
+  "level": 14,
+  "existingChoice": null,
+  "description": "When you choose a warshard weapon during daily preparations, you can transform the material it's composed of so that the weapon is made of a precious material (like adamantine, dawnsilver, or cold iron). The material and quality of the material you select must be of a level equal to or less than your character level. You can transmute the weapon into a standard-grade item of that material only if the weapon is at least level 9. You can transmute the weapon into high-grade item of that material only if the weapon is at least level 15."
+ },
+ {
+  "collection": "feats",
+  "id": "warshard-rune",
+  "name": "Warshard Rune",
+  "level": 14,
+  "existingChoice": null,
+  "description": "When you choose a warshard weapon during your daily preparations, you can empower it with an additional magical effect. Choose one common weapon property rune that's of a level equal to or lower than your level. That rune is applied to your warshard weapon as if it were etched onto it normally, but this weapon property does not count against the normal maximum number of property runes a weapon can have. If you empower a weapon with a property rune of the same type, only the highest-level one applies. This additional rune functions only when you wield your warshard weapon and have at least 1 unspent Mythic Point; otherwise, the rune becomes dormant until these conditions are met."
+ },
+ {
+  "collection": "feats",
+  "id": "mind-smith-dedication",
+  "name": "Mind Smith Dedication",
+  "level": 2,
+  "existingChoice": null,
+  "description": "You've learned to imagine a shape in your mind, to envision it so strongly it takes form in the material world. You gain a single melee weapon of your choosing, called a mind weapon. Your mind weapon is a martial melee weapon. The overall shape and design of your mind weapon can be of your choosing but it has one of the following four basic statistics: - A one-handed weapon that deals 1d4 damage and has the agile and finesse traits - A one-handed weapon that deals 1d6 damage and has the finesse trait - A one-handed weapon that deals 1d8 damage - A two-handed weapon that deals 1d10 damage and has the reach trait Each day during your daily preparations, you can decide if you want your weapon to deal bludgeoning damage and be in the club weapon group, deal piercing damage and be in the spear weapon group, or deal slashing damage and be in the sword weapon group. Your mind weapon is an extension of your mind-it has no Hardness, and any ability that would damage your mind weapon instead damages you directly, pushing back against the weapon's corporeal form and becoming mental damage of the same amount the weapon would've taken. You can project your mind weapon using an Interact action, just as you would draw any other weapon. Only you can hold, carry, or wield your mind weapon; if held by another person, it quickly disappears from their hand, reforming in your mind for you to project again. If you're disarmed of your mind weapon, it dematerializes, but you can draw it again with an Interact action starting at the beginning of your next turn. Upon creating your mind weapon, you also learn to use a mind smith's keepsake: an object of light Bulk, such as a bracelet or figurine, that you wear or keep on your person and inscribe with weapon runes. Your keepsake can't be a magic item, nor can it have any significant monetary value beyond the value of any runes you inscribe on it. You can buy and inscribe fundamental runes and weapon property runes onto your keepsake in the same way you would for a regular weapon, and you can move runes to and from your keepsake to other weapons or runestones for the usual cost. Any runes inscribed on the keepsake apply to your mind weapon "
+ }
+]
