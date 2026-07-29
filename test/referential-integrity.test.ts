@@ -22,6 +22,8 @@ type Rec = {
   effectChoices?: { options?: { value?: string; grant?: { innateSpells?: { spellId: string }[]; focusSpells?: string[] } }[] }[];
 };
 
+type EC = { id?: string; prompt?: string; options?: { value?: string }[]; spellFilter?: unknown };
+
 const COLLECTIONS = ['feats', 'classFeatures', 'items', 'heritages', 'backgrounds', 'ancestries'] as const;
 const records = () =>
   COLLECTIONS.flatMap((col) =>
@@ -71,6 +73,57 @@ describe('referential integrity', () => {
         for (const s of o.grantedSpells ?? []) if (!c.spells[s]) bad.push(`${cid}/${o.id} spell -> ${s}`);
       }
     }
+    expect(bad).toEqual([]);
+  });
+});
+
+/**
+ * `effectChoices` became a heavily-used lane this session (branch grants, spell filters, junction
+ * menus). Its shape rules are all "obvious", which is exactly why they are worth asserting: a menu
+ * with one option, a duplicate id, or neither an option list nor a filter renders as a broken or
+ * empty picker rather than throwing.
+ */
+describe('effect choices are well-formed', () => {
+  const all = COLLECTIONS.flatMap((col) =>
+    Object.entries((c as unknown as Record<string, Record<string, { effectChoices?: EC[] }>>)[col] ?? {})
+      .filter(([, r]) => r.effectChoices?.length)
+      .map(([id, r]) => ({ where: `${col}/${id}`, ecs: r.effectChoices! })),
+  );
+
+  it('there are effect choices to check', () => expect(all.length).toBeGreaterThan(50));
+
+  it('each carries a unique id and a prompt', () => {
+    const bad: string[] = [];
+    for (const { where, ecs } of all) {
+      const seen = new Set<string>();
+      for (const e of ecs) {
+        if (!e.id || seen.has(e.id)) bad.push(`${where}: id '${e.id}'`);
+        else seen.add(e.id);
+        if (!e.prompt) bad.push(`${where}/${e.id}: no prompt`);
+      }
+    }
+    expect(bad).toEqual([]);
+  });
+
+  it('each has exactly one source of options — a list OR a spell filter', () => {
+    const bad: string[] = [];
+    for (const { where, ecs } of all)
+      for (const e of ecs) {
+        if (e.options && e.spellFilter) bad.push(`${where}/${e.id}: both`);
+        if (!e.options && !e.spellFilter) bad.push(`${where}/${e.id}: neither`);
+      }
+    expect(bad).toEqual([]);
+  });
+
+  it('an option list offers at least two distinct choices', () => {
+    const bad: string[] = [];
+    for (const { where, ecs } of all)
+      for (const e of ecs) {
+        if (!e.options) continue;
+        if (e.options.length < 2) bad.push(`${where}/${e.id}: ${e.options.length} option(s)`);
+        const vs = e.options.map((o) => o.value);
+        if (new Set(vs).size !== vs.length) bad.push(`${where}/${e.id}: duplicate values`);
+      }
     expect(bad).toEqual([]);
   });
 });
