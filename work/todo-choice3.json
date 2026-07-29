@@ -1,0 +1,171 @@
+[
+ {
+  "collection": "feats",
+  "id": "jalmeri-heavenseeker-dedication",
+  "name": "Jalmeri Heavenseeker Dedication",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "proficiency",
+    "modelled": true,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "feats",
+  "id": "terrain-scout",
+  "name": "Terrain Scout",
+  "level": 4,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   },
+   {
+    "lane": "grantsFeat",
+    "modelled": true,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "divine-access",
+  "name": "Divine Access",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-bomber",
+  "name": "Perpetual Perfection (Bomber)",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-chirurgeon",
+  "name": "Perpetual Perfection (Chirurgeon)",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-mutagenist",
+  "name": "Perpetual Perfection (Mutagenist)",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-perfection-toxicologist",
+  "name": "Perpetual Perfection (Toxicologist)",
+  "level": 17,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-bomber",
+  "name": "Perpetual Potency (Bomber)",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-chirurgeon",
+  "name": "Perpetual Potency (Chirurgeon)",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-mutagenist",
+  "name": "Perpetual Potency (Mutagenist)",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ },
+ {
+  "collection": "classFeatures",
+  "id": "perpetual-potency-toxicologist",
+  "name": "Perpetual Potency (Toxicologist)",
+  "level": 11,
+  "lanes": [
+   {
+    "lane": "choice",
+    "modelled": false,
+    "examined": false
+   }
+  ],
+  "noSignal": false
+ }
+]

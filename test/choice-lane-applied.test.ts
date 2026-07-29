@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { content } from './_content';
 import { openChoiceOptions } from '../src/rules/openChoice';
+import { featChoicePrompt } from '../src/rules/build';
 
 const c = content();
 
@@ -109,5 +110,40 @@ describe('choice options use app ids, not import artifacts', () => {
   it('skill and save options use the keys the app uses elsewhere', () => {
     expect(c.feats['rogue-dedication'].choice?.options?.map((o) => o.value)).toEqual(['stealth', 'thievery']);
     expect(c.feats['canny-acumen'].choice?.options?.map((o) => o.value)).toEqual(['fortitude', 'reflex', 'will', 'perception']);
+  });
+});
+
+/**
+ * A picker labelled "Choose an option" tells the player nothing.
+ *
+ * 30 records carry the importer's placeholder prompt ("Prompt"). featChoicePrompt used to turn every
+ * one of them into the same generic label, throwing away the FLAG — which usually names the thing
+ * being chosen.
+ */
+describe('choice prompts say what is being chosen', () => {
+  it('a placeholder prompt falls back to the flag, humanised', () => {
+    expect(featChoicePrompt('Prompt', 'terrain')).toBe('Terrain');
+    expect(featChoicePrompt('Prompt', 'performanceType')).toBe('Performance type');
+    expect(featChoicePrompt('Prompt', 'featCelestialResistance')).toBe('Celestial resistance');
+  });
+
+  it('a real prompt always wins', () => {
+    expect(featChoicePrompt('Second weapon configuration', 'anything')).toBe('Second weapon configuration');
+  });
+
+  it('a flag that names nothing still degrades gracefully', () => {
+    expect(featChoicePrompt('Prompt', 'choice')).toBe('Choose an option');
+    expect(featChoicePrompt(undefined)).toBe('Choose an option');
+  });
+
+  it('no shipped picker would render the literal word "Prompt"', () => {
+    const bad: string[] = [];
+    for (const col of ['feats', 'classFeatures', 'items', 'heritages', 'backgrounds'] as const) {
+      for (const [id, r] of Object.entries((c as unknown as Record<string, Record<string, { choice?: { prompt?: string; flag?: string } }>>)[col] ?? {})) {
+        if (!r.choice) continue;
+        if (/^prompt$/i.test(featChoicePrompt(r.choice.prompt, r.choice.flag))) bad.push(`${col}/${id}`);
+      }
+    }
+    expect(bad).toEqual([]);
   });
 });

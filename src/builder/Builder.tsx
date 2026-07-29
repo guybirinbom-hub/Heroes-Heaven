@@ -271,7 +271,7 @@ export function Builder({
                                       trainedSkillOptions(featPrereqChar, def.minRank ?? 'trained')
                                     : def.options ?? [];
                               return (
-                                <SubCard icon="ti-adjustments" label={featChoicePrompt(def.prompt)}>
+                                <SubCard icon="ti-adjustments" label={featChoicePrompt(def.prompt, def.flag)}>
                                   {def.kind === 'text' ? (
                                     // No option list exists for these (Kingdom skills, leadership roles):
                                     // the app has no Kingmaker data, and typing one from memory would be
@@ -279,7 +279,7 @@ export function Builder({
                                     <input
                                       className="txt"
                                       type="text"
-                                      placeholder={`${featChoicePrompt(def.prompt)}…`}
+                                      placeholder={`${featChoicePrompt(def.prompt, def.flag)}…`}
                                       value={build.featChoices[key] ?? ''}
                                       onChange={(e) => actions.setFeatChoice(key, e.target.value)}
                                     />
@@ -297,7 +297,7 @@ export function Builder({
                                           <SearchSelect
                                             key={k}
                                             bare
-                                            label={featChoicePrompt(def.prompt)}
+                                            label={featChoicePrompt(def.prompt, def.flag)}
                                             placeholder={`Search ${def.from?.type ?? 'options'}…`}
                                             value={build.featChoices[k] ?? null}
                                             onChange={(v) => actions.setFeatChoice(k, v)}
@@ -316,11 +316,11 @@ export function Builder({
                                       return keys.map((k, i) => (
                                         <PopupSelect
                                           key={k}
-                                          title={featChoicePrompt(def.prompt)}
+                                          title={featChoicePrompt(def.prompt, def.flag)}
                                           placeholder={
                                             keys.length > 1
-                                              ? `${featChoicePrompt(def.prompt)} ${i + 1} of ${keys.length}…`
-                                              : `${featChoicePrompt(def.prompt)}…`
+                                              ? `${featChoicePrompt(def.prompt, def.flag)} ${i + 1} of ${keys.length}…`
+                                              : `${featChoicePrompt(def.prompt, def.flag)}…`
                                           }
                                           value={build.featChoices[k] ?? ''}
                                           onChange={(v) => actions.setFeatChoice(k, v)}

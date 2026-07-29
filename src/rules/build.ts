@@ -796,10 +796,21 @@ const ABILITY_NAMES: Record<string, string> = {
  * dedications got a concatenated key, "Class DCAbility Score". Fall back to the same wording the
  * other 28 feats already use rather than inventing a new one.
  */
-export function featChoicePrompt(prompt: string | undefined): string {
-  if (!prompt || prompt === 'Prompt') return 'Choose an option';
+export function featChoicePrompt(prompt: string | undefined, flag?: string): string {
   if (prompt === 'Class DCAbility Score') return 'Ability score';
-  return prompt;
+  if (prompt && prompt !== 'Prompt') return prompt;
+  // 30 records carry the importer's placeholder prompt, so every one of those pickers read "Choose an
+  // option". The FLAG usually names the thing being chosen ("terrain", "damage", "performanceType"),
+  // which is a far better label than nothing — humanise it rather than throwing the information away.
+  if (flag && flag !== 'choice') {
+    const words = flag
+      .replace(/^feat/, '')
+      .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+      .trim()
+      .toLowerCase();
+    if (words) return words.charAt(0).toUpperCase() + words.slice(1);
+  }
+  return 'Choose an option';
 }
 
 function slug(s: string): string {
