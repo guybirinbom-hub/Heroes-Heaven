@@ -1,0 +1,3519 @@
+[
+ {
+  "id": "wayfinder-resonance-tinkerer",
+  "collection": "feats",
+  "verdict": "effectChoices",
+  "effectChoices": [
+   {
+    "id": "wayfinder-cantrip",
+    "prompt": "Wayfinder Resonance Tinkerer: choose a cantrip (arcane, divine, occult, or primal) your wayfinder can cast at will",
+    "spellFilter": {
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult",
+      "primal"
+     ],
+     "cantripsOnly": true,
+     "grantAs": "innate",
+     "innate": {
+      "atWill": true
+     }
+    }
+   }
+  ],
+  "src": "confirmed"
+ },
+ {
+  "id": "secret-speech",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "secretSociety",
+   "prompt": "Secret society",
+   "kind": "text"
+  },
+  "src": "confirmed"
+ },
+ {
+  "id": "eidolons-wrath",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "eidolonsWrathDamage",
+   "prompt": "Eidolon's Wrath damage type",
+   "kind": "array",
+   "note": "The focus spell itself is granted; the chosen type is recorded but isn't substituted into the spell's listed damage. Spirit stands in for the alignment-damage option and applies only if your eidolon is a celestial, fiend, or monitor.",
+   "options": [
+    {
+     "value": "acid",
+     "label": "Acid"
+    },
+    {
+     "value": "cold",
+     "label": "Cold"
+    },
+    {
+     "value": "electricity",
+     "label": "Electricity"
+    },
+    {
+     "value": "fire",
+     "label": "Fire"
+    },
+    {
+     "value": "sonic",
+     "label": "Sonic"
+    },
+    {
+     "value": "spirit",
+     "label": "Spirit"
+    },
+    {
+     "value": "vitality",
+     "label": "Vitality"
+    },
+    {
+     "value": "void",
+     "label": "Void"
+    }
+   ]
+  },
+  "src": "confirmed"
+ },
+ {
+  "id": "elf-atavism",
+  "collection": "feats",
+  "verdict": "effectChoices",
+  "effectChoices": [
+   {
+    "id": "elf-heritage",
+    "prompt": "Elf heritage (Elf Atavism) — you typically can't pick one that depends on an elven feature you don't have (e.g. Ancient Elf needs a long-lived non-elf ancestry); the GM may substitute a different benefit.",
+    "options": [
+     {
+      "value": "arctic-elf",
+      "label": "Arctic Elf",
+      "grant": {
+       "resistances": [
+        {
+         "type": "cold",
+         "value": "max(1,floor(@actor.level/2))"
+        }
+       ]
+      },
+      "note": "You also treat environmental cold effects as one step less extreme — not modelled."
+     },
+     {
+      "value": "aquatic-elf",
+      "label": "Aquatic Elf",
+      "grant": {
+       "speeds": {
+        "swim": 30
+       }
+      },
+      "note": "You also gain the amphibious trait, and must rest underwater at least once a week or become fatigued — not modelled."
+     },
+     {
+      "value": "cavern-elf",
+      "label": "Cavern Elf",
+      "grant": {
+       "senses": [
+        {
+         "name": "darkvision"
+        }
+       ]
+      }
+     },
+     {
+      "value": "desert-elf",
+      "label": "Desert Elf",
+      "grant": {
+       "resistances": [
+        {
+         "type": "fire",
+         "value": "max(1,floor(@actor.level/2))"
+        }
+       ]
+      },
+      "note": "You also treat environmental heat effects as one step less extreme — not modelled."
+     },
+     {
+      "value": "seer-elf",
+      "label": "Seer Elf",
+      "grant": {
+       "innateSpells": [
+        {
+         "spellId": "detect-magic",
+         "tradition": "arcane",
+         "atWill": true
+        }
+       ]
+      },
+      "note": "The +1 circumstance bonus to Identify Magic and to Decipher Writing of a magical nature is not modelled."
+     },
+     {
+      "value": "whisper-elf",
+      "label": "Whisper Elf",
+      "note": "+2 circumstance bonus to Seek hidden or undetected creatures within 30 feet, and reduced flat-check DCs (3 concealed / 9 hidden) — situational, not modelled."
+     },
+     {
+      "value": "woodland-elf",
+      "label": "Woodland Elf",
+      "note": "Faster Climbing on trees, vines and foliage, and you can Take Cover anywhere in forest terrain — not modelled."
+     },
+     {
+      "value": "ancient-elf",
+      "label": "Ancient Elf",
+      "note": "Grants a multiclass dedication feat for a class other than your own. The app's picker for that (FEAT_PICK_GRANTS['ancient-elf']) is wired to the Ancient Elf HERITAGE step only, so reaching it through Elf Atavism grants nothing — add the dedication yourself. Also the case the feat's own text warns about: you generally need a long-lived non-elf ancestry."
+     }
+    ]
+   }
+  ],
+  "src": "confirmed"
+ },
+ {
+  "id": "diverse-mystery",
+  "collection": "feats",
+  "verdict": "effectChoices",
+  "effectChoices": [
+   {
+    "id": "revelation",
+    "prompt": "Revelation spell from a mystery OTHER than your own (it gains the cursebound trait, and casting it also inflicts that mystery's Cursebound 1)",
+    "options": [
+     {
+      "value": "ancestral-touch",
+      "label": "Ancestral Touch (Ancestors — initial)",
+      "grant": {
+       "focusSpells": [
+        "ancestral-touch"
+       ]
+      }
+     },
+     {
+      "value": "ancestral-defense",
+      "label": "Ancestral Defense (Ancestors — advanced)",
+      "grant": {
+       "focusSpells": [
+        "ancestral-defense"
+       ]
+      }
+     },
+     {
+      "value": "ashen-wind",
+      "label": "Ashen Wind (Ashes — initial)",
+      "grant": {
+       "focusSpells": [
+        "ashen-wind"
+       ]
+      }
+     },
+     {
+      "value": "incendiary-ashes",
+      "label": "Incendiary Ashes (Ashes — advanced)",
+      "grant": {
+       "focusSpells": [
+        "incendiary-ashes"
+       ]
+      }
+     },
+     {
+      "value": "weapon-trance",
+      "label": "Weapon Trance (Battle — initial)",
+      "grant": {
+       "focusSpells": [
+        "weapon-trance"
+       ]
+      }
+     },
+     {
+      "value": "battlefield-persistence",
+      "label": "Battlefield Persistence (Battle — advanced)",
+      "grant": {
+       "focusSpells": [
+        "battlefield-persistence"
+       ]
+      }
+     },
+     {
+      "value": "ulcerous-canker",
+      "label": "Ulcerous Canker (Blight — initial)",
+      "grant": {
+       "focusSpells": [
+        "ulcerous-canker"
+       ]
+      }
+     },
+     {
+      "value": "purging-toxins",
+      "label": "Purging Toxins (Blight — advanced)",
+      "grant": {
+       "focusSpells": [
+        "purging-toxins"
+       ]
+      }
+     },
+     {
+      "value": "soul-siphon",
+      "label": "Soul Siphon (Bones — initial)",
+      "grant": {
+       "focusSpells": [
+        "soul-siphon"
+       ]
+      }
+     },
+     {
+      "value": "armor-of-bones",
+      "label": "Armor of Bones (Bones — advanced)",
+      "grant": {
+       "focusSpells": [
+        "armor-of-bones"
+       ]
+      }
+     },
+     {
+      "value": "spray-of-stars",
+      "label": "Spray of Stars (Cosmos — initial)",
+      "grant": {
+       "focusSpells": [
+        "spray-of-stars"
+       ]
+      }
+     },
+     {
+      "value": "interstellar-void",
+      "label": "Interstellar Void (Cosmos — advanced)",
+      "grant": {
+       "focusSpells": [
+        "interstellar-void"
+       ]
+      }
+     },
+     {
+      "value": "incendiary-aura",
+      "label": "Incendiary Aura (Flames — initial)",
+      "grant": {
+       "focusSpells": [
+        "incendiary-aura"
+       ]
+      }
+     },
+     {
+      "value": "whirling-flames",
+      "label": "Whirling Flames (Flames — advanced)",
+      "grant": {
+       "focusSpells": [
+        "whirling-flames"
+       ]
+      }
+     },
+     {
+      "value": "life-link",
+      "label": "Life Link (Life — initial)",
+      "grant": {
+       "focusSpells": [
+        "life-link"
+       ]
+      }
+     },
+     {
+      "value": "delay-affliction",
+      "label": "Delay Affliction (Life — advanced)",
+      "grant": {
+       "focusSpells": [
+        "delay-affliction"
+       ]
+      }
+     },
+     {
+      "value": "brain-drain",
+      "label": "Brain Drain (Lore — initial)",
+      "grant": {
+       "focusSpells": [
+        "brain-drain"
+       ]
+      }
+     },
+     {
+      "value": "access-lore",
+      "label": "Access Lore (Lore — advanced)",
+      "grant": {
+       "focusSpells": [
+        "access-lore"
+       ]
+      }
+     },
+     {
+      "value": "tempest-touch",
+      "label": "Tempest Touch (Tempest — initial)",
+      "grant": {
+       "focusSpells": [
+        "tempest-touch"
+       ]
+      }
+     },
+     {
+      "value": "thunderburst",
+      "label": "Thunderburst (Tempest — advanced)",
+      "grant": {
+       "focusSpells": [
+        "thunderburst"
+       ]
+      }
+     },
+     {
+      "value": "temporal-distortion",
+      "label": "Temporal Distortion (Time — initial)",
+      "grant": {
+       "focusSpells": [
+        "temporal-distortion"
+       ]
+      }
+     },
+     {
+      "value": "time-skip",
+      "label": "Time Skip (Time — advanced)",
+      "grant": {
+       "focusSpells": [
+        "time-skip"
+       ]
+      }
+     }
+    ]
+   }
+  ],
+  "src": "confirmed"
+ },
+ {
+  "id": "bloodline-mutation",
+  "collection": "feats",
+  "verdict": "effectChoices",
+  "effectChoices": [
+   {
+    "id": "mutation",
+    "prompt": "Bloodline mutation (only the branch your bloodline's creatures qualify for)",
+    "options": [
+     {
+      "value": "fly",
+      "label": "Fly Speed equal to your land Speed",
+      "note": "Only if the creatures associated with your bloodline can fly.",
+      "grant": {
+       "speeds": {
+        "fly": "@actor.speed.land"
+       }
+      }
+     },
+     {
+      "value": "amphibious",
+      "label": "Amphibious — swim Speed equal to your land Speed",
+      "note": "Only if your bloodline's creatures are aquatic or amphibious. You also breathe water and air equally well (not tracked on the sheet).",
+      "grant": {
+       "speeds": {
+        "swim": "@actor.speed.land"
+       }
+      }
+     },
+     {
+      "value": "resist-acid",
+      "label": "Resistance 20 to acid",
+      "note": "Only if your bloodline's creatures are immune or resistant to acid.",
+      "grant": {
+       "resistances": [
+        {
+         "type": "acid",
+         "value": 20
+        }
+       ]
+      }
+     },
+     {
+      "value": "resist-cold",
+      "label": "Resistance 20 to cold",
+      "note": "Only if your bloodline's creatures are immune or resistant to cold.",
+      "grant": {
+       "resistances": [
+        {
+         "type": "cold",
+         "value": 20
+        }
+       ]
+      }
+     },
+     {
+      "value": "resist-electricity",
+      "label": "Resistance 20 to electricity",
+      "note": "Only if your bloodline's creatures are immune or resistant to electricity.",
+      "grant": {
+       "resistances": [
+        {
+         "type": "electricity",
+         "value": 20
+        }
+       ]
+      }
+     },
+     {
+      "value": "resist-fire",
+      "label": "Resistance 20 to fire",
+      "note": "Only if your bloodline's creatures are immune or resistant to fire.",
+      "grant": {
+       "resistances": [
+        {
+         "type": "fire",
+         "value": 20
+        }
+       ]
+      }
+     },
+     {
+      "value": "resist-void",
+      "label": "Resistance 20 to void",
+      "note": "Only if your bloodline's creatures are immune or resistant to void.",
+      "grant": {
+       "resistances": [
+        {
+         "type": "void",
+         "value": 20
+        }
+       ]
+      }
+     },
+     {
+      "value": "resist-sonic",
+      "label": "Resistance 20 to sonic",
+      "note": "Only if your bloodline's creatures are immune or resistant to sonic.",
+      "grant": {
+       "resistances": [
+        {
+         "type": "sonic",
+         "value": 20
+        }
+       ]
+      }
+     }
+    ]
+   }
+  ],
+  "src": "confirmed"
+ },
+ {
+  "id": "animist-dedication",
+  "collection": "feats",
+  "verdict": "effectChoices",
+  "effectChoices": [
+   {
+    "id": "apparition",
+    "prompt": "Bound apparition — you become trained in its two apparition skills while attuned (expert at 8th level, master at 16th, which you track yourself)",
+    "options": [
+     {
+      "value": "crafter-in-the-vault",
+      "label": "Crafter in the Vault (Architecture Lore, Engineering Lore)",
+      "grant": {
+       "skills": {
+        "lore:architecture": "trained",
+        "lore:engineering": "trained"
+       }
+      }
+     },
+     {
+      "value": "custodian-of-groves-and-gardens",
+      "label": "Custodian of Groves and Gardens (Farming Lore, Herbalism Lore)",
+      "grant": {
+       "skills": {
+        "lore:farming": "trained",
+        "lore:herbalism": "trained"
+       }
+      }
+     },
+     {
+      "value": "echo-of-lost-moments",
+      "label": "Echo of Lost Moments (Fortune-Telling Lore, Genealogy Lore)",
+      "grant": {
+       "skills": {
+        "lore:fortune-telling": "trained",
+        "lore:genealogy": "trained"
+       }
+      }
+     },
+     {
+      "value": "impostor-in-hidden-places",
+      "label": "Impostor in Hidden Places (Fortune-Telling Lore, Underworld Lore)",
+      "grant": {
+       "skills": {
+        "lore:fortune-telling": "trained",
+        "lore:underworld": "trained"
+       }
+      }
+     },
+     {
+      "value": "lurker-in-devouring-dark",
+      "label": "Lurker in Devouring Dark (Ocean Lore, Sailing Lore)",
+      "grant": {
+       "skills": {
+        "lore:ocean": "trained",
+        "lore:sailing": "trained"
+       }
+      }
+     },
+     {
+      "value": "monarch-of-the-fey-courts",
+      "label": "Monarch of the Fey Courts (Art Lore, Fey Lore)",
+      "grant": {
+       "skills": {
+        "lore:art": "trained",
+        "lore:fey": "trained"
+       }
+      }
+     },
+     {
+      "value": "reveler-in-lost-glee",
+      "label": "Reveler in Lost Glee (Circus Lore, Fortune-Telling Lore)",
+      "grant": {
+       "skills": {
+        "lore:circus": "trained",
+        "lore:fortune-telling": "trained"
+       }
+      }
+     },
+     {
+      "value": "shepherd-of-errant-winds",
+      "label": "Shepherd of Errant Winds (Sailing Lore, Scouting Lore)",
+      "grant": {
+       "skills": {
+        "lore:sailing": "trained",
+        "lore:scouting": "trained"
+       }
+      }
+     },
+     {
+      "value": "speaker-in-sibilance",
+      "label": "Speaker in Sibilance (Fortune-Telling Lore, Mountain Lore)",
+      "grant": {
+       "skills": {
+        "lore:fortune-telling": "trained",
+        "lore:mountain": "trained"
+       }
+      }
+     },
+     {
+      "value": "stalker-in-darkened-boughs",
+      "label": "Stalker in Darkened Boughs (Forest Lore, Hunting Lore)",
+      "grant": {
+       "skills": {
+        "lore:forest": "trained",
+        "lore:hunting": "trained"
+       }
+      }
+     },
+     {
+      "value": "steward-of-stone-and-fire",
+      "label": "Steward of Stone and Fire (Mountain Lore, Volcano Lore)",
+      "grant": {
+       "skills": {
+        "lore:mountain": "trained",
+        "lore:volcano": "trained"
+       }
+      }
+     },
+     {
+      "value": "vanguard-of-roaring-waters",
+      "label": "Vanguard of Roaring Waters (Mountain Lore, River Lore)",
+      "grant": {
+       "skills": {
+        "lore:mountain": "trained",
+        "lore:river": "trained"
+       }
+      }
+     },
+     {
+      "value": "witness-to-ancient-battles",
+      "label": "Witness to Ancient Battles (Battlegrounds Lore, Heraldry Lore)",
+      "grant": {
+       "skills": {
+        "lore:battlegrounds": "trained",
+        "lore:heraldry": "trained"
+       }
+      }
+     }
+    ]
+   }
+  ],
+  "src": "confirmed"
+ },
+ {
+  "id": "draconic-acolyte-dedication",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "draconicBenefactor",
+   "prompt": "Draconic benefactor's tradition",
+   "kind": "array",
+   "options": [
+    {
+     "value": "arcane",
+     "label": "Arcane (qualified with Arcana)"
+    },
+    {
+     "value": "primal",
+     "label": "Primal (qualified with Nature)"
+    },
+    {
+     "value": "occult",
+     "label": "Occult (qualified with Occultism)"
+    },
+    {
+     "value": "divine",
+     "label": "Divine (qualified with Religion)"
+    }
+   ],
+   "inert": "Must match the skill you used to qualify, and you can't change your benefactor later. It sets the tradition trait of your draconic gift and of every Draconic Acolyte action — including what triggers Draconic Salvation — which Heroes Heaven doesn't apply, so this is recorded for reference.",
+   "note": "Must match the skill you used to qualify, and you can't change your benefactor later. It sets the tradition trait of your draconic gift and of every Draconic Acolyte action — including what triggers Draconic Salvation — which Heroes Heaven doesn't apply, so this is recorded for reference."
+  },
+  "src": "confirmed"
+ },
+ {
+  "id": "echo-of-the-fallen",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "echoOfTheFallenChoice",
+   "prompt": "Your echo's weapon and skill (chosen with your GM, permanent)",
+   "kind": "text",
+   "inert": "One martial weapon (or an advanced weapon if you're trained in all martial weapons) and one skill. Accept Echo grants trained in that weapon and expert in that skill — master at 7th, expert with the weapon at 13th, legendary at 15th — but only for the 10 minutes the echo inhabits you, so Heroes Heaven doesn't apply the proficiencies.",
+   "note": "One martial weapon (or an advanced weapon if you're trained in all martial weapons) and one skill. Accept Echo grants trained in that weapon and expert in that skill — master at 7th, expert with the weapon at 13th, legendary at 15th — but only for the 10 minutes the echo inhabits you, so Heroes Heaven doesn't apply the proficiencies."
+  },
+  "src": "confirmed"
+ },
+ {
+  "id": "talons-mark",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "talonsMarkTattoo",
+   "prompt": "Tattoo bearing your Talon's Mark",
+   "kind": "text",
+   "inert": "Free text because the tattoo may be a mundane one that isn't an item in your inventory. Heroes Heaven doesn't turn it into a level 6 invested occult tattoo or attach its Twist Design and Adopt Persona abilities.",
+   "note": "Free text because the tattoo may be a mundane one that isn't an item in your inventory. Heroes Heaven doesn't turn it into a level 6 invested occult tattoo or attach its Twist Design and Adopt Persona abilities."
+  },
+  "src": "confirmed"
+ },
+ {
+  "id": "beastkin",
+  "collection": "heritages",
+  "verdict": "choice",
+  "choice": {
+   "flag": "inherentAnimal",
+   "prompt": "Inherent animal",
+   "kind": "text",
+   "note": "Any animal — the printed list is examples only. Beastkin feats that depend on it (Animal Senses, Natural Senses) let you pick the actual sense when you take them."
+  },
+  "src": "confirmed"
+ },
+ {
+  "id": "magical-experiment",
+  "collection": "backgrounds",
+  "verdict": "effectChoices",
+  "effectChoices": [
+   {
+    "id": "experiment-ability",
+    "prompt": "Magical Experiment: the special ability the experiments left you with (agreed with your GM)",
+    "options": [
+     {
+      "value": "enhanced-senses-low-light",
+      "label": "Enhanced Senses — low-light vision",
+      "grant": {
+       "senses": [
+        {
+         "name": "low-light-vision"
+        }
+       ]
+      },
+      "note": "Also pick your imprecise 30-foot sense below."
+     },
+     {
+      "value": "enhanced-senses-darkvision",
+      "label": "Enhanced Senses — darkvision (only if you already had low-light vision)",
+      "grant": {
+       "senses": [
+        {
+         "name": "darkvision"
+        }
+       ]
+      },
+      "note": "Also pick your imprecise 30-foot sense below."
+     },
+     {
+      "value": "resistant-skin",
+      "label": "Resistant Skin",
+      "note": "Pick both energy types below — one is yours, one is the GM's."
+     },
+     {
+      "value": "touch-telepathy",
+      "label": "Touch Telepathy",
+      "note": "You can communicate mentally with any creature you are touching that shares a language. No sheet effect — it conveys no more than normal speech."
+     }
+    ]
+   },
+   {
+    "id": "enhanced-sense",
+    "prompt": "Enhanced Senses only: your imprecise sense, range 30 feet",
+    "options": [
+     {
+      "value": "scent",
+      "label": "Scent (imprecise) 30 feet",
+      "grant": {
+       "senses": [
+        {
+         "name": "scent",
+         "range": 30,
+         "acuity": "imprecise"
+        }
+       ]
+      }
+     },
+     {
+      "value": "thoughtsense",
+      "label": "Thoughtsense (imprecise) 30 feet",
+      "grant": {
+       "senses": [
+        {
+         "name": "thoughtsense",
+         "range": 30,
+         "acuity": "imprecise"
+        }
+       ]
+      }
+     },
+     {
+      "value": "tremorsense",
+      "label": "Tremorsense (imprecise) 30 feet",
+      "grant": {
+       "senses": [
+        {
+         "name": "tremorsense",
+         "range": 30,
+         "acuity": "imprecise"
+        }
+       ]
+      }
+     },
+     {
+      "value": "wavesense",
+      "label": "Wavesense (imprecise) 30 feet",
+      "grant": {
+       "senses": [
+        {
+         "name": "wavesense",
+         "range": 30,
+         "acuity": "imprecise"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   {
+    "id": "resistant-skin-yours",
+    "prompt": "Resistant Skin only: the energy type YOU choose (resistance equal to half your level, minimum 1)",
+    "options": [
+     {
+      "value": "acid",
+      "label": "Acid",
+      "grant": {
+       "resistances": [
+        {
+         "type": "acid",
+         "value": "max(1,floor(@actor.level/2))"
+        }
+       ]
+      }
+     },
+     {
+      "value": "cold",
+      "label": "Cold",
+      "grant": {
+       "resistances": [
+        {
+         "type": "cold",
+         "value": "max(1,floor(@actor.level/2))"
+        }
+       ]
+      }
+     },
+     {
+      "value": "electricity",
+      "label": "Electricity",
+      "grant": {
+       "resistances": [
+        {
+         "type": "electricity",
+         "value": "max(1,floor(@actor.level/2))"
+        }
+       ]
+      }
+     },
+     {
+      "value": "fire",
+      "label": "Fire",
+      "grant": {
+       "resistances": [
+        {
+         "type": "fire",
+         "value": "max(1,floor(@actor.level/2))"
+        }
+       ]
+      }
+     },
+     {
+      "value": "sonic",
+      "label": "Sonic",
+      "grant": {
+       "resistances": [
+        {
+         "type": "sonic",
+         "value": "max(1,floor(@actor.level/2))"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   {
+    "id": "resistant-skin-gm",
+    "prompt": "Resistant Skin only: the energy type your GM chooses (resistance equal to half your level, minimum 1)",
+    "options": [
+     {
+      "value": "acid",
+      "label": "Acid",
+      "grant": {
+       "resistances": [
+        {
+         "type": "acid",
+         "value": "max(1,floor(@actor.level/2))"
+        }
+       ]
+      }
+     },
+     {
+      "value": "cold",
+      "label": "Cold",
+      "grant": {
+       "resistances": [
+        {
+         "type": "cold",
+         "value": "max(1,floor(@actor.level/2))"
+        }
+       ]
+      }
+     },
+     {
+      "value": "electricity",
+      "label": "Electricity",
+      "grant": {
+       "resistances": [
+        {
+         "type": "electricity",
+         "value": "max(1,floor(@actor.level/2))"
+        }
+       ]
+      }
+     },
+     {
+      "value": "fire",
+      "label": "Fire",
+      "grant": {
+       "resistances": [
+        {
+         "type": "fire",
+         "value": "max(1,floor(@actor.level/2))"
+        }
+       ]
+      }
+     },
+     {
+      "value": "sonic",
+      "label": "Sonic",
+      "grant": {
+       "resistances": [
+        {
+         "type": "sonic",
+         "value": "max(1,floor(@actor.level/2))"
+        }
+       ]
+      }
+     }
+    ]
+   }
+  ],
+  "src": "confirmed"
+ },
+ {
+  "id": "spell-mastery",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "masteredSpells",
+   "prompt": "Your four mastered spells (each of a different rank, 9th or lower)",
+   "kind": "text",
+   "inert": "Recorded only. Type your four mastered spells here — the app can't yet pick from a wizard's spellbook. They aren't auto-prepared at daily preparations, and the extra spell slot for each isn't added, so prepare them yourself."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "syncretism",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "secondDeity",
+   "prompt": "Second deity",
+   "kind": "text",
+   "inert": "Recorded only — the second deity's domain (cloistered cleric) or second favored weapon (warpriest) isn't applied. You're still subject to their edicts and anathema."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "divine-access",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "divineAccessDeity",
+   "prompt": "Deity your Divine Access draws on",
+   "kind": "text",
+   "inert": "Recorded only. Heroes Heaven's deity data doesn't record which cleric spells a deity grants, so the up-to-three spells aren't added — add them yourself under Overrides.",
+   "note": "Must be a deity who grants one of your mystery's domains; the app has no mystery-to-domain mapping, so it can't check this for you."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "ancestral-weaponry",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "ancestralWeaponry",
+   "prompt": "Ancestry whose agile or finesse melee weapons gain the monk trait",
+   "kind": "array",
+   "inert": "Recorded only — the monk trait isn't added to those weapons yet. Pick the ancestry you have access to all weapons for (via Unconventional Weaponry or similar); that access isn't checked here.",
+   "options": [
+    {
+     "value": "azarketi",
+     "label": "Azarketi"
+    },
+    {
+     "value": "catfolk",
+     "label": "Catfolk"
+    },
+    {
+     "value": "conrasu",
+     "label": "Conrasu"
+    },
+    {
+     "value": "dwarf",
+     "label": "Dwarf"
+    },
+    {
+     "value": "elf",
+     "label": "Elf"
+    },
+    {
+     "value": "ghoran",
+     "label": "Ghoran"
+    },
+    {
+     "value": "goblin",
+     "label": "Goblin"
+    },
+    {
+     "value": "halfling",
+     "label": "Halfling"
+    },
+    {
+     "value": "kobold",
+     "label": "Kobold"
+    },
+    {
+     "value": "orc",
+     "label": "Orc"
+    },
+    {
+     "value": "tengu",
+     "label": "Tengu"
+    },
+    {
+     "value": "tripkee",
+     "label": "Tripkee"
+    },
+    {
+     "value": "vishkanya",
+     "label": "Vishkanya"
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "eldritch-researcher-dedication",
+  "collection": "feats",
+  "verdict": "effectChoices",
+  "effectChoices": [
+   {
+    "id": "cantrip",
+    "prompt": "Eldritch Researcher: choose an arcane or occult cantrip (cast at will, heightened to half your level rounded up)",
+    "spellFilter": {
+     "traditions": [
+      "arcane",
+      "occult"
+     ],
+     "cantripsOnly": true,
+     "grantAs": "innate",
+     "innate": {
+      "atWill": true
+     }
+    }
+   }
+  ],
+  "src": "corrected"
+ },
+ {
+  "id": "standby-spell",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "standbySpell",
+   "prompt": "Standby spell",
+   "kind": "text",
+   "inert": "Recorded only — casting it unprepared by expending a slot of sufficient rank isn't tracked. It must be a spell you could use with Spellstrike and no higher than your highest magus spell slot; neither limit is checked here."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "advanced-weaponry",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "advancedWeaponry",
+   "prompt": "Trait gained by one of your eidolon's starting melee unarmed attacks",
+   "kind": "array",
+   "inert": "Recorded only — the app doesn't track traits added to an eidolon's unarmed attacks. Note in your eidolon's notes WHICH attack (primary or secondary) you chose; Grasping Limbs later needs the attack that gained grapple.",
+   "options": [
+    {
+     "value": "disarm",
+     "label": "Disarm"
+    },
+    {
+     "value": "grapple",
+     "label": "Grapple"
+    },
+    {
+     "value": "nonlethal",
+     "label": "Nonlethal"
+    },
+    {
+     "value": "shove",
+     "label": "Shove"
+    },
+    {
+     "value": "trip",
+     "label": "Trip"
+    },
+    {
+     "value": "versatile-bludgeoning",
+     "label": "Versatile bludgeoning"
+    },
+    {
+     "value": "versatile-piercing",
+     "label": "Versatile piercing"
+    },
+    {
+     "value": "versatile-slashing",
+     "label": "Versatile slashing"
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "dual-studies",
+  "collection": "feats",
+  "verdict": "effectChoices",
+  "effectChoices": [
+   {
+    "id": "eidolon-skill",
+    "prompt": "Skill your EIDOLON becomes trained in (recorded only — eidolon skill proficiencies aren't tracked, and these are not shared with you). Your own skill is picked in the Trained skill card above.",
+    "options": [
+     {
+      "value": "acrobatics",
+      "label": "Acrobatics"
+     },
+     {
+      "value": "arcana",
+      "label": "Arcana"
+     },
+     {
+      "value": "athletics",
+      "label": "Athletics"
+     },
+     {
+      "value": "crafting",
+      "label": "Crafting"
+     },
+     {
+      "value": "deception",
+      "label": "Deception"
+     },
+     {
+      "value": "diplomacy",
+      "label": "Diplomacy"
+     },
+     {
+      "value": "intimidation",
+      "label": "Intimidation"
+     },
+     {
+      "value": "medicine",
+      "label": "Medicine"
+     },
+     {
+      "value": "nature",
+      "label": "Nature"
+     },
+     {
+      "value": "occultism",
+      "label": "Occultism"
+     },
+     {
+      "value": "performance",
+      "label": "Performance"
+     },
+     {
+      "value": "religion",
+      "label": "Religion"
+     },
+     {
+      "value": "society",
+      "label": "Society"
+     },
+     {
+      "value": "stealth",
+      "label": "Stealth"
+     },
+     {
+      "value": "survival",
+      "label": "Survival"
+     },
+     {
+      "value": "thievery",
+      "label": "Thievery"
+     }
+    ]
+   }
+  ],
+  "src": "corrected"
+ },
+ {
+  "id": "magical-adept",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "magicalAdeptSpells",
+   "prompt": "Eidolon innate spell (one 1st-rank and one 2nd-rank)",
+   "kind": "open",
+   "from": {
+    "type": "spell",
+    "traditions": [
+     "arcane",
+     "divine",
+     "occult",
+     "primal"
+    ],
+    "minRank": 1,
+    "maxRank": 2
+   },
+   "picks": 2,
+   "distinct": true,
+   "inert": "Recorded only — your eidolon's once-per-day innate spells aren't tracked on your sheet.",
+   "note": "Take one 1st-rank and one 2nd-rank spell of your eidolon's tradition; the list checks neither. Your eidolon's tradition: angel/demon/psychopomp/undead = divine, construct/dragon = arcane, beast/elemental/fey/plant/swarm = primal, anger/devotion phantom = occult."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "grasping-limbs",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "graspingLimbs",
+   "prompt": "Eidolon attack",
+   "kind": "array",
+   "inert": "Recorded only — Grab isn't added to your eidolon's attack. The chosen attack must have the grapple trait, which only Advanced Weaponry can give it.",
+   "options": [
+    {
+     "value": "primary",
+     "label": "Primary unarmed attack"
+    },
+    {
+     "value": "secondary",
+     "label": "Secondary unarmed attack"
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "magical-master",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "magicalMasterSpells",
+   "prompt": "Eidolon innate spell (one of each rank it lacks, normally 3rd-7th)",
+   "kind": "open",
+   "from": {
+    "type": "spell",
+    "traditions": [
+     "arcane",
+     "divine",
+     "occult",
+     "primal"
+    ],
+    "minRank": 3,
+    "maxRank": 7
+   },
+   "picks": 5,
+   "distinct": true,
+   "inert": "Recorded only — your eidolon's once-per-day innate spells aren't tracked on your sheet.",
+   "note": "One spell of each rank your eidolon lacks — normally 3rd through 7th, hence five picks; if a Magical Adept spell was swapped, cover the freed rank here instead. Your eidolon can never know more than one spell per rank, and the list isn't filtered by tradition: angel/demon/psychopomp/undead = divine, construct/dragon = arcane, beast/elemental/fey/plant/swarm = primal, anger/devotion phantom = occult."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "scion-of-many-planes",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "feat",
+   "prompt": "Nephilim lineage feat",
+   "kind": "open",
+   "from": {
+    "type": "feat",
+    "featCategory": "ancestry",
+    "traits": [
+     "nephilim",
+     "lineage"
+    ]
+   },
+   "inert": "Recorded only — the chosen feat and its benefits are not added to your sheet yet, so take them into account yourself.",
+   "note": "It must be a lineage feat you do NOT already possess (that isn't checked), and prerequisites aren't checked either — Garuda's Squall requires Plumekith."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "spell-trickster-dedication",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "tricksterFeats",
+   "prompt": "4th-level Spell Trickster feats (up to two)",
+   "kind": "array",
+   "picks": 2,
+   "distinct": true,
+   "inert": "Recorded only — the two feats are not added to your sheet, so add their benefits yourself.",
+   "note": "You may take fewer than two. Each requires you to be able to cast its spell (that prerequisite isn't checked), and the level prerequisite is waived.",
+   "options": [
+    {
+     "value": "agile-hand",
+     "label": "Agile Hand"
+    },
+    {
+     "value": "barrier-shield",
+     "label": "Barrier Shield"
+    },
+    {
+     "value": "forceful-push",
+     "label": "Forceful Push"
+    },
+    {
+     "value": "shining-arms",
+     "label": "Shining Arms"
+    },
+    {
+     "value": "summon-ensemble",
+     "label": "Summon Ensemble"
+    },
+    {
+     "value": "tracing-sigil",
+     "label": "Tracing Sigil"
+    },
+    {
+     "value": "wild-lights",
+     "label": "Wild Lights"
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "adapted-cantrip",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "adaptedCantrip",
+   "prompt": "Adapted cantrip",
+   "kind": "open",
+   "from": {
+    "type": "spell",
+    "cantripsOnly": true
+   },
+   "inert": "Recorded only: the cantrip is not added to your prepared options or your repertoire — add it yourself, cast as a spell of your own class's tradition.",
+   "note": "Must be from a magical tradition OTHER than your own — the picker can't filter that, because your tradition depends on your class."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "adaptive-adept",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "adaptiveSpell",
+   "prompt": "Adaptive Adept spell (cantrip or 1st rank)",
+   "kind": "open",
+   "from": {
+    "type": "spell",
+    "maxRank": 1
+   },
+   "inert": "Recorded only: the spell is not added to your prepared options or repertoire — add it yourself, cast as a spell of your own class's tradition.",
+   "note": "Must be from the same tradition as the cantrip you took with Adapted Cantrip — the picker can't filter to that earlier pick. If you pick a 1st-rank spell you don't gain its heightened versions, and it can't be a signature spell."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "heightened-captivation",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "heightenedSpell",
+   "prompt": "Spell heightened by Heightened Captivation",
+   "kind": "open",
+   "from": {
+    "type": "spell",
+    "traditions": [
+     "occult"
+    ],
+    "cantripsOnly": false
+   },
+   "inert": "Recorded only — the heightening is not applied to your sheet, and you can't change this spell later.",
+   "note": "The list shows every ranked occult spell; it must actually be one you gained from a captivator archetype feat, and it can't be from your highest rank of non-cantrip captivator spells."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "dual-form-weapon",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "secondConfiguration",
+   "prompt": "Second weapon configuration",
+   "kind": "open",
+   "from": {
+    "type": "weapon",
+    "maxLevel": 0
+   },
+   "inert": "Recorded only: the second configuration, its own set of weapon modifications, and the rule that your innovation's Bulk is always the greater of the two are not applied.",
+   "note": "Must be a LEVEL 0 weapon that is common, or one you have access to — the picker can't filter by level or rarity, so it lists every weapon, magic ones included."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "unconventional-weaponry",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "unconventionalWeapon",
+   "prompt": "Unconventional weapon",
+   "kind": "open",
+   "from": {
+    "type": "weapon",
+    "rarity": "uncommon"
+   },
+   "inert": "Recorded only: access and the treat-as-simple (or treat-as-martial) proficiency are not applied to your sheet.",
+   "note": "Must be an UNCOMMON simple or martial weapon with an ancestry trait (dwarf, goblin, orc…) or one common in another culture — the picker can't filter by rarity, level or category, so it lists every weapon. If you're trained in all martial weapons you may instead pick such an uncommon ADVANCED weapon, which you then treat as martial."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "vehicle-mechanic-dedication",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "signatureVehicle",
+   "prompt": "Signature vehicle",
+   "kind": "open",
+   "from": {
+    "type": "own-companion"
+   },
+   "inert": "Recorded only — the +1 circumstance bonus to piloting checks to control it (+2 if you're a master in Crafting) applies to whoever pilots it and isn't tracked here.",
+   "note": "Lists every companion on your sheet, not just vehicles, so add the vehicle first; a vehicle your party owns collectively won't appear. You can re-designate a new vehicle with 1 week of downtime."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "irezoko-tattoo",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "tattooClass",
+   "prompt": "Class whose trait the irezoko takes on",
+   "kind": "text",
+   "inert": "Recorded only — the feat gaining that class's trait isn't modelled. The benefit itself (once per day, concentrate for 3 actions to recover 1 Focus Point) doesn't depend on this answer and is already tracked.",
+   "note": "Must be a class you're a member of that grants a focus pool."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "shadow-reservoir",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "reservoirSource",
+   "prompt": "Spell source for your shadow reservoir",
+   "kind": "text",
+   "inert": "Recorded only: the reservoir itself isn't tracked — note down one spell of each rank at least 2 ranks below your highest, each from that source's list, requiring a spell attack roll or a saving throw. Casting one spends a slot of the same rank (a prepared caster loses what was prepared there).",
+   "note": "Only needed if you have more than one source of spells you can cast from spell slots (e.g. a multiclass caster archetype)."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "rites-of-convocation",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "convocationSummon",
+   "prompt": "Summon spell",
+   "kind": "open",
+   "from": {
+    "type": "spell",
+    "traits": [
+     "summon"
+    ]
+   },
+   "inert": "Recorded only: the app can't swap the chosen spell into one of your prepared witch slots — make the swap by hand on the Spells page.",
+   "note": "Only summon spells on YOUR spellcasting tradition's list are legal — the app can't filter by your tradition, so check it yourself."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "cleric-dedication",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "archetypeDeity",
+   "prompt": "Deity",
+   "kind": "text",
+   "inert": "Recorded for reference: the app doesn't apply your deity's anathema or sanctification from this feat.",
+   "note": "RAW the second free skill should be your deity's associated skill — pick it in the feat's Trained skill dropdown. If your class already chose a deity, name the same one."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "witch-dedication",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "archetypePatron",
+   "prompt": "Patron",
+   "kind": "array",
+   "inert": "Recorded for reference: the patron itself grants nothing here — the archetype's tradition comes from the Tradition picker, and nothing else the patron would normally grant applies.",
+   "note": "Your patron sets the archetype's tradition — choose the matching one in the archetype's Tradition picker. RAW the feat's trained skill should be that tradition's skill (Arcana/Nature/Occultism/Religion).",
+   "options": [
+    {
+     "value": "baba-yaga",
+     "label": "Baba Yaga (occult)"
+    },
+    {
+     "value": "choir-politic",
+     "label": "Choir Politic (divine)"
+    },
+    {
+     "value": "cobyslarni",
+     "label": "Cobyslarni (occult)"
+    },
+    {
+     "value": "devourer-of-decay",
+     "label": "Devourer of Decay (primal)"
+    },
+    {
+     "value": "faiths-flamekeeper",
+     "label": "Faith's Flamekeeper (divine)"
+    },
+    {
+     "value": "mosquito-witch",
+     "label": "Mosquito Witch (primal)"
+    },
+    {
+     "value": "paradox-of-opposites",
+     "label": "Paradox of Opposites (divine)"
+    },
+    {
+     "value": "ripple-in-the-deep",
+     "label": "Ripple in the Deep (primal)"
+    },
+    {
+     "value": "silence-in-snow",
+     "label": "Silence in Snow (primal)"
+    },
+    {
+     "value": "spinner-of-threads",
+     "label": "Spinner of Threads (occult)"
+    },
+    {
+     "value": "starless-shadow",
+     "label": "Starless Shadow (occult)"
+    },
+    {
+     "value": "the-inscribed-one",
+     "label": "The Inscribed One (arcane)"
+    },
+    {
+     "value": "the-resentment",
+     "label": "The Resentment (occult)"
+    },
+    {
+     "value": "the-unseen-broker",
+     "label": "The Unseen Broker (occult)"
+    },
+    {
+     "value": "whisper-of-wings",
+     "label": "Whisper of Wings (primal)"
+    },
+    {
+     "value": "wilding-steward",
+     "label": "Wilding Steward (primal)"
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "adopted-ancestry",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "adoptedAncestry",
+   "prompt": "Adopted ancestry",
+   "kind": "array",
+   "inert": "Recorded only: the chosen ancestry's feats aren't yet offered in your ancestry feat slots — add them through Setup → Overrides.",
+   "note": "Only ancestries marked common in the app's data are listed; an uncommon or rare one needs GM-granted access.",
+   "options": [
+    {
+     "value": "dwarf",
+     "label": "Dwarf"
+    },
+    {
+     "value": "elf",
+     "label": "Elf"
+    },
+    {
+     "value": "gnome",
+     "label": "Gnome"
+    },
+    {
+     "value": "goblin",
+     "label": "Goblin"
+    },
+    {
+     "value": "halfling",
+     "label": "Halfling"
+    },
+    {
+     "value": "human",
+     "label": "Human"
+    },
+    {
+     "value": "leshy",
+     "label": "Leshy"
+    },
+    {
+     "value": "orc",
+     "label": "Orc"
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "improbable-elixirs",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "improbableElixirs",
+   "prompt": "Potion formulas (one per Intelligence modifier, minimum 1; 9th level or lower)",
+   "kind": "text",
+   "inert": "Recorded for reference — outside the Snare Crafting formula book the app tracks no crafting formulas, so these potions don't appear anywhere else.",
+   "note": "Type all of them in this one field; the choice is permanent once made."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "greater-crossblooded-evolution",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "greaterCrossbloodedSpells",
+   "prompt": "Sorcerous gift spells from your secondary bloodline (up to three)",
+   "kind": "text",
+   "inert": "Recorded for reference only: Crossblooded Evolution's secondary bloodline isn't tracked, and no feat lane can add spells to a repertoire — these won't appear on the Spells page.",
+   "note": "Type up to three, all sorcerous gift spells of your secondary bloodline."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "settlement-scholastics",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "settlementLanguage",
+   "prompt": "Language prevalent in that settlement",
+   "kind": "open",
+   "from": {
+    "type": "language"
+   },
+   "inert": "Recorded only: a feat-granted language isn't added to your Languages yet — add it through Setup → Overrides → Add a language.",
+   "note": "Must be a common or uncommon language prevalent in your chosen settlement — rare ones are listed too, so check it yourself. (The settlement itself is the Lore subject on the Additional Lore grant below.)"
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "magic-ammunition",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "magicAmmunition",
+   "prompt": "Three types of common magical ammunition (4th level or lower)",
+   "kind": "text",
+   "inert": "Recorded for reference — the app has no ammunition category to pick from and doesn't track which types you can Transform Ammunition into.",
+   "note": "Name all three in this one field. Your GM may allow uncommon or other-book ammunition. Repeatable: note each set of three you take."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "samsaran-weapon-memory",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "samsaranWeapon",
+   "prompt": "Weapon with an ancestry trait",
+   "kind": "array",
+   "picks": 2,
+   "distinct": true,
+   "options": [
+    {
+     "value": "adze",
+     "label": "Adze (Tripkee)"
+    },
+    {
+     "value": "bladesweeper",
+     "label": "Bladesweeper (Jotunborn)"
+    },
+    {
+     "value": "boarding-axe",
+     "label": "Boarding Axe (Azarketi)"
+    },
+    {
+     "value": "breaching-pike",
+     "label": "Breaching Pike (Hobgoblin)"
+    },
+    {
+     "value": "butchering-axe",
+     "label": "Butchering Axe (Orc)"
+    },
+    {
+     "value": "buugeng",
+     "label": "Buugeng (Conrasu)"
+    },
+    {
+     "value": "capturing-spetum",
+     "label": "Capturing Spetum (Hobgoblin)"
+    },
+    {
+     "value": "clan-dagger",
+     "label": "Clan Dagger (Dwarf)"
+    },
+    {
+     "value": "clan-pistol",
+     "label": "Clan Pistol (Dwarf)"
+    },
+    {
+     "value": "claw-blade",
+     "label": "Claw Blade (Catfolk)"
+    },
+    {
+     "value": "cruuk",
+     "label": "Cruuk (Tripkee)"
+    },
+    {
+     "value": "dawnsilver-tree",
+     "label": "Dawnsilver Tree (Elf)"
+    },
+    {
+     "value": "dogslicer",
+     "label": "Dogslicer (Goblin)"
+    },
+    {
+     "value": "dwarven-dorn-dergar",
+     "label": "Dwarven Dorn-Dergar (Dwarf)"
+    },
+    {
+     "value": "dwarven-war-axe",
+     "label": "Dwarven War Axe (Dwarf)"
+    },
+    {
+     "value": "dwarven-waraxe",
+     "label": "Dwarven Waraxe (Dwarf)"
+    },
+    {
+     "value": "elven-branched-spear",
+     "label": "Elven Branched Spear (Elf)"
+    },
+    {
+     "value": "elven-curve-blade",
+     "label": "Elven Curve Blade (Elf)"
+    },
+    {
+     "value": "fangwire",
+     "label": "Fangwire (Kobold)"
+    },
+    {
+     "value": "fighting-stick",
+     "label": "Fighting Stick (Halfling)"
+    },
+    {
+     "value": "filchers-fork",
+     "label": "Filcher's Fork (Halfling)"
+    },
+    {
+     "value": "flingflenser",
+     "label": "Flingflenser (Goblin)"
+    },
+    {
+     "value": "frying-pan",
+     "label": "Frying Pan (Halfling)"
+    },
+    {
+     "value": "gada",
+     "label": "Gada (Vanara)"
+    },
+    {
+     "value": "gill-hook",
+     "label": "Gill Hook (Azarketi)"
+    },
+    {
+     "value": "gnome-flickmace",
+     "label": "Gnome Flickmace (Gnome)"
+    },
+    {
+     "value": "gnome-hooked-hammer",
+     "label": "Gnome Hooked Hammer (Gnome)"
+    },
+    {
+     "value": "halfling-sling-staff",
+     "label": "Halfling Sling Staff (Halfling)"
+    },
+    {
+     "value": "hand-adze",
+     "label": "Hand Adze (Tripkee)"
+    },
+    {
+     "value": "horsechopper",
+     "label": "Horsechopper (Goblin)"
+    },
+    {
+     "value": "long-hammer",
+     "label": "Long Hammer (Dwarf)"
+    },
+    {
+     "value": "maul-spade",
+     "label": "Maul-Spade (Jotunborn)"
+    },
+    {
+     "value": "orc-knuckle-dagger",
+     "label": "Orc Knuckle Dagger (Orc)"
+    },
+    {
+     "value": "orc-necksplitter",
+     "label": "Orc Necksplitter (Orc)"
+    },
+    {
+     "value": "orc-skewermaul",
+     "label": "Orc Skewermaul (Orc)"
+    },
+    {
+     "value": "spirit-thresher",
+     "label": "Spirit Thresher (Kholo)"
+    },
+    {
+     "value": "spraysling",
+     "label": "Spraysling (Halfling)"
+    },
+    {
+     "value": "taw-launcher",
+     "label": "Taw Launcher (Conrasu)"
+    },
+    {
+     "value": "tengu-gale-blade",
+     "label": "Tengu Gale Blade (Tengu)"
+    },
+    {
+     "value": "thorn-whip",
+     "label": "Thorn Whip (Ghoran)"
+    },
+    {
+     "value": "thunder-sling",
+     "label": "Thunder Sling (Tengu)"
+    },
+    {
+     "value": "tricky-pick",
+     "label": "Tricky Pick (Kobold)"
+    },
+    {
+     "value": "visap",
+     "label": "Visap (Vishkanya)"
+    },
+    {
+     "value": "whip-claw",
+     "label": "Whip Claw (Catfolk)"
+    },
+    {
+     "value": "wrecker",
+     "label": "Wrecker (Dwarf)"
+    },
+    {
+     "value": "wrecker-melee",
+     "label": "Wrecker (Melee) (Dwarf)"
+    },
+    {
+     "value": "wrecker-ranged",
+     "label": "Wrecker (Ranged) (Dwarf)"
+    }
+   ],
+   "note": "The two weapons must carry ancestry traits from two DIFFERENT common humanoid ancestries (or ancestries you have access to) — the app can't check that part.",
+   "inert": "Recorded only. The familiarity benefit (martial treated as simple, advanced as martial) and the 5th-level critical specialization aren't applied from this pick yet."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "inherit-the-dreaming-heirloom",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "pusakaLore",
+   "prompt": "Pusaka Lore subjects — one profession Lore and one environment Lore",
+   "kind": "text",
+   "inert": "Recorded only, and once chosen these can't be changed. You are only temporarily trained in them for the pusaka's once-per-day Recall Knowledge, so they aren't added to your skills. Also decide which item of light Bulk is your pusaka."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "natural-mutagen",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "naturalMutagen",
+   "prompt": "Mutagen you can distill",
+   "kind": "array",
+   "options": [
+    {
+     "value": "bendy-arm-mutagen",
+     "label": "Bendy-Arm Mutagen"
+    },
+    {
+     "value": "bestial-mutagen",
+     "label": "Bestial Mutagen"
+    },
+    {
+     "value": "cognitive-mutagen",
+     "label": "Cognitive Mutagen"
+    },
+    {
+     "value": "deadweight-mutagen",
+     "label": "Deadweight Mutagen"
+    },
+    {
+     "value": "drakeheart-mutagen",
+     "label": "Drakeheart Mutagen"
+    },
+    {
+     "value": "energy-mutagen",
+     "label": "Energy Mutagen"
+    },
+    {
+     "value": "juggernaut-mutagen",
+     "label": "Juggernaut Mutagen"
+    },
+    {
+     "value": "quicksilver-mutagen",
+     "label": "Quicksilver Mutagen"
+    },
+    {
+     "value": "sanguine-mutagen",
+     "label": "Sanguine Mutagen"
+    },
+    {
+     "value": "serene-mutagen",
+     "label": "Serene Mutagen"
+    },
+    {
+     "value": "silvertongue-mutagen",
+     "label": "Silvertongue Mutagen"
+    },
+    {
+     "value": "theatrical-mutagen",
+     "label": "Theatrical Mutagen"
+    }
+   ],
+   "inert": "Records which mutagen you distill. The app doesn't add the daily temporary vial to your inventory — add it yourself at daily preparations (it dissipates by the next ones). It becomes the greater/major version automatically once your level matches that version's level."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "signature-weapon",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "signatureWeapon",
+   "prompt": "Which of your weapons is your signature weapon?",
+   "kind": "open",
+   "from": {
+    "type": "own-item",
+    "itemType": "weapon"
+   },
+   "note": "Only weapons already in your inventory are listed — buy the weapon first if the list is empty.",
+   "inert": "Records which weapon you saturated (name it yourself — it gains the unique trait). The app doesn't yet limit this feat's critical specialization to that one weapon, and the 1-action summoning isn't tracked."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "relinquish-control",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "boundApparition",
+   "prompt": "Apparition you must always attune to",
+   "kind": "array",
+   "options": [
+    {
+     "value": "crafter-in-the-vault",
+     "label": "Crafter in the Vault"
+    },
+    {
+     "value": "custodian-of-groves-and-gardens",
+     "label": "Custodian of Groves and Gardens"
+    },
+    {
+     "value": "echo-of-lost-moments",
+     "label": "Echo of Lost Moments"
+    },
+    {
+     "value": "impostor-in-hidden-places",
+     "label": "Impostor in Hidden Places"
+    },
+    {
+     "value": "lurker-in-devouring-dark",
+     "label": "Lurker in Devouring Dark"
+    },
+    {
+     "value": "monarch-of-the-fey-courts",
+     "label": "Monarch of the Fey Courts"
+    },
+    {
+     "value": "reveler-in-lost-glee",
+     "label": "Reveler in Lost Glee"
+    },
+    {
+     "value": "shepherd-of-errant-winds",
+     "label": "Shepherd of Errant Winds"
+    },
+    {
+     "value": "speaker-in-sibilance",
+     "label": "Speaker in Sibilance"
+    },
+    {
+     "value": "stalker-in-darkened-boughs",
+     "label": "Stalker in Darkened Boughs"
+    },
+    {
+     "value": "steward-of-stone-and-fire",
+     "label": "Steward of Stone and Fire"
+    },
+    {
+     "value": "vanguard-of-roaring-waters",
+     "label": "Vanguard of Roaring Waters"
+    },
+    {
+     "value": "witness-to-ancient-battles",
+     "label": "Witness to Ancient Battles"
+    }
+   ],
+   "note": "Must be an apparition you have access to.",
+   "inert": "Recorded only. The app doesn't model daily attunement, so keep this apparition among the ones you picked for your character — it grants nothing extra on its own."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "mythic-magic",
+  "collection": "feats",
+  "verdict": "effectChoices",
+  "effectChoices": [
+   {
+    "id": "spell-1",
+    "prompt": "Mythic Magic spell 1 — a 1st- or 2nd-rank spell that takes no more than 3 actions to cast and is instantaneous or lasts 10 minutes or less (each casting costs a Mythic Point; heightened to half your level)",
+    "spellFilter": {
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult",
+      "primal"
+     ],
+     "minRank": 1,
+     "maxRank": 2,
+     "cantripsOnly": false,
+     "grantAs": "innate",
+     "innate": {
+      "atWill": true,
+      "heightenHalfLevel": true
+     }
+    }
+   },
+   {
+    "id": "spell-2",
+    "prompt": "Mythic Magic spell 2 — a 1st- or 2nd-rank spell that takes no more than 3 actions to cast and is instantaneous or lasts 10 minutes or less (each casting costs a Mythic Point; heightened to half your level)",
+    "spellFilter": {
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult",
+      "primal"
+     ],
+     "minRank": 1,
+     "maxRank": 2,
+     "cantripsOnly": false,
+     "grantAs": "innate",
+     "innate": {
+      "atWill": true,
+      "heightenHalfLevel": true
+     }
+    }
+   },
+   {
+    "id": "spell-3",
+    "prompt": "Mythic Magic spell 3 — a 1st- or 2nd-rank spell that takes no more than 3 actions to cast and is instantaneous or lasts 10 minutes or less (each casting costs a Mythic Point; heightened to half your level)",
+    "spellFilter": {
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult",
+      "primal"
+     ],
+     "minRank": 1,
+     "maxRank": 2,
+     "cantripsOnly": false,
+     "grantAs": "innate",
+     "innate": {
+      "atWill": true,
+      "heightenHalfLevel": true
+     }
+    }
+   },
+   {
+    "id": "spell-4",
+    "prompt": "Mythic Magic spell 4 (14th level) — a 3rd-rank spell, same casting-time and duration limits (each casting costs a Mythic Point; heightened to half your level)",
+    "spellFilter": {
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult",
+      "primal"
+     ],
+     "rank": 3,
+     "cantripsOnly": false,
+     "grantAs": "innate",
+     "innate": {
+      "atWill": true,
+      "heightenHalfLevel": true
+     },
+     "minLevel": 14
+    }
+   },
+   {
+    "id": "spell-5",
+    "prompt": "Mythic Magic spell 5 (20th level) — a 4th-rank spell, same casting-time and duration limits (each casting costs a Mythic Point; heightened to half your level)",
+    "spellFilter": {
+     "traditions": [
+      "arcane",
+      "divine",
+      "occult",
+      "primal"
+     ],
+     "rank": 4,
+     "cantripsOnly": false,
+     "grantAs": "innate",
+     "innate": {
+      "atWill": true,
+      "heightenHalfLevel": true
+     },
+     "minLevel": 20
+    }
+   }
+  ],
+  "src": "corrected"
+ },
+ {
+  "id": "beast-lord-dedication",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "unitedCompanion",
+   "prompt": "Your united companion",
+   "kind": "open",
+   "from": {
+    "type": "own-companion"
+   },
+   "note": "Must be the mature animal companion or advanced construct companion that qualified you.",
+   "inert": "Recorded only: the app doesn't raise the companion's Intelligence, give it a shared language, or roll the shared save against mental effects for you."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "expanded-domain-initiate",
+  "collection": "feats",
+  "verdict": "effectChoices",
+  "effectChoices": [
+   {
+    "id": "domain",
+    "prompt": "Alternate domain — one of your deity's alternate domains (not one of its four main domains). You gain that domain's initial domain spell and its Focus Point",
+    "options": [
+     {
+      "value": "abomination",
+      "label": "Abomination",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "air",
+      "label": "Air",
+      "grant": {
+       "focusSpells": [
+        "pushing-gust"
+       ]
+      }
+     },
+     {
+      "value": "ambition",
+      "label": "Ambition",
+      "grant": {
+       "focusSpells": [
+        "ignite-ambition"
+       ]
+      }
+     },
+     {
+      "value": "change",
+      "label": "Change",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "cities",
+      "label": "Cities",
+      "grant": {
+       "focusSpells": [
+        "face-in-the-crowd"
+       ]
+      }
+     },
+     {
+      "value": "cold",
+      "label": "Cold",
+      "grant": {
+       "focusSpells": [
+        "winter-bolt"
+       ]
+      }
+     },
+     {
+      "value": "confidence",
+      "label": "Confidence",
+      "grant": {
+       "focusSpells": [
+        "veil-of-confidence"
+       ]
+      }
+     },
+     {
+      "value": "creation",
+      "label": "Creation",
+      "grant": {
+       "focusSpells": [
+        "creative-splash"
+       ]
+      }
+     },
+     {
+      "value": "darkness",
+      "label": "Darkness",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "death",
+      "label": "Death",
+      "grant": {
+       "focusSpells": [
+        "deaths-call"
+       ]
+      }
+     },
+     {
+      "value": "decay",
+      "label": "Decay",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "delirium",
+      "label": "Delirium",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "destruction",
+      "label": "Destruction",
+      "grant": {
+       "focusSpells": [
+        "cry-of-destruction"
+       ]
+      }
+     },
+     {
+      "value": "disorientation",
+      "label": "Disorientation",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "dragon",
+      "label": "Dragon",
+      "grant": {
+       "focusSpells": [
+        "draconic-barrage"
+       ]
+      }
+     },
+     {
+      "value": "dreams",
+      "label": "Dreams",
+      "grant": {
+       "focusSpells": [
+        "sweet-dream"
+       ]
+      }
+     },
+     {
+      "value": "dust",
+      "label": "Dust",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "duty",
+      "label": "Duty",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "earth",
+      "label": "Earth",
+      "grant": {
+       "focusSpells": [
+        "hurtling-stone"
+       ]
+      }
+     },
+     {
+      "value": "family",
+      "label": "Family",
+      "grant": {
+       "focusSpells": [
+        "soothing-words"
+       ]
+      }
+     },
+     {
+      "value": "fate",
+      "label": "Fate",
+      "grant": {
+       "focusSpells": [
+        "read-fate"
+       ]
+      }
+     },
+     {
+      "value": "fire",
+      "label": "Fire",
+      "grant": {
+       "focusSpells": [
+        "fire-ray"
+       ]
+      }
+     },
+     {
+      "value": "freedom",
+      "label": "Freedom",
+      "grant": {
+       "focusSpells": [
+        "unimpeded-stride"
+       ]
+      }
+     },
+     {
+      "value": "glyph",
+      "label": "Glyph",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "healing",
+      "label": "Healing",
+      "grant": {
+       "focusSpells": [
+        "healers-blessing"
+       ]
+      }
+     },
+     {
+      "value": "indulgence",
+      "label": "Indulgence",
+      "grant": {
+       "focusSpells": [
+        "overstuff"
+       ]
+      }
+     },
+     {
+      "value": "introspection",
+      "label": "Introspection",
+      "grant": {
+       "focusSpells": [
+        "guided-introspection"
+       ]
+      }
+     },
+     {
+      "value": "knowledge",
+      "label": "Knowledge",
+      "grant": {
+       "focusSpells": [
+        "scholarly-recollection"
+       ]
+      }
+     },
+     {
+      "value": "lightning",
+      "label": "Lightning",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "luck",
+      "label": "Luck",
+      "grant": {
+       "focusSpells": [
+        "bit-of-luck"
+       ]
+      }
+     },
+     {
+      "value": "magic",
+      "label": "Magic",
+      "grant": {
+       "focusSpells": [
+        "magics-vessel"
+       ]
+      }
+     },
+     {
+      "value": "metal",
+      "label": "Metal",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "might",
+      "label": "Might",
+      "grant": {
+       "focusSpells": [
+        "athletic-rush"
+       ]
+      }
+     },
+     {
+      "value": "moon",
+      "label": "Moon",
+      "grant": {
+       "focusSpells": [
+        "moonbeam"
+       ]
+      }
+     },
+     {
+      "value": "naga",
+      "label": "Naga",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "nature",
+      "label": "Nature",
+      "grant": {
+       "focusSpells": [
+        "vibrant-thorns"
+       ]
+      }
+     },
+     {
+      "value": "nightmares",
+      "label": "Nightmares",
+      "grant": {
+       "focusSpells": [
+        "waking-nightmare"
+       ]
+      }
+     },
+     {
+      "value": "nothingness",
+      "label": "Nothingness",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "pain",
+      "label": "Pain",
+      "grant": {
+       "focusSpells": [
+        "savor-the-sting"
+       ]
+      }
+     },
+     {
+      "value": "passion",
+      "label": "Passion",
+      "grant": {
+       "focusSpells": [
+        "charming-touch"
+       ]
+      }
+     },
+     {
+      "value": "perfection",
+      "label": "Perfection",
+      "grant": {
+       "focusSpells": [
+        "perfected-mind"
+       ]
+      }
+     },
+     {
+      "value": "plague",
+      "label": "Plague",
+      "grant": {
+       "focusSpells": [
+        "divine-plagues"
+       ]
+      }
+     },
+     {
+      "value": "protection",
+      "label": "Protection",
+      "grant": {
+       "focusSpells": [
+        "protectors-sacrifice"
+       ]
+      }
+     },
+     {
+      "value": "repose",
+      "label": "Repose",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "secrecy",
+      "label": "Secrecy",
+      "grant": {
+       "focusSpells": [
+        "forced-quiet"
+       ]
+      }
+     },
+     {
+      "value": "sorrow",
+      "label": "Sorrow",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "soul",
+      "label": "Soul",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "star",
+      "label": "Star",
+      "grant": {
+       "focusSpells": [
+        "zenith-star"
+       ]
+      }
+     },
+     {
+      "value": "sun",
+      "label": "Sun",
+      "grant": {
+       "focusSpells": [
+        "dazzling-flash"
+       ]
+      }
+     },
+     {
+      "value": "swarm",
+      "label": "Swarm",
+      "grant": {
+       "focusSpells": [
+        "swarmsense"
+       ]
+      }
+     },
+     {
+      "value": "time",
+      "label": "Time",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "toil",
+      "label": "Toil",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "travel",
+      "label": "Travel",
+      "grant": {
+       "focusSpells": [
+        "agile-feet"
+       ]
+      }
+     },
+     {
+      "value": "trickery",
+      "label": "Trickery",
+      "grant": {
+       "focusSpells": [
+        "sudden-shift"
+       ]
+      }
+     },
+     {
+      "value": "truth",
+      "label": "Truth",
+      "grant": {
+       "focusSpells": [
+        "word-of-truth"
+       ]
+      }
+     },
+     {
+      "value": "tyranny",
+      "label": "Tyranny",
+      "grant": {
+       "focusSpells": [
+        "touch-of-obedience"
+       ]
+      }
+     },
+     {
+      "value": "undeath",
+      "label": "Undeath",
+      "grant": {
+       "focusSpells": [
+        "touch-of-undeath"
+       ]
+      }
+     },
+     {
+      "value": "vigil",
+      "label": "Vigil",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "void",
+      "label": "Void",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "water",
+      "label": "Water",
+      "grant": {
+       "focusSpells": [
+        "tidal-surge"
+       ]
+      }
+     },
+     {
+      "value": "wealth",
+      "label": "Wealth",
+      "grant": {
+       "focusSpells": [
+        "appearance-of-wealth"
+       ]
+      }
+     },
+     {
+      "value": "wood",
+      "label": "Wood",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "wyrmkin",
+      "label": "Wyrmkin",
+      "grant": {
+       "focusPoolBonus": 1
+      },
+      "note": "This domain's initial domain spell isn't in the app's data, so no spell is granted — add it yourself. The Focus Point is still granted."
+     },
+     {
+      "value": "zeal",
+      "label": "Zeal",
+      "grant": {
+       "focusSpells": [
+        "weapon-surge"
+       ]
+      }
+     }
+    ]
+   }
+  ],
+  "src": "corrected"
+ },
+ {
+  "id": "free-heart",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "freeHeartBackground",
+   "prompt": "Background your Free Heart passion draws on",
+   "kind": "text",
+   "inert": "Recorded only. Heroes Heaven can't apply a background's package from a feat yet, so this answer changes nothing on its own.",
+   "note": "The two skill pickers above are Heroes Heaven's stand-in: they let you choose ANY skill and ANY Lore, where the rules fix both to your chosen background — pick the ones that background actually trains. The background's skill feat is not granted; add it under Overrides."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "awakened-power",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "awakenedPowerFeat",
+   "prompt": "Deviant feat whose power awakens",
+   "kind": "open",
+   "from": {
+    "type": "feat",
+    "traits": [
+     "deviant"
+    ],
+    "maxLevel": 4
+   },
+   "inert": "Recorded only: an awakening is a prose upgrade to that ability, so nothing is added to your statistics. Read the **Awakening** entries in the chosen feat's description — they are shown right here in the picker — and settle with your GM which one you take.",
+   "note": "Pick a deviant feat you already have; the list can't filter to yours, and it includes Awakened Power itself, which has no awakening of its own. Each time you take this feat, choose a different deviant feat."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "greater-awakened-power",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "greaterAwakenedPowerFeat",
+   "prompt": "Deviant feat whose power awakens (Greater)",
+   "kind": "open",
+   "from": {
+    "type": "feat",
+    "traits": [
+     "deviant"
+    ],
+    "maxLevel": 10
+   },
+   "inert": "Recorded only: an awakening is a prose upgrade to that ability, so nothing is added to your statistics. Read the **Awakening** entries in the chosen feat's description — shown here in the picker — and settle with your GM which one you take.",
+   "note": "Pick a deviant feat you already have; the list can't filter to yours, and it includes Awakened Power and Greater Awakened Power themselves, which have no awakening of their own. Each time you take this feat, choose a different deviant feat."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "expert-skysage-divination",
+  "collection": "feats",
+  "verdict": "effectChoices",
+  "effectChoices": [
+   {
+    "id": "skysage-rank4",
+    "prompt": "Choose a 4th-rank Oatia skysage spell (Heroes Heaven grants it as a 1/day innate occult spell — the archetype has no spell slots)",
+    "options": [
+     {
+      "value": "clairvoyance",
+      "label": "Clairvoyance",
+      "grant": {
+       "innateSpells": [
+        {
+         "spellId": "clairvoyance",
+         "tradition": "occult",
+         "usesPerDay": 1
+        }
+       ]
+      }
+     },
+     {
+      "value": "read-omens",
+      "label": "Read Omens",
+      "grant": {
+       "innateSpells": [
+        {
+         "spellId": "read-omens",
+         "tradition": "occult",
+         "usesPerDay": 1
+        }
+       ]
+      }
+     }
+    ]
+   }
+  ],
+  "src": "corrected"
+ },
+ {
+  "id": "master-skysage-divination",
+  "collection": "feats",
+  "verdict": "effectChoices",
+  "effectChoices": [
+   {
+    "id": "skysage-rank7",
+    "prompt": "Choose a 7th-rank Oatia skysage spell (Heroes Heaven grants it as a 1/day innate occult spell — the archetype has no spell slots)",
+    "options": [
+     {
+      "value": "retrocognition",
+      "label": "Retrocognition",
+      "grant": {
+       "innateSpells": [
+        {
+         "spellId": "retrocognition",
+         "tradition": "occult",
+         "usesPerDay": 1
+        }
+       ]
+      }
+     },
+     {
+      "value": "true-target",
+      "label": "True Target",
+      "grant": {
+       "innateSpells": [
+        {
+         "spellId": "true-target",
+         "tradition": "occult",
+         "usesPerDay": 1
+        }
+       ]
+      }
+     }
+    ]
+   }
+  ],
+  "src": "corrected"
+ },
+ {
+  "id": "psychic-dedication",
+  "collection": "feats",
+  "verdict": "choice",
+  "choice": {
+   "flag": "psychicConsciousMind",
+   "prompt": "Conscious mind",
+   "kind": "array",
+   "options": [
+    {
+     "value": "the-distant-grasp",
+     "label": "The Distant Grasp"
+    },
+    {
+     "value": "the-infinite-eye",
+     "label": "The Infinite Eye"
+    },
+    {
+     "value": "the-oscillating-wave",
+     "label": "The Oscillating Wave"
+    },
+    {
+     "value": "the-silent-whisper",
+     "label": "The Silent Whisper"
+    },
+    {
+     "value": "the-tangible-dream",
+     "label": "The Tangible Dream"
+    },
+    {
+     "value": "the-unbound-step",
+     "label": "The Unbound Step"
+    }
+   ],
+   "inert": "Recorded only — you gain no other benefits of the conscious mind from this archetype.",
+   "note": "Your one archetype cantrip is picked on the Spells page from the whole occult list; it should be one of this conscious mind's standard psi cantrips — Distant Grasp: Telekinetic Hand or Telekinetic Projectile; Infinite Eye: Detect Magic or Guidance; Oscillating Wave: Frostbite or Ignition; Silent Whisper: Daze or Message; Tangible Dream: Figment or Shield; Unbound Step: Phase Bolt or Warp Step."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "adept-benefit-wand",
+  "collection": "classFeatures",
+  "verdict": "choice",
+  "choice": {
+   "flag": "wandSecondDamage",
+   "prompt": "Second Fling Magic damage type",
+   "kind": "array",
+   "inert": "Recorded only — the app doesn't compute Fling Magic's damage or apply the chilled/shocked/catching-flame riders. Your FIRST wand attunement (from the initiate benefit) isn't recorded anywhere yet, so pick a type other than that one yourself.",
+   "options": [
+    {
+     "value": "cold",
+     "label": "Cold — target is chilled: −10-foot status penalty to its Speeds for 1 round"
+    },
+    {
+     "value": "electricity",
+     "label": "Electricity — target is shocked: off-guard until the end of your next turn"
+    },
+    {
+     "value": "fire",
+     "label": "Fire — target catches flame, taking 1d10 (or 2d10 on a critical failure)"
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "construct-eidolon",
+  "collection": "classFeatures",
+  "verdict": "choice",
+  "choice": {
+   "flag": "reconfiguredEvolution",
+   "prompt": "Reconfigured Evolution (7th level): additional evolution feat",
+   "kind": "open",
+   "from": {
+    "type": "feat",
+    "featCategory": "class",
+    "traits": [
+     "evolution"
+    ],
+    "maxLevel": 6
+   },
+   "inert": "Recorded only — this is a 7th-level ability (the picker isn't level-gated yet) and the app can't grant a feat to your eidolon. At 17th level, Ultimate Reconfiguration grants a further evolution feat of 16th level or lower, which this picker can't record."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "demon-eidolon",
+  "collection": "classFeatures",
+  "verdict": "choice",
+  "choice": {
+   "flag": "demonSin",
+   "prompt": "Associated sin",
+   "kind": "text",
+   "inert": "Recorded only — the sin is flavour that colours Visions of Sin (7th) and Blasphemous Decree (17th). Demonic Strikes' other pick — which of your eidolon's unarmed attacks gains versatile, and for which physical damage type — isn't recorded here."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "dragon-instinct",
+  "collection": "classFeatures",
+  "verdict": "choice",
+  "choice": {
+   "flag": "instinctDragon",
+   "prompt": "Dragon type",
+   "kind": "array",
+   "note": "Draconic Rage's extra damage is applied but shown as generic 'energy' rather than your dragon's breath type, and Raging Resistance (9th) isn't applied.",
+   "options": [
+    {
+     "value": "adamantine",
+     "label": "Adamantine — Primal, bludgeoning"
+    },
+    {
+     "value": "barrage",
+     "label": "Barrage — Arcane, force"
+    },
+    {
+     "value": "bog",
+     "label": "Bog — Primal, acid"
+    },
+    {
+     "value": "brine",
+     "label": "Brine — Primal, bludgeoning"
+    },
+    {
+     "value": "cinder",
+     "label": "Cinder — Primal, fire"
+    },
+    {
+     "value": "cloud",
+     "label": "Cloud — Primal, electricity"
+    },
+    {
+     "value": "conspirator",
+     "label": "Conspirator — Occult, poison"
+    },
+    {
+     "value": "coral",
+     "label": "Coral — Primal, bludgeoning"
+    },
+    {
+     "value": "crystal",
+     "label": "Crystal — Primal, piercing"
+    },
+    {
+     "value": "delight",
+     "label": "Delight — Divine, spirit"
+    },
+    {
+     "value": "despair",
+     "label": "Despair — Occult, sonic"
+    },
+    {
+     "value": "diabolic",
+     "label": "Diabolic — Divine, fire"
+    },
+    {
+     "value": "empyreal",
+     "label": "Empyreal — Divine, spirit"
+    },
+    {
+     "value": "executor",
+     "label": "Executor — Divine, sonic"
+    },
+    {
+     "value": "forest",
+     "label": "Forest — Primal, piercing"
+    },
+    {
+     "value": "fortune",
+     "label": "Fortune — Arcane, force"
+    },
+    {
+     "value": "horned",
+     "label": "Horned — Primal, poison"
+    },
+    {
+     "value": "magma",
+     "label": "Magma — Primal, fire"
+    },
+    {
+     "value": "mirage",
+     "label": "Mirage — Arcane, mental"
+    },
+    {
+     "value": "mocking",
+     "label": "Mocking — Occult, bludgeoning"
+    },
+    {
+     "value": "oath",
+     "label": "Oath — Divine, spirit"
+    },
+    {
+     "value": "omen",
+     "label": "Omen — Occult, mental"
+    },
+    {
+     "value": "phase",
+     "label": "Phase — Arcane, force"
+    },
+    {
+     "value": "requiem",
+     "label": "Requiem — Divine, spirit"
+    },
+    {
+     "value": "resurrection",
+     "label": "Resurrection — Divine, void"
+    },
+    {
+     "value": "rime",
+     "label": "Rime — Primal, cold"
+    },
+    {
+     "value": "rune",
+     "label": "Rune — Arcane, fire"
+    },
+    {
+     "value": "sage",
+     "label": "Sage — Occult, mental"
+    },
+    {
+     "value": "sea",
+     "label": "Sea — Primal, bludgeoning"
+    },
+    {
+     "value": "sky",
+     "label": "Sky — Divine, electricity"
+    },
+    {
+     "value": "sovereign",
+     "label": "Sovereign — Occult, mental"
+    },
+    {
+     "value": "stormcrown",
+     "label": "Stormcrown — Primal, electricity"
+    },
+    {
+     "value": "time",
+     "label": "Time — Arcane, force"
+    },
+    {
+     "value": "umbral",
+     "label": "Umbral — Occult, void"
+    },
+    {
+     "value": "underworld",
+     "label": "Underworld — Arcane, fire"
+    },
+    {
+     "value": "vizier",
+     "label": "Vizier — Occult, fire"
+    },
+    {
+     "value": "vorpal",
+     "label": "Vorpal — Arcane, void"
+    },
+    {
+     "value": "wailing",
+     "label": "Wailing — Arcane, sonic"
+    },
+    {
+     "value": "whisper",
+     "label": "Whisper — Occult, mental"
+    },
+    {
+     "value": "wish",
+     "label": "Wish — Arcane, mental"
+    },
+    {
+     "value": "black",
+     "label": "Black — Arcane, line of acid"
+    },
+    {
+     "value": "blue",
+     "label": "Blue — Arcane, line of electricity"
+    },
+    {
+     "value": "green",
+     "label": "Green — Arcane, cone of poison"
+    },
+    {
+     "value": "red",
+     "label": "Red — Arcane, cone of fire"
+    },
+    {
+     "value": "white",
+     "label": "White — Arcane, cone of cold"
+    },
+    {
+     "value": "brass",
+     "label": "Brass — Arcane, line of fire"
+    },
+    {
+     "value": "bronze",
+     "label": "Bronze — Arcane, line of electricity"
+    },
+    {
+     "value": "copper",
+     "label": "Copper — Arcane, line of acid"
+    },
+    {
+     "value": "gold",
+     "label": "Gold — Arcane, cone of fire"
+    },
+    {
+     "value": "silver",
+     "label": "Silver — Arcane, cone of cold"
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "eldritch-trickster",
+  "collection": "classFeatures",
+  "verdict": "choice",
+  "choice": {
+   "flag": "tricksterArchetype",
+   "prompt": "Multiclass spellcasting archetype",
+   "kind": "array",
+   "inert": "Recorded only — the dedication isn't granted automatically yet (take it as a class feat), and the racket's option to use that archetype's spellcasting attribute as your key attribute isn't applied.",
+   "options": [
+    {
+     "value": "animist-dedication",
+     "label": "Animist"
+    },
+    {
+     "value": "bard-dedication",
+     "label": "Bard"
+    },
+    {
+     "value": "cleric-dedication",
+     "label": "Cleric"
+    },
+    {
+     "value": "druid-dedication",
+     "label": "Druid"
+    },
+    {
+     "value": "magus-dedication",
+     "label": "Magus"
+    },
+    {
+     "value": "oracle-dedication",
+     "label": "Oracle"
+    },
+    {
+     "value": "psychic-dedication",
+     "label": "Psychic"
+    },
+    {
+     "value": "sorcerer-dedication",
+     "label": "Sorcerer"
+    },
+    {
+     "value": "summoner-dedication",
+     "label": "Summoner"
+    },
+    {
+     "value": "witch-dedication",
+     "label": "Witch"
+    },
+    {
+     "value": "wizard-dedication",
+     "label": "Wizard"
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "light-mortar-innovation",
+  "collection": "classFeatures",
+  "verdict": "choice",
+  "choice": {
+   "flag": "lightMortarModification",
+   "prompt": "Initial light mortar modification",
+   "kind": "array",
+   "inert": "Recorded only — the light mortar isn't modelled as a strike, so the nonlethal / versatile P and S traits and the free-action deployment aren't applied. Breakthrough (7th) and revolutionary (15th) light mortar modifications aren't recorded here.",
+   "options": [
+    {
+     "value": "contained-shrapnel",
+     "label": "Contained Shrapnel — your innovation gains the nonlethal trait (optional on each Launch)"
+    },
+    {
+     "value": "enhanced-shrapnel",
+     "label": "Enhanced Shrapnel — your innovation gains the versatile P and versatile S traits"
+    },
+    {
+     "value": "spring-loaded",
+     "label": "Spring-Loaded — you can deploy your light mortar as a free action"
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "perpetual-infusions-chirurgeon",
+  "collection": "classFeatures",
+  "verdict": "choice",
+  "choice": {
+   "flag": "perpetualElixirs",
+   "prompt": "Perpetual infusions (two 1st-level healing elixirs)",
+   "kind": "array",
+   "picks": 2,
+   "distinct": true,
+   "inert": "Both must be in your formula book. Recorded only — Quick Alchemy doesn't yet make these two for free, and the 10-minute immunity to further perpetual-infusion healing isn't tracked.",
+   "options": [
+    {
+     "value": "affliction-suppressant-lesser",
+     "label": "Affliction Suppressant (Lesser)"
+    },
+    {
+     "value": "antidote-lesser",
+     "label": "Antidote (Lesser)"
+    },
+    {
+     "value": "antiplague-lesser",
+     "label": "Antiplague (Lesser)"
+    },
+    {
+     "value": "elixir-of-life-minor",
+     "label": "Elixir of Life (Minor)"
+    },
+    {
+     "value": "vaccine-minor",
+     "label": "Vaccine (Minor)"
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "perpetual-infusions-mutagenist",
+  "collection": "classFeatures",
+  "verdict": "choice",
+  "choice": {
+   "flag": "perpetualMutagens",
+   "prompt": "Perpetual infusions (two 1st-level mutagens)",
+   "kind": "array",
+   "picks": 2,
+   "distinct": true,
+   "inert": "Both must be in your formula book. Recorded only — Quick Alchemy doesn't yet make these two without spending a batch of infused reagents.",
+   "options": [
+    {
+     "value": "bendy-arm-mutagen-lesser",
+     "label": "Bendy-Arm Mutagen (Lesser)"
+    },
+    {
+     "value": "bestial-mutagen-lesser",
+     "label": "Bestial Mutagen (Lesser)"
+    },
+    {
+     "value": "cognitive-mutagen-lesser",
+     "label": "Cognitive Mutagen (Lesser)"
+    },
+    {
+     "value": "deadweight-mutagen-lesser",
+     "label": "Deadweight Mutagen (Lesser)"
+    },
+    {
+     "value": "drakeheart-mutagen-lesser",
+     "label": "Drakeheart Mutagen (Lesser)"
+    },
+    {
+     "value": "energy-mutagen-lesser",
+     "label": "Energy Mutagen (Lesser)"
+    },
+    {
+     "value": "juggernaut-mutagen-lesser",
+     "label": "Juggernaut Mutagen (Lesser)"
+    },
+    {
+     "value": "quicksilver-mutagen-lesser",
+     "label": "Quicksilver Mutagen (Lesser)"
+    },
+    {
+     "value": "sanguine-mutagen-lesser",
+     "label": "Sanguine Mutagen (Lesser)"
+    },
+    {
+     "value": "serene-mutagen-lesser",
+     "label": "Serene Mutagen (Lesser)"
+    },
+    {
+     "value": "silvertongue-mutagen-lesser",
+     "label": "Silvertongue Mutagen (Lesser)"
+    },
+    {
+     "value": "theatrical-mutagen-lesser",
+     "label": "Theatrical Mutagen (Lesser)"
+    },
+    {
+     "value": "war-blood-mutagen-lesser",
+     "label": "War Blood Mutagen (Lesser) — uncommon"
+    },
+    {
+     "value": "prey-mutagen-lesser",
+     "label": "Prey Mutagen (Lesser) — rare"
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "perpetual-infusions-toxicologist",
+  "collection": "classFeatures",
+  "verdict": "choice",
+  "choice": {
+   "flag": "perpetualPoisons",
+   "prompt": "Perpetual infusions (two common 1st-level alchemical poisons)",
+   "kind": "array",
+   "picks": 2,
+   "distinct": true,
+   "inert": "Both must be in your formula book. Recorded only — Quick Alchemy doesn't yet make these two without spending a batch of infused reagents.",
+   "options": [
+    {
+     "value": "arsenic",
+     "label": "Arsenic"
+    },
+    {
+     "value": "giant-centipede-venom",
+     "label": "Giant Centipede Venom"
+    },
+    {
+     "value": "spear-frog-poison",
+     "label": "Spear Frog Poison"
+    }
+   ]
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "ancestral-embrace",
+  "collection": "items",
+  "verdict": "choice",
+  "choice": {
+   "flag": "ancestralEmbraceFeat",
+   "prompt": "Ancestry feat gained while the armor is invested (recorded only — not applied to your sheet)",
+   "kind": "open",
+   "daily": true,
+   "from": {
+    "type": "feat",
+    "featCategory": "ancestry"
+   },
+   "inert": "Recorded only: nothing in Heroes Heaven applies a feat granted by an ITEM, so the chosen feat won't appear on your sheet. Grant it in Setup → Overrides if you want it applied.",
+   "note": "Every ancestry's feats are listed — pick one from YOUR ancestry whose other prerequisites you meet. You can pick a different one each time you invest the armor."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "storied-skin",
+  "collection": "items",
+  "verdict": "choice",
+  "choice": {
+   "flag": "tattooLore",
+   "prompt": "Lore skill recorded by the tattoo",
+   "kind": "text",
+   "inert": "Recorded only. The +1 item bonus applies just to a visual Recall Knowledge check made while studying your tattoos, so the app does not add it to the skill — it is listed as a situational bonus instead."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "ancestors-call",
+  "collection": "items",
+  "verdict": "choice",
+  "choice": {
+   "flag": "ancestorsCallFeats",
+   "prompt": "Three common 1st-level dwarf ancestry feats",
+   "kind": "open",
+   "from": {
+    "type": "feat",
+    "featCategory": "ancestry",
+    "maxLevel": 1,
+    "traits": [
+     "dwarf"
+    ]
+   },
+   "picks": 3,
+   "distinct": true,
+   "note": "The list cannot filter by rarity: of the 19 dwarf ancestry feats it offers, only the 10 COMMON ones are legal picks.",
+   "inert": "Recorded only. Activating the relic grants one of the three feats to you and each ally in a 10-foot burst for 1 minute; the sheet does not apply that temporary grant."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "aon-ancestors-call",
+  "collection": "items",
+  "verdict": "choice",
+  "choice": {
+   "flag": "ancestorsCallFeats",
+   "prompt": "Three common 1st-level dwarf ancestry feats",
+   "kind": "open",
+   "from": {
+    "type": "feat",
+    "featCategory": "ancestry",
+    "maxLevel": 1,
+    "traits": [
+     "dwarf"
+    ]
+   },
+   "picks": 3,
+   "distinct": true,
+   "note": "The list cannot filter by rarity: of the 19 dwarf ancestry feats it offers, only the 10 COMMON ones are legal picks.",
+   "inert": "Recorded only. Activating the relic grants one of the three feats to you and each ally in a 10-foot burst for 1 minute; the sheet does not apply that temporary grant."
+  },
+  "src": "corrected"
+ },
+ {
+  "id": "adaptive-anadi",
+  "collection": "heritages",
+  "verdict": "choice",
+  "choice": {
+   "flag": "adoptedAncestry",
+   "prompt": "Common Medium humanoid ancestry your form matches",
+   "kind": "array",
+   "options": [
+    {
+     "value": "dwarf",
+     "label": "Dwarf"
+    },
+    {
+     "value": "elf",
+     "label": "Elf"
+    },
+    {
+     "value": "human",
+     "label": "Human"
+    },
+    {
+     "value": "orc",
+     "label": "Orc"
+    }
+   ],
+   "inert": "Recorded only. Adopted Ancestry itself is already granted for you, but the app does not unlock the chosen ancestry's feats in the feat list."
+  },
+  "src": "corrected"
+ }
+]

@@ -78,10 +78,18 @@ export function openChoiceOptions(
         description: f.description,
       }));
     case 'weapon':
+      // Category alone left "choose a level 0 weapon" and "an uncommon simple or martial weapon"
+      // resolving to all 1,039 weapons — a searchable list, but not the one the rules describe.
       return Object.values(content.items)
-        .filter((i) => i.itemType === 'weapon' && (!from.weaponCategory || (i as { category?: string }).category === from.weaponCategory))
+        .filter((i) => {
+          if (i.itemType !== 'weapon') return false;
+          if (from.weaponCategory && (i as { category?: string }).category !== from.weaponCategory) return false;
+          if (from.maxLevel !== undefined && (i.level ?? 0) > from.maxLevel) return false;
+          if (from.rarity && (i.rarity ?? 'common') !== from.rarity) return false;
+          return true;
+        })
         .sort((a, b) => a.name.localeCompare(b.name))
-        .map((i) => ({ id: i.id, name: i.name, description: i.description }));
+        .map((i) => ({ id: i.id, name: i.name, note: (i.level ?? 0) > 0 ? `Level ${i.level}` : undefined, description: i.description }));
     case 'language':
       return Object.values(content.languages ?? {})
         .sort((a, b) => a.name.localeCompare(b.name))

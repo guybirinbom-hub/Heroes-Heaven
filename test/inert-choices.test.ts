@@ -48,12 +48,42 @@ describe('inert (recorded-only) choices', () => {
     // Assurance is the canary: a real, working choose-a-skill pick.
     expect(c.feats['assurance']?.choice?.inert).toBeUndefined();
     expect(c.feats['domain-initiate']?.choice?.inert).toBeUndefined();
-    // And across the whole database, inert is confined to the agreed ids.
-    const agreed = new Set([...KINGDOM, ...LEGACY]);
-    const stray = Object.entries(c.feats)
-      .filter(([id, f]) => f.choice?.inert && !agreed.has(id))
-      .map(([id]) => id);
-    expect(stray, `unexpected inert choices: ${stray.join(', ')}`).toHaveLength(0);
+  });
+
+  /**
+   * This test used to pin `inert` to the five kingdom feats and two legacy ones. The build-choice
+   * pass then applied the SAME agreed treatment — offer the pick, say plainly that it grants nothing —
+   * to every record whose effect the app cannot model, which is dozens rather than seven. An
+   * allow-list of names would have to grow with each one and would stop meaning anything, so what is
+   * asserted now is the rule those seven were an instance of.
+   */
+  it('every inert choice explains itself, in words', () => {
+    const bad: string[] = [];
+    for (const [id, f] of Object.entries(c.feats)) {
+      const inert = f.choice?.inert;
+      if (inert === undefined) continue;
+      // A boolean renders as an empty span in the builder — the reason IS the feature.
+      if (typeof inert !== 'string') bad.push(`${id}: inert is ${typeof inert}, must be a reason string`);
+      else if (inert.trim().length < 15) bad.push(`${id}: reason too short to explain anything ("${inert}")`);
+    }
+    expect(bad).toEqual([]);
+  });
+
+  it('inert is never used where the pick would actually work', () => {
+    // The failure this guards: reaching for `inert` instead of wiring a pick the engine supports.
+    const bad: string[] = [];
+    for (const [id, f] of Object.entries(c.feats)) {
+      if (!f.choice?.inert) continue;
+      if ((f.effectChoices ?? []).length) bad.push(`${id}: grants through effectChoices AND claims to do nothing`);
+      if (f.choice.kind === 'skills') bad.push(`${id}: a skills pick trains a skill — it is not inert`);
+    }
+    expect(bad).toEqual([]);
+  });
+
+  it('the number of do-nothing pickers does not creep up unnoticed', () => {
+    // A ceiling, like the coverage ratchet: lowering it is progress; raising it needs a reason.
+    const inert = Object.values(c.feats).filter((f) => f.choice?.inert).length;
+    expect(inert, 'more records now record a pick without applying it').toBeLessThanOrEqual(47);
   });
 
   it('kingdom feats that ask nothing were left alone', () => {

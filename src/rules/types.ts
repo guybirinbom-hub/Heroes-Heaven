@@ -422,7 +422,10 @@ export interface OpenChoiceFrom {
   anyTraits?: string[];
   /** feat: restrict to a category and a level ceiling ("any 1st-level dwarf ancestry feat"). */
   featCategory?: FeatCategory;
+  /** feat: level ceiling. weapon: item-level ceiling ("choose a level 0 weapon"). */
   maxLevel?: number;
+  /** weapon: required rarity ("an uncommon simple or martial weapon"). */
+  rarity?: Rarity;
   /** weapon: restrict to a proficiency category. */
   weaponCategory?: WeaponCategory;
   /** own-item: restrict to an item type (weapon / armor / shield / equipment …). */
