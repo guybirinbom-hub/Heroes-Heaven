@@ -1,4 +1,5 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync, rmSync, readdirSync, statSync } from 'node:fs';
+import path from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -75,12 +76,71 @@ function fullReloadOnLogicChange(): Plugin {
   };
 }
 
+/**
+ * Keep BUILD-ONLY files out of `dist`.
+ *
+ * THE BUG THIS FIXES. Vite copies `public/` into `dist/` verbatim — every file, whether the app asks
+ * for it or not. Two kinds of file in there are build inputs the browser never fetches:
+ *
+ *   1. `public/ast/<bucket>.json` — the RAW ast buckets. astStore.ts fetches `<bucket>.json.gz` and
+ *      inflates it in the browser, precisely because the raw ones are too big; its own comment says
+ *      "far too large for static-host per-file limits (items is ~36 MB raw, ~2.6 MB gzipped)". The raw
+ *      files are the input the .gz is built from, and a dev-only fallback.
+ *   2. `public/core.foundry-backup.json` (~18 MB) — read only by scripts/import-core-v2.mjs.
+ *
+ * Both are gitignored, so a git-connected build never had them and this only ever bit a deploy made
+ * from a local `dist`. It bit hard: `dist/ast/items.json` is 36.2 MB and **Cloudflare Pages refuses
+ * any file over 25 MiB**, so the upload fails outright rather than degrading. It also made the deploy
+ * 198 MB instead of ~60 MB.
+ *
+ * A raw bucket is removed ONLY when its `.gz` sibling exists — if a bucket ever ships without one, the
+ * fallback path in astStore.ts still has something to fetch.
+ */
+function stripBuildOnlyAssets(): Plugin {
+  let outDir = 'dist';
+  const removed: string[] = [];
+  return {
+    name: 'hh-strip-build-only-assets',
+    enforce: 'post',
+    configResolved(cfg) {
+      outDir = cfg.build.outDir;
+    },
+    closeBundle() {
+      const root = path.resolve(outDir);
+      const drop = (rel: string) => {
+        const abs = path.join(root, rel);
+        if (!existsSync(abs)) return;
+        const mb = statSync(abs).size / 1048576;
+        rmSync(abs);
+        removed.push(`${rel} (${mb.toFixed(1)} MB)`);
+      };
+
+      const astDir = path.join(root, 'ast');
+      if (existsSync(astDir)) {
+        for (const f of readdirSync(astDir)) {
+          if (!f.endsWith('.json')) continue; // .json.gz ends with .gz, so it is never matched
+          if (existsSync(path.join(astDir, `${f}.gz`))) drop(path.join('ast', f));
+        }
+      }
+      drop('core.foundry-backup.json');
+
+      if (!removed.length) return;
+      const total = removed.length;
+      // Report the total, not the list — 60-odd buckets would bury the build output.
+      const bytes = removed.reduce((n, s) => n + parseFloat(s.slice(s.lastIndexOf('(') + 1)), 0);
+      // eslint-disable-next-line no-console
+      console.log(`\n  build-only assets stripped from ${outDir}: ${total} files, ${bytes.toFixed(0)} MB`);
+    },
+  };
+}
+
 // Vite config tuned for Tauri 2: fixed dev port, no screen clearing so Tauri
 // logs stay visible, and src-tauri excluded from the watcher.
 export default defineConfig({
   plugins: [
     react(),
     fullReloadOnLogicChange(),
+    stripBuildOnlyAssets(),
     // PWA: makes the WEB build installable ("Add to Home Screen") and offline-capable. The service
     // worker is registered manually in main.tsx and ONLY in the browser build (never the Tauri
     // shell) — see `injectRegister: null`.
